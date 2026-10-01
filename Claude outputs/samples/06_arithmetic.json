@@ -1,0 +1,1 @@
+{"readable": true, "read_as": "Evaluate 3/4 + 2^5 × sin 30°.", "confidence": 0.97, "unclear": [], "expression": "3/4+2^5*sin(30)", "answer": "16.75 (= 67/4)", "steps": ["2⁵ = 32 and sin 30° = 0.5", "32 × 0.5 = 16", "3/4 + 16 = 16.75"]}

@@ -1,0 +1,1 @@
+{"readable": true, "confidence": 0.93, "unclear": [], "expression": "sqrt(2*9.8*5)", "choice": "C", "answer": "(C) 9.90 m/s", "read_as": "A ball drops 5.0 m from rest. Speed at impact? A) 4.9 B) 7.0 C) 9.9 D) 49 m/s", "steps": ["v² = 2gh", "v = √(2 × 9.8 × 5.0)", "v = √98 ≈ 9.90 m/s", "Matches option C"]}

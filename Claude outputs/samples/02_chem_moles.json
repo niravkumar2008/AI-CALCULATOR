@@ -1,0 +1,1 @@
+{"readable": true, "read_as": "How many moles are in 36.0 g of H₂O?", "confidence": 0.97, "unclear": [], "answer": "n ≈ 2.00 mol", "steps": ["Molar mass of H₂O = 2(1.008) + 16.00 = 18.02 g/mol.", "n = m / M = 36.0 g ÷ 18.02 g/mol", "n ≈ 2.00 mol"]}

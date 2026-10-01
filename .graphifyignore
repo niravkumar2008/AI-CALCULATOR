@@ -1,0 +1,5 @@
+.pio/
+sim/web/dist/
+*.zip
+graphify-out/
+.claude/skills/

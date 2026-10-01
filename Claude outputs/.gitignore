@@ -1,0 +1,10 @@
+build/
+build-win/
+# Built simulator (rebuild or download from a release instead of committing)
+*.exe
+# Never commit your Claude API key
+api_key.txt
+# PlatformIO build output
+firmware/.pio/
+sim/web/calc.js
+sim/web/dist/

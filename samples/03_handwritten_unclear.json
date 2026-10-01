@@ -1,0 +1,1 @@
+{"readable": true, "read_as": "Solve 2x + 7 = 15 for x.", "confidence": 0.62, "unclear": ["line 1: '7' could be '1'", "right edge slightly cut off"], "answer": "x = 4", "steps": ["Subtract 7 from both sides: 2x = 8.", "Divide both sides by 2: x = 4.", "If the 7 is really a 1: x = 7."]}

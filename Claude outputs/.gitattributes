@@ -1,0 +1,2 @@
+# Snapshot tests compare these byte for byte
+tests/golden/*.txt text eol=lf

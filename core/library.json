@@ -1,0 +1,6 @@
+{
+  "name": "calc_core",
+  "version": "3.0.0",
+  "description": "Portable device logic shared by the Windows simulator and the ESP32 firmware",
+  "build": { "srcDir": ".", "includeDir": "." }
+}

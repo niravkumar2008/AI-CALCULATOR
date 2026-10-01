@@ -1,0 +1,17 @@
+build/
+build-win/
+# Built simulator (rebuild or download from a release instead of committing)
+*.exe
+# Never commit your Claude API key
+api_key.txt
+# PlatformIO build output
+firmware/.pio/
+firmware-prototype/.pio/
+sim/web/calc.js
+sim/web/dist/
+# Old zip snapshots (the files they hold are already in the repo)
+*.zip
+# graphify: rebuildable caches and paths that only fit this computer
+graphify-out/cache/
+graphify-out/.graphify_*
+graphify-out/20*/

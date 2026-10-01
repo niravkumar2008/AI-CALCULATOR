@@ -1,0 +1,1 @@
+{"readable": true, "read_as": "Evaluate 47 × 1.5 − 12 (the 7 may be a 1).", "confidence": 0.6, "unclear": ["line 1: 47 or 41?"], "expression": "47*1.5-12", "answer": "58.5", "steps": ["47 × 1.5 = 70.5", "70.5 − 12 = 58.5"]}

@@ -1,0 +1,1 @@
+{"readable": true, "read_as": "Ball dropped from h = 5.0 m. Find its speed just before it hits the ground.", "confidence": 0.95, "unclear": [], "expression": "sqrt(2*9.81*5.0)", "answer": "v ≈ 9.90 m/s", "steps": ["Energy is conserved: mgh = ½mv², so v = √(2gh).", "v = √(2 × 9.81 m/s² × 5.0 m)", "v = √98.1 ≈ 9.90 m/s"]}
