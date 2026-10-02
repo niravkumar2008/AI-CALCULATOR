@@ -12,7 +12,7 @@ namespace {
 
 const char* kKeyNames[] = {
     "SHIFT", "ALPHA", "UP", "DOWN", "LEFT", "RIGHT", "MODE", "ON",
-    "x^-1", "nCr", "Pol", "x^3",
+    "Abs", "x^3", "x^-1", "log_a",
     "frac", "sqrt", "x^2", "x^n", "log", "ln",
     "(-)", "dms", "hyp", "sin", "cos", "tan",
     "RCL", "ENG", "(", ")", "S<>D", "M+",
@@ -82,15 +82,16 @@ bool tokOf(DKey k, bool shift, bool alpha, Tok& t) {
   }
   struct M { DKey k; Tok plain, shifted; };
   static const M kMap[] = {
-      {DKey::Inv, Tok::Inv, Tok::Fact},     {DKey::NCr, Tok::NCr, Tok::NPr},
-      {DKey::Cube, Tok::Cube, Tok::Cbrt},   {DKey::Frac, Tok::Frac, Tok::Count},
+      {DKey::Abs, Tok::Abs, Tok::Count},    {DKey::LogAB, Tok::Log, Tok::Count},  // logₐb: log(base,value)
+      {DKey::Inv, Tok::Inv, Tok::Fact},     {DKey::Cube, Tok::Cube, Tok::Cbrt},
+      {DKey::Frac, Tok::Frac, Tok::Count},
       {DKey::Sqrt, Tok::Sqrt, Tok::Count},  {DKey::Sq, Tok::Sq, Tok::Count},
       {DKey::Pow, Tok::Pow, Tok::XRoot},    {DKey::Log, Tok::Log, Tok::Pow10},
       {DKey::Ln, Tok::Ln, Tok::Exp},        {DKey::Neg, Tok::Neg, Tok::Count},
-      {DKey::Hyp, Tok::Count, Tok::Abs},    {DKey::Sin, Tok::Sin, Tok::Asin},
+      {DKey::Hyp, Tok::Count, Tok::Count},  {DKey::Sin, Tok::Sin, Tok::Asin},
       {DKey::Cos, Tok::Cos, Tok::Acos},     {DKey::Tan, Tok::Tan, Tok::Atan},
       {DKey::Open, Tok::Open, Tok::Pct},    {DKey::Close, Tok::Close, Tok::Comma},
-      {DKey::Mul, Tok::Mul, Tok::Count},    {DKey::Div, Tok::Div, Tok::Count},
+      {DKey::Mul, Tok::Mul, Tok::NPr},      {DKey::Div, Tok::Div, Tok::NCr},
       {DKey::Add, Tok::Add, Tok::Count},    {DKey::Sub, Tok::Sub, Tok::Count},
       {DKey::Dot, Tok::Dot, Tok::Ran},      {DKey::Exp10, Tok::Exp10, Tok::Pi},
       {DKey::Ans, Tok::Ans, Tok::Count},
@@ -146,6 +147,7 @@ bool keysForChar(char c, DKey out[2], int& n) {
       {'s', DKey::Sin, DKey::Sin, 1}, {'c', DKey::Cos, DKey::Cos, 1}, {'t', DKey::Tan, DKey::Tan, 1},
       {'l', DKey::Log, DKey::Log, 1}, {'n', DKey::Ln, DKey::Ln, 1}, {'r', DKey::Sqrt, DKey::Sqrt, 1},
       {'q', DKey::Sq, DKey::Sq, 1}, {'i', DKey::Inv, DKey::Inv, 1}, {'f', DKey::Frac, DKey::Frac, 1},
+      {'b', DKey::Abs, DKey::Abs, 1}, {'g', DKey::LogAB, DKey::LogAB, 1},
       {'h', DKey::Hyp, DKey::Hyp, 1}, {'k', DKey::Rcl, DKey::Rcl, 1}, {'w', DKey::SD, DKey::SD, 1},
       {'M', DKey::MPlus, DKey::MPlus, 1}, {'a', DKey::Ans, DKey::Ans, 1}, {'#', DKey::Del, DKey::Del, 1},
       {'$', DKey::AC, DKey::AC, 1}, {'m', DKey::Mode, DKey::Mode, 1}, {'o', DKey::On, DKey::On, 1},

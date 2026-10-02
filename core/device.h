@@ -16,10 +16,12 @@
 
 namespace calc {
 
-// Every key on the fx-300ES PLUS keypad, top-left to bottom-right.
+// Every key on the fx-300ES PLUS keypad, top-left to bottom-right. Row 2 is
+// the newer keypad's (the one the prototype board is traced from): Abs, x³,
+// x⁻¹, logₐb. nPr / nCr moved to SHIFT × / SHIFT ÷ (Pol / Rec on SHIFT + / −).
 enum class DKey : uint8_t {
   Shift, Alpha, Up, Down, Left, Right, Mode, On,
-  Inv, NCr, Pol, Cube,
+  Abs, Cube, Inv, LogAB,
   Frac, Sqrt, Sq, Pow, Log, Ln,
   Neg, Dms, Hyp, Sin, Cos, Tan,
   Rcl, Eng, Open, Close, SD, MPlus,
@@ -33,7 +35,7 @@ const char* dkeyName(DKey k);  // "SHIFT", "sin", "7" ... for logs and tests
 
 // Typing on a computer keyboard or the Serial Monitor: one character = one
 // key (or SHIFT + key). Digits . + - * / ^ ( ) = as printed; s c t sin cos tan,
-// l log, n ln, r sqrt, q x², i x⁻¹, f fraction, ~ (−), E ×10ˣ, h hyp, k RCL,
+// l log, n ln, r sqrt, q x², i x⁻¹, b Abs, g logₐb, f fraction, ~ (−), E ×10ˣ, h hyp, k RCL,
 // w S⇔D, M M+, a Ans, # DEL, $ AC, m MODE, o ON, [ SHIFT, ] ALPHA,
 // < > u d arrows, p π, ! x!, % percent, , comma. Returns false if unmapped.
 bool keysForChar(char c, DKey out[2], int& n);

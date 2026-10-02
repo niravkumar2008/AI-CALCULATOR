@@ -1,14 +1,19 @@
-# Graph Report - AI-CALCULATOR  (2026-10-01)
+# Graph Report - AI-CALCULATOR  (2026-10-02)
 
 ## Corpus Check
-- 119 files · ~186,118 words
+- 122 files · ~254,481 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 9 file(s) not represented in the graph (top: (none) 6, .ini 3)
+- Unclassified: 44 file(s) not represented in the graph (top: .kicad_mod 11, (none) 9, .kicad_sch 7)
 
 ## Summary
-- 2164 nodes · 4010 edges · 116 communities (104 shown, 12 thin omitted)
-- Extraction: 89% EXTRACTED · 11% INFERRED · 0% AMBIGUOUS · INFERRED: 422 edges (avg confidence: 0.85)
+- 2243 nodes · 4205 edges · 118 communities (106 shown, 12 thin omitted)
+- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 425 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
+
+## Graph Freshness
+- Built from commit: `f8704e0b`
+- Run `git rev-parse HEAD` and compare to check if the graph is stale.
+- Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
 - Parser
@@ -35,8 +40,8 @@
 - tests/tests.cpp
 - App
 - AI Answer Flow
-- Focus
-- Framebuffer
+- Claude outputs/firmware/src/claude_client.h
+- Claude outputs/sim/win32_main.cpp
 - firmware/src/preview.cpp
 - previewResume
 - core/claude_api.cpp
@@ -51,9 +56,9 @@
 - SerialCmd
 - Breadboard Wiring Diagram (exact, camera up)
 - Event
-- Claude outputs/tools/gen_font.py
+- fusion_run.py
 - Stage 4: full calculator
-- Claude outputs/sim/win32_main.cpp
+- Event
 - Claude outputs/core/device.cpp
 - Tester firmware (Stage 4)
 - Event
@@ -81,12 +86,13 @@
 - Failure
 - Screen
 - Failure
-- previewResume
+- JsonParser
 - Key
 - Key
 - Stage 2: Windows simulator AI flow
-- cmath
+- wndProc
 - HistoryItem
+- build_case.py
 - SerialCmd
 - Button
 - Ask
@@ -94,10 +100,10 @@
 - equals
 - Calculator Mode
 - Line
-- firmware-prototype/src/settings.h
-- Tuning
+- CalcError
+- wndProc
 - Com
-- Button
+- Claude outputs/core/json.h
 - Calculator Mode
 - AngleUnit
 - Mode
@@ -110,9 +116,9 @@
 - Menu System
 - Line
 - NormMode
-- Glyph
-- Kind
-- SendStep
+- string
+- readFile
+- SolveCallbacks
 - Prototype firmware (the board inside the Casio)
 - graphify skill trigger (/graphify)
 - render
@@ -124,6 +130,8 @@
 - Kind
 - AngleUnit
 - NormMode
+- core/font.cpp
+- SendStep
 
 ## God Nodes (most connected - your core abstractions)
 1. `Device` - 103 edges
@@ -164,15 +172,15 @@
 - **Firmware capture and send pipeline** — firmware_readme_main, firmware_readme_camera, firmware_readme_scan_pipeline, firmware_readme_claude_client, firmware_readme_root_ca [INFERRED 0.85]
 - **Same wiring drawn in three orientations** — claude_outputs_bb_exact_wiring_diagram, claude_outputs_bb_real_wiring_diagram, claude_outputs_bb_top_wiring_diagram [INFERRED 0.95]
 
-## Communities (116 total, 12 thin omitted)
+## Communities (118 total, 12 thin omitted)
 
 ### Community 0 - "Parser"
 Cohesion: 0.07
 Nodes (46): addOk(), Alias, text, tok, asInt(), endsOperand(), errorText(), evaluate() (+38 more)
 
 ### Community 1 - "Parser"
-Cohesion: 0.08
-Nodes (40): addOk(), Alias, text, tok, asInt(), endsOperand(), evaluate(), exactPlus() (+32 more)
+Cohesion: 0.07
+Nodes (43): addOk(), Alias, text, tok, asInt(), endsOperand(), evaluate(), exactPlus() (+35 more)
 
 ### Community 2 - "Tok"
 Cohesion: 0.03
@@ -200,19 +208,19 @@ Nodes (52): DKey, AC, Add, Alpha, Ans, Close, Cos, Count (+44 more)
 
 ### Community 8 - "DKey"
 Cohesion: 0.04
-Nodes (52): DKey, AC, Add, Alpha, Ans, Close, Cos, Count (+44 more)
+Nodes (52): DKey, Abs, AC, Add, Alpha, Ans, Close, Cos (+44 more)
 
 ### Community 9 - "Claude outputs/tests/tests.cpp"
-Cohesion: 0.11
-Nodes (25): decodeUtf8(), encodeUtf8(), findGlyph(), hasGlyph(), lookup(), normalizeCodepoint(), textLength(), wrapParagraph() (+17 more)
+Cohesion: 0.05
+Nodes (48): drawCalc, decodeUtf8(), encodeUtf8(), findGlyph(), Glyph, cp, rows, hasGlyph() (+40 more)
 
 ### Community 10 - "Json"
 Cohesion: 0.08
 Nodes (17): Json, a_, b_, n_, o_, parse, s_, JsonParser (+9 more)
 
 ### Community 11 - "Json"
-Cohesion: 0.08
-Nodes (17): Json, a_, b_, n_, o_, parse, s_, JsonParser (+9 more)
+Cohesion: 0.09
+Nodes (13): Json, a_, b_, n_, o_, s_, Type, Array (+5 more)
 
 ### Community 12 - "Framebuffer"
 Cohesion: 0.13
@@ -223,16 +231,16 @@ Cohesion: 0.10
 Nodes (35): jsonEscape(), numText(), sim_active_request(), sim_alloc(), sim_api_url(), sim_api_version(), sim_build_request(), sim_classify() (+27 more)
 
 ### Community 14 - "claudeSolve"
-Cohesion: 0.06
-Nodes (27): claudeSolve(), lower(), readLine(), SolveCallbacks, cancelled, fail, partial, reply (+19 more)
+Cohesion: 0.13
+Nodes (12): claudeSolve(), lower(), readLine(), writeAll(), claudeSolve(), lower(), readLine(), writeAll() (+4 more)
 
 ### Community 15 - "firmware/src/camera.cpp"
-Cohesion: 0.10
-Nodes (25): applyAll(), autoTuneLocked(), cameraAutoTune(), cameraBegin(), cameraCapture(), cameraFocusScore(), cameraFrame(), cameraHoldEstimateMs() (+17 more)
+Cohesion: 0.08
+Nodes (30): applyAll(), autoTuneLocked(), cameraAutoTune(), cameraBegin(), cameraCapture(), cameraFocusScore(), cameraFrame(), cameraHoldEstimateMs() (+22 more)
 
 ### Community 16 - "firmware/src/main.cpp"
-Cohesion: 0.09
-Nodes (31): cameraHoldUntil(), applySettings(), connectWifi(), Event, confidence, failure, id, kind (+23 more)
+Cohesion: 0.06
+Nodes (45): cameraHoldUntil(), applySettings(), Button, key, lastMs, nextRepeat, pin, pressed (+37 more)
 
 ### Community 17 - "keyCalc"
 Cohesion: 0.30
@@ -243,16 +251,16 @@ Cohesion: 0.07
 Nodes (34): AI Answer Screen, AI Answer Flow, AI Error States, AI Hold-to-Capture Flow, AI Hold Captured Screen, AI Hold Countdown Screen, AI Hold Done Screen, AI Ready Screen (+26 more)
 
 ### Community 19 - "core/device.cpp"
-Cohesion: 0.12
-Nodes (29): continuesAns(), clearEntry, endExam, equals, insert, keyAi, keyCalc, leaveAi (+21 more)
+Cohesion: 0.13
+Nodes (27): continuesAns(), clearEntry, endExam, equals, insert, keyAi, keyCalc, leaveAi (+19 more)
 
 ### Community 20 - "App"
 Cohesion: 0.07
 Nodes (18): App, activeId_, busySinceMs_, captured_, expression_, hasKey_, holdUntilMs_, kUnclearThreshold (+10 more)
 
 ### Community 21 - "tests/tests.cpp"
-Cohesion: 0.16
-Nodes (20): calcText(), keys(), main(), press(), readFile(), sampleStream(), snapshot(), snapshotFb() (+12 more)
+Cohesion: 0.06
+Nodes (46): clampByte(), enhanceWriting(), analyseFocus(), Crop, h, use, w, x (+38 more)
 
 ### Community 22 - "App"
 Cohesion: 0.08
@@ -262,41 +270,41 @@ Nodes (17): App, activeId_, busySinceMs_, captured_, expression_, hasKey_, kUncl
 Cohesion: 0.11
 Nodes (27): AI Answer Screen, Scroll Indicator Icons, AI Ready Screen, Chemistry Answer Screen, Chemistry Answer Steps Screen, Physics Answer End Screen, Physics Answer Screen, Answer Streaming Screen (+19 more)
 
-### Community 24 - "Focus"
-Cohesion: 0.11
-Nodes (24): analyseFocus(), Crop, h, use, w, x, y, detailCrop() (+16 more)
+### Community 24 - "Claude outputs/firmware/src/claude_client.h"
+Cohesion: 0.12
+Nodes (10): SolveCallbacks, cancelled, fail, partial, reply, SolveCallbacks, cancelled, fail (+2 more)
 
-### Community 25 - "Framebuffer"
-Cohesion: 0.13
-Nodes (19): Framebuffer, clear, drawText, drawTextPx, fillRect, get, icons_, invertRect (+11 more)
+### Community 25 - "Claude outputs/sim/win32_main.cpp"
+Cohesion: 0.18
+Nodes (5): loadSettings(), post(), press(), startLive(), WinMain()
 
 ### Community 26 - "firmware/src/preview.cpp"
-Cohesion: 0.29
+Cohesion: 0.34
 Nodes (16): authorised(), autotuneHandler(), detailHandler(), focusHandler(), frameHandler(), lastHandler(), noCache(), pageHandler() (+8 more)
 
 ### Community 28 - "previewResume"
-Cohesion: 0.29
-Nodes (9): endPreview(), jsonText(), previewResume(), previewSetResult(), previewStart(), previewSuspend(), startNetwork(), startServers() (+1 more)
+Cohesion: 0.25
+Nodes (10): previewEnded(), endPreview(), jsonText(), previewResume(), previewSetResult(), previewStart(), previewSuspend(), startNetwork() (+2 more)
 
 ### Community 29 - "core/claude_api.cpp"
 Cohesion: 0.14
 Nodes (13): base64Encode(), buildSolveRequest(), classifyFailure(), jsonString(), peekAnswer(), StreamReader, buf_, errorMessage_ (+5 more)
 
 ### Community 30 - "firmware/src/settings.cpp"
-Cohesion: 0.17
+Cohesion: 0.16
 Nodes (16): cameraName(), setup(), statusText(), screenBegin(), Ask, Key, Nothing, Password (+8 more)
 
 ### Community 31 - "arduino"
-Cohesion: 0.13
-Nodes (8): draw(), screenBegin(), screenShow(), draw(), screenBegin(), screenShow(), draw(), screenShow()
+Cohesion: 0.14
+Nodes (7): draw(), screenBegin(), screenShow(), draw(), screenShow(), draw(), screenShow()
 
 ### Community 32 - "Claude outputs/firmware/src/main.cpp"
 Cohesion: 0.21
 Nodes (13): dkeyName(), cameraCapture(), applySettings(), connectWifi(), handleEvent(), loop(), pollButtons(), post() (+5 more)
 
 ### Community 33 - "core/app.cpp"
-Cohesion: 0.18
-Nodes (15): accepts, effortParam, onCaptured, onFailure, onKey, onPartialAnswer, onReply, scrollBy (+7 more)
+Cohesion: 0.22
+Nodes (14): accepts, effortParam, onCaptured, onFailure, onKey, onPartialAnswer, onReply, scrollBy (+6 more)
 
 ### Community 34 - "Claude outputs/core/app.cpp"
 Cohesion: 0.20
@@ -323,20 +331,20 @@ Cohesion: 0.23
 Nodes (14): Calculator Buttons (=, AC, Up, Down), 2.13in E-Paper Display, ESP32-S3-CAM Board, LONG Breadboard, MEDIUM Breadboard, Breadboard Wiring Diagram (exact, camera up), Breadboard Wiring Diagram (real orientation, USB away), Breadboard Wiring Diagram (top, USB toward you) (+6 more)
 
 ### Community 40 - "Event"
-Cohesion: 0.06
-Nodes (25): keysForChar(), advanceRequest(), Event, confidence, failure, id, kind, text (+17 more)
+Cohesion: 0.17
+Nodes (12): Event, confidence, failure, id, kind, text, handleEvent(), Kind (+4 more)
 
 ### Community 42 - "Stage 4: full calculator"
 Cohesion: 0.16
 Nodes (14): src/claude_client (HTTPS streaming to Claude), src/main.cpp (buttons, serial keys, Wi-Fi, capture+send task), src/pins.h (pin map), src/root_ca.h (api.anthropic.com certificates), src/screen (125x61 to 250x122 e-paper, Plain/LCD dots), src/settings (hotspot, key, exam state in flash), COMP maths engine (exact fractions, Casio priorities, 10 sig digits), core/calc_engine (tokens, parser, fractions, formatting) (+6 more)
 
-### Community 43 - "Claude outputs/sim/win32_main.cpp"
-Cohesion: 0.08
-Nodes (20): advanceRequest(), Event, confidence, failure, id, kind, text, exifOrientation() (+12 more)
+### Community 43 - "Event"
+Cohesion: 0.17
+Nodes (12): Event, confidence, failure, id, kind, text, failureForWinHttp(), photoToJpeg() (+4 more)
 
 ### Community 44 - "Claude outputs/core/device.cpp"
 Cohesion: 0.14
-Nodes (21): clockText(), drawCalc, drawMenu, drawStatus, endExam, engText, leaveAi, notice (+13 more)
+Nodes (20): clockText(), drawMenu, drawStatus, endExam, engText, leaveAi, notice, onReply (+12 more)
 
 ### Community 45 - "Tester firmware (Stage 4)"
 Cohesion: 0.17
@@ -347,8 +355,8 @@ Cohesion: 0.15
 Nodes (11): Event, confidence, failure, id, kind, text, Kind, Captured (+3 more)
 
 ### Community 47 - "string"
-Cohesion: 0.29
-Nodes (9): clockText(), drawMenu, drawStatus, engText, render, resultText, setNetInfo, pad() (+1 more)
+Cohesion: 0.32
+Nodes (7): engText, onReply, pullScan, resultText, setNetInfo, pad(), two()
 
 ### Community 48 - "Vars"
 Cohesion: 0.17
@@ -379,20 +387,20 @@ Cohesion: 0.13
 Nodes (15): cameraSleep(), beginOn(), keysBegin(), keysPoll(), keysSleepUntilPress(), pollOn(), Repeat, key (+7 more)
 
 ### Community 55 - "CalcError"
-Cohesion: 0.09
-Nodes (20): CalcError, Argument, Math, None, Stack, Syntax, EvalResult, error (+12 more)
+Cohesion: 0.20
+Nodes (10): CalcError, Argument, Math, None, Stack, Syntax, EvalResult, error (+2 more)
 
 ### Community 56 - "SolveResult"
 Cohesion: 0.20
 Nodes (8): SolveResult, answer, confidence, expression, readable, readAs, steps, unclear
 
 ### Community 57 - "drawCalc"
-Cohesion: 0.24
-Nodes (10): drawCalc, decodeUtf8(), encodeUtf8(), findGlyph(), hasGlyph(), lookup(), normalizeCodepoint(), textLength() (+2 more)
+Cohesion: 0.21
+Nodes (10): clockText(), drawCalc, drawMenu, drawStatus, render, decodeUtf8(), encodeUtf8(), textLength() (+2 more)
 
 ### Community 58 - "firmware-prototype/src/main.cpp"
-Cohesion: 0.08
-Nodes (32): cameraHoldUntil(), applySettings(), connectWifi(), Event, confidence, failure, id, kind (+24 more)
+Cohesion: 0.10
+Nodes (29): cameraHoldUntil(), applySettings(), connectWifi(), Event, confidence, failure, id, kind (+21 more)
 
 ### Community 59 - "SolveResult"
 Cohesion: 0.18
@@ -403,16 +411,12 @@ Cohesion: 0.11
 Nodes (27): applyAll(), autoTuneLocked(), cameraAutoTune(), cameraBegin(), cameraCapture(), cameraFocusScore(), cameraFrame(), cameraHoldEstimateMs() (+19 more)
 
 ### Community 61 - "firmware-prototype/src/preview.cpp"
-Cohesion: 0.37
-Nodes (16): authorised(), autotuneHandler(), detailHandler(), focusHandler(), frameHandler(), lastHandler(), noCache(), pageHandler() (+8 more)
+Cohesion: 0.20
+Nodes (25): authorised(), autotuneHandler(), detailHandler(), endPreview(), focusHandler(), frameHandler(), jsonText(), lastHandler() (+17 more)
 
 ### Community 62 - "firmware-prototype/src/settings.cpp"
-Cohesion: 0.18
-Nodes (15): cameraName(), setup(), statusText(), Ask, Key, Nothing, Password, Ssid (+7 more)
-
-### Community 63 - "errorText"
-Cohesion: 0.22
-Nodes (4): errorText(), Fail, e, pos
+Cohesion: 0.16
+Nodes (16): cameraName(), setup(), screenBegin(), Ask, Key, Nothing, Password, Ssid (+8 more)
 
 ### Community 64 - "AI SOLVE mode (MODE 4)"
 Cohesion: 0.22
@@ -442,9 +446,9 @@ Nodes (7): Screen, Busy, Message, Off, Ready, Result, Warning
 Cohesion: 0.25
 Nodes (8): Failure, ApiBusy, ApiError, BadReply, Camera, NoApiKey, NoConnection, Timeout
 
-### Community 71 - "previewResume"
-Cohesion: 0.25
-Nodes (10): previewEnded(), endPreview(), jsonText(), previewResume(), previewSetResult(), previewStart(), previewSuspend(), startNetwork() (+2 more)
+### Community 71 - "JsonParser"
+Cohesion: 0.32
+Nodes (4): parse, JsonParser, err_, i_
 
 ### Community 72 - "Key"
 Cohesion: 0.29
@@ -458,13 +462,21 @@ Nodes (7): Key, AC, Down, Eq, Off, On, Up
 Cohesion: 0.29
 Nodes (7): src/camera (grayscale 1600x1200 JPEG), Claude Sonnet 5.5 model, Photo preprocessing (upright, grayscale, max 1600 px JPEG), Sample mode fallback (samples/ replies when no api_key.txt), Stage 2: Windows simulator AI flow, DEMOS canned replies, toJpeg()
 
+### Community 75 - "wndProc"
+Cohesion: 0.22
+Nodes (4): keysForChar(), exifOrientation(), paint(), wndProc()
+
 ### Community 76 - "HistoryItem"
 Cohesion: 0.33
 Nodes (3): HistoryItem, expr, value
 
+### Community 77 - "build_case.py"
+Cohesion: 0.06
+Nodes (52): appearance(), _blocks(), body_named(), chamfer(), check_outline(), circle(), cm(), comp_named() (+44 more)
+
 ### Community 78 - "SerialCmd"
-Cohesion: 0.22
-Nodes (9): SerialCmd, Changed, ExamOff, Keys, None, Preview, PreviewOff, Scan (+1 more)
+Cohesion: 0.13
+Nodes (13): SerialCmd, Changed, ExamOff, Keys, None, Preview, PreviewOff, Scan (+5 more)
 
 ### Community 79 - "Button"
 Cohesion: 0.40
@@ -486,17 +498,13 @@ Nodes (5): Calc Editing Screen, Calculator Mode, Calc Math Error Screen, Calc Fr
 Cohesion: 0.40
 Nodes (3): Line, header, text
 
-### Community 85 - "firmware-prototype/src/settings.h"
-Cohesion: 0.33
-Nodes (4): Settings, apiKey, password, ssid
+### Community 85 - "CalcError"
+Cohesion: 0.20
+Nodes (10): CalcError, Argument, Math, None, Stack, Syntax, EvalResult, error (+2 more)
 
-### Community 86 - "Tuning"
-Cohesion: 0.40
-Nodes (5): Tuning, def, max, min, name
-
-### Community 88 - "Button"
-Cohesion: 0.33
-Nodes (6): Button, key, lastMs, nextRepeat, pin, pressed
+### Community 86 - "wndProc"
+Cohesion: 0.22
+Nodes (4): exifOrientation(), handleEvent(), paint(), wndProc()
 
 ### Community 89 - "Calculator Mode"
 Cohesion: 0.40
@@ -546,17 +554,17 @@ Nodes (3): Line, header, text
 Cohesion: 0.67
 Nodes (3): NormMode, Norm1, Norm2
 
-### Community 101 - "Glyph"
-Cohesion: 0.67
-Nodes (3): Glyph, cp, rows
+### Community 101 - "string"
+Cohesion: 0.29
+Nodes (4): advanceRequest(), failureForWinHttp(), photoToJpeg(), readFile()
 
-### Community 102 - "Kind"
-Cohesion: 0.40
-Nodes (5): Kind, Captured, Fail, Partial, Reply
+### Community 102 - "readFile"
+Cohesion: 0.29
+Nodes (4): advanceRequest(), loadSettings(), readFile(), WinMain()
 
-### Community 103 - "SendStep"
-Cohesion: 0.50
-Nodes (4): SendStep, Idle, Solving, WaitWifi
+### Community 103 - "SolveCallbacks"
+Cohesion: 0.33
+Nodes (5): SolveCallbacks, cancelled, fail, partial, reply
 
 ### Community 104 - "Prototype firmware (the board inside the Casio)"
 Cohesion: 0.40
@@ -582,13 +590,21 @@ Nodes (4): AngleUnit, Deg, Gra, Rad
 Cohesion: 0.67
 Nodes (3): NormMode, Norm1, Norm2
 
+### Community 116 - "core/font.cpp"
+Cohesion: 0.67
+Nodes (4): findGlyph(), hasGlyph(), lookup(), normalizeCodepoint()
+
+### Community 117 - "SendStep"
+Cohesion: 0.50
+Nodes (4): SendStep, Idle, Solving, WaitWifi
+
 ## Ambiguous Edges - Review These
 - `AI Hold-to-Capture Flow` → `Exam Mode`  [AMBIGUOUS]
   tests/golden/exam_confirm.txt · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **795 isolated node(s):** `On`, `Off`, `AC`, `Eq`, `Up` (+790 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 998 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **801 isolated node(s):** `On`, `Off`, `AC`, `Eq`, `Up` (+796 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1029 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
 - **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
@@ -596,15 +612,15 @@ _Questions this graph is uniquely positioned to answer:_
 
 - **What is the exact relationship between `AI Hold-to-Capture Flow` and `Exam Mode`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `Device` connect `Device` to `View`, `string`, `Claude outputs/core/device.cpp`, `HistoryItem`, `claudeSolve`, `keyCalc`, `equals`, `.onFailure`, `Mode`, `ScanNote`?**
-  _High betweenness centrality (0.101) - this node is a cross-community bridge._
+- **Why does `Device` connect `Device` to `View`, `string`, `Claude outputs/tests/tests.cpp`, `Claude outputs/core/device.cpp`, `HistoryItem`, `keyCalc`, `equals`, `.onFailure`, `Claude outputs/firmware/src/claude_client.h`, `Mode`, `ScanNote`?**
+  _High betweenness centrality (0.095) - this node is a cross-community bridge._
 - **Why does `Tok` connect `Tok` to `string`?**
-  _High betweenness centrality (0.057) - this node is a cross-community bridge._
+  _High betweenness centrality (0.053) - this node is a cross-community bridge._
 - **Why does `Tok` connect `Tok` to `string`?**
-  _High betweenness centrality (0.057) - this node is a cross-community bridge._
+  _High betweenness centrality (0.053) - this node is a cross-community bridge._
 - **What connects `On`, `Off`, `AC` to the rest of the system?**
-  _795 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _801 weakly-connected nodes found - possible documentation gaps or missing edges._
 - **Should `Parser` be split into smaller, more focused modules?**
   _Cohesion score 0.07116104868913857 - nodes in this community are weakly interconnected._
 - **Should `Parser` be split into smaller, more focused modules?**
-  _Cohesion score 0.07773952954675846 - nodes in this community are weakly interconnected._
+  _Cohesion score 0.07183908045977011 - nodes in this community are weakly interconnected._

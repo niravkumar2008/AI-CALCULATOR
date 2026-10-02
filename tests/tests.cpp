@@ -505,8 +505,14 @@ static void testDevice() {
   // SHIFT functions.
   keys(d, {K::AC, K::D5, K::Shift, K::Inv, K::Eq});
   CHECK(d.resultText() == "120");
-  keys(d, {K::AC, K::D1, K::D0, K::NCr, K::D3, K::Eq});
+  keys(d, {K::AC, K::D1, K::D0, K::Shift, K::Div, K::D3, K::Eq});  // nCr = SHIFT ÷
   CHECK(d.resultText() == "120");
+  keys(d, {K::AC, K::D5, K::Shift, K::Mul, K::D2, K::Eq});  // nPr = SHIFT ×
+  CHECK(d.resultText() == "20");
+  keys(d, {K::AC, K::Abs, K::Neg, K::D7, K::Eq});
+  CHECK(d.resultText() == "7");
+  keys(d, {K::AC, K::LogAB, K::D2, K::Shift, K::Close, K::D8, K::Eq});  // logₐb: log(2,8)
+  CHECK(d.resultText() == "3");
   keys(d, {K::AC, K::Shift, K::Exp10, K::Eq});
   CHECK(d.resultText() == "3.141592654");
   keys(d, {K::AC, K::D2, K::Shift, K::Pow, K::D1, K::D6, K::Eq});  // 2ˣ√16

@@ -76,7 +76,7 @@ constexpr int kRows = 7, kCols = 7;
 // wires the Casio pads to match this table.
 const DKey kMatrix[kRows * kCols] = {
     DKey::Shift, DKey::Alpha, DKey::Up,   DKey::Down, DKey::Left,  DKey::Right, DKey::Mode,
-    DKey::Inv,   DKey::NCr,   DKey::Pol,  DKey::Cube, DKey::Frac,  DKey::Sqrt,  DKey::Sq,
+    DKey::Abs,   DKey::Cube,  DKey::Inv,  DKey::LogAB, DKey::Frac, DKey::Sqrt,  DKey::Sq,
     DKey::Pow,   DKey::Log,   DKey::Ln,   DKey::Neg,  DKey::Dms,   DKey::Hyp,   DKey::Sin,
     DKey::Cos,   DKey::Tan,   DKey::Rcl,  DKey::Eng,  DKey::Open,  DKey::Close, DKey::SD,
     DKey::MPlus, DKey::D7,    DKey::D8,   DKey::D9,   DKey::Del,   DKey::AC,    DKey::D4,

@@ -31,6 +31,7 @@ magnetic USB cable plugged in. Setup over the Serial Monitor is the same as the 
 | | Tester | Prototype |
 | --- | --- | --- |
 | Keys | =, AC, ▲, ▼, BOOT | whole keypad; hold ▲ ▼ ◀ ▶ DEL to repeat |
+| Key row 2 | — | the newer Casio keypad, as on the board: Abs, x³, x⁻¹, logₐb; nPr / nCr on SHIFT × / ÷ (serial `keys`: `b` Abs, `g` logₐb) |
 | Starts in | AI SOLVE | COMP, like the Casio (MODE 4 = AI SOLVE) |
 | Photo | 1600x1200 + enhanced close-up | 2560x1920 after autofocus, one photo |
 | Power | USB | LiPo; low-battery icon at 20%; off = Wi-Fi and camera off and light sleep, any key wakes it |
