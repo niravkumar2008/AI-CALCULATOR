@@ -370,7 +370,7 @@ void serviceBattery() {
 // with no power. With USB plugged in it stays awake (radios still off), so
 // the Serial Monitor keeps working for setup and "exam off".
 // ponytail: light sleep keeps RAM, so memory and settings survive for free
-// (~0.3 mA: about 3 weeks on 150 mAh). Deep sleep (months) would need the
+// (~0.3 mA: about 2 weeks on the 100 mAh cell). Deep sleep (months) would need the
 // calculator's state saved to RTC memory first.
 bool g_wasOff = false;
 
@@ -415,7 +415,7 @@ void setup() {
   }
   keysBegin();
   pinMode(PIN_VBUS, INPUT);
-  pinMode(PIN_CHG_STAT, INPUT_PULLDOWN);
+  pinMode(PIN_CHG_STAT, INPUT);  // the board has a 100 k pull-up
 
   screenBegin();
   g_cameraOk = cameraBegin();

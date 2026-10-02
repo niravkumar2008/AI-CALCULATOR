@@ -12,7 +12,7 @@ keeps its own firmware in `../firmware`, untouched by this one.
 | Part | What |
 | --- | --- |
 | Module | ESP32-S3-MINI-1-N4R2 (4 MB flash, 2 MB quad PSRAM) |
-| Camera | OV5640 autofocus on J1; power through CAM_PWR_EN (GPIO 34), PWDN 21, RESET 36 |
+| Camera | OV5640 autofocus on J1; power through CAM_PWR_EN (GPIO 34), PWDN 48, RESET 38; data pins in `src/pins.h` (board stage-6 order) |
 | Screen | 2.13" e-paper panel on J2 with the board's boost circuit; BUSY on GPIO 33 |
 | Keys | 49 keys as an 8 x 10 matrix (ROW0-7, COL0-9) into a TCA8418 (I2C on GPIO 1/2, INT 4); ON on GPIO 7 |
 | Power | LiPo on J4, MCP73831 charger (STAT on GPIO 35), battery sense GPIO 9 (1 M / 1 M), USB sense GPIO 37 |

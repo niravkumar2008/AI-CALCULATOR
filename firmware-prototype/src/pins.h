@@ -23,8 +23,8 @@ constexpr int PIN_KEY_ON = 7;       // [KEY_ON]
 
 // Power
 constexpr int PIN_BATTERY = 9;    // [VBAT_SENSE] battery through 1 M / 1 M: half the voltage
-constexpr int PIN_CHG_STAT = 35;  // [CHG_STAT] MCP73831 STAT: low while charging
-constexpr int PIN_VBUS = 37;      // [VBUS_SENSE] USB 5 V through 51 k / 100 k: high when plugged in
+constexpr int PIN_CHG_STAT = 35;  // [CHG_STAT] MCP73831 STAT through a Schottky + 100 k pull-up: low while charging
+constexpr int PIN_VBUS = 37;      // [VBUS_SENSE] USB 5 V through 10 k / 20 k: high when plugged in
 
 // Camera power: both camera regulators (2.8 V, 1.5 V) are off until this is
 // driven high (100 kOhm pull-down).
@@ -36,7 +36,8 @@ struct CameraPins {
 };
 
 constexpr CameraPins kCameraVariants[] = {
-    // Seeed XIAO ESP32-S3 Sense data pins, plus power-down [CAM_PWDN] 21 and
-    // reset [CAM_RESET] 36
-    {"Prototype board", 21, 36, 10, 40, 39, 15, 17, 18, 16, 14, 12, 11, 48, 38, 47, 13},
+    // Board stage 6 order, so the bus leaves the module in the socket's pin order:
+    // PWDN 48, RESET 38, XCLK 18, SIOD 40, SIOC 39, D0..D7 13 11 10 12 14 16 17 21,
+    // VSYNC 36, HREF 47, PCLK 15 (same as hardware/pins_final.h)
+    {"Prototype board", 48, 38, 18, 40, 39, 13, 11, 10, 12, 14, 16, 17, 21, 36, 47, 15},
 };
