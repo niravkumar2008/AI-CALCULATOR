@@ -65,12 +65,16 @@ int tuning(const char* name) {
 constexpr framesize_t kLiveSize = FRAMESIZE_VGA;
 int g_sensorSize = -1;  // what the sensor is set to now (caller holds the lock)
 
-// OV5640 (5 MP): scans use 2560x1920, just under the 2576 px Claude reads
-// without shrinking. That is already as much detail as a close-up would add,
-// so it sends the one photo (no zoom + enhance) and takes 4 frames instead of
-// 8 so they fit in PSRAM. The "framesize" setting then applies to tuning only.
+// OV5640 (5 MP): scans use its full detail, so it sends the one photo (no
+// zoom + enhance) and takes 4 frames instead of 8. The "framesize" setting
+// then applies to tuning only.
+// The board's MINI-1-N4R2 has 2 MB of PSRAM: room for one 2048x1536 frame
+// buffer (~630 KB) and the photo kept, not two 2560x1920 buffers (~2 MB).
+// With 4 MB or more (a module swap) it uses 2560x1920, just under the
+// 2576 px Claude reads without shrinking.
 bool g_is5640 = false;
-int scanSize() { return g_is5640 ? FRAMESIZE_QSXGA : tuning("framesize"); }
+bool g_lowMem = false;  // under 4 MB of PSRAM
+int scanSize() { return g_is5640 ? (g_lowMem ? FRAMESIZE_QXGA : FRAMESIZE_QSXGA) : tuning("framesize"); }
 
 bool g_asleep = false;  // powered down while the calculator is off (cameraSleep)
 
@@ -140,9 +144,9 @@ camera_config_t configFor(const CameraPins& p) {
   c.pixel_format = PIXFORMAT_JPEG;
   c.frame_size = FRAMESIZE_UXGA;  // 1600x1200: the size the simulator sends (also the largest allowed)
   c.jpeg_quality = 12;            // lower = better; ~150-250 KB per photo
-  c.fb_count = 2;  // one frame fills while the other is sent: smoother live view
+  c.fb_count = g_lowMem ? 1 : 2;  // two: one frame fills while the other is sent (smoother live view)
   c.fb_location = CAMERA_FB_IN_PSRAM;
-  c.grab_mode = CAMERA_GRAB_LATEST;
+  c.grab_mode = g_lowMem ? CAMERA_GRAB_WHEN_EMPTY : CAMERA_GRAB_LATEST;  // LATEST needs 2 buffers
   return c;
 }
 
@@ -184,7 +188,8 @@ bool grab(std::string& jpeg) {
 // esp_jpg_decode hands over the picture in small RGB blocks; we keep gray
 // (the camera already shoots grayscale, so any channel would do).
 struct Decode {
-  const std::string* jpeg;
+  const char* data = nullptr;         // the JPEG being decoded
+  size_t size = 0;
   uint32_t lastYield = millis();      // decoding is pure CPU: let other tasks run
   int fullW = 0, fullH = 0;           // size reported by the decoder
   uint8_t* out = nullptr;             // gray output
@@ -194,10 +199,10 @@ struct Decode {
 };
 
 size_t readJpeg(void* arg, size_t index, uint8_t* buf, size_t len) {
-  const std::string& j = *static_cast<Decode*>(arg)->jpeg;
-  if (index >= j.size()) return 0;
-  len = std::min(len, j.size() - index);
-  if (buf) memcpy(buf, j.data() + index, len);
+  const Decode* d = static_cast<Decode*>(arg);
+  if (index >= d->size) return 0;
+  len = std::min(len, d->size - index);
+  if (buf) memcpy(buf, d->data + index, len);
   return len;
 }
 
@@ -237,9 +242,13 @@ bool writeGray(void* arg, uint16_t x, uint16_t y, uint16_t w, uint16_t h, uint8_
 }
 
 // The frame at 1/4 size in gray: 400x300 for UXGA.
+bool thumbnail(const char* jpeg, size_t size, Decode& d, jpg_scale_t scale = JPG_SCALE_4X) {
+  d.data = jpeg;
+  d.size = size;
+  return esp_jpg_decode(size, scale, readJpeg, writeGray, &d) == ESP_OK && !d.thumb.empty();
+}
 bool thumbnail(const std::string& jpeg, Decode& d, jpg_scale_t scale = JPG_SCALE_4X) {
-  d.jpeg = &jpeg;
-  return esp_jpg_decode(jpeg.size(), scale, readJpeg, writeGray, &d) == ESP_OK && !d.thumb.empty();
+  return thumbnail(jpeg.data(), jpeg.size(), d, scale);
 }
 
 // Zoom + enhance: decodes just the region (k) at full size, cleans it up
@@ -253,13 +262,14 @@ bool enhancedCopy(const std::string& jpeg, const calc::Crop& k, std::string& out
     return false;  // not enough memory: send the photo alone
   }
   Decode d;
-  d.jpeg = &jpeg;
+  d.data = jpeg.data();
+  d.size = jpeg.size();
   d.out = gray.data();
   d.outW = k.w;
   d.outH = k.h;
   d.cx = k.x;
   d.cy = k.y;
-  if (esp_jpg_decode(jpeg.size(), JPG_SCALE_NONE, readJpeg, writeGray, &d) != ESP_OK) return false;
+  if (esp_jpg_decode(d.size, JPG_SCALE_NONE, readJpeg, writeGray, &d) != ESP_OK) return false;
   int w = k.w, h = k.h;
   // 2 MP: a whole UXGA frame keeps its full resolution (Claude reads up to
   // 2576 px / ~3.7 MP since Sonnet 5.5, so nothing is lost on its side), and a
@@ -346,6 +356,11 @@ bool cameraBegin() {
     return false;
   }
   loadTuning();
+  g_lowMem = ESP.getPsramSize() < 4u * 1024 * 1024;
+  // The camera's regulators are off until CAM_PWR_EN goes high.
+  pinMode(PIN_CAM_PWR_EN, OUTPUT);
+  digitalWrite(PIN_CAM_PWR_EN, HIGH);
+  delay(20);  // regulators up and settled before the camera is reset
   for (const CameraPins& p : kCameraVariants) {
     camera_config_t c = configFor(p);
     if (esp_camera_init(&c) != ESP_OK) {
@@ -358,14 +373,15 @@ bool cameraBegin() {
       continue;
     }
     if (s->id.PID == OV5640_PID) {
-      // Frame buffers are sized at init: start again with room for 2560x1920.
+      // Frame buffers are sized at init: start again with room for the scan size.
       esp_camera_deinit();
-      c.frame_size = FRAMESIZE_QSXGA;
+      g_is5640 = true;
+      c.frame_size = framesize_t(scanSize());
       if (esp_camera_init(&c) != ESP_OK || !(s = esp_camera_sensor_get())) {
         esp_camera_deinit();
+        g_is5640 = false;
         continue;
       }
-      g_is5640 = true;
       startAutofocus(s);
     }
     // White paper fools auto-exposure into darkening the whole picture. The
@@ -382,6 +398,7 @@ bool cameraBegin() {
     return true;
   }
   g_name = "not found";
+  digitalWrite(PIN_CAM_PWR_EN, LOW);
   return false;
 }
 
@@ -402,7 +419,15 @@ bool cameraCapture(std::string& jpeg, std::string& detail, std::string& error,
     return false;
   }
   const int kFrames = g_is5640 ? 4 : 8;
-  std::string frames[8];
+  // The frames are scored one at a time as they arrive and only the sharpest
+  // is kept: 2 MB of PSRAM has room for one frame buffer and one kept photo,
+  // not 4-8 photos. Scoring (~0.3 s a frame) also spaces them out, so one
+  // wobble can't spoil them all.
+  const uint32_t t1 = millis();
+  calc::Focus bestFocus;
+  int thumbW = 0, thumbH = 0;
+  std::string scores;
+  jpeg.clear();
   {
     Lock lock;
     g_holdUntil = millis() + cameraHoldEstimateMs();
@@ -419,48 +444,37 @@ bool cameraCapture(std::string& jpeg, std::string& detail, std::string& error,
     }
     waitForFocus(2000);  // autofocus modules only
     g_holdUntil = millis() + kFramesMs;  // the countdown, if focusing took a moment
-    // Spread the frames over ~2 s so one wobble can't spoil all of them.
     for (int i = 0; i < kFrames; ++i) {
-      grab(frames[i]);
-      delay(g_is5640 ? 400 : 150);
+      camera_fb_t* fb = esp_camera_fb_get();
+      if (!fb) continue;
+      if (fb->format == PIXFORMAT_JPEG && fb->len) {
+        const char* buf = reinterpret_cast<const char*>(fb->buf);
+        Decode d;
+        if (thumbnail(buf, fb->len, d)) {
+          const calc::Focus f = calc::analyseFocus(d.thumb.data(), d.outW, d.outH);
+          scores += (scores.empty() ? "" : ", ") + std::to_string(int(f.score));
+          if (jpeg.empty() || f.score > bestFocus.score) {
+            jpeg.assign(buf, fb->len);
+            bestFocus = f;
+            thumbW = d.outW;
+            thumbH = d.outH;
+          }
+        } else if (jpeg.empty()) {
+          jpeg.assign(buf, fb->len);  // undecodable but present: still better than nothing
+        }
+      }
+      esp_camera_fb_return(fb);
     }
     g_holdUntil = 0;
   }
   if (grabbed) grabbed();
-
-  // Keep the frame whose writing is sharpest (not just the biggest file: a
-  // shaky frame can be big from noise). Analysis runs without the camera lock.
-  const uint32_t t1 = millis();
-  int best = -1;
-  calc::Focus bestFocus;
-  int thumbW = 0, thumbH = 0;
-  std::string scores;
-  for (int i = 0; i < kFrames; ++i) {
-    if (frames[i].empty()) continue;
-    vTaskDelay(1);
-    Decode d;
-    if (!thumbnail(frames[i], d)) {
-      if (best < 0) best = i;  // undecodable but present: still better than nothing
-      continue;
-    }
-    const calc::Focus f = calc::analyseFocus(d.thumb.data(), d.outW, d.outH);
-    scores += (scores.empty() ? "" : ", ") + std::to_string(int(f.score));
-    if (best < 0 || f.score > bestFocus.score) {
-      best = i;
-      bestFocus = f;
-      thumbW = d.outW;
-      thumbH = d.outH;
-    }
-  }
-  if (best < 0) {
+  if (jpeg.empty()) {
     error = "The camera didn't return a photo.";
     return false;
   }
-  jpeg.swap(frames[best]);
-  for (auto& f : frames) std::string().swap(f);  // free the others now
 
-  if (g_is5640) {
-    Serial.printf("Focus %s -> kept %d; %u KB photo, no close-up (5 MP); analysis %lu ms\n", scores.c_str(),
+  if (g_is5640 || g_lowMem) {  // no room for a close-up in 2 MB, and the OV5640 doesn't need one
+    Serial.printf("Focus %s -> kept %d; %u KB photo, no close-up; %lu ms\n", scores.c_str(),
                   int(bestFocus.score), unsigned(jpeg.size() / 1024), millis() - t1);
   } else {
     // Zoom + enhance: the writing's close-up (or the whole frame when the
@@ -474,9 +488,13 @@ bool cameraCapture(std::string& jpeg, std::string& detail, std::string& error,
                   unsigned(detail.size() / 1024), millis() - t1);
   }
 
-  Lock lock;
-  g_last = jpeg;
-  g_lastDetail = detail;
+  // ponytail: with 2 MB of PSRAM the copy for the preview page's "last scan
+  // photo" doesn't fit next to the request being sent, so it's skipped.
+  if (!g_lowMem) {
+    Lock lock;
+    g_last = jpeg;
+    g_lastDetail = detail;
+  }
   return true;
 }
 
@@ -487,13 +505,14 @@ void cameraSleep() {
   g_ok = false;
   g_asleep = true;
   g_sensorSize = -1;
-  // A power-down pin, where the board has one, switches the sensor (and its
-  // autofocus motor) off completely; the next scan starts it again.
-  for (const CameraPins& p : kCameraVariants)
-    if (p.pwdn >= 0) {
-      pinMode(p.pwdn, OUTPUT);
-      digitalWrite(p.pwdn, HIGH);
-    }
+  // Regulators off: the sensor and its autofocus motor draw nothing. Its
+  // control pins float (the board's pull-down holds PWDN) so no pin drives
+  // a powered-down camera. The next scan powers it up again.
+  for (const CameraPins& p : kCameraVariants) {
+    if (p.pwdn >= 0) pinMode(p.pwdn, INPUT);
+    if (p.reset >= 0) pinMode(p.reset, INPUT);
+  }
+  digitalWrite(PIN_CAM_PWR_EN, LOW);
 }
 
 bool cameraFrame(std::string& jpeg) {

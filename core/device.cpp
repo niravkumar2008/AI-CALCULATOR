@@ -733,13 +733,13 @@ void Device::drawStatus(Framebuffer& fb) const {
     up = pos > 0;
     down = pos < last;
   }
-  if (battery_ >= 0 && battery_ <= 20) {  // low battery: outline, tip, what's left
+  if (battery_ >= 0 && (battery_ <= 20 || charging_)) {  // outline, tip, what's left
     fb.fillRect(105, 1, 7, 1, true);
     fb.fillRect(105, 5, 7, 1, true);
     fb.fillRect(105, 1, 1, 5, true);
     fb.fillRect(111, 1, 1, 5, true);
     fb.fillRect(112, 2, 1, 3, true);
-    fb.fillRect(106, 2, battery_ * 5 / 20, 3, true);
+    fb.fillRect(106, 2, (battery_ > 100 ? 100 : battery_) * 5 / 100, 3, true);
   }
   if (up) fb.drawText(23, 0, "\xE2\x96\xB2");
   if (down) fb.drawText(24, 0, "\xE2\x96\xBC");

@@ -83,8 +83,11 @@ class Device {
   void setRandomSource(double (*random)()) { random_ = random; }
   void setBlinkingCursor(bool on) { blink_ = on; }  // simulators blink; e-paper keeps it steady
   // 0-100, or -1 for no battery (tester, simulators). A battery icon shows
-  // in the status bar at 20% or below.
-  void setBattery(int percent) { battery_ = percent; }
+  // in the status bar at 20% or below, and always while charging.
+  void setBattery(int percent, bool charging = false) {
+    battery_ = percent;
+    charging_ = charging;
+  }
 
   // ---- exam mode ----
   bool examActive() const { return exam_; }
@@ -180,6 +183,7 @@ class Device {
   double (*random_)() = nullptr;
   bool blink_ = false;
   int battery_ = -1;
+  bool charging_ = false;
   uint32_t nowMs_ = 0, lastKeyMs_ = 0;
   bool timeKnown_ = false;
   std::vector<std::string> notice_;

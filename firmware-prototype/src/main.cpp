@@ -244,6 +244,22 @@ void previewEnded() { connectWifi(); }
 
 namespace {
 
+// ---- battery and charging (the prototype runs on its LiPo) ----
+// The battery reads through a 1 M / 1 M divider (half its voltage).
+// kBatteryCal trims it if the % disagrees with a multimeter (ADCs vary ~3%).
+constexpr float kBatteryCal = 1.00f;
+
+bool usbPlugged() { return digitalRead(PIN_VBUS) == HIGH; }
+// MCP73831 STAT is low while charging (pulled down here when USB is out).
+bool charging() { return usbPlugged() && digitalRead(PIN_CHG_STAT) == LOW; }
+
+int batteryPercent() {
+  const int mv = int(analogReadMilliVolts(PIN_BATTERY) * 2 * kBatteryCal);
+  // ponytail: straight line from 3.3 V (empty) to 4.2 V (full); a LiPo
+  // discharge-curve table if the % drops unevenly.
+  return constrain((mv - 3300) / 9, 0, 100);
+}
+
 std::string statusText() {
   std::string s = "Camera: " + std::string(cameraName());
   s += "\nWi-Fi: " + (g_settings.ssid.empty() ? std::string("not set (type wifi)")
@@ -256,6 +272,8 @@ std::string statusText() {
                                                                     : std::string())));
   s += "\nKey: " + (g_settings.apiKey.empty() ? std::string("not set (type key)")
                                               : "saved (ends ..." + g_settings.apiKey.substr(g_settings.apiKey.size() - 4) + ")");
+  s += "\nBattery: " + std::to_string(batteryPercent()) + "%" +
+       (charging() ? " (charging)" : usbPlugged() ? " (USB, full)" : "");
   s += "\nFree PSRAM: " + std::to_string(ESP.getFreePsram() / 1024) + " KB";
   return s;
 }
@@ -338,23 +356,19 @@ void serviceExam() {
   }
 }
 
-// ---- battery and sleep (the prototype runs on its LiPo) ----
-// The battery reads through a 2 x 100 kOhm divider (half its voltage).
-// kBatteryCal trims it if the % disagrees with a multimeter (ADCs vary ~3%).
-constexpr float kBatteryCal = 1.00f;
+// ---- battery refresh and sleep ----
 uint32_t g_batteryAt = 0;
 
 void serviceBattery() {
   if (g_batteryAt && millis() - g_batteryAt < 30000) return;
   g_batteryAt = millis() | 1;
-  const int mv = int(analogReadMilliVolts(PIN_BATTERY) * 2 * kBatteryCal);
-  // ponytail: straight line from 3.3 V (empty) to 4.2 V (full); a LiPo
-  // discharge-curve table if the % drops unevenly.
-  g_dev.setBattery(constrain((mv - 3300) / 9, 0, 100));
+  g_dev.setBattery(batteryPercent(), charging());
 }
 
 // Off (SHIFT AC, or 10 minutes idle): Wi-Fi and camera off, then light sleep
-// until a key is pressed. The e-paper keeps its picture with no power.
+// until a key is pressed or USB is plugged in. The e-paper keeps its picture
+// with no power. With USB plugged in it stays awake (radios still off), so
+// the Serial Monitor keeps working for setup and "exam off".
 // ponytail: light sleep keeps RAM, so memory and settings survive for free
 // (~0.3 mA: about 3 weeks on 150 mAh). Deep sleep (months) would need the
 // calculator's state saved to RTC memory first.
@@ -375,7 +389,10 @@ void servicePower() {
     WiFi.mode(WIFI_OFF);
     cameraSleep();
   }
-  keysSleepUntilPress();
+  if (!usbPlugged()) {
+    keysSleepUntilPress();
+    g_batteryAt = 0;  // fresh reading after a sleep
+  }
 }
 
 }  // namespace
@@ -397,6 +414,8 @@ void setup() {
     default: break;
   }
   keysBegin();
+  pinMode(PIN_VBUS, INPUT);
+  pinMode(PIN_CHG_STAT, INPUT_PULLDOWN);
 
   screenBegin();
   g_cameraOk = cameraBegin();

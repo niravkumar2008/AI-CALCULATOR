@@ -69,21 +69,22 @@ constexpr uint8_t kTca = 0x34;  // TCA8418 I2C address
 // Registers (TI TCA8418 datasheet)
 constexpr uint8_t kCfg = 0x01, kIntStat = 0x02, kKeyLckEc = 0x03, kKeyEventA = 0x04;
 constexpr uint8_t kKpGpio1 = 0x1D, kKpGpio2 = 0x1E, kKpGpio3 = 0x1F;
-constexpr int kRows = 7, kCols = 7;
+constexpr int kRows = 8, kCols = 10;
+constexpr DKey X = DKey::Count;  // no key at this crossing
 
-// Which key sits at each matrix position: row r, column c = index r * 7 + c.
-// Every key except ON (its own pin), in keypad order. The board's schematic
-// wires the Casio pads to match this table.
-const DKey kMatrix[kRows * kCols] = {
-    DKey::Shift, DKey::Alpha, DKey::Up,   DKey::Down, DKey::Left,  DKey::Right, DKey::Mode,
-    DKey::Abs,   DKey::Cube,  DKey::Inv,  DKey::LogAB, DKey::Frac, DKey::Sqrt,  DKey::Sq,
-    DKey::Pow,   DKey::Log,   DKey::Ln,   DKey::Neg,  DKey::Dms,   DKey::Hyp,   DKey::Sin,
-    DKey::Cos,   DKey::Tan,   DKey::Rcl,  DKey::Eng,  DKey::Open,  DKey::Close, DKey::SD,
-    DKey::MPlus, DKey::D7,    DKey::D8,   DKey::D9,   DKey::Del,   DKey::AC,    DKey::D4,
-    DKey::D5,    DKey::D6,    DKey::Mul,  DKey::Div,  DKey::D1,    DKey::D2,    DKey::D3,
-    DKey::Add,   DKey::Sub,   DKey::D0,   DKey::Dot,  DKey::Exp10, DKey::Ans,   DKey::Eq,
+// Which key sits at each matrix crossing [ROWr][COLc], copied from the
+// board's schematic (hardware/kicad/keypad.kicad_sch, SW1-SW49). Every key
+// but ON (its own pin).
+const DKey kMatrix[kRows][kCols] = {
+    {DKey::Shift, DKey::Alpha, X, X, DKey::Mode, X, DKey::Up, DKey::Down, DKey::Left, DKey::Right},
+    {DKey::Frac, DKey::Sqrt, DKey::Sq, DKey::Pow, DKey::Log, DKey::Ln, DKey::Abs, DKey::Cube, DKey::Inv, DKey::LogAB},
+    {DKey::Neg, DKey::Dms, DKey::Hyp, DKey::Sin, DKey::Cos, DKey::Tan, X, X, X, X},
+    {DKey::Rcl, DKey::Eng, DKey::Open, DKey::Close, DKey::SD, DKey::MPlus, X, X, X, X},
+    {DKey::D7, DKey::D8, DKey::D9, DKey::Del, DKey::AC, X, X, X, X, X},
+    {DKey::D4, DKey::D5, DKey::D6, DKey::Mul, DKey::Div, X, X, X, X, X},
+    {DKey::D1, DKey::D2, DKey::D3, DKey::Add, DKey::Sub, X, X, X, X, X},
+    {DKey::D0, DKey::Dot, DKey::Exp10, DKey::Ans, DKey::Eq, X, X, X, X, X},
 };
-static_assert(int(DKey::Count) - 1 == kRows * kCols, "every key but ON has a matrix spot");
 
 bool g_tcaOk = false;
 Repeat g_repeat;
@@ -111,9 +112,9 @@ void keysBegin() {
   beginOn();
   pinMode(PIN_KEYPAD_INT, INPUT_PULLUP);  // the TCA8418's INT is open-drain
   Wire.begin(PIN_I2C_SDA, PIN_I2C_SCL, 400000);
-  // Rows 0-6 and columns 0-6 scan the keypad; the scanner debounces and
+  // Rows 0-7 and columns 0-9 scan the keypad; the scanner debounces and
   // queues up to 10 events on its own, with INT low while any wait.
-  g_tcaOk = tcaWrite(kKpGpio1, 0x7F) && tcaWrite(kKpGpio2, 0x7F) && tcaWrite(kKpGpio3, 0x00) &&
+  g_tcaOk = tcaWrite(kKpGpio1, 0xFF) && tcaWrite(kKpGpio2, 0xFF) && tcaWrite(kKpGpio3, 0x03) &&
             tcaWrite(kCfg, 0x01);  // KE_IEN: key events raise INT
   for (int i = 0; i < 10 && (tcaRead(kKeyLckEc) & 0x0F); ++i) tcaRead(kKeyEventA);  // drop stale events
   tcaWrite(kIntStat, 0x1F);
@@ -128,7 +129,8 @@ void keysPoll(void (*press)(DKey)) {
       const int code = (ev & 0x7F) - 1;  // key number 1..80 = row * 10 + column + 1
       const int row = code / 10, col = code % 10;
       if (code < 0 || row >= kRows || col >= kCols) continue;
-      const DKey k = kMatrix[row * kCols + col];
+      const DKey k = kMatrix[row][col];
+      if (k == X) continue;
       if (ev & 0x80) {  // pressed
         press(k);
         if (repeats(k)) g_repeat.start(k);
@@ -144,6 +146,7 @@ void keysPoll(void (*press)(DKey)) {
 void keysSleepUntilPress() {
   gpio_wakeup_enable(gpio_num_t(PIN_KEY_ON), GPIO_INTR_LOW_LEVEL);
   gpio_wakeup_enable(gpio_num_t(PIN_KEYPAD_INT), GPIO_INTR_LOW_LEVEL);
+  gpio_wakeup_enable(gpio_num_t(PIN_VBUS), GPIO_INTR_HIGH_LEVEL);  // plugging in USB wakes it too
   esp_sleep_enable_gpio_wakeup();
   Serial.flush();
   esp_light_sleep_start();  // RAM, the calculator and the clock carry on afterwards
