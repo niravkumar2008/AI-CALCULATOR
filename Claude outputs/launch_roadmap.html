@@ -1,0 +1,314 @@
+<title>AI Calculator Launch Roadmap</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: single reading column (~980px) with wide tables in scroll boxes; LCD-panel callouts for the key numbers */
+:root{
+  --bg:#f3f4ef; --surface:#ffffff; --fg:#1d211b; --muted:#5c6357; --line:#d7dacf;
+  --lcd:#c9d3b4; --lcd-ink:#26301a; --accent:#2f5d8a; --warn:#b4621a; --warn-bg:#fbeee0; --good:#3d7a3a;
+  --bar1:#2f5d8a; --bar2:#9db7d3;
+  --display:"Chakra Petch",system-ui,sans-serif; --body:"IBM Plex Sans",system-ui,sans-serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){
+  --bg:#151813; --surface:#1d211b; --fg:#e6e9df; --muted:#9aa192; --line:#343a30;
+  --lcd:#3a4530; --lcd-ink:#dfe8c9; --accent:#8bb4de; --warn:#f0a35e; --warn-bg:#3a2a1a; --good:#8fcf8a;
+  --bar1:#8bb4de; --bar2:#3f5a77; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#151813; --surface:#1d211b; --fg:#e6e9df; --muted:#9aa192; --line:#343a30;
+  --lcd:#3a4530; --lcd-ink:#dfe8c9; --accent:#8bb4de; --warn:#f0a35e; --warn-bg:#3a2a1a; --good:#8fcf8a;
+  --bar1:#8bb4de; --bar2:#3f5a77; color-scheme:dark}
+body{background:var(--bg);color:var(--fg);font:15px/1.6 var(--body);padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:980px;margin:0 auto;display:flex;flex-direction:column;gap:40px}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(28px,5vw,44px);letter-spacing:.01em}
+h2{font-size:24px;padding-bottom:6px;border-bottom:2px solid var(--fg)}
+h3{font-size:17px;margin-top:8px}
+p{margin:0;max-width:68ch}
+section{display:flex;flex-direction:column;gap:14px;min-width:0}
+.eyebrow{font:500 12px var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.lede{color:var(--muted);font-size:16px}
+.lcd-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.lcd{background:var(--lcd);color:var(--lcd-ink);border-radius:6px;padding:14px 16px;display:flex;flex-direction:column;gap:2px;box-shadow:inset 0 2px 0 rgba(0,0,0,.08)}
+.lcd b{font:600 28px var(--mono);font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.lcd span{font-size:13px}
+.note{background:var(--warn-bg);border-left:4px solid var(--warn);padding:10px 14px;border-radius:0 4px 4px 0;max-width:none}
+.tbl{overflow-x:auto;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;font-size:14px;font-variant-numeric:tabular-nums}
+th,td{padding:8px 10px;text-align:left;vertical-align:top;border-bottom:1px solid var(--line)}
+th{font:600 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);background:var(--bg);white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr.total td{font-weight:600;background:var(--bg)}
+.est{font:400 11px var(--mono);color:var(--warn);white-space:nowrap}
+.pill{display:inline-block;font:500 11px var(--mono);padding:1px 7px;border-radius:99px;border:1px solid currentColor;white-space:nowrap}
+.p-you{color:var(--accent)} .p-ext{color:var(--warn)} .p-both{color:var(--good)}
+tr.key td{background:color-mix(in srgb,var(--accent) 9%,transparent)}
+.chart{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:12px;overflow-x:auto}
+.chart svg{display:block;width:100%;min-width:560px;height:auto}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:12px}
+.step{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:14px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.step .q{font:600 13px var(--mono);color:var(--accent)}
+.step h3{margin:0}
+.step p{font-size:14px}
+.step .you{font-size:13px;color:var(--muted);border-top:1px dashed var(--line);padding-top:6px;margin-top:auto}
+ul{margin:0;padding-left:20px;display:flex;flex-direction:column;gap:4px;max-width:70ch}
+.src{font-size:12.5px;color:var(--muted);columns:2 320px;column-gap:28px}
+.src li{break-inside:avoid;overflow-wrap:anywhere}
+a{color:var(--accent)}
+code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3px}
+</style>
+
+<div class="wrap">
+<header style="display:flex;flex-direction:column;gap:10px">
+  <div class="eyebrow">Plan · written Sat 2026-10-03 · prices checked online today</div>
+  <h1>AI Calculator Launch Roadmap</h1>
+  <p class="lede">Your plan from the first two prototypes to a product that a factory builds and ships without you. It covers what to order Monday, the day-by-day plan to working units, how the cost per calculator falls as you scale, and the legal steps you can't skip. Numbers marked <span class="est">estimate</span> are reasoned guesses, not quotes. Source numbers [S#] are listed at the bottom.</p>
+</header>
+
+<section>
+  <div class="lcd-row">
+    <div class="lcd"><span>Monday-night spend</span><b>≈ $440</b><span>$310 core order + $130 local · range $380–520</span></div>
+    <div class="lcd"><span>First working calculator</span><b>Sat 10/17</b><span>buffer to Wed 10/21</span></div>
+    <div class="lcd"><span>Cost per unit</span><b>$138 → $26</b><span>at 2 units → at 10,000 units</span></div>
+    <div class="lcd"><span>Claude API per solve</span><b>$0.026</b><span>Sonnet 5.5 · ≈ $3.90 per user per month</span></div>
+  </div>
+  <p class="note"><b>Why the order costs more than the old $190–240:</b> JLCPCB now collects the US tariff at checkout. Its FAQ says 35–92.5 % on Chinese goods [S8]. The old figure also left out the donor shells, tools, charge cables and DHL shipping. And JLCPCB was closed Oct 1–4 for China's National Day holiday, reopening Oct 5 [S9], so Monday orders may sit in a backlog.</p>
+</section>
+
+<section id="order">
+  <h2>1 · What to buy</h2>
+  <h3>Order Monday 10/5 (fastest shipping)</h3>
+  <div class="tbl"><table>
+    <tr><th>Item</th><th>Where</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Arrives</th><th>Watch out</th></tr>
+    <tr class="key"><td>PCB, 2-layer 0.8 mm ENIG, 5 pcs, <b>2 assembled</b> (Standard PCBA)</td><td>JLCPCB</td><td class="n">1</td><td class="n">–</td><td class="n">$79.04</td><td>build 5–7 d + DHL 3–5 d</td><td>Follow <code>hardware/ORDER_CHECKLIST.md</code>. Check every pin-1 in the 3D preview.</td></tr>
+    <tr><td>DHL Express shipping</td><td>JLCPCB checkout</td><td class="n">–</td><td class="n">–</td><td class="n">$20–30 <span class="est">estimate</span></td><td></td><td>Never pick "Global Standard"</td></tr>
+    <tr><td>US tariff (collected at checkout)</td><td>JLCPCB checkout</td><td class="n">–</td><td class="n">–</td><td class="n">$28–73 <span class="est">estimate</span></td><td></td><td>The exact figure shows at checkout [S8]</td></tr>
+    <tr><td>LiPo 3.7 V 100 mAh, JST-PH (#1570)</td><td>Adafruit</td><td class="n">3</td><td class="n">$5.95</td><td class="n">$17.85</td><td>UPS 2-day</td><td>Backup source: Jameco $7.85 [S1]</td></tr>
+    <tr><td>Magnetic connector, 4-pin (#5358)</td><td>Adafruit</td><td class="n">3</td><td class="n">$6.50</td><td class="n">$19.50</td><td>same box</td><td>[S2]</td></tr>
+    <tr class="key"><td>Magnetic USB charge cable (#5412)</td><td>Adafruit</td><td class="n">2</td><td class="n">$4.95</td><td class="n">$9.90</td><td>same box</td><td><b>Only 36 in stock</b> [S3]. Without it you can't charge or flash.</td></tr>
+    <tr><td>Adafruit shipping</td><td></td><td class="n"></td><td class="n"></td><td class="n">≈ $15 <span class="est">estimate</span></td><td></td><td></td></tr>
+    <tr><td>Waveshare 2.13" e-paper <b>V4 raw panel</b> (SKU 12672)</td><td>Waveshare / Amazon Prime</td><td class="n">3</td><td class="n">$6.31–6.99</td><td class="n">≈ $21</td><td>Prime 1–2 d · direct 4–8 d</td><td>Must say <b>V4</b> (SSD1680 driver) [S4]. The ribbon is fragile, so get a spare.</td></tr>
+    <tr><td>Waveshare shipping</td><td></td><td class="n"></td><td class="n"></td><td class="n">$15–25 <span class="est">estimate</span></td><td></td><td></td></tr>
+    <tr class="key"><td><b>Seeed OV5640 AF</b> camera ("for XIAO ESP32S3 Sense")</td><td>Seeed / US reseller</td><td class="n">3</td><td class="n">≈ $14 <span class="est">estimate</span></td><td class="n">≈ $42</td><td>3–6 d</td><td>Buy <b>this exact module</b>. The board's reversed J1 socket was worked out for its cable [S5].</td></tr>
+    <tr><td>Camera shipping</td><td></td><td class="n"></td><td class="n"></td><td class="n">$10–15 <span class="est">estimate</span></td><td></td><td></td></tr>
+    <tr class="total"><td colspan="4">Core subtotal</td><td class="n">≈ $280–350</td><td colspan="2">midpoint ≈ $310</td></tr>
+  </table></div>
+
+  <h3>Buy locally this weekend</h3>
+  <div class="tbl"><table>
+    <tr><th>Item</th><th>Where</th><th class="n">Qty</th><th class="n">Total</th><th>Why</th></tr>
+    <tr class="key"><td>Casio fx-115ES donor calculator</td><td>Walmart / Target / Staples</td><td class="n">2</td><td class="n">≈ $43 incl. tax</td><td>$19.99 at Walmart [S6]. <b>It must be the same edition you measured</b> (PLUS vs PLUS 2nd edition). The posts and ribs inside can differ.</td></tr>
+    <tr><td>Multimeter with continuity beep</td><td>hardware store</td><td class="n">1</td><td class="n">≈ $25 <span class="est">estimate</span></td><td>Camera cable check E6, power rails</td></tr>
+    <tr><td>Kapton tape 10–20 mm</td><td>Amazon / hardware store</td><td class="n">1</td><td class="n">≈ $9 <span class="est">estimate</span></td><td>Insulates the battery and the back of the e-paper</td></tr>
+    <tr><td>Dremel bits: carbide cutter, sanding drums, 6 mm drill</td><td>hardware store</td><td class="n">1 set</td><td class="n">≈ $12 <span class="est">estimate</span></td><td>Rib grinding + camera hole (stage-10 grind map)</td></tr>
+    <tr><td>Flush cutters + ESD tweezers</td><td>hardware store</td><td class="n">1</td><td class="n">≈ $15 <span class="est">estimate</span></td><td></td></tr>
+    <tr><td>USB-A charger or USB-A(f)→USB-C adapter</td><td>anywhere</td><td class="n">1</td><td class="n">≈ $7 <span class="est">estimate</span></td><td>The magnetic cable ends in USB-A, and flashing goes through it</td></tr>
+    <tr><td>Thin foam tape + 99 % isopropyl</td><td>anywhere</td><td class="n">1</td><td class="n">≈ $10 <span class="est">estimate</span></td><td>Holds the battery and camera, cleans the gold pads</td></tr>
+    <tr class="total"><td colspan="3">Local subtotal (skip what you own; you already have calipers)</td><td class="n">≈ $105–130</td><td></td></tr>
+  </table></div>
+  <p class="lede">Don't buy yet: more than 3 of anything, a soldering station (the board needs no soldering from you), or a pogo-pin test jig. Those come with v2.</p>
+</section>
+
+<section id="timeline">
+  <h2>2 · Timeline</h2>
+  <div class="legend"><span><span class="pill p-you">you</span> your job</span><span><span class="pill p-ext">outside</span> waiting on a supplier</span><span><span class="pill p-both">you + Claude</span> together</span></div>
+  <div class="tbl"><table>
+    <tr><th>Date</th><th>Task</th><th>Who</th><th>Waits on</th></tr>
+    <tr><td>Sat 10/3</td><td>Buy donor calculators + multimeter. Overnight, Claude finishes PCB stage 11, the CAD replica and an independent review.</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
+    <tr class="key"><td>Sun 10/4</td><td><b>Remaining measurements</b>: C14, C15, depths D1–D4/D11/D13, ribbons E6/E7, and the F6 flatbed scan if you can. Answer the open questions in the stage-11 doc.</td><td><span class="pill p-you">you</span></td><td>calipers</td></tr>
+    <tr><td>Sun 10/4</td><td>Claude applies the readings, gets DRC to 0/0/0 and regenerates the fab files. You print the 1:1 fit-check outline and lay it in the shell.</td><td><span class="pill p-both">you + Claude</span></td><td>measurements</td></tr>
+    <tr><td>Sun 10/4</td><td>Start the <b>API proxy</b>: a small server that holds the Claude key, so the calculator never carries it</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
+    <tr class="key"><td>Mon 10/5</td><td><b>ORDER</b>: Adafruit (UPS 2-day), cameras, e-paper, then <b>JLCPCB by about 9 pm ET</b></td><td><span class="pill p-you">you</span></td><td>fit check</td></tr>
+    <tr><td>Tue 10/6</td><td>JLCPCB engineering review. <b>Reply to their emails within hours</b>: each unanswered question costs about a day.</td><td><span class="pill p-ext">outside</span></td><td>order</td></tr>
+    <tr><td>Tue–Wed</td><td>Firmware: camera → JPEG → Wi-Fi → proxy → answer, on the dev board</td><td><span class="pill p-both">you + Claude</span></td><td>proxy</td></tr>
+    <tr><td>Wed 10/7</td><td>Prepare the shells: take out the Casio boards (keep the keypad and screws), grind ribs, drill the camera hole</td><td><span class="pill p-you">you</span></td><td>donor calcs</td></tr>
+    <tr><td>Thu 10/8</td><td>Adafruit box arrives <span class="est">estimate</span>. Check the battery polarity against J4 (a reversed JST lead is common).</td><td><span class="pill p-ext">outside</span></td><td>Adafruit</td></tr>
+    <tr><td>Sat–Sun 10/10–11</td><td>Firmware: full UI in the simulator + <b>factory self-test mode</b> (keys, display, camera, battery, Wi-Fi)</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
+    <tr><td>Mon 10/12</td><td>JLCPCB ships by DHL <span class="est">estimate</span>. Camera-cable beep test E6 (fingers 2 and 15 beep to GND).</td><td><span class="pill p-ext">outside</span></td><td>build</td></tr>
+    <tr class="key"><td>Thu 10/15</td><td><b>Boards arrive.</b> Board #1 on USB only: measure 3.3 V / 2.8 V / 1.5 V, then flash</td><td><span class="pill p-you">you</span></td><td>DHL</td></tr>
+    <tr><td>Fri 10/16</td><td>Plug in the e-paper, then the camera; self-test; battery and charging (about 50 mA)</td><td><span class="pill p-both">you + Claude</span></td><td>bring-up</td></tr>
+    <tr class="key"><td>Sat 10/17</td><td><b>Assemble in shell #1. Photo → Claude → answer on the e-paper.</b></td><td><span class="pill p-you">you</span></td><td>self-test</td></tr>
+    <tr><td>Sun 10/18</td><td>Board #2; 24-hour battery soak; write the v2 bug list</td><td><span class="pill p-you">you</span></td><td>–</td></tr>
+    <tr><td>Wed 10/21</td><td>Buffer if JLCPCB or DHL slips 2–4 days</td><td><span class="pill p-ext">outside</span></td><td>–</td></tr>
+  </table></div>
+  <p><b>Critical path:</b> measurements (Sun) → layout fix + fit check (Sun) → <b>JLCPCB order (Mon)</b> → build (≈ 10/12) → DHL (≈ 10/15) → bring-up → working unit (≈ 10/17). Only the JLCPCB leg is outside your control. Firmware, the proxy and shell prep all run while you wait.</p>
+
+  <h3>After the first units</h3>
+  <div class="steps">
+    <div class="step"><span class="q">Oct 2026 · 2 units</span><h3>Prototype v1</h3><p>Working units in Casio shells.</p><p class="you">You: everything</p></div>
+    <div class="step"><span class="q">Late Oct – Nov · 5–10</span><h3>Prototype v2</h3><p>Fix the v1 bugs, add a test-pad cluster for a pogo jig, second JLCPCB order.</p><p class="you">You: design + test</p></div>
+    <div class="step"><span class="q">Nov – Jan 2027 · 5–10</span><h3>Own shell</h3><p>The fx-115ES-style shell redrawn as your own design, 3D printed (JLC3DP [S15]), with its own keypad.</p><p class="you">You: CAD + fit</p></div>
+    <div class="step"><span class="q">Jan – Mar 2027 · 10–50</span><h3>Pilot batch</h3><p>Testers aged 13 and up, feedback, FCC pre-scan at a lab.</p><p class="you">You: support + fixes</p></div>
+    <div class="step"><span class="q">Mar – Jun 2027 · ~100</span><h3>First sales</h3><p>LLC, FCC SDoC, preorders on Crowd Supply or Kickstarter.</p><p class="you">You: run the business</p></div>
+    <div class="step"><span class="q">H2 2027 · 300–1,000</span><h3>Hundreds</h3><p>Custom battery, OEM magnet connector, an EMS does PCBA + box build, a 3PL ships the orders.</p><p class="you">You: suppliers + software</p></div>
+    <div class="step"><span class="q">2028 · 3,000+</span><h3>Injection molding</h3><p>Molds pay off above about 3,300 units.</p><p class="you">You: approve samples, QA</p></div>
+    <div class="step"><span class="q">2028–29 · 5k–10k+</span><h3>Contract manufacturer</h3><p>The CM buys parts, builds, tests, packs and ships to FBA or a 3PL.</p><p class="you">You: product, firmware, marketing</p></div>
+  </div>
+</section>
+
+<section id="cost">
+  <h2>3 · Cost per calculator as you scale</h2>
+  <p>Estimates built from LCSC price breaks (ESP32-S3-MINI $5.00 → $3.38 [S11], TCA8418 $1.12 → $0.61 [S12]) and the retail prices above. The darker bar is cost without one-time certification. The light cap is the roughly $3.5k for FCC testing, a lawyer and an LLC, spread over that run.</p>
+  <div class="chart" id="costChart" role="img" aria-label="Per-unit cost by quantity"></div>
+  <div class="legend"><span><i style="background:var(--bar1)"></i>Parts, build, freight</span><span><i style="background:var(--bar2)"></i>One-time certification, spread over the run</span></div>
+  <div class="tbl"><table id="costTable"></table></div>
+  <p class="lede">Rule of thumb: retail ≈ 3–4× unit cost to cover shipping, returns, fees and API. At about $40 (1,000 units) that's $119–149 <span class="est">estimate</span>. A plain fx-115ES costs $20, so the AI has to clearly earn the difference.</p>
+
+  <h3>When each part switches supplier</h3>
+  <div class="tbl"><table>
+    <tr><th class="n">At</th><th>Switch</th><th>Price change</th><th>Catch</th></tr>
+    <tr><td class="n">10</td><td>Spread JLCPCB's extended-part fees ($3 × 14 types) over more boards</td><td>PCBA $39.52 → ≈ $18 a board <span class="est">estimate</span></td><td>Fixed fees per order</td></tr>
+    <tr><td class="n">10 / 100</td><td>Adafruit quantity tiers</td><td>#5358: $6.50 → $5.85 → $5.20 [S2]</td><td>–</td></tr>
+    <tr><td class="n">50</td><td>Camera: Seeed → generic OV5640 AF module</td><td>≈ $14 → $4.58–8 [S19]</td><td><b>Check the ribbon pinout and length from every new vendor</b>, because J1 is reversed for one cable direction</td></tr>
+    <tr><td class="n">100</td><td>ESP32 module at reel pricing</td><td>$5.00 → $3.63 [S11]</td><td><b>Keep the module</b>: it carries Espressif's FCC approval</td></tr>
+    <tr><td class="n">100</td><td>E-paper: Waveshare → Good Display direct</td><td>$6.99 → ≈ $5.50 <span class="est">estimate</span></td><td>Request a quote by email</td></tr>
+    <tr><td class="n">~500</td><td>Custom LiPo with UN38.3 + IEC 62133 reports</td><td>$4.76 → ≈ $2.00; cells $0.61–1.70 [S14]</td><td>Get the test summary <i>before</i> paying (testing it yourself ≈ $1,500 [S13])</td></tr>
+    <tr><td class="n">~500</td><td>OEM magnetic pogo connector</td><td>$5.20 → ≈ $2; pins $0.23–0.25 @ 1k [S18]</td><td>Needs a new board footprint (v3)</td></tr>
+    <tr><td class="n">~500–1k</td><td>Hand assembly → EMS box build</td><td>Your time → ≈ $2.50–3 a unit <span class="est">estimate</span></td><td>Your hours go to software + sales</td></tr>
+    <tr><td class="n">~3,300</td><td>3D print → injection mold</td><td>$9 → $1.50 a set + ≈ $25k tooling <span class="est">estimate</span></td><td>Break-even = $25,000 ÷ ($9 − $1.50) [S21]</td></tr>
+    <tr><td class="n">5,000+</td><td>The CM buys the parts</td><td>Another 10–20 % off the parts cost <span class="est">estimate</span></td><td>–</td></tr>
+  </table></div>
+  <p class="note"><b>Money tip:</b> take preorders before each step up. Customers' deposits then pay for the MOQ and the tooling, not your savings.</p>
+
+  <h3>Claude API cost</h3>
+  <p>Assumes about 2,500 input tokens per solve (photo + prompt) and about 2,100 output on Sonnet <span class="est">estimate</span>.</p>
+  <div class="tbl"><table>
+    <tr><th>Model</th><th class="n">Per solve</th><th class="n">60 / month</th><th class="n">150 / month</th><th class="n">400 / month</th></tr>
+    <tr><td>Haiku 4.5</td><td class="n">$0.0065</td><td class="n">$0.39</td><td class="n">$0.98</td><td class="n">$2.60</td></tr>
+    <tr class="key"><td>Sonnet 5.5</td><td class="n">$0.026</td><td class="n">$1.56</td><td class="n">$3.90</td><td class="n">$10.40</td></tr>
+    <tr><td>Opus 5.5</td><td class="n">$0.052</td><td class="n">$3.12</td><td class="n">$7.80</td><td class="n">$20.80</td></tr>
+    <tr><td>Haiku first, Sonnet on 20 %</td><td class="n">$0.010</td><td class="n">$0.62</td><td class="n">$1.56</td><td class="n">$4.16</td></tr>
+  </table></div>
+  <p><b>Funding:</b> include about 3 months of service in the price, then $3–5 a month or $29–39 a year with a fair-use cap. Offer a "bring your own key" option. <b>The calculator must never hold your API key</b>: before any unit leaves your hands, route requests through the proxy with per-device tokens, rate limits and a kill switch.</p>
+</section>
+
+<section id="legal">
+  <h2>4 · Rules you can't skip</h2>
+  <div class="tbl"><table>
+    <tr><th>Item</th><th>When</th><th>Cost</th><th>What to do</th></tr>
+    <tr class="key"><td>FCC Part 15B SDoC</td><td>Before selling any unit</td><td>$1,000–2,500 [S10]</td><td>The ESP32-S3-MINI module has its own FCC grant (Espressif, 2AC7Z [S22]). Label: "Contains FCC ID: 2AC7Z-…". Going chip-down would cost $6.5–10k+ instead.</td></tr>
+    <tr><td>UN38.3 battery report</td><td>Before shipping anything with a battery</td><td>$0 from the supplier · ≈ $1,500 yourself [S13]</td><td>Ships as UN3481 "packed in equipment". Amazon wants the report + SDS.</td></tr>
+    <tr><td>IEC 62133</td><td>Amazon / retailers</td><td>$0 from the supplier · ≈ $6,350 yourself [S17]</td><td>Pick a battery vendor that already has a CB report</td></tr>
+    <tr><td>CPSIA</td><td>Only when marketing to age 12 and under</td><td>Several hundred dollars per test [S23]</td><td><b>Market to 13+.</b> Then a General Certificate of Conformity is enough.</td></tr>
+    <tr class="key"><td>Exam rules</td><td>All marketing</td><td>$0</td><td>The SAT and ACT ban calculators with cameras, wireless or CAS [S16]. Never say "exam approved". Pitch it as an AI homework tutor, with a step-by-step tutor mode.</td></tr>
+    <tr class="key"><td>Casio trademark / trade dress</td><td>Before selling any modified Casio</td><td>Clinic or SCORE consult $0–300 <span class="est">estimate</span></td><td>Fine for your own prototypes. <b>Not OK at scale.</b> Your own shell solves this, which is why it comes before sales.</td></tr>
+    <tr><td>Your brand</td><td>Before public launch</td><td>USPTO $350 per class [S24]</td><td>Class 9 + class 42 = $700</td></tr>
+    <tr><td>Business entity</td><td>Before taking money from strangers</td><td>Indiana LLC $97 [S25]</td><td>Under 18: a parent usually signs. Stripe, Amazon and Kickstarter need an adult account holder.</td></tr>
+    <tr><td>Product liability insurance</td><td>First sales</td><td>≈ $400–1,000 a year <span class="est">estimate</span></td><td>Lithium battery + students: get it</td></tr>
+  </table></div>
+</section>
+
+<section id="auto">
+  <h2>5 · Path to "it makes itself"</h2>
+  <div class="steps">
+    <div class="step"><span class="q">Stage 1 · 2–10 units</span><h3>Now</h3><p>JLCPCB builds the boards. You assemble, test and ship.</p><p class="you">You: everything</p></div>
+    <div class="step"><span class="q">Stage 2 · 10–100</span><h3>Test jig</h3><p>3D-printed pogo-pin bed (≈ $50–150 <span class="est">estimate</span>) + a PC script: flash → self-test → serial number → PASS/FAIL label.</p><p class="you">You: one button per board, about 2 min</p></div>
+    <div class="step"><span class="q">Stage 3 · 300–1,000</span><h3>Turnkey + 3PL</h3><p>An EMS builds and runs <i>your</i> jig and sends you a CSV of results. A 3PL or FBA ships to customers.</p><p class="you">You: supplier email, spot checks, firmware</p></div>
+    <div class="step"><span class="q">Stage 4 · 3,000+</span><h3>Contract manufacturer</h3><p>Parts, molding, PCBA, assembly, test, packing, sea freight to FBA.</p><p class="you">You: roadmap, OTA updates, marketing</p></div>
+  </div>
+  <h3>Build these in order</h3>
+  <ul>
+    <li><b>Factory test firmware</b> (start 10/10): one boot mode that checks everything and prints JSON over USB.</li>
+    <li><b>Test pads</b>: 3.3 V, GND, EN, IO0, D+/D−, VBAT. Tonight's stage-11 work already adds bring-up test points. v2 puts them in a pogo-jig pattern.</li>
+    <li><b>Automated flashing</b>: esptool + Python. Each board gets a unique ID and proxy token when it's flashed.</li>
+    <li><b>Signed OTA updates</b> (two app slots), so bug fixes don't need returns.</li>
+    <li><b>The proxy becomes the fleet backend</b>: subscriptions, usage caps, crash logs.</li>
+    <li><b>Support</b>: FAQ, help email, AI-drafted replies. Budget 2–5 % of units needing help <span class="est">estimate</span>.</li>
+  </ul>
+</section>
+
+<section id="risks">
+  <h2>6 · Top risks</h2>
+  <div class="tbl"><table>
+    <tr><th>Risk</th><th>Effect</th><th>What to do</th></tr>
+    <tr class="key"><td>A measurement moves a part after Monday, or the donor is a different edition</td><td>New order + 2 weeks</td><td>1:1 paper fit check Sunday. Buy donors of the exact edition you measured.</td></tr>
+    <tr><td>JLCPCB holiday backlog + engineering questions</td><td>+2–4 days</td><td>Order Monday, reply fast, keep the 10/21 buffer</td></tr>
+    <tr><td>Camera ribbon direction (reversed J1) is only ~75 % certain</td><td>No image</td><td>Same Seeed module. E6 beep test. A 180° cable twist fixes it.</td></tr>
+    <tr><td>Tariff higher than expected</td><td>+$30–70 now, +35 % or more at volume</td><td>Check the checkout total and budget the high end</td></tr>
+    <tr class="key"><td>API key in firmware / unlimited use</td><td>Stolen key, surprise bill</td><td>Proxy + per-device token + caps</td></tr>
+    <tr><td>Only 36 #5412 cables in stock</td><td>Can't charge</td><td>Order 2 Monday. Backup: Jameco / DigiKey.</td></tr>
+    <tr><td>Selling Casio-branded units; marketing to under-13s</td><td>Takedown, liability</td><td>Own shell before sales; 13+; never "exam approved"</td></tr>
+  </table></div>
+</section>
+
+<section id="sources">
+  <h2>Sources (checked 2026-10-03)</h2>
+  <ol class="src">
+    <li>[S1] Adafruit #1570 $5.95; Jameco $7.85 — jameco.com/z/1570-Adafruit…</li>
+    <li>[S2] <a href="https://www.adafruit.com/product/5358">adafruit.com/product/5358</a> $6.50 / $5.85 / $5.20</li>
+    <li>[S3] <a href="https://www.adafruit.com/product/5412">adafruit.com/product/5412</a> $4.95, 36 in stock</li>
+    <li>[S4] <a href="https://waveshare.com/2.13inch-e-Paper.htm">waveshare.com 2.13inch e-Paper</a> $6.31–6.99</li>
+    <li>[S5] <a href="https://thepihut.com/products/seeed-ov5640-camera-for-xiao-esp32s3-sense">The Pi Hut, Seeed OV5640</a> £11</li>
+    <li>[S6] <a href="https://www.walmart.com/ip/418401755">Walmart fx-115ES PLUS</a> $19.99</li>
+    <li>[S7] <a href="https://jlcpcb.com/help/article/pcb-fabrication-services-and-production-time">JLCPCB production time</a></li>
+    <li>[S8] <a href="https://jlcpcb.com/help/article/us-tariff-policy-faq">JLCPCB US tariff FAQ</a></li>
+    <li>[S9] <a href="https://jlcpcb.com/news/jlcpcb-september-october-2026-holiday-schedule">JLCPCB holiday schedule</a></li>
+    <li>[S10] <a href="https://compliancetesting.com/fcc-certification-faqs/fcc-certification-cost/">FCC certification cost</a>; <a href="https://compliancegate.com/fcc-sdoc">FCC SDoC</a></li>
+    <li>[S11] <a href="https://www.lcsc.com/product-detail/C3013941.html">LCSC C3013941</a> ESP32-S3-MINI-1-N4R2</li>
+    <li>[S12] <a href="https://www.lcsc.com/product-detail/C138713.html">LCSC C138713</a> TCA8418</li>
+    <li>[S13] <a href="https://tritekbattery.com/un38-3-certified-battery-pack-what-it-means-and-how-to-source/">UN38.3 cost</a></li>
+    <li>[S14] Alibaba custom LiPo $0.61–1.70 (alibaba.com product 1600903701763)</li>
+    <li>[S15] <a href="https://jlc3dp.com/news/materials-finishing-pricing-update-july2026">JLC3DP pricing</a></li>
+    <li>[S16] <a href="https://collegeprep.uworld.com/sat/sat-approved-calculators-and-policy/">SAT calculator policy</a></li>
+    <li>[S17] IEC 62133 ≈ $6,350 (batterypoweronline.com)</li>
+    <li>[S18] Magnetic pogo pins $0.23–0.25 @ 1k (accio.ai listing)</li>
+    <li>[S19] Generic OV5640 AF modules $4.58–8 (ship4wd, eBay listings)</li>
+    <li>[S20] Good Display GDEY0213B74 €6.89 (eckstein-shop.de)</li>
+    <li>[S21] <a href="https://www.teamrapidtooling.com/injection-molding-cost-1000-10000-parts-a-680.html">Injection molding cost</a></li>
+    <li>[S22] Espressif ESP32-S3-MINI-1 certificates (grantee 2AC7Z)</li>
+    <li>[S23] <a href="https://www.compliancegate.com/?p=6748">CPSIA testing cost</a></li>
+    <li>[S24] USPTO $350 per class (zenind.com summary)</li>
+    <li>[S25] Indiana LLC $97 (zenind.com summary)</li>
+    <li>[S26] Amazon FBA 2026 fees (novadata.io)</li>
+  </ol>
+  <p class="lede">Full text version: <code>Claude outputs/LAUNCH_ROADMAP.md</code>. Chart data: <code>Claude outputs/launch_roadmap_data.json</code>.</p>
+</section>
+</div>
+
+<script>
+(function(){
+  var q=[2,10,50,100,500,1000,5000,10000];
+  var base=[137.91,81.76,69.47,65.42,43.70,37.60,30.90,25.70];
+  var cert=[0,0,0,35,7,3.5,0.7,0.35];
+  var rows=[
+    ["PCB + PCBA",[39.52,18,13,9,7.9,7.3,6.6,6.2]],
+    ["Camera OV5640 AF",[14,12,7,6,5,4.5,4,3.5]],
+    ["E-paper 2.13\"",[6.99,6.6,6.31,5.5,4.5,4,3.5,3.2]],
+    ["Battery 100 mAh",[5.95,5.36,5.36,4.76,2,1.5,1.2,1]],
+    ["Magnetic connector",[6.5,5.85,5.85,5.2,2,1.2,.9,.7]],
+    ["Magnetic USB cable",[4.95,4.95,4.95,3.96,1.8,1.4,1.1,1]],
+    ["Enclosure + keypad",[20,20,20,21,10,9,6.5,4]],
+    ["Assembly labour",[0,0,0,0,3,2.5,2,1.5]],
+    ["Packaging + QC",[0,1,2,2,1.5,1.2,.9,.8]],
+    ["Freight + duty",[40,8,5,8,6,5,4.2,3.8]],
+    ["Certification (one-time, spread)",cert]
+  ];
+  var f=function(v){return "$"+v.toFixed(2)};
+  var t=document.getElementById("costTable");
+  var h="<tr><th>Item</th>"+q.map(function(x){return '<th class="n">'+x.toLocaleString()+"</th>"}).join("")+"</tr>";
+  rows.forEach(function(r){h+="<tr><td>"+r[0]+"</td>"+r[1].map(function(v){return '<td class="n">'+f(v)+"</td>"}).join("")+"</tr>"});
+  h+='<tr class="total"><td>Total per unit</td>'+base.map(function(v,i){return '<td class="n">'+f(v+cert[i])+"</td>"}).join("")+"</tr>";
+  h+='<tr><td>Without certification</td>'+base.map(function(v){return '<td class="n">'+f(v)+"</td>"}).join("")+"</tr>";
+  t.innerHTML=h;
+
+  var W=760,H=300,L=48,R=12,T=16,B=40,max=150;
+  var pw=W-L-R, ph=H-T-B, bw=pw/q.length;
+  var y=function(v){return T+ph-v/max*ph};
+  var s='<svg viewBox="0 0 '+W+' '+H+'" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Mono, monospace" font-size="11">';
+  [0,25,50,75,100,125,150].forEach(function(g){
+    s+='<line x1="'+L+'" x2="'+(W-R)+'" y1="'+y(g)+'" y2="'+y(g)+'" stroke="var(--line)" stroke-width="1"/>';
+    s+='<text x="'+(L-6)+'" y="'+(y(g)+4)+'" text-anchor="end" fill="var(--muted)">$'+g+'</text>';
+  });
+  q.forEach(function(x,i){
+    var cx=L+bw*i+bw*0.18, w=bw*0.64, b=base[i], c=cert[i];
+    s+='<rect x="'+cx+'" y="'+y(b)+'" width="'+w+'" height="'+(y(0)-y(b))+'" fill="var(--bar1)" rx="2"/>';
+    if(c>0) s+='<rect x="'+cx+'" y="'+y(b+c)+'" width="'+w+'" height="'+(y(b)-y(b+c))+'" fill="var(--bar2)" rx="2"/>';
+    s+='<text x="'+(cx+w/2)+'" y="'+(y(b+c)-6)+'" text-anchor="middle" fill="var(--fg)" font-weight="500">$'+Math.round(b+c)+'</text>';
+    s+='<text x="'+(cx+w/2)+'" y="'+(H-B+16)+'" text-anchor="middle" fill="var(--muted)">'+x.toLocaleString()+'</text>';
+  });
+  s+='<text x="'+(L+pw/2)+'" y="'+(H-6)+'" text-anchor="middle" fill="var(--muted)">units in the run</text></svg>';
+  document.getElementById("costChart").innerHTML=s;
+})();
+</script>

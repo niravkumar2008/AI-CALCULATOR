@@ -1,651 +1,556 @@
 # Graph Report - AI-CALCULATOR  (2026-10-02)
 
 ## Corpus Check
-- 122 files · ~389,862 words
+- 138 files · ~833,010 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 44 file(s) not represented in the graph (top: .kicad_mod 11, (none) 10, .kicad_sch 7)
+- Unclassified: 88 file(s) not represented in the graph (top: .kicad_mod 28, .kicad_sch 14, (none) 12)
 
 ## Summary
-- 2249 nodes · 4229 edges · 123 communities (111 shown, 12 thin omitted)
-- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 426 edges (avg confidence: 0.85)
+- 1810 nodes · 3491 edges · 110 communities (91 shown, 19 thin omitted)
+- Extraction: 88% EXTRACTED · 12% INFERRED · 0% AMBIGUOUS · INFERRED: 410 edges (avg confidence: 0.84)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `5d65ef55`
+- Built from commit: `66a58eb1`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- Parser
-- Parser
+- make_fitcheck.py
+- Num
+- app.cpp
 - Tok
-- Tok
-- Claude outputs/sim/web/web_main.cpp
-- Device
-- Device
-- DKey
-- DKey
-- Framebuffer
-- Json
-- Json
-- Framebuffer
-- sim/web/web_main.cpp
-- claudeSolve
-- firmware/src/camera.cpp
-- firmware/src/main.cpp
-- Claude outputs/core/device.cpp
-- AI Answer Flow
-- core/device.cpp
-- App
-- tests/tests.cpp
-- App
-- AI Answer Flow
-- Claude outputs/firmware/src/claude_client.h
-- firmware/src/preview.cpp
-- previewResume
-- core/claude_api.cpp
-- firmware/src/settings.cpp
-- arduino
-- Claude outputs/firmware/src/main.cpp
-- core/app.cpp
-- Claude outputs/core/app.cpp
-- AI Calculator Simulator page (keypad + test bench)
-- View
-- View
-- SerialCmd
-- Breadboard Wiring Diagram (exact, camera up)
-- Kind
-- fusion_run.py
-- Stage 4: full calculator
-- Event
-- string
-- Tester firmware (Stage 4)
-- Event
-- string
-- Vars
-- Claude outputs/firmware/src/camera.cpp
-- Claude outputs/firmware/src/settings.cpp
-- SerialCmd
-- Vars
-- Decode
-- keys.cpp
-- CalcError
-- SolveResult
-- Focus
-- firmware-prototype/src/main.cpp
-- SolveResult
-- firmware-prototype/src/camera.cpp
-- firmware-prototype/src/preview.cpp
-- firmware-prototype/src/settings.cpp
-- errorText
-- AI SOLVE mode (MODE 4)
-- Decode
-- core static library (core/*.cpp, C++17)
-- Screen
-- Failure
-- Screen
-- Failure
-- loop
-- Key
-- Key
-- Stage 2: Windows simulator AI flow
-- wndProc
-- HistoryItem
 - build_case.py
-- SerialCmd
-- Button
-- Ask
-- Com
-- keyCalc
-- Calculator Mode
-- Line
-- CalcError
-- wndProc
-- Com
-- Claude outputs/tests/tests.cpp
-- Calculator Mode
-- AngleUnit
-- Mode
-- ScanNote
-- Menu System
+- win32_main.cpp
+- Device
+- device.h
 - Kind
-- Mode
-- ScanNote
-- Effort
-- Menu System
-- Line
-- press
+- DKey
+- Json
 - Event
-- press
-- equals
-- Prototype firmware (the board inside the Casio)
-- graphify skill trigger (/graphify)
-- render
-- Glyph
-- Claude outputs/sim/web/build.sh
-- render
-- sim/web/build.sh
-- Tuning
-- HistoryItem
-- AngleUnit
+- ai_calc_pcb_8/hardware/tools/prepass.py
+- Fit check: dummy board + grind map
+- web_main.cpp
+- firmware/src/camera.cpp
+- firmware-prototype/src/camera.cpp
+- firmware/src/main.cpp
+- device.cpp
+- AI Answer Flow
+- Stage 4: full calculator
+- string
+- AI Calculator PCB Handoff
+- tests.cpp
+- testClaudeApi
+- ai_calc_pcb_8/hardware/geometry/derive_geometry.py
+- kicad_summary.py
+- firmware-prototype/src/settings.cpp
+- arduino
+- App
 - Button
-- cmath
-- Tuning
-- Kind
+- Focus
+- hardware/geometry/derive_geometry.py
+- Event
+- SolveCallbacks
+- Framebuffer
+- firmware/src/preview.cpp
+- firmware-prototype/src/main.cpp
+- Ask
+- SerialCmd
+- Back cover (engraved 'AI CALCULATOR rev A, 6 x M2x10')
 - SendStep
-- NormMode
-- Glyph
-- NormMode
-- onWifiEvent
+- AI Calculator Board Concept Layout v2
+- wndProc
+- keys.cpp
+- Tester firmware README (Stage 4)
+- ai_calc_pcb_8/hardware/tools/build_board.py
+- shapely_geometry
+- Failure
+- Root sheet ai_calc.kicad_sch
+- firmware-prototype/src/screen.cpp
+- loop
+- claudeSolve
+- AI Calculator Multiple Choice Test
+- Screen
+- View
+- SerialCmd
+- Effort
+- firmware/src/settings.cpp
+- Stage 10: moving the board to the Casio fx-115ES shell
+- Breadboard Wiring Diagram (exact, camera up)
+- firmware/src/screen.cpp
+- Stage-8 board ai_calc.kicad_pcb (72.3x148.8 mm, 0.8 mm, 2 layers, 140 footprints, 4630 tracks, 322 vias, 92 nets, GND pour)
+- hardware/tools/fixroute.py
+- gen_font.py
+- string
+- Prototype firmware README (board inside the Casio)
+- Stage 9: finishing the v8 board (ai_calc_pcb_9)
+- Kind
+- Com
+- Decode
+- SolveResult
+- loop
+- Keypad 8x10 matrix (ROW0-7, COL0-9, SW1-SW50)
+- Router
+- Alias
+- ai_calc_pcb_8/hardware/tools/fixroute.py
+- full.sh script
+- Key
+- U1 ESP32-S3-MINI-1-N4R2 (MCU module)
+- HistoryItem
+- Board geometry from the scan: assumptions and confidence
+- Tuning
+- Calculator Mode
+- ScanNote
+- Menu System
+- graphify skill trigger (/graphify)
+- sim/web/build.sh
+- Browser simulator page (page.html)
+- hardware/tools/prepass.py
+- Router
+- AI Calculator PCB — handoff for the KiCad Claude Code session
+- Stage 2: electrical plan (pins, power, keypad)
+- JLCPCB order checklist (fill in when the VERIFY items are done)
+- Stage 3: schematic (done)
+- Stages 4 + 5: footprints and placement
+- full.sh script
+- ai_calc_pcb_8/hardware/geometry/layout_concept.py
+- hardware/tools/make_outputs.sh
 
 ## God Nodes (most connected - your core abstractions)
-1. `Device` - 104 edges
-2. `Device` - 99 edges
-3. `Tok` - 71 edges
-4. `Tok` - 71 edges
-5. `DKey` - 52 edges
-6. `DKey` - 52 edges
-7. `App` - 50 edges
-8. `App` - 45 edges
-9. `Parser` - 42 edges
-10. `Parser` - 42 edges
+1. `Device` - 110 edges
+2. `Tok` - 91 edges
+3. `DKey` - 70 edges
+4. `App` - 55 edges
+5. `Num` - 45 edges
+6. `Parser` - 42 edges
+7. `Framebuffer` - 28 edges
+8. `Json` - 27 edges
+9. `AI Calculator PCB Handoff` - 22 edges
+10. `Failure` - 20 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Simulator page (Claude outputs, older: no whereBanner/Scan now)` --semantically_similar_to--> `AI Calculator Simulator page (keypad + test bench)`  [INFERRED] [semantically similar]
-  Claude outputs/sim/web/page.html → sim/web/page.html
-- `directScan()` --semantically_similar_to--> `src/claude_client (HTTPS streaming to Claude)`  [INFERRED] [semantically similar]
-  sim/web/page.html → firmware/README.md
-- `Tester firmware README (Claude outputs, older copy without preview/scan pipeline)` --semantically_similar_to--> `Tester firmware (Stage 4)`  [INFERRED] [semantically similar]
-  Claude outputs/firmware/README.md → firmware/README.md
-- `CMake build config (Claude outputs copy)` --semantically_similar_to--> `core static library (core/*.cpp, C++17)`  [INFERRED] [semantically similar]
-  Claude outputs/CMakeLists.txt → CMakeLists.txt
-- `directScan()` --conceptually_related_to--> `Error screens (CLAUDE ERROR, BUSY, NO CONNECTION, TIMED OUT, CAMERA ERROR)`  [INFERRED]
-  sim/web/page.html → README.md
+- `4. Keypad (50 contacts = 49 matrix + ON)` --references--> `DKey`  [INFERRED]
+  hardware/geometry_assumptions.md → core/device.h
+- `Tester hardware: ESP32-S3-CAM (OV3660) + Waveshare 2.13in e-paper HAT V4` --semantically_similar_to--> `U1 ESP32-S3-MINI-1-N4R2 (MCU module)`  [INFERRED] [semantically similar]
+  firmware/README.md → Claude outputs/ai_calc_pcb_8/hardware/kicad/DESIGN_SUMMARY.md
+- `src/claude_client (HTTPS streaming to Claude)` --semantically_similar_to--> `directScan() (browser fetch to Claude API)`  [INFERRED] [semantically similar]
+  firmware/README.md → sim/web/page.html
+- `kMatrix in src/keys.cpp (key at each matrix crossing)` --semantically_similar_to--> `TOP / FN / NUM key layout tables`  [INFERRED] [semantically similar]
+  firmware-prototype/README.md → sim/web/page.html
+- `3D-printed front shell` --semantically_similar_to--> `Casio fx-300ES Plus original case/PCB`  [INFERRED] [semantically similar]
+  hardware/enclosure/renders/exploded_iso_front.png → Claude outputs/overlay_front.png
 
 ## Import Cycles
 - None detected.
 
 ## Hyperedges (group relationships)
 - **AI Calculator Hardware Circuit (ESP32-S3-CAM + e-paper + buttons on two breadboards)** — claude_outputs_bb_exact_esp32_s3_cam, claude_outputs_bb_exact_epaper_2_13, claude_outputs_bb_exact_calculator_buttons, claude_outputs_bb_exact_long_breadboard, claude_outputs_bb_exact_medium_breadboard [EXTRACTED 1.00]
-- **Browser simulator scan request flow** — sim_web_page_servicerequests, sim_web_page_startscan, sim_web_page_directscan, sim_web_page_claudescan, sim_web_page_demoscan, sim_web_page_wasm_api_bridge [EXTRACTED 1.00]
-- **Same C++ core runs in browser, Windows and ESP32** — cmakelists_core_library, sim_web_simulator_bundle, readme_windows_simulator_exe, firmware_readme_tester_firmware [EXTRACTED 1.00]
-- **AI Solve Pipeline** — claude_outputs_tests_golden_ready_ready_screen, claude_outputs_tests_golden_busy_reading_busy_reading_screen, claude_outputs_tests_golden_busy_solving_busy_solving_screen, claude_outputs_tests_golden_answer_streaming_answer_streaming_screen, claude_outputs_tests_golden_ai_answer_ai_answer_screen [INFERRED 0.75]
-- **Exam Mode Activation Flow** — claude_outputs_tests_golden_exam_confirm_exam_confirm_screen, claude_outputs_tests_golden_exam_wifi_off_exam_wifi_off_screen, claude_outputs_tests_golden_exam_status_bar_exam_status_bar_screen [INFERRED 0.75]
+- **Custom enclosure assembly stack (lens, front shell, keymat, back cover)** — hardware_enclosure_acrylic_lens, hardware_enclosure_front_shell, hardware_enclosure_tpu_keymat, hardware_enclosure_back_cover [EXTRACTED 1.00]
+- **Ribbon Cable Orientation Risk Mitigation** — claude_outputs_ai_calc_pcb_8_hardware_stage4_5_layout_j1_cam_reversed_footprint, claude_outputs_ai_calc_pcb_8_hardware_stage4_5_layout_shou_han_c6364666, claude_outputs_ai_calc_pcb_8_hardware_stage4_5_layout_fpc_pin1_beep_check, claude_outputs_ai_calc_pcb_8_hardware_stage4_5_layout_epaper_fpc_slot, claude_outputs_ai_calc_pcb_8_hardware_stage4_5_layout_j2_epaper_socket [EXTRACTED 1.00]
+- **Simulator scan request flow** — sim_web_page_servicerequests, sim_web_page_startscan, sim_web_page_demoscan, sim_web_page_directscan, sim_web_page_claudescan, sim_web_page_wasm_sim_api [EXTRACTED 1.00]
+- **Stage 6 Layout Build Pipeline (full.sh)** — claude_outputs_ai_calc_pcb_8_hardware_stage4_5_layout_full_sh, claude_outputs_ai_calc_pcb_8_hardware_tools_build_board, claude_outputs_ai_calc_pcb_8_hardware_tools_placement_check, claude_outputs_ai_calc_pcb_handoff_route_sh, claude_outputs_ai_calc_pcb_8_hardware_tools_add_gnd, claude_outputs_ai_calc_pcb_8_hardware_tools_cleanup, claude_outputs_ai_calc_pcb_8_hardware_tools_make_outputs [EXTRACTED 1.00]
 - **Problem capture quality: hold orientation, preview, preprocessing** — claude_outputs_how_to_hold_camera_orientation, claude_outputs_how_to_hold_preview_check, claude_outputs_cmp_image_preprocessing, claude_outputs_cmp_sample_math_problems [INFERRED 0.75]
+- **Camera/OCR solver validation suite (printed + handwritten rounds scored against answer keys)** — claude_outputs_ai_calculator_multiple_choice_test, claude_outputs_ai_calculator_test_worksheet, claude_outputs_ai_calculator_test_worksheet_scan_protocol, claude_outputs_ai_calculator_multiple_choice_test_answer_key, claude_outputs_ai_calculator_test_worksheet_answer_key [INFERRED 0.85]
 - **AI Capture-to-Answer Pipeline** — tests_golden_ai_ready_ai_ready_screen, tests_golden_ai_hold_countdown_ai_hold_countdown_screen, tests_golden_ai_hold_captured_ai_hold_captured_screen, tests_golden_ai_hold_done_ai_hold_done_screen, tests_golden_busy_reading_busy_reading_screen, tests_golden_busy_solving_busy_solving_screen, tests_golden_answer_streaming_answer_streaming_screen, tests_golden_ai_answer_ai_answer_screen [INFERRED 0.85]
+- **Battery/USB power path** — claude_outputs_ai_calc_pcb_8_hardware_kicad_design_summary_j3_magnetic_usb, claude_outputs_ai_calc_pcb_8_hardware_kicad_design_summary_u2_mcp73831, claude_outputs_ai_calc_pcb_8_hardware_kicad_design_summary_power_path_pfets, claude_outputs_ai_calc_pcb_8_hardware_kicad_design_summary_u3_ap2112k, claude_outputs_ai_calc_pcb_8_hardware_kicad_design_summary_j4_battery_jst [INFERRED 0.85]
+- **ESP32-S3 peripherals (camera, e-paper, keypad scanner)** — claude_outputs_layout_concept_v2_esp32_s3_mini_1, claude_outputs_layout_concept_v2_ov5640_camera, claude_outputs_layout_concept_v2_epaper_display, claude_outputs_layout_concept_v2_tca8418 [INFERRED 0.85]
+- **Board power path (magnet connector, charger/3.3V, LiPo)** — claude_outputs_layout_concept_v2_magnetic_connector, claude_outputs_layout_concept_v2_charger_3v3_esd, claude_outputs_layout_concept_v2_lipo_401230 [INFERRED 0.85]
+- **Section views verifying internal fit** — hardware_enclosure_renders_section_display, hardware_enclosure_renders_section_keys, hardware_enclosure_renders_section_left, hardware_enclosure_renders_section_iso_left [INFERRED 0.85]
 - **Exam Mode Lockdown** — tests_golden_exam_confirm_exam_mode_confirm_screen, tests_golden_exam_status_bar_exam_status_bar_screen, tests_golden_exam_wifi_off_exam_wifi_off_screen [INFERRED 0.85]
-- **Firmware capture and send pipeline** — firmware_readme_main, firmware_readme_camera, firmware_readme_scan_pipeline, firmware_readme_claude_client, firmware_readme_root_ca [INFERRED 0.85]
+- **Keypad layout shared across board, firmware, simulator and case** — claude_outputs_ai_calc_pcb_8_hardware_kicad_design_summary_keypad_matrix, firmware_prototype_readme_kmatrix, sim_web_page_key_tables, hardware_enclosure_readme_keymat, hardware_enclosure_readme_key_layout_mismatch [INFERRED 0.85]
+- **Magnet Contacts Never Carry Battery Voltage** — claude_outputs_ai_calc_pcb_handoff_magnet_no_battery_voltage, claude_outputs_ai_calc_pcb_8_hardware_stage2_electrical_adafruit_5358_magnetic_connector, claude_outputs_ai_calc_pcb_8_hardware_stage2_electrical_load_sharing_power_path, claude_outputs_ai_calc_pcb_8_hardware_stage3_schematic_vbus_sense_divider, claude_outputs_ai_calc_pcb_8_hardware_stage3_schematic_usblc6_ref_on_3v3, claude_outputs_ai_calc_pcb_8_hardware_stage3_schematic_d7_smf5_0a_tvs, claude_outputs_ai_calc_pcb_8_hardware_stage2_electrical_usblc6_2 [INFERRED 0.85]
+- **Enclosure assembly stack (front shell, keymat, display, PCB, back cover)** — hardware_enclosure_renders_side_front_shell, hardware_enclosure_renders_section_keys_tpu_keymat, hardware_enclosure_renders_section_display_epaper_stack, hardware_enclosure_renders_section_left_pcb, hardware_enclosure_renders_iso_back_back_cover [INFERRED 0.95]
 - **Same wiring drawn in three orientations** — claude_outputs_bb_exact_wiring_diagram, claude_outputs_bb_real_wiring_diagram, claude_outputs_bb_top_wiring_diagram [INFERRED 0.95]
 
-## Communities (123 total, 12 thin omitted)
+## Communities (110 total, 19 thin omitted)
 
-### Community 0 - "Parser"
-Cohesion: 0.07
-Nodes (46): addOk(), Alias, text, tok, asInt(), endsOperand(), errorText(), evaluate() (+38 more)
+### Community 0 - "make_fitcheck.py"
+Cohesion: 0.15
+Nodes (3): main(), newest(), ring()
 
-### Community 1 - "Parser"
-Cohesion: 0.08
-Nodes (40): addOk(), Alias, text, tok, asInt(), endsOperand(), evaluate(), exactPlus() (+32 more)
+### Community 1 - "Num"
+Cohesion: 0.05
+Nodes (68): addOk(), AngleUnit, Deg, Gra, Rad, asInt(), CalcError, Argument (+60 more)
 
-### Community 2 - "Tok"
-Cohesion: 0.03
-Nodes (71): Tok, Abs, Acos, Acosh, Add, Ans, Asin, Asinh (+63 more)
+### Community 2 - "app.cpp"
+Cohesion: 0.32
+Nodes (11): accepts, onFailure, onKey, onPartialAnswer, onReply, scrollBy, setLines, showMessage (+3 more)
 
 ### Community 3 - "Tok"
 Cohesion: 0.03
-Nodes (71): Tok, Abs, Acos, Acosh, Add, Ans, Asin, Asinh (+63 more)
+Nodes (72): Tok, Abs, Acos, Acosh, Add, Ans, Asin, Asinh (+64 more)
 
-### Community 4 - "Claude outputs/sim/web/web_main.cpp"
-Cohesion: 0.06
-Nodes (52): base64Encode(), buildSolveRequest(), classifyFailure(), jsonString(), peekAnswer(), solveInstructions(), solveSchema(), StreamReader (+44 more)
+### Community 4 - "build_case.py"
+Cohesion: 0.09
+Nodes (45): appearance(), _blocks(), body_named(), chamfer(), check_outline(), circle(), cm(), comp_named() (+37 more)
 
-### Community 5 - "Device"
-Cohesion: 0.04
-Nodes (36): Device, alpha_, angle_, app_, back_, blink_, clrChoice_, continueWith_ (+28 more)
+### Community 5 - "win32_main.cpp"
+Cohesion: 0.14
+Nodes (10): advanceRequest(), failureForWinHttp(), loadSettings(), photoToJpeg(), post(), press(), readFile(), solve() (+2 more)
 
 ### Community 6 - "Device"
-Cohesion: 0.03
+Cohesion: 0.04
 Nodes (38): Device, alpha_, angle_, app_, back_, battery_, blink_, charging_ (+30 more)
 
-### Community 7 - "DKey"
-Cohesion: 0.04
-Nodes (52): DKey, AC, Add, Alpha, Ans, Close, Cos, Count (+44 more)
+### Community 7 - "device.h"
+Cohesion: 0.15
+Nodes (7): NormMode, Norm1, Norm2, Mode, Ai, Comp, sim_state()
 
-### Community 8 - "DKey"
+### Community 8 - "Kind"
+Cohesion: 0.40
+Nodes (5): Kind, Captured, Fail, Partial, Reply
+
+### Community 9 - "DKey"
 Cohesion: 0.04
 Nodes (52): DKey, Abs, AC, Add, Alpha, Ans, Close, Cos (+44 more)
 
-### Community 9 - "Framebuffer"
-Cohesion: 0.09
-Nodes (30): drawCalc, decodeUtf8(), encodeUtf8(), findGlyph(), hasGlyph(), lookup(), normalizeCodepoint(), Framebuffer (+22 more)
-
 ### Community 10 - "Json"
-Cohesion: 0.08
-Nodes (17): Json, a_, b_, n_, o_, parse, s_, JsonParser (+9 more)
-
-### Community 11 - "Json"
-Cohesion: 0.08
-Nodes (17): Json, a_, b_, n_, o_, parse, s_, JsonParser (+9 more)
-
-### Community 12 - "Framebuffer"
 Cohesion: 0.09
-Nodes (29): drawCalc, decodeUtf8(), encodeUtf8(), findGlyph(), hasGlyph(), lookup(), normalizeCodepoint(), Framebuffer (+21 more)
+Nodes (16): Json, a_, b_, n_, o_, s_, JsonParser, err_ (+8 more)
 
-### Community 13 - "sim/web/web_main.cpp"
+### Community 11 - "Event"
+Cohesion: 0.17
+Nodes (12): Event, confidence, failure, id, kind, text, failureText(), handleEvent() (+4 more)
+
+### Community 12 - "ai_calc_pcb_8/hardware/tools/prepass.py"
+Cohesion: 0.25
+Nodes (3): connect_tree(), pad(), stub()
+
+### Community 13 - "Fit check: dummy board + grind map"
+Cohesion: 0.40
+Nodes (4): 1. Grind map (paper, 1:1), 2. Dummy board (3D print), Don't grind, Fit check: dummy board + grind map
+
+### Community 14 - "web_main.cpp"
 Cohesion: 0.10
-Nodes (35): jsonEscape(), numText(), sim_active_request(), sim_alloc(), sim_api_url(), sim_api_version(), sim_build_request(), sim_classify() (+27 more)
-
-### Community 14 - "claudeSolve"
-Cohesion: 0.13
-Nodes (12): claudeSolve(), lower(), readLine(), writeAll(), claudeSolve(), lower(), readLine(), writeAll() (+4 more)
+Nodes (34): jsonEscape(), numText(), sim_active_request(), sim_alloc(), sim_api_url(), sim_api_version(), sim_build_request(), sim_classify() (+26 more)
 
 ### Community 15 - "firmware/src/camera.cpp"
 Cohesion: 0.12
 Nodes (25): applyAll(), autoTuneLocked(), cameraAutoTune(), cameraBegin(), cameraCapture(), cameraFocusScore(), cameraFrame(), cameraHoldEstimateMs() (+17 more)
 
-### Community 16 - "firmware/src/main.cpp"
-Cohesion: 0.10
-Nodes (30): cameraHoldUntil(), applySettings(), connectWifi(), Event, confidence, failure, id, kind (+22 more)
+### Community 16 - "firmware-prototype/src/camera.cpp"
+Cohesion: 0.05
+Nodes (72): applyAll(), autoTuneLocked(), cameraAutoTune(), cameraBegin(), cameraCapture(), cameraFocusScore(), cameraFrame(), cameraHoldEstimateMs() (+64 more)
 
-### Community 17 - "Claude outputs/core/device.cpp"
-Cohesion: 0.15
-Nodes (21): continuesAns(), clearEntry, endExam, insert, keyAi, leaveAi, notice, onKey (+13 more)
+### Community 17 - "firmware/src/main.cpp"
+Cohesion: 0.09
+Nodes (25): dkeyName(), keysForChar(), Event, confidence, failure, id, kind, text (+17 more)
 
-### Community 18 - "AI Answer Flow"
+### Community 18 - "device.cpp"
+Cohesion: 0.16
+Nodes (25): continuesAns(), clearEntry, endExam, equals, insert, keyAi, keyCalc, leaveAi (+17 more)
+
+### Community 19 - "AI Answer Flow"
 Cohesion: 0.07
 Nodes (34): AI Answer Screen, AI Answer Flow, AI Error States, AI Hold-to-Capture Flow, AI Hold Captured Screen, AI Hold Countdown Screen, AI Hold Done Screen, AI Ready Screen (+26 more)
 
-### Community 19 - "core/device.cpp"
-Cohesion: 0.15
-Nodes (23): continuesAns(), clearEntry, endExam, insert, keyAi, keyCalc, leaveAi, notice (+15 more)
-
-### Community 20 - "App"
-Cohesion: 0.07
-Nodes (18): App, activeId_, busySinceMs_, captured_, expression_, hasKey_, holdUntilMs_, kUnclearThreshold (+10 more)
-
-### Community 21 - "tests/tests.cpp"
-Cohesion: 0.16
-Nodes (20): calcText(), keys(), main(), press(), readFile(), sampleStream(), snapshot(), snapshotFb() (+12 more)
-
-### Community 22 - "App"
-Cohesion: 0.08
-Nodes (17): App, activeId_, busySinceMs_, captured_, expression_, hasKey_, kUnclearThreshold, lines_ (+9 more)
-
-### Community 23 - "AI Answer Flow"
-Cohesion: 0.11
-Nodes (27): AI Answer Screen, Scroll Indicator Icons, AI Ready Screen, Chemistry Answer Screen, Chemistry Answer Steps Screen, Physics Answer End Screen, Physics Answer Screen, Answer Streaming Screen (+19 more)
-
-### Community 24 - "Claude outputs/firmware/src/claude_client.h"
+### Community 20 - "Stage 4: full calculator"
 Cohesion: 0.09
-Nodes (15): SolveCallbacks, cancelled, fail, partial, reply, SolveCallbacks, cancelled, fail (+7 more)
+Nodes (25): core static library (core/*.cpp, C++17), Win32 simulator executable (sim/win32_main.cpp), tests executable (tests/tests.cpp), AI Calculator project, AI SOLVE mode (MODE 4), Browser simulator (Emscripten build of core), Casio fx-300ES PLUS (COMP mode emulation), Claude Sonnet 5.5 model (+17 more)
 
-### Community 26 - "firmware/src/preview.cpp"
-Cohesion: 0.37
-Nodes (16): authorised(), autotuneHandler(), detailHandler(), focusHandler(), frameHandler(), lastHandler(), noCache(), pageHandler() (+8 more)
-
-### Community 28 - "previewResume"
-Cohesion: 0.29
-Nodes (9): endPreview(), jsonText(), previewResume(), previewSetResult(), previewStart(), previewSuspend(), startNetwork(), startServers() (+1 more)
-
-### Community 29 - "core/claude_api.cpp"
-Cohesion: 0.14
-Nodes (13): base64Encode(), buildSolveRequest(), classifyFailure(), jsonString(), peekAnswer(), StreamReader, buf_, errorMessage_ (+5 more)
-
-### Community 30 - "firmware/src/settings.cpp"
-Cohesion: 0.18
-Nodes (15): cameraName(), setup(), statusText(), Ask, Key, Nothing, Password, Ssid (+7 more)
-
-### Community 31 - "arduino"
+### Community 21 - "string"
 Cohesion: 0.13
-Nodes (7): draw(), screenShow(), draw(), screenShow(), draw(), screenBegin(), screenShow()
-
-### Community 32 - "Claude outputs/firmware/src/main.cpp"
-Cohesion: 0.20
-Nodes (13): cameraCapture(), applySettings(), connectWifi(), handleEvent(), loop(), pollButtons(), post(), press() (+5 more)
-
-### Community 33 - "core/app.cpp"
-Cohesion: 0.18
-Nodes (15): accepts, effortParam, onCaptured, onFailure, onKey, onPartialAnswer, onReply, scrollBy (+7 more)
-
-### Community 34 - "Claude outputs/core/app.cpp"
-Cohesion: 0.20
-Nodes (14): accepts, onCaptured, onFailure, onKey, onPartialAnswer, onReply, scrollBy, setLines (+6 more)
-
-### Community 35 - "AI Calculator Simulator page (keypad + test bench)"
-Cohesion: 0.32
-Nodes (15): claudeScan(), demoScan(), directScan(), done(), draw(), loop(), press(), serviceRequests() (+7 more)
-
-### Community 36 - "View"
-Cohesion: 0.13
-Nodes (14): View, Ai, Calc, Clr, ClrConfirm, Error, ExamInfo, Hyp (+6 more)
-
-### Community 37 - "View"
-Cohesion: 0.13
-Nodes (14): View, Ai, Calc, Clr, ClrConfirm, Error, ExamInfo, Hyp (+6 more)
-
-### Community 38 - "SerialCmd"
-Cohesion: 0.13
-Nodes (13): SerialCmd, Changed, ExamOff, Keys, None, Preview, PreviewOff, Scan (+5 more)
-
-### Community 39 - "Breadboard Wiring Diagram (exact, camera up)"
-Cohesion: 0.23
-Nodes (14): Calculator Buttons (=, AC, Up, Down), 2.13in E-Paper Display, ESP32-S3-CAM Board, LONG Breadboard, MEDIUM Breadboard, Breadboard Wiring Diagram (exact, camera up), Breadboard Wiring Diagram (real orientation, USB away), Breadboard Wiring Diagram (top, USB toward you) (+6 more)
-
-### Community 40 - "Kind"
-Cohesion: 0.40
-Nodes (5): Kind, Captured, Fail, Partial, Reply
-
-### Community 42 - "Stage 4: full calculator"
-Cohesion: 0.16
-Nodes (14): src/claude_client (HTTPS streaming to Claude), src/main.cpp (buttons, serial keys, Wi-Fi, capture+send task), src/pins.h (pin map), src/root_ca.h (api.anthropic.com certificates), src/screen (125x61 to 250x122 e-paper, Plain/LCD dots), src/settings (hotspot, key, exam state in flash), COMP maths engine (exact fractions, Casio priorities, 10 sig digits), core/calc_engine (tokens, parser, fractions, formatting) (+6 more)
-
-### Community 43 - "Event"
-Cohesion: 0.21
-Nodes (11): Event, confidence, failure, id, kind, text, failureForWinHttp(), photoToJpeg() (+3 more)
-
-### Community 44 - "string"
-Cohesion: 0.23
-Nodes (11): clockText(), drawMenu, drawStatus, engText, onReply, pullScan, render, resultText (+3 more)
-
-### Community 45 - "Tester firmware (Stage 4)"
-Cohesion: 0.17
-Nodes (13): Tester firmware README (Claude outputs, older copy without preview/scan pipeline), AI Calculator README (Claude outputs, older Stage 4 copy), Simulator page (Claude outputs, older: no whereBanner/Scan now), simulator.html bundle (Claude outputs), simulator.html (Claude outputs root, identical to sim/web copy), ESP32-S3-CAM board (OV3660, N16R8), PlatformIO build/upload, Preview mode (board AP, live camera, Send to Claude, Focus score) (+5 more)
-
-### Community 46 - "Event"
-Cohesion: 0.17
-Nodes (11): Event, confidence, failure, id, kind, text, Kind, Captured (+3 more)
-
-### Community 47 - "string"
-Cohesion: 0.23
-Nodes (11): clockText(), drawMenu, drawStatus, engText, onReply, pullScan, render, resultText (+3 more)
-
-### Community 48 - "Vars"
-Cohesion: 0.17
-Nodes (12): Vars, a, ans, b, c, d, e, f (+4 more)
-
-### Community 49 - "Claude outputs/firmware/src/camera.cpp"
-Cohesion: 0.32
-Nodes (3): cameraBegin(), configFor(), sensorName()
-
-### Community 50 - "Claude outputs/firmware/src/settings.cpp"
-Cohesion: 0.26
-Nodes (11): cameraName(), setup(), statusText(), screenBegin(), examLoad(), handle(), help(), save() (+3 more)
-
-### Community 51 - "SerialCmd"
-Cohesion: 0.17
-Nodes (10): SerialCmd, Changed, ExamOff, Keys, None, Snap, Settings, apiKey (+2 more)
-
-### Community 52 - "Vars"
-Cohesion: 0.17
-Nodes (12): Vars, a, ans, b, c, d, e, f (+4 more)
-
-### Community 53 - "Decode"
-Cohesion: 0.17
-Nodes (11): Decode, cx, cy, fullH, fullW, jpeg, lastYield, out (+3 more)
-
-### Community 54 - "keys.cpp"
-Cohesion: 0.16
-Nodes (11): beginOn(), keysBegin(), keysPoll(), pollOn(), Repeat, key, next, repeats() (+3 more)
-
-### Community 55 - "CalcError"
-Cohesion: 0.20
-Nodes (10): CalcError, Argument, Math, None, Stack, Syntax, EvalResult, error (+2 more)
-
-### Community 56 - "SolveResult"
-Cohesion: 0.20
-Nodes (8): SolveResult, answer, confidence, expression, readable, readAs, steps, unclear
-
-### Community 57 - "Focus"
-Cohesion: 0.11
-Nodes (24): analyseFocus(), Crop, h, use, w, x, y, detailCrop() (+16 more)
-
-### Community 58 - "firmware-prototype/src/main.cpp"
-Cohesion: 0.07
-Nodes (33): cameraName(), batteryPercent(), charging(), Event, confidence, failure, id, kind (+25 more)
-
-### Community 59 - "SolveResult"
-Cohesion: 0.18
-Nodes (9): SolveResult, answer, choice, confidence, expression, readable, readAs, steps (+1 more)
-
-### Community 60 - "firmware-prototype/src/camera.cpp"
-Cohesion: 0.10
-Nodes (30): applyAll(), autoTuneLocked(), cameraAutoTune(), cameraBegin(), cameraCapture(), cameraFocusScore(), cameraFrame(), cameraHoldEstimateMs() (+22 more)
-
-### Community 61 - "firmware-prototype/src/preview.cpp"
-Cohesion: 0.31
-Nodes (16): authorised(), autotuneHandler(), detailHandler(), focusHandler(), frameHandler(), lastHandler(), noCache(), pageHandler() (+8 more)
-
-### Community 62 - "firmware-prototype/src/settings.cpp"
-Cohesion: 0.21
-Nodes (11): Ask, Key, Nothing, Password, Ssid, handle(), help(), save() (+3 more)
-
-### Community 63 - "errorText"
-Cohesion: 0.22
-Nodes (4): errorText(), Fail, e, pos
-
-### Community 64 - "AI SOLVE mode (MODE 4)"
-Cohesion: 0.22
-Nodes (9): BEST GUESS (x% sure) display, Careful scan (exposure/gain/contrast sweep scored on ink edges), Scan photo pipeline (careful scan, hold still, 8 frames sharpest, zoom+enhance), AI SOLVE mode (MODE 4), Unclear-scan warning (confidence < 0.8), core/app (AI SOLVE screens), core/claude_api (instructions, schema, request, stream reader, error mapping), Error screens (CLAUDE ERROR, BUSY, NO CONNECTION, TIMED OUT, CAMERA ERROR) (+1 more)
-
-### Community 65 - "Decode"
-Cohesion: 0.18
-Nodes (10): Decode, cx, cy, fullH, fullW, lastYield, out, outH (+2 more)
-
-### Community 66 - "core static library (core/*.cpp, C++17)"
-Cohesion: 0.29
-Nodes (8): AI_Calc_Simulator.html (identical copy of sim/web/simulator.html), CMake build config (Claude outputs copy), core static library (core/*.cpp, C++17), Win32 simulator executable (sim/win32_main.cpp), tests executable (tests/tests.cpp), Browser simulator (Emscripten build of core), AI_Calc_Simulator.exe (Windows simulator), simulator.html (page.html + Emscripten-compiled core)
-
-### Community 67 - "Screen"
-Cohesion: 0.25
-Nodes (7): Screen, Busy, Message, Off, Ready, Result, Warning
-
-### Community 68 - "Failure"
-Cohesion: 0.25
-Nodes (8): Failure, ApiBusy, ApiError, BadReply, Camera, NoApiKey, NoConnection, Timeout
-
-### Community 69 - "Screen"
-Cohesion: 0.25
-Nodes (7): Screen, Busy, Message, Off, Ready, Result, Warning
-
-### Community 70 - "Failure"
-Cohesion: 0.25
-Nodes (8): Failure, ApiBusy, ApiError, BadReply, Camera, NoApiKey, NoConnection, Timeout
-
-### Community 71 - "loop"
-Cohesion: 0.12
-Nodes (26): cameraHoldUntil(), cameraSleep(), keysSleepUntilPress(), applySettings(), connectWifi(), loop(), previewEnded(), scanWifi() (+18 more)
-
-### Community 72 - "Key"
-Cohesion: 0.29
-Nodes (7): Key, AC, Down, Eq, Off, On, Up
-
-### Community 73 - "Key"
-Cohesion: 0.29
-Nodes (7): Key, AC, Down, Eq, Off, On, Up
-
-### Community 74 - "Stage 2: Windows simulator AI flow"
-Cohesion: 0.29
-Nodes (7): src/camera (grayscale 1600x1200 JPEG), Claude Sonnet 5.5 model, Photo preprocessing (upright, grayscale, max 1600 px JPEG), Sample mode fallback (samples/ replies when no api_key.txt), Stage 2: Windows simulator AI flow, DEMOS canned replies, toJpeg()
-
-### Community 75 - "wndProc"
-Cohesion: 0.22
-Nodes (4): exifOrientation(), handleEvent(), paint(), wndProc()
-
-### Community 76 - "HistoryItem"
-Cohesion: 0.33
-Nodes (3): HistoryItem, expr, value
-
-### Community 77 - "build_case.py"
-Cohesion: 0.06
-Nodes (54): appearance(), _blocks(), body_named(), chamfer(), check_outline(), circle(), cm(), comp_named() (+46 more)
-
-### Community 78 - "SerialCmd"
-Cohesion: 0.13
-Nodes (13): SerialCmd, Changed, ExamOff, Keys, None, Preview, PreviewOff, Scan (+5 more)
-
-### Community 79 - "Button"
-Cohesion: 0.40
-Nodes (5): Button, key, lastMs, pin, pressed
-
-### Community 80 - "Ask"
-Cohesion: 0.40
-Nodes (5): Ask, Key, Nothing, Password, Ssid
-
-### Community 82 - "keyCalc"
-Cohesion: 0.48
-Nodes (5): equals, keyCalc, showError, showValue, valueForMemory
-
-### Community 83 - "Calculator Mode"
-Cohesion: 0.40
-Nodes (5): Calc Editing Screen, Calculator Mode, Calc Math Error Screen, Calc Fraction Result Screen, Calc STO Screen
-
-### Community 84 - "Line"
-Cohesion: 0.40
 Nodes (3): Line, header, text
 
-### Community 85 - "CalcError"
-Cohesion: 0.20
-Nodes (10): CalcError, Argument, Math, None, Stack, Syntax, EvalResult, error (+2 more)
+### Community 22 - "AI Calculator PCB Handoff"
+Cohesion: 0.05
+Nodes (65): Board Geometry Assumptions, Battery Bay (LR44 corner), Firmware Row-2 Key Mismatch (Abs, x^3, x^-1, log_a b), Keypad Edge = Casio Edge - 0.25 mm, keys.csv / features.json, KiCad Top View = Back-Cover View; Keys on B.Cu, Magnetic Connector Top-Wall Slot, Scale 7.55 px/mm (+57 more)
 
-### Community 86 - "wndProc"
+### Community 23 - "tests.cpp"
 Cohesion: 0.22
-Nodes (4): exifOrientation(), handleEvent(), paint(), wndProc()
+Nodes (13): keys(), main(), readFile(), sampleStream(), snapshot(), snapshotFb(), testDevice(), testDeviceAi() (+5 more)
 
-### Community 88 - "Claude outputs/tests/tests.cpp"
-Cohesion: 0.18
-Nodes (15): keys(), main(), press(), readFile(), sampleStream(), snapshot(), snapshotFb(), testDevice() (+7 more)
+### Community 24 - "testClaudeApi"
+Cohesion: 0.19
+Nodes (17): base64Encode(), buildSolveRequest(), classifyFailure(), jsonString(), peekAnswer(), solveInstructions(), solveSchema(), StreamReader (+9 more)
 
-### Community 89 - "Calculator Mode"
-Cohesion: 0.40
-Nodes (5): Calculator Editing Screen, Calculator Math Error Screen, Calculator Fraction Result Screen, Calculator STO Screen, Calculator Mode
+### Community 25 - "ai_calc_pcb_8/hardware/geometry/derive_geometry.py"
+Cohesion: 0.17
+Nodes (9): board_polygon(), front_silhouette(), keys(), main(), mm(), overlays(), poly_mm(), to_back() (+1 more)
 
-### Community 90 - "AngleUnit"
-Cohesion: 0.50
-Nodes (4): AngleUnit, Deg, Gra, Rad
+### Community 27 - "kicad_summary.py"
+Cohesion: 0.42
+Nodes (7): board_summary(), kids(), main(), natkey(), parse(), props(), sheet_summary()
 
-### Community 91 - "Mode"
-Cohesion: 0.50
-Nodes (3): Mode, Ai, Comp
+### Community 28 - "firmware-prototype/src/settings.cpp"
+Cohesion: 0.42
+Nodes (6): handle(), help(), save(), settingsLoad(), settingsPoll(), trim()
 
-### Community 92 - "ScanNote"
-Cohesion: 0.50
-Nodes (4): ScanNote, None, Ok, Unclear
+### Community 29 - "arduino"
+Cohesion: 0.29
+Nodes (4): claudeSolve(), lower(), readLine(), writeAll()
 
-### Community 93 - "Menu System"
-Cohesion: 0.50
-Nodes (4): HYP Menu Screen, Menu System, Mode Menu Screen, Setup Menu Screen
+### Community 30 - "App"
+Cohesion: 0.08
+Nodes (24): App, activeId_, busySinceMs_, captured_, effortParam, expression_, hasKey_, holdUntilMs_ (+16 more)
 
-### Community 94 - "Kind"
-Cohesion: 0.40
-Nodes (5): Kind, Captured, Fail, Partial, Reply
-
-### Community 95 - "Mode"
-Cohesion: 0.50
-Nodes (3): Mode, Ai, Comp
-
-### Community 96 - "ScanNote"
-Cohesion: 0.50
-Nodes (4): ScanNote, None, Ok, Unclear
-
-### Community 97 - "Effort"
-Cohesion: 0.40
-Nodes (4): Effort, Careful, Max, Normal
-
-### Community 98 - "Menu System"
-Cohesion: 0.50
-Nodes (4): Hyperbolic Menu Screen, Mode Menu Screen, Setup Menu Screen, Menu System
-
-### Community 99 - "Line"
-Cohesion: 0.67
-Nodes (3): Line, header, text
-
-### Community 100 - "press"
-Cohesion: 0.33
-Nodes (3): loadSettings(), press(), WinMain()
-
-### Community 101 - "Event"
-Cohesion: 0.15
-Nodes (12): advanceRequest(), Event, confidence, failure, id, kind, text, failureForWinHttp() (+4 more)
-
-### Community 102 - "press"
-Cohesion: 0.22
-Nodes (5): advanceRequest(), loadSettings(), press(), readFile(), WinMain()
-
-### Community 103 - "equals"
-Cohesion: 0.40
-Nodes (4): equals, showError, showValue, valueForMemory
-
-### Community 104 - "Prototype firmware (the board inside the Casio)"
-Cohesion: 0.40
-Nodes (4): Differences from the tester, Hardware it expects (from the schematic), Prototype firmware (the board inside the Casio), Upload
-
-### Community 107 - "Glyph"
-Cohesion: 0.67
-Nodes (3): Glyph, cp, rows
-
-### Community 111 - "Tuning"
-Cohesion: 0.40
-Nodes (5): Tuning, def, max, min, name
-
-### Community 112 - "HistoryItem"
-Cohesion: 0.33
-Nodes (3): HistoryItem, expr, value
-
-### Community 113 - "AngleUnit"
-Cohesion: 0.50
-Nodes (4): AngleUnit, Deg, Gra, Rad
-
-### Community 114 - "Button"
+### Community 31 - "Button"
 Cohesion: 0.33
 Nodes (6): Button, key, lastMs, nextRepeat, pin, pressed
 
-### Community 116 - "Tuning"
-Cohesion: 0.40
-Nodes (5): Tuning, def, max, min, name
+### Community 32 - "Focus"
+Cohesion: 0.08
+Nodes (26): clampByte(), enhanceWriting(), analyseFocus(), Crop, h, use, w, x (+18 more)
 
-### Community 117 - "Kind"
-Cohesion: 0.40
-Nodes (5): Kind, Captured, Fail, Partial, Reply
+### Community 33 - "hardware/geometry/derive_geometry.py"
+Cohesion: 0.27
+Nodes (8): board_polygon(), front_silhouette(), keys(), main(), mm(), overlays(), poly_mm(), to_back()
 
-### Community 118 - "SendStep"
+### Community 34 - "Event"
+Cohesion: 0.18
+Nodes (11): Event, confidence, failure, id, kind, text, Kind, Captured (+3 more)
+
+### Community 35 - "SolveCallbacks"
+Cohesion: 0.14
+Nodes (10): SolveCallbacks, cancelled, fail, partial, reply, SolveCallbacks, cancelled, fail (+2 more)
+
+### Community 36 - "Framebuffer"
+Cohesion: 0.08
+Nodes (34): render, drawCalc, decodeUtf8(), encodeUtf8(), findGlyph(), Glyph, cp, rows (+26 more)
+
+### Community 37 - "firmware/src/preview.cpp"
+Cohesion: 0.34
+Nodes (16): authorised(), autotuneHandler(), detailHandler(), focusHandler(), frameHandler(), lastHandler(), noCache(), pageHandler() (+8 more)
+
+### Community 38 - "firmware-prototype/src/main.cpp"
+Cohesion: 0.21
+Nodes (14): cameraName(), applySettings(), batteryPercent(), charging(), onWifiEvent(), post(), reportWifi(), serviceBattery() (+6 more)
+
+### Community 39 - "Ask"
+Cohesion: 0.40
+Nodes (5): Ask, Key, Nothing, Password, Ssid
+
+### Community 40 - "SerialCmd"
+Cohesion: 0.13
+Nodes (13): SerialCmd, Changed, ExamOff, Keys, None, Preview, PreviewOff, Scan (+5 more)
+
+### Community 41 - "Back cover (engraved 'AI CALCULATOR rev A, 6 x M2x10')"
+Cohesion: 0.13
+Nodes (22): Front view render (enclosure), Display window with 'AI CALCULATOR' wordmark, Round D-pad (4-way cursor key), Casio-style keypad layout (SHIFT/ALPHA/D-pad/MODE/ON, Abs x^3 x^-1 log_a b row, 5-col number block), Isometric back render (back cover), Back cover (engraved 'AI CALCULATOR rev A, 6 x M2x10'), 6x M2x10 countersunk screw fastening, Back cover camera window (OV5640) (+14 more)
+
+### Community 42 - "SendStep"
 Cohesion: 0.50
 Nodes (4): SendStep, Idle, Solving, WaitWifi
 
-### Community 119 - "NormMode"
-Cohesion: 0.67
-Nodes (3): NormMode, Norm1, Norm2
+### Community 43 - "AI Calculator Board Concept Layout v2"
+Cohesion: 0.16
+Nodes (20): AI Calculator Board Concept Layout v2, Charger + 3.3 V regulator + ESD block, E-paper socket + driver and window, ESP32-S3 MINI-1 module, Keypad layout (fx-300ES style key grid), LiPo 401230 battery (~110 mAh), Magnetic connector (5358) in solar-cell slot, OV5640 camera + 24-pin socket (+12 more)
 
-### Community 120 - "Glyph"
-Cohesion: 0.67
-Nodes (3): Glyph, cp, rows
+### Community 44 - "wndProc"
+Cohesion: 0.22
+Nodes (4): exifOrientation(), handleEvent(), paint(), wndProc()
 
-### Community 121 - "NormMode"
+### Community 45 - "keys.cpp"
+Cohesion: 0.15
+Nodes (12): beginOn(), keysBegin(), keysPoll(), keysSleepUntilPress(), pollOn(), Repeat, key, next (+4 more)
+
+### Community 46 - "Tester firmware README (Stage 4)"
+Cohesion: 0.13
+Nodes (19): Tester firmware README (Stage 4), src/claude_client (HTTPS streaming to Claude), core/ shared calculator logic, Exam mode (Wi-Fi off, persisted, USB unlock or 12 h), src/screen (125x61 calc screen on 250x122 e-paper), Tester hardware: ESP32-S3-CAM (OV3660) + Waveshare 2.13in e-paper HAT V4, buildKeys(), claudeScan() (scan via host sampleFn) (+11 more)
+
+### Community 47 - "ai_calc_pcb_8/hardware/tools/build_board.py"
+Cohesion: 0.10
+Nodes (14): add_edge_keepout(), add_epaper_slot(), add_rule_areas(), fp_path(), main(), patch_rules(), rule_area(), add_edge_keepout() (+6 more)
+
+### Community 48 - "shapely_geometry"
+Cohesion: 0.13
+Nodes (8): add_via(), free(), obstacles(), via_near_pad(), add_via(), free(), obstacles(), via_near_pad()
+
+### Community 49 - "Failure"
+Cohesion: 0.22
+Nodes (8): Failure, ApiBusy, ApiError, BadReply, Camera, NoApiKey, NoConnection, Timeout
+
+### Community 50 - "Root sheet ai_calc.kicad_sch"
+Cohesion: 0.14
+Nodes (18): Stage-8 KiCad Design Summary (routed board), U4/U5 ME6211 camera LDOs (2.8 V / 1.5 V), E-paper boost circuit (L1 68uH, Q3 SI1308, D3-D5, R12 3R), J1 Camera FPC 24P dual-contact (OV5640, reversed), J2 E-paper FPC 24P dual-contact (2.13in V4), kicad_summary.py (summary generator), Net +3V3, Net SYS (load-shared system rail) (+10 more)
+
+### Community 51 - "firmware-prototype/src/screen.cpp"
+Cohesion: 0.25
+Nodes (3): draw(), screenBegin(), screenShow()
+
+### Community 52 - "loop"
+Cohesion: 0.27
+Nodes (11): connectWifi(), loop(), previewEnded(), scanWifi(), serviceExam(), servicePower(), previewActive(), previewRunning() (+3 more)
+
+### Community 53 - "claudeSolve"
+Cohesion: 0.44
+Nodes (4): claudeSolve(), lower(), readLine(), writeAll()
+
+### Community 54 - "AI Calculator Multiple Choice Test"
+Cohesion: 0.17
+Nodes (13): AI Calculator Multiple Choice Test, Multiple Choice Answer Key and Score Sheet, CHOICE + option label output format, Closest-option selection when exact answer absent, MC Handwritten Round (H1-H4), Option label styles (A-D row, A-D stacked, (a)-(e), 1-4), AI Calculator Test Worksheet, Worksheet Answer Key and Score Sheet (+5 more)
+
+### Community 56 - "Screen"
+Cohesion: 0.25
+Nodes (7): Screen, Busy, Message, Off, Ready, Result, Warning
+
+### Community 57 - "View"
+Cohesion: 0.14
+Nodes (14): View, Ai, Calc, Clr, ClrConfirm, Error, ExamInfo, Hyp (+6 more)
+
+### Community 58 - "SerialCmd"
+Cohesion: 0.13
+Nodes (13): SerialCmd, Changed, ExamOff, Keys, None, Preview, PreviewOff, Scan (+5 more)
+
+### Community 59 - "Effort"
+Cohesion: 0.40
+Nodes (4): Effort, Careful, Max, Normal
+
+### Community 60 - "firmware/src/settings.cpp"
+Cohesion: 0.17
+Nodes (15): cameraName(), setup(), statusText(), Ask, Key, Nothing, Password, Ssid (+7 more)
+
+### Community 61 - "Stage 10: moving the board to the Casio fx-115ES shell"
+Cohesion: 0.29
+Nodes (6): Board changes made in stage 10 (DRC: 0 errors, 0 unconnected, 0 schematic mismatches), How the photos were measured, Stage 10: moving the board to the Casio fx-115ES shell, Still from the old shell (not measurable in the photos), The back cover (photo `2f54d6c7`, fitted on its 6 screw holes, about ±1 mm), Things in the way, seen in the photos
+
+### Community 62 - "Breadboard Wiring Diagram (exact, camera up)"
+Cohesion: 0.23
+Nodes (14): Calculator Buttons (=, AC, Up, Down), 2.13in E-Paper Display, ESP32-S3-CAM Board, LONG Breadboard, MEDIUM Breadboard, Breadboard Wiring Diagram (exact, camera up), Breadboard Wiring Diagram (real orientation, USB away), Breadboard Wiring Diagram (top, USB toward you) (+6 more)
+
+### Community 63 - "firmware/src/screen.cpp"
+Cohesion: 0.40
+Nodes (3): draw(), screenBegin(), screenShow()
+
+### Community 64 - "Stage-8 board ai_calc.kicad_pcb (72.3x148.8 mm, 0.8 mm, 2 layers, 140 footprints, 4630 tracks, 322 vias, 92 nets, GND pour)"
+Cohesion: 0.19
+Nodes (11): Custom footprint library ai_calc.pretty (stage 8), Stage-8 board ai_calc.kicad_pcb (72.3x148.8 mm, 0.8 mm, 2 layers, 140 footprints, 4630 tracks, 322 vias, 92 nets, GND pour), AI Calculator custom case (rev A) README, build_case.py (parametric Fusion case from KiCad), fusion_run.py (sends script to Fusion), FusionMCPBridge add-in, TPU keymat (46 caps + REPLAY rocker), Case Z stack-up (77.7 x 156.2 x 13.6 mm) (+3 more)
+
+### Community 65 - "hardware/tools/fixroute.py"
+Cohesion: 0.11
+Nodes (8): net_pts(), pad_pts(), anchor_points(), items_geom(), raster(), route(), net_pts(), pad_pts()
+
+### Community 67 - "string"
+Cohesion: 0.23
+Nodes (11): clockText(), drawMenu, drawStatus, engText, onReply, pullScan, render, resultText (+3 more)
+
+### Community 68 - "Prototype firmware README (board inside the Casio)"
+Cohesion: 0.24
+Nodes (12): D7 SMF5.0A VBUS TVS, J3 Magnetic USB (Adafruit 5358), J4 Battery JST-PH (Adafruit 1570), Net BAT+, Net VBUS, Sheet: Connectors - magnet USB, battery (connectors.kicad_sch), U2 MCP73831 LiPo charger, U7 USBLC6-2SC6 USB ESD protection (+4 more)
+
+### Community 69 - "Stage 9: finishing the v8 board (ai_calc_pcb_9)"
+Cohesion: 0.40
+Nodes (4): Firmware (done in this stage), Stage 9: finishing the v8 board (ai_calc_pcb_9), Still open before ordering, What changed, and why
+
+### Community 70 - "Kind"
+Cohesion: 0.40
+Nodes (5): Kind, Captured, Fail, Partial, Reply
+
+### Community 73 - "Decode"
+Cohesion: 0.17
+Nodes (11): Decode, cx, cy, fullH, fullW, jpeg, lastYield, out (+3 more)
+
+### Community 74 - "SolveResult"
+Cohesion: 0.14
+Nodes (10): parseSolveResult(), SolveResult, answer, choice, confidence, expression, readable, readAs (+2 more)
+
+### Community 80 - "loop"
+Cohesion: 0.16
+Nodes (21): cameraHoldUntil(), applySettings(), connectWifi(), loop(), previewEnded(), serviceExam(), serviceSend(), endPreview() (+13 more)
+
+### Community 81 - "Keypad 8x10 matrix (ROW0-7, COL0-9, SW1-SW50)"
+Cohesion: 0.31
+Nodes (9): Keypad 8x10 matrix (ROW0-7, COL0-9, SW1-SW50), Sheet: Keypad and TCA8418 (keypad.kicad_sch), U6 TCA8418 keypad scanner (I2C), kMatrix in src/keys.cpp (key at each matrix crossing), Serial Monitor commands (wifi, key, status, preview, scan, snap, forget, keys, exam off), keys command character-to-key table, Check-on-real-hardware list (VERIFY knobs: EPD_T, TRAVEL, PILOT_D, ...), Key layout mismatch check (#10: board row 2 vs firmware key table) (+1 more)
+
+### Community 85 - "Alias"
 Cohesion: 0.67
-Nodes (3): NormMode, Norm1, Norm2
+Nodes (3): Alias, text, tok
+
+### Community 87 - "ai_calc_pcb_8/hardware/tools/fixroute.py"
+Cohesion: 0.18
+Nodes (4): anchor_points(), items_geom(), raster(), route()
+
+### Community 93 - "full.sh script"
+Cohesion: 0.38
+Nodes (4): drc(), full.sh script, route.sh script, run.sh script
+
+### Community 96 - "Key"
+Cohesion: 0.29
+Nodes (7): Key, AC, Down, Eq, Off, On, Up
+
+### Community 97 - "U1 ESP32-S3-MINI-1-N4R2 (MCU module)"
+Cohesion: 0.60
+Nodes (6): Camera DVP bus (CAM_D0-7, PCLK, HREF, VSYNC, XCLK, SIOC/SIOD), E-paper SPI (EPD_CLK/DIN/CS/DC/RST/BUSY), I2C bus (I2C_SCL/I2C_SDA, KEYPAD_INT), Net CHG_STAT (via D6 level clamp from CHG_STAT_RAW), U1 ESP32-S3-MINI-1-N4R2 (MCU module), firmware-prototype src/pins.h
+
+### Community 99 - "HistoryItem"
+Cohesion: 0.50
+Nodes (3): HistoryItem, expr, value
+
+### Community 102 - "Board geometry from the scan: assumptions and confidence"
+Cohesion: 0.20
+Nodes (9): 1. What the scan shows (orientation), 2. Scale, 3. Geometry table, 4. Keypad (50 contacts = 49 matrix + ON), 5. Choices made where two readings were possible, 6. Carry-forward findings, 7. VERIFY list (lowest confidence first), Board geometry from the scan: assumptions and confidence (+1 more)
+
+### Community 110 - "Tuning"
+Cohesion: 0.40
+Nodes (5): Tuning, def, max, min, name
+
+### Community 114 - "Calculator Mode"
+Cohesion: 0.40
+Nodes (5): Calculator Editing Screen, Calculator Math Error Screen, Calculator Fraction Result Screen, Calculator STO Screen, Calculator Mode
+
+### Community 121 - "ScanNote"
+Cohesion: 0.50
+Nodes (4): ScanNote, None, Ok, Unclear
+
+### Community 123 - "Menu System"
+Cohesion: 0.50
+Nodes (4): Hyperbolic Menu Screen, Mode Menu Screen, Setup Menu Screen, Menu System
+
+### Community 138 - "hardware/tools/prepass.py"
+Cohesion: 0.25
+Nodes (3): connect_tree(), pad(), stub()
+
+### Community 142 - "AI Calculator PCB — handoff for the KiCad Claude Code session"
+Cohesion: 0.22
+Nodes (8): AI Calculator PCB — handoff for the KiCad Claude Code session, Key decisions you must not undo, Open questions for Nirav, Product (fixed requirements), Stage 10 (ai_calc_pcb_10): moved to the fx-115ES shell, Stage 9 (ai_calc_pcb_9): v8 finished, Tools (in `hardware/tools/`; written for the cloud box, paths need adapting), Where things stand
+
+### Community 143 - "Stage 2: electrical plan (pins, power, keypad)"
+Cohesion: 0.25
+Nodes (7): 1. Pin map (final: `hardware/pins_final.h`), 2. Power, 3. Keypad, 4. Open items for later stages, Battery life (120 mAh, ~100 mAh usable), Stage 2: electrical plan (pins, power, keypad), Why the magnetic contacts never carry battery voltage
+
+### Community 144 - "JLCPCB order checklist (fill in when the VERIFY items are done)"
+Cohesion: 0.29
+Nodes (6): After it arrives, Assembly options, Files (all in `fab/`), In the parts-placement preview, check these by eye, JLCPCB order checklist (fill in when the VERIFY items are done), PCB options
+
+### Community 145 - "Stage 3: schematic (done)"
+Cohesion: 0.29
+Nodes (6): Changes made in the final review, Design-review fixes (2026-10-02, independent review of the whole schematic), Netlist sanity check (done by script), Notes for the firmware, Stage 3: schematic (done), Still open (needs your hardware, not blocking the board)
+
+### Community 146 - "Stages 4 + 5: footprints and placement"
+Cohesion: 0.29
+Nodes (6): Footprints (all real JLCPCB/LCSC land patterns), How it's built (repeatable), Placement (KiCad view = looking at the board from the back cover), Stage 6: routing (first complete pass, 2026-10-02), Stages 4 + 5: footprints and placement, The two ribbon cables (the riskiest part of the board)
+
+### Community 147 - "full.sh script"
+Cohesion: 0.38
+Nodes (4): drc(), full.sh script, route.sh script, run.sh script
+
+### Community 152 - "ai_calc_pcb_8/hardware/geometry/layout_concept.py"
+Cohesion: 0.22
+Nodes (4): crect(), rect(), crect(), rect()
 
 ## Ambiguous Edges - Review These
 - `AI Hold-to-Capture Flow` → `Exam Mode`  [AMBIGUOUS]
   tests/golden/exam_confirm.txt · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **802 isolated node(s):** `On`, `Off`, `AC`, `Eq`, `Up` (+797 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1028 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **12 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **519 isolated node(s):** `make_outputs.sh script`, `On`, `Off`, `AC`, `Eq` (+514 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 737 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **19 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **What is the exact relationship between `AI Hold-to-Capture Flow` and `Exam Mode`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `Device` connect `Device` to `View`, `string`, `Framebuffer`, `string`, `HistoryItem`, `Claude outputs/core/device.cpp`, `keyCalc`, `Claude outputs/firmware/src/claude_client.h`, `Mode`, `ScanNote`?**
-  _High betweenness centrality (0.096) - this node is a cross-community bridge._
-- **Why does `Device` connect `Device` to `ScanNote`, `View`, `equals`, `Framebuffer`, `string`, `HistoryItem`, `core/device.cpp`, `string`, `Mode`, `errorText`?**
-  _High betweenness centrality (0.060) - this node is a cross-community bridge._
-- **Why does `Tok` connect `Tok` to `string`?**
-  _High betweenness centrality (0.054) - this node is a cross-community bridge._
-- **What connects `On`, `Off`, `AC` to the rest of the system?**
-  _802 weakly-connected nodes found - possible documentation gaps or missing edges._
-- **Should `Parser` be split into smaller, more focused modules?**
-  _Cohesion score 0.07116104868913857 - nodes in this community are weakly interconnected._
-- **Should `Parser` be split into smaller, more focused modules?**
-  _Cohesion score 0.0761904761904762 - nodes in this community are weakly interconnected._
+- **Why does `Device` connect `Device` to `Num`, `Tok`, `Framebuffer`, `string`, `HistoryItem`, `device.h`, `firmware-prototype/src/main.cpp`, `keys.cpp`, `Failure`, `device.cpp`, `firmware/src/main.cpp`, `tests.cpp`, `ScanNote`, `App`, `View`?**
+  _High betweenness centrality (0.115) - this node is a cross-community bridge._
+- **Why does `Tok` connect `Tok` to `Num`, `HistoryItem`, `Device`, `device.cpp`, `Alias`?**
+  _High betweenness centrality (0.058) - this node is a cross-community bridge._
+- **Why does `App` connect `App` to `app.cpp`, `SolveCallbacks`, `Framebuffer`, `Device`, `SolveResult`, `string`, `tests.cpp`, `Screen`, `Effort`?**
+  _High betweenness centrality (0.045) - this node is a cross-community bridge._
+- **What connects `make_outputs.sh script`, `On`, `Off` to the rest of the system?**
+  _519 weakly-connected nodes found - possible documentation gaps or missing edges._
+- **Should `Num` be split into smaller, more focused modules?**
+  _Cohesion score 0.05399792315680166 - nodes in this community are weakly interconnected._
+- **Should `Tok` be split into smaller, more focused modules?**
+  _Cohesion score 0.027777777777777776 - nodes in this community are weakly interconnected._

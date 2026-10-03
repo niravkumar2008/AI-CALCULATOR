@@ -1,0 +1,456 @@
+{
+  "generated": "2026-10-03",
+  "timeline_tasks": [
+    {
+      "date": "2026-10-03",
+      "task": "Buy 2-3 fx-115ES (same edition as the measured one) + calipers + multimeter locally",
+      "owner": "Nirav",
+      "depends_on": []
+    },
+    {
+      "date": "2026-10-03",
+      "task": "Caliper measurements: board outline C6, LCD window/e-paper C12-C13, wall stubs C14, rib heights D13, V3/V5/V9/V11/V12",
+      "owner": "Nirav",
+      "depends_on": [
+        "Buy 2-3 fx-115ES (same edition as the measured one) + calipers + multimeter locally"
+      ]
+    },
+    {
+      "date": "2026-10-03",
+      "task": "Firmware: freeze pins.h, e-paper + keypad drivers on dev board/simulator",
+      "owner": "Nirav + Claude",
+      "depends_on": []
+    },
+    {
+      "date": "2026-10-04",
+      "task": "Send measurements to the KiCad session; move parts if needed; DRC 0/0/0; regenerate fab/",
+      "owner": "Claude (KiCad session)",
+      "depends_on": [
+        "Caliper measurements: board outline C6, LCD window/e-paper C12-C13, wall stubs C14, rib heights D13, V3/V5/V9/V11/V12"
+      ]
+    },
+    {
+      "date": "2026-10-04",
+      "task": "Paper/3D-print fit check: print board outline 1:1, lay it in the shell, check posts, camera hole, ribs",
+      "owner": "Nirav",
+      "depends_on": [
+        "Send measurements to the KiCad session; move parts if needed; DRC 0/0/0; regenerate fab/"
+      ]
+    },
+    {
+      "date": "2026-10-04",
+      "task": "Server: build API proxy (device never holds the Claude key) - Cloudflare Worker or similar",
+      "owner": "Nirav + Claude",
+      "depends_on": []
+    },
+    {
+      "date": "2026-10-05",
+      "task": "Order Adafruit: 3x #1570, 3x #5358, 2x #5412, UPS 2-day",
+      "owner": "Nirav",
+      "depends_on": []
+    },
+    {
+      "date": "2026-10-05",
+      "task": "Order 3x Waveshare 2.13in V4 raw panel (Amazon Prime if listed, else Waveshare DHL)",
+      "owner": "Nirav",
+      "depends_on": []
+    },
+    {
+      "date": "2026-10-05",
+      "task": "Order 3x Seeed OV5640 AF camera (same module the J1 pinout assumes)",
+      "owner": "Nirav",
+      "depends_on": []
+    },
+    {
+      "date": "2026-10-05",
+      "task": "JLCPCB order: 5 PCBs 0.8mm ENIG, assemble 2, Standard PCBA, check every pin-1 in preview; pay DDP tariff",
+      "owner": "Nirav",
+      "depends_on": [
+        "Paper/3D-print fit check: print board outline 1:1, lay it in the shell, check posts, camera hole, ribs"
+      ]
+    },
+    {
+      "date": "2026-10-06",
+      "task": "JLC DFM/engineer review - answer any email within hours (each unanswered question = +1 day)",
+      "owner": "Nirav",
+      "depends_on": [
+        "JLCPCB order: 5 PCBs 0.8mm ENIG, assemble 2, Standard PCBA, check every pin-1 in preview; pay DDP tariff"
+      ]
+    },
+    {
+      "date": "2026-10-06",
+      "task": "Firmware: camera capture + JPEG + Wi-Fi upload to proxy on dev board",
+      "owner": "Nirav + Claude",
+      "depends_on": [
+        "Server: build API proxy (device never holds the Claude key) - Cloudflare Worker or similar"
+      ]
+    },
+    {
+      "date": "2026-10-07",
+      "task": "Prepare shells: open, remove Casio board, grind ribs per stage10 plan, drill ~6mm camera hole (Kapton-mask first)",
+      "owner": "Nirav",
+      "depends_on": [
+        "Buy 2-3 fx-115ES (same edition as the measured one) + calipers + multimeter locally"
+      ]
+    },
+    {
+      "date": "2026-10-08",
+      "task": "Adafruit parts arrive (estimate); test battery polarity vs J4 drawing (sheet E3)",
+      "owner": "Nirav",
+      "depends_on": [
+        "Order Adafruit: 3x #1570, 3x #5358, 2x #5412, UPS 2-day"
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "task": "JLC PCB fab done (estimate, ENIG 2-layer)",
+      "owner": "JLCPCB",
+      "depends_on": [
+        "JLC DFM/engineer review - answer any email within hours (each unanswered question = +1 day)"
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "task": "Camera + e-paper arrive (estimate; Waveshare direct can be 10/12-10/15)",
+      "owner": "Vendors",
+      "depends_on": [
+        "Order 3x Waveshare 2.13in V4 raw panel (Amazon Prime if listed, else Waveshare DHL)",
+        "Order 3x Seeed OV5640 AF camera (same module the J1 pinout assumes)"
+      ]
+    },
+    {
+      "date": "2026-10-10",
+      "task": "Firmware: full UI loop in simulator; factory self-test mode (keys, display, camera, battery ADC)",
+      "owner": "Nirav + Claude",
+      "depends_on": []
+    },
+    {
+      "date": "2026-10-12",
+      "task": "JLC assembly + X-ray done; ships DHL/FedEx (estimate)",
+      "owner": "JLCPCB",
+      "depends_on": [
+        "JLC PCB fab done (estimate, ENIG 2-layer)"
+      ]
+    },
+    {
+      "date": "2026-10-12",
+      "task": "Camera ribbon pin check (E6: fingers 2 and 15 beep to GND)",
+      "owner": "Nirav",
+      "depends_on": [
+        "Camera + e-paper arrive (estimate; Waveshare direct can be 10/12-10/15)"
+      ]
+    },
+    {
+      "date": "2026-10-15",
+      "task": "Boards arrive in Indiana (estimate, DHL 3-4 days)",
+      "owner": "DHL",
+      "depends_on": [
+        "JLC assembly + X-ray done; ships DHL/FedEx (estimate)"
+      ]
+    },
+    {
+      "date": "2026-10-15",
+      "task": "Bring-up board #1: USB only, no battery/display/camera; check 3.3V, 2.8V, 1.5V; flash over magnetic USB",
+      "owner": "Nirav",
+      "depends_on": [
+        "Boards arrive in Indiana (estimate, DHL 3-4 days)"
+      ]
+    },
+    {
+      "date": "2026-10-16",
+      "task": "Plug e-paper, then camera; run self-test; then battery + charging test",
+      "owner": "Nirav",
+      "depends_on": [
+        "Bring-up board #1: USB only, no battery/display/camera; check 3.3V, 2.8V, 1.5V; flash over magnetic USB"
+      ]
+    },
+    {
+      "date": "2026-10-17",
+      "task": "Assemble into fx-115ES shell #1; end-to-end photo -> Claude -> answer on e-paper",
+      "owner": "Nirav",
+      "depends_on": [
+        "Plug e-paper, then camera; run self-test; then battery + charging test",
+        "Prepare shells: open, remove Casio board, grind ribs per stage10 plan, drill ~6mm camera hole (Kapton-mask first)"
+      ]
+    },
+    {
+      "date": "2026-10-18",
+      "task": "Board #2 bring-up + assembly; 24h battery soak test; write bug list for v2",
+      "owner": "Nirav",
+      "depends_on": [
+        "Assemble into fx-115ES shell #1; end-to-end photo -> Claude -> answer on e-paper"
+      ]
+    },
+    {
+      "date": "2026-10-21",
+      "task": "Buffer: if JLC/DHL slip 2-4 days (post-holiday backlog), working units land here",
+      "owner": "-",
+      "depends_on": []
+    }
+  ],
+  "phases": [
+    {
+      "phase": "Prototype v1",
+      "dates": "2026-10-03 to 2026-10-21",
+      "units": 2,
+      "goal": "Two working calculators in fx-115ES shells"
+    },
+    {
+      "phase": "Prototype v2",
+      "dates": "2026-10-22 to 2026-11-20",
+      "units": "5-10",
+      "goal": "Fix v1 bugs, add test pads for a pogo-pin jig, second JLC order"
+    },
+    {
+      "phase": "Custom 3D-printed shell",
+      "dates": "2026-11 to 2027-01",
+      "units": "5-10",
+      "goal": "build123d shell + own keypad; drop Casio parts"
+    },
+    {
+      "phase": "Pilot batch",
+      "dates": "2027-01 to 2027-03",
+      "units": "10-50",
+      "goal": "Beta testers (13+), feedback, FCC pre-scan"
+    },
+    {
+      "phase": "First sales",
+      "dates": "2027-03 to 2027-06",
+      "units": "100",
+      "goal": "LLC, FCC SDoC, preorders (Crowd Supply/Kickstarter or own site)"
+    },
+    {
+      "phase": "Hundreds",
+      "dates": "2027-H2",
+      "units": "300-1000",
+      "goal": "Custom battery + OEM connector, turnkey PCBA + box build, 3PL"
+    },
+    {
+      "phase": "Thousands + injection molding",
+      "dates": "2028",
+      "units": "3000+",
+      "goal": "Steel/aluminium tools pay off above ~3,300 units"
+    },
+    {
+      "phase": "Contract manufacturer",
+      "dates": "2028-2029",
+      "units": "5000-10000+",
+      "goal": "CM builds, tests, packs; ships to FBA/3PL; Nirav runs product + software"
+    }
+  ],
+  "price_scaling": {
+    "units": "USD per finished calculator",
+    "date_checked": "2026-10-03",
+    "quantities": [
+      2,
+      10,
+      50,
+      100,
+      500,
+      1000,
+      5000,
+      10000
+    ],
+    "rows": {
+      "pcb_pcba": [
+        39.52,
+        18.0,
+        13.0,
+        9.0,
+        7.9,
+        7.3,
+        6.6,
+        6.2
+      ],
+      "camera_ov5640af": [
+        14.0,
+        12.0,
+        7.0,
+        6.0,
+        5.0,
+        4.5,
+        4.0,
+        3.5
+      ],
+      "epaper_2in13": [
+        6.99,
+        6.6,
+        6.31,
+        5.5,
+        4.5,
+        4.0,
+        3.5,
+        3.2
+      ],
+      "battery_100mAh": [
+        5.95,
+        5.36,
+        5.36,
+        4.76,
+        2.0,
+        1.5,
+        1.2,
+        1.0
+      ],
+      "magnetic_connector_pair": [
+        6.5,
+        5.85,
+        5.85,
+        5.2,
+        2.0,
+        1.2,
+        0.9,
+        0.7
+      ],
+      "magnetic_usb_cable": [
+        4.95,
+        4.95,
+        4.95,
+        3.96,
+        1.8,
+        1.4,
+        1.1,
+        1.0
+      ],
+      "enclosure_and_keypad": [
+        20.0,
+        20.0,
+        20.0,
+        21.0,
+        10.0,
+        9.0,
+        6.5,
+        4.0
+      ],
+      "final_assembly_labor": [
+        0,
+        0,
+        0,
+        0,
+        3.0,
+        2.5,
+        2.0,
+        1.5
+      ],
+      "packaging_qc": [
+        0,
+        1.0,
+        2.0,
+        2.0,
+        1.5,
+        1.2,
+        0.9,
+        0.8
+      ],
+      "freight_and_import_duty": [
+        40.0,
+        8.0,
+        5.0,
+        8.0,
+        6.0,
+        5.0,
+        4.2,
+        3.8
+      ],
+      "certification_amortized": [
+        0,
+        0,
+        0,
+        35.0,
+        7.0,
+        3.5,
+        0.7,
+        0.35
+      ]
+    },
+    "row_notes": {
+      "pcb_pcba": "qty2 = (JLC fees $59.50 + parts 2x$9.77)/2 from project cost doc; LCSC breaks for ESP32-S3-MINI-1-N4R2 ($5.00/$4.50/$3.63/$3.38) and TCA8418 ($1.12/$0.92/$0.69/$0.61) checked 2026-10-03; other rows estimate",
+      "camera_ov5640af": "qty2-10 Seeed OV5640 AF (~GBP11 UK, US est); 50+ generic 24-pin DVP AF module $4.58-$8 listings; volume estimate",
+      "epaper_2in13": "Waveshare raw 2.13in $6.31-$6.99 (waveshare.com, 2026-10-03); 100+ Good Display GDEY0213B74 direct, estimate",
+      "battery_100mAh": "Adafruit #1570 $5.95 (2026-10-03); 10/100 tiers assume Adafruit's usual 10%/20% breaks (estimate); 500+ custom cell with UN38.3 from Shenzhen, Alibaba range $0.61-$1.70 + pack/PCM (estimate)",
+      "magnetic_connector_pair": "Adafruit #5358 $6.50/$5.85/$5.20 (1/10/100+); 500+ OEM pogo-magnet pair, pins ~$0.23-0.25 @MOQ1000 (estimate for full pair)",
+      "magnetic_usb_cable": "Adafruit #5412 $4.95; volume OEM estimate",
+      "enclosure_and_keypad": "2-50: donor Casio fx-115ES ~$20 (Walmart $19.99, 2026-10-03); 100: 3D-printed shell + small-batch silicone keypad incl. tooling share (estimate); 500-1000: printed/urethane-cast (estimate); 5000+: injection mold, ~$25k tooling amortized + ~$1.50/set (estimate)",
+      "freight_and_import_duty": "qty2 = DHL + JLC DDP tariff share (JLC FAQ: 35-92.5% total tariff on China goods) estimate; volume = ~35% duty on China-made content + sea/air freight, estimate",
+      "certification_amortized": "~$3.5k one-time (FCC Part 15B SDoC $1-2.5k, lawyer, misc) spread over the batch; only counted once you sell (qty 100+). estimate"
+    },
+    "total_per_unit": [
+      137.91,
+      81.76,
+      69.47,
+      100.42,
+      50.7,
+      41.1,
+      31.6,
+      26.05
+    ],
+    "enclosure_options_per_unit": {
+      "casio_fx115es_donor": [
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0,
+        20.0
+      ],
+      "3d_printed_plus_silicone_keypad": [
+        null,
+        30.0,
+        27.0,
+        21.0,
+        12.0,
+        10.0,
+        9.0,
+        9.0
+      ],
+      "injection_molded_25k_tooling": [
+        null,
+        null,
+        null,
+        251.5,
+        51.5,
+        26.5,
+        6.5,
+        4.0
+      ],
+      "note": "estimates; injection = $25,000 tooling / qty + $1.50 per set. Break-even vs ~$9 printed/cast is ~3,300 units"
+    },
+    "claude_api_cost": {
+      "prices_per_million_tokens": {
+        "claude-haiku-4-5": [
+          1.0,
+          5.0
+        ],
+        "claude-sonnet-5-5": [
+          2.0,
+          10.0
+        ],
+        "claude-opus-5-5": [
+          4.0,
+          20.0
+        ]
+      },
+      "assumed_tokens_per_solve": {
+        "input": 2500,
+        "output_incl_thinking_sonnet_opus": 2100,
+        "output_haiku": 800
+      },
+      "cost_per_solve_usd": {
+        "claude-haiku-4-5": 0.0065,
+        "claude-sonnet-5-5": 0.026,
+        "claude-opus-5-5": 0.052
+      },
+      "per_user_month_usd_sonnet": {
+        "light_60_solves": 1.56,
+        "typical_150_solves": 3.9,
+        "heavy_400_solves": 10.4
+      },
+      "per_user_month_usd_haiku_first_then_sonnet_20pct": {
+        "typical_150_solves": 1.56
+      },
+      "source": "Anthropic model price table (claude-api skill cache dated 2026-09-25); token counts are estimates"
+    }
+  }
+}
