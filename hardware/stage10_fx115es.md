@@ -71,3 +71,25 @@ The back cover's ribs pushed on the old LCD and the Casio board. They now meet o
 ## Things in the way, seen in the photos
 - **Round stubs on both side walls beside the screen** (three per side, from the wall photos). They held the old LCD. They stick in where the board's screen section reaches the walls. They're safe to grind off; **C14** says how big they are.
 - **Back cover:** two rings (about 8 and 20 mm across) and ribs in the middle, plus a ribbed box behind the solar cell. They'll press on parts at the top of the keypad. They show up on the grind map once the board is final.
+
+## Stage 11a: e-paper moved to the measured window (calipers C12/C13)
+The window is **60.65 × 24.3 mm**, and its top edge is 24.0 mm below the case top. That puts the window centre at **y 92.99**. The e-paper's visible area was centred at 96.56, so the e-paper would have shown 3.6 mm of border at the top and lost 3.6 mm of the image at the bottom.
+
+- The whole e-paper block moved up 3.57 mm as one piece: J2, its slot and slot keep-out, the booster circuit (L1, Q3, D3–D5, R11, R12) and C19–C30, plus every track and via between them. The e-paper outline/active area on User.3 moved too, and the old 57 × 21 window guess was replaced by the measured window.
+- The handful of tracks stretched across the block's edge were ripped up and re-routed. DRC: 0 errors, 0 unconnected, 0 schematic mismatches.
+- The e-paper glass now ends 0.09 mm inside the board edge at the battery cut-out (y 78.39 vs 78.3). It clears the battery itself by 3.4 mm.
+
+## Caliper readings used so far (2026-10-03)
+| Item | Reading | Use |
+|---|---|---|
+| C1 / C3 length | 159.9 front / 161.0 back | Case length 161.0 (photo trace: 160.9 ✓) |
+| C2 / C3 width | 79.3 | Case width; the photo outline is scaled 1 % narrower |
+| C4 screen-section wall | **4.7 mm** (5.5 with the wire clip) | **Open:** the board comes within about 3.45 mm of the outside edge there. Waiting for Nirav's photo of that part before trimming; the ESP32 antenna edge is on that side |
+| C5 keypad wall | 0.8 | keypad section is fine |
+| C6 Casio board | 65.05 × 97.9 | our board is narrower ✓ |
+| C7 posts | screw posts 3.85, plain pins 2.9 | 4.2/4.4 holes give the pins 0.65–0.75 mm of play; the case uses 3.85 pins |
+| C8 | 61.8 outside to outside (one value) | **Doesn't match the photos (pair 1 = 46.4 centre to centre, three photos agree).** Which pair? |
+| C9 | post 3.7, 49.65 | **Doesn't match** the photos / C11 (corner posts about 63–65 apart). Ask |
+| C10 | 42.85 outside to outside → **39.0 centre to centre** | matches the photos ✓ |
+| C11 | 4.2 from the left wall / 6.1 from the top wall | top-left post ≈ (117.0–117.8, 64.6–65.4); clears the board cut-out by ≥ 1.46 mm ✓ |
+| C12 / C13 | 60.65 × 24.3, top edge 24.0 | stage 11a above |

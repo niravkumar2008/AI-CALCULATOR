@@ -18,6 +18,18 @@ board fits both.
 | --- | --- |
 | ![display section](renders/section_display.png) | ![keys section](renders/section_keys.png) |
 
+## fx-115ES shell (2026-10-03)
+`build_case.py` now copies the **fx-115ES** shell, with no Casio branding:
+- **Outline:** `fx115es_outline.json`, traced from Nirav's back-cover photo (fitted on its 6 screw holes, 0.31 mm RMS) and scaled to the caliper readings: **79.3 × 161.0 mm**, **13.8 mm** thick.
+- **Screws:** six screws at the fx-115ES spots (row-1 pair, bottom pair, top corners from C11).
+- **Pins:** locating pins at the real 3.85 mm post size.
+- **Key openings:** the measured fx-115ES sizes, with oval top-row keys and a Ø 15.4 round pad.
+- **Window:** 60.65 × 24.3 at the C13 position.
+- **Solar window:** kept as a shallow decorative panel.
+- **Label:** "AI CALCULATOR" where the Casio logo sits.
+
+`python build_case.py` checks it offline (board-to-wall gap ≥ 0.5 mm, e-paper centred in the window). The 3D build needs Fusion open with the bridge add-in.
+
 ## What's in it
 
 - **Casio silhouette** from the board: wide top, short taper, narrow bottom; 77.7 × 156.2 × 13.6 mm.

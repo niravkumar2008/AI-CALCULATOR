@@ -708,9 +708,9 @@
     "semantic_hash": "6ce22420097767688cbb622cd64438e5"
   },
   "hardware/enclosure/README.md": {
-    "mtime": 1790993313.1307988,
-    "seen": 1790993334.839046,
-    "ast_hash": "3b2038e5f49f229990e142cd7b8b4bd8",
+    "mtime": 1791065415.7595713,
+    "seen": 1791065451.9310133,
+    "ast_hash": "7ff617ff069b893cbc26c682ff7c4b68",
     "semantic_hash": ""
   },
   "Claude outputs/layout_concept_v2.png": {
@@ -978,8 +978,8 @@
     "semantic_hash": "a77eb9f5fef42db9806355a1f1405044"
   },
   "hardware/kicad/DESIGN_SUMMARY.md": {
-    "mtime": 1791036573.6577957,
-    "seen": 1791036586.188044,
+    "mtime": 1791065438.1495862,
+    "seen": 1791065451.9310133,
     "ast_hash": "1ce123fceb821ff7a77d537cf1b2f786",
     "semantic_hash": ""
   },
@@ -1140,15 +1140,15 @@
     "semantic_hash": ""
   },
   "hardware/fab/ai_calc_assembly_top.pdf": {
-    "mtime": 1791036546.8504374,
-    "seen": 1791036586.188044,
-    "ast_hash": "0ea041298a6fb7cdda45685cb38aaaf4",
+    "mtime": 1791065427.516911,
+    "seen": 1791065451.9310133,
+    "ast_hash": "e5ef9dd2f78bbdfb6c6689d1b72e6f67",
     "semantic_hash": ""
   },
   "hardware/fab/ai_calc_schematic.pdf": {
-    "mtime": 1791036546.0445836,
-    "seen": 1791036586.188044,
-    "ast_hash": "f594c296022b5359de529345f685942d",
+    "mtime": 1791065426.8694997,
+    "seen": 1791065451.9310133,
+    "ast_hash": "056fe99a1247fbd00b7c534db6924d46",
     "semantic_hash": ""
   },
   "hardware/geometry/adafruit_5358_MG04254FRA1S1N.pdf": {
@@ -1170,15 +1170,15 @@
     "semantic_hash": ""
   },
   "hardware/fab/render_bottom.png": {
-    "mtime": 1791036558.3812366,
-    "seen": 1791036586.188044,
-    "ast_hash": "35ab1d6ee5253b8ac11a19b7d72537b6",
+    "mtime": 1791065437.5397577,
+    "seen": 1791065451.9310133,
+    "ast_hash": "3d4d635cbef60df59cac0e3fa215e4b1",
     "semantic_hash": ""
   },
   "hardware/fab/render_top.png": {
-    "mtime": 1791036555.7097638,
-    "seen": 1791036586.188044,
-    "ast_hash": "762d6e6c88d1406c29eb0aa53e5a03a2",
+    "mtime": 1791065434.8823342,
+    "seen": 1791065451.9310133,
+    "ast_hash": "39e71388bbc950c22140b561e1731579",
     "semantic_hash": ""
   },
   "hardware/geometry/board_mm.png": {
@@ -1266,15 +1266,15 @@
     "semantic_hash": ""
   },
   "hardware/fitcheck/grind_map_back_cover.svg": {
-    "mtime": 1791036568.7504194,
-    "seen": 1791036586.188044,
-    "ast_hash": "0ffbaf132ef03be9fd73413216547559",
+    "mtime": 1791065390.4579992,
+    "seen": 1791065451.9310133,
+    "ast_hash": "2aeb91a3db11bd9317c67615385bb3c5",
     "semantic_hash": ""
   },
   "hardware/fitcheck/grind_map_front_shell.svg": {
-    "mtime": 1791036568.74943,
-    "seen": 1791036586.188044,
-    "ast_hash": "72348953d502fb33e19ad783dd5ce723",
+    "mtime": 1791065390.456494,
+    "seen": 1791065451.9310133,
+    "ast_hash": "9ef00080c2ff89ea857f4e2ba0c3936e",
     "semantic_hash": ""
   },
   "hardware/fitcheck/backcover_fx115es.json": {
@@ -1284,9 +1284,9 @@
     "semantic_hash": ""
   },
   "hardware/stage10_fx115es.md": {
-    "mtime": 1790994734.6776626,
-    "seen": 1790994890.8208227,
-    "ast_hash": "0062750d1d38cc1d3c783518d2ae1c0e",
+    "mtime": 1791065415.7146935,
+    "seen": 1791065451.9310133,
+    "ast_hash": "096eef156afcd7e5cb8ce9484ea20967",
     "semantic_hash": ""
   },
   "Claude outputs/launch_roadmap_data.json": {
@@ -1485,6 +1485,12 @@
     "mtime": 1791036674.0655563,
     "seen": 1791036704.7937937,
     "ast_hash": "61e2fbc60360b0e76f2dbbdce8449095",
+    "semantic_hash": ""
+  },
+  "Claude outputs/C15_how_to_measure.png": {
+    "mtime": 1791065571.4278893,
+    "seen": 1791065588.9713466,
+    "ast_hash": "7dccf30cfdd439e6a57ae5a40de723bb",
     "semantic_hash": ""
   }
 }
