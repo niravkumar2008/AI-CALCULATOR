@@ -2041,7 +2041,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "AP2112K-3.3TRG1"
+		(property "Value" "RT9080-33GJ5"
 			(at 190.5 69.85 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -2063,7 +2063,7 @@
 				)
 			)
 		)
-		(property "Datasheet" "https://www.diodes.com/assets/Datasheets/AP2112.pdf"
+		(property "Datasheet" "https://www.richtek.com/assets/product_file/RT9080/DS9080-09.pdf"
 			(at 190.5 62.23 0)
 			(hide yes)
 			(show_name no)
@@ -2074,7 +2074,7 @@
 				)
 			)
 		)
-		(property "Description" "600mA low dropout linear regulator, with enable pin, 3.8V-6V input voltage range, 3.3V fixed positive output, SOT-23-5"
+		(property "Description" "600mA low-Iq (2uA) LDO, 3.3V fixed, VIN 1.2-5.5V, TSOT-23-5 (1 VIN, 2 GND, 3 EN, 4 NC, 5 VOUT, same as AP2112K)"
 			(at 190.5 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -2085,7 +2085,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C51118"
+		(property "LCSC" "C841192"
 			(at 190.5 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -3710,7 +3710,7 @@
 			)
 		)
 	)
-	(global_label "+3V3"
+	(global_label "VBUS_SENSE"
 		(at 110.49 135.89 90)
 		(effects
 			(font

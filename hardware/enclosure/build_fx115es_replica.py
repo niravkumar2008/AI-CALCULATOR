@@ -111,6 +111,8 @@ DOOR_R, DOOR_CLR = 2.0, 0.15
 FEET = [(27.0, 52.0), (-27.0, 52.0), (27.0, -62.0), (-27.0, -62.0)]   # guess
 FOOT_D, FOOT_POCKET = 7.0, 0.4
 
+LCD, LCD_T = (64.0, 28.0), 2.2   # guess: dummy LCD under the window (between the wall stubs)
+
 # ── Slide cover (optional) ────────────────────────────────────────────────────
 RAIL_DEPTH = 0.5     # guess: groove along both long sides for the hard cover
 RAIL_Z = (SEAM_Z + 0.6, SEAM_Z + 1.8)
@@ -410,10 +412,10 @@ def geometry():
     cov_out = offset_const(Vf, -(COVER_CLR + COVER_T))
     return dict(Vf=Vf, Vb=Vb, Vf_s=resample(Vf, SPLINE_STEP), Vb_s=resample(Vb, SPLINE_STEP), C=C, K=K, S=S, top=top, win_c=win_c, screws=screws, locs=locs, keys=keys,
                 replay=replay, openings=openings, stubs=stubs, ribs=ribs, rings=rings, box=box, mat=mat,
-                board_c=board_c, lip_o=offset_const(C, LIP_GAP), lip_i=offset_const(C, LIP_GAP + LIP_T),
+                board_c=board_c, board_clip=offset_const(C, 0.3), lip_o=offset_const(C, LIP_GAP), lip_i=offset_const(C, LIP_GAP + LIP_T),
                 rail=[side_band(rail_in, 25.0, 50.0, True), side_band(rail_in, 25.0, 50.0, False)],
                 cover_lip=[side_band(lip_in, 25.0, 50.0, True), side_band(lip_in, 25.0, 50.0, False)],
-                cov_in=cov_in, cov_out=cov_out)
+                cov_in=cov_in, cov_out=cov_out, cov_out_s=resample(cov_out, SPLINE_STEP))
 
 def check(g):
     """2D sanity checks; returns a list of text lines."""
@@ -734,12 +736,12 @@ def stage_back(g):
     extrude(bk, profiles(sk), 0, SEAM_Z, name="Back cover")
     bb = body_named(bk, "Back cover")
     fillet(bk, edge_loop_at(bb, 0), EDGE_R_BACK)
-    sk = new_sketch(bk, "cavity")
-    poly(sk, g["C"])
+    sk = new_sketch(bk, "cavity")                     # inside of the lip, so the lip grows out of the rim
+    poly(sk, g["lip_i"])
     extrude(bk, profiles(sk), BACK_PLATE, SEAM_Z, "cut", [bb])
     sk = new_sketch(bk, "lip")
     poly(sk, g["lip_o"]); poly(sk, g["lip_i"])
-    extrude(bk, profiles(sk, 2), SEAM_Z, LIP_H, "join", [bb])
+    extrude(bk, profiles(sk, 2), SEAM_Z - 0.01, LIP_H + 0.01, "join", [bb])
 
     sk = new_sketch(bk, "bosses")
     for n, c in g["screws"]:
@@ -882,6 +884,9 @@ def stage_parts(g):
     rrect(sk, g["board_c"], BOARD[0], BOARD[1], 0.5)
     extrude(rf, profiles(sk), Z_BOARD_B, BOARD_T, name="Casio board (reference)")
     pb = body_named(rf, "Casio board (reference)")
+    sk = new_sketch(rf, "corner clip")                 # real board corners follow the rounded case ends
+    poly(sk, g["board_clip"]); poly(sk, [(-60, -100), (60, -100), (60, 100), (-60, 100)])
+    extrude(rf, profiles(sk, 2), Z_BOARD_B - 0.1, BOARD_T + 0.2, "cut", [pb])
     sk = new_sketch(rf, "holes")
     for n, c in g["screws"]:
         circle(sk, c, SCREW_POST_D + 0.4)
@@ -890,10 +895,15 @@ def stage_parts(g):
     extrude(rf, profiles(sk, test=lambda p: any(math.dist(p, c) < 2.4 for n, c in g["screws"] + g["locs"])),
             Z_BOARD_B - 0.1, BOARD_T + 0.2, "cut", [pb])
 
+    lc = comp_named("Reference - LCD (dummy)", True)  # makes the window read right; size is a guess
+    sk = new_sketch(lc, "lcd")
+    rrect(sk, g["win_c"], LCD[0], LCD[1], 0.5)
+    extrude(lc, profiles(sk), Z_PLATE - 0.05 - LCD_T, LCD_T, name="LCD (dummy)")
+
     cv = comp_named("Slide cover", True)
     ztop_in = T_BODY + KEY_PROUD + 0.3
     sk = new_sketch(cv, "plate")
-    poly(sk, g["cov_out"])
+    spline(sk, g["cov_out_s"])
     extrude(cv, profiles(sk), ztop_in, COVER_T, name="Slide cover")
     cb = body_named(cv, "Slide cover")
     sk = new_sketch(cv, "walls")
@@ -903,7 +913,7 @@ def stage_parts(g):
     for band in g["cover_lip"]:
         poly(sk, band)
     extrude(cv, profiles(sk), RAIL_Z[0] + 0.15, RAIL_Z[1] - RAIL_Z[0] - 0.3, "join", [cb])
-    sk = new_sketch(cv, "trim outside")
+    sk = new_sketch(cv, "trim outside")               # below the plate only, so the plate keeps its spline edge
     poly(sk, g["cov_out"]); poly(sk, [(-60, -100), (60, -100), (60, 100), (-60, 100)])
     extrude(cv, profiles(sk, 2), RAIL_Z[0], ztop_in - RAIL_Z[0], "cut", [cb])
     sk = new_sketch(cv, "open ends")                   # walls and lips only along the straight sides
@@ -918,7 +928,8 @@ def stage_parts(g):
 LOOKS = {"Front shell": "Paint - Metallic (Silver)", "Back cover": "Plastic - Matte (Black)",
          "Keymat": "Rubber - Soft", "Window lens": "Glass (Grey)", "Solar cell (dummy)": "Paint - Metallic (Dark Grey)",
          "Battery door": "Plastic - Matte (Black)", "Rubber feet": "Rubber - Hard",
-         "Reference - Casio board (C6)": "Plastic - Matte (Green)", "Slide cover": "Plastic - Translucent Matte (Gray)"}
+         "Reference - Casio board (C6)": "Plastic - Matte (Green)",
+         "Reference - LCD (dummy)": "Glass - Heavy Color", "Slide cover": "Plastic - Translucent Matte (Gray)"}
 
 def stage_looks(g):
     for cname, look in LOOKS.items():
@@ -949,11 +960,46 @@ def stage_check(g):
         out.append("%-36s %3d bodies %7.2f cm3  %5.1f x %5.1f x %5.1f mm" % (
             occ.component.name, occ.bRepBodies.count, vol, (bb.maxPoint.x - bb.minPoint.x) * 10,
             (bb.maxPoint.y - bb.minPoint.y) * 10, (bb.maxPoint.z - bb.minPoint.z) * 10))
-    res = design.analyzeInterference(design.createInterferenceInput(col))
-    out.append("interferences: %d" % res.count)
-    for i in range(res.count):
+    ii = design.createInterferenceInput(col)
+    ii.areCoincidentFacesIncluded = False
+    res = design.analyzeInterference(ii)
+    out.append("bodies checked: %d" % col.count)
+    out.append("interferences: %s" % (res.count if res is not None else "0 (Fusion returned no result set)"))
+    for i in range(res.count if res is not None else 0):
         r = res.item(i)
         out.append("  %s  <->  %s : %.4f cm3" % (r.entityOne.name, r.entityTwo.name, r.interferenceBody.volume))
+    # second opinion: pairwise boolean intersection of every pair whose boxes overlap
+    tb = adsk.fusion.TemporaryBRepManager.get()
+    bodies = [col.item(i) for i in range(col.count)]
+    hits, undet, pairs = [], [], 0
+    for i in range(len(bodies)):
+        for j in range(i + 1, len(bodies)):
+            a, b = bodies[i], bodies[j]
+            if not a.boundingBox.intersects(b.boundingBox):
+                continue
+            pairs += 1
+            v = None
+            for dz in (0.0, 0.002, -0.002):           # faces that just touch confuse the kernel: nudge 0.02 mm
+                try:
+                    ta, tbb = tb.copy(a), tb.copy(b)
+                    if dz:
+                        m = adsk.core.Matrix3D.create(); m.translation = adsk.core.Vector3D.create(0, 0, dz)
+                        tb.transform(tbb, m)
+                    tb.booleanOperation(ta, tbb, adsk.fusion.BooleanTypes.IntersectionBooleanType)
+                    vv = sum(ta.lumps.item(k).volume for k in range(ta.lumps.count)) if ta and ta.lumps.count else 0
+                    v = vv if v is None else min(v, vv)
+                    if v < 1e-6:
+                        break
+                except Exception:
+                    pass
+            if v is None:
+                undet.append("  (undetermined: %s <-> %s)" % (a.name, b.name))
+                continue
+            if v > 1e-6:
+                hits.append("  %s / %s  <->  %s / %s : %.4f cm3" % (a.parentComponent.name, a.name,
+                            b.parentComponent.name, b.name, v))
+    out.append("pairwise boolean check: %d pairs with overlapping boxes, %d real overlaps" % (pairs, len(hits)))
+    out += hits + undet
     with open(os.path.join(OUT, "interference.txt"), "w", encoding="utf8") as f:
         f.write("\n".join(out) + "\n")
     for line in out:
@@ -1002,6 +1048,9 @@ def stage_shots(g):
     named = {"front": V.TopViewOrientation, "back": V.BottomViewOrientation,
              "iso_front": V.IsoTopRightViewOrientation, "iso_back": V.IsoBottomLeftViewOrientation,
              "side": V.RightViewOrientation, "top_end": V.BackViewOrientation, "iso_left": V.IsoTopLeftViewOrientation}
+    for comp in design.allComponents:
+        for skt in comp.sketches:
+            skt.isLightBulbOn = False
     hide = [s for s in ARGS.get("hide", "Slide cover;Reference - Casio board (C6)").split(";") if s]
     set_visible(hide, False)
     try:
@@ -1034,6 +1083,7 @@ def stage_explode(g):
     import adsk.core
     gap = float(ARGS.get("gap", 14))
     order = {"Rubber feet": -2, "Battery door": -1, "Back cover": 0, "Reference - Casio board (C6)": 1,
+             "Reference - LCD (dummy)": 1,
              "Keymat": 2, "Keycaps": 3, "Front shell": 4, "Solar cell (dummy)": 5, "Window lens": 5, "Slide cover": 6}
     for occ in design.rootComponent.occurrences:
         m = adsk.core.Matrix3D.create()

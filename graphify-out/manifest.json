@@ -696,10 +696,10 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/build_case.py": {
-    "mtime": 1790944028.9489527,
-    "seen": 1790965933.4302878,
-    "ast_hash": "cc8f2b5c3690ae87368eb81aa67fda1c",
-    "semantic_hash": "cc8f2b5c3690ae87368eb81aa67fda1c"
+    "mtime": 1790999942.4215848,
+    "seen": 1791002089.9682188,
+    "ast_hash": "84255324fbf75af6b20f6798d0bb47fa",
+    "semantic_hash": ""
   },
   "hardware/enclosure/fusion_run.py": {
     "mtime": 1790943807.351833,
@@ -978,9 +978,9 @@
     "semantic_hash": "a77eb9f5fef42db9806355a1f1405044"
   },
   "hardware/kicad/DESIGN_SUMMARY.md": {
-    "mtime": 1790994824.3888052,
-    "seen": 1790994890.8208227,
-    "ast_hash": "8c9452ad988d3a41d2628930120a67b9",
+    "mtime": 1791002375.0756373,
+    "seen": 1791002382.0579917,
+    "ast_hash": "1a61146377fd57347e5f3c3f4b68e628",
     "semantic_hash": ""
   },
   "hardware/geometry/derive_geometry.py": {
@@ -1287,6 +1287,78 @@
     "mtime": 1790994734.6776626,
     "seen": 1790994890.8208227,
     "ast_hash": "0062750d1d38cc1d3c783518d2ae1c0e",
+    "semantic_hash": ""
+  },
+  "Claude outputs/launch_roadmap_data.json": {
+    "mtime": 1791001488.7702987,
+    "seen": 1791002089.9682188,
+    "ast_hash": "8300392db60a68b4508ab2a540458a92",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/build_fx115es_replica.py": {
+    "mtime": 1791002301.4740732,
+    "seen": 1791002382.0579917,
+    "ast_hash": "2aa39f4888b66e4056995b79d9a2dfa4",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/fx115es_outline.json": {
+    "mtime": 1790999737.9528854,
+    "seen": 1791002089.9682188,
+    "ast_hash": "d07157a557d53ce31045051c3d74d546",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/board_snapshot.json": {
+    "mtime": 1791001191.524716,
+    "seen": 1791002089.9682188,
+    "ast_hash": "739cdb96c893bf8515940302f52af151",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/geometry.json": {
+    "mtime": 1791002376.4265451,
+    "seen": 1791002382.0579917,
+    "ast_hash": "44839b5ab11d31322b5442d2fdba90dd",
+    "semantic_hash": ""
+  },
+  "hardware/tools/pilroute.py": {
+    "mtime": 1791001827.9937544,
+    "seen": 1791002089.9682188,
+    "ast_hash": "8b945b5a50e82cc3f2942a094523ba58",
+    "semantic_hash": ""
+  },
+  "Claude outputs/LAUNCH_ROADMAP.md": {
+    "mtime": 1791001629.9573855,
+    "seen": 1791002089.9682188,
+    "ast_hash": "8be066b1e3061ce099b1a12184b6a1bc",
+    "semantic_hash": ""
+  },
+  "Claude outputs/launch_roadmap.html": {
+    "mtime": 1791002351.7965577,
+    "seen": 1791002382.0579917,
+    "ast_hash": "79f2f59b16e3ab432acac1307ae25b03",
+    "semantic_hash": ""
+  },
+  "hardware/REVIEW_independent_2026-10-03.md": {
+    "mtime": 1791001971.2469435,
+    "seen": 1791002089.9682188,
+    "ast_hash": "f5704e1f222f33e3f9982b7e1c32f24a",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/check_2d.txt": {
+    "mtime": 1791002376.443552,
+    "seen": 1791002382.0579917,
+    "ast_hash": "944d413ef01fb5e241090446c9499824",
+    "semantic_hash": ""
+  },
+  "Claude outputs/PR_hardware-stage11-roadmap.md": {
+    "mtime": 1791002148.1377711,
+    "seen": 1791002162.3759735,
+    "ast_hash": "6c6d6f8a7a1a876c6ba0ac12da2bc715",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/interference.txt": {
+    "mtime": 1791002364.912754,
+    "seen": 1791002382.0579917,
+    "ast_hash": "7d113022198addbafe315cedbfc91f79",
     "semantic_hash": ""
   }
 }

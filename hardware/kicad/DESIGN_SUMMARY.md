@@ -36,7 +36,7 @@ Net labels: +3V3, BAT+, CHG_PROG, CHG_STAT, CHG_STAT_RAW, GND, Q1_G, SYS, VBAT_P
 | R7 | 1M | Resistor_SMD:R_0402_1005Metric | C26083 |
 | R20 | 100k | Resistor_SMD:R_0402_1005Metric | C25741 |
 | U2 | MCP73831T-2ACI/OT | Package_TO_SOT_SMD:SOT-23-5 | C424093 |
-| U3 | AP2112K-3.3TRG1 | Package_TO_SOT_SMD:SOT-23-5 | C51118 |
+| U3 | RT9080-33GJ5 | Package_TO_SOT_SMD:SOT-23-5 | C841192 |
 
 ## Sheet: ESP32-S3 MCU (`mcu.kicad_sch`)
 
@@ -48,6 +48,7 @@ Net labels: +3V3, BOOT, CAM_D0, CAM_D1, CAM_D2, CAM_D3, CAM_D4, CAM_D5, CAM_D6, 
 | C2 | 100nF | Capacitor_SMD:C_0402_1005Metric | C1525 |
 | C3 | 10uF | Capacitor_SMD:C_0603_1608Metric | C19702 |
 | C4 | 1uF | Capacitor_SMD:C_0402_1005Metric | C52923 |
+| C32 | 22uF | Capacitor_SMD:C_0805_2012Metric | C45783 |
 | R1 | 10k | Resistor_SMD:R_0402_1005Metric | C25744 |
 | TP1 | BOOT | TestPoint:TestPoint_Pad_D1.5mm |  |
 | TP2 | UART_TX | TestPoint:TestPoint_Pad_D1.0mm |  |
@@ -186,7 +187,7 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 ## Board (`ai_calc.kicad_pcb`)
 
 - Outline extent: 72.3 x 148.8 mm, thickness 0.8 mm, 2 layers (F.Cu = component side facing back cover, B.Cu = key pads + e-paper)
-- 138 footprints, 5381 track segments, 329 vias
+- 138 footprints, 5386 track segments, 331 vias
 - Copper zones on: GND
 - Nets (92): +3V3, /Keypad and TCA8418/COL0, /Keypad and TCA8418/COL1, /Keypad and TCA8418/COL2, /Keypad and TCA8418/COL3, /Keypad and TCA8418/COL4, /Keypad and TCA8418/COL5, /Keypad and TCA8418/COL6, /Keypad and TCA8418/COL7, /Keypad and TCA8418/COL8, /Keypad and TCA8418/COL9, /Keypad and TCA8418/ROW0, /Keypad and TCA8418/ROW1, /Keypad and TCA8418/ROW2, /Keypad and TCA8418/ROW3, /Keypad and TCA8418/ROW4, /Keypad and TCA8418/ROW5, /Keypad and TCA8418/ROW6, /Keypad and TCA8418/ROW7, BAT+, BOOT, CAM_2V8, CAM_AF, CAM_AVDD, CAM_D0, CAM_D1, CAM_D2, CAM_D3, CAM_D4, CAM_D5, CAM_D6, CAM_D7, CAM_DVDD, CAM_HREF, CAM_PCLK, CAM_PWDN, CAM_PWR_EN, CAM_RESET, CAM_SIOC, CAM_SIOD, CAM_VSYNC, CAM_XCLK, CHG_PROG, CHG_STAT, CHG_STAT_RAW, EN, EPD_BUSY, EPD_CLK, EPD_CS, EPD_DC, EPD_DIN, EPD_GDR, EPD_PREVGH, EPD_PREVGL, EPD_PUMP, EPD_RESE, EPD_RST, EPD_SW, EPD_VCOM, EPD_VDD, EPD_VGH, EPD_VGL, EPD_VPP, EPD_VSH, EPD_VSL, GND, I2C_SCL, I2C_SDA, KEYPAD_INT, KEY_ON, Q1_G, SYS, TCA_RESET, UART_RX, UART_TX, USB_DM, USB_DP, VBAT_P, VBAT_SENSE, VBUS, VBUS_SENSE, unconnected-(J1-Pin_1-Pad1), unconnected-(J2-Pin_1-Pad1), unconnected-(J2-Pin_6-Pad6), unconnected-(J2-Pin_7-Pad7), unconnected-(U1-IO26-Pad26), unconnected-(U1-IO3-Pad7), unconnected-(U1-IO45-Pad41), unconnected-(U1-IO46-Pad44), unconnected-(U3-NC-Pad4), unconnected-(U4-NC-Pad4), unconnected-(U5-NC-Pad4)
 

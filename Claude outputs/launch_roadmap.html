@@ -72,9 +72,67 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
     <div class="lcd"><span>Monday-night spend</span><b>≈ $440</b><span>$310 core order + $130 local · range $380–520</span></div>
     <div class="lcd"><span>First working calculator</span><b>Sat 10/17</b><span>buffer to Wed 10/21</span></div>
     <div class="lcd"><span>Cost per unit</span><b>$138 → $26</b><span>at 2 units → at 10,000 units</span></div>
-    <div class="lcd"><span>Claude API per solve</span><b>$0.026</b><span>Sonnet 5.5 · ≈ $3.90 per user per month</span></div>
+    <div class="lcd"><span>Starting budget</span><b>$2,000</b><span>all toward supply</span></div>
+    <div class="lcd"><span>Your price</span><b>$225</b><span>+ $15/month subscription, first month free</span></div>
+    <div class="lcd"><span>Profit per calculator</span><b>$128 → $173</b><span>at 10 units → at 1,000 units (estimate)</span></div>
+    <div class="lcd"><span>Profit per subscriber</span><b>≈ $10–12.50</b><span>per month after API, fees and server</span></div>
   </div>
   <p class="note"><b>Why the order costs more than the old $190–240:</b> JLCPCB now collects the US tariff at checkout. Its FAQ says 35–92.5 % on Chinese goods [S8]. The old figure also left out the donor shells, tools, charge cables and DHL shipping. And JLCPCB was closed Oct 1–4 for China's National Day holiday, reopening Oct 5 [S9], so Monday orders may sit in a backlog.</p>
+</section>
+
+<section id="money">
+  <h2>0 · Your $2,000 and the $225 + $15 plan</h2>
+  <h3>Where the $2,000 goes</h3>
+  <p>Everything goes toward supply, but in two waves. Buy the second wave only after prototype v1 works. If v1 shows a board bug, the v2 money pays for the fixed boards instead of 10 copies of the bug.</p>
+  <div class="tbl"><table>
+    <tr><th>Wave</th><th>When</th><th>What</th><th class="n">Cost</th></tr>
+    <tr class="key"><td>1 · Prototype v1</td><td>Mon 10/5</td><td>JLCPCB 5 boards (2 assembled), batteries, magnet connectors, cables, cameras, e-paper, donor calculators, tools (§1)</td><td class="n">≈ $440</td></tr>
+    <tr><td>2 · Beta batch v2</td><td>≈ Nov, after v1 works</td><td>10 boards assembled + parts for 10 units (≈ $82 each at 10, §3)</td><td class="n">≈ $820</td></tr>
+    <tr><td>2 · Beta shells + jig</td><td>≈ Nov</td><td>3D-printed shells for the beta units + pogo-pin test jig parts</td><td class="n">≈ $150</td></tr>
+    <tr><td>Server</td><td>Oct – Dec</td><td>Proxy/linking server hosting + Claude API for your own testing and beta users <span class="est">estimate</span></td><td class="n">≈ $90</td></tr>
+    <tr><td>Reserve</td><td>hold</td><td>Re-spins, a dead part, a broken e-paper, a tariff surprise. Rolls into FCC testing if nothing breaks.</td><td class="n">≈ $500</td></tr>
+    <tr class="total"><td colspan="3">Total</td><td class="n">$2,000</td></tr>
+  </table></div>
+
+  <h3>What each calculator earns at $225</h3>
+  <p>Profit = $225 − unit cost (§3, without certification) − card fees (2.9 % + $0.30 = $6.83) − shipping to the customer (≈ $8 <span class="est">estimate</span>).</p>
+  <div class="tbl"><table>
+    <tr><th class="n">Units in the run</th><th class="n">Unit cost</th><th class="n">Profit per unit</th><th class="n">Margin</th></tr>
+    <tr><td class="n">10</td><td class="n">$81.76</td><td class="n">$128</td><td class="n">57 %</td></tr>
+    <tr class="key"><td class="n">100</td><td class="n">$65.42</td><td class="n">$145</td><td class="n">64 %</td></tr>
+    <tr><td class="n">500</td><td class="n">$43.70</td><td class="n">$166</td><td class="n">74 %</td></tr>
+    <tr><td class="n">1,000</td><td class="n">$37.60</td><td class="n">$173</td><td class="n">77 %</td></tr>
+    <tr><td class="n">10,000</td><td class="n">$25.70</td><td class="n">$184</td><td class="n">82 %</td></tr>
+  </table></div>
+  <p class="lede">$225 is about 3–5× the unit cost from 100 units up, which is the healthy range for hardware. Expect returns, warranty swaps and ads to eat part of this <span class="est">estimate</span>.</p>
+
+  <h3>What each subscriber earns at $15 a month</h3>
+  <div class="tbl"><table>
+    <tr><th>How they use it</th><th class="n">API cost</th><th class="n">Card fee</th><th class="n">Server</th><th class="n">You keep</th></tr>
+    <tr><td>Typical, 150 solves, Sonnet</td><td class="n">$3.90</td><td class="n">$0.74</td><td class="n">$0.25</td><td class="n">≈ $10.10</td></tr>
+    <tr class="key"><td>Typical, Haiku first (Sonnet on 20 %)</td><td class="n">$1.56</td><td class="n">$0.74</td><td class="n">$0.25</td><td class="n">≈ $12.45</td></tr>
+    <tr><td>Heavy, 400 solves, Sonnet</td><td class="n">$10.40</td><td class="n">$0.74</td><td class="n">$0.25</td><td class="n">≈ $3.60</td></tr>
+  </table></div>
+  <ul>
+    <li><b>The free first month</b> costs you about $1.50–4 in API per buyer. Cheap, and it gets every buyer linked and using it.</li>
+    <li><b>Set a fair-use cap</b> of about 500 solves a month, so a heavy user can never cost more than they pay.</li>
+    <li><b>Offer a yearly plan</b> at about $150 (two months free). It brings cash in earlier and keeps people longer.</li>
+    <li><b>Bill through Stripe</b> on your own site or companion app, not an app store, so you keep the 30 % an app store would take.</li>
+    <li><b>The calculator without a subscription</b> should still work as a normal scientific calculator. That keeps the $225 fair and avoids "bricked device" complaints.</li>
+  </ul>
+
+  <h3>How the $2,000 compounds <span class="est">estimate</span></h3>
+  <p>Each batch's sales pay for the next, bigger batch. Take <b>preorders with deposits</b> before each build, so customers fund the parts. Two hard rules: no sales until the FCC test (SDoC) is done, and use your own shell, not Casio's (§4).</p>
+  <div class="tbl"><table>
+    <tr><th>Round</th><th>When</th><th class="n">Build</th><th class="n">Spend</th><th class="n">Sell</th><th class="n">Money in</th><th class="n">Cash after</th></tr>
+    <tr><td>1 · Prototypes + beta</td><td>Oct – Nov 2026</td><td class="n">2 + 10</td><td class="n">$1,500</td><td class="n">0 (free beta testers)</td><td class="n">$0</td><td class="n">≈ $500</td></tr>
+    <tr class="key"><td>2 · Founder edition</td><td>Dec 2026 – Feb 2027</td><td class="n">20</td><td class="n">$1,600 build + $1,750 FCC + $97 LLC</td><td class="n">20 preorders</td><td class="n">$4,360</td><td class="n">≈ $1,250</td></tr>
+    <tr><td>3 · First real batch</td><td>Mar – May 2027</td><td class="n">100</td><td class="n">$6,500 + $800 shipping</td><td class="n">100</td><td class="n">$21,800</td><td class="n">≈ $15,700</td></tr>
+    <tr><td>4 · Scale up</td><td>H2 2027</td><td class="n">500</td><td class="n">$22,000 + $800 keypad tooling + $4,000 shipping</td><td class="n">500</td><td class="n">$109,000</td><td class="n">≈ $98,000</td></tr>
+    <tr><td>5 · Molds + CM</td><td>2028</td><td class="n">3,000+</td><td class="n">$25k molds + parts</td><td class="n">–</td><td class="n">–</td><td class="n">–</td></tr>
+  </table></div>
+  <p>Subscriptions add up on top. With all 620 buyers from rounds 2–4 subscribed at about $11 a month kept, that's about <b>$6,800 a month of recurring profit</b> by the end of 2027 <span class="est">estimate</span>. That recurring money is what eventually pays for molds and a contract manufacturer without you putting more in.</p>
+  <p class="note"><b>Check before taking preorders:</b> FCC rules limit marketing a device before its SDoC is done. Taking refundable preorders with a clear "not yet FCC tested, ships after testing" note is the usual approach, but confirm the exact wording with the test lab when you book the SDoC.</p>
 </section>
 
 <section id="order">
@@ -154,7 +212,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <div class="chart" id="costChart" role="img" aria-label="Per-unit cost by quantity"></div>
   <div class="legend"><span><i style="background:var(--bar1)"></i>Parts, build, freight</span><span><i style="background:var(--bar2)"></i>One-time certification, spread over the run</span></div>
   <div class="tbl"><table id="costTable"></table></div>
-  <p class="lede">Rule of thumb: retail ≈ 3–4× unit cost to cover shipping, returns, fees and API. At about $40 (1,000 units) that's $119–149 <span class="est">estimate</span>. A plain fx-115ES costs $20, so the AI has to clearly earn the difference.</p>
+  <p class="lede">At your $225 price the margin is 57 % at 10 units and 77 % at 1,000 (§0). A plain fx-115ES costs $20, so the AI tutor, the linking app and the build quality have to clearly earn the difference.</p>
 
   <h3>When each part switches supplier</h3>
   <div class="tbl"><table>
@@ -181,7 +239,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
     <tr><td>Opus 5.5</td><td class="n">$0.052</td><td class="n">$3.12</td><td class="n">$7.80</td><td class="n">$20.80</td></tr>
     <tr><td>Haiku first, Sonnet on 20 %</td><td class="n">$0.010</td><td class="n">$0.62</td><td class="n">$1.56</td><td class="n">$4.16</td></tr>
   </table></div>
-  <p><b>Funding:</b> include about 3 months of service in the price, then $3–5 a month or $29–39 a year with a fair-use cap. Offer a "bring your own key" option. <b>The calculator must never hold your API key</b>: before any unit leaves your hands, route requests through the proxy with per-device tokens, rate limits and a kill switch.</p>
+  <p><b>Your plan:</b> $15 a month after a free first month, which leaves about $10–12.50 a month per subscriber (§0). <b>The calculator must never hold your API key</b>: before any unit leaves your hands, route requests through the proxy with per-device tokens, rate limits and a kill switch.</p>
 </section>
 
 <section id="legal">
