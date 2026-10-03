@@ -1,6 +1,6 @@
 # JLCPCB order checklist (fill in when the VERIFY items are done)
 
-**Don't order until** the calipers/clay checks in `geometry_assumptions.md` §7 are done, especially V5/V12 (heights), V9 (e-paper ribbon length), V3 (battery bay) and V11 (centre rib). Any of them can move a part, and moving a part means re-running the layout.
+**Don't order until** stage-11 question 1 (C4 wall beside the screen) is answered and the calipers/clay checks in `geometry_assumptions.md` §7 are done, especially V5/V12 (heights), V9 (e-paper ribbon length), V3 (battery bay) and V11 (centre rib). Any of them can move a part, and moving a part means re-running the layout.
 
 ## Files (all in `fab/`)
 | Upload where | File |
@@ -36,8 +36,10 @@
 - **J4** battery socket: the opening faces the battery bay.
 - **U2/U3/U4/U5** (SOT-23-5), **U7** (SOT-23-6), **Q1–Q3**, **D1–D5**: pin 1 / the diode stripe lines up with the dot on the silkscreen. JLCPCB sometimes rotates these by 180° in the preview. If one is off, rotate it there; the file doesn't need changing.
 - **U6** TCA8418: the pin-1 dot matches.
+- **D7** SMF5.0A TVS (stage 11 review S3): the cathode band must be on the pad towards J3 / VBUS. Backwards it shorts the charging cable.
+- **U3** is now RT9080-33GJ5 (C841192, TSOT-23-5): pin 1 (VIN) at the dot, same as the old AP2112K.
 
 ## After it arrives
 1. Battery check (sheet item E3).
 2. Camera ribbon pin-1 check (sheet item E6).
-3. First power-up from USB with no battery, display and camera unplugged. Then plug in the e-paper, then the camera.
+3. First power-up from USB (probe TP5 = 3V3, TP6 = battery, TP7 = EN, TP4 = GND, TP1 = BOOT, TP2/TP3 = UART) with no battery, display and camera unplugged. Then plug in the e-paper, then the camera.

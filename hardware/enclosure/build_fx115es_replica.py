@@ -24,21 +24,33 @@ OUT = os.path.join(ENC, "replica")
 CX, CY = 150.0, 138.94
 
 # ── Overall size ──────────────────────────────────────────────────────────────
-L_FRONT = 159.9      # C1  front shell outer length
-L_BACK = 161.0       # C3  back cover length (overhangs the front shell by half the difference at each end)
-W = 79.3             # C2  outer width (front and back)
+L_FRONT = 159.9      # C1  front shell outer length (= L_BACK - FRONT_BOTTOM_INSET, checked offline)
+L_BACK = 161.0       # C3  back cover length; the traced silhouette is the back cover (photo 88e03c27)
+W = 79.3             # C2/C3 outer width
+# The back cover is a tray (photos 84e63d95, 4e287737): in the keypad section its side walls come up
+# round the front shell, which is a little smaller there; at the screen section the two are flush.
+TRAY_WALL = 0.8      # C5  "wall at keypad section" = the tray wall
+TRAY_GAP = 0.15      # guess
+FRONT_SIDE_INSET = TRAY_WALL + TRAY_GAP   # front shell side inset below the screen section
+FRONT_BOTTOM_INSET = L_BACK - L_FRONT     # 1.1: front shell is shorter at the bottom end only (photo 4e287737)
+Y_INSET0, Y_INSET1 = -12.0, -40.0         # photo: the inset grows from 0 to full between these Y
+
 T = 13.8             # Casio spec thickness (fx-115ES), taken as body + rubber feet
 FOOT_PROUD = 0.5     # guess: feet stick out this much below the back cover
 T_BODY = T - FOOT_PROUD          # 13.3, back face Z=0 -> front face
 
 # ── Walls and plates ──────────────────────────────────────────────────────────
-WALL_KEY = 1.2       # C5  side wall in the keypad section (0.8 skin measured; 1.2 used)
-WALL_SCREEN = 4.7    # C4  side wall in the screen section
+WALL_KEY = 1.2       # guess: front shell skin (the 0.8 of C5 is the tray wall)
+WALL_SCREEN = 4.7    # C4  side wall at the screen section = skin + wire channel + inner rib (photos)
+INNER_RIB_T = 1.0    # photo 25490985: thin inner rib beside the screen
+INNER_RIB_Y = (24.0, 66.0)   # photo: rib runs beside the LCD
+INNER_RIB_Z0 = 6.0   # guess: rib bottom
 WALL_TOP = 2.0       # guess: top end wall
 WALL_BOTTOM = 1.6    # guess: bottom end wall
 Y_SCREEN_SEC = 24.0  # guess: Y where the side wall steps from thin (keypad) to thick (screen)
 FACE_T = 1.5         # guess: front plate thickness
-SEAM_Z = 2.6         # guess: height of the back cover rim = parting line
+SEAM_Z = 2.6         # guess: height of the back cover rim = parting line (screen section)
+Z_TRAY_TOP = 11.3    # guess (no side photo): top of the tray side walls in the keypad section
 BACK_PLATE = 1.4     # guess: back cover floor
 LIP_H, LIP_T, LIP_GAP = 1.5, 0.8, 0.1   # guess: locating lip on the back cover
 EDGE_R_FRONT = 2.0   # guess (photos): round-over of the front face edge
@@ -59,7 +71,11 @@ SOLAR_DEPTH = 0.8          # guess
 # ── Keys ──────────────────────────────────────────────────────────────────────
 # Opening sizes measured on the fx-115ES shell (build_case.py KEY_OPEN), keyed by KiCad pad width class
 KEY_OPEN = {"oval": (8.3, 5.6), 6.0: (8.1, 6.0), 7.0: (8.9, 5.9), 9.0: (11.8, 8.2)}
-KEY_R = {"oval": None, 6.0: 1.3, 7.0: 1.3, 9.0: 1.6}   # guess: opening corner radii
+# photo aa09fe8a: tab-shaped openings, small top corners and big bottom corners (rt, rb)
+KEY_R = {"oval": None, 6.0: (0.8, 2.0), 7.0: (0.8, 2.0), 9.0: (1.0, 3.0)}
+KEY_BEVEL = (0.4, 30.0)  # photo: thin bevel round each opening (depth, degrees)
+COLLAR = (0.25, 0.75, 0.5)  # photo 76dd27d2: collar round each opening underneath (from, to, height)
+ROW_RIB_T = 0.8      # photo: full-width ribs between key rows underneath (same height as the collars)
 OVAL_KEYS = ("SHIFT", "ALPHA", "MODE", "ON")
 REPLAY_D = 15.4      # 4-way pad opening
 CAP_CLR = 0.25       # guess: cap to opening clearance per side
@@ -97,8 +113,9 @@ BOTTOM_Y = -71.1     # board notches (build_case BOTTOM_SCREWS); C10 says ~16.5 
 MID_SCREWS = [(22.4, 12.74), (-24.0, 12.74)]   # row 1/2 screw posts, mat photo (stage 10)
 LOC_POSTS = ["H2", "H4", "H6", "H8", "H9", "H10", "H13", "H14"]   # from the board snapshot
 
-# ── Side-wall stubs (screen section), placeholders until C14 ──────────────────
-STUB_D, STUB_Y, STUB_Z0 = 3.0, (36.0, 48.0, 60.0), 6.0
+# ── Side-wall pins (screen section), photos 25490985 / 9f31444b; sizes until C14 ──
+PIN = (1.5, 1.5, 1.4)        # guess: square-ish pin, length inward x width (Y) x height (Z)
+STUB_Y, PIN_Z = (36.0, 46.0, 56.0), 8.0
 
 # ── Back cover ────────────────────────────────────────────────────────────────
 RIB_T = 1.0          # guess
@@ -106,17 +123,21 @@ RING_T = 1.0         # guess
 SOLAR_BOX = (-4.0, 29.0, 62.9, 74.9)   # stage 10 photo: ribbed box behind the solar cell (X0, X1, Y0, Y1)
 SOLAR_BOX_H = 3.0    # guess: kept below Z_MEET so it never reaches the front posts
 DOOR_C = (-18.3, 69.94)   # stage 10 photo: battery opening centre
-DOOR = (15.0, 13.0)  # guess: battery door size
+DOOR = (16.0, 15.0)  # guess: shallow rectangular recess round the battery hole (photo e82c982d)
 DOOR_R, DOOR_CLR = 2.0, 0.15
+DOOR_DEPTH = 0.6     # guess: recess depth = lid thickness
+BATT_HOLE_D = 12.0   # photo: round LR44 hole (with a key notch)
+CENTRE_HOLE_D = 2.0  # photo e82c982d: 7th hole over the small ring (purpose unknown)
+UPPER_RIB_H = 1.0    # photo 84e63d95: ribs in the screen section are low ridges
+TICK = (2.5, 0.8)    # photo: short ribs on the inside of the long walls (length, thickness)
+TICK_Y = (62.0, 44.0, 26.0, 8.0, -10.0, -28.0, -46.0, -62.0)   # guess spacing, in pairs 2 mm apart
 FEET = [(27.0, 52.0), (-27.0, 52.0), (27.0, -62.0), (-27.0, -62.0)]   # guess
 FOOT_D, FOOT_POCKET = 7.0, 0.4
 
 LCD, LCD_T = (64.0, 28.0), 2.2   # guess: dummy LCD under the window (between the wall stubs)
 
 # ── Slide cover (optional) ────────────────────────────────────────────────────
-RAIL_DEPTH = 0.5     # guess: groove along both long sides for the hard cover
-RAIL_Z = (SEAM_Z + 0.6, SEAM_Z + 1.8)
-COVER_T, COVER_CLR = 1.2, 0.25
+COVER_T, COVER_CLR = 1.2, 0.25   # guess: plain slip-on lid, side walls stop above the tray walls
 COVER_Y = 66.0       # guess: cover side walls run |Y| < this
 
 SPLINE_STEP = 2.5    # outer surface = smooth spline through the trace every 2.5 mm
@@ -176,7 +197,7 @@ def offset_var(V, dfun):
     for i in range(n):
         a, b = V[i], V[(i + 1) % n]
         u = _unit((b[0] - a[0], b[1] - a[1]))
-        d = dfun((u[1], -u[0]))
+        d = dfun((u[1], -u[0]), ((a[0] + b[0]) / 2, (a[1] + b[1]) / 2))
         lines.append(((a[0] - u[1] * d, a[1] + u[0] * d), u, d))
     out = []
     for i in range(n):
@@ -187,7 +208,9 @@ def offset_var(V, dfun):
             out.append(own); continue
         t = ((q[0] - p[0]) * w[1] - (q[1] - p[1]) * w[0]) / den
         x = (p[0] + u[0] * t, p[1] + u[1] * t)
-        out.append(x if math.dist(x, V[i]) < 3 * max(d1, d2, 0.1) + 0.5 else own)
+        pend = (V[i][0] - u[1] * d1, V[i][1] + u[0] * d1)    # previous edge's offset end
+        ok = math.dist(x, V[i]) < 1.5 * max(d1, d2, 0.1) + 0.3
+        out.append(x if ok else ((pend[0] + own[0]) / 2, (pend[1] + own[1]) / 2))
     return untangle(out)
 
 def untangle(Pl, span=8):
@@ -218,16 +241,30 @@ def untangle(Pl, span=8):
                     break
             if changed:
                 break
-    return Pl
+    out = []
+    for p in Pl:                                      # drop near-duplicate points (Fusion merges them badly)
+        if not out or math.dist(p, out[-1]) > 0.05:
+            out.append(p)
+    while len(out) > 3 and math.dist(out[0], out[-1]) <= 0.05:
+        out.pop()
+    return out
 
 def offset_const(V, d):
-    return offset_var(V, lambda n: d)
+    return offset_var(V, lambda n, m=None: d)
 
 def wall_fun(side, top, bottom):
-    def f(n):
+    def f(n, m=None):
         w = min(1.0, max(0.0, (abs(n[1]) - 0.5) / 0.4))
         return side * (1 - w) + (top if n[1] > 0 else bottom) * w
     return f
+
+def front_fun(n, m):
+    """Inset of the front shell from the back-cover outline: 0 at the top and the screen section,
+    FRONT_SIDE_INSET along the sides below it (smooth ramp), FRONT_BOTTOM_INSET at the bottom end."""
+    w = min(1.0, max(0.0, (abs(n[1]) - 0.5) / 0.4))
+    t = min(1.0, max(0.0, (Y_INSET0 - m[1]) / (Y_INSET0 - Y_INSET1)))
+    t = t * t * (3 - 2 * t)
+    return FRONT_SIDE_INSET * t * (1 - w) + (FRONT_BOTTOM_INSET if n[1] < 0 else 0.0) * w
 
 def crossings(P, y0):
     out = []
@@ -349,22 +386,53 @@ def poly_dist(p, P):
 def key_open(name, w):
     k = "oval" if name in OVAL_KEYS else round(w)
     ow, oh = KEY_OPEN.get(k, KEY_OPEN[7.0])
-    r = oh / 2 - 0.01 if k == "oval" else KEY_R.get(k, 1.3)
+    r = None if k == "oval" else KEY_R.get(k, (0.8, 2.0))
     return ow, oh, r
+
+def densify(P, step):
+    """Split long edges so no edge is longer than step (keeps the original corners)."""
+    out = []
+    for i in range(len(P)):
+        a, b = P[i], P[(i + 1) % len(P)]
+        k = max(1, int(math.ceil(math.dist(a, b) / step)))
+        out += [(a[0] + (b[0] - a[0]) * j / k, a[1] + (b[1] - a[1]) * j / k) for j in range(k)]
+    return out
+
+def tray_band(Vb):
+    """Closed polygon of the back cover's tray wall: from the outline inwards by (front inset - gap),
+    only where that is positive (keypad section sides and the bottom end)."""
+    n = len(Vb)
+    outer, inner, keep = [], [], []
+    for i in range(n):
+        a, p, b = Vb[i - 1], Vb[i], Vb[(i + 1) % n]
+        u = _unit((b[0] - a[0], b[1] - a[1]))
+        nrm = (u[1], -u[0])                            # outward
+        d = front_fun(nrm, p) - TRAY_GAP
+        keep.append(d > 0.05)
+        outer.append((p[0] + nrm[0] * 0.3, p[1] + nrm[1] * 0.3)); inner.append((p[0] - nrm[0] * d, p[1] - nrm[1] * d))
+    start = next(i for i in range(n) if keep[i] and not keep[i - 1])
+    run = []
+    i = start
+    while keep[i]:
+        run.append(i); i = (i + 1) % n
+    return [outer[k] for k in run] + [inner[k] for k in reversed(run)]
 
 def geometry():
     """Everything the Fusion stages draw, in one dict (also written to replica/geometry.json)."""
     snap = json.load(open(os.path.join(OUT, "board_snapshot.json")))
-    Vf, Vb = trace_outline(L_FRONT), trace_outline(L_BACK)
-    C, K, S = cavity(Vf)
+    Vb = trace_outline(L_BACK)
+    Vd = densify(Vb, 1.0)                              # the inset varies along Y: needs short edges
+    Vf = offset_var(Vd, front_fun)
+    K = offset_var(Vf, wall_fun(WALL_KEY, WALL_TOP, WALL_BOTTOM))       # inside of the front shell skin
+    C = K
     top = max(y for x, y in Vf)
     win_c = (0.0, top - WIN_TOP_FROM_EDGE - WIN[1] / 2)
 
     # corner screw posts from C11 (mirrored), iterate because the inside top wall is curved
-    cx_, cy_ = 29.0, 70.0
-    for _ in range(4):
-        cx_ = x_at(S, cy_, +1) - CORNER_FROM_SIDE
-        cy_ = y_at(S, cx_, +1) - CORNER_FROM_TOP
+    cx_, cy_ = 30.0, 70.0
+    for _ in range(6):
+        cx_ = x_at(K, cy_, +1) - CORNER_FROM_SIDE
+        cy_ = y_at(K, cx_, +1) - CORNER_FROM_TOP
     screws = [("corner R", (cx_, cy_)), ("corner L", (-cx_, cy_)),
               ("mid R", tuple(MID_SCREWS[0])), ("mid L", tuple(MID_SCREWS[1])),
               ("bottom R", (BOTTOM_PITCH / 2, BOTTOM_Y)), ("bottom L", (-BOTTOM_PITCH / 2, BOTTOM_Y))]
@@ -380,10 +448,26 @@ def geometry():
         ow, oh, r = key_open(n, w)
         openings.append(dict(name=n, c=c, w=ow, h=oh, r=r, oval=n in OVAL_KEYS, number=round(w) == 9))
 
-    stubs = []
-    for y in STUB_Y:
-        for s in (+1, -1):
-            stubs.append((x_at(S, y, s), y))
+    # inner rib beside the screen (wire channel between it and the skin) + 3 pins per side
+    inner_ribs, pins = [], []
+    y0, y1 = INNER_RIB_Y
+    for sg in (+1, -1):
+        xi = lambda y: x_at(Vf, y, sg) - sg * WALL_SCREEN
+        inner_ribs.append([(xi(y0), y0), (xi(y0) + sg * INNER_RIB_T, y0), (xi(y1) + sg * INNER_RIB_T, y1), (xi(y1), y1)])
+        for y in STUB_Y:
+            x = xi(y)
+            pins.append([(x + sg * 0.1, y - PIN[1] / 2), (x + sg * 0.1, y + PIN[1] / 2),
+                         (x - sg * PIN[0], y + PIN[1] / 2), (x - sg * PIN[0], y - PIN[1] / 2)])
+
+    # full-width ribs under the plate between key rows (photo 76dd27d2), and short ones beside REPLAY
+    rows = sorted({(round(o["c"][1], 2), o["h"]) for o in openings if not o["oval"]}, reverse=True)
+    row_ribs = []
+    for (ya, ha), (yb, hb) in zip(rows, rows[1:]):
+        ym = ((ya - ha / 2) + (yb + hb / 2)) / 2
+        row_ribs.append([(x_at(K, ym, -1) - 0.3, ym), (x_at(K, ym, +1) + 0.3, ym)])
+    ym = (rows[0][0] + rows[0][1] / 2 + min(o["c"][1] - o["h"] / 2 for o in openings if o["oval"])) / 2
+    for sg in (+1, -1):
+        row_ribs.append([(sg * (REPLAY_D / 2 + COLLAR[1] - 0.2), ym), (x_at(K, ym, sg) + sg * 0.3, ym)])
 
     rb = json.load(open(os.path.join(REPO, "hardware", "fitcheck", "backcover_fx115es.json")))
     ribs, rings = [], []
@@ -394,28 +478,33 @@ def geometry():
             rings.append((name, F(*v[1]), v[2]))
         else:
             (x1, y1), (x2, y2) = F(*v[1]), F(*v[2])
-            # keep ribs 1.5 mm off the inside walls (and clear of the wall stubs)
-            lim = lambda x, y: max(-(abs(x_at(C, y, -1)) - 1.5), min(x_at(C, y, +1) - 1.5, x))
+            lim = lambda x, y: max(x_at(C, y, -1) + 1.5, min(x_at(C, y, +1) - 1.5, x))
             ylim = lambda y: min(y, y_at(C, (x1 + x2) / 2, +1) - 1.5)
             ribs.append((name, (lim(x1, y1), ylim(y1)), (lim(x2, y2), ylim(y2))))
     x0, x1, y0, y1 = SOLAR_BOX
     box = [((x0, y0), (x1, y0)), ((x1, y0), (x1, y1)), ((x1, y1), (x0, y1)), ((x0, y1), (x0, y0)),
            ((x0 + (x1 - x0) / 3, y0), (x0 + (x1 - x0) / 3, y1)), ((x0 + 2 * (x1 - x0) / 3, y0), (x0 + 2 * (x1 - x0) / 3, y1))]
 
-    mat = clip_below(offset_const(C, 0.4), Y_SCREEN_SEC - 1.0)
+    lip_o, lip_i = offset_const(C, LIP_GAP), offset_const(C, LIP_GAP + LIP_T)
+    ticks = []
+    for y in TICK_Y:
+        for dy in (-1.0, 1.0):
+            for sg in (+1, -1):
+                x = x_at(lip_i, y + dy, sg)
+                ticks.append([(x + sg * 0.2, y + dy - TICK[1] / 2), (x + sg * 0.2, y + dy + TICK[1] / 2),
+                              (x - sg * TICK[0], y + dy + TICK[1] / 2), (x - sg * TICK[0], y + dy - TICK[1] / 2)])
+
     bottom_inner = y_at(C, 0.0, -1)
     board_c = (0.0, bottom_inner + 0.4 + BOARD[1] / 2)
-
-    rail_in = offset_const(Vf, RAIL_DEPTH)
-    lip_in = offset_const(Vf, RAIL_DEPTH - 0.15)
-    cov_in = offset_const(Vf, -COVER_CLR)
-    cov_out = offset_const(Vf, -(COVER_CLR + COVER_T))
-    return dict(Vf=Vf, Vb=Vb, Vf_s=resample(Vf, SPLINE_STEP), Vb_s=resample(Vb, SPLINE_STEP), C=C, K=K, S=S, top=top, win_c=win_c, screws=screws, locs=locs, keys=keys,
-                replay=replay, openings=openings, stubs=stubs, ribs=ribs, rings=rings, box=box, mat=mat,
-                board_c=board_c, board_clip=offset_const(C, 0.3), lip_o=offset_const(C, LIP_GAP), lip_i=offset_const(C, LIP_GAP + LIP_T),
-                rail=[side_band(rail_in, 25.0, 50.0, True), side_band(rail_in, 25.0, 50.0, False)],
-                cover_lip=[side_band(lip_in, 25.0, 50.0, True), side_band(lip_in, 25.0, 50.0, False)],
-                cov_in=cov_in, cov_out=cov_out, cov_out_s=resample(cov_out, SPLINE_STEP))
+    cov_in = offset_const(Vb, -COVER_CLR)
+    cov_out = offset_const(Vb, -(COVER_CLR + COVER_T))
+    return dict(Vf=Vf, Vb=Vb, Vf_s=resample(Vf, SPLINE_STEP), Vb_s=resample(Vb, SPLINE_STEP), C=C, K=K,
+                top=top, win_c=win_c, screws=screws, locs=locs, keys=keys, replay=replay, openings=openings,
+                inner_ribs=inner_ribs, pins=pins, row_ribs=row_ribs, ribs=ribs, rings=rings, box=box,
+                ticks=ticks, board_c=board_c, board_clip=offset_const(C, 0.3), lip_o=lip_o, lip_i=lip_i,
+                tray_band=tray_band(Vd),
+                cov_in=cov_in, cov_out=cov_out, cov_out_s=resample(cov_out, SPLINE_STEP),
+                cov_wall=offset_const(Vb, -(COVER_CLR + COVER_T - 0.1)))
 
 def check(g):
     """2D sanity checks; returns a list of text lines."""
@@ -428,14 +517,18 @@ def check(g):
         out.append("screw post %-9s (%6.2f, %6.2f)  side wall gap %.2f" % (n, c[0], c[1], poly_dist(c, C) - SCREW_POST_D / 2))
     cr = dict(g["screws"])["corner R"]
     out.append("C11 check: corner post %.2f from inside side wall, %.2f from inside top wall"
-               % (x_at(g["S"], cr[1], +1) - cr[0], y_at(g["S"], cr[0], +1) - cr[1]))
+               % (x_at(g["K"], cr[1], +1) - cr[0], y_at(g["K"], cr[0], +1) - cr[1]))
+    vf = g["Vf"]
+    out.append("front shell %.2f x %.2f (C1 %.1f); keypad-section width at Y=-50: %.2f"
+               % (max(p[0] for p in vf) - min(p[0] for p in vf), max(p[1] for p in vf) - min(p[1] for p in vf), L_FRONT,
+                  x_at(vf, -50, 1) - x_at(vf, -50, -1)))
     b = dict(g["screws"])["bottom R"]
     out.append("C10 check: bottom post %.2f from inside side wall" % (x_at(C, b[1], +1) - b[0]))
     out.append("window centre (%.2f, %.2f), top edge %.2f below case top" % (g["win_c"] + (g["top"] - g["win_c"][1] - WIN[1] / 2,)))
     posts = [(n, c, SCREW_POST_D) for n, c in g["screws"]] + [(n, c, LOC_POST_D) for n, c in g["locs"]]
     worst = []
     for o in g["openings"]:
-        P = rrect_pts(o["c"], o["w"], o["h"], o["r"])
+        P = rrect_pts(o["c"], o["w"], o["h"], o["h"] / 2 if o["oval"] else o["r"][0])
         for n, c, d in posts:
             gap = poly_dist(c, P) - d / 2
             from_inside = abs(c[0] - o["c"][0]) < o["w"] / 2 and abs(c[1] - o["c"][1]) < o["h"] / 2
@@ -545,23 +638,52 @@ def spline(sk, pts):
     sk.geometricConstraints.addTangent(s1, s2)
     return s1, s2
 
-def rrect(sk, c, w, h, r):
-    """Rounded rectangle from lines and fillet arcs."""
+def rrect(sk, c, w, h, r, rb=None):
+    """Rounded rectangle from lines and arcs; rb (if given) is the radius of the two bottom corners."""
     x, y = c
-    r = max(0.0, min(r, w / 2 - 0.005, h / 2 - 0.005))
+    rt = r
+    rb = r if rb is None else rb
+    lim = lambda v: max(0.0, min(v, w / 2 - 0.005, h / 2 - 0.005))
+    rt, rb = lim(rt), lim(rb)
+    if rt + rb > h - 0.01:
+        rb = h - 0.01 - rt
     L, A = sk.sketchCurves.sketchLines, sk.sketchCurves.sketchArcs
-    if r <= 0:
+    if rt <= 0 and rb <= 0:
         poly(sk, [(x + w / 2, y - h / 2), (x + w / 2, y + h / 2), (x - w / 2, y + h / 2), (x - w / 2, y - h / 2)])
         return
-    q = r * (1 - 1 / math.sqrt(2))
-    pts = [(x + w / 2, y - h / 2 + r), (x + w / 2, y + h / 2 - r), (x + w / 2 - r, y + h / 2), (x - w / 2 + r, y + h / 2),
-           (x - w / 2, y + h / 2 - r), (x - w / 2, y - h / 2 + r), (x - w / 2 + r, y - h / 2), (x + w / 2 - r, y - h / 2)]
-    mids = [(x + w / 2 - q, y + h / 2 - q), (x - w / 2 + q, y + h / 2 - q), (x - w / 2 + q, y - h / 2 + q), (x + w / 2 - q, y - h / 2 + q)]
-    for k in range(4):
-        a, b = pts[2 * k], pts[2 * k + 1]                 # straight side
-        if math.dist(a, b) > 1e-4:
-            L.addByTwoPoints(P(*a), P(*b))
-        A.addByThreePoints(P(*b), P(*mids[k]), P(*pts[(2 * k + 2) % 8]))
+    k = 1 - 1 / math.sqrt(2)
+    corners = [  # (start, mid, end, radius) going CCW from the top-right corner
+        ((x + w / 2, y + h / 2 - rt), (x + w / 2 - rt * k, y + h / 2 - rt * k), (x + w / 2 - rt, y + h / 2)),
+        ((x - w / 2 + rt, y + h / 2), (x - w / 2 + rt * k, y + h / 2 - rt * k), (x - w / 2, y + h / 2 - rt)),
+        ((x - w / 2, y - h / 2 + rb), (x - w / 2 + rb * k, y - h / 2 + rb * k), (x - w / 2 + rb, y - h / 2)),
+        ((x + w / 2 - rb, y - h / 2), (x + w / 2 - rb * k, y - h / 2 + rb * k), (x + w / 2, y - h / 2 + rb))]
+    for i, (s0, m, e) in enumerate(corners):
+        if math.dist(s0, e) > 1e-4:
+            A.addByThreePoints(P(*s0), P(*m), P(*e))
+        nxt = corners[(i + 1) % 4][0]
+        if math.dist(e, nxt) > 1e-4:
+            L.addByTwoPoints(P(*e), P(*nxt))
+
+def ellipse(sk, c, a, b):
+    sk.sketchCurves.sketchEllipses.add(P(*c), P(c[0] + a, c[1]), P(c[0], c[1] + b))
+
+def key_shape(sk, o, grow):
+    """A key opening grown (or shrunk) by grow mm all round."""
+    if o["oval"]:
+        ellipse(sk, o["c"], o["w"] / 2 + grow, o["h"] / 2 + grow)
+    else:
+        rt, rb = o["r"]
+        rrect(sk, o["c"], o["w"] + 2 * grow, o["h"] + 2 * grow, max(0.05, rt + grow), max(0.05, rb + grow))
+
+def shape_pts(o, grow):
+    """Polygon of key_shape (for centroid tests)."""
+    if o["oval"]:
+        a, b = o["w"] / 2 + grow, o["h"] / 2 + grow
+        return [(o["c"][0] + a * math.cos(t * math.pi / 24), o["c"][1] + b * math.sin(t * math.pi / 24)) for t in range(48)]
+    return rrect_pts(o["c"], o["w"] + 2 * grow, o["h"] + 2 * grow, max(0.05, sum(o["r"]) / 2 + grow))
+
+def circle_pts(c, d):
+    return [(c[0] + d / 2 * math.cos(t * math.pi / 24), c[1] + d / 2 * math.sin(t * math.pi / 24)) for t in range(48)]
 
 def circle(sk, c, d):
     sk.sketchCurves.sketchCircles.addByCenterRadius(P(*c), cm(d / 2))
@@ -698,15 +820,37 @@ def stage_front(g):
     for n, c in g["locs"]:
         circle(sk, c, LOC_POST_D)
     extrude(fr, profiles(sk), Z_LOC_END, Z_PLATE - Z_LOC_END + 0.01, "join", [fb])
-    sk = new_sketch(fr, "wall stubs")                  # placeholders (C14)
-    for c in g["stubs"]:
-        circle(sk, c, STUB_D)
-    extrude(fr, profiles(sk), STUB_Z0, Z_PLATE - STUB_Z0 + 0.01, "join", [fb])
 
-    # display window, lens recess, solar-cell recess
+    # screen section: inner rib (wire channel behind it) and the 3 pins per side
+    sk = new_sketch(fr, "inner ribs")
+    for q in g["inner_ribs"]:
+        poly(sk, q)
+    extrude(fr, profiles(sk), INNER_RIB_Z0, Z_PLATE - INNER_RIB_Z0 + 0.01, "join", [fb])
+    sk = new_sketch(fr, "wall pins")
+    for q in g["pins"]:
+        poly(sk, q)
+    extrude(fr, profiles(sk), PIN_Z - PIN[2] / 2, PIN[2], "join", [fb])
+
+    # row ribs and collars under the plate
+    sk = new_sketch(fr, "row ribs")
+    rects = [rib_rect(a, b, ROW_RIB_T) for a, b in g["row_ribs"]]
+    for r in rects:
+        poly(sk, r)
+    extrude(fr, profiles(sk, test=lambda p: any(inside(p, r) for r in rects)), Z_PLATE - COLLAR[2],
+            COLLAR[2] + 0.01, "join", [fb])
+    sk = new_sketch(fr, "collars")
+    outer = [shape_pts(o, COLLAR[1]) for o in g["openings"]] + [circle_pts(g["replay"], REPLAY_D + 2 * COLLAR[1])]
+    inner = [shape_pts(o, COLLAR[0]) for o in g["openings"]] + [circle_pts(g["replay"], REPLAY_D + 2 * COLLAR[0])]
+    for o in g["openings"]:
+        key_shape(sk, o, COLLAR[0]); key_shape(sk, o, COLLAR[1])
+    circle(sk, g["replay"], REPLAY_D + 2 * COLLAR[0]); circle(sk, g["replay"], REPLAY_D + 2 * COLLAR[1])
+    extrude(fr, profiles(sk, test=lambda p: any(inside(p, q) for q in outer) and not any(inside(p, q) for q in inner)),
+            Z_PLATE - COLLAR[2], COLLAR[2] + 0.01, "join", [fb])
+
+    # display window in a bevelled recess (lens sits in it), solar-cell window
     sk = new_sketch(fr, "lens recess")
     rrect(sk, g["win_c"], WIN[0] + 2 * BEZEL_MARGIN, WIN[1] + 2 * BEZEL_MARGIN, WIN_R + BEZEL_MARGIN)
-    extrude(fr, profiles(sk), T_BODY - BEZEL_DEPTH, BEZEL_DEPTH + 1, "cut", [fb])
+    extrude(fr, profiles(sk), T_BODY - BEZEL_DEPTH, BEZEL_DEPTH + 0.01, "cut", [fb], taper=45)
     sk = new_sketch(fr, "window")
     rrect(sk, g["win_c"], WIN[0], WIN[1], WIN_R)
     extrude(fr, profiles(sk), Z_PLATE - 1, FACE_T + 2, "cut", [fb])
@@ -714,22 +858,18 @@ def stage_front(g):
     rrect(sk, SOLAR_C, SOLAR[0], SOLAR[1], 0.8)
     extrude(fr, profiles(sk), T_BODY - SOLAR_DEPTH, SOLAR_DEPTH + 1, "cut", [fb])
 
-    # key openings
+    # key openings with a thin bevel on top
     sk = new_sketch(fr, "key openings")
     for o in g["openings"]:
-        rrect(sk, o["c"], o["w"], o["h"], o["r"])
+        key_shape(sk, o, 0.0)
     circle(sk, g["replay"], REPLAY_D)
-    extrude(fr, profiles(sk), Z_PLATE - 1, FACE_T + 2, "cut", [fb])
-
-    # grooves along both long sides for the slide-on hard cover
-    if RAIL_DEPTH > 0:
-        sk = new_sketch(fr, "cover rails")
-        for band in g["rail"]:
-            poly(sk, band)
-        extrude(fr, profiles(sk), RAIL_Z[0], RAIL_Z[1] - RAIL_Z[0], "cut", [fb])
+    prof = profiles(sk)
+    extrude(fr, prof, Z_PLATE - 1, FACE_T + 2, "cut", [fb])
+    extrude(fr, profiles(sk), T_BODY - KEY_BEVEL[0], KEY_BEVEL[0] + 0.01, "cut", [fb], taper=KEY_BEVEL[1])
     print("front ok, faces", fb.faces.count)
 
 def stage_back(g):
+    import adsk.core
     bk = comp_named("Back cover", True)
     sk = new_sketch(bk, "outline")
     spline(sk, g["Vb_s"])
@@ -742,6 +882,17 @@ def stage_back(g):
     sk = new_sketch(bk, "lip")
     poly(sk, g["lip_o"]); poly(sk, g["lip_i"])
     extrude(bk, profiles(sk, 2), SEAM_Z - 0.01, LIP_H + 0.01, "join", [bb])
+    # tray walls: where the front shell is smaller than the back (keypad section, bottom end)
+    sk = new_sketch(bk, "tray walls")
+    poly(sk, g["tray_band"])                           # drawn 0.3 proud, then trimmed back to the outline spline
+    extrude(bk, profiles(sk), SEAM_Z - 0.01, Z_TRAY_TOP - SEAM_Z + 0.01, "join", [bb])
+    sk = new_sketch(bk, "tray trim")
+    spline(sk, g["Vb_s"]); poly(sk, [(-60, -100), (60, -100), (60, 100), (-60, 100)])
+    extrude(bk, profiles(sk, 2), SEAM_Z - 0.005, Z_TRAY_TOP - SEAM_Z + 1, "cut", [bb])
+    sk = new_sketch(bk, "wall ticks")                 # pairs of short ribs on the inside of the long walls
+    for q in g["ticks"]:
+        poly(sk, q)
+    extrude(bk, profiles(sk), BACK_PLATE - 0.01, SEAM_Z + LIP_H - BACK_PLATE + 0.01, "join", [bb])
 
     sk = new_sketch(bk, "bosses")
     for n, c in g["screws"]:
@@ -749,12 +900,13 @@ def stage_back(g):
     extrude(bk, profiles(sk), BACK_PLATE - 0.01, Z_MEET - 0.1 - BACK_PLATE + 0.01, "join", [bb])
 
     # ribs and rings that back up the board / display (stage 10 photo, ~1 mm)
-    sk = new_sketch(bk, "ribs")
-    rects = [rib_rect(a, b, RIB_T) for n, a, b in g["ribs"]]
-    for r in rects:
-        poly(sk, r)
-    extrude(bk, profiles(sk, test=lambda p: any(inside(p, r) for r in rects)), BACK_PLATE - 0.01,
-            Z_RIB_TOP - BACK_PLATE + 0.01, "join", [bb])
+    for low in (False, True):                         # screen-section ribs are low ridges (photo 84e63d95)
+        sk = new_sketch(bk, "ribs low" if low else "ribs")
+        rects = [rib_rect(a, b, RIB_T) for n, a, b in g["ribs"] if n.startswith("upper") == low]
+        for r in rects:
+            poly(sk, r)
+        extrude(bk, profiles(sk, test=lambda p: any(inside(p, r) for r in rects)), BACK_PLATE - 0.01,
+                (UPPER_RIB_H if low else Z_RIB_TOP - BACK_PLATE) + 0.01, "join", [bb])
     for n, c, r in g["rings"]:
         sk = new_sketch(bk, n)
         circle(sk, c, 2 * r); circle(sk, c, 2 * r - 2 * RING_T)
@@ -776,10 +928,18 @@ def stage_back(g):
         circle(sk, c, CBORE_D)
     extrude(bk, smallest_profiles(sk, 6), -1, CBORE_H + 1, "cut", [bb])
 
-    # battery door opening and rubber-foot pockets
-    sk = new_sketch(bk, "battery opening")
+    # battery: shallow recess for the lid + round LR44 hole with a key notch; centre hole over the small ring
+    sk = new_sketch(bk, "battery recess")
     rrect(sk, DOOR_C, DOOR[0], DOOR[1], DOOR_R)
-    extrude(bk, smallest_profiles(sk, 1), -1, BACK_PLATE + 1.01, "cut", [bb])
+    extrude(bk, profiles(sk), -1, DOOR_DEPTH + 1, "cut", [bb])
+    sk = new_sketch(bk, "battery hole")
+    circle(sk, DOOR_C, BATT_HOLE_D)
+    rrect(sk, (DOOR_C[0], DOOR_C[1] + BATT_HOLE_D / 2), 3.0, 2.4, 0.4)
+    extrude(bk, profiles(sk), -1, BACK_PLATE + 1.01, "cut", [bb])
+    small = [c for n, c, r in g["rings"] if n.startswith("small")][0]
+    sk = new_sketch(bk, "centre hole")
+    circle(sk, small, CENTRE_HOLE_D)
+    extrude(bk, profiles(sk), -1, BACK_PLATE + 1.01, "cut", [bb])
     sk = new_sketch(bk, "feet pockets")
     for c in FEET:
         circle(sk, c, FOOT_D + 0.2)
@@ -788,13 +948,16 @@ def stage_back(g):
 
 def stage_keys(g):
     km = comp_named("Keymat", True)
-    sk = new_sketch(km, "sheet")
-    poly(sk, g["mat"])
+    sk = new_sketch(km, "sheet")                       # board-sized rectangle (photos 28bb9c4b, dc7abe75)
+    rrect(sk, g["board_c"], BOARD[0] - 0.4, BOARD[1] - 0.4, 0.5)
     extrude(km, profiles(sk), Z_MAT_BOT, MAT_T, name="Keymat (rubber)")
     kb = body_named(km, "Keymat (rubber)")
-    sk = new_sketch(km, "plungers")
+    sk = new_sketch(km, "clip")
+    poly(sk, g["board_clip"]); poly(sk, [(-60, -100), (60, -100), (60, 100), (-60, 100)])
+    extrude(km, profiles(sk, 2), Z_MAT_BOT - 0.1, MAT_T + 0.2, "cut", [kb])
+    sk = new_sketch(km, "plungers")                    # one round dome per key
     for n, c, w, h in g["keys"]:
-        rrect(sk, c, w - 1.0, h - 1.0, 0.8)
+        circle(sk, c, min(w, h) - 0.8)
     extrude(km, profiles(sk), Z_BOARD_F + TRAVEL, Z_MAT_BOT - Z_BOARD_F - TRAVEL + 0.01, "join", [kb])
     sk = new_sketch(km, "post holes")
     for n, c in g["screws"]:
@@ -805,24 +968,24 @@ def stage_keys(g):
             Z_BOARD_F, Z_MAT_TOP - Z_BOARD_F + 0.1, "cut", [kb])
 
     kc = comp_named("Keycaps", True)
-    caps = [(o["name"], o["c"], o["w"] - 2 * CAP_CLR, o["h"] - 2 * CAP_CLR, o["r"]) for o in g["openings"]]
+    caps = [(o["name"], o["c"]) for o in g["openings"]]
     rd = REPLAY_D - 2 * CAP_CLR
     sk = new_sketch(kc, "flanges")
-    for n, c, w, h, r in caps:
-        rrect(sk, c, w + 2 * CAP_FLANGE, h + 2 * CAP_FLANGE, r + CAP_FLANGE if r < h / 2 - 0.1 else (h + 2 * CAP_FLANGE) / 2)
+    for o in g["openings"]:
+        key_shape(sk, o, CAP_FLANGE - CAP_CLR)
     circle(sk, g["replay"], rd + 2 * CAP_FLANGE)
     f = extrude(kc, profiles(sk), Z_CAP_BOT, FLANGE_T, name="cap")
     bodies = [f.bodies.item(i) for i in range(f.bodies.count)]
     sk = new_sketch(kc, "shafts")
-    for n, c, w, h, r in caps:
-        rrect(sk, c, w, h, r if r < h / 2 - 0.1 else h / 2)
+    for o in g["openings"]:
+        key_shape(sk, o, -CAP_CLR)
     circle(sk, g["replay"], rd)
     prof = profiles(sk)
     extrude(kc, prof, Z_CAP_BOT + FLANGE_T - 0.01, T_BODY - Z_CAP_BOT - FLANGE_T + 0.01, "join", bodies)
     # crowns: tapered tops (a taper is much cheaper than filleting 47 loops)
     sk2 = new_sketch(kc, "crowns")
-    for n, c, w, h, r in caps:
-        rrect(sk2, c, w, h, r if r < h / 2 - 0.1 else h / 2)
+    for o in g["openings"]:
+        key_shape(sk2, o, -CAP_CLR)
     extrude(kc, profiles(sk2), T_BODY, KEY_PROUD, "join", list(kc.bRepBodies), taper=-CROWN_TAPER)
     # REPLAY sits a little lower than the keys: trim its crown
     sk3 = new_sketch(kc, "replay trim")
@@ -837,7 +1000,7 @@ def stage_keys(g):
     extrude(kc, profiles(sk4, test=lambda p: any(math.dist(p, c) < 2.5 for n, c in g["screws"] + g["locs"])),
             Z_CAP_BOT - 0.1, FLANGE_T + 0.2, "cut", list(kc.bRepBodies))
     # name each cap after its key (nearest centre)
-    names = [(n, c) for n, c, *_ in caps] + [("REPLAY", g["replay"])]
+    names = caps + [("REPLAY", g["replay"])]
     for b in kc.bRepBodies:
         bb = b.boundingBox
         mid = ((bb.minPoint.x + bb.maxPoint.x) * 5, (bb.minPoint.y + bb.maxPoint.y) * 5)
@@ -855,23 +1018,15 @@ def stage_parts(g):
     rrect(sk, SOLAR_C, SOLAR[0] - 0.4, SOLAR[1] - 0.4, 0.6)
     extrude(so, profiles(sk), T_BODY - SOLAR_DEPTH + 0.02, 0.5, name="Solar cell (dummy)")
 
-    dr = comp_named("Battery door", True)
-    sk = new_sketch(dr, "door")
+    dr = comp_named("Battery lid", True)              # guess: thin lid in the recess over the LR44 hole
+    sk = new_sketch(dr, "lid")
     rrect(sk, DOOR_C, DOOR[0] - 2 * DOOR_CLR, DOOR[1] - 2 * DOOR_CLR, DOOR_R - DOOR_CLR)
-    extrude(dr, profiles(sk), 0.0, BACK_PLATE, name="Battery door")
-    db = body_named(dr, "Battery door")
-    sk = new_sketch(dr, "tab")                         # hooks under the cover at the top end
-    rrect(sk, (DOOR_C[0], DOOR_C[1] + DOOR[1] / 2 - 0.5), 6.0, 3.0, 0.5)
-    extrude(dr, profiles(sk), BACK_PLATE, 0.5, "join", [db])
-    sk = new_sketch(dr, "screw")                       # small screw at the bottom end
-    c = (DOOR_C[0], DOOR_C[1] - DOOR[1] / 2 + 2.5)
-    circle(sk, c, 1.6); circle(sk, c, 3.0)
-    extrude(dr, smallest_profiles(sk, 1), -0.1, BACK_PLATE + 0.2, "cut", [db])
-    extrude(dr, profiles(sk, 2), -0.1, 0.7, "cut", [db])
+    extrude(dr, profiles(sk), 0.0, DOOR_DEPTH - 0.02, name="Battery lid")
+    db = body_named(dr, "Battery lid")
     sk = new_sketch(dr, "grip")
     for k in range(-2, 3):
-        rrect(sk, (DOOR_C[0] + k * 1.8, DOOR_C[1] + 1.5), 0.8, 5.0, 0.3)
-    extrude(dr, profiles(sk), -0.1, 0.4, "cut", [db])
+        rrect(sk, (DOOR_C[0] + k * 1.8, DOOR_C[1] - 3.5), 0.8, 4.0, 0.3)
+    extrude(dr, profiles(sk), -0.1, 0.35, "cut", [db])
 
     ft = comp_named("Rubber feet", True)
     sk = new_sketch(ft, "feet")
@@ -906,28 +1061,22 @@ def stage_parts(g):
     spline(sk, g["cov_out_s"])
     extrude(cv, profiles(sk), ztop_in, COVER_T, name="Slide cover")
     cb = body_named(cv, "Slide cover")
-    sk = new_sketch(cv, "walls")
-    poly(sk, g["cov_out"]); poly(sk, g["cov_in"])
-    extrude(cv, profiles(sk, 2), RAIL_Z[0] + 0.15, ztop_in - RAIL_Z[0] - 0.15 + 0.01, "join", [cb])
-    sk = new_sketch(cv, "lips")
-    for band in g["cover_lip"]:
-        poly(sk, band)
-    extrude(cv, profiles(sk), RAIL_Z[0] + 0.15, RAIL_Z[1] - RAIL_Z[0] - 0.3, "join", [cb])
-    sk = new_sketch(cv, "trim outside")               # below the plate only, so the plate keeps its spline edge
-    poly(sk, g["cov_out"]); poly(sk, [(-60, -100), (60, -100), (60, 100), (-60, 100)])
-    extrude(cv, profiles(sk, 2), RAIL_Z[0], ztop_in - RAIL_Z[0], "cut", [cb])
-    sk = new_sketch(cv, "open ends")                   # walls and lips only along the straight sides
+    fillet(cv, edge_loop_at(cb, ztop_in + COVER_T), 1.0)
+    z_wall = Z_TRAY_TOP + 0.2                         # side walls stop just above the tray walls
+    sk = new_sketch(cv, "walls")                       # 0.1 inside the plate edge: no near-coincident faces
+    poly(sk, g["cov_wall"]); poly(sk, g["cov_in"])
+    extrude(cv, profiles(sk, 2), z_wall, ztop_in - z_wall + 0.01, "join", [cb])
+    sk = new_sketch(cv, "open ends")                   # walls only along the straight sides
     poly(sk, [(-26, -COVER_Y), (26, -COVER_Y), (26, COVER_Y), (-26, COVER_Y)])
     poly(sk, [(-60, COVER_Y), (60, COVER_Y), (60, 100), (-60, 100)])
     poly(sk, [(-60, -100), (60, -100), (60, -COVER_Y), (-60, -COVER_Y)])
-    extrude(cv, profiles(sk), RAIL_Z[0] - 0.1, ztop_in - RAIL_Z[0] + 0.09, "cut", [cb])
-    fillet(cv, edge_loop_at(cb, ztop_in + COVER_T), 1.5)
+    extrude(cv, profiles(sk), z_wall - 0.1, ztop_in - z_wall + 0.09, "cut", [cb])
     stage_looks(g)
     print("parts ok")
 
-LOOKS = {"Front shell": "Paint - Metallic (Silver)", "Back cover": "Plastic - Matte (Black)",
+LOOKS = {"Front shell": "Paint - Metallic (Silver)", "Back cover": "Plastic - Matte (Blue)",
          "Keymat": "Rubber - Soft", "Window lens": "Glass (Grey)", "Solar cell (dummy)": "Paint - Metallic (Dark Grey)",
-         "Battery door": "Plastic - Matte (Black)", "Rubber feet": "Rubber - Hard",
+         "Battery lid": "Plastic - Matte (Blue)", "Rubber feet": "Rubber - Hard",
          "Reference - Casio board (C6)": "Plastic - Matte (Green)",
          "Reference - LCD (dummy)": "Glass - Heavy Color", "Slide cover": "Plastic - Translucent Matte (Gray)"}
 
@@ -941,9 +1090,7 @@ def stage_looks(g):
     try:
         for b in comp_named("Keycaps").bRepBodies:
             n = b.name[4:]
-            appearance(b, "Plastic - Matte (Gray)" if n in "0123456789" and len(n) == 1 or n in (".", "x10^x", "Ans", "=", "+", "-", "x", "/")
-                       else "Paint - Metallic (Silver)" if n in OVAL_KEYS + ("REPLAY",)
-                       else "Plastic - Matte (Red)" if n in ("AC", "DEL") else "Plastic - Matte (Black)")
+            appearance(b, "Plastic - Matte (Gray)" if n == "REPLAY" else "Paint - Metallic (Dark Grey)")   # photo 4e287737
     except KeyError:
         pass
 
@@ -1082,7 +1229,7 @@ def stage_shots(g):
 def stage_explode(g):
     import adsk.core
     gap = float(ARGS.get("gap", 14))
-    order = {"Rubber feet": -2, "Battery door": -1, "Back cover": 0, "Reference - Casio board (C6)": 1,
+    order = {"Rubber feet": -2, "Battery lid": -1, "Back cover": 0, "Reference - Casio board (C6)": 1,
              "Reference - LCD (dummy)": 1,
              "Keymat": 2, "Keycaps": 3, "Front shell": 4, "Solar cell (dummy)": 5, "Window lens": 5, "Slide cover": 6}
     for occ in design.rootComponent.occurrences:
@@ -1153,9 +1300,10 @@ def send(stage, extra):
             if "FAILED" in tail():
                 r = {"result": "", "traceback": tail()[-2500:]}
     print(r.get("result") or r.get("error") or r)
-    if r.get("traceback"):
-        print(r["traceback"])
-        sys.exit(1)
+    if r.get("traceback") or r.get("error"):
+        print(r.get("traceback", ""))
+        sys.stdout.flush()
+        os._exit(1)
 
 if "ARGS" in globals():
     import adsk.core, adsk.fusion, traceback

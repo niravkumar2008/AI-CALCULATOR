@@ -361,3 +361,33 @@ def island_at(b, netname, x, y, tol=0.05):
             if abs(p[0] - x) < tol + 0.1 and abs(p[1] - y) < tol + 0.1:
                 return g
     return None
+
+
+def polyline(b, netname, pts, layer=0, width=None, vias=()):
+    """hand-route: straight segments through pts [(x,y),...] on LAYERS[layer]; vias at given points"""
+    net = b.FindNet(netname); added = []
+    if width is None:
+        width = Router(b, (0, 0, 1, 1)).netclass_of(netname)[0]
+    for a, c in zip(pts, pts[1:]):
+        t = pcbnew.PCB_TRACK(b); t.SetStart(MM(*a)); t.SetEnd(MM(*c)); t.SetWidth(FM(width))
+        t.SetLayer(LAYERS[layer]); t.SetNet(net); b.Add(t); added.append(t)
+    for (x, y) in vias:
+        v = pcbnew.PCB_VIA(b); v.SetPosition(MM(x, y)); v.SetWidth(FM(VIA_D)); v.SetDrill(FM(VIA_DR))
+        v.SetNet(net); b.Add(v); added.append(v)
+    return added
+
+
+def connect_all(b, netname, win, G=0.05, log=print, **kw):
+    """join every copper island of a net (smallest island first, to all the others)"""
+    while True:
+        g = islands(b, netname)
+        if len(g) < 2:
+            return True
+        g.sort(key=len)
+        src = g[0]; dst = [it for k in g[1:] for it in k]
+        R = Router(b, win, G=G)
+        r = R.route(netname, item_pts(src), item_pts(dst), **kw)
+        if r is None:
+            log(f'  {netname}: FAILED ({len(g)} islands, expanded {R.expanded})')
+            return False
+        log(f'  {netname}: joined island ({len(g)} -> {len(g) - 1}), {len(r)} items')

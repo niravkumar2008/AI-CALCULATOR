@@ -69,7 +69,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
 
 <section>
   <div class="lcd-row">
-    <div class="lcd"><span>Monday-night spend</span><b>≈ $440</b><span>$310 core order + $130 local · range $380–520</span></div>
+    <div class="lcd"><span>Monday-night spend</span><b>≈ $365</b><span>$310 core order + $55 local · range $325–405</span></div>
     <div class="lcd"><span>First working calculator</span><b>Sat 10/17</b><span>buffer to Wed 10/21</span></div>
     <div class="lcd"><span>Cost per unit</span><b>$138 → $26</b><span>at 2 units → at 10,000 units</span></div>
     <div class="lcd"><span>Starting budget</span><b>$2,000</b><span>all toward supply</span></div>
@@ -77,7 +77,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
     <div class="lcd"><span>Profit per calculator</span><b>$128 → $173</b><span>at 10 units → at 1,000 units (estimate)</span></div>
     <div class="lcd"><span>Profit per subscriber</span><b>≈ $10–12.50</b><span>per month after API, fees and server</span></div>
   </div>
-  <p class="note"><b>Why the order costs more than the old $190–240:</b> JLCPCB now collects the US tariff at checkout. Its FAQ says 35–92.5 % on Chinese goods [S8]. The old figure also left out the donor shells, tools, charge cables and DHL shipping. And JLCPCB was closed Oct 1–4 for China's National Day holiday, reopening Oct 5 [S9], so Monday orders may sit in a backlog.</p>
+  <p class="note"><b>Why the order costs more than the old $190–240:</b> JLCPCB now collects the US tariff at checkout. Its FAQ says 35–92.5 % on Chinese goods [S8]. The old figure also left out tools, charge cables and DHL shipping. And JLCPCB was closed Oct 1–4 for China's National Day holiday, reopening Oct 5 [S9], so Monday orders may sit in a backlog.</p>
 </section>
 
 <section id="money">
@@ -86,11 +86,11 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <p>Everything goes toward supply, but in two waves. Buy the second wave only after prototype v1 works. If v1 shows a board bug, the v2 money pays for the fixed boards instead of 10 copies of the bug.</p>
   <div class="tbl"><table>
     <tr><th>Wave</th><th>When</th><th>What</th><th class="n">Cost</th></tr>
-    <tr class="key"><td>1 · Prototype v1</td><td>Mon 10/5</td><td>JLCPCB 5 boards (2 assembled), batteries, magnet connectors, cables, cameras, e-paper, donor calculators, tools (§1)</td><td class="n">≈ $440</td></tr>
+    <tr class="key"><td>1 · Prototype v1</td><td>Mon 10/5</td><td>JLCPCB 5 boards (2 assembled), batteries, magnet connectors, cables, cameras, e-paper, small tools (§1). You already have the calculators and a multimeter.</td><td class="n">≈ $365</td></tr>
     <tr><td>2 · Beta batch v2</td><td>≈ Nov, after v1 works</td><td>10 boards assembled + parts for 10 units (≈ $82 each at 10, §3)</td><td class="n">≈ $820</td></tr>
     <tr><td>2 · Beta shells + jig</td><td>≈ Nov</td><td>3D-printed shells for the beta units + pogo-pin test jig parts</td><td class="n">≈ $150</td></tr>
     <tr><td>Server</td><td>Oct – Dec</td><td>Proxy/linking server hosting + Claude API for your own testing and beta users <span class="est">estimate</span></td><td class="n">≈ $90</td></tr>
-    <tr><td>Reserve</td><td>hold</td><td>Re-spins, a dead part, a broken e-paper, a tariff surprise. Rolls into FCC testing if nothing breaks.</td><td class="n">≈ $500</td></tr>
+    <tr><td>Reserve</td><td>hold</td><td>Re-spins, a dead part, a broken e-paper, a tariff surprise. Rolls into FCC testing if nothing breaks.</td><td class="n">≈ $575</td></tr>
     <tr class="total"><td colspan="3">Total</td><td class="n">$2,000</td></tr>
   </table></div>
 
@@ -125,9 +125,9 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <p>Each batch's sales pay for the next, bigger batch. Take <b>preorders with deposits</b> before each build, so customers fund the parts. Two hard rules: no sales until the FCC test (SDoC) is done, and use your own shell, not Casio's (§4).</p>
   <div class="tbl"><table>
     <tr><th>Round</th><th>When</th><th class="n">Build</th><th class="n">Spend</th><th class="n">Sell</th><th class="n">Money in</th><th class="n">Cash after</th></tr>
-    <tr><td>1 · Prototypes + beta</td><td>Oct – Nov 2026</td><td class="n">2 + 10</td><td class="n">$1,500</td><td class="n">0 (free beta testers)</td><td class="n">$0</td><td class="n">≈ $500</td></tr>
-    <tr class="key"><td>2 · Founder edition</td><td>Dec 2026 – Feb 2027</td><td class="n">20</td><td class="n">$1,600 build + $1,750 FCC + $97 LLC</td><td class="n">20 preorders</td><td class="n">$4,360</td><td class="n">≈ $1,250</td></tr>
-    <tr><td>3 · First real batch</td><td>Mar – May 2027</td><td class="n">100</td><td class="n">$6,500 + $800 shipping</td><td class="n">100</td><td class="n">$21,800</td><td class="n">≈ $15,700</td></tr>
+    <tr><td>1 · Prototypes + beta</td><td>Oct – Nov 2026</td><td class="n">2 + 10</td><td class="n">$1,425</td><td class="n">0 (free beta testers)</td><td class="n">$0</td><td class="n">≈ $575</td></tr>
+    <tr class="key"><td>2 · Founder edition</td><td>Dec 2026 – Feb 2027</td><td class="n">20</td><td class="n">$1,600 build + $1,750 FCC + $97 LLC</td><td class="n">20 preorders</td><td class="n">$4,360</td><td class="n">≈ $1,330</td></tr>
+    <tr><td>3 · First real batch</td><td>Mar – May 2027</td><td class="n">100</td><td class="n">$6,500 + $800 shipping</td><td class="n">100</td><td class="n">$21,800</td><td class="n">≈ $15,800</td></tr>
     <tr><td>4 · Scale up</td><td>H2 2027</td><td class="n">500</td><td class="n">$22,000 + $800 keypad tooling + $4,000 shipping</td><td class="n">500</td><td class="n">$109,000</td><td class="n">≈ $98,000</td></tr>
     <tr><td>5 · Molds + CM</td><td>2028</td><td class="n">3,000+</td><td class="n">$25k molds + parts</td><td class="n">–</td><td class="n">–</td><td class="n">–</td></tr>
   </table></div>
@@ -157,14 +157,12 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <h3>Buy locally this weekend</h3>
   <div class="tbl"><table>
     <tr><th>Item</th><th>Where</th><th class="n">Qty</th><th class="n">Total</th><th>Why</th></tr>
-    <tr class="key"><td>Casio fx-115ES donor calculator</td><td>Walmart / Target / Staples</td><td class="n">2</td><td class="n">≈ $43 incl. tax</td><td>$19.99 at Walmart [S6]. <b>It must be the same edition you measured</b> (PLUS vs PLUS 2nd edition). The posts and ribs inside can differ.</td></tr>
-    <tr><td>Multimeter with continuity beep</td><td>hardware store</td><td class="n">1</td><td class="n">≈ $25 <span class="est">estimate</span></td><td>Camera cable check E6, power rails</td></tr>
     <tr><td>Kapton tape 10–20 mm</td><td>Amazon / hardware store</td><td class="n">1</td><td class="n">≈ $9 <span class="est">estimate</span></td><td>Insulates the battery and the back of the e-paper</td></tr>
     <tr><td>Dremel bits: carbide cutter, sanding drums, 6 mm drill</td><td>hardware store</td><td class="n">1 set</td><td class="n">≈ $12 <span class="est">estimate</span></td><td>Rib grinding + camera hole (stage-10 grind map)</td></tr>
     <tr><td>Flush cutters + ESD tweezers</td><td>hardware store</td><td class="n">1</td><td class="n">≈ $15 <span class="est">estimate</span></td><td></td></tr>
     <tr><td>USB-A charger or USB-A(f)→USB-C adapter</td><td>anywhere</td><td class="n">1</td><td class="n">≈ $7 <span class="est">estimate</span></td><td>The magnetic cable ends in USB-A, and flashing goes through it</td></tr>
     <tr><td>Thin foam tape + 99 % isopropyl</td><td>anywhere</td><td class="n">1</td><td class="n">≈ $10 <span class="est">estimate</span></td><td>Holds the battery and camera, cleans the gold pads</td></tr>
-    <tr class="total"><td colspan="3">Local subtotal (skip what you own; you already have calipers)</td><td class="n">≈ $105–130</td><td></td></tr>
+    <tr class="total"><td colspan="3">Local subtotal (you already have calipers, a multimeter and the 2 calculators)</td><td class="n">≈ $40–55</td><td></td></tr>
   </table></div>
   <p class="lede">Don't buy yet: more than 3 of anything, a soldering station (the board needs no soldering from you), or a pogo-pin test jig. Those come with v2.</p>
 </section>
@@ -174,14 +172,14 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <div class="legend"><span><span class="pill p-you">you</span> your job</span><span><span class="pill p-ext">outside</span> waiting on a supplier</span><span><span class="pill p-both">you + Claude</span> together</span></div>
   <div class="tbl"><table>
     <tr><th>Date</th><th>Task</th><th>Who</th><th>Waits on</th></tr>
-    <tr><td>Sat 10/3</td><td>Buy donor calculators + multimeter. Overnight, Claude finishes PCB stage 11, the CAD replica and an independent review.</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
+    <tr><td>Sat 10/3</td><td>Overnight, Claude finishes PCB stage 11, the CAD replica and an independent review.</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
     <tr class="key"><td>Sun 10/4</td><td><b>Remaining measurements</b>: C14, C15, depths D1–D4/D11/D13, ribbons E6/E7, and the F6 flatbed scan if you can. Answer the open questions in the stage-11 doc.</td><td><span class="pill p-you">you</span></td><td>calipers</td></tr>
     <tr><td>Sun 10/4</td><td>Claude applies the readings, gets DRC to 0/0/0 and regenerates the fab files. You print the 1:1 fit-check outline and lay it in the shell.</td><td><span class="pill p-both">you + Claude</span></td><td>measurements</td></tr>
     <tr><td>Sun 10/4</td><td>Start the <b>API proxy</b>: a small server that holds the Claude key, so the calculator never carries it</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
     <tr class="key"><td>Mon 10/5</td><td><b>ORDER</b>: Adafruit (UPS 2-day), cameras, e-paper, then <b>JLCPCB by about 9 pm ET</b></td><td><span class="pill p-you">you</span></td><td>fit check</td></tr>
     <tr><td>Tue 10/6</td><td>JLCPCB engineering review. <b>Reply to their emails within hours</b>: each unanswered question costs about a day.</td><td><span class="pill p-ext">outside</span></td><td>order</td></tr>
     <tr><td>Tue–Wed</td><td>Firmware: camera → JPEG → Wi-Fi → proxy → answer, on the dev board</td><td><span class="pill p-both">you + Claude</span></td><td>proxy</td></tr>
-    <tr><td>Wed 10/7</td><td>Prepare the shells: take out the Casio boards (keep the keypad and screws), grind ribs, drill the camera hole</td><td><span class="pill p-you">you</span></td><td>donor calcs</td></tr>
+    <tr><td>Wed 10/7</td><td>Prepare the shells: take out the Casio boards (keep the keypad and screws), grind ribs, drill the camera hole</td><td><span class="pill p-you">you</span></td><td>your 2 calculators</td></tr>
     <tr><td>Thu 10/8</td><td>Adafruit box arrives <span class="est">estimate</span>. Check the battery polarity against J4 (a reversed JST lead is common).</td><td><span class="pill p-ext">outside</span></td><td>Adafruit</td></tr>
     <tr><td>Sat–Sun 10/10–11</td><td>Firmware: full UI in the simulator + <b>factory self-test mode</b> (keys, display, camera, battery, Wi-Fi)</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
     <tr><td>Mon 10/12</td><td>JLCPCB ships by DHL <span class="est">estimate</span>. Camera-cable beep test E6 (fingers 2 and 15 beep to GND).</td><td><span class="pill p-ext">outside</span></td><td>build</td></tr>
@@ -281,7 +279,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <h2>6 · Top risks</h2>
   <div class="tbl"><table>
     <tr><th>Risk</th><th>Effect</th><th>What to do</th></tr>
-    <tr class="key"><td>A measurement moves a part after Monday, or the donor is a different edition</td><td>New order + 2 weeks</td><td>1:1 paper fit check Sunday. Buy donors of the exact edition you measured.</td></tr>
+    <tr class="key"><td>A measurement moves a part after Monday, </td><td>New order + 2 weeks</td><td>1:1 paper fit check Sunday. Measure on one of the same 2 calculators you will build into.</td></tr>
     <tr><td>JLCPCB holiday backlog + engineering questions</td><td>+2–4 days</td><td>Order Monday, reply fast, keep the 10/21 buffer</td></tr>
     <tr><td>Camera ribbon direction (reversed J1) is only ~75 % certain</td><td>No image</td><td>Same Seeed module. E6 beep test. A 180° cable twist fixes it.</td></tr>
     <tr><td>Tariff higher than expected</td><td>+$30–70 now, +35 % or more at volume</td><td>Check the checkout total and budget the high end</td></tr>

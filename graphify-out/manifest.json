@@ -978,9 +978,9 @@
     "semantic_hash": "a77eb9f5fef42db9806355a1f1405044"
   },
   "hardware/kicad/DESIGN_SUMMARY.md": {
-    "mtime": 1791002375.0756373,
-    "seen": 1791002382.0579917,
-    "ast_hash": "1a61146377fd57347e5f3c3f4b68e628",
+    "mtime": 1791036573.6577957,
+    "seen": 1791036586.188044,
+    "ast_hash": "1ce123fceb821ff7a77d537cf1b2f786",
     "semantic_hash": ""
   },
   "hardware/geometry/derive_geometry.py": {
@@ -1104,15 +1104,15 @@
     "semantic_hash": ""
   },
   "hardware/HANDOFF.md": {
-    "mtime": 1790994857.6152308,
-    "seen": 1790994890.8208227,
-    "ast_hash": "d6a2e8018a5c317e3426640a8a57c28c",
+    "mtime": 1791036688.1521027,
+    "seen": 1791036704.7937937,
+    "ast_hash": "4e46bb7ee45ae873144c13e371b3be2f",
     "semantic_hash": ""
   },
   "hardware/ORDER_CHECKLIST.md": {
-    "mtime": 1790965456.0033717,
-    "seen": 1790966262.9678125,
-    "ast_hash": "036ac550feb5e7db61981463ff29842d",
+    "mtime": 1791036688.1521027,
+    "seen": 1791036704.7937937,
+    "ast_hash": "cf5a6762f31fe0e044121f98185b30e9",
     "semantic_hash": ""
   },
   "hardware/geometry_assumptions.md": {
@@ -1140,15 +1140,15 @@
     "semantic_hash": ""
   },
   "hardware/fab/ai_calc_assembly_top.pdf": {
-    "mtime": 1790994791.1430168,
-    "seen": 1790994890.8208227,
-    "ast_hash": "84a3d455c19ef1709c2ff1a620409828",
+    "mtime": 1791036546.8504374,
+    "seen": 1791036586.188044,
+    "ast_hash": "0ea041298a6fb7cdda45685cb38aaaf4",
     "semantic_hash": ""
   },
   "hardware/fab/ai_calc_schematic.pdf": {
-    "mtime": 1790994789.5601318,
-    "seen": 1790994890.8208227,
-    "ast_hash": "bf587474f0c69b0f8a0854c97e34b541",
+    "mtime": 1791036546.0445836,
+    "seen": 1791036586.188044,
+    "ast_hash": "f594c296022b5359de529345f685942d",
     "semantic_hash": ""
   },
   "hardware/geometry/adafruit_5358_MG04254FRA1S1N.pdf": {
@@ -1164,21 +1164,21 @@
     "semantic_hash": ""
   },
   "hardware/schematic.pdf": {
-    "mtime": 1790965455.933376,
-    "seen": 1790966262.9678125,
-    "ast_hash": "9bc955909908328f5e4e125908ce1426",
+    "mtime": 1791036563.8633206,
+    "seen": 1791036586.188044,
+    "ast_hash": "f594c296022b5359de529345f685942d",
     "semantic_hash": ""
   },
   "hardware/fab/render_bottom.png": {
-    "mtime": 1790994822.578203,
-    "seen": 1790994890.8208227,
-    "ast_hash": "dc906fa07ef8162e5159924d6afb518d",
+    "mtime": 1791036558.3812366,
+    "seen": 1791036586.188044,
+    "ast_hash": "35ab1d6ee5253b8ac11a19b7d72537b6",
     "semantic_hash": ""
   },
   "hardware/fab/render_top.png": {
-    "mtime": 1790994811.8815384,
-    "seen": 1790994890.8208227,
-    "ast_hash": "fd37bf732393ccaf08512a0012bf4918",
+    "mtime": 1791036555.7097638,
+    "seen": 1791036586.188044,
+    "ast_hash": "762d6e6c88d1406c29eb0aa53e5a03a2",
     "semantic_hash": ""
   },
   "hardware/geometry/board_mm.png": {
@@ -1266,15 +1266,15 @@
     "semantic_hash": ""
   },
   "hardware/fitcheck/grind_map_back_cover.svg": {
-    "mtime": 1790994657.8557222,
-    "seen": 1790994890.8208227,
-    "ast_hash": "43cde08127b2f1eb48efc893c4dec142",
+    "mtime": 1791036568.7504194,
+    "seen": 1791036586.188044,
+    "ast_hash": "0ffbaf132ef03be9fd73413216547559",
     "semantic_hash": ""
   },
   "hardware/fitcheck/grind_map_front_shell.svg": {
-    "mtime": 1790994657.8546999,
-    "seen": 1790994890.8208227,
-    "ast_hash": "90411f6c8d7f9b51c8b53483af5439c0",
+    "mtime": 1791036568.74943,
+    "seen": 1791036586.188044,
+    "ast_hash": "72348953d502fb33e19ad783dd5ce723",
     "semantic_hash": ""
   },
   "hardware/fitcheck/backcover_fx115es.json": {
@@ -1296,9 +1296,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/build_fx115es_replica.py": {
-    "mtime": 1791002301.4740732,
-    "seen": 1791002382.0579917,
-    "ast_hash": "2aa39f4888b66e4056995b79d9a2dfa4",
+    "mtime": 1791036392.4920833,
+    "seen": 1791036586.188044,
+    "ast_hash": "bf51288a7eda9e501bf753e067a42048",
     "semantic_hash": ""
   },
   "hardware/enclosure/fx115es_outline.json": {
@@ -1314,15 +1314,15 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/replica/geometry.json": {
-    "mtime": 1791002376.4265451,
-    "seen": 1791002382.0579917,
-    "ast_hash": "44839b5ab11d31322b5442d2fdba90dd",
+    "mtime": 1791036515.822042,
+    "seen": 1791036586.188044,
+    "ast_hash": "17298a8f5d81a401a2b4a5857bfc6774",
     "semantic_hash": ""
   },
   "hardware/tools/pilroute.py": {
-    "mtime": 1791001827.9937544,
-    "seen": 1791002089.9682188,
-    "ast_hash": "8b945b5a50e82cc3f2942a094523ba58",
+    "mtime": 1791002731.6840549,
+    "seen": 1791002753.0027242,
+    "ast_hash": "162b8fe5138c40fc4d81709ee42180fa",
     "semantic_hash": ""
   },
   "Claude outputs/LAUNCH_ROADMAP.md": {
@@ -1332,9 +1332,9 @@
     "semantic_hash": ""
   },
   "Claude outputs/launch_roadmap.html": {
-    "mtime": 1791002351.7965577,
-    "seen": 1791002382.0579917,
-    "ast_hash": "79f2f59b16e3ab432acac1307ae25b03",
+    "mtime": 1791002964.2070627,
+    "seen": 1791036586.188044,
+    "ast_hash": "54bb41a553a39d2319dd213ee9ab080e",
     "semantic_hash": ""
   },
   "hardware/REVIEW_independent_2026-10-03.md": {
@@ -1344,9 +1344,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/replica/check_2d.txt": {
-    "mtime": 1791002376.443552,
-    "seen": 1791002382.0579917,
-    "ast_hash": "944d413ef01fb5e241090446c9499824",
+    "mtime": 1791036515.842125,
+    "seen": 1791036586.188044,
+    "ast_hash": "9f41a5c603ce8252c6d35af7660cc7e3",
     "semantic_hash": ""
   },
   "Claude outputs/PR_hardware-stage11-roadmap.md": {
@@ -1356,9 +1356,135 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/replica/interference.txt": {
-    "mtime": 1791002364.912754,
-    "seen": 1791002382.0579917,
-    "ast_hash": "7d113022198addbafe315cedbfc91f79",
+    "mtime": 1791036471.6177797,
+    "seen": 1791036586.188044,
+    "ast_hash": "d9ab5a494a87f30aeabc2aa4d80c25df",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/back.png": {
+    "mtime": 1791036481.440805,
+    "seen": 1791036586.188044,
+    "ast_hash": "e5a7e342634d0358cd7c11b8d28a450c",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/exploded_iso_back.png": {
+    "mtime": 1791036492.3425784,
+    "seen": 1791036586.188044,
+    "ast_hash": "b0a0cc9a2d1fd964335dae8392f62dca",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/exploded_iso_front.png": {
+    "mtime": 1791036490.608423,
+    "seen": 1791036586.188044,
+    "ast_hash": "4c0a4b3ab470d508e627389ade6d38ea",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/front.png": {
+    "mtime": 1791036480.1729207,
+    "seen": 1791036586.188044,
+    "ast_hash": "eb1281aaa2b5c904e3cfd498b33a0577",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/inside_back_iso_front.png": {
+    "mtime": 1791036497.1474576,
+    "seen": 1791036586.188044,
+    "ast_hash": "c31d0da6bf36c53c7feffea4b00f7279",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/inside_front_iso_back.png": {
+    "mtime": 1791036495.0746653,
+    "seen": 1791036586.188044,
+    "ast_hash": "1a4c2fadd4439b683c2f9ad5952e2bbc",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/iso_back.png": {
+    "mtime": 1791036488.9021013,
+    "seen": 1791036586.188044,
+    "ast_hash": "509ebcf3f0a3c2c44e8940c4cee5a03d",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/iso_front.png": {
+    "mtime": 1791036487.5825627,
+    "seen": 1791036586.188044,
+    "ast_hash": "60c6ebe57eba66d15d3f3c0120d2ca48",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/section_x_side.png": {
+    "mtime": 1791036501.86239,
+    "seen": 1791036586.188044,
+    "ast_hash": "581d10ab0d812ab43b1dd8e9e7063a96",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/side.png": {
+    "mtime": 1791036484.021403,
+    "seen": 1791036586.188044,
+    "ast_hash": "ef8565793961a3ff2e42bfa333fb81e5",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/top_end.png": {
+    "mtime": 1791036486.2378342,
+    "seen": 1791036586.188044,
+    "ast_hash": "eb86df10b1c65555c06f5e107fafe7ae",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/with_cover_iso_front.png": {
+    "mtime": 1791036506.2766716,
+    "seen": 1791036586.188044,
+    "ast_hash": "6b3adc8f2a33dd0821c82f834d96941b",
+    "semantic_hash": ""
+  },
+  "hardware/QUESTIONS_AND_ISSUES.md": {
+    "mtime": 1791036674.9431136,
+    "seen": 1791036704.7937937,
+    "ast_hash": "6033cddb3d68d9ba4f8f41d0256bc72c",
+    "semantic_hash": ""
+  },
+  "hardware/tools/gnd_islands.py": {
+    "mtime": 1791003595.4556038,
+    "seen": 1791036586.188044,
+    "ast_hash": "79fb6142bfdf5fc736303f00a15f5382",
+    "semantic_hash": ""
+  },
+  "hardware/tools/smooth.py": {
+    "mtime": 1791036474.9743721,
+    "seen": 1791036586.188044,
+    "ast_hash": "dec8815a7c4a765f8195c80c8c3be5a7",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/PROGRESS.md": {
+    "mtime": 1791036592.6276834,
+    "seen": 1791036704.7937937,
+    "ast_hash": "cb9932cbcfa13d0e5528147ff95b72e7",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/photo_notes.md": {
+    "mtime": 1791003035.4253988,
+    "seen": 1791036586.188044,
+    "ast_hash": "301e0fe757a429ddc6868cc87c9d3fa3",
+    "semantic_hash": ""
+  },
+  "hardware/stage11_progress.md": {
+    "mtime": 1791036699.4879704,
+    "seen": 1791036704.7937937,
+    "ast_hash": "385ce392eac6e140365c3a3575ad026c",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/renders/closeup_top_0.png": {
+    "mtime": 1791036507.3841798,
+    "seen": 1791036586.188044,
+    "ast_hash": "215fbece382bc3b7159b8e9407f5326f",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/replica/README.md": {
+    "mtime": 1791036579.3200445,
+    "seen": 1791036592.275271,
+    "ast_hash": "35f403e18a04f2e6f65b0e98a66b82b7",
+    "semantic_hash": ""
+  },
+  "hardware/stage11_epaper_calipers.md": {
+    "mtime": 1791036674.0655563,
+    "seen": 1791036704.7937937,
+    "ast_hash": "61e2fbc60360b0e76f2dbbdce8449095",
     "semantic_hash": ""
   }
 }

@@ -40,7 +40,7 @@ Net labels: +3V3, BAT+, CHG_PROG, CHG_STAT, CHG_STAT_RAW, GND, Q1_G, SYS, VBAT_P
 
 ## Sheet: ESP32-S3 MCU (`mcu.kicad_sch`)
 
-Net labels: +3V3, BOOT, CAM_D0, CAM_D1, CAM_D2, CAM_D3, CAM_D4, CAM_D5, CAM_D6, CAM_D7, CAM_HREF, CAM_PCLK, CAM_PWDN, CAM_PWR_EN, CAM_RESET, CAM_SIOC, CAM_SIOD, CAM_VSYNC, CAM_XCLK, CHG_STAT, EN, EPD_BUSY, EPD_CLK, EPD_CS, EPD_DC, EPD_DIN, EPD_RST, GND, I2C_SCL, I2C_SDA, KEYPAD_INT, KEY_ON, UART_RX, UART_TX, USB_DM, USB_DP, VBAT_SENSE, VBUS_SENSE
+Net labels: +3V3, BAT+, BOOT, CAM_D0, CAM_D1, CAM_D2, CAM_D3, CAM_D4, CAM_D5, CAM_D6, CAM_D7, CAM_HREF, CAM_PCLK, CAM_PWDN, CAM_PWR_EN, CAM_RESET, CAM_SIOC, CAM_SIOD, CAM_VSYNC, CAM_XCLK, CHG_STAT, EN, EPD_BUSY, EPD_CLK, EPD_CS, EPD_DC, EPD_DIN, EPD_RST, GND, I2C_SCL, I2C_SDA, KEYPAD_INT, KEY_ON, UART_RX, UART_TX, USB_DM, USB_DP, VBAT_SENSE, VBUS_SENSE
 
 | Ref | Value | Footprint | LCSC |
 |---|---|---|---|
@@ -54,6 +54,9 @@ Net labels: +3V3, BOOT, CAM_D0, CAM_D1, CAM_D2, CAM_D3, CAM_D4, CAM_D5, CAM_D6, 
 | TP2 | UART_TX | TestPoint:TestPoint_Pad_D1.0mm |  |
 | TP3 | UART_RX | TestPoint:TestPoint_Pad_D1.0mm |  |
 | TP4 | GND | TestPoint:TestPoint_Pad_D1.5mm |  |
+| TP5 | +3V3 | TestPoint:TestPoint_Pad_D1.5mm |  |
+| TP6 | BAT+ | TestPoint:TestPoint_Pad_D1.5mm |  |
+| TP7 | EN | TestPoint:TestPoint_Pad_D1.5mm |  |
 | U1 | ESP32-S3-MINI-1-N4R2 | ai_calc:ESP32-S3-MINI-1 | C3013941 |
 
 ## Sheet: Camera OV5640 (`camera.kicad_sch`)
@@ -187,7 +190,7 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 ## Board (`ai_calc.kicad_pcb`)
 
 - Outline extent: 72.3 x 148.8 mm, thickness 0.8 mm, 2 layers (F.Cu = component side facing back cover, B.Cu = key pads + e-paper)
-- 138 footprints, 5386 track segments, 331 vias
+- 142 footprints, 3102 track segments, 343 vias
 - Copper zones on: GND
 - Nets (92): +3V3, /Keypad and TCA8418/COL0, /Keypad and TCA8418/COL1, /Keypad and TCA8418/COL2, /Keypad and TCA8418/COL3, /Keypad and TCA8418/COL4, /Keypad and TCA8418/COL5, /Keypad and TCA8418/COL6, /Keypad and TCA8418/COL7, /Keypad and TCA8418/COL8, /Keypad and TCA8418/COL9, /Keypad and TCA8418/ROW0, /Keypad and TCA8418/ROW1, /Keypad and TCA8418/ROW2, /Keypad and TCA8418/ROW3, /Keypad and TCA8418/ROW4, /Keypad and TCA8418/ROW5, /Keypad and TCA8418/ROW6, /Keypad and TCA8418/ROW7, BAT+, BOOT, CAM_2V8, CAM_AF, CAM_AVDD, CAM_D0, CAM_D1, CAM_D2, CAM_D3, CAM_D4, CAM_D5, CAM_D6, CAM_D7, CAM_DVDD, CAM_HREF, CAM_PCLK, CAM_PWDN, CAM_PWR_EN, CAM_RESET, CAM_SIOC, CAM_SIOD, CAM_VSYNC, CAM_XCLK, CHG_PROG, CHG_STAT, CHG_STAT_RAW, EN, EPD_BUSY, EPD_CLK, EPD_CS, EPD_DC, EPD_DIN, EPD_GDR, EPD_PREVGH, EPD_PREVGL, EPD_PUMP, EPD_RESE, EPD_RST, EPD_SW, EPD_VCOM, EPD_VDD, EPD_VGH, EPD_VGL, EPD_VPP, EPD_VSH, EPD_VSL, GND, I2C_SCL, I2C_SDA, KEYPAD_INT, KEY_ON, Q1_G, SYS, TCA_RESET, UART_RX, UART_TX, USB_DM, USB_DP, VBAT_P, VBAT_SENSE, VBUS, VBUS_SENSE, unconnected-(J1-Pin_1-Pad1), unconnected-(J2-Pin_1-Pad1), unconnected-(J2-Pin_6-Pad6), unconnected-(J2-Pin_7-Pad7), unconnected-(U1-IO26-Pad26), unconnected-(U1-IO3-Pad7), unconnected-(U1-IO45-Pad41), unconnected-(U1-IO46-Pad44), unconnected-(U3-NC-Pad4), unconnected-(U4-NC-Pad4), unconnected-(U5-NC-Pad4)
 
@@ -224,6 +227,7 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 | C29 | Capacitor_SMD:C_0603_1608Metric | F.Cu | 168.6 98.83 |
 | C30 | Capacitor_SMD:C_0603_1608Metric | F.Cu | 168.6 100.43 |
 | C31 | Capacitor_SMD:C_0402_1005Metric | F.Cu | 129.4 144.2 90 |
+| C32 | Capacitor_SMD:C_0805_2012Metric | F.Cu | 118.4 81 90 |
 | D1 | Diode_SMD:D_SOD-123 | F.Cu | 129.2 75.2 |
 | D2 | Diode_SMD:D_SOD-123 | F.Cu | 158 154 |
 | D3 | Diode_SMD:D_SOD-123 | F.Cu | 164.6 106.23 |
@@ -233,13 +237,13 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 | D7 | Diode_SMD:D_SMF | F.Cu | 127.6 69.3 |
 | FB1 | Inductor_SMD:L_0603_1608Metric | F.Cu | 137.4 154.4 |
 | H1 | ai_calc:ScrewBoss_Hole_6.0mm | F.Cu | 128.36 126.74 |
-| H2 | ai_calc:Post_Hole_4.4mm | F.Cu | 130.85 175.5 |
+| H2 | ai_calc:Post_Hole_4.2mm | F.Cu | 130.85 175.5 |
 | H3 | ai_calc:ScrewBoss_Hole_6.0mm | F.Cu | 174 126.1 |
-| H4 | ai_calc:Post_Hole_4.4mm | F.Cu | 171.06 145.96 |
-| H6 | ai_calc:Post_Hole_4.4mm | F.Cu | 130.6 187.2 |
-| H8 | ai_calc:Post_Hole_4.4mm | F.Cu | 128.609 137.046 |
-| H9 | ai_calc:Post_Hole_4.4mm | F.Cu | 169.2 175.75 |
-| H10 | ai_calc:Post_Hole_4.4mm | F.Cu | 171.457 136.795 |
+| H4 | ai_calc:Post_Hole_4.2mm | F.Cu | 171.06 145.96 |
+| H6 | ai_calc:Post_Hole_4.2mm | F.Cu | 130.6 187.2 |
+| H8 | ai_calc:Post_Hole_4.2mm | F.Cu | 128.609 137.046 |
+| H9 | ai_calc:Post_Hole_4.2mm | F.Cu | 169.2 175.75 |
+| H10 | ai_calc:Post_Hole_4.2mm | F.Cu | 171.457 136.795 |
 | H13 | ai_calc:Post_Hole_4.2mm | F.Cu | 130.5 198 |
 | H14 | ai_calc:Post_Hole_4.2mm | F.Cu | 169.1 198.1 |
 | J1 | ai_calc:FPC_24P_P0.5mm_DualContact_C6364666_CamReversed | F.Cu | 150 161 180 |
@@ -260,8 +264,8 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 | R8 | Resistor_SMD:R_0402_1005Metric | F.Cu | 136 165.2 90 |
 | R9 | Resistor_SMD:R_0402_1005Metric | F.Cu | 138.4 165.2 90 |
 | R10 | Resistor_SMD:R_0402_1005Metric | F.Cu | 134.6 163.4 |
-| R11 | Resistor_SMD:R_0402_1005Metric | F.Cu | 163.6 95.23 |
-| R12 | Resistor_SMD:R_0603_1608Metric | F.Cu | 165.4 99.83 |
+| R11 | Resistor_SMD:R_0402_1005Metric | F.Cu | 165.45 99.85 |
+| R12 | Resistor_SMD:R_0603_1608Metric | F.Cu | 164 95.3 180 |
 | R13 | Resistor_SMD:R_0402_1005Metric | F.Cu | 122.4 141 90 |
 | R14 | Resistor_SMD:R_0402_1005Metric | F.Cu | 123.6 141 90 |
 | R15 | Resistor_SMD:R_0402_1005Metric | F.Cu | 124.8 141 90 |
@@ -324,6 +328,9 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 | TP2 | TestPoint:TestPoint_Pad_D1.0mm | F.Cu | 138 86.4 |
 | TP3 | TestPoint:TestPoint_Pad_D1.0mm | F.Cu | 140.4 86.4 |
 | TP4 | TestPoint:TestPoint_Pad_D1.5mm | F.Cu | 120.6 113.1 |
+| TP5 | TestPoint:TestPoint_Pad_D1.5mm | F.Cu | 123.6 82.35 |
+| TP6 | TestPoint:TestPoint_Pad_D1.5mm | F.Cu | 140.4 80.3 |
+| TP7 | TestPoint:TestPoint_Pad_D1.5mm | F.Cu | 128 84.6 |
 | U1 | ai_calc:ESP32-S3-MINI-1 | F.Cu | 127.55 97 90 |
 | U2 | Package_TO_SOT_SMD:SOT-23-5 | F.Cu | 132.5 72.2 |
 | U3 | Package_TO_SOT_SMD:SOT-23-5 | F.Cu | 122 76.8 |

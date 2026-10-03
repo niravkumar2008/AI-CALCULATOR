@@ -1,24 +1,31 @@
-front outline 79.24 x 159.90 mm, back 161.00 long
-screw post corner R  ( 29.15,  72.78)  side wall gap 2.27
-screw post corner L  (-29.15,  72.78)  side wall gap 2.27
+front outline 78.42 x 159.90 mm, back 161.00 long
+screw post corner R  ( 32.66,  73.15)  side wall gap 2.27
+screw post corner L  (-32.66,  73.15)  side wall gap 2.28
 screw post mid R     ( 22.40,  12.74)  side wall gap 13.43
-screw post mid L     (-24.00,  12.74)  side wall gap 11.78
-screw post bottom R  ( 19.50, -71.10)  side wall gap 2.31
-screw post bottom L  (-19.50, -71.10)  side wall gap 2.31
+screw post mid L     (-24.00,  12.74)  side wall gap 11.74
+screw post bottom R  ( 19.50, -71.10)  side wall gap 1.74
+screw post bottom L  (-19.50, -71.10)  side wall gap 1.74
 C11 check: corner post 4.20 from inside side wall, 6.10 from inside top wall
-C10 check: bottom post 16.22 from inside side wall
-window centre (0.00, 45.40), top edge 24.00 below case top
-posts closer than 0.6 mm to a key opening: 12
-  post H2       vs opening AC     gap 0.14
-  post H6       vs opening /      gap 0.44
-  post H13      vs opening -      gap 0.12
-  post bottom R vs opening =      gap 0.40
-  post H2       vs opening DEL    gap -0.02
-  post H6       vs opening x      gap 0.59
-  post H13      vs opening +      gap 0.40
-  post H9       vs opening 8      gap 0.21
-  post H14      vs opening 2      gap 0.23
-  post H9       vs opening 7      gap 0.30
-  post H14      vs opening 1      gap 0.44
-  post bottom L vs opening 0      gap 0.40
-  WARNING boss corner L 0.60 from the battery door
+front shell 78.42 x 159.90 (C1 159.9); keypad-section width at Y=-50: 76.84
+C10 check: bottom post 15.41 from inside side wall
+window centre (0.00, 45.95), top edge 24.00 below case top
+posts closer than 0.6 mm to a key opening: 19
+  post H2       vs opening AC     gap -0.10
+  post H6       vs opening /      gap 0.19
+  post H6       vs opening -      gap 0.57
+  post H13      vs opening -      gap -0.13
+  post bottom R vs opening =      gap 0.20
+  post H8       vs opening ln     gap 0.41
+  post H8       vs opening log    gap 0.49
+  post H2       vs opening DEL    gap -0.26
+  post H6       vs opening x      gap 0.35
+  post H13      vs opening +      gap 0.15
+  post bottom R vs opening Ans    gap 0.41
+  post H9       vs opening 8      gap -0.03
+  post H14      vs opening 2      gap -0.02
+  post bottom L vs opening .      gap 0.41
+  post H4       vs opening sqrt   gap 0.59
+  post H9       vs opening 7      gap 0.05
+  post H14      vs opening 1      gap 0.19
+  post bottom L vs opening 0      gap 0.20
+  post H10      vs opening a/b    gap 0.57

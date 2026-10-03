@@ -9,7 +9,7 @@ Nirav is new to PCB design: explain non-obvious choices in 1–2 plain sentences
 ## Product (fixed requirements)
 - New board inside an unmodified Casio fx-300ES Plus case; the only drilled hole is a ~6 mm camera hole in the back cover.
 - Parts: ESP32-S3-MINI-1-N4R2, Seeed OV5640 AF camera (24-pin FPC), Waveshare 2.13" V4 bare e-paper (24-pin FPC, on-board booster), TCA8418 keypad scanner, ON key on its own RTC pin.
-- Power: MCP73831 charger, AP2112K-3.3, USBLC6-2, SMF5.0A TVS, reverse-battery FET + load-sharing FET.
+- Power: MCP73831 charger, RT9080-33GJ5 (was AP2112K-3.3 until stage 11), USBLC6-2, SMF5.0A TVS, reverse-battery FET + load-sharing FET.
 - Battery: Adafruit #1570, 100 mAh, JST-PH. Charging comes in through an Adafruit #5358 magnetic connector.
 - The magnet contacts must never carry battery voltage. No LED (exam mode). Nothing for Nirav to solder.
 - JLCPCB build: 2 layers, 0.8 mm, ENIG, assemble 2 of 5. Use real LCSC numbers only and flag extended parts.
@@ -24,6 +24,7 @@ Nirav is new to PCB design: explain non-obvious choices in 1–2 plain sentences
 | 3 schematic | Done. ERC 0/0. Every part has a live-checked LCSC number. Independent review fixes applied (stage3_schematic.md) |
 | 4/5 footprints + placement | Done. Placement check: 0 overlaps / keep-out hits (stage4_5_layout.md) |
 | 6 routing | **ai_calc_pcb_10.zip (fx-115ES holes) = complete: DRC 0 errors, 0 unconnected, 0 schematic-parity warnings**, with the v8 camera bus (0.6 mm ribbon) and the stage-6 GPIO map. See stage9_finish.md |
+| 11 e-paper + calipers | **ai_calc_pcb_11.zip: DRC 0/0/0 with schematic parity.** E-paper block moved up 3.57 mm to the measured window and fully re-routed, locating-post holes 4.2 mm (C7), review fixes S1 (R20 → VBUS_SENSE), S2 (U3 = RT9080-33GJ5), S4 (C32 22 µF), new TP5 +3V3 / TP6 BAT+ / TP7 EN. See stage11_epaper_calipers.md |
 | 7 outputs | `fab/` regenerated from the v10 board by `tools/make_outputs.sh` (now also runs on Windows, see its header). ORDER_CHECKLIST.md written |
 
 **Don't order yet:** Nirav's caliper measurements (measurement-sheet artifact) can still move parts. Items V3/V5/V9/V11/V12 in geometry_assumptions.md need checking first.
@@ -32,10 +33,10 @@ Nirav is new to PCB design: explain non-obvious choices in 1–2 plain sentences
 - **Camera socket J1** uses `ai_calc:FPC_24P_P0.5mm_DualContact_C6364666_CamReversed`: the same land pattern with pad numbers mirrored. A flat cable going straight in lands mirrored on standard numbering; two independent checks agreed (~75 %).
   - Both FPC sockets are SHOU HAN C6364666 dual-contact parts, so if the reading is wrong, a 180° twist in the cable fixes it.
   - Before the first plug-in, check the cable: fingers 2 and 15 should beep (both GND).
-- **E-paper:** the FPC folds behind the panel, comes up through a **1.0 × 14 mm slot at x = 172.9**, and plugs into J2 (x 177.9, opening facing the slot). Length budget is 14.3 mm.
+- **E-paper:** the FPC folds behind the panel, comes up through a **1.0 × 14 mm slot at x = 172.9** (centre y 92.83 since stage 11), and plugs into J2 (x 177.9, y 92.83, opening facing the slot). Length budget is 14.3 mm.
 - **Camera GPIO map re-ordered in stage 6** so the bus leaves the module in J1's pin order: XCLK 18, D0 13, D1 11, D2 10, D3 12, D4 14, D5 16, D6 17, D7 21, VSYNC 36, HREF 47, PCLK 15, PWDN 48, RESET 38 (SIOD 40, SIOC 39, PWR_EN 34 unchanged). The schematic (mcu sheet labels) and pins_final.h are already updated. **Firmware must use these.**
 - **Review fixes:**
-  - STAT → IO35 goes through Schottky D6 + 100 k pull-up R20, because STAT drives 5 V.
+  - STAT → IO35 goes through Schottky D6 + 100 k pull-up R20, because STAT drives 5 V. Since stage 11 R20 pulls up to VBUS_SENSE (not +3V3), so nothing back-feeds the charger without a cable.
   - R12 = 3 Ω (B/W panel). C20 = 4.7 µF 50 V 1206.
   - VBUS divider = 10 k / 20 k. Charge current = 50 mA (R2 20 k).
   - SCCB pull-ups R18/R19 go to CAM_2V8. The USBLC6 reference pin is on +3V3.
@@ -67,3 +68,8 @@ Back-cover ribs and rings were mapped onto the board (several sit over the camer
 - Measurement sheet: https://claude.ai/artifact/SzK4TuLjkGAZ9tvzqEtqkq (42 items, including camera-cable continuity E6 and e-paper ribbon length E7).
 - Cost: ~$190–240 total. JLCPCB fees ~$59.50, parts $9.77/board, 14 extended part types (doc: https://claude.ai/code/artifact/6bda3922-c9f2-47b0-8e37-4b1de94ca7f4).
 - Next generation: a custom shell from a build123d script (3D print first, then a manufacturer). Not started.
+
+## Stage 11 (ai_calc_pcb_11): e-paper at the measured window, calipers, review fixes
+- Details, assumptions and the questions list: `stage11_epaper_calipers.md` and `QUESTIONS_AND_ISSUES.md` → "PCB (stage 11)".
+- **Blocking question:** C4 (5.5 mm wall beside the screen) would make the board's top part ~2 mm too wide per side. Measure the inside width there.
+- New Windows tools (no Freerouting/shapely needed): `tools/pilroute.py`, `tools/gnd_islands.py`, `tools/smooth.py`.
