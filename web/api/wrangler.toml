@@ -1,0 +1,44 @@
+# AI Calculator API: one Cloudflare Worker for the calculators (/v1/*) and the portal (/api/*).
+# Everything here works on the FREE Workers plan. See README.md.
+name = "ai-calc-api"
+main = "src/index.ts"
+compatibility_date = "2026-10-01"
+# Free-plan default address: https://ai-calc-api.<your-subdomain>.workers.dev
+workers_dev = true
+
+# D1 (SQLite). For local dev and tests the id below is a placeholder; before the first deploy
+# run `npx wrangler d1 create ai-calc` and paste the printed database_id here.
+[[d1_databases]]
+binding = "DB"
+database_name = "ai-calc"
+database_id = "00000000-0000-0000-0000-000000000000"
+migrations_dir = "migrations"
+
+# Workers KV for the firmware image (free; no card needed, unlike R2). Before the first deploy run
+# `npx wrangler kv namespace create FIRMWARE` and paste the printed id here.
+[[kv_namespaces]]
+binding = "FIRMWARE"
+id = "00000000000000000000000000000000"
+
+# Daily clean-up: unlinked calculators unused for 30 days, expired codes, sessions and counters.
+[triggers]
+crons = ["17 3 * * *"]
+
+# Settings (PLAN section 4b). Secrets (ANTHROPIC_API_KEY, RESEND_API_KEY, ADMIN_TOKEN) are NOT
+# here: locally they go in .dev.vars, in production use `npx wrangler secret put NAME`.
+# DEV_MODE is deliberately absent: it must never be set in production.
+[vars]
+ANTHROPIC_BASE_URL = "https://api.anthropic.com"
+MODEL = "claude-sonnet-5-5"
+MAX_TOKENS = "16000"
+EFFORT = "high"
+REFUSAL_FALLBACK = "1"
+UPSTREAM_TIMEOUT_MS = "60000"
+PUBLIC_URL = "http://localhost:8787"
+TRIAL_DAYS = "30"
+MONTHLY_SOLVES = "300"
+MONTHLY_SPEND_USD = "8"
+GLOBAL_DAILY_CAP_USD = "50"
+PRICE_IN_PER_MTOK = "2"
+PRICE_OUT_PER_MTOK = "10"
+MAIL_FROM = ""
