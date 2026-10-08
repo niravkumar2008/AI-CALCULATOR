@@ -381,6 +381,15 @@ void stopServers() {
   if (s) httpd_stop(s);
 }
 
+// A GET route with every other field zeroed (the struct grows with IDF options).
+httpd_uri_t getUri(const char* path, esp_err_t (*handler)(httpd_req_t*)) {
+  httpd_uri_t u = {};
+  u.uri = path;
+  u.method = HTTP_GET;
+  u.handler = handler;
+  return u;
+}
+
 bool startServers(std::string& error) {
   httpd_config_t c = HTTPD_DEFAULT_CONFIG();
   c.stack_size = 8192;
@@ -393,13 +402,18 @@ bool startServers(std::string& error) {
     return false;
   }
   const httpd_uri_t uris[] = {
-      {"/", HTTP_GET, pageHandler, nullptr},
-      {"/frame", HTTP_GET, frameHandler, nullptr},    {"/last.jpg", HTTP_GET, lastHandler, nullptr},
-      {"/set", HTTP_GET, setHandler, nullptr},        {"/tuning", HTTP_GET, tuningHandler, nullptr},
-      {"/save", HTTP_GET, saveHandler, nullptr},      {"/reset", HTTP_GET, resetHandler, nullptr},
-      {"/detail.jpg", HTTP_GET, detailHandler, nullptr}, {"/focus", HTTP_GET, focusHandler, nullptr},
-      {"/send", HTTP_GET, sendHandler, nullptr},      {"/result", HTTP_GET, resultHandler, nullptr},
-      {"/autotune", HTTP_GET, autotuneHandler, nullptr},
+      getUri("/", pageHandler),
+      getUri("/frame", frameHandler),
+      getUri("/last.jpg", lastHandler),
+      getUri("/set", setHandler),
+      getUri("/tuning", tuningHandler),
+      getUri("/save", saveHandler),
+      getUri("/reset", resetHandler),
+      getUri("/detail.jpg", detailHandler),
+      getUri("/focus", focusHandler),
+      getUri("/send", sendHandler),
+      getUri("/result", resultHandler),
+      getUri("/autotune", autotuneHandler),
   };
   for (const auto& u : uris) httpd_register_uri_handler(g_server, &u);
   // The live view gets its own server: esp_http_server answers one request
@@ -418,7 +432,7 @@ bool startServers(std::string& error) {
     error = "Couldn't start the live view.";
     return false;
   }
-  const httpd_uri_t stream = {"/stream", HTTP_GET, streamHandler, nullptr};
+  const httpd_uri_t stream = getUri("/stream", streamHandler);
   httpd_register_uri_handler(g_stream, &stream);
   return true;
 }

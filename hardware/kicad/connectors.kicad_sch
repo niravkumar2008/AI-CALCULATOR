@@ -1069,7 +1069,7 @@
 				)
 			)
 		)
-		(property "Value" "Magnetic USB (Adafruit 5358): VBUS GND D- D+"
+		(property "Value" "Magnetic USB (Adafruit 5358, N end at pin 1): VBUS D- D+ GND"
 			(at 49.53 67.31 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1079,7 +1079,7 @@
 				)
 			)
 		)
-		(property "Footprint" "ai_calc:PinSocket_1x04_P2.54mm_SMD_H5.0_C42379197"
+		(property "Footprint" "ai_calc:PinSocket_1x04_P2.54mm_SMD_RA_C46061768"
 			(at 49.53 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -1090,7 +1090,7 @@
 				)
 			)
 		)
-		(property "Datasheet" ""
+		(property "Datasheet" "https://www.lcsc.com/datasheet/C46061768.pdf"
 			(at 49.53 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -1112,7 +1112,7 @@
 				)
 			)
 		)
-		(property "LCSC" "C42379197"
+		(property "LCSC" "C46061768"
 			(at 49.53 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -1123,7 +1123,7 @@
 				)
 			)
 		)
-		(property "MPN" "HX PM2.54-1x4P TP-YQ (5 mm SMD female header)"
+		(property "MPN" "HX PM2.54-1x4P WT (right-angle SMD female header)"
 			(at 49.53 59.69 0)
 			(hide yes)
 			(show_name no)
@@ -1366,7 +1366,7 @@
 		)
 		(uuid "c386b669-9c95-4b90-959b-11d801285c57")
 	)
-	(global_label "GND"
+	(global_label "USB_DM"
 		(at 44.45 59.69 180)
 		(effects
 			(font
@@ -1376,7 +1376,7 @@
 		)
 		(uuid "804a713c-cf4a-40eb-b6a3-151e2bf8e47a")
 	)
-	(global_label "USB_DM"
+	(global_label "USB_DP"
 		(at 44.45 62.23 180)
 		(effects
 			(font
@@ -1386,7 +1386,7 @@
 		)
 		(uuid "fc090c8f-de40-43d0-aa96-31e9f2a231b5")
 	)
-	(global_label "USB_DP"
+	(global_label "GND"
 		(at 44.45 64.77 180)
 		(effects
 			(font

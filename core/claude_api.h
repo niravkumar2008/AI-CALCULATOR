@@ -48,6 +48,8 @@ class StreamReader {
 bool peekAnswer(const std::string& partialJson, double& confidence, std::string& answer);
 
 // Maps a finished request to a failure, or returns false if it succeeded.
+// Account errors from the calculator's proxy (not linked, subscription, fair-use cap)
+// become Failure::Account with the proxy's message as `detail`.
 // httpStatus is the HTTP code; body is the non-streamed error body (if any).
 bool classifyFailure(int httpStatus, const std::string& body, const StreamReader& stream,
                      Failure& f, std::string& detail);

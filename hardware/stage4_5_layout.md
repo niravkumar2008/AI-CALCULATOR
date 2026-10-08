@@ -17,7 +17,7 @@ Picture: `geometry/placement_v1.png`. Check script: `work/placement_check.py`. I
 ## The two ribbon cables (the riskiest part of the board)
 **Camera (Seeed OV5640, 24-pin, 70.5 mm).** From Seeed's module drawing: the gold fingers are on the underside (the same side as the module's base), and when you look at the fingers with the tip pointing away from you, **pin 1 is on the left**.
 The camera lies lens-up on the F side, and its cable runs flat straight down the centre to J1 at y ≈ 161. That puts the fingers face-down. The JUSHUO/SHOU HAN pad numbering expects pin 1 on the *right* (from both the AFC01 datasheet's top view and its recommended-FPC drawing). So a straight run lands **mirrored**.
-J1 therefore uses `_CamReversed`: the same land pattern, with pad numbers flipped so that cable pin N lands on schematic pin N. An independent check came to the same answer (about 75 % confidence).
+J1 therefore uses `_CamReversed`: the same land pattern, with pad numbers flipped so that cable pin N lands on schematic pin N. An independent check came to the same answer (about 75 % confidence at the time; raised to about 90 % by verification 01/03 in stage 14).
 The one thing that argues against it: Seeed's own XIAO board uses this camera with an AFC01 and plain numbering. That only fits if Seeed's footprint is numbered from the other end, which can't be confirmed from their PDF.
 
 **Safety net:** J1 is dual-contact. If the reading is wrong, giving the cable one 180° twist along its length flips which face touches the contacts. That also flips the order, so the camera works with no board change. (Mid-twist the cable stands on edge, 6 mm, so do the twist where there's height.)

@@ -1,5 +1,7 @@
 # Tester firmware (Stage 4)
 
+> **This is the old breadboard tester (ESP32-S3-CAM dev board + buttons), not the board firmware.** The firmware for the custom board inside the Casio is **`../firmware-prototype/`**; never flash this one to that board.
+
 Runs the full calculator (the same code as the browser and Windows simulators) on the real tester:
 ESP32-S3-CAM (OV3660 camera) + Waveshare 2.13" e-paper HAT V4 + 4 buttons.
 Wire it first with the hole-by-hole checklist in the Build Book.

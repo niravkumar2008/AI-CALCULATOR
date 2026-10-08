@@ -1,8 +1,10 @@
 # AI Calculator launch roadmap
 
-Written Saturday 2026-10-03. Prices were checked online on 2026-10-03 unless marked **(estimate)**. Sources are listed at the end, numbered [S1], [S2] and so on.
+Written Saturday 2026-10-03; timeline and JLCPCB cost updated 2026-10-04 for the final v14 board (`hardware/FINAL_STATUS.md`). Prices were checked online on 2026-10-03 unless marked **(estimate)**. Sources are listed at the end, numbered [S1], [S2] and so on.
 
 Chart data (timeline tasks, price-scaling table, API costs) is in `launch_roadmap_data.json` in this folder.
+
+> **Status update 2026-10-06 (docs audit, `hardware/verification/10_docs_consistency.md`):** the JLCPCB order was **not** placed on Mon 10/5; nothing below is ordered yet. Every day the order slips moves the dates from 10/15 on by a day (boards about **10–14 days** door-to-door after ordering, so about **10/17–10/21** for an order on 10/7; economy shipping alone is 7–15 days if express isn't offered). **Cost update 10/6 (`hardware/FAB_VENDOR_COMPARISON.md`):** JLCPCB is still about $135–155 before shipping but now about **$200–240 delivered**: US import duty of about 35–37.5 % is collected at checkout (de-minimis suspended since 2026-06-24) plus $20–40 shipping; the totals below include it. Changes since this was written: the battery is now the **Adafruit #1317, 150 mAh** (same price, same plug; `hardware/enclosure/final_assembly/battery_upgrade.md`); the **API proxy exists** (`server/proxy/`, FastAPI, device tokens, 30-day free trial, 500 solves/month cap) and the stage-13 firmware never holds the API key; the **factory self-test exists** (SHIFT + ALPHA, ON); the camera hole is **7 mm**, not 6; the battery is held with **0.1 mm double-sided tape, no foam**. The decided price is **$225 + $15/month, first month free** (§0; the $3–5/month idea in §3.3 is the earlier analysis, and `COMPETITOR_ANALYSIS.md` B1 argues for a lower subscription: still an open business question).
 
 ---
 
@@ -10,25 +12,26 @@ Chart data (timeline tasks, price-scaling table, API costs) is in `launch_roadma
 
 | Question | Answer |
 |---|---|
-| What you spend by Monday night | About **$310** for the core electronics order (JLCPCB + Adafruit + panels + cameras). About **$440** with 2 donor calculators and the tools. Likely range **$380–520** (estimate). |
+| What you spend by Monday night | About **$380** for the core electronics order (JLCPCB ≈ $200–240 delivered + Adafruit + panels + cameras; updated 10/6). About **$430** with the small tools (you already own the calculators and a multimeter). Likely range **$390–460** (estimate). |
 | Why it's higher than the old $190–240 | JLCPCB now charges US tariffs up front (DDP). Its FAQ puts the total tariff on Chinese goods at **35–92.5 %** [S8]. The old figure also left out shells, tools, the charge cables and DHL. |
-| When you'll have working units | Boards land around **Thu 10/15**. First working calculator around **Sat 10/17** if nothing slips. Plan on a **10/21 buffer**: JLCPCB has only just reopened after China's National Day holiday (closed Oct 1–4, back on Oct 5 [S9]), so there may be a backlog. |
+| When you'll have working units | Boards land about 10–14 days after the order (≈ 10/17–10/21 for an order on 10/7). First working calculator about 2 days after the boards land if nothing slips. Plan on a **10/21 buffer**: JLCPCB has only just reopened after China's National Day holiday (closed Oct 1–4, back on Oct 5 [S9]), so there may be a backlog. |
 | Cost per unit (estimate) | **$138 at 2 · $65 at 100** (plus about $35 of one-time certification spread over those 100) **· $41 at 1,000 · $26 at 10,000** |
 | Claude API cost | About **$0.026 per solve** on Sonnet 5.5, and about **$3.90 per user per month** at 150 solves (estimate). See §3.3. |
+| Price (decided 10/4) | **$225** per calculator + **$15/month** subscription, **first month free** (the proxy's `TRIAL_DAYS=30`), fair-use cap 500 solves/month (`MONTHLY_CAP`). The calculator must still work as a normal scientific calculator without a subscription. Full margin tables: `launch_roadmap.html` §0. |
 | Biggest legal facts | 1. A camera + Wi-Fi calculator is **banned on the SAT and ACT** [S16], so market it as a homework and study tool. 2. **Don't sell modified Casio shells at scale** (trademark risk). 3. Before selling to the public you need an **FCC Part 15B SDoC** (about $1–2.5k [S10]), and the battery needs a **UN38.3 test summary**. |
 
 ---
 
 ## 1. Parts list for the first build (2 assembled boards out of 5)
 
-### 1A. Must be ordered MONDAY 10/5 (fastest shipping listed)
+### 1A. Order first, as soon as the paper dry fit passes (was "Monday 10/5"; not ordered as of 10/6; fastest shipping listed)
 
 | # | Item | Vendor and link | Qty | Unit | Total | Lead time to Indiana | Notes |
 |---|---|---|---|---|---|---|---|
-| 1 | PCB 2-layer, 0.8 mm, ENIG, 5 pcs, **2 assembled** (Standard PCBA) | JLCPCB, jlcpcb.com | 1 order | – | **$79.04** (fees ≈ $59.50 + parts 2 × $9.77, from the project cost doc) | Build about 5–7 days. Standard PCBA alone is "≥4 days" [S7]. DHL/FedEx 3–5 days | Use `hardware/ORDER_CHECKLIST.md`. Check every pin-1 in the 3D preview. |
-| 1b | DHL Express shipping | JLCPCB checkout | – | – | ~$20–30 **(estimate)** | – | Pick DHL or FedEx, never "Global Standard". |
-| 1c | US tariff, paid at checkout (DDP for individuals) | JLCPCB checkout | – | – | ~$28–73 **(estimate: 35–92.5 % of about $80 [S8])** | – | The exact figure appears at checkout. |
-| 2 | LiPo 3.7 V 100 mAh, JST-PH (#1570) | Adafruit, adafruit.com/product/1570 | 3 (1 spare) | $5.95 [S1] | $17.85 | Ships from NYC. UPS 2nd-Day ≈ 2–3 days | Backup source: Jameco $7.85 [S1] |
+| 1 | PCB 2-layer, 0.8 mm, ENIG, 5 pcs, **2 assembled** (Standard PCBA) | JLCPCB, jlcpcb.com | 1 order | – | **≈ $135–155 before shipping** (final review 2026-10-04: PCBs, PCBA setup + stencil, 14 Extended fees, parts for 2 boards) | Build about 5–7 days. Standard PCBA alone is "≥4 days" [S7]. DHL/FedEx 3–5 days | Use `hardware/ORDER_WALKTHROUGH.md`. The CPL is rotation-corrected: **verify the preview, rotate nothing.** |
+| 1b | DHL Express shipping | JLCPCB checkout | – | – | $20–40 **(estimate)** | – | Pick DHL or FedEx; economy (7–15 days of shipping) only if express isn't offered. **JLCPCB delivered ≈ $200–240.** |
+| 1c | US tariff, paid at checkout (DDP for individuals) | JLCPCB checkout | – | – | ≈ $45–55 **(estimate: about 35–37.5 % duty, de-minimis suspended since 2026-06-24; `hardware/FAB_VENDOR_COMPARISON.md`)** | – | The exact figure appears at checkout. |
+| 2 | LiPo 3.7 V **150 mAh**, JST-PH (**#1317**, 26 × 19.75 × 3.8 mm; replaced the 100 mAh #1570 on 10/6) | Adafruit, adafruit.com/product/1317 | 3 (1 spare) | $5.95 (in stock 10/6) | $17.85 | Ships from NYC. UPS 2nd-Day ≈ 2–3 days | Peel the lead tape off the top of the cell; meter the polarity before plugging in |
 | 3 | DIY magnetic connector, 4-pin right-angle (#5358, both halves) | Adafruit, adafruit.com/product/5358 | 3 | $6.50 [S2] | $19.50 | same box | Also at DigiKey/Mouser for $6.50 [S2] |
 | 4 | Magnetic USB charging cable for 4-pin (#5412) | Adafruit, adafruit.com/product/5412 | 2 | $4.95 [S3] | $9.90 | same box | **Only 36 in stock** [S3]. Without it, #5358 has nothing to plug into. |
 | 4b | Adafruit shipping (UPS 2nd Day) | – | – | – | ~$15 **(estimate)** | – | – |
@@ -36,7 +39,7 @@ Chart data (timeline tasks, price-scaling table, API costs) is in `launch_roadma
 | 5b | Waveshare shipping | – | – | – | ~$15–25 **(estimate)** | – | – |
 | 6 | **Seeed OV5640 AF camera** (24-pin FPC, the "for XIAO ESP32S3 Sense" one) | seeedstudio.com, or a US reseller | 3 (1 spare) | ~$14 **(estimate; £11 in the UK [S5])** | ~$42 | Seeed US warehouse 3–6 days **(estimate)** | Buy **this exact module**. J1's reversed pinout was worked out for it. Avoid the $46 Newegg reseller [S5]. |
 | 6b | Camera shipping | – | – | – | ~$10–15 **(estimate)** | – | – |
-| | **Core subtotal (Monday)** | | | | **≈ $280–350, midpoint ≈ $310** | | |
+| | **Core subtotal (Monday)** | | | | **≈ $350–405, midpoint ≈ $380** (updated 10/6 with the import-duty estimate) | | |
 
 ### 1B. Buy locally THIS WEEKEND (no shipping wait)
 
@@ -46,13 +49,15 @@ Chart data (timeline tasks, price-scaling table, API costs) is in `launch_roadma
 | 8 | Digital calipers (0.01 mm) | Harbor Freight / hardware store | 1 | ~$20–30 **(estimate)** | ~$25 | Needed TODAY for the measurement sheet |
 | 9 | Multimeter with continuity beep | same | 1 (if you don't own one) | ~$20–30 **(estimate)** | ~$25 | Needed for camera-cable check E6 and the power rails |
 | 10 | Kapton tape, 10–20 mm | Amazon/hardware store | 1 roll | ~$8–10 **(estimate)** | ~$9 | Insulate the battery and the back of the e-paper; mask the plastic before drilling |
-| 11 | Dremel bits: carbide cutter + sanding drums + 6 mm drill | hardware store | 1 set | ~$10–15 **(estimate)** | ~$12 | Grind the ribs and drill the camera hole (stage-10 grind plan) |
+| 11 | Dremel bits: carbide burr + sanding drums + **7 mm drill (9/32") and a small pilot bit** | hardware store | 1 set | ~$10–15 **(estimate)** | ~$12 | Grind the solar box, rib B and the magnet notch; drill the 7 mm camera window (Shell Grinding Guide) |
 | 12 | Flush cutters + ESD tweezers | hardware store | 1 each | ~$15 **(estimate)** | ~$15 | |
 | 13 | USB-A wall charger, or USB-A(female)-to-USB-C adapter for your laptop | anywhere | 1 | ~$6–8 **(estimate)** | ~$7 | The magnetic cable ends in **USB-A**. Flashing also goes through it (native USB on the ESP32-S3). |
-| 14 | Thin double-sided foam tape + 99 % isopropyl | anywhere | 1 each | ~$10 **(estimate)** | ~$10 | Holds the battery and camera in place; clean the ENIG pads |
+| 14 | Thin double-sided tape, **0.1 mm (not foam)** for the camera and battery, about 0.15 mm for the e-paper, + 99 % isopropyl | anywhere | 1 each | ~$10 **(estimate)** | ~$10 | Holds the camera, battery and e-paper; clean the ENIG pads. **No foam anywhere:** there is only 0.3 mm above the battery and 0.5 mm above the camera lens |
+| 15 | Matte black vinyl or black sticker paper, 0.08–0.15 mm | craft/office store | 1 sheet | ~$5 **(estimate)** | ~$5 | Window mask inside the display lens (`window_mask.md`) |
+| 16 | Epoxy or hot glue | hardware store | 1 | ~$6 **(estimate)** | ~$6 | Glues the magnet piece into the top-wall notch |
 | | **Local subtotal** | | | | **≈ $130–150** | Skip whatever you already own |
 
-**Monday-night total: about $310 for the core order + about $130 local ≈ $440 (estimate). Range $380–520 depending on tariff and shipping.**
+**Order-day total: about $380 for the core order + about $40–55 local ≈ $430 (estimate). Range $390–460 depending on duty and shipping.**
 
 ### 1C. Don't buy yet
 - More than 3 of anything. Prototype v1 will change something.
@@ -71,23 +76,24 @@ Chart data (timeline tasks, price-scaling table, API costs) is in `launch_roadma
 | 10/3 | Sat | Caliper measurements: C6 outline, C12/C13 LCD window, C14 wall stubs, D13 rib heights, plus V3/V5/V9/V11/V12 in `geometry_assumptions.md` | Nirav | calipers |
 | 10/3 | Sat | Firmware: freeze `pins.h`; e-paper and keypad drivers on the simulator or dev board | Nirav + Claude | – |
 | 10/4 | Sun | Give the measurements to the KiCad session. It moves parts, runs DRC to 0/0/0 and regenerates `fab/` | Claude (KiCad session) | measurements |
-| 10/4 | Sun | **Fit check**: print the board outline 1:1 on paper (or a 0.8 mm 3D print), lay it in the shell, check posts, ribs and camera hole | Nirav | new fab files |
-| 10/4 | Sun | Build an **API proxy** (a small server that holds the Claude key). The device only talks to the proxy. | Nirav + Claude | – |
-| **10/5** | **Mon** | **Order:** Adafruit (UPS 2-day), cameras, e-paper; then **JLCPCB by ~9 pm ET**. Click through every pin-1 in the preview. | Nirav | fit check |
+| 10/4 | Sun | **Done:** board v14 finished, DRC/ERC 0, independent re-check GO; fab files in `hardware/fab/` | Claude | – |
+| 10/4–5 | Sun–Mon | **Paper dry fit** (`hardware/FINAL_STATUS.md` §1): print `grind_map_front_shell.svg` at 100 %, check the 50 mm line, every post inside its hole | Nirav | – |
+| 10/4 | Sun | **Done:** the **API proxy** (`server/proxy/`) holds the Claude key; the device only talks to the proxy with its own token. | Claude | – |
+| **10/5** | **Mon** | **Order:** Adafruit (UPS 2-day), cameras, e-paper; then **JLCPCB by ~9 pm ET**, after the paper test passes (`hardware/ORDER_WALKTHROUGH.md`). Verify the preview against step 5; rotate nothing. About $135–155 before shipping, $200–240 delivered. **Not done on 10/5 (audit 10/6): order as soon as the paper dry fit passes; every day moves the rows below by a day.** | Nirav | paper dry fit |
 | 10/6 | Tue | JLCPCB engineer review. **Answer their emails within hours**: each unanswered question costs about a day. | Nirav | order |
 | 10/6–7 | Tue–Wed | Firmware: camera capture → JPEG → Wi-Fi → proxy → answer, on the dev board | Nirav + Claude | proxy |
 | 10/7 | Wed | Prepare shells: open, remove the Casio board (keep the rubber keypad and screws), mask with Kapton, grind ribs, drill the camera hole | Nirav | donor calcs |
 | 10/8 | Thu | Adafruit box arrives **(estimate)**. Check battery polarity against J4 (sheet E3). **A reversed JST lead is common.** | Nirav | Adafruit |
 | 10/9 | Fri | JLCPCB finishes the bare PCBs **(estimate)**. Cameras and e-paper arrive (Waveshare direct may take until 10/12–15). | JLCPCB / vendors | – |
-| 10/10–11 | Sat–Sun | Firmware: full UI in the simulator; **factory self-test mode** (every key, a display pattern, camera snapshot, battery ADC, Wi-Fi scan) | Nirav + Claude | – |
+| 10/10–11 | Sat–Sun | **Done early (stage 13):** the **factory self-test** (SHIFT + ALPHA, ON, or `selftest`: keys, display pattern, camera JPEG, battery, Wi-Fi scan, one JSON line). Use the days for the proxy deployment on Render and the shell prep instead. | Nirav + Claude | – |
 | 10/12 | Mon | JLCPCB assembly and X-ray done, board ships by DHL **(estimate)**. Camera cable check E6: fingers 2 and 15 should beep to GND. | JLCPCB / Nirav | – |
-| **10/15** | Thu | **Boards arrive (estimate).** Bring up board #1 on USB only, no battery, display or camera. Measure 3.3 V / 2.8 V / 1.5 V, then flash over the magnetic USB. | Nirav | DHL |
+| **10/15** (≈ 10/17–10/21 if ordered 10/7) | Thu | **Boards arrive (estimate).** Bring up board #1 on USB only, no battery, display or camera: inspect, meter checks, VBUS / SYS / 3.3 V (TP5) / EN (TP7), then flash over the magnetic USB (First Power-Up Guide, steps 2–7). | Nirav | DHL |
 | 10/16 | Fri | Plug in the e-paper, then the camera; run the self-test; then battery and charging (check the charge current is about 50 mA) | Nirav | bring-up |
 | **10/17** | Sat | **Assemble into shell #1. End-to-end: photo → Claude → answer on the e-paper.** | Nirav | shells + self-test |
 | 10/18 | Sun | Board #2 bring-up and assembly. 24-hour battery soak. Write the v2 bug list. | Nirav | – |
 | 10/21 | Wed | **Buffer** in case JLCPCB or DHL slips 2–4 days | – | – |
 
-**Critical path:** measurements (10/3) → layout fix + fit check (10/4) → **JLCPCB order (10/5)** → build (≈10/12) → DHL (≈10/15) → bring-up → assembled unit (≈10/17).
+**Critical path:** measurements (10/3) → board v14 (10/4) → paper dry fit → **JLCPCB order (planned Mon 10/5, slipped; every later date moves with it)** → build (≈ order + 5–8 days) → DHL (≈ order + 10–14 days door-to-door) → bring-up → assembled unit (≈ order + 12–16 days).
 
 Only the JLCPCB leg is outside your control. Everything else (firmware, proxy, shell prep) runs in parallel while you wait.
 
@@ -119,7 +125,7 @@ Everything else in this table is **an estimate** built from those breaks plus th
 | PCB + PCBA | $39.52 | $18.00 | $13.00 | $9.00 | $7.90 | $7.30 | $6.60 | $6.20 |
 | Camera OV5640 AF | $14.00 | $12.00 | $7.00 | $6.00 | $5.00 | $4.50 | $4.00 | $3.50 |
 | E-paper 2.13" | $6.99 | $6.60 | $6.31 | $5.50 | $4.50 | $4.00 | $3.50 | $3.20 |
-| Battery 100 mAh | $5.95 | $5.36 | $5.36 | $4.76 | $2.00 | $1.50 | $1.20 | $1.00 |
+| Battery 150 mAh (#1317; same price tiers as the #1570) | $5.95 | $5.36 | $5.36 | $4.76 | $2.00 | $1.50 | $1.20 | $1.00 |
 | Magnetic connector pair | $6.50 | $5.85 | $5.85 | $5.20 | $2.00 | $1.20 | $0.90 | $0.70 |
 | Magnetic USB cable (in the box) | $4.95 | $4.95 | $4.95 | $3.96 | $1.80 | $1.40 | $1.10 | $1.00 |
 | Enclosure + keypad | $20.00 | $20.00 | $20.00 | $21.00 | $10.00 | $9.00 | $6.50 | $4.00 |
@@ -139,8 +145,8 @@ How to read it:
 
 | Part | Now (retail) | Switch at | Switch to | Why / catch |
 |---|---|---|---|---|
-| Battery | Adafruit #1570 $5.95 [S1] | **~500 units** | A Shenzhen custom LiPo with protection circuit, JST-PH and **UN38.3 + IEC 62133 reports from the supplier**. Alibaba LiPo cells cost $0.61–1.70; MOQ from 3 pcs to 1,000 [S14] | Ask for the UN38.3 test summary **before** paying. Paying for your own UN38.3 costs about $1,500 per model [S13]; IEC 62133 about $6,350 [S17]. |
-| Magnetic connector | Adafruit #5358 $6.50 → $5.20 @100 [S2] | **~500** | Shenzhen/Dongguan magnetic pogo pair. Pins cost about $0.23–0.25 at MOQ 1,000 [S18] | **Needs a new footprint** (today J3 is a 5 mm female header that takes Adafruit's pins). Make the change in a v3 board. |
+| Battery | Adafruit #1317 150 mAh $5.95 (was #1570) | **~500 units** | A Shenzhen custom LiPo with protection circuit, JST-PH and **UN38.3 + IEC 62133 reports from the supplier**. Alibaba LiPo cells cost $0.61–1.70; MOQ from 3 pcs to 1,000 [S14] | Ask for the UN38.3 test summary **before** paying. Paying for your own UN38.3 costs about $1,500 per model [S13]; IEC 62133 about $6,350 [S17]. |
+| Magnetic connector | Adafruit #5358 $6.50 → $5.20 @100 [S2] | **~500** | Shenzhen/Dongguan magnetic pogo pair. Pins cost about $0.23–0.25 at MOQ 1,000 [S18] | **Needs a new footprint** (today J3 is a right-angle SMD female header, C46061768, that takes the #5358's straightened legs). Make the change in a v3 board. |
 | Charge cable | Adafruit #5412 $4.95 [S3] | ~500 | OEM magnetic USB-C cable, about $1–1.8 **(estimate)** | Order it together with the connector so they mate |
 | Camera | Seeed ~$14 | **~50** | Generic OV5640 AF 24-pin DVP modules, listed at $4.58–$8 [S19] | **Check the FPC pinout and cable length on every new vendor.** J1 is reversed for one specific cable direction. |
 | E-paper | Waveshare $6.31–6.99 [S4] | ~100 | Good Display GDEY0213B74 direct (the same panel family; about €6.89 retail [S20]); volume quote by RFQ | Needs a quote by email; MOQ applies |
@@ -178,13 +184,13 @@ The assumed tokens per solve are an **estimate**:
 
 **How to fund it.** A one-time price can't pay for unlimited AI forever.
 
-Recommended plan **(estimate)**:
+*Earlier analysis, written before the $225 + $15/month decision (§0). Kept for the numbers; the counter-argument for a cheaper subscription is in `COMPETITOR_ANALYSIS.md` B1.* Recommended plan **(estimate)**:
 1. **Include about 3 months** of service in the hardware price. That's about $5 of API cost at the typical rate with Haiku-first routing.
 2. Then charge **$3–5 a month or $29–39 a year**, with a fair-use cap (for example 300 solves a month).
 3. Optional "bring your own API key" mode for power users.
 
 Must-haves:
-- **The device must never contain your API key.** Today `firmware-prototype/src/claude_client.cpp` calls the API directly, which is fine for 2 prototypes. Before anyone else holds a unit, route requests through your **proxy** with a per-device token, a rate limit and a kill switch.
+- **The device must never contain your API key.** **Done in the stage-13 firmware:** `firmware-prototype/src/claude_client.cpp` talks only to `server/proxy/` with a per-device token (monthly cap, trial, admin tool); the firmware erases any old key from flash. Still to do: deploy the proxy (Render or similar), and a real sign-in on the link page before selling.
 - Your local `api_key.txt` is correctly git-ignored. Keep it that way.
 
 ---
@@ -225,7 +231,7 @@ Must-haves:
 | 4. Contract manufacturer | 3,000+ | A CM in Shenzhen/Dongguan: parts buying, molding, PCBA, assembly, test, packaging | CM's line, with your golden-sample test spec | Sea freight → FBA/3PL | Product roadmap, OTA updates, marketing, support triage |
 
 Building blocks that make this possible. Build them in this order:
-1. **Factory test firmware** (start 10/10): one boot mode that checks every key, the display, camera, Wi-Fi RSSI, battery voltage and charge STAT, then prints JSON over USB.
+1. **Factory test firmware**: **done** (stage 13 self-test: every key, display pattern, camera, Wi-Fi RSSI, battery and charge STAT, one JSON line over USB).
 2. **Test pads on board v2** (3.3 V, GND, EN, IO0, D+/D−, VBAT). Add these when the KiCad session does v2. Don't touch the v1 files now.
 3. **Automated flashing**: `esptool` + a Python script. Each board gets a unique device ID and a proxy token at flash time.
 4. **OTA updates**: ESP-IDF OTA with two app slots and signed images. Ship bug fixes without returns.
@@ -259,18 +265,18 @@ Building blocks that make this possible. Build them in this order:
 | # | Risk | Effect | Mitigation |
 |---|---|---|---|
 | 1 | **Measurements move a part** after Monday, or the donor calculator is a different edition | A board that doesn't fit = a new order + 2 weeks | Do the 1:1 paper fit check on Sunday. Buy donors of the **exact** measured edition. |
-| 2 | **JLCPCB backlog after the holiday** (closed Oct 1–4 [S9]) and DFM questions | +2–4 days | Order Monday; reply to JLCPCB emails fast; 10/21 buffer |
-| 3 | **Camera ribbon orientation (J1 reversed)** is only about 75 % certain (HANDOFF.md) | No image | Buy the same Seeed module; run the E6 beep test; a 180° cable twist fixes it |
+| 2 | **JLCPCB backlog after the holiday** (closed Oct 1–4 [S9]) and DFM questions | +2–4 days | Order as soon as the paper dry fit passes; reply to JLCPCB emails fast; 10/21 buffer |
+| 3 | **Camera ribbon orientation (J1 reversed)** is about 90 % certain (verification 01/03) | No image | Buy the same Seeed module; run the E6 beep test; a 180° cable twist fixes it |
 | 4 | **Tariff/DDP cost** higher than expected | +$30–70 on this order; +35 %+ at volume [S8] | Check the checkout total Monday; budget the high end |
 | 5 | **API key in firmware / unlimited API use** | Stolen key, surprise bill | Proxy + per-device token + caps before any unit leaves your hands |
-| 6 | Supply of #5412 cable (36 in stock [S3]) | No way to charge | Order 2 on Monday; Jameco/DigiKey as backup |
+| 6 | Supply of #5412 cable (35 in stock on 10/6 [S3]) | No way to charge | Order 2 first; Jameco/DigiKey as backup |
 | 7 | Legal: selling Casio-branded altered units; marketing to under-13s | Takedown, liability | Custom shell before sales; 13+ only; never "exam-approved" |
 
 ---
 
 ## Sources (checked 2026-10-03)
 
-- [S1] Adafruit #1570 battery $5.95 (adafruit.com, via search); Jameco $7.85 / $7.45 (10+) / $6.55 (50+): https://www.jameco.com/z/1570-Adafruit-Industries-Lithium-Ion-Polymer-Battery-3-7V-100mAh_2505887.html
+- [S1] Adafruit #1317 150 mAh battery $5.95, in stock (https://www.adafruit.com/product/1317, checked 2026-10-06; replaced the #1570 100 mAh, whose Jameco price breaks were $7.85 / $7.45 (10+) / $6.55 (50+))
 - [S2] Adafruit #5358 $6.50 / $5.85 (10–99) / $5.20 (100+): https://www.adafruit.com/product/5358
 - [S3] Adafruit #5412 magnetic USB cable $4.95, 36 in stock: https://www.adafruit.com/product/5412
 - [S4] Waveshare 2.13" raw e-paper $6.31–6.99, SKU 12672: https://www.waveshare.com/epaper?p=4 , https://waveshare.com/2.13inch-e-Paper.htm

@@ -1,0 +1,64 @@
+"""Admin tool for the proxy's database. Run on the server, next to app.py.
+
+  python admin.py new-device "Nirav's board #1"   -> prints the device token ONCE (type it into the calculator: token)
+  python admin.py devices                          -> every device, linked account, revoked?
+  python admin.py revoke dev_1a2b3c                -> the token stops working at once
+  python admin.py paid someone@example.com 2026-12-31   -> subscription paid until that date (until billing is wired)
+  python admin.py usage                            -> solves per account / device this month
+  python admin.py firmware <firmware.bin> <version>  -> publish a firmware image for over-the-air updates
+                                                      (firmware-prototype/.pio/build/prototype/firmware.bin;
+                                                      version = kFirmwareVersion in claude_client.h)
+  python admin.py firmware                         -> what is published now
+"""
+import sys
+from datetime import datetime, timezone
+
+import config
+import db
+import firmware
+
+
+def main(argv):
+    db.init()
+    if len(argv) < 2:
+        print(__doc__)
+        return 1
+    cmd = argv[1]
+    if cmd == "new-device":
+        device_id, token = db.create_device(argv[2] if len(argv) > 2 else "")
+        print(f"device id: {device_id}\ntoken:     {token}\n"
+              "Type  token  in the calculator's Serial Monitor and paste it. It is not shown again.")
+    elif cmd == "devices":
+        for d in db.list_devices():
+            print(f"{d['id']}  {d['label'] or '-':20s}  hw={d['hw_id'] or '-':18s}  account={d['email'] or '-'}"
+                  f"{'  REVOKED' if d['revoked'] else ''}")
+    elif cmd == "revoke" and len(argv) > 2:
+        print("revoked" if db.revoke_device(argv[2]) else "no such device")
+    elif cmd == "paid" and len(argv) > 3:
+        until = datetime.strptime(argv[3], "%Y-%m-%d").replace(tzinfo=timezone.utc)
+        n = db.set_paid_until(argv[2], until.timestamp() + 86399)
+        print("updated" if n else "no such account (it is created when a calculator is linked)")
+    elif cmd == "firmware" and len(argv) > 3:
+        try:
+            m = firmware.publish(argv[2], argv[3])
+        except (OSError, ValueError) as e:
+            print(f"not published: {e}")
+            return 1
+        print(f"published {m['version']}: {m['size']} bytes, sha256 {m['sha256']}
+"
+              f"in {config.FIRMWARE_DIR}. Calculators switched off on a cable install it on their next check.")
+    elif cmd == "firmware":
+        m = firmware.current()
+        print("nothing published" if m is None else f"{m['version']}: {m['size']} bytes, sha256 {m['sha256']} ({m['file']})")
+    elif cmd == "usage":
+        with db.conn() as c:
+            for r in c.execute("SELECT * FROM usage WHERE period=? ORDER BY count DESC", (db.month(),)):
+                print(f"{r['subject']:20s} {r['count']}")
+    else:
+        print(__doc__)
+        return 1
+    return 0
+
+
+if __name__ == "__main__":
+    sys.exit(main(sys.argv))

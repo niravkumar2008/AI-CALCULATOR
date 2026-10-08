@@ -1,5 +1,7 @@
 # Stage 10: moving the board to the Casio fx-115ES shell
 
+> **⚠ History (stage 10).** Superseded by stages 11–14: see `FINAL_STATUS.md`. Pending-caliper notes here have since been answered.
+
 Nirav switched from the fx-300ES Plus shell to an **fx-115ES** shell on 2026-10-02. This stage moves the board to the new shell, using his photos. Caliper readings (Measurement Sheet C6–C15) and a flatbed scan (F6) will confirm it before ordering.
 
 ## How the photos were measured

@@ -1,5 +1,5 @@
 Re-extracting code files in . (no LLM needed)...
-[graphify watch] 150 file(s) not classified (no supported extension or shebang), skipped: .gitattributes, .gitignore, .graphifyignore, 00_Key_Abs.stl, 01_Key_RCL.stl, 02_Key_a_b.stl (+144 more)
+[graphify watch] 188 file(s) not classified (no supported extension or shebang), skipped: .env.example, .gitattributes, .gitignore, .graphifyignore, 00_Key_Abs.stl, 01_Key_RCL.stl (+182 more)
 [graphify watch] No code-graph topology changes detected; outputs left untouched.
 Code graph updated. For doc/paper/image changes run /graphify --update in your AI assistant.
 Tip: set GEMINI_API_KEY or GOOGLE_API_KEY to use Gemini for semantic extraction.

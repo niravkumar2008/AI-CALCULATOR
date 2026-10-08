@@ -1353,7 +1353,7 @@
 				)
 			)
 		)
-		(property "Footprint" "ai_calc:KeyPad_6.0x4.5"
+		(property "Footprint" "ai_calc:KeyPad_6.0x4.5_H3notch"
 			(at 39.37 100.33 0)
 			(hide yes)
 			(show_name no)
@@ -1583,7 +1583,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "Abs"
+		(property "Value" "CALC"
 			(at 184.15 111.76 0)
 			(show_name no)
 			(do_not_autoplace no)
@@ -1663,7 +1663,7 @@
 				(justify left)
 			)
 		)
-		(property "Value" "x^3"
+		(property "Value" "∫dx"
 			(at 208.28 111.76 0)
 			(show_name no)
 			(do_not_autoplace no)

@@ -62,15 +62,15 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
 
 <div class="wrap">
 <header style="display:flex;flex-direction:column;gap:10px">
-  <div class="eyebrow">Plan · written Sat 2026-10-03 · prices checked online today</div>
+  <div class="eyebrow">Plan · written Sat 2026-10-03 · prices checked 2026-10-03 · status notes added 2026-10-06 (order not yet placed)</div>
   <h1>AI Calculator Launch Roadmap</h1>
-  <p class="lede">Your plan from the first two prototypes to a product that a factory builds and ships without you. It covers what to order Monday, the day-by-day plan to working units, how the cost per calculator falls as you scale, and the legal steps you can't skip. Numbers marked <span class="est">estimate</span> are reasoned guesses, not quotes. Source numbers [S#] are listed at the bottom.</p>
+  <p class="lede">Your plan from the first two prototypes to a product that a factory builds and ships without you. It covers what to order first (once the paper dry fit passes), the day-by-day plan to working units, how the cost per calculator falls as you scale, and the legal steps you can't skip. Numbers marked <span class="est">estimate</span> are reasoned guesses, not quotes. Source numbers [S#] are listed at the bottom.</p>
 </header>
 
 <section>
   <div class="lcd-row">
-    <div class="lcd"><span>Monday-night spend</span><b>≈ $365</b><span>$310 core order + $55 local · range $325–405</span></div>
-    <div class="lcd"><span>First working calculator</span><b>Sat 10/17</b><span>buffer to Wed 10/21</span></div>
+    <div class="lcd"><span>Monday-night spend</span><b>≈ $430</b><span>$380 core order + $50 local · range $390–460</span></div>
+    <div class="lcd"><span>First working calculator</span><b>≈ 10/19–10/23</b><span>order 10/7 + 10–14 days + 2</span></div>
     <div class="lcd"><span>Cost per unit</span><b>$138 → $26</b><span>at 2 units → at 10,000 units</span></div>
     <div class="lcd"><span>Starting budget</span><b>$2,000</b><span>all toward supply</span></div>
     <div class="lcd"><span>Your price</span><b>$225</b><span>+ $15/month subscription, first month free</span></div>
@@ -86,11 +86,11 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <p>Everything goes toward supply, but in two waves. Buy the second wave only after prototype v1 works. If v1 shows a board bug, the v2 money pays for the fixed boards instead of 10 copies of the bug.</p>
   <div class="tbl"><table>
     <tr><th>Wave</th><th>When</th><th>What</th><th class="n">Cost</th></tr>
-    <tr class="key"><td>1 · Prototype v1</td><td>Mon 10/5</td><td>JLCPCB 5 boards (2 assembled), batteries, magnet connectors, cables, cameras, e-paper, small tools (§1). You already have the calculators and a multimeter.</td><td class="n">≈ $365</td></tr>
+    <tr class="key"><td>1 · Prototype v1</td><td>Mon 10/5 (slipped; not ordered as of Tue 10/6)</td><td>JLCPCB 5 boards (2 assembled), batteries, magnet connectors, cables, cameras, e-paper, small tools (§1). You already have the calculators and a multimeter.</td><td class="n">≈ $390 (≈ $425 with the 10/6 import-duty estimate; the difference comes out of the reserve)</td></tr>
     <tr><td>2 · Beta batch v2</td><td>≈ Nov, after v1 works</td><td>10 boards assembled + parts for 10 units (≈ $82 each at 10, §3)</td><td class="n">≈ $820</td></tr>
     <tr><td>2 · Beta shells + jig</td><td>≈ Nov</td><td>3D-printed shells for the beta units + pogo-pin test jig parts</td><td class="n">≈ $150</td></tr>
     <tr><td>Server</td><td>Oct – Dec</td><td>Proxy/linking server hosting + Claude API for your own testing and beta users <span class="est">estimate</span></td><td class="n">≈ $90</td></tr>
-    <tr><td>Reserve</td><td>hold</td><td>Re-spins, a dead part, a broken e-paper, a tariff surprise. Rolls into FCC testing if nothing breaks.</td><td class="n">≈ $575</td></tr>
+    <tr><td>Reserve</td><td>hold</td><td>Re-spins, a dead part, a broken e-paper, a tariff surprise. Rolls into FCC testing if nothing breaks.</td><td class="n">≈ $550</td></tr>
     <tr class="total"><td colspan="3">Total</td><td class="n">$2,000</td></tr>
   </table></div>
 
@@ -125,7 +125,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <p>Each batch's sales pay for the next, bigger batch. Take <b>preorders with deposits</b> before each build, so customers fund the parts. Two hard rules: no sales until the FCC test (SDoC) is done, and use your own shell, not Casio's (§4).</p>
   <div class="tbl"><table>
     <tr><th>Round</th><th>When</th><th class="n">Build</th><th class="n">Spend</th><th class="n">Sell</th><th class="n">Money in</th><th class="n">Cash after</th></tr>
-    <tr><td>1 · Prototypes + beta</td><td>Oct – Nov 2026</td><td class="n">2 + 10</td><td class="n">$1,425</td><td class="n">0 (free beta testers)</td><td class="n">$0</td><td class="n">≈ $575</td></tr>
+    <tr><td>1 · Prototypes + beta</td><td>Oct – Nov 2026</td><td class="n">2 + 10</td><td class="n">$1,450</td><td class="n">0 (free beta testers)</td><td class="n">$0</td><td class="n">≈ $550</td></tr>
     <tr class="key"><td>2 · Founder edition</td><td>Dec 2026 – Feb 2027</td><td class="n">20</td><td class="n">$1,600 build + $1,750 FCC + $97 LLC</td><td class="n">20 preorders</td><td class="n">$4,360</td><td class="n">≈ $1,330</td></tr>
     <tr><td>3 · First real batch</td><td>Mar – May 2027</td><td class="n">100</td><td class="n">$6,500 + $800 shipping</td><td class="n">100</td><td class="n">$21,800</td><td class="n">≈ $15,800</td></tr>
     <tr><td>4 · Scale up</td><td>H2 2027</td><td class="n">500</td><td class="n">$22,000 + $800 keypad tooling + $4,000 shipping</td><td class="n">500</td><td class="n">$109,000</td><td class="n">≈ $98,000</td></tr>
@@ -137,31 +137,32 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
 
 <section id="order">
   <h2>1 · What to buy</h2>
-  <h3>Order Monday 10/5 (fastest shipping)</h3>
+  <h3>Order first, as soon as the paper dry fit passes (was Monday 10/5; not ordered as of Tue 10/6; fastest shipping)</h3>
   <div class="tbl"><table>
     <tr><th>Item</th><th>Where</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Arrives</th><th>Watch out</th></tr>
-    <tr class="key"><td>PCB, 2-layer 0.8 mm ENIG, 5 pcs, <b>2 assembled</b> (Standard PCBA)</td><td>JLCPCB</td><td class="n">1</td><td class="n">–</td><td class="n">$79.04</td><td>build 5–7 d + DHL 3–5 d</td><td>Follow <code>hardware/ORDER_CHECKLIST.md</code>. Check every pin-1 in the 3D preview.</td></tr>
-    <tr><td>DHL Express shipping</td><td>JLCPCB checkout</td><td class="n">–</td><td class="n">–</td><td class="n">$20–30 <span class="est">estimate</span></td><td></td><td>Never pick "Global Standard"</td></tr>
-    <tr><td>US tariff (collected at checkout)</td><td>JLCPCB checkout</td><td class="n">–</td><td class="n">–</td><td class="n">$28–73 <span class="est">estimate</span></td><td></td><td>The exact figure shows at checkout [S8]</td></tr>
-    <tr><td>LiPo 3.7 V 100 mAh, JST-PH (#1570)</td><td>Adafruit</td><td class="n">3</td><td class="n">$5.95</td><td class="n">$17.85</td><td>UPS 2-day</td><td>Backup source: Jameco $7.85 [S1]</td></tr>
+    <tr class="key"><td>PCB, 2-layer 0.8 mm ENIG, 5 pcs, <b>2 assembled</b> (Standard PCBA)</td><td>JLCPCB</td><td class="n">1</td><td class="n">–</td><td class="n">$135–155 (final review of the v14 board: 14 extended parts = $42 in fees)</td><td>build 5–7 d + DHL 3–5 d</td><td>Follow <code>hardware/ORDER_WALKTHROUGH.md</code>. The CPL is already rotation-corrected: verify the preview against its step 5, rotate nothing.</td></tr>
+    <tr><td>DHL Express shipping</td><td>JLCPCB checkout</td><td class="n">–</td><td class="n">–</td><td class="n">$20–40 <span class="est">estimate</span></td><td></td><td>Express (3–6 d). Economy (7–15 d) only if express isn't offered</td></tr>
+    <tr><td>US tariff (collected at checkout)</td><td>JLCPCB checkout</td><td class="n">–</td><td class="n">–</td><td class="n">≈ $45–55 <span class="est">estimate</span></td><td></td><td>About 35–37.5 % duty, collected at checkout (de-minimis suspended since 2026-06-24). The exact figure shows at checkout [S8]. JLCPCB delivered ≈ $200–240, door-to-door ≈ 10–14 days (hardware/FAB_VENDOR_COMPARISON.md)</td></tr>
+    <tr><td>LiPo 3.7 V <b>150 mAh</b>, JST-PH (<b>#1317</b>, 26 × 19.75 × 3.8 mm; replaced the 100 mAh #1570 on 10/6)</td><td>Adafruit</td><td class="n">3</td><td class="n">$5.95</td><td class="n">$17.85</td><td>UPS 2-day</td><td>Same price and plug. Peel the lead tape; meter the polarity [S1]</td></tr>
     <tr><td>Magnetic connector, 4-pin (#5358)</td><td>Adafruit</td><td class="n">3</td><td class="n">$6.50</td><td class="n">$19.50</td><td>same box</td><td>[S2]</td></tr>
-    <tr class="key"><td>Magnetic USB charge cable (#5412)</td><td>Adafruit</td><td class="n">2</td><td class="n">$4.95</td><td class="n">$9.90</td><td>same box</td><td><b>Only 36 in stock</b> [S3]. Without it you can't charge or flash.</td></tr>
+    <tr class="key"><td>Magnetic USB charge cable (#5412)</td><td>Adafruit</td><td class="n">2</td><td class="n">$4.95</td><td class="n">$9.90</td><td>same box</td><td><b>Only 35 in stock (10/6)</b> [S3]. Without it you can't charge or flash.</td></tr>
     <tr><td>Adafruit shipping</td><td></td><td class="n"></td><td class="n"></td><td class="n">≈ $15 <span class="est">estimate</span></td><td></td><td></td></tr>
-    <tr><td>Waveshare 2.13" e-paper <b>V4 raw panel</b> (SKU 12672)</td><td>Waveshare / Amazon Prime</td><td class="n">3</td><td class="n">$6.31–6.99</td><td class="n">≈ $21</td><td>Prime 1–2 d · direct 4–8 d</td><td>Must say <b>V4</b> (SSD1680 driver) [S4]. The ribbon is fragile, so get a spare.</td></tr>
+    <tr><td>Waveshare 2.13" e-paper <b>V4 raw panel</b> (SKU 12672)</td><td>Waveshare / Amazon Prime</td><td class="n">2</td><td class="n">$6.31–6.99</td><td class="n">≈ $14</td><td>Prime 1–2 d · direct 4–8 d</td><td>You already have one V4 panel: unplug it from your e-Paper HAT's ribbon socket. Buy 1 for board #2 + 1 spare (the ribbon is fragile). It must say <b>V4</b> [S4].</td></tr>
     <tr><td>Waveshare shipping</td><td></td><td class="n"></td><td class="n"></td><td class="n">$15–25 <span class="est">estimate</span></td><td></td><td></td></tr>
     <tr class="key"><td><b>Seeed OV5640 AF</b> camera ("for XIAO ESP32S3 Sense")</td><td>Seeed / US reseller</td><td class="n">3</td><td class="n">≈ $14 <span class="est">estimate</span></td><td class="n">≈ $42</td><td>3–6 d</td><td>Buy <b>this exact module</b>. The board's reversed J1 socket was worked out for its cable [S5].</td></tr>
     <tr><td>Camera shipping</td><td></td><td class="n"></td><td class="n"></td><td class="n">$10–15 <span class="est">estimate</span></td><td></td><td></td></tr>
-    <tr class="total"><td colspan="4">Core subtotal</td><td class="n">≈ $280–350</td><td colspan="2">midpoint ≈ $310</td></tr>
+    <tr class="total"><td colspan="4">Core subtotal (JLCPCB delivered ≈ $200–240 incl. shipping + duty, + Adafruit, panels, cameras)</td><td class="n">≈ $350–405</td><td colspan="2">midpoint ≈ $380</td></tr>
   </table></div>
 
   <h3>Buy locally this weekend</h3>
   <div class="tbl"><table>
     <tr><th>Item</th><th>Where</th><th class="n">Qty</th><th class="n">Total</th><th>Why</th></tr>
     <tr><td>Kapton tape 10–20 mm</td><td>Amazon / hardware store</td><td class="n">1</td><td class="n">≈ $9 <span class="est">estimate</span></td><td>Insulates the battery and the back of the e-paper</td></tr>
-    <tr><td>Dremel bits: carbide cutter, sanding drums, 6 mm drill</td><td>hardware store</td><td class="n">1 set</td><td class="n">≈ $12 <span class="est">estimate</span></td><td>Rib grinding + camera hole (stage-10 grind map)</td></tr>
+    <tr><td>Dremel bits: carbide burr, sanding drums, <b>7 mm drill (9/32") + small pilot bit</b></td><td>hardware store</td><td class="n">1 set</td><td class="n">≈ $12 <span class="est">estimate</span></td><td>Solar box, rib B, magnet notch + the 7 mm camera window (Shell Grinding Guide)</td></tr>
     <tr><td>Flush cutters + ESD tweezers</td><td>hardware store</td><td class="n">1</td><td class="n">≈ $15 <span class="est">estimate</span></td><td></td></tr>
     <tr><td>USB-A charger or USB-A(f)→USB-C adapter</td><td>anywhere</td><td class="n">1</td><td class="n">≈ $7 <span class="est">estimate</span></td><td>The magnetic cable ends in USB-A, and flashing goes through it</td></tr>
-    <tr><td>Thin foam tape + 99 % isopropyl</td><td>anywhere</td><td class="n">1</td><td class="n">≈ $10 <span class="est">estimate</span></td><td>Holds the battery and camera, cleans the gold pads</td></tr>
+    <tr><td>Thin double-sided tape 0.1 mm (<b>not foam</b>) + ≈ 0.15 mm for the e-paper + 99 % isopropyl</td><td>anywhere</td><td class="n">1</td><td class="n">≈ $10 <span class="est">estimate</span></td><td>Holds the camera, battery and e-paper; cleans the gold pads. No foam: 0.3 mm above the battery, 0.5 mm above the lens</td></tr>
+    <tr><td>Matte black vinyl / sticker paper (0.08–0.15 mm) + epoxy or hot glue</td><td>craft / hardware store</td><td class="n">1 each</td><td class="n">≈ $11 <span class="est">estimate</span></td><td>Window mask inside the lens; gluing the magnet piece</td></tr>
     <tr class="total"><td colspan="3">Local subtotal (you already have calipers, a multimeter and the 2 calculators)</td><td class="n">≈ $40–55</td><td></td></tr>
   </table></div>
   <p class="lede">Don't buy yet: more than 3 of anything, a soldering station (the board needs no soldering from you), or a pogo-pin test jig. Those come with v2.</p>
@@ -175,21 +176,21 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
     <tr><td>Sat 10/3</td><td>Overnight, Claude finishes PCB stage 11, the CAD replica and an independent review.</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
     <tr class="key"><td>Sun 10/4</td><td><b>Remaining measurements</b>: C14, C15, depths D1–D4/D11/D13, ribbons E6/E7, and the F6 flatbed scan if you can. Answer the open questions in the stage-11 doc.</td><td><span class="pill p-you">you</span></td><td>calipers</td></tr>
     <tr><td>Sun 10/4</td><td>Claude applies the readings, gets DRC to 0/0/0 and regenerates the fab files. You print the 1:1 fit-check outline and lay it in the shell.</td><td><span class="pill p-both">you + Claude</span></td><td>measurements</td></tr>
-    <tr><td>Sun 10/4</td><td>Start the <b>API proxy</b>: a small server that holds the Claude key, so the calculator never carries it</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
-    <tr class="key"><td>Mon 10/5</td><td><b>ORDER</b>: Adafruit (UPS 2-day), cameras, e-paper, then <b>JLCPCB by about 9 pm ET</b></td><td><span class="pill p-you">you</span></td><td>fit check</td></tr>
+    <tr><td>Sun 10/4</td><td><b>Done:</b> the <b>API proxy</b> (<code>server/proxy/</code>) holds the Claude key; the calculator never carries it</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
+    <tr class="key"><td>Mon 10/5 → <b>slipped</b></td><td><b>ORDER</b>: Adafruit (UPS 2-day), cameras, e-paper, then <b>JLCPCB</b>. Not placed on 10/5: order as soon as the paper dry fit passes. Every day it slips moves the rows from 10/15 on by a day (boards ≈ 10/17–10/21 for an order on 10/7: about 10–14 days door-to-door).</td><td><span class="pill p-you">you</span></td><td>fit check</td></tr>
     <tr><td>Tue 10/6</td><td>JLCPCB engineering review. <b>Reply to their emails within hours</b>: each unanswered question costs about a day.</td><td><span class="pill p-ext">outside</span></td><td>order</td></tr>
-    <tr><td>Tue–Wed</td><td>Firmware: camera → JPEG → Wi-Fi → proxy → answer, on the dev board</td><td><span class="pill p-both">you + Claude</span></td><td>proxy</td></tr>
-    <tr><td>Wed 10/7</td><td>Prepare the shells: take out the Casio boards (keep the keypad and screws), grind ribs, drill the camera hole</td><td><span class="pill p-you">you</span></td><td>your 2 calculators</td></tr>
+    <tr><td>Tue–Wed</td><td><b>Deploy the proxy</b> (<code>server/proxy/README.md</code>, Power-Up step 10): the Claude API key goes only in the host's environment settings, never in the calculator; make one device token per calculator. The board firmware is done (over-the-air updates, phone setup, low-battery lock-out)</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
+    <tr><td>Wed 10/7</td><td>Prepare the shells: take out the Casio boards (keep the keypad and screws), the 10-minute pre-grind checklist (verification 07 §3), grind zones 1, 2, 5 (5b and 6 only if your shell needs them). <b>Hold the 7 mm camera hole</b> until the camera ribbon is measured</td><td><span class="pill p-you">you</span></td><td>your 2 calculators</td></tr>
     <tr><td>Thu 10/8</td><td>Adafruit box arrives <span class="est">estimate</span>. Check the battery polarity against J4 (a reversed JST lead is common).</td><td><span class="pill p-ext">outside</span></td><td>Adafruit</td></tr>
     <tr><td>Sat–Sun 10/10–11</td><td>Firmware: full UI in the simulator + <b>factory self-test mode</b> (keys, display, camera, battery, Wi-Fi)</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
     <tr><td>Mon 10/12</td><td>JLCPCB ships by DHL <span class="est">estimate</span>. Camera-cable beep test E6 (fingers 2 and 15 beep to GND).</td><td><span class="pill p-ext">outside</span></td><td>build</td></tr>
-    <tr class="key"><td>Thu 10/15</td><td><b>Boards arrive.</b> Board #1 on USB only: measure 3.3 V / 2.8 V / 1.5 V, then flash</td><td><span class="pill p-you">you</span></td><td>DHL</td></tr>
-    <tr><td>Fri 10/16</td><td>Plug in the e-paper, then the camera; self-test; battery and charging (about 50 mA)</td><td><span class="pill p-both">you + Claude</span></td><td>bring-up</td></tr>
-    <tr class="key"><td>Sat 10/17</td><td><b>Assemble in shell #1. Photo → Claude → answer on the e-paper.</b></td><td><span class="pill p-you">you</span></td><td>self-test</td></tr>
+    <tr class="key"><td>Thu 10/15 (≈ 10/17–10/21 if ordered 10/7)</td><td><b>Boards arrive.</b> Start at <code>hardware/ARRIVAL_CHECKLIST.md</code>. Board #1 on USB only: inspect, meter checks, VBUS / SYS / 3.3 V / EN, then the first flash, always over USB (First Power-Up Guide)</td><td><span class="pill p-you">you</span></td><td>DHL</td></tr>
+    <tr><td>Fri 10/16</td><td>Plug in the e-paper, then the camera; self-test; battery and charging (about 50 mA); then the AI settings: hotspot, server address, device token (Power-Up step 10)</td><td><span class="pill p-both">you + Claude</span></td><td>bring-up</td></tr>
+    <tr class="key"><td>Sat 10/17 (≈ boards + 2 days)</td><td><b>Assemble in shell #1. Photo → Claude → answer on the e-paper.</b></td><td><span class="pill p-you">you</span></td><td>self-test</td></tr>
     <tr><td>Sun 10/18</td><td>Board #2; 24-hour battery soak; write the v2 bug list</td><td><span class="pill p-you">you</span></td><td>–</td></tr>
     <tr><td>Wed 10/21</td><td>Buffer if JLCPCB or DHL slips 2–4 days</td><td><span class="pill p-ext">outside</span></td><td>–</td></tr>
   </table></div>
-  <p><b>Critical path:</b> measurements (Sun) → layout fix + fit check (Sun) → <b>JLCPCB order (Mon)</b> → build (≈ 10/12) → DHL (≈ 10/15) → bring-up → working unit (≈ 10/17). Only the JLCPCB leg is outside your control. Firmware, the proxy and shell prep all run while you wait.</p>
+  <p><b>Critical path:</b> measurements (Sun) → layout fix + fit check (Sun) → <b>JLCPCB order (Mon)</b> → build (5–8 days) → DHL (door-to-door ≈ 10–14 days after the order) → bring-up → working unit (≈ 2 days later). Only the JLCPCB leg is outside your control. Firmware, the proxy and shell prep all run while you wait.</p>
 
   <h3>After the first units</h3>
   <div class="steps">
@@ -266,7 +267,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   </div>
   <h3>Build these in order</h3>
   <ul>
-    <li><b>Factory test firmware</b> (start 10/10): one boot mode that checks everything and prints JSON over USB.</li>
+    <li><b>Factory test firmware</b>: <b>done</b> (stage-13 self-test: SHIFT + ALPHA, ON, or <code>selftest</code>; one JSON line over USB).</li>
     <li><b>Test pads</b>: 3.3 V, GND, EN, IO0, D+/D−, VBAT. Tonight's stage-11 work already adds bring-up test points. v2 puts them in a pogo-jig pattern.</li>
     <li><b>Automated flashing</b>: esptool + Python. Each board gets a unique ID and proxy token when it's flashed.</li>
     <li><b>Signed OTA updates</b> (two app slots), so bug fixes don't need returns.</li>
@@ -280,11 +281,11 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <div class="tbl"><table>
     <tr><th>Risk</th><th>Effect</th><th>What to do</th></tr>
     <tr class="key"><td>A measurement moves a part after Monday, </td><td>New order + 2 weeks</td><td>1:1 paper fit check Sunday. Measure on one of the same 2 calculators you will build into.</td></tr>
-    <tr><td>JLCPCB holiday backlog + engineering questions</td><td>+2–4 days</td><td>Order Monday, reply fast, keep the 10/21 buffer</td></tr>
-    <tr><td>Camera ribbon direction (reversed J1) is only ~75 % certain</td><td>No image</td><td>Same Seeed module. E6 beep test. A 180° cable twist fixes it.</td></tr>
+    <tr><td>JLCPCB holiday backlog + engineering questions</td><td>+2–4 days</td><td>Order as soon as the dry fit passes, reply fast, keep the 10/21 buffer</td></tr>
+    <tr><td>Camera ribbon direction (reversed J1) is about 90 % certain (verification 01/03)</td><td>No image</td><td>Same Seeed module. E6 beep test. A 180° cable twist fixes it.</td></tr>
     <tr><td>Tariff higher than expected</td><td>+$30–70 now, +35 % or more at volume</td><td>Check the checkout total and budget the high end</td></tr>
     <tr class="key"><td>API key in firmware / unlimited use</td><td>Stolen key, surprise bill</td><td>Proxy + per-device token + caps</td></tr>
-    <tr><td>Only 36 #5412 cables in stock</td><td>Can't charge</td><td>Order 2 Monday. Backup: Jameco / DigiKey.</td></tr>
+    <tr><td>Only ~35 #5412 cables in stock</td><td>Can't charge</td><td>Order 2 now. Backup: Jameco / DigiKey.</td></tr>
     <tr><td>Selling Casio-branded units; marketing to under-13s</td><td>Takedown, liability</td><td>Own shell before sales; 13+; never "exam approved"</td></tr>
   </table></div>
 </section>
@@ -292,9 +293,9 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
 <section id="sources">
   <h2>Sources (checked 2026-10-03)</h2>
   <ol class="src">
-    <li>[S1] Adafruit #1570 $5.95; Jameco $7.85 — jameco.com/z/1570-Adafruit…</li>
+    <li>[S1] Adafruit #1317 150 mAh $5.95, in stock (adafruit.com/product/1317, checked 2026-10-06; replaced the #1570)</li>
     <li>[S2] <a href="https://www.adafruit.com/product/5358">adafruit.com/product/5358</a> $6.50 / $5.85 / $5.20</li>
-    <li>[S3] <a href="https://www.adafruit.com/product/5412">adafruit.com/product/5412</a> $4.95, 36 in stock</li>
+    <li>[S3] <a href="https://www.adafruit.com/product/5412">adafruit.com/product/5412</a> $4.95, 36 in stock on 10/3, 35 on 10/6</li>
     <li>[S4] <a href="https://waveshare.com/2.13inch-e-Paper.htm">waveshare.com 2.13inch e-Paper</a> $6.31–6.99</li>
     <li>[S5] <a href="https://thepihut.com/products/seeed-ov5640-camera-for-xiao-esp32s3-sense">The Pi Hut, Seeed OV5640</a> £11</li>
     <li>[S6] <a href="https://www.walmart.com/ip/418401755">Walmart fx-115ES PLUS</a> $19.99</li>
@@ -332,7 +333,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
     ["PCB + PCBA",[39.52,18,13,9,7.9,7.3,6.6,6.2]],
     ["Camera OV5640 AF",[14,12,7,6,5,4.5,4,3.5]],
     ["E-paper 2.13\"",[6.99,6.6,6.31,5.5,4.5,4,3.5,3.2]],
-    ["Battery 100 mAh",[5.95,5.36,5.36,4.76,2,1.5,1.2,1]],
+    ["Battery 150 mAh (#1317)",[5.95,5.36,5.36,4.76,2,1.5,1.2,1]],
     ["Magnetic connector",[6.5,5.85,5.85,5.2,2,1.2,.9,.7]],
     ["Magnetic USB cable",[4.95,4.95,4.95,3.96,1.8,1.4,1.1,1]],
     ["Enclosure + keypad",[20,20,20,21,10,9,6.5,4]],

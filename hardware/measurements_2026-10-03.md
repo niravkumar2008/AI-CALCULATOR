@@ -1,5 +1,7 @@
 # Nirav's caliper readings, fx-115ES shell (2026-10-03, second batch)
 
+> **Status (stage 14):** these raw readings are all used. C4/C8/C9/C14/C15 and D1–D13 were answered in stages 12–13. Still open: E6 (camera ribbon beep test), E7 (e-paper ribbon / stiffener length) and the camera ribbon length; see `FINAL_STATUS.md` §6. The "still to do" line at the end is history.
+
 These are verbatim except that typos are fixed. The interpretation notes in *italics* are Claude's first read. Workers must check them against the photos in `C:\Users\r_kas\.claude\uploads\` (all subfolders; newer uploads may appear) before relying on them.
 
 ## Case, with calipers
@@ -18,16 +20,16 @@ These are verbatim except that typos are fixed. The interpretation notes in *ita
 | C11 | Top-left corner post: centre to inside of left wall / top wall | 4.2 / 6.1 | |
 | C12 | Window opening | 60.65 × 24.3 | |
 | C13 | Window top edge to case top edge | 24.0 | |
-| C14 | Side-wall stubs beside the screen: how far they stick in / how high | **5.45 / 5** | *How this relates to C4 is unclear. They may be the "wire holder" bits.* |
+| C14 | Side-wall stubs beside the screen: how far they stick in / how high | **5.45 / 5** | *How this relates to C4 is unclear. They may be the "wire holder" bits.* **Answered 2026-10-03 (photo 871567b6):** the stubs/clips stop above the board plane, so they never touch the board. The stage-12 narrowing is kept (harmless, and the ESP32 antenna overhang is good). |
 | C15 | How far down each post row is | "From the outside of the calculator to the outside of the holes": **8.9 / 69.95 / 89.6 / 120.45 / 130.2 / 142.4 / 154.6**. "There are 8 rows of holes in total, but row 4 only has a hole on the right side of the PCB and row 6 only on the left. Look at the uploaded picture to cross-reference." | *7 numbers for 8 rows, so one row is missing (probably the row 2/3 pair at about 80 mm). "Outside of holes" may mean the hole's far edge, so centre = reading − r. First mapping, with the case top edge at KiCad y ≈ 56.9: 8.9 = top corners; 69.95 = H1/H3 (photo y ≈ 126.2 → 69.3); 89.6 = H4 (146.5 → 89.6); 120.45 = H2/H9 (175.6 → 118.7); 130.2 = H6 (187.2 → 130.3); 142.4 = H13/H14 (198.1 → 141.2); 154.6 = bottom posts (210.1 → 153.2). Residuals are −0.1 to +1.75, so work out the right edge convention and top reference.* |
 
 ## Depths and heights
 | ID | Item | Reading | Notes |
 |---|---|---|---|
-| D1 | Board height above the front floor | 5.5 | |
+| D1 | Board height above the front floor | 5.5 | **Clarified 2026-10-03:** measured from the front shell's rim (the parting line where the back cover meets it) down to the board, i.e. the board's F side (component side) is 5.5 below the parting line. |
 | D2 | Battery bay depth (old coin-cell corner) | not measured. "You do the math with the rest." | |
 | D3 | Space above the board line at the top edge | about 5 | Needs 3.5, or 6 without the notch |
-| D4 | Space behind the board at the camera spot | 5.5 | Camera needs 5.4 + 0.3. **Tight.** |
+| D4 | Space behind the board at the camera spot | ~~5.5~~ **about 6.0** | **Corrected 2026-10-03:** measured from the board to the back cover's INSIDE face, "closer to 6.0". Stack: back cover ~1.0 + 6.0 + board 0.8 + ~4.0 front side = 11.8 (D10). Design limit = 6.0 − 0.3 clearance = **5.7**, minus any rib under it. Camera (5.4) and J4 (5.5) fit where no rib is above them (stage 13). |
 | D5 | Back cover thickness at the camera spot | about 1 (edges are rounded) | |
 | D6 | Solar box height on the back cover | frame 5–6. "I can grind it with a Dremel." | |
 | D7 | Coin-cell holder rib height | 5–6 | |

@@ -1,5 +1,7 @@
 # Independent electrical + manufacturability review (2026-10-03)
 
+> **⚠ Superseded by stage 14: see `FINAL_STATUS.md`.** Every item here was fixed or closed in stages 11–14 (status table in `REVIEW_final_2026-10-04.md`). Kept as history. The battery is now the #1317 150 mAh (the #1570 / 100 mAh numbers below are from 10/3).
+
 Read-only review before the JLCPCB PCBA order planned for Monday 2026-10-05. I did not change any design file.
 
 **Inputs:** HANDOFF.md, stage2/stage3 notes, pins_final.h, the BOM, DESIGN_SUMMARY.md, a fresh netlist exported with `kicad-cli` from a *copy* of the six schematic sheets, and targeted greps of `ai_calc.kicad_pcb` (saved 00:05).

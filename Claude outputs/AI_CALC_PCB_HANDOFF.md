@@ -1,5 +1,7 @@
 # AI Calculator PCB — handoff for the KiCad Claude Code session
 
+> **⚠ Superseded by stage 14: this is an old (2026-10-02) copy. Use `hardware/HANDOFF.md` and `hardware/FINAL_STATUS.md`.** Out of date below: the shell is the fx-115ES (not fx-300ES Plus), the camera hole is **7 mm**, the battery is the Adafruit **#1317 150 mAh**, the regulator is the RT9080-33GJ5.
+
 Paste or attach this file in the new chat. It sums up a long cloud session (2026-10-01/02).
 Repo: `C:\Users\r_kas\OneDrive\Documents\GitHub\AI-CALCULATOR`. All hardware lives under `hardware/`.
 Nirav is new to PCB design: explain non-obvious choices in 1–2 plain sentences. No screenshots of his screen. Deliver each stage as a sequential zip `ai_calc_pcb_N.zip` (he commits and pushes himself). Use KiCad 10.
@@ -27,7 +29,7 @@ Nirav is new to PCB design: explain non-obvious choices in 1–2 plain sentences
 **Don't order yet:** Nirav's caliper measurements (measurement-sheet artifact) can still move parts. Items V3/V5/V9/V11/V12 in geometry_assumptions.md need checking first.
 
 ## Key decisions you must not undo
-- **Camera socket J1** uses `ai_calc:FPC_24P_P0.5mm_DualContact_C6364666_CamReversed`: the same land pattern with pad numbers mirrored. A flat cable going straight in lands mirrored on standard numbering; two independent checks agreed (~75 %).
+- **Camera socket J1** uses `ai_calc:FPC_24P_P0.5mm_DualContact_C6364666_CamReversed`: the same land pattern with pad numbers mirrored. A flat cable going straight in lands mirrored on standard numbering; two independent checks agreed (~90 % after verification 01/03).
   - Both FPC sockets are SHOU HAN C6364666 dual-contact parts, so if the reading is wrong, a 180° twist in the cable fixes it.
   - Before the first plug-in, check the cable: fingers 2 and 15 should beep (both GND).
 - **E-paper:** the FPC folds behind the panel, comes up through a **1.0 × 14 mm slot at x = 172.9**, and plugs into J2 (x 177.9, opening facing the slot). Length budget is 14.3 mm.

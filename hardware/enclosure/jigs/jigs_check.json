@@ -1,0 +1,40 @@
+{
+ "time": "2026-10-06 00:19",
+ "check": {
+  "A": [
+   {
+    "body": "Back cover",
+    "overlap_mm3": 0,
+    "gap": 0.0
+   }
+  ],
+  "A2": [
+   {
+    "body": "Back cover",
+    "overlap_mm3": 0,
+    "gap": 3.6
+   }
+  ],
+  "B": [
+   {
+    "body": "Front shell",
+    "overlap_mm3": 0,
+    "gap": 0.0
+   }
+  ],
+  "C": [
+   {
+    "body": "Front shell",
+    "overlap_mm3": 0,
+    "gap": 0.0
+   }
+  ]
+ },
+ "stl": [
+  "A_back_cover_plate.stl",
+  "A2_camera_drill_bush.stl",
+  "A3_depth_gauge_7_2.stl",
+  "B_magnet_notch_saddle.stl",
+  "C_LR44_trim_sled.stl"
+ ]
+}

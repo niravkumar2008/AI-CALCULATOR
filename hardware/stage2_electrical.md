@@ -1,5 +1,8 @@
 # Stage 2: electrical plan (pins, power, keypad)
 
+> **⚠ History (stage 2).** The battery is now the **Adafruit #1317, 150 mAh** (26 × 19.75 × 3.8 mm, decided 2026-10-06); the #1570 / 100 mAh figures below are the original pick. Charge current stays 50 mA (R2 20 k = 0.33 C). U3 is the RT9080-33GJ5 since stage 11. Current status: `FINAL_STATUS.md`.
+
+
 Stage 2 of the AI Calculator main board (ai_calc_pcb_3). This plan feeds the schematic in stage 3.
 Part numbers (LCSC) are looked up and checked for stock in stage 3. None are invented here.
 
@@ -12,12 +15,12 @@ DVDD 1.5 V; PWDN active high, RESET active low); Seeed XIAO ESP32S3 Sense expans
 
 | GPIO | Use | Notes |
 |---|---|---|
-| 0 | BOOT test pad | Strapping pin (weak pull-up). To force download mode, short it to GND while plugging in. Normally never needed, because USB flashing resets the chip itself. |
+| 0 | BOOT test pad (TP1) | Strapping pin (weak pull-up). Normally never needed, because USB flashing resets the chip itself. To force download mode (stage 14 correction): hold TP1 (BOOT) to TP4 (GND), tap TP7 (EN) to GND for ~0.2 s (or unplug the battery first, then plug in with TP1 held low), release TP1, flash. Plugging the cable in alone does not reset the chip while the battery is connected. Backup: UART0 on TP2/TP3 with the same TP1 + TP7 sequence. Never burn the security / USB-disable eFuses. |
 | 1 / 2 | I2C SDA / SCL to the keypad scanner | Its own bus with 4.7 k pull-ups. Same pins as the prototype. |
 | 3 | unused | Strapping (JTAG source). Left floating. |
 | 4 | TCA8418 INT | RTC pin, open drain |
 | 5 / 6 / 8 | E-paper CLK / DIN / CS | As proposed |
-| 7 | **ON key** | RTC pin. Wakes the chip from deep sleep (EXT0, active low). 100 k pull-up. Not in the matrix. |
+| 7 | **ON key** | RTC pin. Wakes the chip from deep sleep (EXT0, active low). R17 100 k pull-up. Not in the matrix. |
 | 9 | Battery voltage | ADC1_CH8 (ADC1 still works with Wi-Fi on). 1 M / 1 M divider + 100 nF, so only 2 µA drain. |
 | 10 | Camera XCLK | |
 | 11–18, 48 | Camera D0–D7 (Y2–Y9) = 15, 17, 18, 16, 14, 12, 11, 48 | As proposed |
@@ -76,7 +79,7 @@ With the cable off, each exposed contact ties to:
   can hold D+ at 3.3 V through its internal 1.5 k pull-up. That's a logic level, not battery voltage, and a
   short is limited to about 2 mA. The firmware turns USB off when VBUS_SENSE is low, which also saves
   power, so the contacts are dead while unplugged and the chip is asleep.
-- **Pin order** {VBUS, GND, D−, D+} puts VBUS next to GND only, so a slipped contact can never put 5 V on a data pin.
+- **Pin order (stage 14):** J3 = {VBUS, D−, D+, GND} with the magnet piece's N end at pin 1. The Adafruit #5412 cable fixes the contact order (its face reads GND, D+, D−, VBUS from its N end), so the old {VBUS, GND, D−, D+} matched neither way of fitting the piece and could put 5 V on D+. Power and ground are now the outer pins: a piece fitted backwards swaps VBUS/GND (D7 clamps, the host current-limits), never 5 V on a data line. Meter-check before gluing (`ORDER_WALKTHROUGH.md`).
 
 ### Battery life (120 mAh, ~100 mAh usable)
 

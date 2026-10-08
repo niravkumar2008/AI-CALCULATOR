@@ -1,0 +1,150 @@
+{
+ "mag_X": 22.5,
+ "mag_face_Y": 81.6669424566787,
+ "mag_Z": [
+  2.2,
+  9.2
+ ],
+ "cam": [
+  0.0,
+  43.84
+ ],
+ "lipo": [
+  -13.400000000000006,
+  69.69
+ ],
+ "lipo_Z": [
+  1.0,
+  4.8
+ ],
+ "epd": [
+  0.03100000000000591,
+  45.95399999999999
+ ],
+ "top": 82.1,
+ "inner_top": 80.46492940995117,
+ "lip_top": 80.3647616560572
+}
+== new
+new document
+
+   19 s
+== shell
+(finished after the bridge timed out)
+nal - Back cover cut z0=0.95 h=2.15
+17:14:52 extrude Final - Back cover join z0=0.99 h=1.21
+17:14:52 extrude Final - Back cover cut z0=5.90 h=1.00
+17:14:52 extrude Final - Keymat new z0=7.82 h=0.80
+17:15:01 extrude Final - Keymat cut z0=7.70 h=1.10
+17:15:02 extrude Final - Keymat join z0=8.61 h=0.99
+17:15:03 extrude Final - Keymat cut z0=7.80 h=1.90
+17:15:09 extrude Final - Keycaps new z0=9.62 h=0.40
+17:15:16 extrude Final - Keycaps join z0=10.01 h=1.29
+17:15:23 extrude Final - Keycaps join z0=11.30 h=1.50
+17:15:25 extrude Final - Keycaps cut z0=12.50 h=3.00
+17:15:25 extrude Final - Keycaps cut z0=9.52 h=0.60
+17:15:27 extrude Final - Window lens new z0=10.82 h=0.80
+17:15:27 extrude Final - Solar cell (dummy) new z0=10.00 h=0.55
+17:15:28 extrude Final - Battery lid new z0=0.00 h=0.58
+17:15:29 extrude Final - Battery lid cut z0=-0.10 h=0.35
+17:15:29 extrude Final - Rubber feet new z0=-0.30 h=0.68
+17:15:29 extrude Final - Reference - Casio board (C6) new z0=7.00 h=0.80
+17:15:40 extrude Final - Reference - Casio board (C6) cut z0=6.90 h=1.00
+17:15:40 extrude Final - Reference - Casio board (C6) cut z0=6.90 h=1.00
+17:15:41 extrude Final - Reference - LCD (dummy) new z0=6.80 h=3.75
+17:15:42 extrude Final - Slide case (stored) new z0=5.95 h=8.35
+17:15:42 fillet Final - Slide case (stored) 53 edges r=1.00
+17:15:44 extrude Final - Slide case (stored) cut z0=5.85 h=7.25
+17:15:44 extrude Final - Slide case (stored) join z0=5.95 h=0.90
+17:15:47 stage shell done
+
+   141 s
+== grind
+grind ok: ['solar_box', 'rib_b', 'camera_window', 'magnet_slot']
+
+   3 s
+== pcb
+pcb ok: 155 bodies, board 0.71 thick, F face at Z 7.00
+
+   7 s
+== parts
+parts ok
+e-paper FPC path from the panel edge into J2 (2.0 inside) 12.7 mm vs 14.3 supplied
+camera FPC: path module -> into J1 58.7 mm vs 70.5 cable: 11.8 mm slack lies in a loop (not modelled); ribbon modelled 1.46 mm under the board (tallest part in its path)
+LiPo leads: plug at front-view X 8.4, LiPo end at X 2.1
+magnet pins end at front-view Y 72.37; J3/header body Y 65.72..77.05, Z 4.41..6.94; pin axis Z 5.70
+
+   25 s
+== mask
+mask ok: opening 47.75 x 22.90 at (2.555, 45.954); lens lifted 0.095; gap mask -> panel 1.79
+
+   7 s
+== case
+case ok {"in_use": {"bbox": [-40.95, -80.2, -1.5, 40.95, 82.1, 6.85]}, "stored": {"bbox": [-40.95, -80.2, 5.95, 40.95, 82.1, 14.3]}, "camera_hole": {"d": 8.0, "X": 0.0, "Y": 43.84, "from_open_end": 38.26, "from_closed_end_inside": 123.04, "from_closed_end_outside": 124.04, "from_each_long_edge": 40.95, "case_outer": [81.9, 162.3]}}
+
+   16 s
+== check
+(finished after the bridge timed out)
+17:16:47 stage check
+17:16:47 check: 243 bodies
+17:17:49 check: 0/243 bodies, 233 pairs, 0 hits, 62 s
+17:18:27 check: 25/243 bodies, 471 pairs, 0 hits, 99 s
+17:18:41 check: 50/243 bodies, 471 pairs, 0 hits, 113 s
+17:18:45 check: 75/243 bodies, 486 pairs, 0 hits, 118 s
+17:18:48 check: 100/243 bodies, 502 pairs, 6 hits, 120 s
+17:18:51 check: 125/243 bodies, 509 pairs, 6 hits, 123 s
+17:18:52 check: 150/243 bodies, 512 pairs, 6 hits, 125 s
+17:18:54 check: 175/243 bodies, 526 pairs, 6 hits, 127 s
+17:18:56 check: 200/243 bodies, 526 pairs, 6 hits, 129 s
+17:18:57 check: 225/243 bodies, 532 pairs, 8 hits, 130 s
+17:18:58 stage check done
+
+   132 s
+== case_check
+{
+ "Slide case (in use)": {
+  "hits": [],
+  "min_gaps": {
+   "Front shell": 0.05,
+   "Back cover": 0.0,
+   "Keycaps (closest)": 6.93,
+   "Window lens": 7.858,
+   "Rubber feet": 0.0,
+   "Camera module": 2.059,
+   "Magnet connector": 2.5,
+   "Magnetic cable plug (detached)": 11.834
+  }
+ },
+ "Slide case (stored)": {
+  "hits": [],
+  "min_gaps": {
+   "Front shell": 0.05,
+   "Back cover": 0.05,
+   "Keycaps (closest)": 0.3,
+   "Window lens": 1.385,
+   "Rubber feet": 10.499,
+   "Camera module": 6.2,
+   "Magnet connector": 3.9,
+   "Magnetic cable plug (detached)": 12.207
+  }
+ },
+ "camera_covered_without_hole": true,
+ "magnet_face_Y": 81.6669424566787,
+ "case_open_end_Y": 82.1,
+ "magnet_blocked": false,
+ "thickness": {
+  "body_top": 11.8,
+  "body_keys": 11.3,
+  "key_tops": 12.8,
+  "feet": 0.3,
+  "in_use_total": 14.3,
+  "in_use_top_part": 13.3,
+  "stored_total": 14.6
+ }
+}
+
+   10 s
+== export
+exported f3d + step
+
+   6 s

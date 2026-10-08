@@ -12,6 +12,7 @@
 #include <vector>
 
 #include "../core/app.h"
+#include "../core/battery.h"
 #include "../core/calc_engine.h"
 #include "../core/claude_api.h"
 #include "../core/device.h"
@@ -20,6 +21,7 @@
 #include "../core/font.h"
 #include "../core/json.h"
 #include "../core/text.h"
+#include "../core/viewfinder.h"
 
 using namespace calc;
 
@@ -255,7 +257,7 @@ static void testClaudeApi() {
   CHECK(req["thinking"]["type"].asString() == "adaptive");
   CHECK(req["system"].asString().find("25 characters wide") != std::string::npos);
   const Json& schema = req["output_config"]["format"]["schema"];
-  CHECK(schema["required"].items().size() == 8 && schema["additionalProperties"].isBool());
+  CHECK(schema["required"].items().size() == 9 && schema["additionalProperties"].isBool());
   CHECK(schema["required"].items()[3].asString() == "expression" &&
         schema["required"].items()[4].asString() == "choice" &&
         schema["required"].items()[5].asString() == "answer");
@@ -509,8 +511,21 @@ static void testDevice() {
   CHECK(d.resultText() == "120");
   keys(d, {K::AC, K::D5, K::Shift, K::Mul, K::D2, K::Eq});  // nPr = SHIFT ×
   CHECK(d.resultText() == "20");
-  keys(d, {K::AC, K::Abs, K::Neg, K::D7, K::Eq});
+  keys(d, {K::AC, K::Shift, K::Hyp, K::Neg, K::D7, K::Eq});  // fx-115ES: Abs = SHIFT hyp
   CHECK(d.resultText() == "7");
+  keys(d, {K::AC, K::D2, K::Shift, K::Sq, K::Eq});  // fx-115ES: x³ = SHIFT x²
+  CHECK(d.resultText() == "8");
+  keys(d, {K::AC, K::Shift, K::Sqrt, K::D2, K::D7, K::Eq});  // fx-115ES: ∛ = SHIFT √
+  CHECK(d.resultText() == "3");
+  keys(d, {K::AC, K::Calc});  // CALC isn't implemented: a clear notice, nothing else
+  CHECK(d.view() == View::Notice);
+  snapshot("notice_calc", d);
+  keys(d, {K::AC});
+  CHECK(d.view() == View::Calc);
+  keys(d, {K::Shift, K::Integral});  // d/dx: same
+  CHECK(d.view() == View::Notice);
+  keys(d, {K::AC});
+  CHECK(d.view() == View::Calc);
   keys(d, {K::AC, K::LogAB, K::D2, K::Shift, K::Close, K::D8, K::Eq});  // logₐb: log(2,8)
   CHECK(d.resultText() == "3");
   keys(d, {K::AC, K::Shift, K::Exp10, K::Eq});
@@ -847,6 +862,267 @@ static void testEnhance() {
   CHECK(tw == 2 && th == 2);
 }
 
+// Stage 13: battery maths, deep-sleep state, proxy errors, verified answers, tutor mode.
+static void testStage13() {
+  // LiPo curve: ends, flat middle, monotonic.
+  CHECK(lipoPercent(3000) == 0 && lipoPercent(4250) == 100);
+  CHECK(lipoPercent(4200) == 100 && lipoPercent(3270) == 0);
+  CHECK(lipoPercent(3840) == 50);
+  CHECK(lipoPercent(3700) >= 10 && lipoPercent(3700) <= 15);
+  bool mono = true;
+  for (int mv = 3200; mv < 4300; mv += 5) mono &= lipoPercent(mv) <= lipoPercent(mv + 5);
+  CHECK(mono);
+  CHECK(chargeState(false, false) == Charge::NoCable && chargeState(false, true) == Charge::NoCable);
+  CHECK(chargeState(true, false) == Charge::Charging && chargeState(true, true) == Charge::Full);
+  const int samples[] = {2000, 2010, 1990, 1500, 2600, 2000};
+  CHECK(robustAverage(samples, 6) == 2000);
+
+  // Deep sleep keeps memories, settings, history and exam mode.
+  {
+    Device d;
+    d.tick(0);
+    keys(d, {K::D7, K::Eq});                       // Ans = 7, history 1
+    keys(d, {K::D2, K::Shift, K::Rcl, K::Neg});    // 2 -> A (STO A)
+    keys(d, {K::Shift, K::Mode, K::D2});           // SETUP 2: Rad
+    keys(d, {K::Shift, K::AC});                    // off
+    CHECK(d.isOff());
+    const std::string st = d.saveState();
+    CHECK(st.size() > 20 && st.size() <= 2048);
+    Device e;
+    e.tick(0);
+    CHECK(e.restoreState(st, 1000));
+    CHECK(e.isOff() && e.angleUnit() == AngleUnit::Rad);
+    CHECK(e.vars().ans.v == d.vars().ans.v && e.vars().a.v == d.vars().a.v);
+    keys(e, {K::On, K::Up});                       // replay the history
+    CHECK(exprText(e.expression()) == exprText(d.expression()) || !e.expression().empty());
+    CHECK(!e.restoreState("garbage"));
+    CHECK(!e.restoreState(""));
+    // exam mode: survives, and 12 h asleep ends it
+    Device x;
+    x.tick(0);
+    keys(x, {K::Shift, K::AC, K::Shift, K::D7, K::On});
+    CHECK(x.examActive());
+    keys(x, {K::AC, K::Shift, K::AC});
+    const std::string xs = x.saveState();
+    Device y;
+    y.tick(0);
+    CHECK(y.restoreState(xs, 60000) && y.examActive());
+    Device z;
+    z.tick(0);
+    CHECK(z.restoreState(xs, Device::kExamMaxMs) && !z.examActive());
+    // SHIFT then a deep sleep then 7, ON still starts exam mode
+    Device w;
+    w.tick(0);
+    keys(w, {K::Shift, K::AC, K::Shift});
+    Device w2;
+    w2.tick(0);
+    CHECK(w2.restoreState(w.saveState()));
+    keys(w2, {K::D7, K::On});
+    CHECK(w2.examActive());
+    // a tiny budget still saves the settings (no history)
+    CHECK(d.saveState(290).size() <= 290 && d.saveState(290).size() < st.size());
+  }
+
+  // Proxy account errors show the proxy's message (with the pairing code).
+  {
+    StreamReader sr;
+    Failure f;
+    std::string det;
+    CHECK(classifyFailure(402, "{\"type\":\"error\",\"error\":{\"type\":\"device_not_linked\",\"message\":\"Link code K7Q2PX\"}}",
+                          sr, f, det));
+    CHECK(f == Failure::Account && det == "Link code K7Q2PX");
+    CHECK(classifyFailure(429, "{\"type\":\"error\",\"error\":{\"type\":\"fair_use_exceeded\",\"message\":\"500 solves used\"}}",
+                          sr, f, det));
+    CHECK(f == Failure::Account);
+    CHECK(classifyFailure(429, "{\"type\":\"error\",\"error\":{\"type\":\"rate_limit_error\",\"message\":\"x\"}}", sr, f, det));
+    CHECK(f == Failure::ApiBusy);
+    CHECK(std::string(solveSchema()).find("\"check\"") != std::string::npos);
+  }
+
+  // Verified answers: the calculator re-computes Claude's number.
+  {
+    std::string c;
+    CHECK(verifyAnswer("24.5 m", "9.81*2.5", c) == Verify::Verified);
+    CHECK(verifyAnswer("x = 24.5 m", "9.81*2.5", c) == Verify::Verified);
+    CHECK(verifyAnswer("30 m", "9.81*2.5", c) == Verify::Mismatch && !c.empty());
+    CHECK(verifyAnswer("(C) 9.90 m/s", "sqrt(98)", c) == Verify::Verified);
+    CHECK(verifyAnswer("3.2\xC3\x97" "10^-5 mol", "3.2E-5", c) == Verify::Verified);
+    CHECK(verifyAnswer("\xE2\x88\x92" "4", "2-6", c) == Verify::Verified);
+    CHECK(verifyAnswer("1/3", "1/3", c) == Verify::Verified);
+    CHECK(verifyAnswer("1,200 N", "1200", c) == Verify::Verified);
+    CHECK(verifyAnswer("H2O", "2", c) == Verify::None);
+    CHECK(verifyAnswer("24.5 m", "", c) == Verify::None);
+    CHECK(verifyAnswer("24.5 m", "9.81*", c) == Verify::None);
+    App a;
+    a.onKey(Key::Eq);
+    int id = a.takeRequest();
+    a.onReply(id, "{\"readable\":true,\"confidence\":0.95,\"unclear\":[],\"expression\":\"\",\"choice\":\"\","
+                  "\"answer\":\"24.5 m\",\"check\":\"9.81*2.5\",\"read_as\":\"How far?\",\"steps\":[\"d=g*t\",\"=24.5 m\"]}");
+    CHECK(a.verified() == Verify::Verified);
+    snapshot("ai_verified", a);
+    a.onKey(Key::AC);
+    a.onKey(Key::Eq);
+    id = a.takeRequest();
+    a.onReply(id, "{\"readable\":true,\"confidence\":0.95,\"unclear\":[],\"expression\":\"\",\"choice\":\"\","
+                  "\"answer\":\"30 m\",\"check\":\"9.81*2.5\",\"read_as\":\"How far?\",\"steps\":[\"d=g*t\"]}");
+    CHECK(a.verified() == Verify::Mismatch);
+    snapshot("ai_mismatch", a);
+  }
+
+  // Tutor mode: hints one at a time, the answer last; no early answer.
+  {
+    App a;
+    a.onKey(Key::Tutor);
+    CHECK(a.tutor());
+    snapshot("ai_tutor_ready", a);
+    a.onKey(Key::Eq);
+    const int id = a.takeRequest();
+    a.onCaptured(id);
+    a.onPartialAnswer(id, 0.9, "x = 3");
+    CHECK(a.screen() == Screen::Busy);  // not shown early
+    a.onReply(id, "{\"readable\":true,\"confidence\":0.9,\"unclear\":[],\"expression\":\"\",\"choice\":\"\","
+                  "\"answer\":\"x = 3\",\"check\":\"3\",\"read_as\":\"solve 2x+1=7\",\"steps\":[\"2x = 6\",\"x = 3\"]}");
+    CHECK(a.screen() == Screen::Result);
+    snapshot("ai_tutor_0", a);
+    a.onKey(Key::Eq);
+    snapshot("ai_tutor_1", a);
+    a.onKey(Key::Eq);
+    a.onKey(Key::Eq);  // past the last step: the answer
+    snapshot("ai_tutor_answer", a);
+    CHECK(a.takeRequest() == 0);
+    a.onKey(Key::Eq);  // now = takes a new photo
+    CHECK(a.takeRequest() != 0);
+  }
+  // Device: 1 on the AI home screen toggles tutor mode.
+  {
+    Device d;
+    d.tick(0);
+    d.setOnline(true);
+    keys(d, {K::Mode, K::D4, K::D1});
+    CHECK(d.ai().tutor());
+    keys(d, {K::D1});
+    CHECK(!d.ai().tutor());
+  }
+}
+
+// ---- camera viewfinder (core/viewfinder.*)
+static void snapshotPanel(const std::string& name, const Panel& p) {
+  const std::string got = p.toAscii();
+  const std::string path = "tests/golden/" + name + ".txt";
+  if (std::getenv("UPDATE_GOLDEN")) std::ofstream(path, std::ios::binary) << got;
+  if (const char* dir = std::getenv("SNAP_DIR")) {
+    std::ofstream pbm(std::string(dir) + "/" + name + ".pbm");
+    pbm << "P1\n" << Panel::kWidth << " " << Panel::kHeight << "\n";
+    for (int y = 0; y < Panel::kHeight; ++y) {
+      for (int x = 0; x < Panel::kWidth; ++x) pbm << (p.get(x, y) ? "1 " : "0 ");
+      pbm << "\n";
+    }
+  }
+  const bool same = readFile(path) == got;
+  if (!same) std::printf("snapshot mismatch: %s\n", name.c_str());
+  CHECK(same);
+}
+
+// A fake camera: a 160x120 gray "worksheet" with uneven light, a ruled border and
+// three lines of character-sized dark strokes around the middle. dx shifts it
+// (hand shake); blur > 0 box-blurs it (out of focus).
+static std::vector<uint8_t> fakeFrame(int dx = 0, int blur = 0) {
+  const int w = 160, h = 120;
+  std::vector<uint8_t> g(w * h);
+  for (int y = 0; y < h; ++y)
+    for (int x = 0; x < w; ++x) g[y * w + x] = uint8_t(150 + x * 40 / w + y * 20 / h);  // paper, lit from one side
+  auto ink = [&](int x0, int y0, int ww, int hh) {
+    for (int y = y0; y < y0 + hh; ++y)
+      for (int x = x0 + dx; x < x0 + dx + ww; ++x)
+        if (x >= 0 && x < w && y >= 0 && y < h) g[y * w + x] = 40;
+  };
+  for (int line = 0; line < 3; ++line)
+    for (int c = 0; c < 9; ++c) {
+      const int x = 34 + c * 10, y = 40 + line * 14;
+      ink(x, y, 2, 8);                     // a stem
+      ink(x, y + (c % 3) * 3, 6, 2);       // a bar at a different height per "letter"
+      if (c % 2) ink(x + 5, y, 2, 8);
+    }
+  ink(10, 10, 140, 1);  // the worksheet's printed rule
+  if (blur > 0) {
+    std::vector<uint8_t> o(g);
+    for (int y = 0; y < h; ++y)
+      for (int x = 0; x < w; ++x) {
+        int sum = 0, n = 0;
+        for (int j = -blur; j <= blur; ++j)
+          for (int i = -blur; i <= blur; ++i)
+            if (x + i >= 0 && x + i < w && y + j >= 0 && y + j < h) sum += g[(y + j) * w + x + i], ++n;
+        o[y * w + x] = uint8_t(sum / n);
+      }
+    g.swap(o);
+  }
+  return g;
+}
+
+static void testViewfinder() {
+  Panel p;
+  p.set(3, 4, true);
+  p.set(249, 121, true);
+  CHECK(p.get(3, 4) && p.get(249, 121) && !p.get(4, 4) && !p.get(250, 0));
+  p.invert(3, 4);
+  CHECK(!p.get(3, 4));
+  Panel q;
+  CHECK(p.diff(q) == 1);
+  CHECK(sizeof(Panel) < 4096);  // bit-packed: fits next to TLS in the ESP32's RAM
+
+  const auto sharp = fakeFrame(), soft = fakeFrame(0, 3), moved = fakeFrame(8);
+  const double fs = focusMeasure(sharp.data(), 160, 120, 40, 190);
+  const double fb = focusMeasure(soft.data(), 160, 120, 40, 190);
+  CHECK(fs > Viewfinder::kSharpMin && fb < Viewfinder::kSharpMin && fs > 3 * fb);
+
+  Viewfinder v;
+  v.start(0);
+  CHECK(v.running() && !v.timedOut(29000) && v.timedOut(30000));
+  v.touch(20000);
+  CHECK(!v.timedOut(30000) && v.secondsLeft(30000) == 20);
+  v.start(0);
+  Panel out;
+  v.renderStarting(out);
+  snapshotPanel("viewfinder_starting", out);
+  CHECK(v.feed(sharp.data(), 160, 120, true, 100).state == Focus3::Starting);
+  CHECK(v.takeFullRefresh(out));  // first frame: full refresh
+  CHECK(v.feed(sharp.data(), 160, 120, false, 500).state == Focus3::Focusing);  // AF not done yet
+  const FrameInfo& ok = v.feed(sharp.data(), 160, 120, true, 900);
+  CHECK(ok.state == Focus3::Sharp && ok.motion < 1);
+  CHECK(ok.textFound && ok.tx >= 24 && ok.tx <= 40 && ok.tw >= 80 && ok.ty >= 32 && ok.ty + ok.th <= 88);
+  v.render(out, 900, "Tutor on");
+  snapshotPanel("viewfinder_sharp", out);
+  CHECK(v.feed(moved.data(), 160, 120, true, 1300).state == Focus3::Moving);
+  v.render(out, 1300);
+  snapshotPanel("viewfinder_moving", out);
+  v.feed(soft.data(), 160, 120, true, 1700);  // changed a lot from the shaken frame: "moving"
+  CHECK(v.feed(soft.data(), 160, 120, true, 2000).state == Focus3::Focusing);
+  v.render(out, 1700);
+  snapshotPanel("viewfinder_soft", out);
+  // A blank wall: no text box, and the stretch doesn't turn noise into a pattern.
+  std::vector<uint8_t> flat(160 * 120, 128);
+  const FrameInfo& f = v.feed(flat.data(), 160, 120, true, 2100);
+  CHECK(!f.textFound && f.hi - f.lo >= 32);
+
+  // Full refreshes: every `fullEvery` frames when the picture barely changes.
+  Viewfinder r;
+  r.fullEvery = 3;
+  r.start(0);
+  Panel a;
+  int fulls = 0;
+  for (int i = 0; i < 8; ++i) fulls += r.takeFullRefresh(a);
+  CHECK(fulls == 2);  // frame 1, then after 3 partials (frame 5)
+  // ...or sooner when many pixels flipped (ghosting builds up).
+  Viewfinder gh;
+  gh.start(0);
+  gh.takeFullRefresh(a);
+  Panel b;
+  b.fillRect(0, 0, 162, 122, true);
+  int quick = 0;
+  for (int i = 0; i < 4; ++i) quick += gh.takeFullRefresh(i % 2 ? a : b);
+  CHECK(quick >= 1);
+}
+
 int main() {
   testFocus();
   testEnhance();
@@ -861,6 +1137,8 @@ int main() {
   testDevice();
   testDeviceAi();
   testExam();
+  testStage13();
+  testViewfinder();
   std::printf("%d passed, %d failed\n", g_pass, g_fail);
   return g_fail ? 1 : 0;
 }

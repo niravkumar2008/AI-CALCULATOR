@@ -49,6 +49,8 @@ Net labels: +3V3, BAT+, BOOT, CAM_D0, CAM_D1, CAM_D2, CAM_D3, CAM_D4, CAM_D5, CA
 | C3 | 10uF | Capacitor_SMD:C_0603_1608Metric | C19702 |
 | C4 | 1uF | Capacitor_SMD:C_0402_1005Metric | C52923 |
 | C32 | 22uF | Capacitor_SMD:C_0805_2012Metric | C45783 |
+| C33 | 22uF | Capacitor_SMD:C_0805_2012Metric | C45783 |
+| C34 | 22uF | Capacitor_SMD:C_0805_2012Metric | C45783 |
 | R1 | 10k | Resistor_SMD:R_0402_1005Metric | C25744 |
 | TP1 | BOOT | TestPoint:TestPoint_Pad_D1.5mm |  |
 | TP2 | UART_TX | TestPoint:TestPoint_Pad_D1.0mm |  |
@@ -124,11 +126,11 @@ Net labels: +3V3, COL0, COL1, COL2, COL3, COL4, COL5, COL6, COL7, COL8, COL9, GN
 | R15 | 10k | Resistor_SMD:R_0402_1005Metric | C25744 |
 | R16 | 10k | Resistor_SMD:R_0402_1005Metric | C25744 |
 | R17 | 100k | Resistor_SMD:R_0402_1005Metric | C25741 |
-| SW1 | SHIFT | ai_calc:KeyPad_6.0x4.5 |  |
+| SW1 | SHIFT | ai_calc:KeyPad_6.0x4.5_H3notch |  |
 | SW2 | ALPHA | ai_calc:KeyPad_6.0x4.5 |  |
 | SW3 | MODE | ai_calc:KeyPad_6.0x4.5 |  |
-| SW4 | Abs | ai_calc:KeyPad_6.0x4.5 |  |
-| SW5 | x^3 | ai_calc:KeyPad_6.0x4.5 |  |
+| SW4 | CALC | ai_calc:KeyPad_6.0x4.5 |  |
+| SW5 | ∫dx | ai_calc:KeyPad_6.0x4.5 |  |
 | SW6 | x^-1 | ai_calc:KeyPad_6.0x4.5 |  |
 | SW7 | log_a | ai_calc:KeyPad_6.0x4.5 |  |
 | SW8 | a/b | ai_calc:KeyPad_6.0x4.5 |  |
@@ -183,14 +185,14 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 | Ref | Value | Footprint | LCSC |
 |---|---|---|---|
 | D7 | SMF5.0A (VBUS TVS) | Diode_SMD:D_SMF | C193402 |
-| J3 | Magnetic USB (Adafruit 5358): VBUS GND D- D+ | ai_calc:PinSocket_1x04_P2.54mm_SMD_H5.0_C42379197 | C42379197 |
+| J3 | Magnetic USB (Adafruit 5358, N end at pin 1): VBUS D- D+ GND | ai_calc:PinSocket_1x04_P2.54mm_SMD_RA_C46061768 | C46061768 |
 | J4 | Battery JST-PH (Adafruit 1570) | ai_calc:JST_PH_S2B-PH-SM4-TB_LCSC | C295747 |
 | U7 | USBLC6-2SC6 | Package_TO_SOT_SMD:SOT-23-6 | C7519 |
 
 ## Board (`ai_calc.kicad_pcb`)
 
-- Outline extent: 72.3 x 148.8 mm, thickness 0.8 mm, 2 layers (F.Cu = component side facing back cover, B.Cu = key pads + e-paper)
-- 142 footprints, 3102 track segments, 343 vias
+- Outline extent: 71.6 x 148.8 mm, thickness 0.8 mm, 2 layers (F.Cu = component side facing back cover, B.Cu = key pads + e-paper)
+- 147 footprints, 3035 track segments, 333 vias
 - Copper zones on: GND
 - Nets (92): +3V3, /Keypad and TCA8418/COL0, /Keypad and TCA8418/COL1, /Keypad and TCA8418/COL2, /Keypad and TCA8418/COL3, /Keypad and TCA8418/COL4, /Keypad and TCA8418/COL5, /Keypad and TCA8418/COL6, /Keypad and TCA8418/COL7, /Keypad and TCA8418/COL8, /Keypad and TCA8418/COL9, /Keypad and TCA8418/ROW0, /Keypad and TCA8418/ROW1, /Keypad and TCA8418/ROW2, /Keypad and TCA8418/ROW3, /Keypad and TCA8418/ROW4, /Keypad and TCA8418/ROW5, /Keypad and TCA8418/ROW6, /Keypad and TCA8418/ROW7, BAT+, BOOT, CAM_2V8, CAM_AF, CAM_AVDD, CAM_D0, CAM_D1, CAM_D2, CAM_D3, CAM_D4, CAM_D5, CAM_D6, CAM_D7, CAM_DVDD, CAM_HREF, CAM_PCLK, CAM_PWDN, CAM_PWR_EN, CAM_RESET, CAM_SIOC, CAM_SIOD, CAM_VSYNC, CAM_XCLK, CHG_PROG, CHG_STAT, CHG_STAT_RAW, EN, EPD_BUSY, EPD_CLK, EPD_CS, EPD_DC, EPD_DIN, EPD_GDR, EPD_PREVGH, EPD_PREVGL, EPD_PUMP, EPD_RESE, EPD_RST, EPD_SW, EPD_VCOM, EPD_VDD, EPD_VGH, EPD_VGL, EPD_VPP, EPD_VSH, EPD_VSL, GND, I2C_SCL, I2C_SDA, KEYPAD_INT, KEY_ON, Q1_G, SYS, TCA_RESET, UART_RX, UART_TX, USB_DM, USB_DP, VBAT_P, VBAT_SENSE, VBUS, VBUS_SENSE, unconnected-(J1-Pin_1-Pad1), unconnected-(J2-Pin_1-Pad1), unconnected-(J2-Pin_6-Pad6), unconnected-(J2-Pin_7-Pad7), unconnected-(U1-IO26-Pad26), unconnected-(U1-IO3-Pad7), unconnected-(U1-IO45-Pad41), unconnected-(U1-IO46-Pad44), unconnected-(U3-NC-Pad4), unconnected-(U4-NC-Pad4), unconnected-(U5-NC-Pad4)
 
@@ -201,7 +203,7 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 | C3 | Capacitor_SMD:C_0603_1608Metric | F.Cu | 125 106.6 90 |
 | C4 | Capacitor_SMD:C_0402_1005Metric | F.Cu | 125.7 87.9 |
 | C5 | Capacitor_SMD:C_0603_1608Metric | F.Cu | 135.9 72 90 |
-| C6 | Capacitor_SMD:C_0603_1608Metric | F.Cu | 129.1 72 90 |
+| C6 | Capacitor_SMD:C_0603_1608Metric | F.Cu | 139.6 66 90 |
 | C7 | Capacitor_SMD:C_0603_1608Metric | F.Cu | 119 76.8 90 |
 | C8 | Capacitor_SMD:C_0603_1608Metric | F.Cu | 125.8 79.3 |
 | C9 | Capacitor_SMD:C_0402_1005Metric | F.Cu | 139 107 90 |
@@ -228,27 +230,32 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 | C30 | Capacitor_SMD:C_0603_1608Metric | F.Cu | 168.6 100.43 |
 | C31 | Capacitor_SMD:C_0402_1005Metric | F.Cu | 129.4 144.2 90 |
 | C32 | Capacitor_SMD:C_0805_2012Metric | F.Cu | 118.4 81 90 |
+| C33 | Capacitor_SMD:C_0805_2012Metric | F.Cu | 121.7 84.75 180 |
+| C34 | Capacitor_SMD:C_0805_2012Metric | F.Cu | 124.55 85.35 -90 |
 | D1 | Diode_SMD:D_SOD-123 | F.Cu | 129.2 75.2 |
 | D2 | Diode_SMD:D_SOD-123 | F.Cu | 158 154 |
 | D3 | Diode_SMD:D_SOD-123 | F.Cu | 164.6 106.23 |
 | D4 | Diode_SMD:D_SOD-123 | F.Cu | 159.5 106.23 |
 | D5 | Diode_SMD:D_SOD-123 | F.Cu | 164.6 108.63 |
 | D6 | Diode_SMD:D_SOD-123 | F.Cu | 130.3 78.6 |
-| D7 | Diode_SMD:D_SMF | F.Cu | 127.6 69.3 |
+| D7 | Diode_SMD:D_SMF | F.Cu | 119.2 73.4 180 |
 | FB1 | Inductor_SMD:L_0603_1608Metric | F.Cu | 137.4 154.4 |
-| H1 | ai_calc:ScrewBoss_Hole_6.0mm | F.Cu | 128.36 126.74 |
-| H2 | ai_calc:Post_Hole_4.2mm | F.Cu | 130.85 175.5 |
+| FID1 | Fiducial_1mm_Mask2mm | F.Cu | 121.5 203.5 |
+| FID2 | Fiducial_1mm_Mask2mm | F.Cu | 178.5 203.5 |
+| FID3 | Fiducial_1mm_Mask2mm | F.Cu | 177 112.5 |
+| H1 | ai_calc:ScrewBoss_Hole_6.0mm | F.Cu | 127.5 126.1 |
+| H2 | ai_calc:Post_Slot_4.2x5.0mm | F.Cu | 130.85 176.25 |
 | H3 | ai_calc:ScrewBoss_Hole_6.0mm | F.Cu | 174 126.1 |
 | H4 | ai_calc:Post_Hole_4.2mm | F.Cu | 171.06 145.96 |
-| H6 | ai_calc:Post_Hole_4.2mm | F.Cu | 130.6 187.2 |
-| H8 | ai_calc:Post_Hole_4.2mm | F.Cu | 128.609 137.046 |
-| H9 | ai_calc:Post_Hole_4.2mm | F.Cu | 169.2 175.75 |
-| H10 | ai_calc:Post_Hole_4.2mm | F.Cu | 171.457 136.795 |
-| H13 | ai_calc:Post_Hole_4.2mm | F.Cu | 130.5 198 |
-| H14 | ai_calc:Post_Hole_4.2mm | F.Cu | 169.1 198.1 |
+| H6 | ai_calc:Post_Hole_4.2mm | F.Cu | 130.6 186.99 |
+| H8 | ai_calc:Post_Hole_4.2mm | F.Cu | 128.85 137 |
+| H9 | ai_calc:Post_Slot_4.4x4.8mm | F.Cu | 169.2 176.2 |
+| H10 | ai_calc:Post_Hole_4.2mm | F.Cu | 171.25 136.8 |
+| H13 | ai_calc:Post_Slot_4.2x4.45mm | F.Cu | 130.5 198.325 |
+| H14 | ai_calc:Post_Slot_4.2x4.65mm | F.Cu | 169.1 198.375 |
 | J1 | ai_calc:FPC_24P_P0.5mm_DualContact_C6364666_CamReversed | F.Cu | 150 161 180 |
 | J2 | ai_calc:FPC_24P_P0.5mm_DualContact_C6364666 | F.Cu | 177.9 92.83 -90 |
-| J3 | ai_calc:PinSocket_1x04_P2.54mm_SMD_H5.0_C42379197 | F.Cu | 136 66.6 |
+| J3 | ai_calc:PinSocket_1x04_P2.54mm_SMD_RA_C46061768 | F.Cu | 127.5 72 |
 | J4 | ai_calc:JST_PH_S2B-PH-SM4-TB_LCSC | F.Cu | 142.6 74.6 |
 | L1 | ai_calc:L_SMNR4020_4.0x4.0mm | F.Cu | 159.8 101.83 180 |
 | Q1 | Package_TO_SOT_SMD:SOT-23 | F.Cu | 136.1 79.5 |
@@ -274,7 +281,7 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 | R18 | Resistor_SMD:R_0402_1005Metric | F.Cu | 139.6 165.2 90 |
 | R19 | Resistor_SMD:R_0402_1005Metric | F.Cu | 140.8 165.2 90 |
 | R20 | Resistor_SMD:R_0402_1005Metric | F.Cu | 130.3 80.6 |
-| SW1 | ai_calc:KeyPad_6.0x4.5 | B.Cu | 176.623 120.795 180 |
+| SW1 | ai_calc:KeyPad_6.0x4.5_H3notch | B.Cu | 176.623 120.795 180 |
 | SW2 | ai_calc:KeyPad_6.0x4.5 | B.Cu | 166.026 120.795 180 |
 | SW3 | ai_calc:KeyPad_6.0x4.5 | B.Cu | 133.974 120.795 180 |
 | SW4 | ai_calc:KeyPad_6.0x4.5 | B.Cu | 176.623 132.45 180 |
@@ -332,7 +339,7 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 | TP6 | TestPoint:TestPoint_Pad_D1.5mm | F.Cu | 140.4 80.3 |
 | TP7 | TestPoint:TestPoint_Pad_D1.5mm | F.Cu | 128 84.6 |
 | U1 | ai_calc:ESP32-S3-MINI-1 | F.Cu | 127.55 97 90 |
-| U2 | Package_TO_SOT_SMD:SOT-23-5 | F.Cu | 132.5 72.2 |
+| U2 | Package_TO_SOT_SMD:SOT-23-5 | F.Cu | 135.9 67.5 |
 | U3 | Package_TO_SOT_SMD:SOT-23-5 | F.Cu | 122 76.8 |
 | U4 | Package_TO_SOT_SMD:SOT-23-5 | F.Cu | 137.4 157 |
 | U5 | Package_TO_SOT_SMD:SOT-23-5 | F.Cu | 137.4 160.6 |
@@ -348,11 +355,18 @@ Net labels: +3V3, BAT+, GND, USB_DM, USB_DP, VBUS
 - JST_PH_S2B-PH-SM4-TB_LCSC
 - KeyPad_5.0x4.0
 - KeyPad_6.0x4.5
+- KeyPad_6.0x4.5_H3notch
 - KeyPad_7.0x5.5
 - KeyPad_9.0x7.0
 - L_SMNR4020_4.0x4.0mm
+- MX1.25_2P_SMD_RA_H3.6_C7430468
 - PinSocket_1x04_P2.54mm_SMD_H5.0_C42379197
+- PinSocket_1x04_P2.54mm_SMD_RA_C46061768
 - Post_Hole_4.2mm
 - Post_Hole_4.4mm
+- Post_Slot_4.2x4.45mm
+- Post_Slot_4.2x4.65mm
+- Post_Slot_4.2x5.0mm
+- Post_Slot_4.4x4.8mm
 - SOT-323_SI1308EDL
 - ScrewBoss_Hole_6.0mm

@@ -1,5 +1,7 @@
 # Board geometry from the scan: assumptions and confidence
 
+> **⚠ History (fx-300ES scan era).** The geometry was re-derived for the fx-115ES in stages 10–13. Current status: `FINAL_STATUS.md`.
+
 > **Shell switch (2026-10-02):** Nirav now uses a **Casio fx-115ES** shell, not the fx-300ES Plus. Same key grid, but it has paired screw posts (not 12 pegs), stubs on the side walls beside the screen, and rings and ribs in the back cover. The geometry below is still from the fx-300ES scan: the post holes, outline and key pads must be re-derived from the new readings and a flatbed scan (measurement sheet C7–C15, F6) before ordering.
 
 Stage 1 of the AI Calculator main board (ai_calc_pcb_1). Every physical dimension

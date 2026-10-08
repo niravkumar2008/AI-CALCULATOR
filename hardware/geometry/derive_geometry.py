@@ -124,9 +124,9 @@ N5 = [815, 718, 621, 524, 427]          # number columns
 KEY_ROWS = [  # (row name, y px, [(DKey, label, x px)], pad w, pad h, confidence)
     ("R1", 928, [("Shift", "SHIFT", F6[0]), ("Alpha", "ALPHA", F6[1]), ("Mode", "MODE", F6[4]),
                  ("On", "ON", F6[5])], 6.0, 4.5, "med"),
-    # R2 per Nirav's fx-300ES PLUS photo: Abs, x^3 | x^-1, log_a(b). (firmware DKey still says
-    # Inv, NCr, Pol, Cube: nCr/Pol are SHIFT functions of the divide/plus keys, so it needs Abs + LogBase.)
-    ("R2", 1016, [("Abs", "Abs", F6[0]), ("Cube", "x^3", F6[1]), ("Inv", "x^-1", F6[4]),
+    # R2: positions traced from Nirav's fx-300ES PLUS photo; legends are the fx-115ES ones (stage 14):
+    # CALC, integral dx | x^-1, log_a(b). Abs is SHIFT+hyp and x^3 is SHIFT+x^2 on the fx-115ES.
+    ("R2", 1016, [("Calc", "CALC", F6[0]), ("Integral", "∫dx", F6[1]), ("Inv", "x^-1", F6[4]),
                   ("LogBase", "log_a", F6[5])], 6.0, 4.5, "med"),
     ("R3", 1083, list(zip(["Frac", "Sqrt", "Sq", "Pow", "Log", "Ln"],
                           ["a/b", "sqrt", "x^2", "x^n", "log", "ln"], F6)), 7.0, 5.5, "med"),

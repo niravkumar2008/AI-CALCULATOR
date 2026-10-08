@@ -1,5 +1,6 @@
 {
   "generated": "2026-10-03",
+  "status_2026-10-06": "Not ordered as of Tue 2026-10-06. Boards land about 10-14 days door-to-door after the JLCPCB order (about 10/17-10/21 for an order on 10/7); JLCPCB about $200-240 delivered (US import duty ~35-37.5 % collected at checkout, de-minimis suspended since 2026-06-24, + $20-40 shipping; hardware/FAB_VENDOR_COMPARISON.md); every task dated 10/5 or later moves by the same number of days. Battery is the Adafruit #1317 150 mAh; camera window is 7 mm; tape is 0.1 mm, no foam.",
   "timeline_tasks": [
     {
       "date": "2026-10-03",
@@ -39,13 +40,13 @@
     },
     {
       "date": "2026-10-04",
-      "task": "Server: build API proxy (device never holds the Claude key) - Cloudflare Worker or similar",
+      "task": "Server: build API proxy (device never holds the Claude key) - server/proxy (FastAPI, Docker on Render/Railway/Fly.io); deploy + one device token per calculator before bring-up step 10",
       "owner": "Nirav + Claude",
       "depends_on": []
     },
     {
       "date": "2026-10-05",
-      "task": "Order Adafruit: 3x #1570, 3x #5358, 2x #5412, UPS 2-day",
+      "task": "Order Adafruit: 3x #1317 (150 mAh), 3x #5358, 2x #5412, UPS 2-day",
       "owner": "Nirav",
       "depends_on": []
     },
@@ -63,7 +64,7 @@
     },
     {
       "date": "2026-10-05",
-      "task": "JLCPCB order: 5 PCBs 0.8mm ENIG, assemble 2, Standard PCBA, check every pin-1 in preview; pay DDP tariff",
+      "task": "JLCPCB order: 5 PCBs 0.8mm ENIG, assemble 2, Standard PCBA, verify the preview against ORDER_WALKTHROUGH step 5, rotate nothing; pay DDP tariff",
       "owner": "Nirav",
       "depends_on": [
         "Paper/3D-print fit check: print board outline 1:1, lay it in the shell, check posts, camera hole, ribs"
@@ -74,7 +75,7 @@
       "task": "JLC DFM/engineer review - answer any email within hours (each unanswered question = +1 day)",
       "owner": "Nirav",
       "depends_on": [
-        "JLCPCB order: 5 PCBs 0.8mm ENIG, assemble 2, Standard PCBA, check every pin-1 in preview; pay DDP tariff"
+        "JLCPCB order: 5 PCBs 0.8mm ENIG, assemble 2, Standard PCBA, verify the preview against ORDER_WALKTHROUGH step 5, rotate nothing; pay DDP tariff"
       ]
     },
     {
@@ -82,12 +83,12 @@
       "task": "Firmware: camera capture + JPEG + Wi-Fi upload to proxy on dev board",
       "owner": "Nirav + Claude",
       "depends_on": [
-        "Server: build API proxy (device never holds the Claude key) - Cloudflare Worker or similar"
+        "Server: build API proxy (device never holds the Claude key) - server/proxy (FastAPI, Docker on Render/Railway/Fly.io); deploy + one device token per calculator before bring-up step 10"
       ]
     },
     {
       "date": "2026-10-07",
-      "task": "Prepare shells: open, remove Casio board, grind ribs per stage10 plan, drill ~6mm camera hole (Kapton-mask first)",
+      "task": "Prepare shells: open, remove Casio board, grind ribs per stage10 plan, drill the 7 mm camera hole only after the camera ribbon is measured (Kapton-mask first)",
       "owner": "Nirav",
       "depends_on": [
         "Buy 2-3 fx-115ES (same edition as the measured one) + calipers + multimeter locally"
@@ -98,7 +99,7 @@
       "task": "Adafruit parts arrive (estimate); test battery polarity vs J4 drawing (sheet E3)",
       "owner": "Nirav",
       "depends_on": [
-        "Order Adafruit: 3x #1570, 3x #5358, 2x #5412, UPS 2-day"
+        "Order Adafruit: 3x #1317 (150 mAh), 3x #5358, 2x #5412, UPS 2-day"
       ]
     },
     {
@@ -150,7 +151,7 @@
     },
     {
       "date": "2026-10-15",
-      "task": "Bring-up board #1: USB only, no battery/display/camera; check 3.3V, 2.8V, 1.5V; flash over magnetic USB",
+      "task": "Bring-up board #1: USB only, no battery/display/camera; meter VBUS, SYS, TP5 3.3V, TP7 EN, TP6 BAT; flash over magnetic USB",
       "owner": "Nirav",
       "depends_on": [
         "Boards arrive in Indiana (estimate, DHL 3-4 days)"
@@ -161,7 +162,7 @@
       "task": "Plug e-paper, then camera; run self-test; then battery + charging test",
       "owner": "Nirav",
       "depends_on": [
-        "Bring-up board #1: USB only, no battery/display/camera; check 3.3V, 2.8V, 1.5V; flash over magnetic USB"
+        "Bring-up board #1: USB only, no battery/display/camera; meter VBUS, SYS, TP5 3.3V, TP7 EN, TP6 BAT; flash over magnetic USB"
       ]
     },
     {
@@ -170,7 +171,7 @@
       "owner": "Nirav",
       "depends_on": [
         "Plug e-paper, then camera; run self-test; then battery + charging test",
-        "Prepare shells: open, remove Casio board, grind ribs per stage10 plan, drill ~6mm camera hole (Kapton-mask first)"
+        "Prepare shells: open, remove Casio board, grind ribs per stage10 plan, drill the 7 mm camera hole only after the camera ribbon is measured (Kapton-mask first)"
       ]
     },
     {
@@ -191,7 +192,7 @@
   "phases": [
     {
       "phase": "Prototype v1",
-      "dates": "2026-10-03 to 2026-10-21",
+      "dates": "2026-10-03 to 2026-10-21 (planned; the JLCPCB order had not been placed as of 2026-10-06, so dates from 10/5 on slip by the order date)",
       "units": 2,
       "goal": "Two working calculators in fx-115ES shells"
     },
@@ -282,7 +283,7 @@
         3.5,
         3.2
       ],
-      "battery_100mAh": [
+      "battery_150mAh": [
         5.95,
         5.36,
         5.36,
@@ -367,7 +368,7 @@
       "pcb_pcba": "qty2 = (JLC fees $59.50 + parts 2x$9.77)/2 from project cost doc; LCSC breaks for ESP32-S3-MINI-1-N4R2 ($5.00/$4.50/$3.63/$3.38) and TCA8418 ($1.12/$0.92/$0.69/$0.61) checked 2026-10-03; other rows estimate",
       "camera_ov5640af": "qty2-10 Seeed OV5640 AF (~GBP11 UK, US est); 50+ generic 24-pin DVP AF module $4.58-$8 listings; volume estimate",
       "epaper_2in13": "Waveshare raw 2.13in $6.31-$6.99 (waveshare.com, 2026-10-03); 100+ Good Display GDEY0213B74 direct, estimate",
-      "battery_100mAh": "Adafruit #1570 $5.95 (2026-10-03); 10/100 tiers assume Adafruit's usual 10%/20% breaks (estimate); 500+ custom cell with UN38.3 from Shenzhen, Alibaba range $0.61-$1.70 + pack/PCM (estimate)",
+      "battery_150mAh": "Adafruit #1317 150 mAh $5.95 (replaced the 100 mAh #1570 on 2026-10-06; same price tiers); 10/100 tiers assume Adafruit's usual 10%/20% breaks (estimate); 500+ custom cell with UN38.3 from Shenzhen, Alibaba range $0.61-$1.70 + pack/PCM (estimate)",
       "magnetic_connector_pair": "Adafruit #5358 $6.50/$5.85/$5.20 (1/10/100+); 500+ OEM pogo-magnet pair, pins ~$0.23-0.25 @MOQ1000 (estimate for full pair)",
       "magnetic_usb_cable": "Adafruit #5412 $4.95; volume OEM estimate",
       "enclosure_and_keypad": "2-50: donor Casio fx-115ES ~$20 (Walmart $19.99, 2026-10-03); 100: 3D-printed shell + small-batch silicone keypad incl. tooling share (estimate); 500-1000: printed/urethane-cast (estimate); 5000+: injection mold, ~$25k tooling amortized + ~$1.50/set (estimate)",

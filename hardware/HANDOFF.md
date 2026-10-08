@@ -1,75 +1,53 @@
-# AI Calculator PCB — handoff for the KiCad Claude Code session
+# AI Calculator PCB: handoff for the next Claude session (from stage 14)
 
-> **Shell switch (2026-10-02):** Nirav now uses a **Casio fx-115ES** shell, not the fx-300ES Plus. Same key grid, but it has paired screw posts (not 12 pegs), stubs on the side walls beside the screen, and rings and ribs in the back cover. The geometry below is still from the fx-300ES scan: the post holes, outline and key pads must be re-derived from the new readings and a flatbed scan (measurement sheet C7–C15, F6) before ordering.
+Updated 2026-10-04. Read `hardware/FINAL_STATUS.md` first (status, open items, decisions, history). This file is the short context a new session needs to continue.
 
-Paste or attach this file in the new chat. It sums up a long cloud session (2026-10-01/02).
-Repo: `C:\Users\r_kas\OneDrive\Documents\GitHub\AI-CALCULATOR`. All hardware lives under `hardware/`.
-Nirav is new to PCB design: explain non-obvious choices in 1–2 plain sentences. No screenshots of his screen. Deliver each stage as a sequential zip `ai_calc_pcb_N.zip` (he commits and pushes himself). Use KiCad 10.
-
-## Product (fixed requirements)
-- New board inside an unmodified Casio fx-300ES Plus case; the only drilled hole is a ~6 mm camera hole in the back cover.
-- Parts: ESP32-S3-MINI-1-N4R2, Seeed OV5640 AF camera (24-pin FPC), Waveshare 2.13" V4 bare e-paper (24-pin FPC, on-board booster), TCA8418 keypad scanner, ON key on its own RTC pin.
-- Power: MCP73831 charger, RT9080-33GJ5 (was AP2112K-3.3 until stage 11), USBLC6-2, SMF5.0A TVS, reverse-battery FET + load-sharing FET.
-- Battery: Adafruit #1570, 100 mAh, JST-PH. Charging comes in through an Adafruit #5358 magnetic connector.
-- The magnet contacts must never carry battery voltage. No LED (exam mode). Nothing for Nirav to solder.
-- JLCPCB build: 2 layers, 0.8 mm, ENIG, assemble 2 of 5. Use real LCSC numbers only and flag extended parts.
-- Board geometry comes from the scan (`hardware/scan/9C102_A.pdf`, `hardware/geometry/derive_geometry.py`, `features.json`).
-- KiCad top view = seen from the back cover. F.Cu is the component side (faces the back cover). B.Cu carries the 50 bare key pads and the e-paper panel.
+Repo: `C:\Users\r_kas\OneDrive\Documents\GitHub\AI-CALCULATOR`; all hardware is under `hardware/`. KiCad 10 (`kicad-cli` on Windows). Nirav is new to PCB design: explain non-obvious choices in 1–2 plain sentences, no screenshots of his screen. Deliver each stage as a numbered zip `Claude outputs/ai_calc_pcb_N.zip`; he commits and pushes himself. Query the graph first (`graphify query "…" --budget 800`) and run `graphify update .` after changes.
 
 ## Where things stand
+
+- **Board v14** (silk "AI CALC v14 2026-10-04"), `kicad/ai_calc.kicad_pcb` + sheets. DRC 0/0/0 with schematic parity (`--refill-zones --schematic-parity --severity-all`), ERC 0. Every copper item ≥ 0.25 mm from every hole.
+- **Independent re-check: GO** (`verification/05_stage14_recheck.md`). Fab files in `fab/`, zip `Claude outputs/ai_calc_pcb_14.zip`. Backup of 13b: `kicad/.mcp-backups/stage14_pre/`.
+- **Not ordered yet (still true on 2026-10-06).** The plan was Monday 2026-10-05 after Nirav's paper dry fit (`FINAL_STATUS.md` §1); every day the order slips moves the board arrival (about 10–14 days door-to-door after ordering; JLCPCB ≈ $200–240 delivered incl. ~35–37.5 % duty, `FAB_VENDOR_COMPARISON.md`). Ordering: `ORDER_WALKTHROUGH.md`.
+- Product: ESP32-S3-MINI-1 board inside a ground **Casio fx-115ES** shell; OV5640 AF camera (J1), Waveshare 2.13" V4 e-paper (J2, through a 1.0 × 14 mm slot), TCA8418 keypad, MCP73831 + RT9080-33GJ5 power, Adafruit #1317 150 mAh LiPo (26 × 19.75 × 3.8), Adafruit #5358/#5412 magnetic USB on J3. No LED, nothing for Nirav to solder. JLCPCB: 2 layers, 0.8 mm, ENIG, 5 PCBs, 2 assembled.
+- Open items: paper dry fit; E7 / e-paper stiffener length; camera ribbon length; magnet meter check; J4 polarity; E6. Business: pricing vs VovoCorp. (Bigger cell: decided 2026-10-06, Adafruit #1317 150 mAh for the donor shells; see `enclosure/final_assembly/battery_upgrade.md`.)
+- Guides (published): First Power-Up https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9 · Shell Grinding https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL · Calculator Assembly https://claude.ai/artifact/8BTC57FZ3JFwiDdiLprwtY · Launch Roadmap https://claude.ai/artifact/K5hMpGzzf4gS9b6nGKSoM9.
+- Docs consistency audit of 2026-10-06: `verification/10_docs_consistency.md`.
+
+## Stage table
+
 | Stage | State |
 |---|---|
-| 1 geometry | Done (ai_calc_pcb_1/2) |
-| 2 pins/power | Done. `hardware/pins_final.h` is the source of truth (camera pins changed in stage 6, see below) |
-| 3 schematic | Done. ERC 0/0. Every part has a live-checked LCSC number. Independent review fixes applied (stage3_schematic.md) |
-| 4/5 footprints + placement | Done. Placement check: 0 overlaps / keep-out hits (stage4_5_layout.md) |
-| 6 routing | **ai_calc_pcb_10.zip (fx-115ES holes) = complete: DRC 0 errors, 0 unconnected, 0 schematic-parity warnings**, with the v8 camera bus (0.6 mm ribbon) and the stage-6 GPIO map. See stage9_finish.md |
-| 11 e-paper + calipers | **ai_calc_pcb_11.zip: DRC 0/0/0 with schematic parity.** E-paper block moved up 3.57 mm to the measured window and fully re-routed, locating-post holes 4.2 mm (C7), review fixes S1 (R20 → VBUS_SENSE), S2 (U3 = RT9080-33GJ5), S4 (C32 22 µF), new TP5 +3V3 / TP6 BAT+ / TP7 EN. See stage11_epaper_calipers.md |
-| 7 outputs | `fab/` regenerated from the v10 board by `tools/make_outputs.sh` (now also runs on Windows, see its header). ORDER_CHECKLIST.md written |
+| 1–9 | Geometry, pin map, schematic, placement, routing, camera GPIO re-order (6), outputs (7), v8 camera bus (8/9). Details: stage2/3/4_5/9 docs |
+| 10 | fx-115ES shell: holes from photos (`stage10_fx115es.md`) |
+| 11 | E-paper at the measured window, RT9080, R20 → VBUS_SENSE, TP5–TP7 (`stage11_epaper_calipers.md`) |
+| 12 | Second caliper batch, narrowed screen section, height table, grind map (`stage12_measurements.md`) |
+| 13 / 13b | Heights and grind plan, slotted holes, 7 mm camera window; J3 right-angle header, C33/C34 (`stage13_heights.md`) |
+| 14 | Verification fixes: J3 order, CPL rotation tool, SW1/H3 notch, recovery, key names (`stage14_verification_fixes.md`); re-check GO |
 
-**Don't order yet:** Nirav's caliper measurements (measurement-sheet artifact) can still move parts. Items V3/V5/V9/V11/V12 in geometry_assumptions.md need checking first.
+Older "don't order yet" notes (stages 11–12: J4/J3 heights, C4 wall, D11) are all resolved; ignore them.
 
-## Key decisions you must not undo
-- **Camera socket J1** uses `ai_calc:FPC_24P_P0.5mm_DualContact_C6364666_CamReversed`: the same land pattern with pad numbers mirrored. A flat cable going straight in lands mirrored on standard numbering; two independent checks agreed (~75 %).
-  - Both FPC sockets are SHOU HAN C6364666 dual-contact parts, so if the reading is wrong, a 180° twist in the cable fixes it.
-  - Before the first plug-in, check the cable: fingers 2 and 15 should beep (both GND).
-- **E-paper:** the FPC folds behind the panel, comes up through a **1.0 × 14 mm slot at x = 172.9** (centre y 92.83 since stage 11), and plugs into J2 (x 177.9, y 92.83, opening facing the slot). Length budget is 14.3 mm.
-- **Camera GPIO map re-ordered in stage 6** so the bus leaves the module in J1's pin order: XCLK 18, D0 13, D1 11, D2 10, D3 12, D4 14, D5 16, D6 17, D7 21, VSYNC 36, HREF 47, PCLK 15, PWDN 48, RESET 38 (SIOD 40, SIOC 39, PWR_EN 34 unchanged). The schematic (mcu sheet labels) and pins_final.h are already updated. **Firmware must use these.**
-- **Review fixes:**
-  - STAT → IO35 goes through Schottky D6 + 100 k pull-up R20, because STAT drives 5 V. Since stage 11 R20 pulls up to VBUS_SENSE (not +3V3), so nothing back-feeds the charger without a cable.
-  - R12 = 3 Ω (B/W panel). C20 = 4.7 µF 50 V 1206.
-  - VBUS divider = 10 k / 20 k. Charge current = 50 mA (R2 20 k).
-  - SCCB pull-ups R18/R19 go to CAM_2V8. The USBLC6 reference pin is on +3V3.
-- **Magnet socket J3** = 5 mm SMD female header C42379197 (no THT fee). Function-key and bottom-row pads are KeyPad_6.0x4.5.
+## Decisions you must not undo
 
-## Stage 9 (ai_calc_pcb_9): v8 finished
-All the v8 leftovers are fixed. Details and the reasons are in `stage9_finish.md`. The v7 fallback (`v7_drc_clean/`) is no longer needed, but it's kept for reference.
-Firmware: `firmware-prototype/src/pins.h` now uses the stage-6 camera map. It builds.
+- **J1** camera socket = `ai_calc:FPC_24P_P0.5mm_DualContact_C6364666_CamReversed` (pad numbers mirrored; ~90 % confidence after verification 01/03; fallback is a 180° cable twist). Tell JLCPCB **not to rotate J1**.
+- **Camera GPIO map** (stage 6): XCLK 18, D0 13, D1 11, D2 10, D3 12, D4 14, D5 16, D6 17, D7 21, VSYNC 36, HREF 47, PCLK 15, PWDN 48, RESET 38, SIOD 40, SIOC 39, PWR_EN 34. `pins_final.h` and firmware use it.
+- **E-paper:** FPC through the 1.0 × 14 mm slot at x 172.9 into J2 (177.9, 92.83); ribbon budget 14.3 = 14.3 (CAD path 12.7 → about 1.6 mm nominal spare, 0.3 worst case; treat as none), so **J2 doesn't move** without the E7/stiffener rule in `stage14_verification_fixes.md` fix 6 (ribbon lengths). **J1 doesn't move** either (same fix 6).
+- **Power:** U3 = RT9080-33GJ5 (C841192); R20 pulls STAT up to VBUS_SENSE; R12 3 Ω; C20 4.7 µF 50 V; VBUS divider 10 k / 20 k; charge 50 mA (R2 20 k); C32–C34 22 µF on +3V3; **R17 = 100 k** (C25741; the "10 k" in verification 02 was wrong). The magnet contacts never carry battery voltage.
+- **Outline and holes:** screen section narrowed past the wall pins (x 118.9–183.65); ESP32 antenna (a bare 0.8 mm tab, 4.15 mm past the edge) overhangs the KiCad-left edge on purpose (= the calculator's right-hand, solar-window side in use); it and the board's un-narrowed top corner (x 114.3–114.8, y 72–83) may need grinding zone 6 (35 mm of the faceplate's inner side-wall rib, `verification/07_final_review_fitment.md`; v15: narrow that corner to x 118.9 as well); H2/H9/H13/H14 slotted, H6 moved (stage 13).
+- **J3** = right-angle SMD header C46061768 at (127.5, 72.0), magnet glued in a top-wall U-notch. **Pin order 1 VBUS, 2 USB_DM, 3 USB_DP, 4 GND, piece's N end at pin 1** (silk N / + / −). Never re-introduce "turn the magnet piece over" advice.
+- **CPL:** always generate with `tools/make_outputs.sh` (BOM first, then `tools/jlc_cpl.py`, which adds JLCPCB offsets per LCSC: Q1 180, Q2 270, U2/U3/U7 270, U4/U5 180, J3 180). In JLCPCB's preview, verify only.
+- **SW1** uses `KeyPad_6.0x4.5_H3notch` (clearance to H3).
+- **Keys:** row 2 = CALC, ∫dx (fx-115ES); firmware: Abs = SHIFT hyp, x³ = SHIFT x², ∛ = SHIFT √.
+- **Recovery:** hold TP1 (BOOT) to TP4 (GND), tap TP7 (EN); UART on TP2/TP3. Never burn security or USB-disable eFuses.
+- **Battery** lies on the back-cover floor; the LR44 cup is not ground. Grinds: solar box, rib B 14 mm, 7 mm camera drill, magnet U-notch (5b lip only if present).
 
-## Stage 10 (ai_calc_pcb_10): moved to the fx-115ES shell
-The holes now follow the fx-115ES posts, measured from Nirav's photos with a key-pad-fitted perspective transform (about 0.5 mm).
-- H3 moved, H2/H6/H9 shifted, H5/H7/H11/H12 removed, H13/H14 added.
-- The 4-way pad's UP/DOWN contacts are spread further apart.
-- The top-left post cut-out is widened.
-- DRC is 0/0/0, and `fab/` and the fit-check files are regenerated.
+## Lessons (stage 14)
 
-Back-cover ribs and rings were mapped onto the board (several sit over the camera, ESP32 and J1; grind plan in the doc). Still waiting on calipers: board outline (C6), LCD window and e-paper position (C12/C13, probably about 2 mm higher), wall stubs (C14) and rib heights (D13). Details in `stage10_fx115es.md`.
+- **Verify CPL rotations against the EasyEDA footprints** JLCPCB actually uses (fetch per LCSC number; `tools/check_cpl_easyeda.py`), not against KiCad or guesses. Include a negative test (raw KiCad rotations must fail).
+- **Verify connector pinouts against the mating part** (here the #5412 cable drawing, mated face to face), not just the board-side part's drawing.
+- Run the copper-to-hole check (`tools/check_hole_clearance.py`) as well as DRC; DRC missed SW1 at 0.055 mm from H3.
+- After any change: regenerate `fab/`, the fit-check files and the zip; confirm BOM designators == CPL designators (77); re-run DRC with parity and ERC.
 
-## Tools (in `hardware/tools/`; written for the cloud box, paths need adapting)
-- `build_board.py`: places every part from the schematic netlist (placement table inside) and adds the slot, keep-outs, rule areas and netclasses.
-- `prepass.py` + `gridroute.py`: A* pre-router for the camera bus, SYS and the +3V3 trunk.
-- `route.sh`: Freerouting 1.9 headless.
-- `add_gnd.py`: GND pours, via stitching, and a 2-vias-per-island rule.
-- `cleanup.py`: via merging and silk placement.
-- `fixroute.py`: leftover connections.
-- `placement_check.py`, `check_keys.py`, `make_outputs.sh`.
+## Tools (`hardware/tools/`)
 
-## Open questions for Nirav
-- Measurement sheet: https://claude.ai/artifact/SzK4TuLjkGAZ9tvzqEtqkq (42 items, including camera-cable continuity E6 and e-paper ribbon length E7).
-- Cost: ~$190–240 total. JLCPCB fees ~$59.50, parts $9.77/board, 14 extended part types (doc: https://claude.ai/code/artifact/6bda3922-c9f2-47b0-8e37-4b1de94ca7f4).
-- Next generation: a custom shell from a build123d script (3D print first, then a manufacturer). Not started.
-
-## Stage 11 (ai_calc_pcb_11): e-paper at the measured window, calipers, review fixes
-- Details, assumptions and the questions list: `stage11_epaper_calipers.md` and `QUESTIONS_AND_ISSUES.md` → "PCB (stage 11)".
-- **Blocking question:** C4 (5.5 mm wall beside the screen) would make the board's top part ~2 mm too wide per side. Measure the inside width there.
-- New Windows tools (no Freerouting/shapely needed): `tools/pilroute.py`, `tools/gnd_islands.py`, `tools/smooth.py`.
+`make_outputs.sh` (fab outputs), `jlc_cpl.py`, `check_cpl_easyeda.py`, `check_hole_clearance.py`, `make_fitcheck.py`, `check_keys.py`, `placement_check.py`; routing helpers `pilroute.py`, `gnd_islands.py`, `smooth.py` (Windows) and the older cloud-box scripts (`build_board.py`, `prepass.py`, `gridroute.py`, `route.sh`, `add_gnd.py`, `cleanup.py`, `fixroute.py`).

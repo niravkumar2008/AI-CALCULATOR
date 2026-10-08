@@ -1,5 +1,7 @@
 # Stage 11: e-paper moved to the measured window, calipers applied, review fixes (ai_calc_pcb_11)
 
+> **⚠ History (stage 11).** "Still don't order" below is resolved (stage 12 narrowed the board; the board is v14, GO). Current status: `FINAL_STATUS.md`.
+
 **Result:** `kicad-cli pcb drc --refill-zones --schematic-parity` gives **0 errors, 0 warnings, 0 unconnected, 0 schematic-parity issues**. ERC is 0/0. The report is in `kicad/ai_calc_drc_violations.json`.
 
 **Still don't order.** Question 1 below (the wall thickness beside the screen) could mean the top part of the board is about 2 mm too wide on each side.

@@ -3,12 +3,18 @@
 #pragma once
 #include "device.h"
 
-void keysBegin();
+// keepEvents: after a deep-sleep wake, keep the scanner's queued key events (the
+// key that woke the chip); a cold start drops stale ones.
+void keysBegin(bool keepEvents = false);
+void keysWokeByOn();      // the chip woke from deep sleep because ON was pressed
+bool keysScannerOk();     // the TCA8418 answered on I2C
+bool keysHeld(calc::DKey k);  // held right now (ON: read from its pin)
+// Before deep sleep: empties the scanner's queue and clears INT. True if INT is
+// high afterwards (then a keypad key may wake the chip).
+bool keysPrepareSleep();
 // Calls `press` once per key press since the last call, plus repeats while
 // a scrolling key is held (▲ ▼ ◀ ▶ DEL). Presses are
 // caught by interrupts (or the scanner's own memory), so none are lost while
 // the e-paper is busy refreshing.
 void keysPoll(void (*press)(calc::DKey));
-// Light-sleeps the chip until a key is pressed or USB is plugged in (the
-// calculator is off).
-void keysSleepUntilPress();
+

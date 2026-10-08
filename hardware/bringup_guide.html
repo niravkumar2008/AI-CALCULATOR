@@ -1,0 +1,357 @@
+<title>First Power-Up Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column, a bench-log of numbered stages; each stage is a checklist; readings sit in mono "meter" chips. */
+:root{
+  --bg:#f3f5f1; --surface:#ffffff; --fg:#1b241f; --muted:#56625b; --line:#d6ddd6;
+  --mask:#1f6b4a; --mask-soft:#e1efe7; --copper:#a8571b; --copper-soft:#f8e9dc;
+  --stop:#b3261e; --stop-soft:#fbe6e4; --ok:#1f6b4a;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111613; --surface:#18201b; --fg:#e4ebe6; --muted:#9aa8a0; --line:#2c3831;
+  --mask:#5fc796; --mask-soft:#1b3428; --copper:#e39a5c; --copper-soft:#3a2617;
+  --stop:#ff8a80; --stop-soft:#3d1a18; --ok:#5fc796; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#111613; --surface:#18201b; --fg:#e4ebe6; --muted:#9aa8a0; --line:#2c3831;
+  --mask:#5fc796; --mask-soft:#1b3428; --copper:#e39a5c; --copper-soft:#3a2617;
+  --stop:#ff8a80; --stop-soft:#3d1a18; --ok:#5fc796; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body);padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:46rem;margin-inline:auto;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,6vw,2.8rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:800;display:flex;gap:.6rem;align-items:baseline}
+h2 .n{font-family:var(--f-mono);font-size:.9rem;color:var(--mask);font-weight:600}
+h3{font-size:1.05rem;font-weight:600;margin-top:4px}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+header{display:flex;flex-direction:column;gap:12px}
+.lede{color:var(--muted);max-width:62ch}
+section{display:flex;flex-direction:column;gap:14px;padding-top:22px;border-top:1px solid var(--line)}
+code,.m{font-family:var(--f-mono);font-size:.88em}
+.m{background:var(--mask-soft);color:var(--fg);padding:1px 6px;border-radius:4px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.rules{background:var(--stop-soft);border:1px solid var(--stop);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.rules strong{color:var(--stop)}
+.rules ol{margin:0;padding-left:1.3rem;display:flex;flex-direction:column;gap:4px}
+.note{border-left:3px solid var(--copper);background:var(--copper-soft);padding:10px 14px;border-radius:0 6px 6px 0}
+.stop{border-left:3px solid var(--stop);background:var(--stop-soft);padding:10px 14px;border-radius:0 6px 6px 0}
+.unsure{font-size:.82rem;font-family:var(--f-mono);color:var(--copper);border:1px solid var(--copper);border-radius:4px;padding:0 5px;white-space:nowrap}
+ul.check{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+ul.check li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;align-items:start;padding:8px 6px;border-radius:6px}
+ul.check li:hover{background:var(--mask-soft)}
+ul.check input{width:20px;height:20px;margin-top:3px;accent-color:var(--mask);cursor:pointer}
+ul.check label{cursor:pointer}
+ul.check input:checked + label{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+ul.check ul{margin:6px 0 0;padding-left:1.1rem;text-decoration:none}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--copper);outline-offset:2px}
+.progress{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);padding-block:10px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.bar{flex:1 1 160px;height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--mask);transition:width .3s}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+.progress span{font-family:var(--f-mono);font-size:.85rem;font-variant-numeric:tabular-nums}
+button{font:600 .85rem var(--f-mono);background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer}
+button.armed{border-color:var(--stop);color:var(--stop)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+td.v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+figure{margin:0;display:flex;flex-direction:column;gap:6px}
+figure img{border:1px solid var(--line);border-radius:8px;background:var(--surface);max-width:100%;height:auto}
+figcaption{font-size:.85rem;color:var(--muted)}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+.kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
+pre{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font:.8rem/1.5 var(--f-mono);margin:0;white-space:pre-wrap;word-break:break-all}
+a{color:var(--mask)}
+footer{color:var(--muted);font-size:.85rem}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">AI Calculator · board v14 (stage 14) · firmware stage14-2026.10.06 · boards land about 10–14 days after the JLCPCB order</p>
+  <h1>First Power-Up Guide</h1>
+  <p class="lede">Do these steps in order, one at a time, the day the JLCPCB boards arrive. Every check is there to catch a fault <em>before</em> it can hurt the board. Tick each box as you go; ticks are saved in this browser only.</p>
+  <div class="rules">
+    <p><strong>Five rules for the whole day</strong></p>
+    <ol>
+      <li>If anything gets warm, smells, or a reading is wrong: <strong>unplug first, think second.</strong></li>
+      <li>Never plug or unplug a ribbon (e-paper, camera) while the board has any power. Once the battery is in, the board is always powered, so ribbons go in <em>before</em> the battery. <span class="unsure">general practice</span></li>
+      <li>First power comes from a <strong>computer USB port</strong>, not a phone charger. A computer port cuts the current quickly on a fault; a charger may push 2 A or more.</li>
+      <li>Never connect the battery until its polarity has been metered (step 4).</li>
+      <li>Never burn eFuses, enable secure boot or flash encryption. They are the only things that can lock you out for good.</li>
+    </ol>
+  </div>
+</header>
+
+<div class="progress" aria-live="polite">
+  <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+  <span id="count">0 / 0 done</span>
+  <button type="button" id="reset">Clear ticks</button>
+</div>
+
+<section id="kit">
+  <h2><span class="n">01</span>What you need</h2>
+  <div class="kit">
+    <ul class="check" data-step="kit">
+      <li><input type="checkbox" id="k1"><label for="k1">Multimeter with DC volts, continuity (beep), and mA</label></li>
+      <li><input type="checkbox" id="k2"><label for="k2">Adafruit #5412 magnetic cable and the #5358 magnet piece</label></li>
+      <li><input type="checkbox" id="k3"><label for="k3">A USB phone charger (only for the magnet check)</label></li>
+    </ul>
+    <ul class="check" data-step="kit">
+      <li><input type="checkbox" id="k4"><label for="k4">USB-A to USB-C adapter, if your PC has only USB-C ports</label></li>
+      <li><input type="checkbox" id="k5"><label for="k5">Kapton tape, tweezers, two short wires for the test pads</label></li>
+      <li><input type="checkbox" id="k6"><label for="k6">PC with VS Code + PlatformIO, the repo's <code>firmware-prototype</code> folder</label></li>
+      <li><input type="checkbox" id="k7"><label for="k7">For step 10: a 2.4 GHz phone hotspot, your AI server's https address and one device token for this board (setting the server up takes about 30 min; do it while you wait for the boards)</label></li>
+    </ul>
+  </div>
+  <p class="note">Test points on the board, all on the component side, labelled on the silkscreen: <span class="m">TP1 BOOT</span> <span class="m">TP2 TX</span> <span class="m">TP3 RX</span> <span class="m">TP4 GND</span> <span class="m">TP5 3V3</span> <span class="m">TP6 BAT</span> <span class="m">TP7 EN</span>. The black meter probe goes on TP4 for every voltage reading below.</p>
+</section>
+
+<section id="inspect">
+  <h2><span class="n">02</span>Inspect the bare board</h2>
+  <p>Unpowered, under good light (a phone camera zoomed in works). Hold it like the render: component side up, top edge away from you.</p>
+  <div class="figs">
+    <figure><img src="fab/render_top.png" alt="Render of the board's component side, top edge at the top" loading="lazy"><figcaption>Component side. "Top-left" below means as seen here.</figcaption></figure>
+    <figure><img src="fab/render_bottom.png" alt="Render of the board's other side" loading="lazy"><figcaption>Other side (key pads).</figcaption></figure>
+  </div>
+  <ul class="check" data-step="inspect">
+    <li><input type="checkbox" id="i1"><label for="i1"><strong>U2</strong> (charger), <strong>U3</strong> (3.3 V regulator), <strong>U4, U5</strong>: pin-1 dot <strong>top-left</strong>, the 3-pin side on the left. <strong>U7</strong> (USB protection, 6 pins): dot <strong>top-left</strong>.</label></li>
+    <li><input type="checkbox" id="i2"><label for="i2"><strong>Q1</strong>: two pins on the left, the single pin on the right. <strong>Q2</strong>: single pin at the top, two at the bottom. <strong>Q3</strong>: single pin on the left.</label></li>
+    <li><input type="checkbox" id="i3"><label for="i3"><strong>D7</strong> (near the magnet header): band on the <strong>right</strong> pad, towards J3. This one matters most. <strong>D1–D6</strong>: band on the <strong>left</strong> pad.</label></li>
+    <li><input type="checkbox" id="i4"><label for="i4">No solder bridges between neighbouring pins, especially on U1 (ESP32), U6 (keypad chip), U7 and the two ribbon sockets. No loose balls of solder.</label></li>
+    <li><input type="checkbox" id="i5"><label for="i5"><strong>J1</strong> (camera) opening faces up towards the camera area; <strong>J2</strong> (e-paper) opening faces left, towards the slot. Both lids open and close freely. Leave them closed for now.</label></li>
+    <li><input type="checkbox" id="i6"><label for="i6"><strong>J4</strong> battery socket opening faces down. <strong>J3</strong> openings face the top edge.</label></li>
+    <li><input type="checkbox" id="i7"><label for="i7">Meter on continuity: <span class="m">TP5 3V3 ↔ TP4 GND</span> must <strong>not</strong> beep steadily. A short "chirp" as capacitors charge is fine. <span class="unsure">general practice</span></label></li>
+  </ul>
+  <p class="stop">If a part is turned the wrong way or bridged: don't power it. Photograph it and ask.</p>
+</section>
+
+<section id="magnet">
+  <h2><span class="n">03</span>Magnet piece check, before gluing</h2>
+  <p>J3 is wired, from pin 1 (silk <span class="m">N</span> and <span class="m">+</span>, leftmost pin seen from the component side, top edge away from you): <strong>VBUS, D−, D+, GND</strong>. The last pin has the silk <span class="m">−</span>.</p>
+  <ul class="check" data-step="magnet">
+    <li><input type="checkbox" id="g1"><label for="g1">Straighten the 4 legs of the #5358 piece. Don't fit it yet. Snap the cable's magnet end onto it (it latches only one way).</label></li>
+    <li><input type="checkbox" id="g2"><label for="g2">Plug the cable's USB-A end into the <strong>phone charger</strong>. Meter on DC volts. Black probe on one <strong>outer</strong> leg, red on the other outer leg: about <span class="m">+5 V</span>. The red-probe leg is <strong>VBUS</strong>: mark it with a pen. (−5 V? swap the probes.)</label></li>
+    <li><input type="checkbox" id="g3"><label for="g3">Each <strong>inner</strong> leg to the black (GND) leg reads <span class="m">0–0.6 V</span>. If 5 V shows on an inner leg, <strong>stop</strong>: the cable differs from Adafruit's drawing. Don't fit it; ask.</label></li>
+    <li><input type="checkbox" id="g4"><label for="g4">Unplug the charger. Meter on continuity:
+      <ul>
+        <li>VBUS leg beeps to one outer contact of the USB-A plug (USB pin 1). GND leg beeps to the other outer contact (pin 4), usually to the metal shell too.</li>
+        <li>Inner leg <strong>next to VBUS</strong> beeps to the contact next to pin 1 (pin 2 = <strong>D−</strong>).</li>
+        <li>Inner leg <strong>next to GND</strong> beeps to the contact next to pin 4 (pin 3 = <strong>D+</strong>).</li>
+        <li>Inner legs the other way round: stop and ask. Not harmful, but USB data won't work.</li>
+      </ul></label></li>
+    <li><input type="checkbox" id="g5"><label for="g5">Push the piece in (no glue) with the <strong>VBUS leg in pin 1</strong> (silk N / +) and the <strong>GND leg in pin 4</strong> (silk −).</label></li>
+    <li><input type="checkbox" id="g6"><label for="g6">On the board: J3 pin 4's leg <strong>beeps</strong> to TP4. J3 pin 1's leg does <strong>not</strong> beep to TP4.</label></li>
+    <li><input type="checkbox" id="g7"><label for="g7">Only now glue the body into the top-wall slot (or leave it pushed in for the bench steps and glue at assembly).</label></li>
+  </ul>
+  <p class="stop"><strong>Why:</strong> fitted backwards, the cable's 5 V lands on the board's GND. A computer port cuts the current quickly, but a phone charger can push 2 A or more through D7 and the charger chip and damage them. Never test that on purpose.</p>
+</section>
+
+<section id="battery">
+  <h2><span class="n">04</span>Battery polarity</h2>
+  <ul class="check" data-step="battery">
+    <li><input type="checkbox" id="b1"><label for="b1">Look at J4 from the component side with its opening towards you: <strong>− on the left, + on the right</strong> (silk "+" / "−" beside it).</label></li>
+    <li><input type="checkbox" id="b2"><label for="b2">Hold the battery plug the same way it would go in. Meter on DC volts, red probe into the contact that will meet J4 "+": you should read the cell voltage as a <strong>positive</strong> number (about 3.0–4.2 V), and that contact should be on the red wire. Don't let the probes touch each other.</label></li>
+    <li><input type="checkbox" id="b3"><label for="b3">If reversed: swap the two crimp pins in the plug. Lift each little plastic tab with a needle, slide the pin out, swap, push back until it clicks. No soldering. Meter again.</label></li>
+  </ul>
+  <p class="note">Q1 protects the board from a reversed cell, but with USB also plugged in a few mA would flow into the reversed cell. So: polarity first, always.</p>
+</section>
+
+<section id="ribbon">
+  <h2><span class="n">05</span>Camera ribbon beep test</h2>
+  <ul class="check" data-step="ribbon">
+    <li><input type="checkbox" id="r1"><label for="r1">Camera unplugged from everything. Count the ribbon's gold fingers from the end you think is pin 1. Fingers <strong>2 and 15</strong> must beep to each other (both GND).</label></li>
+    <li><input type="checkbox" id="r2"><label for="r2">If they don't, try 2 against 10. If that pair beeps, you counted from the other end; recount and try again. If neither beeps, stop and ask. (Mirrored, 23 ↔ 10 should <em>not</em> beep.)</label></li>
+  </ul>
+  <p class="note">While the camera is out: measure its ribbon from the module's far edge to the tip and note it. Under about 70.3 mm means tape the module up to 1.7 mm towards J1 and drill the 7 mm window where the lens actually sits.</p>
+</section>
+
+<section id="power">
+  <h2><span class="n">06</span>First power: USB only</h2>
+  <p><strong>Nothing else connected:</strong> no battery, no display, no camera. Magnet piece pushed into J3, cable into a <strong>computer</strong> USB port. Keep one hand on the plug.</p>
+  <ul class="check" data-step="power">
+    <li><input type="checkbox" id="p1"><label for="p1">Plug in. For the first 10 seconds touch the top of U2, U3, U7, D1, D7 and U1 lightly with a fingertip. Anything hot: unplug at once.</label></li>
+    <li><input type="checkbox" id="p2"><label for="p2">Measure each row below (black probe on TP4) and write the values down.</label></li>
+  </ul>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Rail</th><th>Where (red probe)</th><th>Expect</th><th>If wrong</th></tr></thead>
+      <tbody>
+        <tr><td>VBUS</td><td>J3 pin 1 leg (no TP on this rail)</td><td class="v">≈ 5.0 V<br>(4.75–5.25)</td><td>Near 0 or negative: magnet piece backwards. Unplug.</td></tr>
+        <tr><td>SYS</td><td>D1, the banded (left) end <span class="unsure">derived from schematic</span></td><td class="v">4.55–4.7 V</td><td>0 V with good VBUS: check D1. Unplug if anything is warm.</td></tr>
+        <tr><td>+3V3</td><td><span class="m">TP5 3V3</span></td><td class="v">3.25–3.35 V</td><td>0 V: U3 or SYS. Above 3.6 V: unplug now, ask.</td></tr>
+        <tr><td>EN</td><td><span class="m">TP7 EN</span></td><td class="v">≈ 3.3 V (high)</td><td>Low: chip held in reset; check for a bridge near TP7.</td></tr>
+        <tr><td>BAT+</td><td><span class="m">TP6 BAT</span></td><td class="v">≈ 0 V, or 4.1–4.25 V</td><td>Both are normal with no cell: the charger may regulate into nothing (QA plan A4 #29). Anything else (say 1–4 V, or above 4.3 V): note it, ask before going on.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">The VBUS range is the normal USB range, not a board figure. SYS is VBUS minus D1's drop. A few tenths of a volt off on VBUS/SYS is fine; +3V3 should be inside its range.</p>
+  <p class="stop"><strong>Wrong reading or hot part:</strong> unplug, let it cool, don't plug in again "to check". Note which part was warm and which reading was off, then ask.</p>
+</section>
+
+<section id="flash">
+  <h2><span class="n">07</span>Flash the firmware</h2>
+  <ul class="check" data-step="flash">
+    <li><input type="checkbox" id="f1"><label for="f1">Cable still in the PC. In VS Code open <code>firmware-prototype</code>, click <strong>Upload</strong> (→ in the blue bar). Command line: <code>%USERPROFILE%\.platformio\penv\Scripts\pio run -t upload</code></label></li>
+    <li><input type="checkbox" id="f2"><label for="f2">Open the Serial Monitor at <span class="m">115200</span>, type <code>help</code>, then <code>status</code>. The first line reads <code>Firmware: stage14-2026.10.06 (slot app0)  id …</code> (the version is <code>kFirmwareVersion</code> in <code>src/claude_client.h</code>); below it <code>Wi-Fi: not set</code>, <code>AI proxy: not set</code>, <code>Device token: … (type token)</code>. That's expected until step 10.</label></li>
+  </ul>
+  <p class="note"><strong>The first flash is always over USB</strong>, on every board: a new board is blank, and this firmware uses a two-slot partition table (<code>min_spiffs.csv</code>) so that later versions can arrive over the air. An over-the-air update only replaces the app in the other slot; it can never write the partition table, so the first flash (and any future partition change) must be this USB upload. After it, <code>status</code> and the self-test show <code>app0</code>; the first over-the-air update moves to <code>app1</code> (<code>firmware-prototype/README.md</code> §4).</p>
+  <h3>If no COM port appears, or "no serial data"</h3>
+  <ul class="check" data-step="flash">
+    <li><input type="checkbox" id="f3"><label for="f3">Hold a wire from <span class="m">TP1 BOOT</span> to <span class="m">TP4 GND</span>.</label></li>
+    <li><input type="checkbox" id="f4"><label for="f4">With a second wire, tap <span class="m">TP7 EN</span> to <span class="m">TP4 GND</span> for about 0.2 s. The chip restarts in download mode. Release TP1, click Upload.</label></li>
+    <li><input type="checkbox" id="f5"><label for="f5">When it finishes, tap TP7 to GND once more to start the new firmware.</label></li>
+  </ul>
+  <p class="note">With a battery connected later, plugging the cable in does <strong>not</strong> reset the chip, so holding BOOT while plugging in does nothing. Use the TP7 tap (or unplug the battery first). Last resort: a 3.3 V USB-serial adapter on TP2 (TX) / TP3 (RX) / TP4 (GND), then the same TP1 + TP7 sequence. In deep sleep the USB port disappears: press ON to bring it back.</p>
+</section>
+
+<section id="selftest">
+  <h2><span class="n">08</span>Factory self-test</h2>
+  <ul class="check" data-step="selftest">
+    <li><input type="checkbox" id="s1"><label for="s1">Type <code>selftest</code> in the Serial Monitor (the key combo, hold <strong>SHIFT + ALPHA, press ON</strong>, needs the keypad, so use the command on the bench). Type <code>q</code> to skip the 50-key test for now.</label></li>
+    <li><input type="checkbox" id="s2"><label for="s2">Copy the <code>SELFTEST_JSON</code> line into a text file. With nothing attached, expect <code>display_ok</code>, <code>camera_ok</code>, <code>keys_all_ok</code> and so <code>pass</code> to be false; that's fine here. Without a panel the screen step no longer stalls (BUSY has a pull-down).</label></li>
+  </ul>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Field</th><th>Good value</th><th>What it proves</th></tr></thead>
+      <tbody>
+        <tr><td><code>firmware</code>, <code>firmware_slot</code></td><td class="v">stage14-…, app0</td><td>Which build is running and from which app slot (<code>app0</code> after a USB flash, <code>app1</code> after the first over-the-air update)</td></tr>
+        <tr><td><code>memory_ok</code></td><td class="v">true</td><td>4 MB flash, 2 MB PSRAM found</td></tr>
+        <tr><td><code>keypad_scanner_ok</code></td><td class="v">true</td><td>U6 (TCA8418) answers on I²C</td></tr>
+        <tr><td><code>vbus</code></td><td class="v">true</td><td>Cable detected</td></tr>
+        <tr><td><code>battery_mv</code>, <code>battery_ok</code>, <code>charge</code></td><td class="v">3000–4300, true</td><td>Meaningful once a cell is in (with no cell and the cable in it may read about 4200 mV: the charger regulating into nothing)</td></tr>
+        <tr><td><code>display_refresh_ms</code>, <code>display_ok</code></td><td class="v">300–9000, true</td><td>E-paper BUSY line and booster work; look for dead lines</td></tr>
+        <tr><td><code>camera_ok</code>, <code>camera_jpeg_bytes</code>, <code>camera_autofocus</code></td><td class="v">true, &gt; 1000, true</td><td>OV5640 ID read, a VGA JPEG taken, the autofocus firmware loaded</td></tr>
+        <tr><td><code>wifi_ok</code></td><td class="v">true</td><td>≥ 1 network better than −80 dBm</td></tr>
+        <tr><td><code>keys_ok</code>, <code>keys_missing</code>, <code>keys_all_ok</code></td><td class="v">50, [], true</td><td>Every key (needs the rubber keypad: Assembly Guide steps 8 and 11)</td></tr>
+        <tr><td><code>pass</code></td><td class="v">true</td><td>Everything above</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <pre>SELFTEST_JSON {"firmware":"stage14-2026.10.06","firmware_slot":"app0","device_id":"calc-…","trigger":"serial","reset_reason":"…","memory_ok":true,"keypad_scanner_ok":true,"battery_mv":3987,"battery_pct":75,"vbus":true,"chg_stat_high":false,"charge":"charging","battery_ok":true,"display_refresh_ms":2140,"display_ok":true,"camera":"…OV5640","camera_jpeg_bytes":31877,"camera_autofocus":true,"camera_ok":true,"wifi_networks":7,"wifi_best_rssi":-48,"wifi_ok":true,"keys_ok":50,"keys_total":50,"keys_missing":[],"keys_all_ok":true,"pass":true}</pre>
+  <p class="eyebrow">Example of a full pass (shortened: the real line also has chip_rev, flash_mb, psram_kb, camera_ms, wifi_tx_cap_dbm_x4 and battery_mv_radio_on)</p>
+</section>
+
+<section id="attach">
+  <h2><span class="n">09</span>Display, camera, then battery</h2>
+  <p><strong>Unplug the cable before each ribbon.</strong> Both sockets are flip-lid, dual-contact (they touch both faces of the ribbon).</p>
+  <h3>Ribbon technique <span class="unsure">general practice</span></h3>
+  <ul class="check" data-step="attach">
+    <li><input type="checkbox" id="a1"><label for="a1">Lift the lid gently with a fingernail or the tweezers' tip, by its centre, to about 90°. Don't force it past its stop.</label></li>
+    <li><input type="checkbox" id="a2"><label for="a2">Slide the ribbon in straight and fully (no angle), then press the lid down until it sits flat. Tug lightly: the ribbon must not move.</label></li>
+  </ul>
+  <h3>Order</h3>
+  <ul class="check" data-step="attach">
+    <li><input type="checkbox" id="a3"><label for="a3"><strong>E-paper into J2.</strong> The ribbon folds behind the panel and comes up through the slot into J2 (its length budget has no spare, so it must go fully in). Plug the cable in, run <code>selftest</code>: <code>display_ok</code> true, checkerboard visible.</label></li>
+    <li><input type="checkbox" id="a4"><label for="a4">Unplug. <strong>Camera into J1</strong> (only after step 5 passed). Lay the camera lens-up where it will sit and run its ribbon <strong>straight</strong> into J1, with no twist or flip (that's how the board was designed). Plug in, <code>selftest</code>: <code>camera_ok</code> true. If it fails, reseat once; then try the ribbon with a 180° twist (the J1 orientation is about 90 % sure, and the twist is the known fix). <span class="unsure">contact side not verified on a real part</span></label></li>
+    <li><input type="checkbox" id="a5"><label for="a5">Unplug. <strong>Battery into J4</strong> (polarity already checked). From now on the board is always on.</label></li>
+    <li><input type="checkbox" id="a6"><label for="a6">Plug the cable in. <code>status</code> should say <strong>"(charging)"</strong>; later <strong>"(USB, full)"</strong>. In the self-test JSON, <code>chg_stat_high</code> is false while charging and true when done. There's no charge LED on this board.</label></li>
+    <li><input type="checkbox" id="a7"><label for="a7">Charge current is set to <span class="m">50 mA</span>. If you can put the meter (mA range) in series with the battery lead, expect about 50 mA mid-charge, about 5 mA if the cell is below ~3 V, tapering near full.</label></li>
+    <li><input type="checkbox" id="a8"><label for="a8">Compare <code>status</code> mV with the meter on <span class="m">TP6 BAT</span> once and note both (for the battery calibration).</label></li>
+    <li><input type="checkbox" id="a9"><label for="a9">Optional: no cable, switch off (SHIFT AC), wait 10 s, battery current in series: target <span class="m">≤ 40 µA</span>.</label></li>
+  </ul>
+</section>
+
+<section id="ai">
+  <h2><span class="n">10</span>Connect it to the AI server</h2>
+  <p>The maths works without any of this. For AI SOLVE the calculator needs three things: a <strong>phone hotspot</strong> (2.4 GHz), the address of <strong>your AI server</strong> (the proxy in <code>server/proxy</code>) and <strong>its own device token</strong>. The Claude API key lives only on the server. The calculator never holds it: the <code>token</code> command refuses anything starting with <code>sk-ant-</code>.</p>
+  <h3>Once: put the server online (about 30 min, best while you wait for the boards)</h3>
+  <ul class="check" data-step="ai">
+    <li><input type="checkbox" id="v1"><label for="v1">On Render (or Railway / Fly.io): a new <strong>Web Service</strong> from this repo, root directory <code>server/proxy</code> (the Dockerfile is ready). Add a 1 GB disk mounted at <code>/data</code> (the database and the firmware images live there).</label></li>
+    <li><input type="checkbox" id="v2"><label for="v2">In the service's <strong>Environment</strong> settings: <code>ANTHROPIC_API_KEY</code> = your key, <strong>here and nowhere else</strong> (not in git, not in the calculator, not in a chat). <code>PUBLIC_URL</code> = the https address the host gives you. Everything else in <code>.env.example</code> can stay as it is.</label></li>
+    <li><input type="checkbox" id="v3"><label for="v3">Set a monthly spend limit in the Anthropic Console. Open <code>https://&lt;your address&gt;/healthz</code> in a browser: it answers <code>{"ok": true, …}</code>.</label></li>
+  </ul>
+  <h3>Per calculator: make its token</h3>
+  <ul class="check" data-step="ai">
+    <li><input type="checkbox" id="v4"><label for="v4">In the host's shell (Render: the service's <strong>Shell</strong> tab; Fly.io: <code>fly ssh console</code>): <code>python admin.py new-device "calc 1"</code>. Copy the token: it is shown <strong>once</strong>. One token per calculator; <code>python admin.py revoke dev_…</code> stops a lost one.</label></li>
+  </ul>
+  <h3>Put the settings in the calculator (cable in)</h3>
+  <ul class="check" data-step="ai">
+    <li><input type="checkbox" id="v5"><label for="v5"><strong>Serial Monitor:</strong> <code>wifi</code> → hotspot name and password (iPhone: turn on Maximize Compatibility). <code>proxy</code> → <code>https://&lt;your address&gt;</code>. <code>token</code> → paste it.</label></li>
+    <li><input type="checkbox" id="v6"><label for="v6"><strong>Or from a phone</strong> (the way a customer does it): type <code>setup</code> here; on a finished calculator it is <strong>SHIFT MODE (SETUP), 6, =</strong>. The e-paper shows <code>SETUP BY PHONE</code> with a network <code>AI-Calc-xxxx</code> and an 8-character password (the Serial Monitor prints them too). Join it on the phone; the form pops up as the sign-in page (or open <code>http://192.168.4.1</code>). Pick the hotspot, type its password, the server address and the token (empty = keep the old one), <strong>Save</strong>. The network closes a few seconds later. AC (or <code>setup off</code>) cancels; it also ends by itself after 10 minutes.</label></li>
+    <li><input type="checkbox" id="v7"><label for="v7"><code>status</code>: your hotspot's name, <code>AI proxy: https://…</code> and a masked <code>Device token</code>. The settings are kept in flash (they survive switching off, a battery pull and firmware updates; <code>forget</code> erases them).</label></li>
+    <li><input type="checkbox" id="v8"><label for="v8"><code>pair</code> prints a 6-letter code. On the phone open <code>https://&lt;your address&gt;/link</code>, type the code and your e-mail. The free month starts. <code>account</code> shows it.</label></li>
+    <li><input type="checkbox" id="v9"><label for="v9">Optional, camera connected: <code>keys m4</code> (MODE 4 = AI SOLVE), point the camera at a printed problem, <code>keys =</code>. The log shows <code>[solve] … answer after … ms</code>. Otherwise the real AI test is Assembly Guide step 11.</label></li>
+  </ul>
+  <p class="note">Screen messages: <code>Not set up yet: SETUP 6</code> = address or token missing. <code>NO CONNECTION</code> = the hotspot is off or not 2.4 GHz. <code>AI ACCOUNT</code> = not linked yet, trial over, or the monthly cap (the server's own sentence is shown). <code>Battery low: plug in the cable to use AI solve</code> = the cell is under 3.6 V: camera and Wi-Fi stay off until it is back above 3.7 V or a cable is in; maths keeps working. Later firmware versions reach the calculator over the air from this server (<code>firmware-prototype/README.md</code> §4, <code>server/proxy/README.md</code>).</p>
+</section>
+
+<section id="assemble">
+  <h2><span class="n">11</span>Hand over to the Assembly Guide</h2>
+  <p>The bare board has passed. Everything from here on (shell teardown, grinding, e-paper, camera, magnet, board into the shell, battery, closing, final test) is in the <a href="https://claude.ai/artifact/8BTC57FZ3JFwiDdiLprwtY" target="_blank" rel="noopener">Calculator Assembly Guide</a>, which starts at its step 3 by asking for this guide's results. The reminders below are the ones that are easy to forget between the two guides.</p>
+  <ul class="check" data-step="assemble">
+    <li><input type="checkbox" id="c1"><label for="c1">Grinding is done before the board goes near the shell: <a href="https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL" target="_blank" rel="noopener">Shell Grinding Guide</a> (Assembly Guide step 2). Blow out all plastic dust.</label></li>
+    <li><input type="checkbox" id="c2"><label for="c2">Unplug the battery and cable before fitting the board.</label></li>
+    <li><input type="checkbox" id="c3"><label for="c3">Glue the magnet piece in the top-wall slot only after step 3 passed.</label></li>
+    <li><input type="checkbox" id="c4"><label for="c4">Battery on the back-cover floor. Hold it flat with 0.1 mm tape (no foam). Keep it and the tape <strong>off TP1, TP4 and TP7</strong> so recovery stays possible. Kapton where a bare pad could touch metal.</label></li>
+    <li><input type="checkbox" id="c5"><label for="c5">Close up without pinching either ribbon (Assembly Guide steps 8–10). Then the full self-test with the key combo (SHIFT + ALPHA, ON), all 50 keys (Assembly Guide step 11).</label></li>
+    <li><input type="checkbox" id="c6"><label for="c6">Write down the camera ribbon length (step 5) and the SELFTEST_JSON line: the Assembly Guide asks for both. The AI settings from step 10 stay in the board; the Assembly Guide's final test (step 11) uses them.</label></li>
+  </ul>
+</section>
+
+<section id="trouble">
+  <h2><span class="n">12</span>Troubleshooting</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Likely cause</th><th>Check</th></tr></thead>
+      <tbody>
+        <tr><td>A part gets hot</td><td>Short, reversed part, or reversed supply</td><td>Unplug. Re-inspect that part's orientation (step 2). Don't re-power until found.</td></tr>
+        <tr><td>VBUS near 0 V or negative</td><td>Magnet piece backwards</td><td>Unplug. Redo step 3; pin 4 leg must beep to TP4.</td></tr>
+        <tr><td>+3V3 = 0 V, VBUS fine</td><td>No SYS (D1), or U3 problem</td><td>Measure SYS at D1. Inspect U3 dot and pins for bridges.</td></tr>
+        <tr><td>+3V3 above 3.6 V</td><td>5 V reaching a data line</td><td>Unplug. Redo the step 3 inner-leg checks.</td></tr>
+        <tr><td>No COM port</td><td>Deep sleep, wrong data legs, or bad flash</td><td>Press ON. Then the TP1 + TP7 recovery. Then step 3 continuity.</td></tr>
+        <tr><td>Upload "no serial data"</td><td>App running, not in download mode</td><td>TP1 held to GND, tap TP7, release TP1, Upload.</td></tr>
+        <tr><td><code>keypad_scanner_ok</code> false</td><td>U6 solder or I²C</td><td>Look at U6 for bridges or lifted pins; photo, ask.</td></tr>
+        <tr><td><code>display_ok</code> false / dead lines</td><td>Ribbon not fully in, lid not closed</td><td>Unplug, reseat J2. Refresh time must be 0.3–9 s.</td></tr>
+        <tr><td><code>camera_ok</code> false</td><td>Ribbon reversed or not seated</td><td>Unplug, redo the 2 ↔ 15 beep, reseat; then try a 180° twist.</td></tr>
+        <tr><td><code>wifi_ok</code> false</td><td>No 2.4 GHz network nearby</td><td>Phone hotspot on 2.4 GHz (iPhone: Maximize Compatibility).</td></tr>
+        <tr><td>Not charging</td><td>No cell, reversed cell, flat cell</td><td>Meter TP6. Recheck polarity (step 4). Status reads charge only with the cable in.</td></tr>
+        <tr><td>Sleep current ~330 µA</td><td>KEYPAD_INT stuck low</td><td>Send the number; firmware fix.</td></tr>
+        <tr><td>Sleep current 0.3–1 mA</td><td>Camera pins or CAM_PWR_EN</td><td>Send the number.</td></tr>
+        <tr><td>Restarts during AI SOLVE on battery</td><td>Brown-out (<code>status</code>: "Last restart: brownout")</td><td>Lower Wi-Fi power: <code>kWifiMaxTxQuarterDbm</code> 34 in <code>power.h</code>.</td></tr>
+        <tr><td>"Battery low: plug in the cable to use AI solve"</td><td>Cell under 3.6 V (AI, camera and Wi-Fi off together)</td><td>Charge. AI comes back above 3.7 V, or at once with the cable in. <code>status</code> says "AI, camera and Wi-Fi off until charged".</td></tr>
+        <tr><td>"Not set up yet: SETUP 6"</td><td>Server address or token missing</td><td>Step 10. <code>status</code> shows which one.</td></tr>
+        <tr><td><code>AI ACCOUNT</code>: "This calculator isn't registered with the AI server. Check its token."</td><td>Token typo, revoked, or made on another server</td><td>Make a new one with <code>admin.py new-device</code>, type <code>token</code> again.</td></tr>
+        <tr><td><code>UPDATING … %</code> on the screen</td><td>An over-the-air update from your server (switched off on the cable)</td><td>Leave the cable in. <code>UPDATE FAILED</code> keeps the old firmware running.</td></tr>
+        <tr><td><code>status</code>: "not yet confirmed"</td><td>New firmware's first 15 s</td><td>Normal. If it restarts before that, the bootloader goes back to the old slot.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>Sources: ORDER_WALKTHROUGH.md §5 and §9, stage14_verification_fixes.md, verification/01, 02 and 05, DESIGN_SUMMARY.md, firmware-prototype/README.md and src/ (firmware stage14-2026.10.06), firmware/FINAL_REVIEW_firmware.md, server/proxy/README.md. Start of the day: hardware/ARRIVAL_CHECKLIST.md. Orange tags mark steps that are general practice or my inference rather than a checked board fact.<br>Linked: <a href="https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL">Shell Grinding Guide</a> · <a href="https://claude.ai/artifact/8BTC57FZ3JFwiDdiLprwtY">Calculator Assembly Guide</a> · entry point <code>hardware/FINAL_STATUS.md</code>.</footer>
+</div>
+
+<script>
+(function(){
+  var KEY='bringup-v14-checks';
+  var boxes=[].slice.call(document.querySelectorAll('ul.check input[type=checkbox]'));
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){saved={};}
+  boxes.forEach(function(b){ if(saved[b.id]) b.checked=true; });
+  function update(){
+    var done=boxes.filter(function(b){return b.checked;}).length;
+    document.getElementById('count').textContent=done+' / '+boxes.length+' done';
+    document.getElementById('barfill').style.width=(boxes.length?done/boxes.length*100:0)+'%';
+  }
+  function save(){
+    var s={}; boxes.forEach(function(b){ if(b.checked) s[b.id]=1; });
+    try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){}
+  }
+  boxes.forEach(function(b){ b.addEventListener('change',function(){save();update();}); });
+  var reset=document.getElementById('reset'), armed=false, t;
+  reset.addEventListener('click',function(){
+    if(!armed){armed=true;reset.classList.add('armed');reset.textContent='Click again to clear';
+      t=setTimeout(function(){armed=false;reset.classList.remove('armed');reset.textContent='Clear ticks';},3000);return;}
+    clearTimeout(t);armed=false;reset.classList.remove('armed');reset.textContent='Clear ticks';
+    boxes.forEach(function(b){b.checked=false;}); save(); update();
+  });
+  update();
+})();
+</script>

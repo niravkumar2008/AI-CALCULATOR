@@ -1,5 +1,8 @@
 # Stage 3: schematic (done)
 
+> **⚠ History (stage 3).** The battery is now the **Adafruit #1317, 150 mAh** (26 × 19.75 × 3.8 mm, decided 2026-10-06); the #1570 / 100 mAh figures below are the original pick. Charge current stays 50 mA (R2 20 k = 0.33 C). U3 is the RT9080-33GJ5 and R20 pulls up to VBUS_SENSE since stage 11. Current status: `FINAL_STATUS.md`.
+
+
 ERC: **0 errors, 0 warnings** (KiCad 10.0.6, all six sheets). Every placed part has an LCSC number, checked live against the JLCPCB parts list on 2026-10-02.
 Keypad pads (SW1-SW50) and test pads (TP1-TP4) are copper only: they are excluded from the BOM and the pick-and-place file.
 

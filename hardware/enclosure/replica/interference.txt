@@ -1,14 +1,14 @@
-Replica - Front shell                  1 bodies   16.81 cm3   78.5 x 159.9 x  10.7 mm
-Replica - Back cover                   1 bodies   23.36 cm3   79.9 x 161.3 x  11.3 mm
-Replica - Keymat                       1 bodies    5.34 cm3   64.7 x  97.5 x   1.3 mm
-Replica - Keycaps                     47 bodies    9.78 cm3   63.5 x  90.7 x   3.6 mm
+Replica - Front shell                  1 bodies   13.32 cm3   79.4 x 159.9 x  10.7 mm
+Replica - Back cover                   1 bodies   17.35 cm3   79.9 x 161.3 x   9.8 mm
+Replica - Keymat                       1 bodies    5.89 cm3   64.7 x  97.5 x   1.8 mm
+Replica - Keycaps                     47 bodies    8.73 cm3   63.5 x  90.7 x   3.2 mm
 Replica - Window lens                  1 bodies    1.51 cm3   65.4 x  29.0 x   0.8 mm
-Replica - Solar cell (dummy)           1 bodies    0.18 cm3   33.6 x  10.6 x   0.5 mm
+Replica - Solar cell (dummy)           1 bodies    0.21 cm3   34.2 x  11.2 x   0.6 mm
 Replica - Battery lid                  1 bodies    0.13 cm3   15.7 x  14.7 x   0.6 mm
-Replica - Rubber feet                  4 bodies    0.14 cm3   61.0 x 121.0 x   0.9 mm
+Replica - Rubber feet                  4 bodies    0.10 cm3   61.0 x 121.0 x   0.7 mm
 Replica - Reference - Casio board (C6)   1 bodies    4.93 cm3   65.1 x  97.9 x   0.8 mm
-Replica - Reference - LCD (dummy)      1 bodies    3.94 cm3   64.0 x  28.0 x   2.2 mm
-Replica - Slide cover                  1 bodies   16.55 cm3   82.1 x 163.9 x   4.8 mm
+Replica - Reference - LCD (dummy)      1 bodies    7.14 cm3   68.0 x  28.0 x   3.8 mm
+Replica - Slide case (stored)          1 bodies   18.51 cm3   81.9 x 162.3 x   8.4 mm
 bodies checked: 60
 interferences: 0
-pairwise boolean check: 159 pairs with overlapping boxes, 0 real overlaps
+pairwise boolean check: 162 pairs with overlapping boxes, 0 real overlaps

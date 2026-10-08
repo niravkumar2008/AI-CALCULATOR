@@ -1,0 +1,624 @@
+<title>Shell Grinding Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one narrow reading column for a phone at the bench; zone cards with a spec strip, before/after pair, then steps. */
+:root {
+  --bg: #f3f4f6;
+  --surface: #ffffff;
+  --ink: #1b1f2a;
+  --muted: #5a6172;
+  --line: #d6d9e0;
+  --accent: #3d3f8f;      /* the back cover's navy in the renders */
+  --accent-soft: #e6e7f6;
+  --warn: #b4520a;
+  --warn-soft: #fbeee2;
+  --stop: #b3261e;
+  --stop-soft: #fbe9e7;
+  --ok: #23703f;
+  --ok-soft: #e4f3e8;
+  --skip: #6b6f7a;
+  --skip-soft: #eceef1;
+  --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
+  --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #12141b; --surface: #1b1e28; --ink: #e7e9f0; --muted: #a2a8b8; --line: #30344a;
+    --accent: #a9adf5; --accent-soft: #262a48;
+    --warn: #f0a35e; --warn-soft: #3a2a1c; --stop: #ff8a80; --stop-soft: #3d1f1f;
+    --ok: #79d29a; --ok-soft: #1b3324; --skip: #a3a8b5; --skip-soft: #262933;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #12141b; --surface: #1b1e28; --ink: #e7e9f0; --muted: #a2a8b8; --line: #30344a;
+  --accent: #a9adf5; --accent-soft: #262a48;
+  --warn: #f0a35e; --warn-soft: #3a2a1c; --stop: #ff8a80; --stop-soft: #3d1f1f;
+  --ok: #79d29a; --ok-soft: #1b3324; --skip: #a3a8b5; --skip-soft: #262933;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+body {
+  background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: 1.0625rem; line-height: 1.55;
+}
+.wrap { max-width: 46rem; margin: 0 auto; padding-inline: 16px; padding-block: 24px 64px; display: grid; gap: 28px; }
+h1, h2, h3 { font-family: var(--font-display); text-wrap: balance; line-height: 1.1; margin: 0; letter-spacing: 0.01em; }
+h1 { font-size: 2.6rem; }
+h2 { font-size: 1.85rem; }
+h3 { font-size: 1.3rem; }
+p { margin: 0; }
+ul, ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 6px; }
+.num, code { font-family: var(--font-mono); font-size: 0.92em; font-variant-numeric: tabular-nums; }
+.eyebrow { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
+section { display: grid; gap: 14px; }
+a { color: var(--accent); }
+
+header.top { display: grid; gap: 12px; }
+header.top .lede { color: var(--muted); max-width: 40rem; }
+figure { margin: 0; display: grid; gap: 6px; }
+figure img { width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); }
+figcaption { font-size: 0.85rem; color: var(--muted); }
+
+.toc { display: flex; flex-wrap: wrap; gap: 8px; }
+.toc a { font-family: var(--font-mono); font-size: 0.82rem; text-decoration: none; padding: 6px 10px; border: 1px solid var(--line); border-radius: 999px; background: var(--surface); color: var(--ink); }
+.toc a:focus-visible, .toc a:hover { border-color: var(--accent); }
+
+.box { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 16px; display: grid; gap: 10px; min-width: 0; }
+.callout { border-radius: 8px; padding: 14px 16px; display: grid; gap: 8px; }
+.callout.stop { background: var(--stop-soft); color: var(--ink); border: 1px solid var(--stop); }
+.callout.warn { background: var(--warn-soft); border: 1px solid var(--warn); }
+.callout.ok { background: var(--ok-soft); border: 1px solid var(--ok); }
+.callout strong.tag { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; }
+.callout.stop .tag { color: var(--stop); }
+.callout.warn .tag { color: var(--warn); }
+.callout.ok .tag { color: var(--ok); }
+
+.rules { counter-reset: r; list-style: none; padding: 0; display: grid; gap: 10px; }
+.rules li { display: grid; grid-template-columns: 2.2rem 1fr; gap: 10px; align-items: start; }
+.rules li::before { counter-increment: r; content: counter(r); font-family: var(--font-display); font-size: 1.5rem; color: var(--accent); line-height: 1.1; }
+
+.order { list-style: none; padding: 0; display: grid; gap: 8px; }
+.order li { display: grid; grid-template-columns: 3rem 1fr auto; gap: 10px; align-items: center; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.order .n { font-family: var(--font-mono); font-weight: 600; color: var(--accent); }
+.order .part { font-size: 0.85rem; color: var(--muted); }
+.pill { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em; text-transform: uppercase; padding: 3px 8px; border-radius: 999px; white-space: nowrap; }
+.pill.do { background: var(--accent-soft); color: var(--accent); }
+.pill.skip { background: var(--skip-soft); color: var(--skip); }
+.pill.check { background: var(--warn-soft); color: var(--warn); }
+
+.zone { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 16px; display: grid; gap: 16px; scroll-margin-top: 12px; }
+.zone.skipped { background: var(--skip-soft); }
+.zone-head { display: grid; gap: 6px; }
+.zone-head .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
+.spec { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.spec div { background: var(--surface); padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
+.zone.skipped .spec div { background: var(--skip-soft); }
+.spec dt { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
+.spec dd { margin: 0; font-weight: 600; }
+.pair { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+@media (max-width: 34rem) { .pair { grid-template-columns: 1fr; } }
+.steps { display: grid; gap: 8px; }
+.steps li::marker { font-family: var(--font-mono); color: var(--accent); }
+.sub { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+
+.tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
+table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
+th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
+tr:last-child td { border-bottom: 0; }
+
+.check { list-style: none; padding: 0; display: grid; gap: 6px; }
+.check label { display: grid; grid-template-columns: 1.5rem 1fr; gap: 10px; align-items: start; padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
+.check input { width: 1.2rem; height: 1.2rem; margin: 2px 0 0; accent-color: var(--accent); }
+.check input:checked + span { color: var(--muted); text-decoration: line-through; }
+.check input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.small { font-size: 0.9rem; color: var(--muted); }
+</style>
+
+<div class="wrap">
+
+<header class="top">
+  <span class="eyebrow">AI calculator · fx-115ES shell · grinding</span>
+  <h1>Shell Grinding Guide</h1>
+  <p class="lede">How to grind your Casio fx-115ES shell so the AI-calculator board, camera, battery and magnet connector fit. Three jobs on the back cover (zones 1&ndash;3), one on the front shell (zone 5), plus two "only if your shell needs it" jobs (5b and 6). Zone 4 (the LR44 cup) is kept, not ground. Go slowly: every step can be checked with your calipers before you go further.</p>
+  <figure>
+    <img src="renders/hero_back.png" alt="The finished calculator seen from the back, with the camera window in the back cover." loading="lazy">
+    <figcaption>What you are working towards: the finished calculator from the back (3D model).</figcaption>
+  </figure>
+  <nav class="toc" aria-label="Sections">
+    <a href="#tools">Tools</a><a href="#safety">Safety</a><a href="#rules">Golden rules</a><a href="#order">Order</a>
+    <a href="#z1">1 Solar box</a><a href="#z2">2 Rib B</a><a href="#z3">3 Camera window</a><a href="#z4">4 LR44 cup</a><a href="#z5">5 Magnet notch</a><a href="#z5b">5b Lip</a><a href="#z6">6 Antenna relief</a><a href="#z6b">6b Pins + hooks</a><a href="#z6c">6c Rib ends</a>
+    <a href="#fit">Test fit</a><a href="#final">Checklist</a><a href="#fix">Went too far?</a>
+  </nav>
+</header>
+
+<div class="callout stop">
+  <strong class="tag">Read this first</strong>
+  <p>The back-cover floor is only about <span class="num">1.0 mm</span> thick (your reading D5). You may never go below <span class="num">0.8 mm</span>. That leaves you just <span class="num">0.2 mm</span> of room for mistakes when you grind things "flat to the floor". Aim to stop <em>at</em> the floor, never <em>into</em> it.</p>
+</div>
+
+<section id="tools">
+  <h2>What you'll need</h2>
+  <div class="box">
+    <p class="sub">Cutting</p>
+    <ul>
+      <li><strong>Dremel</strong> (or any rotary tool with a speed dial).</li>
+      <li><strong>Carbide burr</strong>, cylinder or ball shape: for removing most of the solar box and for the magnet notch.</li>
+      <li><strong>Sanding drum</strong> (fine grit if you have a choice): for the last few tenths, to get the ground spots flat and smooth.</li>
+      <li><strong>7 mm drill bit</strong> (a <span class="num">9/32"</span> bit is <span class="num">7.1 mm</span> and is fine) plus a small pilot bit. A 7 mm bit will not fit a Dremel collet, so use a hand drill or drill press for it.</li>
+      <li>A flat needle file or sandpaper on a flat stick, if you have one, for squaring the notch corners.</li>
+    </ul>
+    <p class="sub">Measuring and marking</p>
+    <ul>
+      <li><strong>Calipers with a depth rod</strong> (the thin rod that slides out of the end).</li>
+      <li>A steel ruler, to lay across the rim as a reference for depth readings.</li>
+      <li>Fine permanent marker.</li>
+      <li><strong>Masking tape</strong> to protect surfaces you are not cutting, and <strong>Kapton tape</strong> (it doesn't melt).</li>
+      <li>The two printed grind maps at <span class="num">100 %</span> (see "Templates" below).</li>
+    </ul>
+    <p class="sub">Holding and safety</p>
+    <ul>
+      <li><strong>Safety glasses</strong> and a <strong>dust mask</strong>.</li>
+      <li>A <strong>vise or clamp</strong>, with a rag or wood between the jaws so the shell isn't scratched or cracked.</li>
+      <li>A <strong>spare shell</strong> to practise on.</li>
+    </ul>
+  </div>
+  <div class="callout warn">
+    <strong class="tag">Speed</strong>
+    <p>Plastic melts long before it cuts cleanly at high speed. Use the <strong>low end</strong> of your Dremel's dial: about <strong>2–4 on a 1–10 dial</strong>. If the plastic smears, strings or goes shiny and soft, you are too fast or pressing too hard: stop, let it cool, slow down. (This is general rotary-tool advice, not a number from our model; trust what the plastic shows you.)</p>
+  </div>
+  <div class="box">
+    <h3>Templates</h3>
+    <p>Two 1:1 maps live in the repo at <code>hardware/fitcheck/</code>:</p>
+    <ul>
+      <li><code>grind_map_back_cover.svg</code>: lay it in the <strong>back cover</strong>, inside up. It is printed mirrored on purpose.</li>
+      <li><code>grind_map_front_shell.svg</code>: lay it in the <strong>front shell</strong> (keys down), printed side up.</li>
+    </ul>
+    <p>Print each from a browser at <strong>100 % / actual size</strong>, then measure the <span class="num">50 mm</span> line on the sheet with your calipers. If it isn't 50 mm, the print is scaled: fix the print settings before you trust it. Cut along the outline and lay it in the shell. The red dashed shapes are what to grind.</p>
+  </div>
+</section>
+
+<section id="safety">
+  <h2>Safety</h2>
+  <div class="box">
+    <ul>
+      <li>Glasses on before the Dremel is plugged in. Bits shatter and chips fly.</li>
+      <li>Dust mask on. Hot plastic dust and fumes are not good to breathe; work by an open window.</li>
+      <li>Clamp the part. Never hold a small shell in your hand while grinding near your fingers.</li>
+      <li>Let the tool stop before you put it down. Unplug it when you change bits.</li>
+      <li>Loose sleeves, hair and cords away from the bit.</li>
+      <li>Ground plastic gets hot. Touch it only after it has cooled.</li>
+      <li>No electronics near the shell while you grind. The board goes in only after the shell is cleaned.</li>
+    </ul>
+  </div>
+</section>
+
+<section id="rules">
+  <h2>Golden rules</h2>
+  <ol class="rules">
+    <li><span><strong>Low to medium speed, light pressure.</strong> Let the bit do the work.</span></li>
+    <li><span><strong>Short passes.</strong> A few seconds, lift off, look.</span></li>
+    <li><span><strong>Measure every 30 seconds.</strong> Blow the dust off, take a depth reading, then decide.</span></li>
+    <li><span><strong>Never grind into the floor.</strong> Keep at least <span class="num">0.8 mm</span> of plastic everywhere (it starts at about <span class="num">1.0</span>).</span></li>
+    <li><span><strong>Never touch</strong> the screw posts, the locating posts (pegs), the snap clips, the outer walls, the window frame or the key holes. Mask them with tape so a slip only scuffs tape.</span></li>
+    <li><span><strong>Plastic melts.</strong> If it gets soft or shiny, stop and let it cool for a minute.</span></li>
+    <li><span><strong>Practise on the spare shell first.</strong> Do one full zone there before you touch the real one.</span></li>
+  </ol>
+  <div class="callout stop">
+    <strong class="tag">Locating posts: hands off</strong>
+    <p>Locating post H6 has only <span class="num">0.10 mm</span> of room in the board's hole. Don't grind or file any post. If the real board binds on H6, file the <strong>hole in the board</strong> a little towards the top of the board, never the post.</p>
+  </div>
+</section>
+
+<section id="order">
+  <h2>Order of operations</h2>
+  <p>Do them in this order: each "before" picture already shows the earlier grinds done.</p>
+  <ol class="order">
+    <li><span class="n">1</span><span>Solar box flat to the floor<br><span class="part">back cover</span></span><span class="pill do">grind</span></li>
+    <li><span class="n">2</span><span>Rib B flat over the camera, 14 mm<br><span class="part">back cover</span></span><span class="pill do">grind</span></li>
+    <li><span class="n">3</span><span>Camera window, Ø 7 mm<br><span class="part">back cover</span></span><span class="pill do">drill</span></li>
+    <li><span class="n">4</span><span>LR44 coin-cell cup<br><span class="part">front shell</span></span><span class="pill skip">not needed</span></li>
+    <li><span class="n">5</span><span>Magnet U-notch in the top wall<br><span class="part">front shell</span></span><span class="pill do">cut</span></li>
+    <li><span class="n">5b</span><span>Back-cover lip under the magnet notch<br><span class="part">back cover</span></span><span class="pill check">only if there</span></li>
+    <li><span class="n">6</span><span>Side-wall relief: notch the inner side-wall rib 2–2.5 mm deep (to 7 mm below the rim), 15–50 mm from the top, solar-window side<br><span class="part">front shell</span></span><span class="pill do">file</span></li>
+    <li><span class="n">6b</span><span>Snip the 3 round pins and the 3 wire hooks off the inner rib, both side walls<br><span class="part">front shell</span></span><span class="pill do">snip</span></li>
+    <li><span class="n">6c</span><span>Lower end of the inner ribs where the board widens<br><span class="part">front shell</span></span><span class="pill check">only if the paper's wide corners ride up</span></li>
+  </ol>
+  <p class="small"><strong>Before any of this (10 minutes, real shell in hand):</strong> do the pre-grind checklist in <code>hardware/verification/07_final_review_fitment.md</code>: it measures the few things the 3D model only guessed (inner-rib depth, solar-frame strip, floor thickness at the label, lip, screw length) and tells you whether zone 5b applies to <em>your</em> shell. Zone 6 and 6b are settled (depth rod 2026-10-06, <code>hardware/verification/12_rib_pin_recheck.md</code>): the rib, pins and hooks all sit at board height on both walls.</p>
+  <p class="small">The big ring on the back cover does <strong>not</strong> need grinding (D2 and C16 clear it). Leave all other ribs alone.</p>
+</section>
+
+<!-- ZONE 1 -->
+<article class="zone" id="z1">
+  <div class="zone-head">
+    <div class="row"><span class="eyebrow">Zone 1 · back cover</span><span class="pill do">grind</span></div>
+    <h2>Solar box: flat to the floor</h2>
+    <p><strong>Why:</strong> the box of thin walls (a frame with a grid inside) that hangs down from the back cover sits right over the battery socket J4, the magnet header J3 and the power parts. Without this grind J4 hits it by <span class="num">4.6 mm</span>. It is also where the LiPo will lie.</p>
+  </div>
+  <dl class="spec">
+    <div><dt>Size</dt><dd class="num">≈ 33 × 12 mm</dd></div>
+    <div><dt>Height to remove</dt><dd class="num">5–5.5 mm (D6, D13)</dd></div>
+    <div><dt>Target</dt><dd>Flush with the floor, no stub</dd></div>
+    <div><dt>Floor left</dt><dd class="num">≥ 0.8 mm (≈ 1.0)</dd></div>
+    <div><dt>Bits</dt><dd>Carbide burr, then sanding drum</dd></div>
+    <div><dt>Speed</dt><dd>Low (dial 2–4)</dd></div>
+  </dl>
+  <div class="pair">
+    <figure><img src="renders/grind_solar_box_before.png" alt="Back cover inside: the solar box, a walled grid, next to a corner screw post." loading="lazy"><figcaption>Before: the walled grid box. Note the corner screw post right next to it.</figcaption></figure>
+    <figure><img src="renders/grind_solar_box_after.png" alt="Back cover inside after grinding: the solar box is gone, floor flat." loading="lazy"><figcaption>After: nothing left but flat floor.</figcaption></figure>
+  </div>
+  <div class="box">
+    <p class="sub">Where</p>
+    <p>You can't miss it: it's the only box with a grid inside, near the top end of the back cover, beside a corner screw post. From the model, its outer frame runs about <span class="num">7.2 to 19.2 mm</span> in from the cover's top outer edge, and its near end is about <span class="num">10.7 mm</span> in from the nearest side edge. Confirm with the back-cover template ("GRIND 1").</p>
+  </div>
+  <div class="box">
+    <p class="sub">Steps</p>
+    <ol class="steps">
+      <li>Mask the corner screw post and the outer wall next to the box with tape.</li>
+      <li><strong>Take a reference reading.</strong> Lay the steel ruler across the back cover's rim over the box. Put the end of the calipers on the ruler and slide the depth rod down to the bare floor <em>next to</em> the box. Write this number down: call it R.</li>
+      <li>With the carbide burr, take the grid walls down first, then the outer frame, a little at a time, working across the whole box so it goes down evenly.</li>
+      <li>Every 30 seconds: blow off the dust, measure at several spots over the box. While the reading is smaller than R, there is still plastic standing up.</li>
+      <li>When the walls are about <span class="num">0.5 mm</span> above the floor (reading ≈ R − 0.5), switch to the sanding drum and finish gently.</li>
+      <li>Check with a fingertip and the depth rod across the whole area, especially the area nearest the screw post where J4 will sit.</li>
+    </ol>
+  </div>
+  <div class="callout ok">
+    <strong class="tag">Stop when</strong>
+    <p>Every reading over the old box equals R (the floor next to it), and you can't feel a ridge with your fingernail. Stop the moment the readings match. Going past R means you are into the floor.</p>
+  </div>
+  <div class="callout stop">
+    <strong class="tag">No stub</strong>
+    <p>After this grind, J4 (the battery socket) has only <span class="num">0.41 mm</span> to the floor. A <span class="num">0.5 mm</span> stub left behind would hit it. It must be properly flush.</p>
+  </div>
+  <figure><img src="renders/section_j4_battery.png" alt="Cut-away through J4, its plug and the battery, showing the small gap to the back-cover floor." loading="lazy"><figcaption>Cut through J4, its plug and the LiPo: the reason there can be no stub.</figcaption></figure>
+  <div class="box">
+    <p class="sub">Common mistakes</p>
+    <ul>
+      <li>Grinding one corner of the box all the way down first and then gouging the floor next to it. Work the whole area down evenly.</li>
+      <li>Leaving the frame's base "almost flat". It has to be flush.</li>
+      <li>Catching the screw post with the side of the burr. Tape it and keep the burr pointing away from it.</li>
+      <li>Too much speed: the walls melt and fold over instead of cutting. Slow down.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ZONE 2 -->
+<article class="zone" id="z2">
+  <div class="zone-head">
+    <div class="row"><span class="eyebrow">Zone 2 · back cover</span><span class="pill do">grind</span></div>
+    <h2>Rib B over the camera: 14 mm flat</h2>
+    <p><strong>Why:</strong> the camera module is <span class="num">5.4 mm</span> tall and this <span class="num">1 mm</span> rib runs across it; without the grind the lens hits by <span class="num">0.5 mm</span>. Only the middle 14 mm of the rib comes off. The rest of rib B stays.</p>
+  </div>
+  <dl class="spec">
+    <div><dt>Length</dt><dd class="num">14 mm, centred</dd></div>
+    <div><dt>Height to remove</dt><dd class="num">1 mm</dd></div>
+    <div><dt>Target</dt><dd>Flush with the floor</dd></div>
+    <div><dt>Floor left</dt><dd class="num">≥ 0.8 mm (≈ 1.0)</dd></div>
+    <div><dt>Bits</dt><dd>Sanding drum (burr if slow)</dd></div>
+    <div><dt>Speed</dt><dd>Low (dial 2–4)</dd></div>
+  </dl>
+  <div class="pair">
+    <figure><img src="renders/grind_rib_b_before.png" alt="Back cover inside: the long 1 mm ribs, rib B crossing the camera spot." loading="lazy"><figcaption>Before: rib B crosses the camera spot.</figcaption></figure>
+    <figure><img src="renders/grind_rib_b_after.png" alt="Back cover inside after grinding: a 14 mm gap in rib B." loading="lazy"><figcaption>After: a 14 mm gap in the rib.</figcaption></figure>
+  </div>
+  <div class="box">
+    <p class="sub">Where</p>
+    <p>The camera window's centre is on the <strong>centre line of the cover's width</strong> (measure the full width, halve it), about <span class="num">38.3 mm</span> down from the cover's top outer edge (from the model). Rib B runs across the cover right there. Mark the centre point on the rib, then mark <span class="num">7 mm</span> each side of it: that's your 14 mm. The back-cover template shows it as "GRIND 2".</p>
+  </div>
+  <div class="box">
+    <p class="sub">Steps</p>
+    <ol class="steps">
+      <li>Mark the 14 mm with two marker lines. Put tape on the floor on both sides of the rib if you like.</li>
+      <li>Reference reading R next to the rib, exactly as in zone 1.</li>
+      <li>Sand the rib down between your marks with the sanding drum, held so it rides along the rib.</li>
+      <li>Check every 30 seconds until the reading on the old rib equals R.</li>
+    </ol>
+  </div>
+  <div class="callout ok"><strong class="tag">Stop when</strong><p>The 14 mm stretch reads the same as the floor beside it. Leave your two marker lines visible: they show you where the camera goes.</p></div>
+  <div class="box">
+    <p class="sub">Common mistakes</p>
+    <ul>
+      <li>Grinding the whole rib instead of just 14 mm.</li>
+      <li>Getting the centre wrong. Measure twice and cross-check with the template before you start.</li>
+      <li>Touching the 4 mm "mid rib" further down: the camera ribbon passes over it with half a millimetre to spare, but it does not need grinding. Leave it.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ZONE 3 -->
+<article class="zone" id="z3">
+  <div class="zone-head">
+    <div class="row"><span class="eyebrow">Zone 3 · back cover</span><span class="pill do">drill</span></div>
+    <h2>Camera window: drill Ø 7 mm</h2>
+    <p><strong>Why:</strong> the camera looks out of the back. Nothing hits here; this hole is the camera's view. The lens does not need to poke into the hole.</p>
+  </div>
+  <dl class="spec">
+    <div><dt>Hole</dt><dd class="num">Ø 7 mm (9/32" OK)</dd></div>
+    <div><dt>Centre</dt><dd>On rib B's centre mark</dd></div>
+    <div><dt>Board ref.</dt><dd class="num">KiCad (150, 95.1)</dd></div>
+    <div><dt>Tools</dt><dd>Pilot bit, then 7 mm in a hand drill</dd></div>
+    <div><dt>Speed</dt><dd>Slow</dd></div>
+    <div><dt>Do after</dt><dd>Zone 2</dd></div>
+  </dl>
+  <div class="pair">
+    <figure><img src="renders/grind_camera_window_before.png" alt="Back cover outside before drilling." loading="lazy"><figcaption>Outside, before.</figcaption></figure>
+    <figure><img src="renders/grind_camera_window_after.png" alt="Back cover outside with the 7 mm camera window." loading="lazy"><figcaption>Outside, after: one round 7 mm hole.</figcaption></figure>
+    <figure><img src="renders/grind_camera_window_inside_before.png" alt="Back cover inside at the camera spot before drilling." loading="lazy"><figcaption>Inside, before (rib B already ground).</figcaption></figure>
+    <figure><img src="renders/grind_camera_window_inside_after.png" alt="Back cover inside with the camera window drilled." loading="lazy"><figcaption>Inside, after.</figcaption></figure>
+  </div>
+  <div class="box">
+    <p class="sub">Steps</p>
+    <ol class="steps">
+      <li>Find the centre on the inside: the middle of your 14 mm marks on the ground rib, on the width centre line. Check it against the template.</li>
+      <li>Push a pin or the point of a scriber through to make a small dent at the centre.</li>
+      <li>Clamp the cover on a scrap block of wood so the drill has something to go into. Put masking tape on the outside where the hole will come out (less chipping).</li>
+      <li>Drill a small pilot hole first, straight up and down.</li>
+      <li>Open it to 7 mm with the hand drill, slowly and with light pressure. Plastic likes to grab a big bit just as it breaks through: ease off at the end.</li>
+      <li>Clean the edge with a fingertip of sandpaper. Don't make the hole bigger.</li>
+    </ol>
+  </div>
+  <div class="callout ok"><strong class="tag">Stop when</strong><p>The hole is round, 7 mm across (check with the calipers' inside jaws) and clean on both sides.</p></div>
+  <figure><img src="renders/section_camera.png" alt="Cut-away through the camera module under the 7 mm window." loading="lazy"><figcaption>Cut through the camera: the lens sits just under the window, with <span class="num">0.71 mm</span> to the hole's edge.</figcaption></figure>
+  <div class="box">
+    <p class="sub">Common mistakes</p>
+    <ul>
+      <li>Drilling straight in with the 7 mm bit: it wanders and grabs. Always pilot first.</li>
+      <li>Drilling at an angle. Keep the drill upright, or use a drill press.</li>
+      <li>Later: mounting the camera on foam tape. Use thin tape only (<span class="num">≤ 0.1 mm</span>) under the module, with Kapton on the board below it.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ZONE 4 -->
+<article class="zone skipped" id="z4">
+  <div class="zone-head">
+    <div class="row"><span class="eyebrow">Zone 4 · front shell</span><span class="pill skip">not needed (optional)</span></div>
+    <h2>LR44 coin-cell cup: skip it</h2>
+    <p><strong>Why it's skipped:</strong> the final assembly check moved the LiPo battery so it <strong>lies flat on the back-cover floor</strong> instead of against the front plate. In that position the cup's bottom is still <span class="num">0.3 mm</span> above the battery, so the cup can stay. Don't grind it.</p>
+  </div>
+  <div class="pair">
+    <figure><img src="renders/grind_lr44_cup_before.png" alt="Front shell inside with the LR44 coin-cell cup." loading="lazy"><figcaption>The cup as it is: leave it like this.</figcaption></figure>
+    <figure><img src="renders/grind_lr44_cup_after.png" alt="Front shell with the cup trimmed, the old plan." loading="lazy"><figcaption>The old plan (trimmed flat). No longer needed.</figcaption></figure>
+  </div>
+  <div class="box">
+    <p class="sub">What the new battery position needs instead</p>
+    <ul>
+      <li>The solar-box grind (zone 1): the battery's end sits where the box was.</li>
+      <li>Hold the battery to the floor with thin (<span class="num">0.1 mm</span>) double-sided tape. <strong>No foam:</strong> the coin-cell cup sits only <span class="num">0.3 mm</span> above the battery.</li>
+      <li>The battery lies over the old LR44 hole in the back floor. The battery lid still closes that hole.</li>
+    </ul>
+    <p class="small">The front-shell map (regenerated 2026-10-06) now shows the cup in green with "zone 4 (KEEP)". If you still have an older print that says "LR44 cup: TRIM FLAT", throw it away and print the new one.</p>
+  </div>
+</article>
+
+<!-- ZONE 5 -->
+<article class="zone" id="z5">
+  <div class="zone-head">
+    <div class="row"><span class="eyebrow">Zone 5 · front shell</span><span class="pill do">cut</span></div>
+    <h2>Magnet slot: U-notch in the top wall</h2>
+    <p><strong>Why:</strong> the magnetic charging connector's face (<span class="num">21 × 7 mm</span>) sits flush in the top end wall. Without the notch it runs <span class="num">1.0 mm</span> into the wall. The notch is <span class="num">21.5 mm</span> wide, so there is <span class="num">0.25 mm</span> each side: glue fills that.</p>
+  </div>
+  <dl class="spec">
+    <div><dt>Width</dt><dd class="num">21.5 mm</dd></div>
+    <div><dt>Depth from rim</dt><dd class="num">7.95 mm</dd></div>
+    <div><dt>Through</dt><dd class="num">the 1.2 mm wall</dd></div>
+    <div><dt>From right edge</dt><dd class="num">6.4 → 27.9 mm</dd></div>
+    <div><dt>Bits</dt><dd>Carbide burr, then file</dd></div>
+    <div><dt>Speed</dt><dd>Low (dial 2–4)</dd></div>
+  </dl>
+  <div class="pair">
+    <figure><img src="renders/grind_magnet_slot_before.png" alt="Top end of the calculator before the notch." loading="lazy"><figcaption>Before: solid top wall.</figcaption></figure>
+    <figure><img src="renders/grind_magnet_slot_after.png" alt="Top end of the calculator with a U-notch open from the parting line." loading="lazy"><figcaption>After: a U-notch open at the parting line, where the back cover meets the front shell.</figcaption></figure>
+  </div>
+  <div class="box">
+    <p class="sub">Where</p>
+    <p>Hold the front shell <strong>display side up, top end away from you</strong>. On the top end wall, measure from the <strong>right-hand side edge</strong>: the notch runs from <span class="num">6.4 mm</span> to <span class="num">27.9 mm</span> in. That puts it on the same side as the solar window. From the <strong>rim</strong> (the parting line, where the back cover sits) it goes <span class="num">7.95 mm</span> down towards the display face. It's a notch open at the rim, not a closed window: a closed window would leave a strip only <span class="num">0.45 mm</span> thick at the rim, which would break.</p>
+  </div>
+  <div class="box">
+    <p class="sub">Steps</p>
+    <ol class="steps">
+      <li>Tape the outside of the top wall. Draw the notch on the tape: two vertical lines at 6.4 and 27.9 mm from the right edge, and the bottom line 7.95 mm from the rim. Use the calipers' depth rod against the rim to mark the depth at both ends.</li>
+      <li>Check the marked width is <span class="num">21.5 mm</span> before you cut.</li>
+      <li>Clamp the shell with the top wall facing you, soft jaws, no squeezing on the display window.</li>
+      <li>With the burr, cut <em>inside</em> your lines, starting at the rim and working down. Stay about <span class="num">0.5 mm</span> inside the lines.</li>
+      <li>Finish to the lines with the file or sanding drum. Keep the bottom edge straight and parallel to the rim.</li>
+      <li>Measure: width <span class="num">21.5</span>, depth from the rim <span class="num">7.95</span> at both ends.</li>
+      <li>When the magnet part arrives: its face should sit <span class="num">0.45–7.45 mm</span> below the rim, flush with the outside. Only glue it after the case closes and the face is flush.</li>
+    </ol>
+  </div>
+  <div class="callout ok"><strong class="tag">Stop when</strong><p>The notch measures <span class="num">21.5 mm</span> wide and <span class="num">7.95 mm</span> deep from the rim, with clean square corners. Too tight is easy to fix; too wide isn't, so creep up on the lines.</p></div>
+  <figure><img src="renders/section_magnet_slot.png" alt="Cut-away through the magnet connector in its notch, legs into header J3." loading="lazy"><figcaption>Cut through the magnet in its notch, legs pushed into header J3.</figcaption></figure>
+  <div class="box">
+    <p class="sub">Common mistakes</p>
+    <ul>
+      <li>Measuring from the left edge or with the shell upside down. Display up, top away, measure from the right.</li>
+      <li>Cutting to the line straight away with the burr. It always takes a bit more than you think: stay inside, then file.</li>
+      <li>Hitting the top-corner screw post behind the wall. It's close to the notch's outer end: tape it, keep the burr shallow.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ZONE 5b -->
+<article class="zone" id="z5b">
+  <div class="zone-head">
+    <div class="row"><span class="eyebrow">Zone 5b · back cover</span><span class="pill check">only if there</span></div>
+    <h2>Back-cover lip under the magnet notch</h2>
+    <p><strong>Why:</strong> our 3D model guessed a <span class="num">1.5 mm</span> locating lip round the back cover's rim (it was never measured). If your back cover really has a lip where the magnet sits, the magnet body hits it by <span class="num">0.5 mm</span>.</p>
+  </div>
+  <div class="box">
+    <p class="sub">Steps</p>
+    <ol class="steps">
+      <li>Look at your back cover's rim at the top end. No raised lip there? You're done with this zone.</li>
+      <li>If there is one: put the back cover on the notched front shell and mark the lip with the marker through the notch, on both sides.</li>
+      <li>Take the lip off between the marks, <span class="num">21.5 mm</span> wide, down to the back cover's rim. Burr, then file. Don't touch the outer wall.</li>
+    </ol>
+  </div>
+  <div class="callout ok"><strong class="tag">Stop when</strong><p>The marked stretch of lip is level with the rim and 21.5 mm wide, lined up with the notch.</p></div>
+</article>
+
+<!-- ZONE 6 -->
+<article class="zone" id="z6">
+  <div class="zone-head">
+    <div class="row"><span class="eyebrow">Zone 6 · front shell</span><span class="pill">needed</span></div>
+    <h2>Side-wall relief: 2–2.5 mm off the inner side-wall rib, 15–50 mm from the top (board corner + antenna)</h2>
+    <p><strong>Why:</strong> on the <strong>solar-window side</strong> the screen-section side wall is an outer skin, a wire channel and a thin <strong>inner rib</strong> (the one the three round pins stick out of). Your depth rod (2026-10-06) put the rib's top edge <span class="num">4.5–5.0 mm</span> below the rim; the board sits 5.5–6.3 mm below the rim, so the rib runs right through where the board goes. Two things on the board reach into it: the board's own top corner, a strip 15–26 mm from the top outer edge that the board keeps at full width (up to <span class="num">0.7 mm</span> into the rib), and the ESP32 module's antenna end, a bare <span class="num">0.8 mm</span> tab that sticks out <span class="num">4.15 mm</span> past the board's edge 32–48 mm from the top (<span class="num">0.3 mm</span> into the rib). Either one stops the board seating. Only the part of the rib between 4.5 and 7 mm below the rim is in the way, so this is a 2–2.5 mm deep notch along the rib, not the whole rib (verification 12).</p>
+  </div>
+  <dl class="spec">
+    <div><dt>Where</dt><dd class="num">solar-window side; 15–50 mm from the top outer edge (board corner 15–27, antenna tab 31–50)</dd></div>
+    <div><dt>What</dt><dd>the thin inner rib (1 mm), not the outer skin, not the channel floor</dd></div>
+    <div><dt>Depth</dt><dd class="num">from the rib's top edge (4.5–5 below the rim) down to 7.0 mm below the rim (6.5 is the minimum: the board's far face is at 6.3)</dd></div>
+    <div><dt>Pins and hooks</dt><dd>gone first (zone 6b), so the file has a clear run</dd></div>
+    <div><dt>Tools</dt><dd>flat needle file or a small sanding stick; steel ruler across the rim + depth rod to check</dd></div>
+    <div><dt>Check</dt><dd>the paper template with its yellow tab lies flat; depth rod on the filed rib reads 7.0 everywhere between the marks</dd></div>
+  </dl>
+  <div class="pair">
+    <figure><img src="renders/grind_antenna_relief_before.png" alt="Inside of the front shell: the inner rib beside the screen on the antenna side." loading="lazy"><figcaption>Before: the inner rib of the thick side wall beside the screen (picture from rev F: in your shell its top edge is 4.5–5 mm below the rim, and the pins and hooks sit at board height).</figcaption></figure>
+    <figure><img src="renders/grind_antenna_relief_after.png" alt="Inside of the front shell with 35 mm of the inner rib filed away." loading="lazy"><figcaption>After: the rib notched between the marks down to 7 mm below the rim.</figcaption></figure>
+  </div>
+  <div class="box">
+    <p class="sub">Steps</p>
+    <ol class="steps">
+      <li>Do zone 6b first (pins and hooks off, both walls).</li>
+      <li>Front shell face down, top end away from you. The antenna side is on your <strong>left</strong> now (it is the right-hand, solar-window side when you use the calculator).</li>
+      <li>Mark 15 and 50 mm down from the top outer edge on the rim of that wall.</li>
+      <li>Between the marks, file the top edge of the inner rib down until the depth rod reads <span class="num">7.0 mm</span> from the ruler on the rim. Keep the file flat along the rib; check every 10 mm.</li>
+      <li>Don't touch the outer skin (the wall you see from outside) or the wire-channel floor.</li>
+      <li>Lay the paper template in again: the tab and the top corner beside it must drop in flat. Then the dummy board / real board.</li>
+    </ol>
+  </div>
+  <div class="callout ok"><strong class="tag">Stop when</strong><p>Between 15 and 50 mm from the top the depth rod reads 7.0 mm on the rib, and the yellow paper tab lies flat on the posts with the rest of the template.</p></div>
+  <figure><img src="renders/section_antenna.png" alt="Section across the ESP32 antenna tab and the faceplate's side wall." loading="lazy"><figcaption>Cut across the antenna tab (0.8 mm, bottom left) and the side wall: without the relief the tab runs 0.3 mm into the inner rib.</figcaption></figure>
+</article>
+
+<!-- ZONE 6b -->
+<article class="zone" id="z6b">
+  <div class="zone-head">
+    <div class="row"><span class="eyebrow">Zone 6b · front shell</span><span class="pill">needed</span></div>
+    <h2>Snip the 3 round pins and the 3 wire hooks off the inner rib, on BOTH side walls</h2>
+    <p><strong>Why:</strong> the depth rod (2026-10-06) put the round pins <span class="num">5.1–5.5 mm</span> (outer two) and <span class="num">6.0–6.1 mm</span> (middle) below the rim and the U-shaped wire hooks at <span class="num">5.5 mm</span>; the board occupies 5.5–6.3 mm. So every pin and hook is at board height. On the J2 side their tips are 0–0.5 mm from the board's edge (the paper edge runs through the pin bosses in your photo); on the solar side the two upper hooks sit <span class="num">1.1–1.4 mm</span> inside the board's top corner and the pins reach <span class="num">1 mm</span> into the antenna tab. They held Casio's solar-cell wires; nothing of ours runs along those walls (the LiPo leads go straight into J4). Verification 12, hits 1–5 and 8–11.</p>
+  </div>
+  <dl class="spec">
+    <div><dt>Where</dt><dd>both screen-section side walls: 3 round pins (26, 35, 45 mm from the top) and 3 hooks (17, 22 and 56–59 mm from the top; the lowest one is the wider wire holder)</dd></div>
+    <div><dt>What</dt><dd>cut each pin and hook off flush with the rib it grows from</dd></div>
+    <div><dt>Leave</dt><dd>the rib itself (zone 6 only notches it on the solar side), the posts, the snap tabs</dd></div>
+    <div><dt>Tools</dt><dd>flush cutters; a needle file for the stubs</dd></div>
+    <div><dt>Time</dt><dd>2 minutes</dd></div>
+  </dl>
+  <div class="box">
+    <p class="sub">Steps</p>
+    <ol class="steps">
+      <li>Front shell face down. Find the thin inner rib beside the screen opening on each side; the pins and the U-hooks grow from its inner face.</li>
+      <li>Flush cutters flat against the rib: snip each pin at its root. Same for the three hooks (cut the arm where it meets the rib; the U falls off).</li>
+      <li>Run a needle file along the rib so nothing stands proud; a fingernail drawn along the rib should not catch.</li>
+      <li>Repeat on the other wall. Blow the chips out.</li>
+    </ol>
+  </div>
+  <div class="callout ok"><strong class="tag">Stop when</strong><p>Both inner ribs are smooth from the top wall down to where the thick wall ends: 6 pins and 6 hooks gone.</p></div>
+</article>
+
+<!-- ZONE 6c -->
+<article class="zone" id="z6c">
+  <div class="zone-head">
+    <div class="row"><span class="eyebrow">Zone 6c · front shell</span><span class="pill check">only if needed</span></div>
+    <h2>Lower end of the inner ribs, where the board widens</h2>
+    <p><strong>Why:</strong> the board goes from 64.75 mm wide (beside the screen) to its full width between 59.5 and 63 mm from the top, with a diagonal on each side. In the model the thick wall (and its inner rib) stops at 58.4 mm from the top; your photo of the J2 side suggests it may run to 60–62. If it does, the end of the rib catches the diagonal (up to 0.9 mm). The paper dry fit tells you: today the paper's wide corner on the J2 side did not lie flat beside the lowest hook; zone 6b removes that hook, and this zone is for what is left.</p>
+  </div>
+  <dl class="spec">
+    <div><dt>Where</dt><dd>the last 2–3 mm of each inner rib's lower end (56–63 mm from the top), whichever side the paper still rides up on</dd></div>
+    <div><dt>Depth</dt><dd class="num">down to 7.0 mm below the rim, like zone 6</dd></div>
+    <div><dt>Decides it</dt><dd>after 6b: the paper template's wide corners both lie flat, skip. One rides up: file that side.</dd></div>
+    <div><dt>Tools</dt><dd>needle file</dd></div>
+  </dl>
+  <div class="callout ok"><strong class="tag">Stop when</strong><p>Both wide corners of the paper (and then the dummy board) lie flat with every post in its hole.</p></div>
+</article>
+
+<section id="fit">
+  <h2>Test fit</h2>
+  <div class="box">
+    <h3>1. Paper template</h3>
+    <p>Lay the cut-out grind maps back in each half (cut the front-shell one out <em>with</em> its yellow antenna tab). Every red zone you meant to grind should now sit over bare floor (or the notch), and the antenna tab must lie flat beside the side wall. The green LR44 cup stays.</p>
+  </div>
+  <div class="box">
+    <h3>2. Dummy board (3D print)</h3>
+    <p><code>hardware/fitcheck/dummy_board.stl</code> is the whole board at real size with every part at its real height, a <span class="num">12 × 12 × 5.4 mm</span> camera block and a battery block as a separate piece (regenerated 2026-10-06: the loose block is now the <span class="num">26 × 19.75 × 3.8 mm</span> #1317 at its back-cover-floor spot, and the ESP32 antenna tab is on the dummy because it is part of the module's 3D model). Tallest point: <span class="num">5.5 mm</span> (J4). Print flat, parts up, <span class="num">0.2 mm</span> layers, no supports.</p>
+    <ol class="steps">
+      <li>Colour the tops of the ribs (and the ground areas) with marker.</li>
+      <li>Press the dummy in, put the battery piece on the back-cover floor (its new place), close the back cover gently. Don't force it.</li>
+      <li>Open it. Any marker on the dummy shows a rib that touches. Mark that spot on the shell, take it down a little more, test again.</li>
+    </ol>
+  </div>
+  <div class="box">
+    <h3>3. Real board (when it arrives)</h3>
+    <ul>
+      <li>Fit the board alone first. If it binds on locating post H6, file the board's hole slightly towards the top of the board, not the post.</li>
+      <li>Camera: Kapton on the board, thin tape (<span class="num">≤ 0.1 mm</span>) under the module, centred under the window. Look through the hole: you should see the lens in the middle.</li>
+      <li>LiPo flat on the back-cover floor, held with thin (<span class="num">0.1 mm</span>) tape underneath, nothing on top (only <span class="num">0.3 mm</span> under the coin-cell cup). Its leads plug into J4 at J4's level, under the board.</li>
+      <li>Camera ribbon: there is little spare (the 3D path needs 58.7 mm from the module's near edge into J1; a nominal 70.5 mm ribbon measured from the module's far edge leaves about 1.4–3.3 mm), so lay it flat and straight into J1. Don't let it sag over the mid rib. If your ribbon measures under about 70.3 mm, the camera moves up to 1.7 mm towards J1 and the window is drilled over the lens (Assembly Guide step 6).</li>
+      <li>Close the case with the screws snug, not tight. It should close fully without a gap at the rim.</li>
+    </ul>
+  </div>
+  <figure><img src="renders/back_cover_off.png" alt="The assembled calculator with the back cover removed: board, camera, LiPo, J4 plug and magnet." loading="lazy"><figcaption>Back cover off: where the board, camera, LiPo, J4 plug and magnet end up.</figcaption></figure>
+</section>
+
+<section id="final">
+  <h2>Final checklist</h2>
+  <p class="small">Tick as you go. Ticks are saved on this phone only.</p>
+  <ul class="check">
+    <li><label for="c1"><input type="checkbox" id="c1"><span>Solar box gone; reads the same as the floor everywhere; no stub near J4.</span></label></li>
+    <li><label for="c2"><input type="checkbox" id="c2"><span>Rib B flat for 14 mm, centred on the camera spot.</span></label></li>
+    <li><label for="c3"><input type="checkbox" id="c3"><span>Camera window Ø 7 mm, clean, in the right place.</span></label></li>
+    <li><label for="c4"><input type="checkbox" id="c4"><span>LR44 cup left alone.</span></label></li>
+    <li><label for="c5"><input type="checkbox" id="c5"><span>Magnet notch 21.5 wide × 7.95 deep from the rim, 6.4–27.9 mm from the right edge.</span></label></li>
+    <li><label for="c6"><input type="checkbox" id="c6"><span>Back-cover lip at the notch: checked, and cut if it was there.</span></label></li>
+    <li><label for="c6b"><input type="checkbox" id="c6b"><span>Side-wall relief (zone 6): rib filed to 7.0 mm below the rim between 15 and 50 mm from the top on the solar-window side; the paper template with its tab drops in flat.</span></label></li>
+    <li><label for="c6d"><input type="checkbox" id="c6d"><span>Zone 6b: all 3 pins and 3 hooks snipped flush on BOTH side walls; zone 6c checked (wide corners of the paper lie flat).</span></label></li>
+    <li><label for="c6c"><input type="checkbox" id="c6c"><span>Pre-grind checklist (verification/07) done and its numbers written down: inner-rib depth, solar-frame strip ≥ 2.6 mm, floor ≥ 0.9 mm at the moulded label, lip, screw length.</span></label></li>
+    <li><label for="c7"><input type="checkbox" id="c7"><span>Floor at least 0.8 mm everywhere you ground (no light through it, no soft spots).</span></label></li>
+    <li><label for="c8"><input type="checkbox" id="c8"><span>Screw posts, locating posts, clips and outer walls untouched.</span></label></li>
+    <li><label for="c9"><input type="checkbox" id="c9"><span>Both halves washed or blown clean of dust and plastic hairs.</span></label></li>
+    <li><label for="c10"><input type="checkbox" id="c10"><span>Dummy-board marker test: no marks.</span></label></li>
+  </ul>
+</section>
+
+<section id="fix">
+  <h2>If you went too far</h2>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>What happened</th><th>Fix</th></tr></thead>
+      <tbody>
+        <tr><td>Thin spot or small dip in the floor (still solid)</td><td>Fill with 2-part epoxy or plastic filler from the inside, let it cure fully, sand flat to the floor. Re-check with the depth rod: a bump here can hit J4.</td></tr>
+        <tr><td>Hole through the floor</td><td>Kapton or a thin plastic patch on the outside, epoxy over it from the inside, sand flat. If it's near J4 or the camera, use the spare shell instead.</td></tr>
+        <tr><td>Magnet notch too wide</td><td>The glue fills small gaps. If it's more than about a millimetre, build the side up with epoxy and file it back.</td></tr>
+        <tr><td>Notch too deep</td><td>Fine for fitting; fill the gap under the magnet with glue when you glue it in.</td></tr>
+        <tr><td>Camera hole off-centre or too big</td><td>Move the camera module to sit under the hole (it's held by tape). If it's badly off, use the spare back cover.</td></tr>
+        <tr><td>Nicked a post, clip or the outer wall</td><td>Stop. A small nick can be epoxied. A cracked or broken screw post: use the spare shell.</td></tr>
+        <tr><td>Plastic melted and smeared</td><td>Let it cool fully, cut the blobs off with a sharp knife, then sand at lower speed.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="callout ok"><strong class="tag">Remember</strong><p>You have a spare shell. A mistake costs you a shell, not the project.</p></div>
+</section>
+
+<p class="small">Sources: <code>hardware/enclosure/final_assembly/assembly_report.md</code>, <code>hardware/stage13_heights.md</code>, <code>hardware/fitcheck/</code>, <code>hardware/measurements_2026-10-03.md</code>. Distances marked "from the model" come from the CAD replica: always confirm them with the printed template before cutting. Linked: <a href="https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9">First Power-Up Guide</a> · <a href="https://claude.ai/artifact/8BTC57FZ3JFwiDdiLprwtY">Calculator Assembly Guide</a> · entry point <code>hardware/FINAL_STATUS.md</code>.</p>
+
+</div>
+
+<script>
+(function () {
+  var boxes = document.querySelectorAll('.check input[type="checkbox"]');
+  var KEY = 'grind-checklist';
+  var state = {};
+  try { state = JSON.parse(localStorage.getItem(KEY) || '{}') || {}; } catch (e) { state = {}; }
+  boxes.forEach(function (b) {
+    if (state[b.id]) b.checked = true;
+    b.addEventListener('change', function () {
+      state[b.id] = b.checked;
+      try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
+    });
+  });
+})();
+</script>

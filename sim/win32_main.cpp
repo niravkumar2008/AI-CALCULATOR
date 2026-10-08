@@ -20,6 +20,7 @@
 
 #include "../core/device.h"
 #include "../core/claude_api.h"
+#include "../core/viewfinder.h"
 
 using namespace calc;
 
@@ -286,6 +287,123 @@ void startLive(int id) {
   }).detach();
 }
 
+// ---- Camera viewfinder with a fake camera ----
+// The AI SOLVE home screen shows the viewfinder, drawn exactly as the e-paper gets it
+// (core/viewfinder). The "camera" is a picture chosen with F7 (or a made-up worksheet),
+// shrunk to the firmware's 160x120 gray frame. F8 switches it between steady, shaky
+// and out of focus. Frames come every 400 ms, about the e-paper's speed.
+Viewfinder g_vf;
+Panel g_panel;
+bool g_vfPaused = false, g_wasAiReady = false;
+std::vector<uint8_t> g_scene;  // 160x120 gray; empty = the made-up worksheet
+int g_camMode = 0;             // 0 steady, 1 shaky, 2 out of focus
+DWORD g_vfNext = 0;
+constexpr int kCamW = 160, kCamH = 120;
+
+bool pictureToGray(const std::wstring& path, std::vector<uint8_t>& out) {
+  CoInitializeEx(nullptr, COINIT_APARTMENTTHREADED);
+  Com<IWICImagingFactory> f;
+  Com<IWICBitmapDecoder> dec;
+  Com<IWICBitmapFrameDecode> frame;
+  Com<IWICBitmapScaler> sc;
+  Com<IWICFormatConverter> gray;
+  if (FAILED(CoCreateInstance(CLSID_WICImagingFactory, nullptr, CLSCTX_INPROC_SERVER, IID_IWICImagingFactory,
+                              reinterpret_cast<void**>(&f))) ||
+      FAILED(f->CreateDecoderFromFilename(path.c_str(), nullptr, GENERIC_READ, WICDecodeMetadataCacheOnDemand, &dec)) ||
+      FAILED(dec->GetFrame(0, &frame)) || FAILED(f->CreateBitmapScaler(&sc)) ||
+      FAILED(sc->Initialize(frame.p, kCamW, kCamH, WICBitmapInterpolationModeFant)) ||
+      FAILED(f->CreateFormatConverter(&gray)) ||
+      FAILED(gray->Initialize(sc.p, GUID_WICPixelFormat8bppGray, WICBitmapDitherTypeNone, nullptr, 0,
+                              WICBitmapPaletteTypeCustom)))
+    return false;
+  out.assign(kCamW * kCamH, 0);
+  return SUCCEEDED(gray->CopyPixels(nullptr, kCamW, static_cast<UINT>(out.size()), out.data()));
+}
+
+void pickScene() {
+  wchar_t file[MAX_PATH] = L"";
+  OPENFILENAMEW ofn = {};
+  ofn.lStructSize = sizeof(ofn);
+  ofn.hwndOwner = g_hwnd;
+  ofn.lpstrFilter = L"Pictures\0*.jpg;*.jpeg;*.png;*.bmp;*.gif;*.tif;*.tiff;*.webp\0All files\0*.*\0";
+  ofn.lpstrFile = file;
+  ofn.nMaxFile = MAX_PATH;
+  ofn.lpstrTitle = L"Fake camera: what should the viewfinder see?";
+  ofn.Flags = OFN_FILEMUSTEXIST | OFN_PATHMUSTEXIST | OFN_NOCHANGEDIR;
+  if (!GetOpenFileNameW(&ofn)) return;
+  std::vector<uint8_t> g;
+  if (pictureToGray(file, g)) g_scene.swap(g);
+}
+
+// One fake camera frame: the scene, shaken or blurred as F8 says.
+std::vector<uint8_t> fakeCameraFrame() {
+  std::vector<uint8_t> base = g_scene;
+  if (base.empty()) {  // a made-up worksheet: paper, a rule and rows of letter-like strokes
+    base.assign(kCamW * kCamH, 0);
+    for (int y = 0; y < kCamH; ++y)
+      for (int x = 0; x < kCamW; ++x) base[y * kCamW + x] = uint8_t(150 + x * 40 / kCamW + y * 20 / kCamH);
+    auto ink = [&](int x0, int y0, int w, int h) {
+      for (int y = y0; y < y0 + h; ++y)
+        for (int x = x0; x < x0 + w; ++x) base[y * kCamW + x] = 40;
+    };
+    for (int line = 0; line < 3; ++line)
+      for (int c = 0; c < 9; ++c) {
+        const int x = 34 + c * 10, y = 40 + line * 14;
+        ink(x, y, 2, 8);
+        ink(x, y + (c % 3) * 3, 6, 2);
+        if (c % 2) ink(x + 5, y, 2, 8);
+      }
+    ink(10, 10, 140, 1);
+  }
+  std::vector<uint8_t> out(base.size());
+  const int dx = g_camMode == 1 ? int(GetTickCount() / 400 % 5) * 3 - 6 : 0;  // a shaking hand
+  const int r = g_camMode == 2 ? 3 : 0;                                        // out of focus
+  for (int y = 0; y < kCamH; ++y)
+    for (int x = 0; x < kCamW; ++x) {
+      int sum = 0, n = 0;
+      for (int j = -r; j <= r; ++j)
+        for (int i = -r; i <= r; ++i) {
+          const int sx = std::clamp(x + i - dx, 0, kCamW - 1), sy = std::clamp(y + j, 0, kCamH - 1);
+          sum += base[sy * kCamW + sx];
+          ++n;
+        }
+      out[y * kCamW + x] = uint8_t(sum / n);
+    }
+  return out;
+}
+
+bool onAiReady() {
+  return !g_dev.isOff() && g_dev.mode() == Mode::Ai && g_dev.view() == View::Ai && g_dev.ai().screen() == Screen::Ready;
+}
+
+void serviceViewfinder() {
+  const DWORD now = GetTickCount();
+  const bool ready = onAiReady();
+  if (ready && !g_wasAiReady) g_vfPaused = false;
+  g_wasAiReady = ready;
+  if (!ready || g_vfPaused) {
+    g_vf.stop();
+    return;
+  }
+  if (!g_vf.running()) {
+    g_vf.start(now);
+    g_vf.renderStarting(g_panel);
+    g_vfNext = now + 600;  // the camera takes a moment to start
+    return;
+  }
+  if (g_vf.timedOut(now)) {
+    g_vf.stop();
+    g_vfPaused = true;
+    return;
+  }
+  if (int32_t(now - g_vfNext) < 0) return;
+  g_vfNext = now + 400;
+  const std::vector<uint8_t> frame = fakeCameraFrame();
+  g_vf.feed(frame.data(), kCamW, kCamH, g_camMode != 2, now);
+  const char* effort = g_dev.ai().effort() == Effort::Max ? "Max" : g_dev.ai().effort() == Effort::Careful ? "Careful" : "Normal";
+  g_vf.render(g_panel, now, std::string(effort) + (g_dev.ai().tutor() ? " +Tutor" : ""));
+}
+
 void handleEvent(Event* e) {
   switch (e->kind) {
     case Event::Captured: g_dev.onCaptured(e->id); break;
@@ -314,6 +432,11 @@ void advanceRequest() {
 }
 
 void press(DKey k) {
+  if (g_vf.running()) g_vf.touch(GetTickCount());
+  if (k == DKey::Right && g_vfPaused && onAiReady()) {  // right arrow: viewfinder again
+    g_vfPaused = false;
+    return;
+  }
   g_dev.tick(GetTickCount());
   g_dev.onKey(k);
   if (g_reqId && g_dev.activeRequest() != g_reqId) g_reqId = 0;  // cancelled (AC, MODE, OFF)
@@ -347,11 +470,17 @@ void paint(HWND hwnd) {
   static uint32_t pixels[kLcdH][kLcdW];
   const bool off = g_dev.isOff(), dots = g_dev.dotMatrix();
   const uint32_t lcd = off ? 0xA8AE98 : 0xC4CCB2, dot = 0x1E241E;
-  for (int y = 0; y < kLcdH; ++y)
-    for (int x = 0; x < kLcdW; ++x) {
-      bool gap = dots && ((x % kZoom == kZoom - 1) || (y % kZoom == kZoom - 1));
-      pixels[y][x] = (!gap && fb.get(x / kZoom, y / kZoom)) ? dot : lcd;
-    }
+  if (g_vf.running()) {  // the viewfinder uses the panel's full 250x122 pixels
+    for (int y = 0; y < kLcdH; ++y)
+      for (int x = 0; x < kLcdW; ++x)
+        pixels[y][x] = g_panel.get(x * Panel::kWidth / kLcdW, y * Panel::kHeight / kLcdH) ? dot : lcd;
+  } else {
+    for (int y = 0; y < kLcdH; ++y)
+      for (int x = 0; x < kLcdW; ++x) {
+        bool gap = dots && ((x % kZoom == kZoom - 1) || (y % kZoom == kZoom - 1));
+        pixels[y][x] = (!gap && fb.get(x / kZoom, y / kZoom)) ? dot : lcd;
+      }
+  }
   BITMAPINFO bi = {};
   bi.bmiHeader.biSize = sizeof(bi.bmiHeader);
   bi.bmiHeader.biWidth = kLcdW;
@@ -376,7 +505,7 @@ void paint(HWND hwnd) {
   const wchar_t* help[] = {
       L"0-9 . + - * / ^ ( )   Enter =   Backspace DEL   Esc AC   arrows   [ SHIFT   ] ALPHA   m MODE",
       L"s c t sin cos tan   l log   n ln   r \u221A   q x\u00B2   p \u03C0   ! x!   ~ (\u2212)   E \u00D710\u02E3   a Ans   w S\u21D4D",
-      L"F6  SCAN A PHOTO (picks a file)   F2 hotspot   F3 key on/off   F4 power   F5 USB unlock",
+      L"F6  SCAN A PHOTO (picks a file)   F2 hotspot   F3 key on/off   F4 power   F5 USB unlock   F7 camera pic   F8 shake/blur",
   };
   for (int i = 0; i < 3; ++i) TextOutW(mem, kPad, helpTop + i * 24, help[i], lstrlenW(help[i]));
   std::wstring status =
@@ -406,6 +535,7 @@ LRESULT CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
       g_dev.tick(GetTickCount());
       if (g_reqId && g_dev.activeRequest() != g_reqId) g_reqId = 0;
       advanceRequest();
+      serviceViewfinder();
       InvalidateRect(hwnd, nullptr, FALSE);
       return 0;
     case WM_KEYDOWN:
@@ -424,6 +554,8 @@ LRESULT CALLBACK wndProc(HWND hwnd, UINT msg, WPARAM wp, LPARAM lp) {
           else { press(DKey::Shift); press(DKey::AC); }
           break;
         case VK_F5: g_dev.usbUnlock(); break;
+        case VK_F7: pickScene(); break;                     // what the fake camera sees
+        case VK_F8: g_camMode = (g_camMode + 1) % 3; break;  // steady / shaky / out of focus
         case VK_F6:  // scan a photo: MODE 4 (AI SOLVE) then =, which opens the photo picker
           if (g_dev.isOff()) press(DKey::On);
           if (g_dev.mode() != Mode::Ai) { press(DKey::AC); press(DKey::Mode); press(DKey::D4); }

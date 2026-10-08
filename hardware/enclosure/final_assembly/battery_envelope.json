@@ -1,0 +1,1515 @@
+{
+ "margin": 0.3,
+ "floor_Z": 1.0,
+ "board_Z": [
+  7.0,
+  7.8
+ ],
+ "plate_Z": 10.600000000000001,
+ "configs": {
+  "revD": {
+   "region": "corner",
+   "envelopes": [
+    {
+     "H": 3.8,
+     "L": 33.5,
+     "W": 20.7,
+     "X": [
+      -30.9,
+      2.6
+     ],
+     "Y": [
+      58.2,
+      78.9
+     ],
+     "Z": [
+      1.0,
+      4.8
+     ],
+     "vol_cm3": 2.64,
+     "limits": {
+      "-X": [
+       "screw boss corner L"
+      ],
+      "+X": [
+       "lead channel to J4"
+      ],
+      "-Y": [
+       "upper rib A"
+      ],
+      "+Y": [
+       "snap tooth top"
+      ],
+      "top": [
+       "LR44 holder bar/lug",
+       "LR44 holder ring"
+      ]
+     }
+    },
+    {
+     "H": 5.7,
+     "L": 10.2,
+     "W": 20.7,
+     "X": [
+      -7.6,
+      2.6
+     ],
+     "Y": [
+      58.2,
+      78.9
+     ],
+     "Z": [
+      1.0,
+      6.7
+     ],
+     "vol_cm3": 1.2,
+     "limits": {
+      "-X": [
+       "LR44 holder bar/lug"
+      ],
+      "+X": [
+       "lead channel to J4"
+      ],
+      "-Y": [
+       "upper rib A"
+      ],
+      "+Y": [
+       "snap tooth top"
+      ],
+      "top": [
+       "board"
+      ]
+     }
+    },
+    {
+     "H": 6.8,
+     "L": 9.6,
+     "W": 17.0,
+     "X": [
+      -7.6,
+      2.0
+     ],
+     "Y": [
+      61.9,
+      78.9
+     ],
+     "Z": [
+      1.0,
+      7.8
+     ],
+     "vol_cm3": 1.11,
+     "limits": {
+      "-X": [
+       "LR44 holder bar/lug"
+      ],
+      "+X": [
+       "board"
+      ],
+      "-Y": [
+       "board"
+      ],
+      "+Y": [
+       "snap tooth top"
+      ],
+      "top": [
+       "solar window frame"
+      ]
+     }
+    },
+    {
+     "H": 9.3,
+     "L": 41.8,
+     "W": 1.6,
+     "X": [
+      -35.8,
+      6.0
+     ],
+     "Y": [
+      77.3,
+      78.9
+     ],
+     "Z": [
+      1.0,
+      10.3
+     ],
+     "vol_cm3": 0.62,
+     "limits": {
+      "-X": [
+       "side / top wall (lip)"
+      ],
+      "+X": [],
+      "-Y": [
+       "LR44 holder bar/lug",
+       "board",
+       "LR44 holder ring"
+      ],
+      "+Y": [
+       "snap tooth top",
+       "side / top wall (lip)"
+      ],
+      "top": [
+       "faceplate plate"
+      ]
+     }
+    }
+   ]
+  },
+  "lr44_trim": {
+   "region": "corner",
+   "envelopes": [
+    {
+     "H": 5.7,
+     "L": 33.5,
+     "W": 20.7,
+     "X": [
+      -30.9,
+      2.6
+     ],
+     "Y": [
+      58.2,
+      78.9
+     ],
+     "Z": [
+      1.0,
+      6.7
+     ],
+     "vol_cm3": 3.95,
+     "limits": {
+      "-X": [
+       "screw boss corner L"
+      ],
+      "+X": [
+       "lead channel to J4"
+      ],
+      "-Y": [
+       "upper rib A"
+      ],
+      "+Y": [
+       "snap tooth top"
+      ],
+      "top": [
+       "LR44 holder bar/lug (trimmed)",
+       "LR44 holder ring (trimmed)",
+       "board"
+      ]
+     }
+    },
+    {
+     "H": 6.8,
+     "L": 9.6,
+     "W": 17.0,
+     "X": [
+      -7.6,
+      2.0
+     ],
+     "Y": [
+      61.9,
+      78.9
+     ],
+     "Z": [
+      1.0,
+      7.8
+     ],
+     "vol_cm3": 1.11,
+     "limits": {
+      "-X": [
+       "LR44 holder bar/lug (trimmed)"
+      ],
+      "+X": [
+       "board"
+      ],
+      "-Y": [
+       "board"
+      ],
+      "+Y": [
+       "snap tooth top"
+      ],
+      "top": [
+       "solar window frame"
+      ]
+     }
+    },
+    {
+     "H": 9.3,
+     "L": 41.8,
+     "W": 1.6,
+     "X": [
+      -35.8,
+      6.0
+     ],
+     "Y": [
+      77.3,
+      78.9
+     ],
+     "Z": [
+      1.0,
+      10.3
+     ],
+     "vol_cm3": 0.62,
+     "limits": {
+      "-X": [
+       "side / top wall (lip)"
+      ],
+      "+X": [],
+      "-Y": [
+       "LR44 holder bar/lug (trimmed)",
+       "board",
+       "LR44 holder ring (trimmed)"
+      ],
+      "+Y": [
+       "snap tooth top",
+       "side / top wall (lip)"
+      ],
+      "top": [
+       "faceplate plate"
+      ]
+     }
+    }
+   ]
+  },
+  "lr44_ground": {
+   "region": "corner",
+   "envelopes": [
+    {
+     "H": 5.7,
+     "L": 33.5,
+     "W": 20.7,
+     "X": [
+      -30.9,
+      2.6
+     ],
+     "Y": [
+      58.2,
+      78.9
+     ],
+     "Z": [
+      1.0,
+      6.7
+     ],
+     "vol_cm3": 3.95,
+     "limits": {
+      "-X": [
+       "screw boss corner L"
+      ],
+      "+X": [
+       "lead channel to J4"
+      ],
+      "-Y": [
+       "upper rib A"
+      ],
+      "+Y": [
+       "snap tooth top"
+      ],
+      "top": [
+       "board"
+      ]
+     }
+    },
+    {
+     "H": 6.8,
+     "L": 32.4,
+     "W": 17.6,
+     "X": [
+      -30.9,
+      1.5
+     ],
+     "Y": [
+      61.3,
+      78.9
+     ],
+     "Z": [
+      1.0,
+      7.8
+     ],
+     "vol_cm3": 3.88,
+     "limits": {
+      "-X": [
+       "screw boss corner L"
+      ],
+      "+X": [
+       "board"
+      ],
+      "-Y": [
+       "board"
+      ],
+      "+Y": [
+       "snap tooth top"
+      ],
+      "top": [
+       "solar window frame"
+      ]
+     }
+    },
+    {
+     "H": 9.1,
+     "L": 23.4,
+     "W": 18.2,
+     "X": [
+      -30.9,
+      -7.5
+     ],
+     "Y": [
+      61.1,
+      79.3
+     ],
+     "Z": [
+      1.0,
+      10.1
+     ],
+     "vol_cm3": 3.88,
+     "limits": {
+      "-X": [
+       "screw boss corner L"
+      ],
+      "+X": [
+       "solar window frame"
+      ],
+      "-Y": [
+       "board"
+      ],
+      "+Y": [
+       "side / top wall (lip)"
+      ],
+      "top": [
+       "LR44 holder stub (ground)",
+       "faceplate plate"
+      ]
+     }
+    },
+    {
+     "H": 9.3,
+     "L": 41.8,
+     "W": 1.6,
+     "X": [
+      -35.8,
+      6.0
+     ],
+     "Y": [
+      77.3,
+      78.9
+     ],
+     "Z": [
+      1.0,
+      10.3
+     ],
+     "vol_cm3": 0.62,
+     "limits": {
+      "-X": [
+       "side / top wall (lip)"
+      ],
+      "+X": [],
+      "-Y": [
+       "LR44 holder stub (ground)",
+       "board"
+      ],
+      "+Y": [
+       "snap tooth top",
+       "side / top wall (lip)"
+      ],
+      "top": [
+       "faceplate plate"
+      ]
+     }
+    }
+   ]
+  },
+  "custom": {
+   "region": "whole",
+   "envelopes": [
+    {
+     "H": 4.0,
+     "L": 70.0,
+     "W": 45.75,
+     "X": [
+      -35.0,
+      35.0
+     ],
+     "Y": [
+      -68.5,
+      -22.75
+     ],
+     "Z": [
+      1.0,
+      5.0
+     ],
+     "vol_cm3": 12.81,
+     "limits": {
+      "-X": [
+       "side / top wall (lip)"
+      ],
+      "+X": [
+       "side / top wall (lip)"
+      ],
+      "-Y": [
+       "screw boss bottom L",
+       "screw boss bottom R",
+       "side / top wall (lip)"
+      ],
+      "+Y": [
+       "camera ribbon corridor",
+       "board part J1"
+      ],
+      "top": [
+       "board part U5"
+      ]
+     }
+    },
+    {
+     "H": 5.1,
+     "L": 70.0,
+     "W": 45.0,
+     "X": [
+      -35.0,
+      35.0
+     ],
+     "Y": [
+      -68.5,
+      -23.5
+     ],
+     "Z": [
+      1.0,
+      6.1
+     ],
+     "vol_cm3": 16.06,
+     "limits": {
+      "-X": [
+       "side / top wall (lip)"
+      ],
+      "+X": [
+       "side / top wall (lip)"
+      ],
+      "-Y": [
+       "screw boss bottom L",
+       "screw boss bottom R",
+       "side / top wall (lip)"
+      ],
+      "+Y": [
+       "board part U5"
+      ],
+      "top": [
+       "board part C18",
+       "board part R10",
+       "board part R18",
+       "board part R19"
+      ]
+     }
+    },
+    {
+     "H": 5.4,
+     "L": 70.0,
+     "W": 41.25,
+     "X": [
+      -35.0,
+      35.0
+     ],
+     "Y": [
+      -68.5,
+      -27.25
+     ],
+     "Z": [
+      1.0,
+      6.4
+     ],
+     "vol_cm3": 15.59,
+     "limits": {
+      "-X": [
+       "side / top wall (lip)"
+      ],
+      "+X": [
+       "side / top wall (lip)"
+      ],
+      "-Y": [
+       "screw boss bottom L",
+       "screw boss bottom R",
+       "side / top wall (lip)"
+      ],
+      "+Y": [
+       "board part R19",
+       "board part R18",
+       "board part R9"
+      ],
+      "top": [
+       "locating post H13",
+       "locating post H14",
+       "locating post H2",
+       "locating post H6"
+      ]
+     }
+    },
+    {
+     "H": 5.7,
+     "L": 32.5,
+     "W": 47.0,
+     "X": [
+      -16.25,
+      16.25
+     ],
+     "Y": [
+      -74.25,
+      -27.25
+     ],
+     "Z": [
+      1.0,
+      6.7
+     ],
+     "vol_cm3": 8.71,
+     "limits": {
+      "-X": [
+       "screw boss bottom L"
+      ],
+      "+X": [
+       "screw boss bottom R"
+      ],
+      "-Y": [
+       "side / top wall (lip)"
+      ],
+      "+Y": [
+       "board part R19",
+       "board part R18",
+       "board part R9"
+      ],
+      "top": [
+       "board"
+      ]
+     }
+    },
+    {
+     "H": 6.8,
+     "L": 32.0,
+     "W": 17.5,
+     "X": [
+      -30.75,
+      1.25
+     ],
+     "Y": [
+      61.25,
+      78.75
+     ],
+     "Z": [
+      1.0,
+      7.8
+     ],
+     "vol_cm3": 3.81,
+     "limits": {
+      "-X": [
+       "screw boss corner L"
+      ],
+      "+X": [
+       "board"
+      ],
+      "-Y": [
+       "board"
+      ],
+      "+Y": [
+       "snap tooth top"
+      ],
+      "top": [
+       "solar window frame"
+      ]
+     }
+    },
+    {
+     "H": 9.3,
+     "L": 23.0,
+     "W": 18.0,
+     "X": [
+      -30.75,
+      -7.75
+     ],
+     "Y": [
+      61.25,
+      79.25
+     ],
+     "Z": [
+      1.0,
+      10.3
+     ],
+     "vol_cm3": 3.85,
+     "limits": {
+      "-X": [
+       "screw boss corner L"
+      ],
+      "+X": [
+       "solar window frame"
+      ],
+      "-Y": [
+       "board"
+      ],
+      "+Y": [
+       "side / top wall (lip)"
+      ],
+      "top": [
+       "faceplate plate"
+      ]
+     }
+    }
+   ]
+  }
+ },
+ "fits": [
+  {
+   "name": "Adafruit #1570 (current)",
+   "src": "adafruit.com/product/1570",
+   "mAh": 100,
+   "L": 31.0,
+   "W": 11.5,
+   "T": 3.8,
+   "price": "$5.95",
+   "ship": "in stock, 2-5 days US",
+   "lead": "105 mm JST-PH, Adafruit polarity",
+   "note": "fitted today",
+   "revD": {
+    "slack_min": 2.9,
+    "slack_x": 2.9,
+    "slack_y": 3.0,
+    "rot": "L along X",
+    "centre": [
+     -14.35,
+     65.45
+    ],
+    "kicad": [
+     164.35,
+     73.49
+    ],
+    "per_side_x": 1.75,
+    "per_side_y": 1.8,
+    "top": 0.3
+   },
+   "lr44_trim": {
+    "slack_min": 2.9,
+    "slack_x": 2.9,
+    "slack_y": 3.0,
+    "rot": "L along X",
+    "centre": [
+     -14.35,
+     65.45
+    ],
+    "kicad": [
+     164.35,
+     73.49
+    ],
+    "per_side_x": 1.75,
+    "per_side_y": 1.8,
+    "top": 2.2
+   },
+   "lr44_ground": {
+    "slack_min": 2.9,
+    "slack_x": 2.9,
+    "slack_y": 3.0,
+    "rot": "L along X",
+    "centre": [
+     -14.35,
+     65.45
+    ],
+    "kicad": [
+     164.35,
+     73.49
+    ],
+    "per_side_x": 1.75,
+    "per_side_y": 1.8,
+    "top": 3.3
+   },
+   "custom": {
+    "slack_min": 34.25,
+    "slack_x": 39.0,
+    "slack_y": 34.25,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -45.62
+    ],
+    "kicad": [
+     150.0,
+     184.56
+    ],
+    "per_side_x": 19.8,
+    "per_side_y": 17.43,
+    "top": 1.9
+   }
+  },
+  {
+   "name": "Adafruit #1317 (cable untaped, led off the end)",
+   "src": "adafruit.com/product/1317",
+   "mAh": 150,
+   "L": 26.02,
+   "W": 19.75,
+   "T": 3.8,
+   "price": "$5.95",
+   "ship": "in stock, 2-5 days US",
+   "lead": "127 mm JST-PH, Adafruit polarity",
+   "note": "ships with the cable taped on top: peel it and lead it off the end",
+   "revD": {
+    "slack_min": 1.45,
+    "slack_x": 4.58,
+    "slack_y": 1.45,
+    "rot": "L along X",
+    "centre": [
+     -15.6,
+     68.7
+    ],
+    "kicad": [
+     165.6,
+     70.24
+    ],
+    "per_side_x": 2.59,
+    "per_side_y": 1.02,
+    "top": 0.3
+   },
+   "lr44_trim": {
+    "slack_min": 1.45,
+    "slack_x": 4.58,
+    "slack_y": 1.45,
+    "rot": "L along X",
+    "centre": [
+     -15.6,
+     68.7
+    ],
+    "kicad": [
+     165.6,
+     70.24
+    ],
+    "per_side_x": 2.59,
+    "per_side_y": 1.02,
+    "top": 2.2
+   },
+   "lr44_ground": {
+    "slack_min": 1.45,
+    "slack_x": 4.58,
+    "slack_y": 1.45,
+    "rot": "L along X",
+    "centre": [
+     -15.6,
+     68.7
+    ],
+    "kicad": [
+     165.6,
+     70.24
+    ],
+    "per_side_x": 2.59,
+    "per_side_y": 1.02,
+    "top": 2.2
+   },
+   "custom": {
+    "slack_min": 26.0,
+    "slack_x": 43.98,
+    "slack_y": 26.0,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -45.62
+    ],
+    "kicad": [
+     150.0,
+     184.56
+    ],
+    "per_side_x": 22.29,
+    "per_side_y": 13.3,
+    "top": 1.9
+   }
+  },
+  {
+   "name": "Adafruit #1317 (as shipped, cable taped on top)",
+   "src": "adafruit.com/product/1317",
+   "mAh": 150,
+   "L": 26.02,
+   "W": 19.75,
+   "T": 4.9,
+   "price": "$5.95",
+   "ship": "in stock",
+   "lead": "127 mm",
+   "note": "+~1.1 for the taped lead",
+   "revD": null,
+   "lr44_trim": {
+    "slack_min": 1.45,
+    "slack_x": 4.58,
+    "slack_y": 1.45,
+    "rot": "L along X",
+    "centre": [
+     -15.6,
+     68.7
+    ],
+    "kicad": [
+     165.6,
+     70.24
+    ],
+    "per_side_x": 2.59,
+    "per_side_y": 1.02,
+    "top": 1.1
+   },
+   "lr44_ground": {
+    "slack_min": 1.45,
+    "slack_x": 4.58,
+    "slack_y": 1.45,
+    "rot": "L along X",
+    "centre": [
+     -15.6,
+     68.7
+    ],
+    "kicad": [
+     165.6,
+     70.24
+    ],
+    "per_side_x": 2.59,
+    "per_side_y": 1.02,
+    "top": 1.1
+   },
+   "custom": {
+    "slack_min": 25.25,
+    "slack_x": 43.98,
+    "slack_y": 25.25,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -46.0
+    ],
+    "kicad": [
+     150.0,
+     184.94
+    ],
+    "per_side_x": 22.29,
+    "per_side_y": 12.93,
+    "top": 0.8
+   }
+  },
+  {
+   "name": "Alibaba custom 352033 (3.5 x 20 x 33)",
+   "src": "Alibaba, custom/stock size",
+   "mAh": 180,
+   "L": 33.0,
+   "W": 20.3,
+   "T": 3.6,
+   "price": "~$1.5-2.5 @ MOQ 100-500",
+   "ship": "samples 1-2 wk, batch 3-5 wk + air (UN38.3) 1-2 wk",
+   "lead": "specify 60 mm 28AWG + PH2.0, red = + on Adafruit pin",
+   "note": "fits WITHOUT any LR44 work",
+   "revD": {
+    "slack_min": 0.4,
+    "slack_x": 0.5,
+    "slack_y": 0.4,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 0.55,
+    "per_side_y": 0.5,
+    "top": 0.5
+   },
+   "lr44_trim": {
+    "slack_min": 0.4,
+    "slack_x": 0.5,
+    "slack_y": 0.4,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 0.55,
+    "per_side_y": 0.5,
+    "top": 2.4
+   },
+   "lr44_ground": {
+    "slack_min": 0.4,
+    "slack_x": 0.5,
+    "slack_y": 0.4,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 0.55,
+    "per_side_y": 0.5,
+    "top": 2.4
+   },
+   "custom": {
+    "slack_min": 25.45,
+    "slack_x": 37.0,
+    "slack_y": 25.45,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -45.62
+    ],
+    "kicad": [
+     150.0,
+     184.56
+    ],
+    "per_side_x": 18.8,
+    "per_side_y": 13.03,
+    "top": 2.1
+   }
+  },
+  {
+   "name": "Alibaba 402030 (4.0 x 20 x 30, ~200 mAh)",
+   "src": "Alibaba / Amazon generic",
+   "mAh": 200,
+   "L": 32.0,
+   "W": 20.5,
+   "T": 4.2,
+   "price": "~$1-2 @ MOQ / ~$4 ea Amazon",
+   "ship": "Amazon 1-3 days; Alibaba 3-6 wk",
+   "lead": "PH2.0, check polarity",
+   "note": "",
+   "revD": null,
+   "lr44_trim": {
+    "slack_min": 0.2,
+    "slack_x": 1.5,
+    "slack_y": 0.2,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 1.05,
+    "per_side_y": 0.4,
+    "top": 1.8
+   },
+   "lr44_ground": {
+    "slack_min": 0.2,
+    "slack_x": 1.5,
+    "slack_y": 0.2,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 1.05,
+    "per_side_y": 0.4,
+    "top": 1.8
+   },
+   "custom": {
+    "slack_min": 24.5,
+    "slack_x": 38.0,
+    "slack_y": 24.5,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -46.0
+    ],
+    "kicad": [
+     150.0,
+     184.94
+    ],
+    "per_side_x": 19.3,
+    "per_side_y": 12.55,
+    "top": 1.5
+   }
+  },
+  {
+   "name": "EEMB 502030 250 mAh (Amazon B08VRZTHDL)",
+   "src": "amazon.com/dp/B08VRZTHDL",
+   "mAh": 250,
+   "L": 32.0,
+   "W": 20.5,
+   "T": 5.3,
+   "price": "4-pack, ~$4-6 per cell (check listing)",
+   "ship": "Prime 1-3 days",
+   "lead": "~50 mm, JST 2.0; listing says confirm polarity",
+   "note": "EEMB size 20.5 x 32 x 5.3 incl. PCM",
+   "revD": null,
+   "lr44_trim": {
+    "slack_min": 0.2,
+    "slack_x": 1.5,
+    "slack_y": 0.2,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 1.05,
+    "per_side_y": 0.4,
+    "top": 0.7
+   },
+   "lr44_ground": {
+    "slack_min": 0.2,
+    "slack_x": 1.5,
+    "slack_y": 0.2,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 1.05,
+    "per_side_y": 0.4,
+    "top": 0.7
+   },
+   "custom": {
+    "slack_min": 20.75,
+    "slack_x": 38.0,
+    "slack_y": 20.75,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -47.88
+    ],
+    "kicad": [
+     150.0,
+     186.81
+    ],
+    "per_side_x": 19.3,
+    "per_side_y": 10.68,
+    "top": 0.4
+   }
+  },
+  {
+   "name": "Generic 502030 250 mAh (worst-case 33.0)",
+   "src": "Amazon (Liter, AKZYTUE, MakerHawk) / Melopero spec",
+   "mAh": 250,
+   "L": 33.0,
+   "W": 20.5,
+   "T": 5.2,
+   "price": "~$4-6 ea in 2-4 packs",
+   "ship": "Prime 1-3 days",
+   "lead": "PH2.0, polarity varies by seller",
+   "note": "Melopero datasheet 5.2 x 20.5 x 33.0",
+   "revD": null,
+   "lr44_trim": {
+    "slack_min": 0.2,
+    "slack_x": 0.5,
+    "slack_y": 0.2,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 0.55,
+    "per_side_y": 0.4,
+    "top": 0.8
+   },
+   "lr44_ground": {
+    "slack_min": 0.2,
+    "slack_x": 0.5,
+    "slack_y": 0.2,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 0.55,
+    "per_side_y": 0.4,
+    "top": 0.8
+   },
+   "custom": {
+    "slack_min": 20.75,
+    "slack_x": 37.0,
+    "slack_y": 20.75,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -47.88
+    ],
+    "kicad": [
+     150.0,
+     186.81
+    ],
+    "per_side_x": 18.8,
+    "per_side_y": 10.68,
+    "top": 0.5
+   }
+  },
+  {
+   "name": "Alibaba custom 552033 (5.5 x 20 x 33)",
+   "src": "Alibaba custom size",
+   "mAh": 300,
+   "L": 33.0,
+   "W": 20.3,
+   "T": 5.5,
+   "price": "~$1.5-3 @ MOQ 200-500",
+   "ship": "samples 1-2 wk, batch 3-5 wk + air 1-2 wk",
+   "lead": "specify 60 mm + PH2.0 Adafruit polarity",
+   "note": "fills the trimmed envelope",
+   "revD": null,
+   "lr44_trim": {
+    "slack_min": 0.4,
+    "slack_x": 0.5,
+    "slack_y": 0.4,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 0.55,
+    "per_side_y": 0.5,
+    "top": 0.5
+   },
+   "lr44_ground": {
+    "slack_min": 0.4,
+    "slack_x": 0.5,
+    "slack_y": 0.4,
+    "rot": "L along X",
+    "centre": [
+     -14.15,
+     68.55
+    ],
+    "kicad": [
+     164.15,
+     70.39
+    ],
+    "per_side_x": 0.55,
+    "per_side_y": 0.5,
+    "top": 0.5
+   },
+   "custom": {
+    "slack_min": 12.2,
+    "slack_x": 12.2,
+    "slack_y": 14.0,
+    "rot": "L along Y",
+    "centre": [
+     0.0,
+     -50.75
+    ],
+    "kicad": [
+     150.0,
+     189.69
+    ],
+    "per_side_x": 6.4,
+    "per_side_y": 7.3,
+    "top": 0.5
+   }
+  },
+  {
+   "name": "Alibaba 601230 (6 x 12 x 30)",
+   "src": "Alibaba / Amazon generic",
+   "mAh": 200,
+   "L": 32.0,
+   "W": 12.5,
+   "T": 6.2,
+   "price": "~$1-2",
+   "ship": "",
+   "lead": "",
+   "note": "thick: needs the full holder removal",
+   "revD": null,
+   "lr44_trim": null,
+   "lr44_ground": {
+    "slack_min": 1.0,
+    "slack_x": 1.0,
+    "slack_y": 4.2,
+    "rot": "L along X",
+    "centre": [
+     -14.4,
+     70.55
+    ],
+    "kicad": [
+     164.4,
+     68.39
+    ],
+    "per_side_x": 0.8,
+    "per_side_y": 2.4,
+    "top": 0.9
+   },
+   "custom": {
+    "slack_min": 0.75,
+    "slack_x": 0.75,
+    "slack_y": 4.25,
+    "rot": "L along X",
+    "centre": [
+     -14.38,
+     70.38
+    ],
+    "kicad": [
+     164.38,
+     68.56
+    ],
+    "per_side_x": 0.68,
+    "per_side_y": 2.42,
+    "top": 0.9
+   }
+  },
+  {
+   "name": "Alibaba 501535 (5 x 15 x 35)",
+   "src": "Alibaba / Amazon generic",
+   "mAh": 220,
+   "L": 37.0,
+   "W": 15.5,
+   "T": 5.2,
+   "price": "~$1-2",
+   "ship": "",
+   "lead": "",
+   "note": "",
+   "revD": null,
+   "lr44_trim": null,
+   "lr44_ground": null,
+   "custom": {
+    "slack_min": 25.75,
+    "slack_x": 33.0,
+    "slack_y": 25.75,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -47.88
+    ],
+    "kicad": [
+     150.0,
+     186.81
+    ],
+    "per_side_x": 16.8,
+    "per_side_y": 13.18,
+    "top": 0.5
+   }
+  },
+  {
+   "name": "Adafruit #4237 350 mAh",
+   "src": "adafruit.com/product/4237",
+   "mAh": 350,
+   "L": 32.5,
+   "W": 25.0,
+   "T": 5.0,
+   "price": "$5.95",
+   "ship": "in stock",
+   "lead": "25 mm, taped sideways on top",
+   "note": "",
+   "revD": null,
+   "lr44_trim": null,
+   "lr44_ground": null,
+   "custom": {
+    "slack_min": 20.0,
+    "slack_x": 37.5,
+    "slack_y": 20.0,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -46.0
+    ],
+    "kicad": [
+     150.0,
+     184.94
+    ],
+    "per_side_x": 19.05,
+    "per_side_y": 10.3,
+    "top": 0.7
+   }
+  },
+  {
+   "name": "Adafruit #2750 350 mAh",
+   "src": "adafruit.com/product/2750",
+   "mAh": 350,
+   "L": 36.0,
+   "W": 19.6,
+   "T": 5.2,
+   "price": "$6.95",
+   "ship": "in stock",
+   "lead": "~100 mm, taped on top",
+   "note": "",
+   "revD": null,
+   "lr44_trim": null,
+   "lr44_ground": null,
+   "custom": {
+    "slack_min": 21.65,
+    "slack_x": 34.0,
+    "slack_y": 21.65,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -47.88
+    ],
+    "kicad": [
+     150.0,
+     186.81
+    ],
+    "per_side_x": 17.3,
+    "per_side_y": 11.12,
+    "top": 0.5
+   }
+  },
+  {
+   "name": "Adafruit #4236 420 mAh",
+   "src": "adafruit.com/product/4236",
+   "mAh": 420,
+   "L": 35.0,
+   "W": 24.0,
+   "T": 5.2,
+   "price": "$6.95",
+   "ship": "in stock",
+   "lead": "25 mm",
+   "note": "",
+   "revD": null,
+   "lr44_trim": null,
+   "lr44_ground": null,
+   "custom": {
+    "slack_min": 17.25,
+    "slack_x": 35.0,
+    "slack_y": 17.25,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -47.88
+    ],
+    "kicad": [
+     150.0,
+     186.81
+    ],
+    "per_side_x": 17.8,
+    "per_side_y": 8.93,
+    "top": 0.5
+   }
+  },
+  {
+   "name": "Adafruit #3898 400 mAh",
+   "src": "adafruit.com/product/3898",
+   "mAh": 400,
+   "L": 36.0,
+   "W": 17.0,
+   "T": 7.8,
+   "price": "$6.95",
+   "ship": "in stock",
+   "lead": "25 mm",
+   "note": "",
+   "revD": null,
+   "lr44_trim": null,
+   "lr44_ground": null,
+   "custom": null
+  },
+  {
+   "name": "Adafruit #1578 500 mAh",
+   "src": "adafruit.com/product/1578",
+   "mAh": 500,
+   "L": 36.0,
+   "W": 29.0,
+   "T": 4.75,
+   "price": "$7.95",
+   "ship": "in stock",
+   "lead": "102 mm",
+   "note": "",
+   "revD": null,
+   "lr44_trim": null,
+   "lr44_ground": null,
+   "custom": {
+    "slack_min": 16.0,
+    "slack_x": 34.0,
+    "slack_y": 16.0,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -46.0
+    ],
+    "kicad": [
+     150.0,
+     184.94
+    ],
+    "per_side_x": 17.3,
+    "per_side_y": 8.3,
+    "top": 0.95
+   }
+  },
+  {
+   "name": "Adafruit #258 1200 mAh",
+   "src": "adafruit.com/product/258",
+   "mAh": 1200,
+   "L": 62.0,
+   "W": 34.0,
+   "T": 5.0,
+   "price": "$9.95",
+   "ship": "in stock",
+   "lead": "~50-70 mm: needs a ~100 mm extension to reach J4 from the keypad pocket",
+   "note": "custom shell",
+   "revD": null,
+   "lr44_trim": null,
+   "lr44_ground": null,
+   "custom": {
+    "slack_min": 8.5,
+    "slack_x": 8.5,
+    "slack_y": 9.75,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -45.38
+    ],
+    "kicad": [
+     150.0,
+     184.31
+    ],
+    "per_side_x": 4.55,
+    "per_side_y": 5.17,
+    "top": 0.7
+   }
+  },
+  {
+   "name": "Alibaba 504060 (5 x 40 x 60)",
+   "src": "Alibaba stock size",
+   "mAh": 1500,
+   "L": 62.0,
+   "W": 40.5,
+   "T": 5.2,
+   "price": "~$3-5 @ MOQ 100-500",
+   "ship": "3-6 wk",
+   "lead": "specify 120 mm + PH2.0 Adafruit polarity",
+   "note": "custom shell, largest practical",
+   "revD": null,
+   "lr44_trim": null,
+   "lr44_ground": null,
+   "custom": {
+    "slack_min": 0.75,
+    "slack_x": 8.0,
+    "slack_y": 0.75,
+    "rot": "L along X",
+    "centre": [
+     0.0,
+     -47.88
+    ],
+    "kicad": [
+     150.0,
+     186.81
+    ],
+    "per_side_x": 4.3,
+    "per_side_y": 0.68,
+    "top": 0.5
+   }
+  },
+  {
+   "name": "Adafruit #2011 2000 mAh",
+   "src": "adafruit.com/product/2011",
+   "mAh": 2000,
+   "L": 60.0,
+   "W": 36.0,
+   "T": 7.0,
+   "price": "$12.50",
+   "ship": "out of stock",
+   "lead": "",
+   "note": "too thick",
+   "revD": null,
+   "lr44_trim": null,
+   "lr44_ground": null,
+   "custom": null
+  }
+ ]
+}
