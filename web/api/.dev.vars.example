@@ -8,11 +8,16 @@ ANTHROPIC_API_KEY=
 # Optional: Resend API key for real sign-in e-mails. Blank = e-mails only go to the dev outbox.
 RESEND_API_KEY=
 
-# Optional: enables POST /v1/admin/firmware (publishing firmware). Blank = admin endpoint off (404).
+# Optional: enables board enrolment and firmware publishing (/v1/admin/*). Must be at least
+# 32 characters; shorter or blank = admin endpoints off (404).
 ADMIN_TOKEN=
 
-# Local testing helpers (/__dev/outbox, /__dev/user). Only honoured on localhost / 127.0.0.1.
-# NEVER set this in production. Uncomment for local tests, or run `npm run dev:test`.
+# Optional: Cloudflare Turnstile secret. When set, sign-in requires a turnstile_token.
+TURNSTILE_SECRET=
+
+# Local testing helpers (/__dev/outbox, /__dev/user), and permission to use an http:// PUBLIC_URL.
+# Only honoured on localhost / 127.0.0.1. NEVER set this in production.
+# `npm run dev` already passes DEV_MODE=1.
 # DEV_MODE=1
 
 # Point solves at a mock Anthropic server for tests (web/tests starts one):
