@@ -8,8 +8,13 @@ ANTHROPIC_API_KEY=
 # Optional: Resend API key for real sign-in e-mails. Blank = e-mails only go to the dev outbox.
 RESEND_API_KEY=
 
+# Key for the hashes of e-mails that had a free month. Required in production (32+ characters,
+# make it with: node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))").
+# With DEV_MODE=1 a fixed development value is used when this is blank.
+TRIAL_PEPPER=
+
 # Optional: enables board enrolment and firmware publishing (/v1/admin/*). Must be at least
-# 32 characters; shorter or blank = admin endpoints off (404).
+# 32 characters (use the same node command as above); shorter or blank = admin endpoints off (404).
 ADMIN_TOKEN=
 
 # Optional: Cloudflare Turnstile secret. When set, sign-in requires a turnstile_token.

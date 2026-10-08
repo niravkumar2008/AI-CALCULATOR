@@ -76,12 +76,14 @@ In `wrangler.toml` under `[vars]` (not secret):
 | `UPSTREAM_TIMEOUT_MS` | `60000` | How long to wait for Claude to start answering. |
 | `MAX_NEW_TRIALS_PER_DAY` | `20` | At most this many new free months per UTC day. |
 | `MAIL_DAILY_CAP` | `80` | At most this many sign-in e-mails per UTC day (Resend free plan: 100). |
+| `REGISTER_GLOBAL_PER_HOUR` | `200` | At most this many calculator registrations per hour in total (plus 5 per IP; IPv6 counted per /64). |
 | `MAIL_FROM` | (empty) | Sender for sign-in e-mails, e.g. `AI Calculator <login@yourdomain>`. |
 
 Secrets (never in git; locally in `.dev.vars`, in production with `npx wrangler secret put NAME`):
 `ANTHROPIC_API_KEY`, `RESEND_API_KEY` (sign-in e-mails; without it, e-mails are not sent),
-`ADMIN_TOKEN` (enables board enrolment and firmware publishing; must be at least 32 characters,
-otherwise both stay off), `TURNSTILE_SECRET` (optional; when set, sign-in needs a Cloudflare
+`TRIAL_PEPPER` (**required in production**: the server refuses to run without it; it keys the
+hashes of e-mail addresses that already had a free month), `ADMIN_TOKEN` (enables board
+enrolment and firmware publishing; must be at least 32 characters, otherwise both stay off), `TURNSTILE_SECRET` (optional; when set, sign-in needs a Cloudflare
 Turnstile token from the portal page, which arrives in stage 2).
 
 ## 5. Deploy on the FREE plan (workers.dev address)
@@ -93,11 +95,16 @@ Turnstile token from the portal page, which arrives in stage 2).
    npx wrangler kv namespace create FIRMWARE       -> id
    ```
 3. Create the tables in the real database: `npx wrangler d1 migrations apply DB --remote`
-4. Add the secrets:
+4. Add the secrets. `TRIAL_PEPPER` and `ADMIN_TOKEN` must each be 32 random bytes made with
+   this command (run it once for each; paste the printed value when asked):
+   ```
+   node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))"
+   ```
    ```
    npx wrangler secret put ANTHROPIC_API_KEY
    npx wrangler secret put RESEND_API_KEY     (optional until you want real e-mails)
-   npx wrangler secret put ADMIN_TOKEN        (32+ random characters, for enrolment and firmware)
+   npx wrangler secret put TRIAL_PEPPER       (required; never change it once live)
+   npx wrangler secret put ADMIN_TOKEN        (for enrolment and firmware publishing)
    ```
 5. Set `PUBLIC_URL` in `wrangler.toml` to the address the site will use, then `npm run deploy`.
    Wrangler prints the address, like `https://ai-calc-api.<you>.workers.dev`.
