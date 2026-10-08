@@ -6,7 +6,7 @@
   "type": "module",
   "engines": { "node": ">=20" },
   "scripts": {
-    "test": "node --test --test-concurrency=1 --test-timeout=120000 device.test.mjs solve.test.mjs auth.test.mjs account.test.mjs firmware.test.mjs dev.test.mjs stage3.todo.test.mjs",
+    "test": "node --test --test-concurrency=1 --test-timeout=120000 device.test.mjs solve.test.mjs auth.test.mjs account.test.mjs enrolment.test.mjs firmware.test.mjs dev.test.mjs limits.test.mjs stage3.todo.test.mjs",
     "test:full": "node run-all.mjs",
     "mock": "node mock-anthropic.mjs",
     "selfcheck": "node selfcheck.mjs"

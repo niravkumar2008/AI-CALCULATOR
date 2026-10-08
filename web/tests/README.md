@@ -1,4 +1,4 @@
-# web/tests: contract tests for the AI Calculator Worker
+﻿# web/tests: contract tests for the AI Calculator Worker
 
 Black-box tests over HTTP against the Worker in `web/api`, validated against
 `docs/web/openapi.yaml` (the contract). Node built-ins only (`node:test`, `node:assert`,
@@ -9,7 +9,8 @@ Black-box tests over HTTP against the Worker in `web/api`, validated against
 ```sh
 cd web/tests
 npm install
-npm run test:full     # mock + wrangler dev + all tests + clean shutdown
+npm run test:full     # mock + wrangler dev (3 passes) + all tests + clean shutdown
+# port 8787 busy (e.g. another wrangler)?  PORT=8797 MOCK_PORT=8798 npm run test:full
 ```
 
 `test:full` (`run-all.mjs`):
@@ -26,15 +27,25 @@ npm run test:full     # mock + wrangler dev + all tests + clean shutdown
 4. waits for `/healthz`, runs the tests one file at a time, then kills the wrangler
    process tree (`taskkill /T /F` on Windows) and deletes the temp state.
 
-Knobs: `KEEP_STATE=1` (use `../api/.wrangler/state` and `npm run db:migrate:local`),
-`TEST_FILES="solve.test.mjs"`, `PORT`, `MOCK_PORT`, `API_DIR`, `CONTRACT_PATH`.
+Everything binds and talks to `127.0.0.1` (`--ip 127.0.0.1`, BASE_URL and PUBLIC_URL
+`http://127.0.0.1:8787`): on Windows Node can resolve `localhost` to `::1` while workerd
+listens on IPv4 only. Messages that embed the host are checked against PUBLIC_URL's host.
+
+Three passes, each on fresh state: `main` (all files, MAX_NEW_TRIALS_PER_DAY=100000 so the
+suite's many trials fit), `quota` (limits.test.mjs with MONTHLY_SOLVES=2,
+MAX_NEW_TRIALS_PER_DAY=1) and `cap` (limits.test.mjs with GLOBAL_DAILY_CAP_USD=0.01).
+
+Knobs: `PASSES="main"`, `KEEP_STATE=1` (use `../api/.wrangler/state` and
+`npm run db:migrate:local`), `TEST_FILES="solve.test.mjs"` (main pass), `PORT` (any port
+other than 8787 calls `npx wrangler dev --local --port PORT` instead of `npm run dev`),
+`MOCK_PORT`, `API_DIR`, `CONTRACT_PATH`.
 
 Against a server you started yourself:
 
 ```sh
 npm run mock          # terminal 1 (only needed for solve tests)
 # terminal 2: wrangler dev with DEV_MODE=1, ANTHROPIC_BASE_URL=http://127.0.0.1:8788
-BASE_URL=http://localhost:8787 ADMIN_TOKEN=... npm test
+BASE_URL=http://127.0.0.1:8787 ADMIN_TOKEN=... npm test
 ```
 
 `npm run selfcheck` checks the kit with no Worker: every file parses, the contract loads
@@ -51,6 +62,8 @@ and all 76 schemas compile, and the mock streams correctly in all failure modes.
 | `solve.test.mjs` | SSE passthrough, new + legacy bodies, legacy model/system/max_tokens/text/tools not forwarded, 402 not linked / trial over (exact D2 message) / plan inactive, 400s, 6 MB decoded, 8 MB raw 413, upstream 500 -> 502, mid-stream `event: error`, one-in-flight 429, burst 7th 429. Every rejection asserts the mock call count did not move. |
 | `auth.test.mjs` | login always 204, age_confirmed, Origin and Content-Type 403, IP limit 429, cookie flags, single-use token, logout, /api/me 401. |
 | `account.test.mjs` | claim (dash / no dash / lower case / spaces), one invalid_code message, claim race (exactly one 201), 3-device limit 409, rename, label validation, cross-account 404, revoke -> device_revoked, trial starts on first claim only, DELETE /api/me confirm_email. |
+| `enrolment.test.mjs` | /v1/admin/hardware (401/400/201), register hw_secret, free month only for enrolled boards, once per board (revoke + re-register, re-enrol keeps trial_used), once per e-mail even after DELETE /api/me, unenrolled -> plan none + "No free month" reason, solve 402. |
+| `limits.test.mjs` | Runs only in the extra passes: quota (MONTHLY_SOLVES=2 -> 429 quota_exceeded; MAX_NEW_TRIALS_PER_DAY=1 -> claim 429 with the code not consumed) and cap (GLOBAL_DAILY_CAP_USD=0.01 -> 503 spend_cap). |
 | `firmware.test.mjs` | nothing published (fresh state only), admin 401s, bad image 400s, publish -> update true/false, image sha256. |
 | `dev.test.mjs` | `/__dev/*` is 404 for foreign Host headers (uses `node:http`, since fetch cannot set Host). |
 | `stage3.todo.test.mjs` | Stage 1: Stripe routes 404. Skipped TODOs for billing, store, webhook signature / idempotency / subscription states, quota and spend cap. |
@@ -59,8 +72,6 @@ and all 76 schemas compile, and the mock streams correctly in all failure modes.
 ## Skipped, and why
 
 - Billing, store and webhook (stage 3): not in stage 1.
-- `quota_exceeded` and `spend_cap`: need either a dev hook to preset usage or a run with
-  tiny limits; listed as TODOs.
 - Admin firmware tests: skipped when `ADMIN_TOKEN` is not given (`test:full` sets one).
 - "Nothing published": runs only with a fresh state (`FRESH_STATE=1`, set by `test:full`).
 
@@ -82,11 +93,12 @@ and all 76 schemas compile, and the mock streams correctly in all failure modes.
 
 ## Contract change proposals (not applied; for the lead)
 
-1. `PATCH /api/devices/{device_id}`: add `'400': BadRequest` (label validation). Tracked in
-   `contract.mjs` `KNOWN_GAPS` so the test passes with a warning until then.
-2. `/api/devices/claim` 400 description: mention `bad_request` for a bad `label` as well as
-   `invalid_code`.
-3. `/v1/firmware`, `/v1/pair/start`, `/v1/device/status`: no `429` is documented. If the
+1. (done in the 4c revision) PATCH 400 and the claim `bad_request` wording.
+2. Say which error `/v1/solve` returns for a linked board with plan `none` (no free month).
+   The tests assume 402 `subscription_inactive` with the device-status reason as message.
+3. Say whether a registration with a well-formed but wrong `hw_secret` is 201 (unenrolled)
+   or 400. The tests accept either.
+3b. `/v1/firmware`, `/v1/pair/start`, `/v1/device/status`: no `429` is documented. If the
    Worker rate-limits polling, add it.
 4. `/api/auth/logout` without a session: document `401` or say it is 204 either way.
 5. Stage 1 returns 404 for the Stripe routes; nothing to change, but `stage3.todo` skips

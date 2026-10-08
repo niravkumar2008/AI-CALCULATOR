@@ -1,4 +1,4 @@
-// Firmware OTA on Workers KV: /v1/firmware, /v1/firmware/image, admin publish.
+﻿// Firmware OTA on Workers KV: /v1/firmware, /v1/firmware/image, admin publish.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
@@ -15,7 +15,7 @@ const publish = (version, body, token = ADMIN_TOKEN) =>
   api('POST', `/v1/admin/firmware?version=${encodeURIComponent(version)}`, {
     rawBody: body,
     contentType: 'application/octet-stream',
-    headers: token === undefined ? {} : { 'x-admin-token': token },
+    headers: token === null ? {} : { 'x-admin-token': token },
   });
 
 const noAdmin = ADMIN_TOKEN ? false : 'ADMIN_TOKEN not given to the test run (npm run test:full sets one)';
@@ -34,7 +34,7 @@ test('firmware endpoints need a device token', async () => {
 });
 
 test('admin publish: missing or wrong token -> 401 unauthorized, nothing published', { skip: noAdmin }, async () => {
-  assertError(await publish('evil-1', image(), undefined), 401, 'unauthorized');
+  assertError(await publish('evil-1', image(), null), 401, 'unauthorized');
   assertError(await publish('evil-2', image(), 'wrong-' + ADMIN_TOKEN), 401, 'unauthorized');
   const d = await register();
   const r = await api('GET', '/v1/firmware', { token: d.token, headers: { 'x-firmware': 'x' } });

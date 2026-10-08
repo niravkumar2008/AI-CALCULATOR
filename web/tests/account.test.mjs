@@ -1,7 +1,7 @@
 // Portal account API: claim, rename, revoke, trial start, account deletion (tag "account").
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
-import { api, browser, assertError, register, login, claim, now, ORIGIN, DEVICE_ID_RE } from './lib.mjs';
+import { api, browser, assertError, register, registerEnrolled, login, claim, now, ORIGIN, DEVICE_ID_RE } from './lib.mjs';
 
 test('claim with the code as shown (XXXX-XXXX) -> 201 Device', async () => {
   const d = await register();
@@ -79,7 +79,7 @@ test('label validation: "<script>", empty, too long, control chars rejected', as
   // On claim the 400 is documented.
   assertError(await claim(u.cookie, d.pair_code, '<script>alert(1)</script>'), 400, 'bad_request');
   assert.equal((await claim(u.cookie, d.pair_code)).status, 201, 'a rejected label does not consume the code');
-  // On PATCH the 400 is a known contract gap (see contract.mjs KNOWN_GAPS).
+  // On PATCH too.
   for (const label of ['<script>', '', 'x'.repeat(41), 'a\u0001b']) {
     const r = await browser('PATCH', `/api/devices/${d.device_id}`, u.cookie, { label });
     assertError(r, 400, 'bad_request');
@@ -122,11 +122,11 @@ test('account endpoints need a session and the right Origin / Content-Type', asy
   assert.equal((await claim(u.cookie, d.pair_code)).status, 201, 'rejected CSRF attempts did not consume the code');
 });
 
-test('first claim starts the 30-day trial; a second device does not restart it', async () => {
+test('first claim of an enrolled board starts the 30-day trial; a second device does not restart it', async () => {
   const u = await login();
   const before = await api('GET', '/api/me', { cookie: u.cookie });
   assert.equal(before.json.plan, 'none');
-  const d1 = await register();
+  const d1 = await registerEnrolled();
   await claim(u.cookie, d1.pair_code);
   const s = await api('GET', '/v1/device/status', { token: d1.token });
   assert.equal(s.json.plan, 'trial');
@@ -139,7 +139,7 @@ test('first claim starts the 30-day trial; a second device does not restart it',
   assert.equal(me.json.usage.solves_this_month, 0);
 
   await new Promise((r) => setTimeout(r, 1100));
-  const d2 = await register();
+  const d2 = await registerEnrolled();
   await claim(u.cookie, d2.pair_code);
   const me2 = await api('GET', '/api/me', { cookie: u.cookie });
   assert.equal(me2.json.trial_ends_at, me.json.trial_ends_at, 'trial not restarted by another device');

@@ -102,7 +102,7 @@ test('not linked -> 402 device_not_linked with link URL and code, no upstream ca
 });
 
 test('trial over -> 402 subscription_inactive with the exact D2 message; status agrees', async () => {
-  const { dev, user } = await linkedDevice();
+  const { dev, user } = await linkedDevice({ trial: true });
   await devUser({ email: user.email, trial_ends_at: now() - 60 });
   const r = await noUpstream(() => solve(dev.token, solveBody()));
   const msg = assertError(r, 402, 'subscription_inactive');
@@ -128,9 +128,8 @@ test('plan inactive (subscription ended) -> 402 subscription_inactive, renew mes
   assert.ok(msg.includes('/account'), msg);
 });
 
-test('plan active via override still solves', async () => {
-  const { dev, user } = await linkedDevice();
-  await devUser({ email: user.email, trial_ends_at: now() - 60, plan_override: 'active' });
+test('trial (enrolled board, never expired) solves without any override', async () => {
+  const { dev } = await linkedDevice({ trial: true });
   const r = await solve(dev.token, solveBody());
   assert.equal(r.status, 200, r.text.slice(0, 300));
 });

@@ -42,8 +42,7 @@ const METHODS = ['get', 'post', 'put', 'patch', 'delete'];
  * change proposal in README.md. Remove an entry as soon as the contract documents it.
  */
 export const KNOWN_GAPS = [
-  // PATCH /api/devices/{id} validates `label` (Label pattern) but documents no 400.
-  ['patch', '/api/devices/{device_id}', '400'],
+  // (empty: PATCH /api/devices/{id} 400 is documented since the 4c contract revision)
 ];
 
 const esc = (s) => s.replace(/~/g, '~0').replace(/\//g, '~1');

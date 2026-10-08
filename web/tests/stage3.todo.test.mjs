@@ -44,8 +44,8 @@ describe('stripe webhook (stage 3)', () => {
   test('DB error -> 503 so Stripe retries', { skip: TODO });
 });
 
-describe('limits that need settled spend (stage 3 follow-up)', () => {
-  test('monthly solves at MONTHLY_SOLVES -> 429 quota_exceeded "Monthly AI limit reached..."', { skip: 'TODO: needs a /__dev/user field to preset usage, or a low MONTHLY_SOLVES run' });
-  test('global daily cap reached -> 503 spend_cap, no upstream call', { skip: 'TODO: needs a run with GLOBAL_DAILY_CAP_USD tiny' });
+// quota_exceeded and spend_cap now run in limits.test.mjs (quota / cap passes of test:full).
+describe('spend accounting (follow-up)', () => {
   test('settlement: usage row settled to real cost from message_delta.usage', { skip: 'TODO: needs a dev read of usage rows' });
+  test('monthly spend limit ($8) -> 429 quota_exceeded before the solve count limit', { skip: 'TODO: needs a run with MONTHLY_SPEND_USD tiny' });
 });

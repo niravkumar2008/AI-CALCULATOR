@@ -3,7 +3,7 @@ import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import {
-  api, assertError, register, login, claim, hwId, fakeIp, now,
+  api, assertError, register, registerEnrolled, login, claim, hwId, fakeIp, now,
   TOKEN_RE, PAIR_RE, DEVICE_ID_RE, PUBLIC_URL, browser,
 } from './lib.mjs';
 
@@ -66,8 +66,8 @@ test('status before claim: not linked, cannot solve, reason has the code', async
   assert.equal(r.json.account_hint, undefined, 'account_hint only when linked');
 });
 
-test('status after claim: linked, trial, can solve, masked account hint', async () => {
-  const d = await register();
+test('status after claim (enrolled board): linked, trial, can solve, masked account hint', async () => {
+  const d = await registerEnrolled();
   const u = await login();
   const c = await claim(u.cookie, d.pair_code);
   assert.equal(c.status, 201);

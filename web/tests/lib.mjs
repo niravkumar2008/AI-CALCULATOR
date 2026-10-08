@@ -3,7 +3,8 @@ import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { assertMatches } from './contract.mjs';
 
-export const BASE_URL = (process.env.BASE_URL || 'http://localhost:8787').replace(/\/$/, '');
+// 127.0.0.1, not localhost: Node may resolve localhost to ::1 while workerd binds IPv4 only.
+export const BASE_URL = (process.env.BASE_URL || 'http://127.0.0.1:8787').replace(/\/$/, '');
 export const MOCK_URL = (process.env.MOCK_URL || 'http://127.0.0.1:8788').replace(/\/$/, '');
 /** The site origin the Worker expects in Origin (derived from PUBLIC_URL). */
 export const PUBLIC_URL = (process.env.PUBLIC_URL || BASE_URL).replace(/\/$/, '');
@@ -124,11 +125,29 @@ export const legacyBody = (marker = 'OK') => ({
 });
 
 // ---------------------------------------------------------------- flows
+export const hwSecret = () => 'hs_' + crypto.randomBytes(32).toString('base64url');
+
+/** Enrol a board as QA would (POST /v1/admin/hardware). Returns { hw_id, hw_secret, trial_used }. */
+export async function enrol(hw_id = hwId(), hw_secret = hwSecret()) {
+  assert.ok(ADMIN_TOKEN, 'ADMIN_TOKEN is needed to enrol boards (npm run test:full sets one)');
+  const r = await api('POST', '/v1/admin/hardware', { body: { hw_id, hw_secret }, headers: { 'x-admin-token': ADMIN_TOKEN } });
+  assert.equal(r.status, 201, `enrol failed: ${r.status} ${r.text.slice(0, 200)}`);
+  return { hw_id, hw_secret, trial_used: r.json.trial_used };
+}
+
+/** extra: { hw_id, hw_secret, ip } */
 export async function register(extra = {}) {
   const hw = extra.hw_id || hwId();
-  const res = await api('POST', '/v1/device/register', { body: { hw_id: hw }, headers: { 'x-firmware': 'test-1.0' }, ip: extra.ip });
+  const body = extra.hw_secret ? { hw_id: hw, hw_secret: extra.hw_secret } : { hw_id: hw };
+  const res = await api('POST', '/v1/device/register', { body, headers: { 'x-firmware': 'test-1.0' }, ip: extra.ip });
   assert.equal(res.status, 201, `register failed: ${res.status} ${res.text}`);
-  return { ...res.json, hw_id: hw };
+  return { ...res.json, hw_id: hw, hw_secret: extra.hw_secret };
+}
+
+/** Register an enrolled board (eligible for the free month). */
+export async function registerEnrolled() {
+  const b = await enrol();
+  return register(b);
 }
 
 /** Sign in by magic link (dev outbox). Returns { email, cookie, sid }. */
@@ -170,12 +189,18 @@ export async function claim(cookie, code, label) {
   return browser('POST', '/api/devices/claim', cookie, body);
 }
 
-/** A registered device linked to a fresh account (trial started). */
-export async function linkedDevice() {
-  const dev = await register();
+/**
+ * A registered device linked to a fresh account that can solve.
+ * Default: an unenrolled board, made entitled with /__dev/user plan_override 'active', so
+ * solve tests do not depend on the trial rules. { trial: true }: an enrolled board whose
+ * claim starts the free month (needs POST /v1/admin/hardware).
+ */
+export async function linkedDevice({ trial = false } = {}) {
+  const dev = trial ? await registerEnrolled() : await register();
   const user = await login();
   const c = await claim(user.cookie, dev.pair_code);
   assert.equal(c.status, 201, `claim failed: ${c.status} ${c.text}`);
+  if (!trial) await devUser({ email: user.email, plan_override: 'active' });
   return { dev, user };
 }
 
