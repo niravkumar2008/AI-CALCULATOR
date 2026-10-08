@@ -41,6 +41,17 @@ export async function sha256Hex(data: string | Uint8Array | ArrayBuffer): Promis
   return hex(new Uint8Array(await crypto.subtle.digest("SHA-256", buf)));
 }
 
+/** HMAC-SHA256(key, message) as hex. */
+export async function hmacHex(key: string, message: string): Promise<string> {
+  const k = await crypto.subtle.importKey("raw", enc.encode(key), { name: "HMAC", hash: "SHA-256" }, false, ["sign"]);
+  return hex(new Uint8Array(await crypto.subtle.sign("HMAC", k, enc.encode(message))));
+}
+
+/** The peppered hash of an e-mail address (lower-cased), for trials_used and rate-limit keys. */
+export function emailHash(pepper: string, email: string): Promise<string> {
+  return hmacHex(pepper, email.trim().toLowerCase());
+}
+
 /** Constant-time string comparison (hashes both sides so lengths don't leak either). */
 export async function safeEqual(a: string, b: string): Promise<boolean> {
   const [ha, hb] = await Promise.all([

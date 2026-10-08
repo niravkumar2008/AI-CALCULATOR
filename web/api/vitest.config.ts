@@ -17,6 +17,8 @@ export default defineConfig(async () => {
             ANTHROPIC_BASE_URL: "https://anthropic.test",
             ADMIN_TOKEN: "admin-test-token-0123456789abcdefghijkl", // >= 32 chars (S10)
             DEV_MODE: "1",
+            // Needed by the tests that switch DEV_MODE off (production rules apply then).
+            TRIAL_PEPPER: "test-trial-pepper-0123456789abcdefghijklmnop",
           },
         },
       }),

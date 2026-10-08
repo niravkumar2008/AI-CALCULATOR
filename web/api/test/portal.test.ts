@@ -1,6 +1,6 @@
 import { env } from "cloudflare:workers";
 import { createExecutionContext, createScheduledController, waitOnExecutionContext } from "cloudflare:test";
-import { describe, expect, it } from "vitest";
+import { describe, expect, it, vi } from "vitest";
 import worker from "../src/index";
 import {
   ADMIN_TOKEN,
@@ -95,13 +95,26 @@ describe("sign-in", () => {
     expectError(await call("/api/auth/confirm", { body: { token }, headers: browserHeaders() }), 400, "invalid_token");
   });
 
-  it("Secure cookie when PUBLIC_URL is https", async () => {
-    const over = { PUBLIC_URL: "https://aicalc.example" };
+  it("production: e-mail via Resend with an https link, Secure cookie", async () => {
+    const over = { PUBLIC_URL: "https://aicalc.example", DEV_MODE: "", RESEND_API_KEY: "re_test", MAIL_FROM: "AI Calc <login@aicalc.example>" };
     const email = freshEmail();
     const h = { ...browserHeaders(), origin: "https://aicalc.example" };
-    await call("/api/auth/login", { body: { email, age_confirmed: true }, headers: h, env: over });
-    const { token, link } = (await call(`/__dev/outbox?email=${email}`, { env: over })).json;
-    expect(link).toBe(`https://aicalc.example/login/confirm?token=${token}`);
+    const mails: any[] = [];
+    vi.spyOn(globalThis, "fetch").mockImplementation(async (input: RequestInfo | URL, init?: RequestInit) => {
+      const req = new Request(input as RequestInfo, init);
+      expect(req.url).toBe("https://api.resend.com/emails");
+      expect(req.headers.get("authorization")).toBe("Bearer re_test");
+      mails.push(await req.json());
+      return Response.json({ id: "x" });
+    });
+    expect((await call("/api/auth/login", { body: { email, age_confirmed: true }, headers: h, env: over })).res.status).toBe(204);
+    expect(mails).toHaveLength(1);
+    expect(mails[0].to).toEqual([email]);
+    expect(mails[0].from).toBe("AI Calc <login@aicalc.example>");
+    const m = /https:\/\/aicalc\.example\/login\/confirm\?token=([A-Za-z0-9_-]{43})/.exec(mails[0].text);
+    expect(m).not.toBeNull();
+    const token = m![1]!;
+    expect(await dbFirst(`SELECT * FROM dev_outbox`)).toBeNull();
     const c = await call("/api/auth/confirm", { body: { token }, headers: h, env: over });
     expect(c.res.headers.get("set-cookie")).toMatch(/; HttpOnly; Secure; SameSite=Lax; Path=\/; Max-Age=2592000$/);
   });

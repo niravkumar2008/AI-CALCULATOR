@@ -1,7 +1,7 @@
 // Magic-link sign-in and sessions for the portal (/api/auth/*).
 
 import type { Config, Env } from "./env";
-import { newId, randomSecret, sha256Hex } from "./crypto";
+import { emailHash, newId, randomSecret, sha256Hex } from "./crypto";
 import { HttpError, MSG, empty } from "./http";
 import type { UserRow } from "./plan";
 import { devAllowed } from "./dev";
@@ -74,7 +74,7 @@ export async function login(req: Request, env: Env, cfg: Config, ctx: ExecutionC
   if (!ip.ok) throw rateLimited(ip);
   // S5: optional bot check (Cloudflare Turnstile), only when TURNSTILE_SECRET is set.
   if (turnstileSecret) await verifyTurnstile(turnstileSecret, body.turnstile_token, ipAddr);
-  const perEmail = await hitRateLimit(env.DB, `login:email:${await sha256Hex(email)}`, 3600, 5, now);
+  const perEmail = await hitRateLimit(env.DB, `login:email:${await emailHash(cfg.trialPepper, email)}`, 3600, 5, now);
   if (!perEmail.ok) return empty(204); // silently dropped: same answer as success
   // S5: global cap on sign-in e-mails per UTC day (protects the Resend quota and reputation).
   const daily = await hitRateLimit(env.DB, "login:mail:day", 86400, cfg.mailDailyCap, now);

@@ -1,7 +1,7 @@
 // Portal account endpoints: /api/me, /api/devices/*.
 
 import type { Config, Env } from "./env";
-import { normalisePairCode, sha256Hex } from "./crypto";
+import { emailHash, normalisePairCode } from "./crypto";
 import { HttpError, MSG, empty, json } from "./http";
 import { clearCookie, requireBrowserWrite, requireUser } from "./auth";
 import { type DeviceRow, monthUsage, planOf } from "./plan";
@@ -123,36 +123,33 @@ export async function claim(req: Request, env: Env, cfg: Config, now: number): P
   // Free month (decision D2, security review S1): only for an enrolled board whose trial was
   // never used, an account that never had one, and an e-mail (by hash) that never had one,
   // within the daily cap of new trials.
-  const emailHash = await sha256Hex(user.email.toLowerCase());
+  const emailH = await emailHash(cfg.trialPepper, user.email);
   const dayStart = Math.floor(now / 86400) * 86400;
-  const emailUsed = await env.DB.prepare(`SELECT 1 AS x FROM trials_used WHERE email_hash = ?1`).bind(emailHash).first();
+  const emailUsed = await env.DB.prepare(`SELECT 1 AS x FROM trials_used WHERE email_hash = ?1`).bind(emailH).first();
   const eligible =
     target.enrolled === 1 &&
     target.allowed_hw !== null &&
     target.trial_used_at === null &&
     user.trial_ends_at === null &&
     !emailUsed;
-  if (eligible) {
-    const today = await env.DB.prepare(`SELECT COUNT(*) AS n FROM trials_used WHERE used_at >= ?1`)
-      .bind(dayStart)
-      .first<{ n: number }>();
-    if ((today?.n ?? 0) >= cfg.maxNewTrialsPerDay) {
-      // Only the daily cap blocks: refuse without consuming the code, so nobody loses a trial.
-      throw new HttpError(429, "rate_limited", "Too many new free months today. Please try again tomorrow.", {
-        "retry-after": String(Math.max(1, dayStart + 86400 - now)),
-      });
-    }
-  }
+  const capError = () =>
+    // Only the daily cap blocks: refuse without consuming the code, so nobody loses a trial.
+    new HttpError(429, "rate_limited", "Too many new free months today. Please try again tomorrow.", {
+      "retry-after": String(Math.max(1, dayStart + 86400 - now)),
+    });
+  const trialsToday = async () =>
+    (await env.DB.prepare(`SELECT COUNT(*) AS n FROM trials_used WHERE used_at >= ?1`).bind(dayStart).first<{ n: number }>())
+      ?.n ?? 0;
+  if (eligible && (await trialsToday()) >= cfg.maxNewTrialsPerDay) throw capError();
 
-  // ---- one transaction: claim the code, link the device, and (if eligible) use up the board's
-  // and the e-mail's trial and start it. Each trial statement only runs if the one before it
-  // changed a row (changes() = 1), so a lost race leaves no half-granted trial.
-  const stmts = [
+  // ---- one transaction. The claim statements are the same for both paths.
+  const claimStmts = (chained: boolean) => [
     env.DB.prepare(
       `UPDATE pair_codes SET claimed_at = ?1
        WHERE code = ?2 AND claimed_at IS NULL AND expires_at > ?1
          AND device_id IN (SELECT id FROM devices WHERE user_id IS NULL AND revoked_at IS NULL)
-         AND (SELECT COUNT(*) FROM devices WHERE user_id = ?3 AND revoked_at IS NULL) < ?4`,
+         AND (SELECT COUNT(*) FROM devices WHERE user_id = ?3 AND revoked_at IS NULL) < ?4
+         ${chained ? "AND changes() = 1" : ""}`,
     ).bind(now, code, user.id, MAX_ACTIVE_DEVICES),
     env.DB.prepare(
       `UPDATE devices SET user_id = ?1, label = COALESCE(?2, label, 'Calculator')
@@ -160,27 +157,50 @@ export async function claim(req: Request, env: Env, cfg: Config, now: number): P
          AND user_id IS NULL AND revoked_at IS NULL AND changes() = 1`,
     ).bind(user.id, label, code, now),
   ];
+
+  let results: D1Result[];
   if (eligible) {
-    stmts.push(
+    // R2-5: for an eligible device the trial steps come FIRST and the code is claimed and the
+    // device linked only if all of them changed a row (changes() = 1 chains each statement to
+    // the one before). If the daily cap (or anything else) was hit between the pre-check and
+    // this batch, nothing is written at all. R2-4: every step re-checks the board and device.
+    results = await env.DB.batch([
       env.DB.prepare(
         `UPDATE hw_allow SET trial_used_at = ?1
-         WHERE hw_id = ?2 AND trial_used_at IS NULL AND changes() = 1
-           AND EXISTS (SELECT 1 FROM devices WHERE id = ?3 AND user_id = ?4 AND enrolled = 1)
-           AND EXISTS (SELECT 1 FROM users WHERE id = ?4 AND trial_ends_at IS NULL)
+         WHERE hw_id = ?2 AND trial_used_at IS NULL
+           AND EXISTS (SELECT 1 FROM devices WHERE id = ?3 AND hw_id = ?2 AND enrolled = 1
+                       AND user_id IS NULL AND revoked_at IS NULL)
+           AND EXISTS (SELECT 1 FROM pair_codes WHERE code = ?8 AND device_id = ?3
+                       AND claimed_at IS NULL AND expires_at > ?1)
+           AND EXISTS (SELECT 1 FROM users WHERE id = ?4 AND trial_ends_at IS NULL AND deleted_at IS NULL)
            AND NOT EXISTS (SELECT 1 FROM trials_used WHERE email_hash = ?5)
            AND (SELECT COUNT(*) FROM trials_used WHERE used_at >= ?6) < ?7`,
-      ).bind(now, target.allowed_hw, target.device_id, user.id, emailHash, dayStart, cfg.maxNewTrialsPerDay),
+      ).bind(now, target.allowed_hw, target.device_id, user.id, emailH, dayStart, cfg.maxNewTrialsPerDay, code),
       env.DB.prepare(
         `INSERT INTO trials_used (email_hash, used_at) SELECT ?1, ?2 WHERE changes() = 1
          ON CONFLICT (email_hash) DO NOTHING`,
-      ).bind(emailHash, now),
-      env.DB.prepare(`UPDATE users SET trial_ends_at = ?1 WHERE id = ?2 AND trial_ends_at IS NULL AND changes() = 1`).bind(
-        now + Math.round(cfg.trialDays * 86400),
-        user.id,
-      ),
-    );
+      ).bind(emailH, now),
+      env.DB.prepare(
+        `UPDATE users SET trial_ends_at = ?1
+         WHERE id = ?2 AND trial_ends_at IS NULL AND changes() = 1
+           AND EXISTS (SELECT 1 FROM hw_allow WHERE hw_id = ?3 AND trial_used_at = ?4)`,
+      ).bind(now + Math.round(cfg.trialDays * 86400), user.id, target.allowed_hw, now),
+      ...claimStmts(true),
+    ]);
+    if (results[0]?.meta.changes !== 1) {
+      // The trial wasn't granted and nothing was written. If the cap is why: 429, code kept.
+      // Otherwise the device is no longer eligible (e.g. its trial was used a moment ago):
+      // link it without a trial below.
+      if ((await trialsToday()) >= cfg.maxNewTrialsPerDay) throw capError();
+      results = await env.DB.batch(claimStmts(false));
+    } else if (results[3]?.meta.changes !== 1 || results[4]?.meta.changes !== 1) {
+      throw new Error("claim batch: trial granted but link failed"); // impossible by the chain above
+    } else {
+      results = results.slice(3);
+    }
+  } else {
+    results = await env.DB.batch(claimStmts(false));
   }
-  const results = await env.DB.batch(stmts);
   if (results[0]?.meta.changes !== 1 || results[1]?.meta.changes !== 1) {
     const again = await env.DB.prepare(`SELECT COUNT(*) AS n FROM devices WHERE user_id = ?1 AND revoked_at IS NULL`)
       .bind(user.id)

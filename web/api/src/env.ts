@@ -27,6 +27,8 @@ export interface Env {
   MAIL_DAILY_CAP?: string;
   TURNSTILE_SECRET?: string;
   STREAM_MAX_MS?: string;
+  TRIAL_PEPPER?: string;
+  REGISTER_GLOBAL_PER_HOUR?: string;
 }
 
 export class ConfigError extends Error {}
@@ -52,7 +54,15 @@ export interface Config {
   maxNewTrialsPerDay: number;
   mailDailyCap: number;
   streamMaxMs: number;
+  /** HMAC key for e-mail hashes (trials_used, login rate-limit keys). */
+  trialPepper: string;
+  registerGlobalPerHour: number;
 }
+
+/** A reservation older than this no longer blocks the device and is settled by the cron. */
+export const STALE_INFLIGHT_SEC = 600;
+/** Used only with DEV_MODE=1 (local). Production must set the TRIAL_PEPPER secret. */
+export const DEV_TRIAL_PEPPER = "dev-only-trial-pepper-not-secret-0123456789";
 
 function num(v: string | undefined, def: number, name: string, min = 0): number {
   const s = (v ?? "").trim();
@@ -65,6 +75,15 @@ function num(v: string | undefined, def: number, name: string, min = 0): number 
 const EFFORTS = new Set(["low", "medium", "high", "xhigh", "max"]);
 
 export function config(env: Env): Config {
+  const c = parseConfig(env);
+  // R2-6: a solve must always finish (or be cut) before its reservation counts as stale.
+  if (c.streamMaxMs + c.upstreamTimeoutMs >= STALE_INFLIGHT_SEC * 1000) {
+    throw new ConfigError("STREAM_MAX_MS + UPSTREAM_TIMEOUT_MS must be under the 600 s stale limit");
+  }
+  return c;
+}
+
+function parseConfig(env: Env): Config {
   let url: URL;
   try {
     url = new URL((env.PUBLIC_URL ?? "").trim() || "http://localhost:8787");
@@ -78,6 +97,13 @@ export function config(env: Env): Config {
   const devMode = (env.DEV_MODE ?? "").trim() === "1";
   // S8: production must be https (cookies, links on the calculator); http only for local dev.
   if (url.protocol !== "https:" && !devMode) throw new ConfigError("PUBLIC_URL must be https unless DEV_MODE=1");
+  // R2-7: DEV_MODE only makes sense for a local PUBLIC_URL; refuse it anywhere else.
+  if (devMode && url.hostname !== "localhost" && url.hostname !== "127.0.0.1") {
+    throw new ConfigError("DEV_MODE=1 is only allowed with a localhost PUBLIC_URL");
+  }
+  // R2-3: e-mail hashes are HMACs with a secret pepper.
+  const pepper = (env.TRIAL_PEPPER ?? "").trim();
+  if (!devMode && pepper.length < 32) throw new ConfigError("TRIAL_PEPPER (32+ characters) is required");
   const local = url.protocol === "http:" && (url.hostname === "localhost" || url.hostname === "127.0.0.1");
   const base = ((env.ANTHROPIC_BASE_URL ?? "").trim() || "https://api.anthropic.com").replace(/\/+$/, "");
   return {
@@ -102,5 +128,7 @@ export function config(env: Env): Config {
     mailDailyCap: Math.floor(num(env.MAIL_DAILY_CAP, 80, "MAIL_DAILY_CAP")),
     // S12: total time one solve may stream (the calculator gives up long before).
     streamMaxMs: num(env.STREAM_MAX_MS, 290_000, "STREAM_MAX_MS", 50),
+    trialPepper: pepper.length >= 32 ? pepper : DEV_TRIAL_PEPPER,
+    registerGlobalPerHour: Math.floor(num(env.REGISTER_GLOBAL_PER_HOUR, 200, "REGISTER_GLOBAL_PER_HOUR")),
   };
 }

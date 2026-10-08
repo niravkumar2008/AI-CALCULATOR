@@ -23,9 +23,31 @@ export function monthOf(t: number): string {
 export function clientIp(req: Request, devAllowed: boolean): string {
   if (devAllowed) {
     const dev = req.headers.get("x-dev-client-ip")?.trim();
-    if (dev) return dev.slice(0, 64);
+    if (dev) return ipKey(dev.slice(0, 64));
   }
-  return req.headers.get("cf-connecting-ip")?.trim() || "unknown";
+  return ipKey(req.headers.get("cf-connecting-ip")?.trim() || "unknown");
+}
+
+/**
+ * Rate-limit key for an address (R2-1): IPv4 as is, IPv6 by its /64 prefix (one customer
+ * usually owns a whole /64, so per-address limits would be trivial to dodge).
+ */
+export function ipKey(ip: string): string {
+  let a = ip.trim().toLowerCase();
+  if (!a.includes(":")) return a;
+  a = a.replace(/^\[|\]$/g, "").split("%")[0]!;
+  const v4 = /^(?:0{0,4}:){0,5}(?:ffff:)?(\d{1,3}(?:\.\d{1,3}){3})$/.exec(a.replace(/^::/, ""));
+  if (v4 && a.startsWith("::")) return v4[1]!; // IPv4-mapped / compatible
+  const parts = a.split("::");
+  if (parts.length > 2) return a;
+  const head = parts[0] ? parts[0].split(":") : [];
+  const tail = parts.length === 2 && parts[1] ? parts[1].split(":") : [];
+  if (tail.length && tail[tail.length - 1]!.includes(".")) return a; // embedded IPv4: keep whole
+  const fill = parts.length === 2 ? 8 - head.length - tail.length : 0;
+  if (fill < 0) return a;
+  const groups = [...head, ...new Array(fill).fill("0"), ...tail];
+  if (groups.length !== 8 || !groups.every((g) => /^[0-9a-f]{1,4}$/.test(g))) return a;
+  return groups.slice(0, 4).map((g) => parseInt(g, 16).toString(16)).join(":") + "::/64";
 }
 
 /**
@@ -123,6 +145,22 @@ export async function hitRateLimit(
     .first<{ count: number }>();
   const count = row?.count ?? Number.MAX_SAFE_INTEGER;
   return { ok: count <= limit, retryAfter };
+}
+
+/** Reads a counter without writing (for global limits checked before any write). */
+export async function peekRateLimit(
+  db: D1Database,
+  key: string,
+  windowSec: number,
+  limit: number,
+  now = nowSec(),
+): Promise<RateResult> {
+  const start = Math.floor(now / windowSec) * windowSec;
+  const cur = await db
+    .prepare(`SELECT count FROM rate_limits WHERE key = ?1 AND window_start = ?2`)
+    .bind(key, start)
+    .first<{ count: number }>();
+  return { ok: (cur?.count ?? 0) < limit, retryAfter: Math.max(1, start + windowSec - now) };
 }
 
 export function rateLimited(r: RateResult, message: string = MSG.rateLimited): HttpError {

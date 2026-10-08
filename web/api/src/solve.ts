@@ -1,7 +1,7 @@
 // POST /v1/solve: validate, reserve the worst-case cost atomically (fail closed), call Claude,
 // stream the SSE reply through byte for byte, then settle the real cost (PLAN section 4).
 
-import type { Config, Env } from "./env";
+import { type Config, type Env, STALE_INFLIGHT_SEC } from "./env";
 import { newId } from "./crypto";
 import { authDevice, checkLimits, checkLinkedAndEntitled } from "./device";
 import { HttpError, MSG, errorBody } from "./http";
@@ -12,8 +12,7 @@ import { dayOf, hitRateLimit, monthOf, rateLimited, readBody } from "./util";
 export const MAX_BODY_BYTES = 8 * 1024 * 1024;
 export const MAX_DECODED_BYTES = 5 * 1024 * 1024; // contract: 5 MiB decoded in total, else 400
 export const BURST_PER_MIN = 6;
-/** A reservation older than this no longer blocks the device (the Worker probably died). */
-export const STALE_INFLIGHT_SEC = 600;
+export { STALE_INFLIGHT_SEC };
 /** Give up on a silent upstream stream after this long (the calculator gives up after 120 s). */
 export const STREAM_IDLE_MS = 300_000;
 
@@ -183,33 +182,28 @@ async function reserve(
   throw new HttpError(503, "spend_cap", MSG.spendCap, { "retry-after": "60" }); // lost a race: fail closed
 }
 
+// R2-9: the usage row and spend_daily change in one batch (one transaction); spend_daily only
+// moves when this call really flipped the reservation (changes() = 1).
 async function release(env: Env, r: Reservation): Promise<void> {
-  const res = await env.DB.prepare(
-    `UPDATE usage SET state = 'failed', cost_micro = 0 WHERE id = ?1 AND state = 'reserved'`,
-  )
-    .bind(r.id)
-    .run();
-  if (res.meta.changes === 1) {
-    await env.DB.prepare(`UPDATE spend_daily SET reserved_micro = MAX(0, reserved_micro - ?1) WHERE day = ?2`)
-      .bind(r.reservedMicro, r.day)
-      .run();
-  }
+  await env.DB.batch([
+    env.DB.prepare(`UPDATE usage SET state = 'failed', cost_micro = 0 WHERE id = ?1 AND state = 'reserved'`).bind(r.id),
+    env.DB.prepare(
+      `UPDATE spend_daily SET reserved_micro = MAX(0, reserved_micro - ?1) WHERE day = ?2 AND changes() = 1`,
+    ).bind(r.reservedMicro, r.day),
+  ]);
 }
 
 async function settle(env: Env, r: Reservation, costMicro: number, model: string | null, u: TokenUsage | null) {
-  const res = await env.DB.prepare(
-    `UPDATE usage SET state = 'settled', cost_micro = ?1, model = COALESCE(?2, model), input_tokens = ?3, output_tokens = ?4
-     WHERE id = ?5 AND state = 'reserved'`,
-  )
-    .bind(costMicro, model, u ? u.input + u.cacheWrite + u.cacheRead : null, u ? u.output : null, r.id)
-    .run();
-  if (res.meta.changes === 1) {
-    await env.DB.prepare(
-      `UPDATE spend_daily SET reserved_micro = MAX(0, reserved_micro - ?1), settled_micro = settled_micro + ?2 WHERE day = ?3`,
-    )
-      .bind(r.reservedMicro, costMicro, r.day)
-      .run();
-  }
+  await env.DB.batch([
+    env.DB.prepare(
+      `UPDATE usage SET state = 'settled', cost_micro = ?1, model = COALESCE(?2, model), input_tokens = ?3, output_tokens = ?4
+       WHERE id = ?5 AND state = 'reserved'`,
+    ).bind(costMicro, model, u ? u.input + u.cacheWrite + u.cacheRead : null, u ? u.output : null, r.id),
+    env.DB.prepare(
+      `UPDATE spend_daily SET reserved_micro = MAX(0, reserved_micro - ?1), settled_micro = settled_micro + ?2
+       WHERE day = ?3 AND changes() = 1`,
+    ).bind(r.reservedMicro, costMicro, r.day),
+  ]);
 }
 
 // ------------------------------------------------------------ SSE usage scanner

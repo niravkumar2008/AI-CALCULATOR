@@ -20,7 +20,7 @@ import {
 } from "./plan";
 import { HW_SECRET_RE } from "./admin";
 import { devAllowed } from "./dev";
-import { clientIp, hitRateLimit, onlyKeys, rateLimited, readJsonObject } from "./util";
+import { clientIp, hitRateLimit, peekRateLimit, onlyKeys, rateLimited, readJsonObject } from "./util";
 
 const HW_ID_RE = /^calc-[0-9a-f]{12}$/;
 
@@ -70,8 +70,14 @@ export async function register(req: Request, env: Env, cfg: Config, now: number)
   if (body.hw_secret !== undefined && (typeof body.hw_secret !== "string" || !HW_SECRET_RE.test(body.hw_secret))) {
     throw new HttpError(400, "bad_request", "hw_secret is malformed.");
   }
+  // R2-1: a global cap, checked with a read before anything is written, so a flood from
+  // rotating addresses can't turn into unlimited D1 writes.
+  const global = await peekRateLimit(env.DB, "register:global", 3600, cfg.registerGlobalPerHour, now);
+  if (!global.ok) throw rateLimited(global, "Registration is busy. Please try again later.");
   const rl = await hitRateLimit(env.DB, `register:ip:${clientIp(req, devAllowed(req, cfg))}`, 3600, 5, now);
   if (!rl.ok) throw rateLimited(rl, "Too many registrations from this network. Try again in an hour.");
+  const g = await hitRateLimit(env.DB, "register:global", 3600, cfg.registerGlobalPerHour, now);
+  if (!g.ok) throw rateLimited(g, "Registration is busy. Please try again later.");
 
   const fw = req.headers.get("x-firmware")?.trim();
   const fwVersion = fw && fw.length <= 32 && /^[\x20-\x7e]+$/.test(fw) ? fw : null;
