@@ -1,0 +1,95 @@
+# web/tests: contract tests for the AI Calculator Worker
+
+Black-box tests over HTTP against the Worker in `web/api`, validated against
+`docs/web/openapi.yaml` (the contract). Node built-ins only (`node:test`, `node:assert`,
+`fetch`); dev dependencies are `ajv`, `ajv-formats` and `yaml`.
+
+## Run
+
+```sh
+cd web/tests
+npm install
+npm run test:full     # mock + wrangler dev + all tests + clean shutdown
+```
+
+`test:full` (`run-all.mjs`):
+
+1. starts the mock Anthropic server on `127.0.0.1:8788`;
+2. creates a throw-away state directory and applies the D1 migrations to it
+   (`npx wrangler d1 migrations apply DB --local --persist-to <tmp>`), so every run starts
+   with an empty DB and KV;
+3. runs `npm run dev -- --persist-to <tmp> --var KEY:VALUE ...` in `../api`. Settings go in
+   as `--var` flags (DEV_MODE=1, ANTHROPIC_BASE_URL=mock, a fake ANTHROPIC_API_KEY,
+   PUBLIC_URL, a random ADMIN_TOKEN, an empty RESEND_API_KEY so no real e-mail is ever
+   sent). It never creates or edits `../api/.dev.vars`; in wrangler 4.x `--var` overrides
+   both `wrangler.toml` vars and `.dev.vars`;
+4. waits for `/healthz`, runs the tests one file at a time, then kills the wrangler
+   process tree (`taskkill /T /F` on Windows) and deletes the temp state.
+
+Knobs: `KEEP_STATE=1` (use `../api/.wrangler/state` and `npm run db:migrate:local`),
+`TEST_FILES="solve.test.mjs"`, `PORT`, `MOCK_PORT`, `API_DIR`, `CONTRACT_PATH`.
+
+Against a server you started yourself:
+
+```sh
+npm run mock          # terminal 1 (only needed for solve tests)
+# terminal 2: wrangler dev with DEV_MODE=1, ANTHROPIC_BASE_URL=http://127.0.0.1:8788
+BASE_URL=http://localhost:8787 ADMIN_TOKEN=... npm test
+```
+
+`npm run selfcheck` checks the kit with no Worker: every file parses, the contract loads
+and all 76 schemas compile, and the mock streams correctly in all failure modes.
+
+## Files
+
+| File | Covers |
+|---|---|
+| `contract.mjs` | Loads `openapi.yaml`; `assertMatches(method, path, res)` fails on any undocumented status, wrong content type, schema mismatch ($refs, oneOf), missing documented header (Retry-After, Set-Cookie) or a body on a bodiless response. Every `api()` call in the tests goes through it. |
+| `mock-anthropic.mjs` | `POST /v1/messages` with a real-format SSE stream (usage in `message_start` and `message_delta`, the calculator's JSON answer in text deltas). Checks `x-api-key` and `anthropic-version`. Markers in the image bytes: `FAIL500`, `MIDFAIL`, `SLOW`. `GET /__last`, `GET /__count`, `POST /__reset`. |
+| `lib.mjs` | HTTP helper, register / login (dev outbox) / claim flows, test images. |
+| `device.test.mjs` | register (shape, formats, hw_id 400, 5/IP/hour 429), pair/start, status before/after claim, 401 unauthorized vs device_revoked, x-device-id optional. |
+| `solve.test.mjs` | SSE passthrough, new + legacy bodies, legacy model/system/max_tokens/text/tools not forwarded, 402 not linked / trial over (exact D2 message) / plan inactive, 400s, 6 MB decoded, 8 MB raw 413, upstream 500 -> 502, mid-stream `event: error`, one-in-flight 429, burst 7th 429. Every rejection asserts the mock call count did not move. |
+| `auth.test.mjs` | login always 204, age_confirmed, Origin and Content-Type 403, IP limit 429, cookie flags, single-use token, logout, /api/me 401. |
+| `account.test.mjs` | claim (dash / no dash / lower case / spaces), one invalid_code message, claim race (exactly one 201), 3-device limit 409, rename, label validation, cross-account 404, revoke -> device_revoked, trial starts on first claim only, DELETE /api/me confirm_email. |
+| `firmware.test.mjs` | nothing published (fresh state only), admin 401s, bad image 400s, publish -> update true/false, image sha256. |
+| `dev.test.mjs` | `/__dev/*` is 404 for foreign Host headers (uses `node:http`, since fetch cannot set Host). |
+| `stage3.todo.test.mjs` | Stage 1: Stripe routes 404. Skipped TODOs for billing, store, webhook signature / idempotency / subscription states, quota and spend cap. |
+| `EXAM_MODE_REGRESSION_PLAN.md` | Exam-mode behaviours stage 2 must pin in `tests/tests.cpp`, with proposed code. |
+
+## Skipped, and why
+
+- Billing, store and webhook (stage 3): not in stage 1.
+- `quota_exceeded` and `spend_cap`: need either a dev hook to preset usage or a run with
+  tiny limits; listed as TODOs.
+- Admin firmware tests: skipped when `ADMIN_TOKEN` is not given (`test:full` sets one).
+- "Nothing published": runs only with a fresh state (`FRESH_STATE=1`, set by `test:full`).
+
+## Conventions the Worker must honour (beyond openapi.yaml)
+
+1. **`x-dev-client-ip`**: when DEV_MODE=1 and the host is localhost, IP rate limits are keyed
+   on this header if present. Without it all tests share one IP and the 5-per-hour register
+   limit stops the suite after 5 devices. Never honoured outside DEV_MODE.
+2. `/__dev/outbox?email=` matches e-mails case-insensitively and returns `{link, token}`
+   (status 200) for the last sign-in e-mail.
+3. `/__dev/user` `plan_override` takes a `PlanState` (`active`, `past_due`, `inactive`, ...).
+   `inactive` with an expired trial means "subscription ended".
+4. State-changing calls without a body (logout, revoke) are sent with
+   `Content-Type: application/json` and body `{}`.
+5. Images are forwarded to Anthropic unchanged (the mock reads its markers from the bytes).
+6. Device firmware endpoints work for unlinked devices (an unpaired calculator must still update).
+7. A pair code rejected with `device_limit`, or with a bad label, stays claimable.
+8. On a 429 the `Retry-After` header is always sent (the contract documents it).
+
+## Contract change proposals (not applied; for the lead)
+
+1. `PATCH /api/devices/{device_id}`: add `'400': BadRequest` (label validation). Tracked in
+   `contract.mjs` `KNOWN_GAPS` so the test passes with a warning until then.
+2. `/api/devices/claim` 400 description: mention `bad_request` for a bad `label` as well as
+   `invalid_code`.
+3. `/v1/firmware`, `/v1/pair/start`, `/v1/device/status`: no `429` is documented. If the
+   Worker rate-limits polling, add it.
+4. `/api/auth/logout` without a session: document `401` or say it is 204 either way.
+5. Stage 1 returns 404 for the Stripe routes; nothing to change, but `stage3.todo` skips
+   contract validation for them on purpose.
+6. `ImagePart.data` "Max 6 MB decoded" vs the 8 MB raw limit: say MB = 10^6 or MiB, since
+   6 MiB decoded is already over 8 MiB of base64 (one of the two limits is unreachable).
