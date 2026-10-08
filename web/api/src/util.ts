@@ -106,6 +106,13 @@ export async function hitRateLimit(
   now = nowSec(),
 ): Promise<RateResult> {
   const start = Math.floor(now / windowSec) * windowSec;
+  const retryAfter = Math.max(1, start + windowSec - now);
+  // S4: once over the limit, stop writing (a flood of refused requests costs only reads).
+  const cur = await db
+    .prepare(`SELECT count FROM rate_limits WHERE key = ?1 AND window_start = ?2`)
+    .bind(key, start)
+    .first<{ count: number }>();
+  if (cur && cur.count >= limit) return { ok: false, retryAfter };
   const row = await db
     .prepare(
       `INSERT INTO rate_limits (key, window_start, count) VALUES (?1, ?2, 1)
@@ -115,7 +122,7 @@ export async function hitRateLimit(
     .bind(key, start)
     .first<{ count: number }>();
   const count = row?.count ?? Number.MAX_SAFE_INTEGER;
-  return { ok: count <= limit, retryAfter: Math.max(1, start + windowSec - now) };
+  return { ok: count <= limit, retryAfter };
 }
 
 export function rateLimited(r: RateResult, message: string = MSG.rateLimited): HttpError {

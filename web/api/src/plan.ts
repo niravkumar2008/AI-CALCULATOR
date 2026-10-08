@@ -2,7 +2,7 @@
 // (PLAN section 3 "Entitlement" and section 4 item 5).
 
 import type { Config } from "./env";
-import { HttpError, MSG, msgNotLinked, msgSubEnded, msgTrialOver } from "./http";
+import { HttpError, MSG, msgNoTrial, msgNotLinked, msgSubEnded, msgTrialOver } from "./http";
 import { dayOf, monthOf } from "./util";
 import { currentPairCode } from "./pairing";
 import { formatPairCode } from "./crypto";
@@ -28,6 +28,7 @@ export interface DeviceRow {
   created_at: number;
   last_seen_at: number | null;
   revoked_at: number | null;
+  enrolled?: number;
 }
 
 export interface PlanInfo {
@@ -147,7 +148,8 @@ export async function loadUser(db: D1Database, userId: string): Promise<UserRow 
 }
 
 export function notEntitledError(cfg: Config, p: PlanInfo): HttpError {
-  return new HttpError(402, "subscription_inactive", p.hadSubscription ? msgSubEnded(cfg) : msgTrialOver(cfg));
+  const msg = p.hadSubscription ? msgSubEnded(cfg) : p.plan === "none" ? msgNoTrial(cfg) : msgTrialOver(cfg);
+  return new HttpError(402, "subscription_inactive", msg);
 }
 
 export async function notLinkedError(db: D1Database, cfg: Config, deviceId: string, now: number): Promise<HttpError> {

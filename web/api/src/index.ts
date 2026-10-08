@@ -2,13 +2,13 @@
 // Contract: docs/web/openapi.yaml. Plan: docs/web/PLAN.md.
 
 import { claim, deleteMe, getMe, renameDevice, revokeDevice } from "./account";
-import { publishFirmware } from "./admin";
+import { enrolHardware, publishFirmware } from "./admin";
 import { confirm, login, logout } from "./auth";
 import { devRoute } from "./dev";
 import { firmwareCheck, firmwareImage, pairStart, register, status } from "./device";
 import { ConfigError, type Config, type Env, config } from "./env";
 import { HttpError, MSG, error, json } from "./http";
-import { solve } from "./solve";
+import { STALE_INFLIGHT_SEC, solve } from "./solve";
 import { nowSec } from "./util";
 
 type Handler = (req: Request, env: Env, cfg: Config, ctx: ExecutionContext, now: number, param: string) => Promise<Response>;
@@ -23,6 +23,7 @@ const ROUTES: Record<string, Partial<Record<string, Handler>>> = {
   "/v1/firmware": { GET: (r, e, _c, _x, n) => firmwareCheck(r, e, n) },
   "/v1/firmware/image": { GET: (r, e, _c, _x, n) => firmwareImage(r, e, n) },
   "/v1/admin/firmware": { POST: (r, e) => publishFirmware(r, e) },
+  "/v1/admin/hardware": { POST: (r, e, _c, _x, n) => enrolHardware(r, e, n) },
   // ---- portal
   "/api/auth/login": { POST: (r, e, c, x, n) => login(r, e, c, x, n) },
   "/api/auth/confirm": { POST: (r, e, c, _x, n) => confirm(r, e, c, n) },
@@ -67,10 +68,23 @@ export async function handle(req: Request, env: Env, ctx: ExecutionContext): Pro
   }
 }
 
-/** Daily clean-up (cron in wrangler.toml). */
+/** Hourly clean-up (cron in wrangler.toml). */
 export async function cleanup(env: Env, now: number): Promise<void> {
   const unusedSince = now - 30 * 86400;
+  const stale = now - STALE_INFLIGHT_SEC;
   await env.DB.batch([
+    // S12: reservations whose Worker died are settled at their worst case (safe for the caps).
+    env.DB.prepare(
+      `UPDATE spend_daily SET
+         reserved_micro = MAX(0, reserved_micro - (SELECT COALESCE(SUM(reserved_micro), 0) FROM usage
+                                                   WHERE state = 'reserved' AND started_at < ?1 AND day = spend_daily.day)),
+         settled_micro = settled_micro + (SELECT COALESCE(SUM(reserved_micro), 0) FROM usage
+                                          WHERE state = 'reserved' AND started_at < ?1 AND day = spend_daily.day)
+       WHERE day IN (SELECT day FROM usage WHERE state = 'reserved' AND started_at < ?1)`,
+    ).bind(stale),
+    env.DB.prepare(
+      `UPDATE usage SET state = 'settled', cost_micro = reserved_micro WHERE state = 'reserved' AND started_at < ?1`,
+    ).bind(stale),
     // Unlinked calculators unused for 30 days (their token can't spend money anyway).
     env.DB.prepare(
       `DELETE FROM pair_codes WHERE device_id IN

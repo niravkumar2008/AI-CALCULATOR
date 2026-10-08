@@ -4,17 +4,50 @@ import type { Env } from "./env";
 import { safeEqual, sha256Hex } from "./crypto";
 import type { FirmwareMeta } from "./device";
 import { HttpError, MSG, json } from "./http";
-import { readBody } from "./util";
+import { onlyKeys, readBody, readJsonObject } from "./util";
 
 export const MIN_IMAGE_BYTES = 100_000; // an ESP32-S3 Arduino image is well over this
 export const MAX_IMAGE_BYTES = 0x1e0000; // the app slot size in min_spiffs.csv (1.9 MB)
 const VERSION_RE = /^[0-9A-Za-z.\-]{1,32}$/;
 
-export async function publishFirmware(req: Request, env: Env): Promise<Response> {
+export const MIN_ADMIN_TOKEN_CHARS = 32;
+
+/** Admin API: off (404) unless ADMIN_TOKEN is at least 32 characters (S10); constant-time check. */
+async function requireAdmin(req: Request, env: Env): Promise<void> {
   const adminToken = (env.ADMIN_TOKEN ?? "").trim();
-  if (!adminToken) throw new HttpError(404, "not_found", MSG.notFound); // admin API off
+  if (adminToken.length < MIN_ADMIN_TOKEN_CHARS) throw new HttpError(404, "not_found", MSG.notFound);
   const given = req.headers.get("x-admin-token") ?? "";
   if (!(await safeEqual(given, adminToken))) throw new HttpError(401, "unauthorized", "Admin token not accepted.");
+}
+
+const HW_ID_RE = /^calc-[0-9a-f]{12}$/;
+export const HW_SECRET_RE = /^hs_[A-Za-z0-9_-]{43}$/;
+
+/** POST /v1/admin/hardware: enrol one board at QA (scripts/enroll-board.mjs). */
+export async function enrolHardware(req: Request, env: Env, now: number): Promise<Response> {
+  await requireAdmin(req, env);
+  const body = await readJsonObject(req, 4096);
+  onlyKeys(body, ["hw_id", "hw_secret"]);
+  if (typeof body.hw_id !== "string" || !HW_ID_RE.test(body.hw_id)) {
+    throw new HttpError(400, "bad_request", "hw_id must look like calc-0123456789ab.");
+  }
+  if (typeof body.hw_secret !== "string" || !HW_SECRET_RE.test(body.hw_secret)) {
+    throw new HttpError(400, "bad_request", "hw_secret must be hs_ followed by 43 base64url characters.");
+  }
+  // Re-enrolling replaces the secret but never resets trial_used_at.
+  const row = await env.DB.prepare(
+    `INSERT INTO hw_allow (hw_id, secret_hash, enrolled_at) VALUES (?1, ?2, ?3)
+     ON CONFLICT (hw_id) DO UPDATE SET secret_hash = excluded.secret_hash, enrolled_at = excluded.enrolled_at
+     RETURNING trial_used_at`,
+  )
+    .bind(body.hw_id, await sha256Hex(body.hw_secret), now)
+    .first<{ trial_used_at: number | null }>();
+  console.log(JSON.stringify({ event: "board_enrolled", hw_id: body.hw_id }));
+  return json({ hw_id: body.hw_id, trial_used: row?.trial_used_at != null }, 201);
+}
+
+export async function publishFirmware(req: Request, env: Env): Promise<Response> {
+  await requireAdmin(req, env);
 
   const version = new URL(req.url).searchParams.get("version") ?? "";
   if (!VERSION_RE.test(version)) throw new HttpError(400, "bad_request", "version must be 1-32 of 0-9 A-Z a-z . -");

@@ -396,6 +396,7 @@ describe("every error a calculator can get (no upstream call on any of them)", (
       solveBody([{ media_type: "image/jpeg", data: JPEG_B64.slice(0, 12) + "A".repeat(7_000_000) }]),
     ];
     for (const body of cases) {
+      await dbRun(`DELETE FROM rate_limits WHERE 1 = ?`, 1); // the burst limit is checked before the body (S6)
       const r = await call("/v1/solve", {
         body: typeof body === "string" ? body : JSON.stringify(body),
         headers: { ...deviceHeaders(device), "content-type": "application/json" },
@@ -513,14 +514,15 @@ describe("streaming failures and settlement", () => {
     expect(u.cost_micro).toBe(Math.ceil(100 * 2 + 1000 * 2 * 1.25 + 2000 * 2 * 0.1 + 300 * 10));
   });
 
-  it("refusal fallback is requested by default and can be turned off", async () => {
+  it("refusal fallback is off by default and can be turned on", async () => {
     const { device } = await linkedDevice();
     const { calls } = mockAnthropic();
     await solve(device);
-    expect(calls[0]!.headers.get("anthropic-beta")).toBe("server-side-fallback-2026-07-01");
-    expect(calls[0]!.body.fallbacks).toBe("default");
-    await solve(device, solveBody(), { REFUSAL_FALLBACK: "0" });
-    expect(calls[1]!.headers.get("anthropic-beta")).toBeNull();
-    expect(calls[1]!.body.fallbacks).toBeUndefined();
+    // S3: off by default (wrangler.toml sets "0"; unset is off too).
+    expect(calls[0]!.headers.get("anthropic-beta")).toBeNull();
+    expect(calls[0]!.body.fallbacks).toBeUndefined();
+    await solve(device, solveBody(), { REFUSAL_FALLBACK: "1" });
+    expect(calls[1]!.headers.get("anthropic-beta")).toBe("server-side-fallback-2026-07-01");
+    expect(calls[1]!.body.fallbacks).toBe("default");
   });
 });

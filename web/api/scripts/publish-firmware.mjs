@@ -24,6 +24,11 @@ if (!token) {
   process.exit(2);
 }
 const base = (urlArg || process.env.API_URL || "http://localhost:8787").replace(/\/+$/, "");
+const u = new URL(base);
+if (u.protocol !== "https:" && !(u.protocol === "http:" && (u.hostname === "localhost" || u.hostname === "127.0.0.1"))) {
+  console.error(`Refusing ${u.protocol}//${u.host}: use https (plain http is only allowed to localhost).`);
+  process.exit(2);
+}
 const image = await readFile(file);
 const localSha = createHash("sha256").update(image).digest("hex");
 

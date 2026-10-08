@@ -104,6 +104,10 @@ export function msgTrialOver(c: Config): string {
 export function msgSubEnded(c: Config): string {
   return clamp110(`Your subscription has ended. Renew at ${c.host}/account to keep using AI.`);
 }
+/** Linked, but this board/account can't get a free month (S1). */
+export function msgNoTrial(c: Config): string {
+  return clamp110(`No free month for this calculator. Subscribe at ${c.host}/account to use AI.`);
+}
 export function msgNotLinked(c: Config, code: string): string {
   return clamp110(`Link this calculator: go to ${c.host}/link and enter code ${code}`);
 }

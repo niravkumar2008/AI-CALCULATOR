@@ -3,6 +3,8 @@ import { env } from "cloudflare:workers";
 import { afterEach, beforeEach, vi } from "vitest";
 
 const TABLES = [
+  "hw_allow",
+  "trials_used",
   "usage",
   "spend_daily",
   "pair_codes",

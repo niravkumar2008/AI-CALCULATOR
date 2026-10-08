@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "dev": "wrangler dev --local --port 8787",
+    "dev": "wrangler dev --local --port 8787 --var DEV_MODE:1",
     "dev:test": "wrangler dev --local --port 8787 --var DEV_MODE:1",
     "test": "vitest run",
     "typecheck": "tsc --noEmit",

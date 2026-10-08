@@ -23,6 +23,10 @@ export interface Env {
   MAIL_FROM?: string;
   ADMIN_TOKEN?: string;
   DEV_MODE?: string;
+  MAX_NEW_TRIALS_PER_DAY?: string;
+  MAIL_DAILY_CAP?: string;
+  TURNSTILE_SECRET?: string;
+  STREAM_MAX_MS?: string;
 }
 
 export class ConfigError extends Error {}
@@ -45,6 +49,9 @@ export interface Config {
   upstreamTimeoutMs: number;
   anthropicBaseUrl: string;
   devMode: boolean;
+  maxNewTrialsPerDay: number;
+  mailDailyCap: number;
+  streamMaxMs: number;
 }
 
 function num(v: string | undefined, def: number, name: string, min = 0): number {
@@ -68,6 +75,9 @@ export function config(env: Env): Config {
   const publicUrl = (url.origin + url.pathname).replace(/\/+$/, "");
   const effort = (env.EFFORT ?? "").trim() || "high";
   if (!EFFORTS.has(effort)) throw new ConfigError("bad setting EFFORT");
+  const devMode = (env.DEV_MODE ?? "").trim() === "1";
+  // S8: production must be https (cookies, links on the calculator); http only for local dev.
+  if (url.protocol !== "https:" && !devMode) throw new ConfigError("PUBLIC_URL must be https unless DEV_MODE=1");
   const local = url.protocol === "http:" && (url.hostname === "localhost" || url.hostname === "127.0.0.1");
   const base = ((env.ANTHROPIC_BASE_URL ?? "").trim() || "https://api.anthropic.com").replace(/\/+$/, "");
   return {
@@ -87,6 +97,10 @@ export function config(env: Env): Config {
     refusalFallback: (env.REFUSAL_FALLBACK ?? "").trim() === "1",
     upstreamTimeoutMs: num(env.UPSTREAM_TIMEOUT_MS, 60000, "UPSTREAM_TIMEOUT_MS", 1000),
     anthropicBaseUrl: base,
-    devMode: (env.DEV_MODE ?? "").trim() === "1",
+    devMode,
+    maxNewTrialsPerDay: Math.floor(num(env.MAX_NEW_TRIALS_PER_DAY, 20, "MAX_NEW_TRIALS_PER_DAY")),
+    mailDailyCap: Math.floor(num(env.MAIL_DAILY_CAP, 80, "MAIL_DAILY_CAP")),
+    // S12: total time one solve may stream (the calculator gives up long before).
+    streamMaxMs: num(env.STREAM_MAX_MS, 290_000, "STREAM_MAX_MS", 50),
   };
 }

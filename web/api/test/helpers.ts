@@ -80,15 +80,48 @@ export interface Device {
   expires_at: number;
 }
 
-export async function registerDevice(over: Partial<Env> = {}): Promise<Device> {
+export const ADMIN_TOKEN = "admin-test-token-0123456789abcdefghijkl";
+
+export function newHwSecret(): string {
+  const b = new Uint8Array(32);
+  crypto.getRandomValues(b);
+  let s = "";
+  for (const x of b) s += String.fromCharCode(x);
+  return "hs_" + btoa(s).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/, "");
+}
+
+export function nextHwId(): string {
   hwCounter++;
+  return `calc-${hwCounter.toString(16).padStart(12, "0")}`;
+}
+
+export async function enrolBoard(hwId: string, secret = newHwSecret()) {
+  const r = await call("/v1/admin/hardware", {
+    body: { hw_id: hwId, hw_secret: secret },
+    headers: { "x-admin-token": ADMIN_TOKEN },
+  });
+  expect(r.res.status, r.text).toBe(201);
+  return { secret, json: r.json };
+}
+
+/**
+ * Registers a device. By default the board is enrolled first (QA step) and registers with
+ * its secret, so it is eligible for the free month. `enrolled: false` = a dev/fake board.
+ */
+export async function registerDevice(
+  over: Partial<Env> = {},
+  opts: { enrolled?: boolean; hwId?: string; secret?: string } = {},
+): Promise<Device & { hw_id: string; hw_secret?: string }> {
+  const hwId = opts.hwId ?? nextHwId();
+  let secret = opts.secret;
+  if (opts.enrolled !== false && secret === undefined) secret = (await enrolBoard(hwId)).secret;
   const r = await call("/v1/device/register", {
-    body: { hw_id: `calc-${hwCounter.toString(16).padStart(12, "0")}` },
+    body: secret === undefined ? { hw_id: hwId } : { hw_id: hwId, hw_secret: secret },
     headers: { "x-dev-client-ip": freshIp(), "x-firmware": "stage13" },
     env: over,
   });
   expect(r.res.status, r.text).toBe(201);
-  return r.json as Device;
+  return { ...(r.json as Device), hw_id: hwId, hw_secret: secret };
 }
 
 export function deviceHeaders(d: Device): Record<string, string> {

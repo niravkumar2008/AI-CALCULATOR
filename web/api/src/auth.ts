@@ -61,17 +61,27 @@ export async function requireUser(req: Request, env: Env, now: number): Promise<
 export async function login(req: Request, env: Env, cfg: Config, ctx: ExecutionContext, now: number) {
   requireBrowserWrite(req, cfg);
   const body = await readJsonObject(req, BODY_LIMIT);
-  onlyKeys(body, ["email", "age_confirmed"]);
+  const turnstileSecret = (env.TURNSTILE_SECRET ?? "").trim();
+  onlyKeys(body, turnstileSecret ? ["email", "age_confirmed", "turnstile_token"] : ["email", "age_confirmed"]);
   if (!isEmail(body.email)) throw new HttpError(400, "bad_request", "Please enter a valid e-mail address.");
   if (body.age_confirmed !== true) {
     throw new HttpError(400, "bad_request", "Please confirm the account holder is 18 or older.");
   }
   const email = body.email.trim().toLowerCase();
 
-  const ip = await hitRateLimit(env.DB, `login:ip:${clientIp(req, devAllowed(req, cfg))}`, 3600, 20, now);
+  const ipAddr = clientIp(req, devAllowed(req, cfg));
+  const ip = await hitRateLimit(env.DB, `login:ip:${ipAddr}`, 3600, 20, now);
   if (!ip.ok) throw rateLimited(ip);
+  // S5: optional bot check (Cloudflare Turnstile), only when TURNSTILE_SECRET is set.
+  if (turnstileSecret) await verifyTurnstile(turnstileSecret, body.turnstile_token, ipAddr);
   const perEmail = await hitRateLimit(env.DB, `login:email:${await sha256Hex(email)}`, 3600, 5, now);
   if (!perEmail.ok) return empty(204); // silently dropped: same answer as success
+  // S5: global cap on sign-in e-mails per UTC day (protects the Resend quota and reputation).
+  const daily = await hitRateLimit(env.DB, "login:mail:day", 86400, cfg.mailDailyCap, now);
+  if (!daily.ok) {
+    console.error(JSON.stringify({ event: "mail_daily_cap_reached", cap: cfg.mailDailyCap }));
+    return empty(204);
+  }
 
   const token = randomSecret();
   await env.DB.prepare(
@@ -88,6 +98,28 @@ export async function login(req: Request, env: Env, cfg: Config, ctx: ExecutionC
   // Sent in the background so the response time doesn't depend on the mail provider.
   if ((env.RESEND_API_KEY ?? "").trim()) ctx.waitUntil(sendLoginMail(env, cfg, email, link));
   return empty(204);
+}
+
+const TURNSTILE_URL = "https://challenges.cloudflare.com/turnstile/v0/siteverify";
+
+async function verifyTurnstile(secret: string, token: unknown, ip: string): Promise<void> {
+  if (typeof token !== "string" || token.length < 1 || token.length > 2048) {
+    throw new HttpError(403, "forbidden", "Please complete the check and try again.");
+  }
+  const form = new FormData();
+  form.append("secret", secret);
+  form.append("response", token);
+  if (ip !== "unknown") form.append("remoteip", ip);
+  let ok = false;
+  try {
+    const r = await fetch(TURNSTILE_URL, { method: "POST", body: form });
+    const j = (await r.json()) as { success?: boolean };
+    ok = r.ok && j.success === true;
+  } catch (e) {
+    console.error(JSON.stringify({ event: "turnstile_failed", detail: String(e).slice(0, 200) }));
+    throw new HttpError(503, "unavailable", MSG.unavailable); // fail closed
+  }
+  if (!ok) throw new HttpError(403, "forbidden", "Please complete the check and try again.");
 }
 
 async function sendLoginMail(env: Env, cfg: Config, to: string, link: string): Promise<void> {

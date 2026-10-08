@@ -1,7 +1,7 @@
 // Portal account endpoints: /api/me, /api/devices/*.
 
 import type { Config, Env } from "./env";
-import { normalisePairCode } from "./crypto";
+import { normalisePairCode, sha256Hex } from "./crypto";
 import { HttpError, MSG, empty, json } from "./http";
 import { clearCookie, requireBrowserWrite, requireUser } from "./auth";
 import { type DeviceRow, monthUsage, planOf } from "./plan";
@@ -104,10 +104,50 @@ export async function claim(req: Request, env: Env, cfg: Config, now: number): P
   const code = normalisePairCode(body.code);
   if (!code) throw new HttpError(400, "invalid_code", MSG.invalidCode);
 
-  // Atomic: the code flips to claimed only if it is unexpired, unclaimed, its device is still
-  // unlinked and not revoked, and the account has fewer than 3 active calculators. The device is
-  // linked in the same transaction.
-  const [upd] = await env.DB.batch([
+  // ---- read-only pre-checks (the batch below re-checks everything atomically)
+  const target = await env.DB.prepare(
+    `SELECT d.id AS device_id, d.hw_id, d.enrolled, h.hw_id AS allowed_hw, h.trial_used_at
+     FROM pair_codes p JOIN devices d ON d.id = p.device_id
+     LEFT JOIN hw_allow h ON h.hw_id = d.hw_id
+     WHERE p.code = ?1 AND p.claimed_at IS NULL AND p.expires_at > ?2
+       AND d.user_id IS NULL AND d.revoked_at IS NULL`,
+  )
+    .bind(code, now)
+    .first<{ device_id: string; hw_id: string | null; enrolled: number; allowed_hw: string | null; trial_used_at: number | null }>();
+  if (!target) throw new HttpError(400, "invalid_code", MSG.invalidCode);
+  const active = await env.DB.prepare(`SELECT COUNT(*) AS n FROM devices WHERE user_id = ?1 AND revoked_at IS NULL`)
+    .bind(user.id)
+    .first<{ n: number }>();
+  if ((active?.n ?? 0) >= MAX_ACTIVE_DEVICES) throw new HttpError(409, "device_limit", MSG.deviceLimit);
+
+  // Free month (decision D2, security review S1): only for an enrolled board whose trial was
+  // never used, an account that never had one, and an e-mail (by hash) that never had one,
+  // within the daily cap of new trials.
+  const emailHash = await sha256Hex(user.email.toLowerCase());
+  const dayStart = Math.floor(now / 86400) * 86400;
+  const emailUsed = await env.DB.prepare(`SELECT 1 AS x FROM trials_used WHERE email_hash = ?1`).bind(emailHash).first();
+  const eligible =
+    target.enrolled === 1 &&
+    target.allowed_hw !== null &&
+    target.trial_used_at === null &&
+    user.trial_ends_at === null &&
+    !emailUsed;
+  if (eligible) {
+    const today = await env.DB.prepare(`SELECT COUNT(*) AS n FROM trials_used WHERE used_at >= ?1`)
+      .bind(dayStart)
+      .first<{ n: number }>();
+    if ((today?.n ?? 0) >= cfg.maxNewTrialsPerDay) {
+      // Only the daily cap blocks: refuse without consuming the code, so nobody loses a trial.
+      throw new HttpError(429, "rate_limited", "Too many new free months today. Please try again tomorrow.", {
+        "retry-after": String(Math.max(1, dayStart + 86400 - now)),
+      });
+    }
+  }
+
+  // ---- one transaction: claim the code, link the device, and (if eligible) use up the board's
+  // and the e-mail's trial and start it. Each trial statement only runs if the one before it
+  // changed a row (changes() = 1), so a lost race leaves no half-granted trial.
+  const stmts = [
     env.DB.prepare(
       `UPDATE pair_codes SET claimed_at = ?1
        WHERE code = ?2 AND claimed_at IS NULL AND expires_at > ?1
@@ -117,33 +157,43 @@ export async function claim(req: Request, env: Env, cfg: Config, now: number): P
     env.DB.prepare(
       `UPDATE devices SET user_id = ?1, label = COALESCE(?2, label, 'Calculator')
        WHERE id = (SELECT device_id FROM pair_codes WHERE code = ?3 AND claimed_at = ?4)
-         AND user_id IS NULL AND revoked_at IS NULL`,
+         AND user_id IS NULL AND revoked_at IS NULL AND changes() = 1`,
     ).bind(user.id, label, code, now),
-  ]);
-  if (upd?.meta.changes !== 1) {
-    const active = await env.DB.prepare(
-      `SELECT COUNT(*) AS n FROM devices WHERE user_id = ?1 AND revoked_at IS NULL`,
-    )
+  ];
+  if (eligible) {
+    stmts.push(
+      env.DB.prepare(
+        `UPDATE hw_allow SET trial_used_at = ?1
+         WHERE hw_id = ?2 AND trial_used_at IS NULL AND changes() = 1
+           AND EXISTS (SELECT 1 FROM devices WHERE id = ?3 AND user_id = ?4 AND enrolled = 1)
+           AND EXISTS (SELECT 1 FROM users WHERE id = ?4 AND trial_ends_at IS NULL)
+           AND NOT EXISTS (SELECT 1 FROM trials_used WHERE email_hash = ?5)
+           AND (SELECT COUNT(*) FROM trials_used WHERE used_at >= ?6) < ?7`,
+      ).bind(now, target.allowed_hw, target.device_id, user.id, emailHash, dayStart, cfg.maxNewTrialsPerDay),
+      env.DB.prepare(
+        `INSERT INTO trials_used (email_hash, used_at) SELECT ?1, ?2 WHERE changes() = 1
+         ON CONFLICT (email_hash) DO NOTHING`,
+      ).bind(emailHash, now),
+      env.DB.prepare(`UPDATE users SET trial_ends_at = ?1 WHERE id = ?2 AND trial_ends_at IS NULL AND changes() = 1`).bind(
+        now + Math.round(cfg.trialDays * 86400),
+        user.id,
+      ),
+    );
+  }
+  const results = await env.DB.batch(stmts);
+  if (results[0]?.meta.changes !== 1 || results[1]?.meta.changes !== 1) {
+    const again = await env.DB.prepare(`SELECT COUNT(*) AS n FROM devices WHERE user_id = ?1 AND revoked_at IS NULL`)
       .bind(user.id)
       .first<{ n: number }>();
-    if ((active?.n ?? 0) >= MAX_ACTIVE_DEVICES) throw new HttpError(409, "device_limit", MSG.deviceLimit);
+    if ((again?.n ?? 0) >= MAX_ACTIVE_DEVICES) throw new HttpError(409, "device_limit", MSG.deviceLimit);
     throw new HttpError(400, "invalid_code", MSG.invalidCode);
   }
 
-  const dev = await env.DB.prepare(
-    `SELECT ${DEVICE_COLS} FROM devices WHERE id = (SELECT device_id FROM pair_codes WHERE code = ?1)`,
-  )
-    .bind(code)
+  const dev = await env.DB.prepare(`SELECT ${DEVICE_COLS} FROM devices WHERE id = ?1`)
+    .bind(target.device_id)
     .first<DeviceRow>();
   if (!dev) throw new Error("claimed device vanished");
-  // The free month starts on the account's first calculator, once per account (decision D2).
-  await env.DB.batch([
-    env.DB.prepare(`UPDATE users SET trial_ends_at = ?1 WHERE id = ?2 AND trial_ends_at IS NULL`).bind(
-      now + Math.round(cfg.trialDays * 86400),
-      user.id,
-    ),
-    env.DB.prepare(`DELETE FROM pair_codes WHERE device_id = ?1 AND claimed_at IS NULL`).bind(dev.id),
-  ]);
+  await env.DB.prepare(`DELETE FROM pair_codes WHERE device_id = ?1 AND claimed_at IS NULL`).bind(dev.id).run();
   return json(deviceJson(dev), 201);
 }
 

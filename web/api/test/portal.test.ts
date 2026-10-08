@@ -3,6 +3,7 @@ import { createExecutionContext, createScheduledController, waitOnExecutionConte
 import { describe, expect, it } from "vitest";
 import worker from "../src/index";
 import {
+  ADMIN_TOKEN,
   browserHeaders,
   call,
   claimCode,
@@ -63,12 +64,12 @@ describe("sign-in", () => {
   });
 
   it("x-dev-client-ip is ignored without DEV_MODE", async () => {
-    const off = { DEV_MODE: "" };
+    const off = { DEV_MODE: "", PUBLIC_URL: "https://aicalc.example" };
     for (let i = 0; i < 20; i++) {
-      const h = { ...browserHeaders(), "x-dev-client-ip": `203.0.113.${i}`, "cf-connecting-ip": "203.0.113.200" };
+      const h = { ...browserHeaders(), origin: "https://aicalc.example", "x-dev-client-ip": `203.0.113.${i}`, "cf-connecting-ip": "203.0.113.200" };
       expect((await call("/api/auth/login", { body: { email: freshEmail(), age_confirmed: true }, headers: h, env: off })).res.status).toBe(204);
     }
-    const h = { ...browserHeaders(), "x-dev-client-ip": "203.0.113.99", "cf-connecting-ip": "203.0.113.200" };
+    const h = { ...browserHeaders(), origin: "https://aicalc.example", "x-dev-client-ip": "203.0.113.99", "cf-connecting-ip": "203.0.113.200" };
     expectError(await call("/api/auth/login", { body: { email: freshEmail(), age_confirmed: true }, headers: h, env: off }), 429, "rate_limited");
   });
 
@@ -308,7 +309,7 @@ describe("firmware", () => {
     for (let i = 1; i < size; i++) b[i] = i & 255;
     return b;
   }
-  const admin = { "x-admin-token": "admin-test-token-0123456789", "content-type": "application/octet-stream" };
+  const admin = { "x-admin-token": ADMIN_TOKEN, "content-type": "application/octet-stream" };
 
   it("publish, check and download (works for unlinked devices too)", async () => {
     const d = await registerDevice();
@@ -367,15 +368,21 @@ describe("firmware", () => {
 
 describe("dev endpoints", () => {
   it("are refused without DEV_MODE or off localhost", async () => {
-    expectError(await call("/__dev/outbox?email=a@example.com", { env: { DEV_MODE: "" } }), 404, "not_found");
-    expectError(await call("/__dev/user", { body: { email: "a@example.com" }, env: { DEV_MODE: "" } }), 404, "not_found");
+    const prod = { DEV_MODE: "", PUBLIC_URL: "https://aicalc.example" };
+    expectError(await call("/__dev/outbox?email=a@example.com", { env: prod }), 404, "not_found");
+    expectError(await call("/__dev/user", { body: { email: "a@example.com" }, env: prod }), 404, "not_found");
     expectError(await call("/__dev/outbox?email=a@example.com", { base: "https://aicalc.example" }), 404, "not_found");
     expectError(await call("/__dev/user", { body: { email: "a@example.com" }, base: "https://api.aicalc.example" }), 404, "not_found");
   });
 
   it("no outbox rows are written without DEV_MODE", async () => {
     const email = freshEmail();
-    await call("/api/auth/login", { body: { email, age_confirmed: true }, headers: browserHeaders(), env: { DEV_MODE: "" } });
+    const r = await call("/api/auth/login", {
+      body: { email, age_confirmed: true },
+      headers: { ...browserHeaders(), origin: "https://aicalc.example" },
+      env: { DEV_MODE: "", PUBLIC_URL: "https://aicalc.example" },
+    });
+    expect(r.res.status).toBe(204);
     expect(await dbFirst(`SELECT * FROM dev_outbox`)).toBeNull();
   });
 

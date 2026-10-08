@@ -18,6 +18,7 @@ import {
   spendCapError,
   worstCaseMicro,
 } from "./plan";
+import { HW_SECRET_RE } from "./admin";
 import { devAllowed } from "./dev";
 import { clientIp, hitRateLimit, onlyKeys, rateLimited, readJsonObject } from "./util";
 
@@ -30,7 +31,7 @@ export async function authDevice(req: Request, env: Env, now: number): Promise<D
   const token = m?.[1] ?? "";
   if (!DEVICE_TOKEN_RE.test(token)) throw new HttpError(401, "unauthorized", MSG.unknownDevice);
   const dev = await env.DB.prepare(
-    `SELECT id, hw_id, fw_version, user_id, label, created_at, last_seen_at, revoked_at
+    `SELECT id, hw_id, fw_version, user_id, label, created_at, last_seen_at, revoked_at, enrolled
      FROM devices WHERE token_hash = ?1`,
   )
     .bind(await sha256Hex(token))
@@ -40,7 +41,8 @@ export async function authDevice(req: Request, env: Env, now: number): Promise<D
 
   const hw = req.headers.get("x-device-id")?.trim();
   const fw = req.headers.get("x-firmware")?.trim();
-  const newHw = hw && HW_ID_RE.test(hw) ? hw : dev.hw_id;
+  // An enrolled board's hw_id is fixed at registration (it keys the once-per-board trial).
+  const newHw = dev.enrolled !== 1 && hw && HW_ID_RE.test(hw) ? hw : dev.hw_id;
   const newFw = fw && fw.length <= 32 && /^[\x20-\x7e]+$/.test(fw) ? fw : dev.fw_version;
   // Write at most once a minute unless something changed (review item M2).
   if (newHw !== dev.hw_id || newFw !== dev.fw_version || dev.last_seen_at === null || now - dev.last_seen_at >= 60) {
@@ -61,22 +63,34 @@ function linkUrl(cfg: Config, code: string): string {
 // ------------------------------------------------------------ POST /v1/device/register
 export async function register(req: Request, env: Env, cfg: Config, now: number): Promise<Response> {
   const body = await readJsonObject(req, 4096);
-  onlyKeys(body, ["hw_id"]);
+  onlyKeys(body, ["hw_id", "hw_secret"]);
   if (typeof body.hw_id !== "string" || !HW_ID_RE.test(body.hw_id)) {
     throw new HttpError(400, "bad_request", "hw_id must look like calc-0123456789ab.");
+  }
+  if (body.hw_secret !== undefined && (typeof body.hw_secret !== "string" || !HW_SECRET_RE.test(body.hw_secret))) {
+    throw new HttpError(400, "bad_request", "hw_secret is malformed.");
   }
   const rl = await hitRateLimit(env.DB, `register:ip:${clientIp(req, devAllowed(req, cfg))}`, 3600, 5, now);
   if (!rl.ok) throw rateLimited(rl, "Too many registrations from this network. Try again in an hour.");
 
   const fw = req.headers.get("x-firmware")?.trim();
   const fwVersion = fw && fw.length <= 32 && /^[\x20-\x7e]+$/.test(fw) ? fw : null;
+  // S1: enrolled only with the secret registered for this board at QA. A wrong or missing
+  // secret gives the same response, just an unenrolled device (it can link but gets no trial).
+  let enrolled = 0;
+  if (typeof body.hw_secret === "string") {
+    const allow = await env.DB.prepare(`SELECT 1 AS x FROM hw_allow WHERE hw_id = ?1 AND secret_hash = ?2`)
+      .bind(body.hw_id, await sha256Hex(body.hw_secret))
+      .first();
+    enrolled = allow ? 1 : 0;
+  }
   const deviceId = newId("dev_");
   const token = newDeviceToken();
   await env.DB.prepare(
-    `INSERT INTO devices (id, token_hash, hw_id, fw_version, user_id, label, created_at, last_seen_at)
-     VALUES (?1, ?2, ?3, ?4, NULL, NULL, ?5, ?5)`,
+    `INSERT INTO devices (id, token_hash, hw_id, fw_version, user_id, label, created_at, last_seen_at, enrolled)
+     VALUES (?1, ?2, ?3, ?4, NULL, NULL, ?5, ?5, ?6)`,
   )
-    .bind(deviceId, await sha256Hex(token), body.hw_id, fwVersion, now)
+    .bind(deviceId, await sha256Hex(token), body.hw_id, fwVersion, now, enrolled)
     .run();
   const { code, expiresAt } = await issuePairCode(env.DB, deviceId, now);
   return json(

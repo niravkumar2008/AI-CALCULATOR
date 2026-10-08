@@ -15,7 +15,7 @@ export default defineConfig(async () => {
             TEST_MIGRATIONS: migrations,
             ANTHROPIC_API_KEY: "sk-test-not-a-real-key",
             ANTHROPIC_BASE_URL: "https://anthropic.test",
-            ADMIN_TOKEN: "admin-test-token-0123456789",
+            ADMIN_TOKEN: "admin-test-token-0123456789abcdefghijkl", // >= 32 chars (S10)
             DEV_MODE: "1",
           },
         },

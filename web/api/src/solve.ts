@@ -308,8 +308,13 @@ export async function solve(
   ctx: ExecutionContext,
   now: number,
 ): Promise<Response> {
-  // Order (contract): auth -> body -> linked -> entitled -> burst -> in-flight -> monthly -> global.
+  // Order: auth -> linked -> entitled -> burst, all BEFORE the (up to 8 MiB) body is read and
+  // parsed (security review S6), then body -> in-flight -> monthly -> global (the reservation).
   const dev = await authDevice(req, env, now);
+  const { user } = await checkLinkedAndEntitled(env, cfg, dev, now);
+  const burst = await hitRateLimit(env.DB, `solve:dev:${dev.id}`, 60, BURST_PER_MIN, now);
+  if (!burst.ok) throw rateLimited(burst, MSG.burst);
+
   const raw = await readBody(req, MAX_BODY_BYTES, new HttpError(413, "payload_too_large", MSG.tooLarge));
   let body: unknown;
   try {
@@ -318,10 +323,6 @@ export async function solve(
     throw bad("The request body is not valid JSON.");
   }
   const parsed = parseSolveBody(body);
-  const { user } = await checkLinkedAndEntitled(env, cfg, dev, now);
-
-  const burst = await hitRateLimit(env.DB, `solve:dev:${dev.id}`, 60, BURST_PER_MIN, now);
-  if (!burst.ok) throw rateLimited(burst, MSG.burst);
 
   const apiKey = (env.ANTHROPIC_API_KEY ?? "").trim();
   if (!apiKey) {
@@ -367,12 +368,22 @@ export async function solve(
   const writer = writable.getWriter();
   const scanner = new UsageScanner();
   const reader = upstream.body.getReader();
+  const deadline = Date.now() + cfg.streamMaxMs; // S12: total stream time cap
   const pump = (async () => {
     let clientGone = false;
     let failed = false;
+    let timedOut = false;
     try {
       for (;;) {
-        const { done, value } = await readWithIdle(reader, STREAM_IDLE_MS);
+        const left = deadline - Date.now();
+        if (left <= 0) {
+          timedOut = true;
+          throw new Error("stream time cap");
+        }
+        const { done, value } = await readWithIdle(reader, Math.min(STREAM_IDLE_MS, left)).catch((e) => {
+          if (Date.now() >= deadline) timedOut = true;
+          throw e;
+        });
         if (done) break;
         scanner.feed(value);
         try {
@@ -394,7 +405,11 @@ export async function solve(
 
     // Settle: real cost when the final usage arrived; worst case if the message started but its
     // final usage never came (errs on the safe side); release when nothing was generated.
-    if (scanner.sawDelta) {
+    if (timedOut) {
+      // Cut off by the time cap: keep the worst case (the final usage may never be known).
+      await settle(env, r, r.reservedMicro, scanner.model, scanner.usage);
+      log(dev.id, "settled_worst_case_timeout", r.reservedMicro);
+    } else if (scanner.sawDelta) {
       const cost = actualCostMicro(cfg, scanner.usage);
       await settle(env, r, cost, scanner.model, scanner.usage);
       log(dev.id, "settled", cost);
