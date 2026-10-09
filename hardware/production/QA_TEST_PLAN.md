@@ -13,8 +13,8 @@ Do this to every board, assembled or bare, on the day the box arrives. 5 min per
 ### A1. Visual, no tools
 | # | Look at | Pass |
 |---|---|---|
-| 1 | Silk reads **"AI CALC v14 2026-10-04"** (or the v15 string) | Matches the version you ordered |
-| 2 | Board outline and the slot for the e-paper ribbon (1.0 × 14 mm near x 172.9) | Slot is open and clean, no fibre fuzz |
+| 1 | Silk reads **"AI CALC v14 2026-10-04"** (or **"AI CALC v15-LCD 2026-10-08"** on a v15-LCD board) | Matches the version you ordered |
+| 2 | Board outline and the slot for the e-paper ribbon (1.0 × 14 mm near x 172.9; **v15-LCD:** the LCD-tail slot, 1.0 × 20 mm at x 180.5–181.5) | Slot is open and clean, no fibre fuzz |
 | 3 | Locating slots H2/H9/H13/H14 and hole H6, screw notches at the bottom (38.94 c-c) | Open, no copper burr. **Keep a bare board as the gauge** for the paper dry fit |
 | 4 | ENIG finish on the 50 key pads (B side) | Even gold, no scratches or dull patches; a dull pad = oxidised nickel, reject |
 | 5 | Edge of the ESP32 antenna overhang (left edge) | Not chipped; the antenna keep-out has no copper |
@@ -26,7 +26,7 @@ Compare each item with the preview table in `ORDER_WALKTHROUGH.md` step 5.
 | 6 | U1 ESP32-S3-MINI-1 | Pin-1 dot at the silk mark, all castellations wetted, no bridge between neighbours | Every castellation shows a fillet |
 | 7 | U6 TCA8418 (QFN-24) | Orientation dot matches silk; look along each side for bridges; exposed pad not floating (board flat) | No bridge, package flat |
 | 8 | U2, U3, U4, U5, U7 (SOT-23-5/6) and Q1–Q3 | Orientation per the walkthrough table (these are the parts the CPL rotates: Q1 180, Q2 270, U2/U3/U7 270, U4/U5 180) | Pin 1 where the table says |
-| 9 | J1 (camera FPC, `CamReversed`) and J2 (e-paper FPC) | Latch closed and intact, 24 pins all soldered, no solder in the slot | Latch flips freely once |
+| 9 | J1 (camera FPC, `CamReversed`) and J2 (e-paper FPC; **v15-LCD:** J5, the 30-pin LCD socket, `LcdReversed`, R23 = 15 Ω) | Latch closed and intact, 24 pins all soldered, no solder in the slot | Latch flips freely once |
 | 10 | J3 magnet header (C46061768, right angle) | Opening faces the top edge; silk "N"/"+" beside pin 1, "−" beside pin 4 | 4 pins wetted |
 | 11 | J4 JST-PH | Mouth faces the keypad (down); "+" silk visible | Both pins and the two anchors wetted |
 | 12 | D1–D7 (SOD-123 / SMF) | Cathode band at the silk bar | All 7 bands agree with silk |
@@ -92,7 +92,7 @@ With the calculator off: **hold SHIFT and ALPHA, press ON.** (Or type `selftest`
 | 2 keypad chip | `keypad_scanner_ok` | true (TCA8418 answers at 0x34) | U6 bridge, I2C pull-ups missing |
 | 3 battery | `battery_mv` | **3000–4300 mV** → `battery_ok` true. For shipping, additionally **3700–4100 mV** (limit set here: ship at 40–80 %, not full) | < 3000: cell unplugged or reversed at J4. ≈ 4200 with no cable: fine. 0 with a cable: Q1 or J4 |
 | 3 charging | `vbus`, `charge` | With the cable on: `vbus` true and `charge` = "charging" or "full". Without: `vbus` false, "no_cable" | `vbus` false with the cable on = magnet piece polarity or a bad J3 joint |
-| 4 e-paper | `display_refresh_ms`, `display_ok` | **300 < ms < 9000**, `display_ok` true. Typical **1800–2500 ms** | < 300: BUSY never asserted (J2 not latched); > 9000: booster (L1/C20/D2–D5) |
+| 4 e-paper (**v15-LCD:** `lcd_ok`, `lcd_push_ms` < 200, `backlight_ok`; look at the colour bars; `ARRIVAL_CHECKLIST.md` §4) | `display_refresh_ms`, `display_ok` | **300 < ms < 9000**, `display_ok` true. Typical **1800–2500 ms** | < 300: BUSY never asserted (J2 not latched); > 9000: booster (L1/C20/D2–D5) |
 | 4 e-paper, by eye | the pattern | Checkerboard squares crisp, border unbroken on all 4 sides, **no missing row or column**, no grey half-tone bands | A missing line = cracked panel or one J2 pin dry |
 | 5 camera | `camera`, `camera_jpeg_bytes`, `camera_ok`, `camera_autofocus` | contains "OV5640", bytes **> 1 024** (typical 20–40 KB at VGA), `camera_ok` true, **`camera_autofocus` true** (limit set here: a fixed-focus module is a wrong part) | Sensor ID missing = ribbon in backwards (J1 is `CamReversed`) or fingers 2/15 open |
 | 6 Wi-Fi | `wifi_networks`, `wifi_best_rssi`, `wifi_ok` | networks **≥ 1**, best RSSI **> −80 dBm**; with the bench AP 2 m away expect **−35 to −55 dBm** (limit set here: **> −60** on the bench, else the antenna overhang is touching the wall or something metallic sits over it) | |

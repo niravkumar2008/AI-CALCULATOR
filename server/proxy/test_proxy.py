@@ -164,7 +164,9 @@ class Firmware(unittest.TestCase):
         older = firmware.decide("stage14-2026.10.06", self.dir)
         self.assertTrue(older["update"])
         self.assertEqual((older["size"], older["sha256"], older["path"]), (m["size"], m["sha256"], "/v1/firmware/image"))
-        self.assertTrue(firmware.decide("", self.dir)["update"])  # a calculator that sends no version
+        self.assertFalse(firmware.decide("", self.dir)["update"])  # unknown board: never guess
+        # A v15-LCD calculator must never get the v14 e-paper image (and vice versa).
+        self.assertFalse(firmware.decide("v15lcd-2026.10.08", self.dir)["update"])
 
     def test_rejects_bad_images_and_versions(self):
         with self.assertRaises(ValueError):

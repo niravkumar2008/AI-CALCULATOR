@@ -2,7 +2,21 @@
 
 Started 2026-10-03 (overnight session). Each item says what I assumed in the meantime, so nothing is blocked while you sleep. Answer them in any order. Items once marked **(blocks order)** have all been answered; only the "⭐ Start here" list below is current.
 
-## ⭐ Start here (rewritten 2026-10-06 after the final review)
+## ⭐ Start here: v15-LCD (added 2026-10-08 evening)
+**v14 was ordered on 10/8 (tag `v14-order`, frozen); the list for it below still applies to the v14 boards.** The **v15-LCD board is verified "ORDER"** (`verification/14_v15_final_preorder.md`): order it with `ORDER_WALKTHROUGH_v15_lcd.md` (files `fab_v15_lcd/`, 21:38), and buy **3 × BuyDisplay ER-TFT019-1 (no touch)**. Nothing blocks the v15 order. Status: `FINAL_STATUS.md` → "Current plan".
+
+**Closed for v15 (2026-10-08):** panel choice (ER-TFT019-1, datasheet-verified; Adafruit #5394 only a fallback; bulk from Alibaba Goldenmorning/ZJY after a sample check), R23 value (15 Ω C22810), tail route (slot x 180.5–181.5, J5 at (158.6, 93.1), one bow), board side of the pin-1 question (J5 mirrored; confirmed on two independent drawings), key-pad positions (SW1/SW2/SW50 moved to the Casio contacts). Sources: `stage15_lcd.md` §9, reviews 13, 14, 15.
+
+**Open for v15: the bench checks when the boards and panels arrive** (none can block the order; all are fixable on this board; `ARRIVAL_CHECKLIST.md` v15 section, v15 Power-Up guide https://claude.ai/artifact/BeQnacuLhchaHz492CnLRT):
+- V1. **Diode test on the first ER-TFT019-1 tail** before plugging it in: LED between finger 20 and finger 22 (11th and 9th from the pin-30 end). Finger 1 must land at the J5 silk tick (bottom), the LED fingers in the top half. If not: half twist of the tail.
+- V2. **Backlight current** = volts across R23 ÷ 15 at 100 %: expect 16–37 mA (≈ 26 typical). Too dim (< 18 mA): 12 Ω only if the measured Vf ≥ 2.75 V, otherwise the AW9364 driver on a later board.
+- V3. **Panel at 3.3 V** (top of its 2.4–3.3 V range): picture OK, IDD ≤ 20 mA. If it objects, a 2.8 V supply replaces Q4 on the next spin.
+- V4. **`LCD_INVERT` / `LCD_RGB_ORDER`** build flags on the colour bars (`firmware-v15-lcd/PORT_NOTES.md`).
+- V5. **Tail length 36.6 ± 0.3 mm** and the bow's clearance to rib B (assembly guide, marker dot); a 36.9 mm tail leaves only ~0.1 mm.
+- V6. **Feel of the 3 moved keys** SHIFT, ALPHA, ON.
+- Still Nirav's call (unchanged): battery-life plan (150 mAh vs the 1,200–1,500 mAh cell first), R5 → 15 k, a touch panel later (`stage15_lcd.md` §9 items 6, 7, 9).
+
+## ⭐ Start here for v14 (rewritten 2026-10-06 after the final review)
 **Board v14 is GO to order, unchanged** (`verification/06_final_review_pcb.md` + second opinion `verification/08_second_opinion_pcb.md`, 2026-10-06: no FATAL, no SERIOUS; earlier re-check `verification/05_stage14_recheck.md`): DRC 0/0/0 with parity, ERC 0. **Not ordered yet** as of Tue 10/6. Status, decisions and history: **`FINAL_STATUS.md`**. Ordering: `ORDER_WALKTHROUGH.md`. This is the whole list of what is really open:
 
 **Before paying JLCPCB**

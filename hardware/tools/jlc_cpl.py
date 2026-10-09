@@ -29,6 +29,7 @@ ROT_BY_LCSC = {
     "C53100": 180,     # ME6211C15M5G-N, SOT-23-5 "-BR" (U5)
     "C7519": 270,      # USBLC6-2SC6, SOT-23-6 "-BL" (U7)
     "C46061768": 180,  # HX PM2.54-1x4P WT right-angle header (J3): EasyEDA body is on +y of the pads
+    "C20917": 180,     # AO3400A, SOT-23 "-BR" (Q5, v15-LCD backlight switch): same EasyEDA zero angle as C15127
     # Verified offset 0 (listed so the table documents every polarised part):
     "C469327": 0,      # SI1308EDL SOT-323 (Q3)
     "C138713": 0,      # TCA8418 WQFN-24 (U6)
@@ -37,6 +38,9 @@ ROT_BY_LCSC = {
     "C295747": 0,      # JST S2B-PH-SM4-TB (J4)
     "C8598": 0,        # B5819W SOD-123 (D1-D6)
     "C193402": 0,      # SMF5.0A SOD-123FL (D7)
+    "C2919501": 0,     # HDGC 0.5K-HX-30PWB 30-pin FPC socket (J5, v15-LCD): verified with check_cpl_easyeda_v15.py; review 13: _LcdReversed footprint, pad numbers mirrored like J1, geometry unchanged
+    "C23345": 0,       # 22R 0603 (R23 until review 14): symmetric
+    "C22810": 0,       # 15R 0603 (R23, v15-LCD review 14): symmetric
 }
 
 # Fallback by KiCad footprint name, used only when an LCSC number is missing.

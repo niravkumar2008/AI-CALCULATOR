@@ -1,0 +1,102 @@
+(footprint "KeyPad_6.0x4.5"
+  (version 20241229)
+  (generator "kicad-mcp")
+  (generator_version "9.0")
+  (layer "F.Cu")
+  (descr "Bare ENIG interdigitated key contact (SHIFT/ALPHA/MODE/ON row and row 2). Place on the bottom side. No paste.")
+  (tags "key pad carbon pill membrane calculator")
+
+  (property "Reference" "REF**" (at 0 -3.1 0)
+    (layer "F.SilkS")
+    (uuid "7bb3bb0b-a592-4a5e-a6ed-46decd47ec0b")
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (property "Value" "KeyPad_6.0x4.5" (at 0 3.1 0)
+    (layer "F.Fab")
+    (uuid "670a08ae-ff8e-4159-b8f2-b4b61d6cff00")
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (property "Datasheet" "" (at 0 0 0)
+    (layer "F.Fab")
+    (uuid "8f23e5f6-bc0a-4e41-992d-548b46b17b55")
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+
+  (fp_rect (start -3.10 -2.35) (end 3.10 2.35)
+    (stroke (width 0.05) (type default))
+    (fill none)
+    (layer "F.CrtYd")
+    (uuid "539ff286-56a5-4670-bfc5-2a72f59fe350")
+  )
+
+  (pad "1" smd rect
+    (at 0 -1.95)
+    (size 6 0.6)
+    (layers "F.Cu" "F.Mask")
+    (uuid "0f9934d7-cfe8-4a4d-a37e-0edda509de9b")
+  )
+
+  (pad "2" smd rect
+    (at 0 1.95)
+    (size 6 0.6)
+    (layers "F.Cu" "F.Mask")
+    (uuid "0af0ee7a-209f-4c6a-8d6f-d039f290aa0f")
+  )
+
+  (pad "1" smd rect
+    (at -2.625 -0.15)
+    (size 0.45 3)
+    (layers "F.Cu" "F.Mask")
+    (uuid "2d2e4470-8913-49f4-b441-045662a49bb5")
+  )
+
+  (pad "2" smd rect
+    (at -1.875 0.15)
+    (size 0.45 3)
+    (layers "F.Cu" "F.Mask")
+    (uuid "9a9d6c89-61a6-411c-90cc-0ae7f88744b3")
+  )
+
+  (pad "1" smd rect
+    (at -1.125 -0.15)
+    (size 0.45 3)
+    (layers "F.Cu" "F.Mask")
+    (uuid "9c84b1cc-afc5-4bc2-b3c9-14a3986e1c64")
+  )
+
+  (pad "2" smd rect
+    (at -0.375 0.15)
+    (size 0.45 3)
+    (layers "F.Cu" "F.Mask")
+    (uuid "43cdfb0c-d9c4-4acf-a07d-f3f0ce878b59")
+  )
+
+  (pad "1" smd rect
+    (at 0.375 -0.15)
+    (size 0.45 3)
+    (layers "F.Cu" "F.Mask")
+    (uuid "67cdf6d3-1459-4dcf-bb96-063580443a97")
+  )
+
+  (pad "2" smd rect
+    (at 1.125 0.15)
+    (size 0.45 3)
+    (layers "F.Cu" "F.Mask")
+    (uuid "3e5bc132-c384-4208-9f26-331768acd383")
+  )
+
+  (pad "1" smd rect
+    (at 1.875 -0.15)
+    (size 0.45 3)
+    (layers "F.Cu" "F.Mask")
+    (uuid "de37d9f9-3cc8-4765-9dc5-c0e81a376540")
+  )
+
+  (pad "2" smd rect
+    (at 2.625 0.15)
+    (size 0.45 3)
+    (layers "F.Cu" "F.Mask")
+    (uuid "ff39c36a-d7aa-47c9-b960-26774abd9d3e")
+  )
+
+)

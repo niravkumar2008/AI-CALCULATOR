@@ -150,8 +150,8 @@
     "semantic_hash": "83cfd6d6449b9d3550b6963aa90ca40a"
   },
   "firmware/.vscode/extensions.json": {
-    "mtime": 1790965430.5994742,
-    "seen": 1790965933.4302878,
+    "mtime": 1791509086.8675394,
+    "seen": 1791511318.7417023,
     "ast_hash": "b4fe65422789c169a6e60ad8eeb1d8c6",
     "semantic_hash": "b4fe65422789c169a6e60ad8eeb1d8c6"
   },
@@ -1104,9 +1104,9 @@
     "semantic_hash": ""
   },
   "hardware/HANDOFF.md": {
-    "mtime": 1791309225.855085,
-    "seen": 1791309426.884049,
-    "ast_hash": "d2e231862c0d60085cf6604d1fb2d7e8",
+    "mtime": 1791511435.4620223,
+    "seen": 1791511489.2631583,
+    "ast_hash": "2b2b7863f7fe76dc2be549588124136d",
     "semantic_hash": ""
   },
   "hardware/ORDER_CHECKLIST.md": {
@@ -1272,15 +1272,15 @@
     "semantic_hash": ""
   },
   "hardware/fitcheck/grind_map_front_shell.svg": {
-    "mtime": 1791296632.4314427,
-    "seen": 1791297036.7161467,
-    "ast_hash": "93b631c588f9b000f785225ebcb604d0",
+    "mtime": 1791322579.1966314,
+    "seen": 1791478551.0698748,
+    "ast_hash": "b757c0c5472881c292d6277423fb2fd7",
     "semantic_hash": ""
   },
   "hardware/fitcheck/backcover_fx115es.json": {
-    "mtime": 1791296620.057829,
-    "seen": 1791297036.7161467,
-    "ast_hash": "a1d61c878836702a1127d9718181476d",
+    "mtime": 1791322579.1976397,
+    "seen": 1791478551.068884,
+    "ast_hash": "c6c6efe6c76f3fe9e7ba5603650cd2bd",
     "semantic_hash": ""
   },
   "hardware/stage10_fx115es.md": {
@@ -1290,15 +1290,15 @@
     "semantic_hash": ""
   },
   "Claude outputs/launch_roadmap_data.json": {
-    "mtime": 1791309276.5414054,
-    "seen": 1791309426.8830435,
-    "ast_hash": "35550c27c3ce8d57a1c7148a9b8ce62d",
+    "mtime": 1791511356.244952,
+    "seen": 1791511489.2631583,
+    "ast_hash": "39bf96bd9b77278b13daed724c26cd6c",
     "semantic_hash": ""
   },
   "hardware/enclosure/build_fx115es_replica.py": {
-    "mtime": 1791294662.4527357,
-    "seen": 1791295230.0457795,
-    "ast_hash": "4801b26c958b46cd96de03ff1617b2e1",
+    "mtime": 1791322288.098215,
+    "seen": 1791478551.068884,
+    "ast_hash": "940362f7c1b9dad6fa2908b89e2fe5ac",
     "semantic_hash": ""
   },
   "hardware/enclosure/fx115es_outline.json": {
@@ -1326,15 +1326,15 @@
     "semantic_hash": ""
   },
   "Claude outputs/LAUNCH_ROADMAP.md": {
-    "mtime": 1791309264.7749126,
-    "seen": 1791309426.884049,
-    "ast_hash": "dd2268e09681658c3d6c71c6760ae990",
+    "mtime": 1791511262.6826892,
+    "seen": 1791511318.7417023,
+    "ast_hash": "2a65c2c665991603b2fba52318776eb0",
     "semantic_hash": ""
   },
   "Claude outputs/launch_roadmap.html": {
-    "mtime": 1791309276.5403922,
-    "seen": 1791309426.884049,
-    "ast_hash": "d674157d7dd832b6d210cf409543217a",
+    "mtime": 1791511317.5561478,
+    "seen": 1791511318.7417023,
+    "ast_hash": "6fc8beaea1eeb874214baba57baf73b8",
     "semantic_hash": ""
   },
   "hardware/REVIEW_independent_2026-10-03.md": {
@@ -1428,9 +1428,9 @@
     "semantic_hash": ""
   },
   "hardware/QUESTIONS_AND_ISSUES.md": {
-    "mtime": 1791309401.375659,
-    "seen": 1791309426.884049,
-    "ast_hash": "17ebbcacf663fd9456fea5bc76d2fc44",
+    "mtime": 1791511173.720243,
+    "seen": 1791511318.7417023,
+    "ast_hash": "1a667c0d8ea5c8950bbc09b6b19c964f",
     "semantic_hash": ""
   },
   "hardware/tools/gnd_islands.py": {
@@ -1620,9 +1620,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/build_final_assembly.py": {
-    "mtime": 1791296618.1685455,
-    "seen": 1791297036.7161467,
-    "ast_hash": "d0adf9723a458a70bb198d2fc2e8bf26",
+    "mtime": 1791322288.099213,
+    "seen": 1791478551.068884,
+    "ast_hash": "a03c28e0e5f2c0c2a4ad50b4564eca57",
     "semantic_hash": ""
   },
   "firmware/PROGRESS_FW.md": {
@@ -1668,21 +1668,21 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/geometry.json": {
-    "mtime": 1791296928.8509493,
-    "seen": 1791297036.7161467,
+    "mtime": 1791322643.9119682,
+    "seen": 1791478551.068884,
     "ast_hash": "fe83fe9a11566d80ba91fbeb06b38e83",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/interference.json": {
-    "mtime": 1791297195.0361805,
-    "seen": 1791297533.2745013,
-    "ast_hash": "1d09f2b8f7ee0c79267afa811593556e",
+    "mtime": 1791322642.5252254,
+    "seen": 1791478551.068884,
+    "ast_hash": "7133e260917fa22288e66247495f7fdb",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/placement.json": {
-    "mtime": 1791295121.6241477,
-    "seen": 1791295230.0457795,
-    "ast_hash": "67a08f0253c3bf0ec3fa357593f1feaa",
+    "mtime": 1791322497.6597896,
+    "seen": 1791478551.068884,
+    "ast_hash": "167b084b9c7f4b1489766b628f04ce25",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/README.md": {
@@ -1722,9 +1722,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/interference_before_grind.json": {
-    "mtime": 1791296912.5508425,
-    "seen": 1791297036.7161467,
-    "ast_hash": "49ea299d9bbf2d21852c3244866d7a21",
+    "mtime": 1791322791.3682716,
+    "seen": 1791478551.068884,
+    "ast_hash": "1038a47060cfad0ecc42a9804f395235",
     "semantic_hash": ""
   },
   "server/proxy/admin.py": {
@@ -1764,9 +1764,9 @@
     "semantic_hash": ""
   },
   "server/proxy/test_proxy.py": {
-    "mtime": 1791295137.532275,
-    "seen": 1791295230.0457795,
-    "ast_hash": "c7dc9d5aef54e1c9969f02f85d8a4278",
+    "mtime": 1791493629.7341695,
+    "seen": 1791494216.6749208,
+    "ast_hash": "730eddf8262ad4c699f205cc33d89f9e",
     "semantic_hash": ""
   },
   "hardware/REVIEW_final_2026-10-04.md": {
@@ -1998,9 +1998,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/grinding_manual.html": {
-    "mtime": 1791309173.1313276,
-    "seen": 1791309426.884049,
-    "ast_hash": "5923047b4d46c81d71bf962bf9d425a1",
+    "mtime": 1791322577.9993632,
+    "seen": 1791478551.068884,
+    "ast_hash": "3db2a57723067031d3d552a00c005aee",
     "semantic_hash": ""
   },
   "tests/golden/viewfinder_moving.txt": {
@@ -2172,9 +2172,9 @@
     "semantic_hash": ""
   },
   "hardware/tools/jlc_cpl.py": {
-    "mtime": 1791138689.735327,
-    "seen": 1791139873.7840397,
-    "ast_hash": "d5408a2989a986cc4757d4b54d0af164",
+    "mtime": 1791509323.9320047,
+    "seen": 1791511318.7417023,
+    "ast_hash": "756ced33bf4061ef95971429bea58d94",
     "semantic_hash": ""
   },
   "hardware/ORDER_WALKTHROUGH.md": {
@@ -2202,9 +2202,9 @@
     "semantic_hash": ""
   },
   "hardware/FINAL_STATUS.md": {
-    "mtime": 1791309326.0260365,
-    "seen": 1791309426.884049,
-    "ast_hash": "429501e53922d387b8680fea3a6f09ee",
+    "mtime": 1791511156.9614587,
+    "seen": 1791511318.7417023,
+    "ast_hash": "641b4da040ac25639e0a19e67e520fa4",
     "semantic_hash": ""
   },
   "hardware/bringup_guide.html": {
@@ -2880,9 +2880,9 @@
     "semantic_hash": ""
   },
   "hardware/production/QA_TEST_PLAN.md": {
-    "mtime": 1791309189.636158,
-    "seen": 1791309426.884049,
-    "ast_hash": "0feb588668afc0b7f1aaf26573b4e7be",
+    "mtime": 1791511444.2372952,
+    "seen": 1791511489.2641563,
+    "ast_hash": "f8a3ac26d209fb18c4c95e6ad395672b",
     "semantic_hash": ""
   },
   "server/proxy/FINAL_REVIEW_server.md": {
@@ -2952,9 +2952,9 @@
     "semantic_hash": ""
   },
   "hardware/production/build_cost_model.py": {
-    "mtime": 1791294905.488624,
-    "seen": 1791295230.0457795,
-    "ast_hash": "a0a9e5de04878d2518a3b4e5b8e61506",
+    "mtime": 1791510808.9869912,
+    "seen": 1791511318.7417023,
+    "ast_hash": "7d287e3ecb2db5ffc2d564e8e5b0400b",
     "semantic_hash": ""
   },
   "hardware/tools/check_requirements_11.py": {
@@ -2970,21 +2970,21 @@
     "semantic_hash": ""
   },
   "server/proxy/firmware.py": {
-    "mtime": 1791295077.555781,
-    "seen": 1791295230.0457795,
-    "ast_hash": "970032db81725d32643c334c7914dbf7",
+    "mtime": 1791493612.0959663,
+    "seen": 1791494216.6749208,
+    "ast_hash": "e87721960af00dc9aa7594868d12e03f",
     "semantic_hash": ""
   },
   "hardware/production/KNOCKOFF_SHELL_PLAN.md": {
-    "mtime": 1791294816.0235102,
-    "seen": 1791295230.0457795,
-    "ast_hash": "2ff11307c2f981a1d9146358666509b4",
+    "mtime": 1791511435.4630232,
+    "seen": 1791511489.2641563,
+    "ast_hash": "db001cf992b6cba77ed5fe045b178354",
     "semantic_hash": ""
   },
   "hardware/production/UNIT_ECONOMICS.md": {
-    "mtime": 1791294874.6069992,
-    "seen": 1791295230.0457795,
-    "ast_hash": "0a33482762d4f006ab2f1f4b5b4192cd",
+    "mtime": 1791511024.7835498,
+    "seen": 1791511318.7417023,
+    "ast_hash": "01eb04b66ded7612675b61c4ba1fd659",
     "semantic_hash": ""
   },
   "hardware/verification/06_final_review_pcb.md": {
@@ -3018,9 +3018,9 @@
     "semantic_hash": ""
   },
   "hardware/verification/07_final_review_fitment.md": {
-    "mtime": 1791309178.0195782,
-    "seen": 1791309426.884049,
-    "ast_hash": "d95cb1ff5b3213a47a10a8eb242bd8a4",
+    "mtime": 1791322580.4639575,
+    "seen": 1791478551.068884,
+    "ast_hash": "3ca67dd5ed3fa9ceddba49bf38d111e9",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/antenna_corner.png": {
@@ -3060,15 +3060,933 @@
     "semantic_hash": ""
   },
   "hardware/ARRIVAL_CHECKLIST.md": {
-    "mtime": 1791309380.714216,
-    "seen": 1791309426.884049,
-    "ast_hash": "8cd5065c52758d3497f3ae2ea238ccaf",
+    "mtime": 1791511194.8286333,
+    "seen": 1791511318.7417023,
+    "ast_hash": "525a010d5ee545a05b45f0e14ae0f780",
     "semantic_hash": ""
   },
   "Claude outputs/paper_cutout_preview.png": {
     "mtime": 1791315233.0111134,
     "seen": 1791315265.2797885,
     "ast_hash": "77cf9950db50c76b22ce23c53630de8f",
+    "semantic_hash": ""
+  },
+  "hardware/verification/12_rib_pin_recheck.md": {
+    "mtime": 1791322840.980127,
+    "seen": 1791478551.068884,
+    "ast_hash": "084b678044ae42d83a93a4ebc7b3a5b4",
+    "semantic_hash": ""
+  },
+  "hardware/archive/kicad_v14_FROZEN/kicad_summary.py": {
+    "mtime": 1791479334.6462772,
+    "seen": 1791479402.6045403,
+    "ast_hash": "25b3885bff90fdbeeee27f244509a115",
+    "semantic_hash": ""
+  },
+  "hardware/archive/README.md": {
+    "mtime": 1791479343.3793807,
+    "seen": 1791479402.6045403,
+    "ast_hash": "aca42a4cbf9ac9be7597e3fd3ac5008b",
+    "semantic_hash": ""
+  },
+  "hardware/archive/kicad_v14_FROZEN/DESIGN_SUMMARY.md": {
+    "mtime": 1791479334.556958,
+    "seen": 1791479402.6045403,
+    "ast_hash": "b0c33619d09372ad2e6f04292792281b",
+    "semantic_hash": ""
+  },
+  "hardware/kicad_v15_lcd/DESIGN_SUMMARY.md": {
+    "mtime": 1791509951.265786,
+    "seen": 1791511318.7417023,
+    "ast_hash": "438339297220db69a07e3a1e421810c4",
+    "semantic_hash": ""
+  },
+  "hardware/archive/fab_v14_FROZEN/ai_calc_assembly_top.pdf": {
+    "mtime": 1791479334.9343297,
+    "seen": 1791479402.6055355,
+    "ast_hash": "3e73bd6284a1ec7416f5e8ad930b8fb9",
+    "semantic_hash": ""
+  },
+  "hardware/archive/fab_v14_FROZEN/ai_calc_schematic.pdf": {
+    "mtime": 1791479334.8288321,
+    "seen": 1791479402.6055355,
+    "ast_hash": "a6ed312ed1ae6188e48207b20727bea2",
+    "semantic_hash": ""
+  },
+  "hardware/archive/fab_v14_FROZEN/render_bottom.png": {
+    "mtime": 1791479334.824822,
+    "seen": 1791479402.6055355,
+    "ast_hash": "7d2fb2144ebc44aae5efdfe748d71b3e",
+    "semantic_hash": ""
+  },
+  "hardware/archive/fab_v14_FROZEN/render_top.png": {
+    "mtime": 1791479334.8413656,
+    "seen": 1791479402.6055355,
+    "ast_hash": "b29d44c1adf26416c41f8e4827037125",
+    "semantic_hash": ""
+  },
+  "hardware/tools/v15_lcd/make_lcd_sheet.py": {
+    "mtime": 1791509323.9171407,
+    "seen": 1791511318.7417023,
+    "ast_hash": "1253ffdc2cedaa5655f8e896ff7526b0",
+    "semantic_hash": ""
+  },
+  "hardware/tools/v15_lcd/board_step1_cleanup.py": {
+    "mtime": 1791481962.2220812,
+    "seen": 1791482186.8993683,
+    "ast_hash": "4f90fce4397e36e950279e7fd07dd1a5",
+    "semantic_hash": ""
+  },
+  "hardware/tools/v15_lcd/board_step2_route.py": {
+    "mtime": 1791509323.9310064,
+    "seen": 1791511318.7417023,
+    "ast_hash": "c1e597accf889698ef8544b1ce9b23a0",
+    "semantic_hash": ""
+  },
+  "hardware/tools/v15_lcd/check_hole_clearance_v15.py": {
+    "mtime": 1791483323.8857079,
+    "seen": 1791483403.526162,
+    "ast_hash": "8466aac0ad8f670424eee797f8332316",
+    "semantic_hash": ""
+  },
+  "hardware/tools/v15_lcd/make_outputs_v15.sh": {
+    "mtime": 1791483374.1350732,
+    "seen": 1791483403.526162,
+    "ast_hash": "16d50ba87cee3e44cbe4451c3c764e23",
+    "semantic_hash": ""
+  },
+  "hardware/fab_v15_lcd/ai_calc_v15_lcd_assembly_top.pdf": {
+    "mtime": 1791509925.0294805,
+    "seen": 1791511318.7417023,
+    "ast_hash": "a24e1d73af9142269aab5c0c83dac7c7",
+    "semantic_hash": ""
+  },
+  "hardware/fab_v15_lcd/ai_calc_v15_lcd_schematic.pdf": {
+    "mtime": 1791509924.2156792,
+    "seen": 1791511318.7417023,
+    "ast_hash": "b3fdf1d22689e114f51126016e24920a",
+    "semantic_hash": ""
+  },
+  "hardware/fab_v15_lcd/render_top.png": {
+    "mtime": 1791509937.4873824,
+    "seen": 1791511318.7417023,
+    "ast_hash": "854590781c575a9b8da85eae24331961",
+    "semantic_hash": ""
+  },
+  "hardware/kicad_v15_lcd/kicad_summary_v15.py": {
+    "mtime": 1791483412.1666217,
+    "seen": 1791483495.529059,
+    "ast_hash": "a7c096df4cf63dbc6031fd0f9d2614e5",
+    "semantic_hash": ""
+  },
+  "hardware/kicad_v15_lcd/pins_v15_lcd.h": {
+    "mtime": 1791509323.940017,
+    "seen": 1791511318.7417023,
+    "ast_hash": "2f5faad0dc1a8b8d9ea095da1e14a20c",
+    "semantic_hash": ""
+  },
+  "hardware/tools/v15_lcd/check_cpl_easyeda_v15.py": {
+    "mtime": 1791509323.9320047,
+    "seen": 1791511318.7417023,
+    "ast_hash": "17d2f4cd09acf70ae50b7d6fd7ee164e",
+    "semantic_hash": ""
+  },
+  "hardware/fab_v15_lcd/render_bottom.png": {
+    "mtime": 1791509941.1596649,
+    "seen": 1791511318.7417023,
+    "ast_hash": "3bd92029e98cf7a39da1d7b2f466edca",
+    "semantic_hash": ""
+  },
+  "hardware/fab_v15_lcd/cpl_easyeda_check_v15.md": {
+    "mtime": 1791509947.6742425,
+    "seen": 1791511318.7417023,
+    "ast_hash": "faae8ad0665ce29581b9b02895b10ca3",
+    "semantic_hash": ""
+  },
+  "hardware/stage15_lcd.md": {
+    "mtime": 1791510507.7596152,
+    "seen": 1791511318.7417023,
+    "ast_hash": "be218d5599dd7c7015f5f775cffdb7b4",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/build_final_assembly_v15.py": {
+    "mtime": 1791510436.8621008,
+    "seen": 1791511318.7417023,
+    "ast_hash": "475b69a81aa9a770d51466b2a82a0a53",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/window_mask_template_v15.py": {
+    "mtime": 1791486517.081866,
+    "seen": 1791486655.8909924,
+    "ast_hash": "1d401de58a64c19849ff50769a99f39d",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/board_snapshot.json": {
+    "mtime": 1791001191.524716,
+    "seen": 1791485303.4709241,
+    "ast_hash": "739cdb96c893bf8515940302f52af151",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/geometry.json": {
+    "mtime": 1791511118.421219,
+    "seen": 1791511318.7417023,
+    "ast_hash": "fe83fe9a11566d80ba91fbeb06b38e83",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/placement.json": {
+    "mtime": 1791510688.4287643,
+    "seen": 1791511318.7417023,
+    "ast_hash": "341f55f9eb3959de1c051fd8fb1f0e97",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/clearance_table_full.json": {
+    "mtime": 1791510921.2261298,
+    "seen": 1791511318.7417023,
+    "ast_hash": "fb44ee021af6ec379f98d090cbd7b737",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/clearances.json": {
+    "mtime": 1791510875.409711,
+    "seen": 1791511318.7417023,
+    "ast_hash": "321ecf8a3c88ce775cfeb0ecd51dbabe",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/compose_v15.py": {
+    "mtime": 1791486480.3648996,
+    "seen": 1791486655.8909924,
+    "ast_hash": "e48563bb64f95b49c236d8075f0c332a",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/interference.json": {
+    "mtime": 1791510861.5455496,
+    "seen": 1791511318.7417023,
+    "ast_hash": "9ec88e538a81ce3d15806d885ed12f20",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/interference_before_grind.json": {
+    "mtime": 1791511103.1455767,
+    "seen": 1791511318.7417023,
+    "ast_hash": "921207b112c23323f227bb6525ec5d88",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/probe_inplane.json": {
+    "mtime": 1791510880.3968399,
+    "seen": 1791511318.7417023,
+    "ast_hash": "040087dc9d23e71f22e75cf5a30229bc",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/clearance_table_full.md": {
+    "mtime": 1791510921.231158,
+    "seen": 1791511318.7417023,
+    "ast_hash": "f8bac826c9ed9b064bc52053c29edd05",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/compare_v14_v15_display.png": {
+    "mtime": 1791511198.505092,
+    "seen": 1791511318.7417023,
+    "ast_hash": "182adea77cff2fdb38c9fd51aaf21f5f",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/compare_v14_v15_fpc_end_section.png": {
+    "mtime": 1791511198.8371964,
+    "seen": 1791511318.7417023,
+    "ast_hash": "6c886dae22d32f767159e93b1e8b6162",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/compare_v14_v15_front.png": {
+    "mtime": 1791511198.6950922,
+    "seen": 1791511318.7417023,
+    "ast_hash": "06e48c01f973335802c2ebbb4c361dbf",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/display_screen_key.png": {
+    "mtime": 1791511145.7305968,
+    "seen": 1791511318.7417023,
+    "ast_hash": "d9dd0881c55d73df50740ea7578cf69e",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/display_screen_off.png": {
+    "mtime": 1791511137.3609564,
+    "seen": 1791511318.7417023,
+    "ast_hash": "9182454a512eed6a5b1db7e5dad6e2a7",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/display_screen_on.png": {
+    "mtime": 1791511198.0327399,
+    "seen": 1791511318.7417023,
+    "ast_hash": "510b5ef0d004ec7c5fd1606d8533ae7e",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/exploded_back.png": {
+    "mtime": 1791511154.540735,
+    "seen": 1791511318.7417023,
+    "ast_hash": "b3701be0b686d7bf96cbb1078dc38514",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/exploded_front.png": {
+    "mtime": 1791511154.3141124,
+    "seen": 1791511318.7417023,
+    "ast_hash": "0091dc7b5d1b48ce1123a4a05e55ef06",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/front_screen_key.png": {
+    "mtime": 1791511145.5506628,
+    "seen": 1791511318.7417023,
+    "ast_hash": "6fe82575076717a0c9fbf56e4f7ce13a",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/front_screen_off.png": {
+    "mtime": 1791511137.001985,
+    "seen": 1791511318.7417023,
+    "ast_hash": "6ebfa1cb0e6e7271f9a5ca30cab1b549",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/front_screen_on.png": {
+    "mtime": 1791511197.0297842,
+    "seen": 1791511318.7417023,
+    "ast_hash": "e0f2752c4fc92eee4b104f0d0008edb4",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/hero_screen_key.png": {
+    "mtime": 1791511145.9077728,
+    "seen": 1791511318.7417023,
+    "ast_hash": "c226803aa24f6e551e117723edb4e263",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/hero_screen_off.png": {
+    "mtime": 1791511137.5543315,
+    "seen": 1791511318.7417023,
+    "ast_hash": "e49852b4bfeb7b1428d53fe66681aaf4",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/hero_screen_on.png": {
+    "mtime": 1791511198.325913,
+    "seen": 1791511318.7417023,
+    "ast_hash": "f1d9e7334fba2cb7035d28b489ff915e",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/lcd_fpc_slot_closeup.png": {
+    "mtime": 1791511156.0383422,
+    "seen": 1791511318.7417023,
+    "ast_hash": "f9109ea4699bb04e3626ef12f167854e",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/lcd_on_board_iso.png": {
+    "mtime": 1791511155.8286664,
+    "seen": 1791511318.7417023,
+    "ast_hash": "4f1037ebffa8f290a1a882e5d59eb331",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/mock_ui_320x170.png": {
+    "mtime": 1791511196.695998,
+    "seen": 1791511318.7417023,
+    "ast_hash": "57129bcdb3d7c3cf1665aeb009c6b448",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/mock_ui_320x170_x4.png": {
+    "mtime": 1791511196.707004,
+    "seen": 1791511318.7417023,
+    "ast_hash": "2ad5218e353527e69aafe3e569234178",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/section_lcd_across.png": {
+    "mtime": 1791511158.2012148,
+    "seen": 1791511318.7417023,
+    "ast_hash": "7f21fdf083086a1768ce3fe1e69ba90b",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/section_lcd_across_solar.png": {
+    "mtime": 1791511159.231418,
+    "seen": 1791511318.7417023,
+    "ast_hash": "e164be56b4f4ebeb1eda41e235480b04",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/section_lcd_across_top.png": {
+    "mtime": 1791511158.821011,
+    "seen": 1791511318.7417023,
+    "ast_hash": "c1020f2f5557f57918d8c9e2a74af4fa",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/section_lcd_fpc_end.png": {
+    "mtime": 1791511157.6989462,
+    "seen": 1791511318.7417023,
+    "ast_hash": "058b85eaf0db80e22823929c50907e07",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/section_lcd_lengthwise.png": {
+    "mtime": 1791511157.163875,
+    "seen": 1791511318.7417023,
+    "ast_hash": "5dbee3437e4a2ae647e18d24d48563a8",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/window_mask_template_v15.svg": {
+    "mtime": 1791486517.223746,
+    "seen": 1791486655.8929942,
+    "ast_hash": "f3e3912b87a62231f9c849f66f9b0811",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/REPORT.md": {
+    "mtime": 1791511397.5747097,
+    "seen": 1791511489.2641563,
+    "ast_hash": "c5294bdc9409bae9fb64e54fc95d5772",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/camera.cpp": {
+    "mtime": 1791493321.5775888,
+    "seen": 1791493513.437723,
+    "ast_hash": "58a2801676b3e62a14618f5f674f5081",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/camera.h": {
+    "mtime": 1791493256.7286992,
+    "seen": 1791493513.437723,
+    "ast_hash": "1bfcaec321d7d1cb34fa88bf5d66f3cb",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/claude_client.cpp": {
+    "mtime": 1791493321.5779395,
+    "seen": 1791493513.437723,
+    "ast_hash": "4fdeff44aea1625ca97d54bd8a2087e5",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/claude_client.h": {
+    "mtime": 1791493554.5396037,
+    "seen": 1791494216.6749208,
+    "ast_hash": "c62aadca92c32524432f5fc12aded0c4",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/fbtext.cpp": {
+    "mtime": 1791493321.578281,
+    "seen": 1791493513.437723,
+    "ast_hash": "5d5ae7fcf2d6ca43c856d718c037577d",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/fbtext.h": {
+    "mtime": 1791489095.4487488,
+    "seen": 1791492732.434706,
+    "ast_hash": "e0aad8bde3aba4f76c1324a13d9b8353",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/glyphdraw.h": {
+    "mtime": 1791489208.4425292,
+    "seen": 1791492732.434706,
+    "ast_hash": "802658a4bbab76e7d6b0dbd2107783ce",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/keys.cpp": {
+    "mtime": 1791509920.020628,
+    "seen": 1791511318.7417023,
+    "ast_hash": "be042a259640ec9361dd2cedbaf335a1",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/keys.h": {
+    "mtime": 1791488960.0912478,
+    "seen": 1791492732.434706,
+    "ast_hash": "4f4c3913d3b2167bd0766e0f09fccfd1",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/lcd.cpp": {
+    "mtime": 1791493321.5787847,
+    "seen": 1791493513.437723,
+    "ast_hash": "9194cd9b560852c86de0602f959a7ca8",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/lcd.h": {
+    "mtime": 1791489020.7090278,
+    "seen": 1791492732.434706,
+    "ast_hash": "f25a4787dadad2ecab38beb2894f4563",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/log.h": {
+    "mtime": 1791488960.107406,
+    "seen": 1791492732.434706,
+    "ast_hash": "797fa17f4ba1e0cc0b5efb93fcef8371",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/main.cpp": {
+    "mtime": 1791493471.3401518,
+    "seen": 1791493513.437723,
+    "ast_hash": "5aa8fd1912667d538c78b28437ad886e",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/ota.cpp": {
+    "mtime": 1791493321.5796282,
+    "seen": 1791493513.437723,
+    "ast_hash": "53e9bf11de99099853399ab9f7a517ca",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/ota.h": {
+    "mtime": 1791488960.1204247,
+    "seen": 1791492732.434706,
+    "ast_hash": "15f65d96400f1974d6a186c9bbfbc977",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/pins.h": {
+    "mtime": 1791488991.0366764,
+    "seen": 1791492732.434706,
+    "ast_hash": "8add815ab3755d0f9c066783d00f84a9",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/power.cpp": {
+    "mtime": 1791493321.5800884,
+    "seen": 1791493513.437723,
+    "ast_hash": "96782bcda4ab0ca1d3f8471deaf7fbd2",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/power.h": {
+    "mtime": 1791493466.0451424,
+    "seen": 1791493513.437723,
+    "ast_hash": "10de27fbe87ccf164206f056518fbb14",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/preview.cpp": {
+    "mtime": 1791493321.5804234,
+    "seen": 1791493513.437723,
+    "ast_hash": "cf8f0e5da6ab69aa0f71d3ab77924ace",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/preview.h": {
+    "mtime": 1791488960.167344,
+    "seen": 1791492732.434706,
+    "ast_hash": "53b6e69826ab550d6f5ba0e1e58c3e27",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/root_ca.h": {
+    "mtime": 1791488960.1903596,
+    "seen": 1791492732.434706,
+    "ast_hash": "69a3b456e0409a6cd0c1d7a01dd84548",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/selftest.cpp": {
+    "mtime": 1791493321.5807383,
+    "seen": 1791493513.437723,
+    "ast_hash": "8a9d185d96cb8461ce15e914618a759f",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/selftest.h": {
+    "mtime": 1791493462.2193882,
+    "seen": 1791493513.437723,
+    "ast_hash": "197ff41023675ebbec306d86fe730aa8",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/settings.cpp": {
+    "mtime": 1791493321.5812047,
+    "seen": 1791493513.437723,
+    "ast_hash": "71c6fd389321058e6d597fabda605f51",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/settings.h": {
+    "mtime": 1791493011.9952016,
+    "seen": 1791493513.437723,
+    "ast_hash": "a85207ce316f70ce26cf704f20f56925",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/setup_portal.cpp": {
+    "mtime": 1791493321.581609,
+    "seen": 1791493513.437723,
+    "ast_hash": "d1c4536d37f4d030403eb8e86e977c8f",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/setup_portal.h": {
+    "mtime": 1791488960.2610624,
+    "seen": 1791492732.434706,
+    "ast_hash": "4cfe2ee5a980e787872da0cbbce6c210",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/tools/check_pins.py": {
+    "mtime": 1791488960.329483,
+    "seen": 1791492732.434706,
+    "ast_hash": "a04d55902f13545ee3596a14abd3648c",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/ui.cpp": {
+    "mtime": 1791493321.5820613,
+    "seen": 1791493513.437723,
+    "ast_hash": "5079421653944d9bf11949ce496452ed",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/ui.h": {
+    "mtime": 1791492731.118121,
+    "seen": 1791492880.1224883,
+    "ast_hash": "3b9d633079e9c541fe40060dfe82a0b5",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/vf_lcd.cpp": {
+    "mtime": 1791493321.5824606,
+    "seen": 1791493513.437723,
+    "ast_hash": "c0e651f34e66b17105829fca438034c6",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/src/vf_lcd.h": {
+    "mtime": 1791492821.2337778,
+    "seen": 1791492880.1224883,
+    "ast_hash": "944913d1c2f14a9c4d6a55691be60fec",
+    "semantic_hash": ""
+  },
+  "hardware/LCD_PANEL_OPTIONS.md": {
+    "mtime": 1791510482.1055715,
+    "seen": 1791511318.7417023,
+    "ast_hash": "34fb07dba7e76e648a161644e86f44f0",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/PORT_NOTES.md": {
+    "mtime": 1791510498.4215891,
+    "seen": 1791511318.7417023,
+    "ast_hash": "5bff32549f627e56e7dd724945640a6f",
+    "semantic_hash": ""
+  },
+  "firmware-v15-lcd/README.md": {
+    "mtime": 1791510507.7247791,
+    "seen": 1791511318.7417023,
+    "ast_hash": "47cc7842a748a9513971c3326efe941d",
+    "semantic_hash": ""
+  },
+  "hardware/tools/v15_lcd/board_step3_review13.py": {
+    "mtime": 1791509323.928999,
+    "seen": 1791511318.7417023,
+    "ast_hash": "9d50a273d51e16266e2c6d672811e068",
+    "semantic_hash": ""
+  },
+  "hardware/verification/13_v15_lcd_review.md": {
+    "mtime": 1791494198.1334596,
+    "seen": 1791494216.6759238,
+    "ast_hash": "2c8bb4610480a4111bbd5d352e86d014",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/annotate_guide_v15.py": {
+    "mtime": 1791510721.8223858,
+    "seen": 1791511318.7417023,
+    "ast_hash": "e72fd0cdee4c748db94e679c011883d5",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/lcd_position_jig_v15.py": {
+    "mtime": 1791495475.6256375,
+    "seen": 1791495786.2149165,
+    "ast_hash": "33031505d82f6035988ee0c98aee8acd",
+    "semantic_hash": ""
+  },
+  "hardware/production/lcd_suppliers.json": {
+    "mtime": 1791511037.4254453,
+    "seen": 1791511318.7417023,
+    "ast_hash": "26143d0c1a0e03b847308f5eb843fd60",
+    "semantic_hash": ""
+  },
+  "hardware/bringup_guide_v15_lcd.html": {
+    "mtime": 1791511418.8987072,
+    "seen": 1791511489.2641563,
+    "ast_hash": "994b82b838a7787f989e03871be379db",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/lcd_position_jig_v15.svg": {
+    "mtime": 1791495482.2489889,
+    "seen": 1791495786.2159128,
+    "ast_hash": "081786f4e7823b776164ca4a8f05b32b",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/photos/front_ann.jpg": {
+    "mtime": 1791495424.341953,
+    "seen": 1791495786.2159128,
+    "ast_hash": "d6b3b3af0f84edfb5a1ee1af8128dd38",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/photos/shell_keymat_ann.jpg": {
+    "mtime": 1791495424.3319027,
+    "seen": 1791495786.2159128,
+    "ast_hash": "073462e08b4f130dbdca6174f2a4e8e1",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/photos/teardown_ann.jpg": {
+    "mtime": 1791495424.3218372,
+    "seen": 1791495786.2159128,
+    "ast_hash": "66c802ef64acb08c3294c13cd13e4e81",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/v14_shared/grind_camera_window_inside_after.png": {
+    "mtime": 1791495424.3745959,
+    "seen": 1791495786.2159128,
+    "ast_hash": "503acb962e16450dcaeb564f7d4b8d1f",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/v14_shared/section_camera.png": {
+    "mtime": 1791495424.3848047,
+    "seen": 1791495786.2159128,
+    "ast_hash": "f5cde7a932b5ed32cb67c9a24e219d7d",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/v14_shared/section_j4_battery.png": {
+    "mtime": 1791495424.3937995,
+    "seen": 1791495786.2159128,
+    "ast_hash": "b053fa9eadc3c5286bf0af8f3ce6cd38",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/anchors.json": {
+    "mtime": 1791511190.013598,
+    "seen": 1791511318.7417023,
+    "ast_hash": "277376137d8c3467a8d0f48f5dbde3fa",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html": {
+    "mtime": 1791511217.2916365,
+    "seen": 1791511318.7417023,
+    "ast_hash": "1779acd9ae61bf4addf0e350b77af4ea",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s01_open_shell.png": {
+    "mtime": 1791511164.101413,
+    "seen": 1791511318.7417023,
+    "ast_hash": "e7ef16d162a241a67b3352a9921bd866",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s01_open_shell_ann.png": {
+    "mtime": 1791511199.253924,
+    "seen": 1791511318.7417023,
+    "ast_hash": "c71d2a77f3c130214085858a0853ae63",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s04_parts.png": {
+    "mtime": 1791511166.0430236,
+    "seen": 1791511318.7417023,
+    "ast_hash": "ffa4a8771c6e7ca5b71e0224ca1b3b38",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s04_parts_ann.png": {
+    "mtime": 1791511199.353121,
+    "seen": 1791511318.7417023,
+    "ast_hash": "e86d8d6498b8c7149023be23cba42aa2",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s05a_lcd_tail.png": {
+    "mtime": 1791511167.7643182,
+    "seen": 1791511318.7417023,
+    "ast_hash": "7c7a1fdd458310633c423517ab3f9789",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s05a_lcd_tail_ann.png": {
+    "mtime": 1791511199.4403782,
+    "seen": 1791511318.7417023,
+    "ast_hash": "e09ad6819b6a2753cd2126768eb61286",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s05b_lcd_j5.png": {
+    "mtime": 1791511169.3082025,
+    "seen": 1791511318.7417023,
+    "ast_hash": "a6e3e78d488fcc835c14f9f7f5cfc082",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s05b_lcd_j5_ann.png": {
+    "mtime": 1791511199.5262473,
+    "seen": 1791511318.7417023,
+    "ast_hash": "82037f585deb0271b6dd734032874b3a",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s05c_lcd_on_board.png": {
+    "mtime": 1791511170.8002772,
+    "seen": 1791511318.7417023,
+    "ast_hash": "ff455c71c1ffa3e454460f8d2089fbf4",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s05c_lcd_on_board_ann.png": {
+    "mtime": 1791511199.6641634,
+    "seen": 1791511318.7417023,
+    "ast_hash": "a584dd932345e519c6787f5d6a870e6b",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s06a_camera.png": {
+    "mtime": 1791511172.339975,
+    "seen": 1791511318.7417023,
+    "ast_hash": "914cd106d9f64abb9b0a1a79cdf62643",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s06a_camera_ann.png": {
+    "mtime": 1791511199.8035946,
+    "seen": 1791511318.7417023,
+    "ast_hash": "fbc77c475dc87af3b250622b5d4c5e7f",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s06b_camera_j1.png": {
+    "mtime": 1791511173.81576,
+    "seen": 1791511318.7417023,
+    "ast_hash": "e8736d1e0d8cce0dba72eb4a561da252",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s06b_camera_j1_ann.png": {
+    "mtime": 1791511199.8893049,
+    "seen": 1791511318.7417023,
+    "ast_hash": "37db651a609bccc4b7718b63f33cca98",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s07_magnet_j3.png": {
+    "mtime": 1791511175.6823924,
+    "seen": 1791511318.7417023,
+    "ast_hash": "f7c2c1ef612103c29a931791c41f6146",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s07_magnet_j3_ann.png": {
+    "mtime": 1791511199.9834895,
+    "seen": 1791511318.7417023,
+    "ast_hash": "4108d292b9c61e24de2fec70fe1b64d6",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s07b_magnet_in.png": {
+    "mtime": 1791511177.168422,
+    "seen": 1791511318.7417023,
+    "ast_hash": "15ff8b28e046f92f5c84ddb14a8f86f4",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s07b_magnet_in_ann.png": {
+    "mtime": 1791511200.0806508,
+    "seen": 1791511318.7417023,
+    "ast_hash": "a06ff2e5dc30ac637d6d351acbb2ed8a",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s08a_keymat.png": {
+    "mtime": 1791511179.3055916,
+    "seen": 1791511318.7417023,
+    "ast_hash": "2de9f777f0f60fa06206496d80b8d7d5",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s08a_keymat_ann.png": {
+    "mtime": 1791511200.233166,
+    "seen": 1791511318.7417023,
+    "ast_hash": "27fca29a59776340fcf3cb5d0a3edec2",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s08b_board_in.png": {
+    "mtime": 1791511181.298972,
+    "seen": 1791511318.7417023,
+    "ast_hash": "dd82d4078fbb0a91c658918e69a7f49e",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s08b_board_in_ann.png": {
+    "mtime": 1791511200.3903427,
+    "seen": 1791511318.7417023,
+    "ast_hash": "98c084515927462f717dd6c599674382",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s08c_magnet_flush.png": {
+    "mtime": 1791511182.785143,
+    "seen": 1791511318.7417023,
+    "ast_hash": "25db969d997b23491876842250e607d0",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s08c_magnet_flush_ann.png": {
+    "mtime": 1791511200.4878988,
+    "seen": 1791511318.7417023,
+    "ast_hash": "cd302cc9777bb54c4052df40adcd008d",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s09_battery.png": {
+    "mtime": 1791511184.520322,
+    "seen": 1791511318.7417023,
+    "ast_hash": "30d465c0528e77045d2f0d9e291ef7fd",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s09_battery_ann.png": {
+    "mtime": 1791511200.598049,
+    "seen": 1791511318.7417023,
+    "ast_hash": "b624ebc1c6b9bffc1549d13bec73c534",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s10a_cover_lowering.png": {
+    "mtime": 1791511186.0850012,
+    "seen": 1791511318.7417023,
+    "ast_hash": "71c4fd2f33620aba5bde34de43ec3d98",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s10a_cover_lowering_ann.png": {
+    "mtime": 1791511200.729506,
+    "seen": 1791511318.7417023,
+    "ast_hash": "0d4e8c930f9127f2d1a5b0be300f0b2e",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s10b_closed_back.png": {
+    "mtime": 1791511187.7686534,
+    "seen": 1791511318.7417023,
+    "ast_hash": "ae7b46c9c5bb63623284b6fde83a0b6e",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s10b_closed_back_ann.png": {
+    "mtime": 1791511200.8333807,
+    "seen": 1791511318.7417023,
+    "ast_hash": "5343a75e4e5705bcf959d56b15224cef",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s11_finished_front.png": {
+    "mtime": 1791511189.309992,
+    "seen": 1791511318.7417023,
+    "ast_hash": "3abd621e9362e267b7324a4f96b4abfb",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s11_finished_front_ann.png": {
+    "mtime": 1791511200.972262,
+    "seen": 1791511318.7417023,
+    "ast_hash": "577d9c2c2953f494399d05bb48e297ad",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/key_pills.json": {
+    "mtime": 1791510584.8797839,
+    "seen": 1791511318.7417023,
+    "ast_hash": "8ae1a4ed90c5567f17f9d3cd5d6f94d8",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/key_pills_v15.py": {
+    "mtime": 1791510615.4864469,
+    "seen": 1791511318.7417023,
+    "ast_hash": "0f50ddcaea04c9c029c50df1c141239d",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/tail_worstcase.json": {
+    "mtime": 1791510949.4466941,
+    "seen": 1791511318.7417023,
+    "ast_hash": "d02c65b8b277aff26d0fa7fa0aa2da89",
+    "semantic_hash": ""
+  },
+  "hardware/tools/v15_lcd/board_step4_review14.py": {
+    "mtime": 1791509851.4759471,
+    "seen": 1791511318.7417023,
+    "ast_hash": "a09505039e8bb17be7ab78461131db4e",
+    "semantic_hash": ""
+  },
+  "hardware/ORDER_WALKTHROUGH_v15_lcd.md": {
+    "mtime": 1791511125.417699,
+    "seen": 1791511318.7417023,
+    "ast_hash": "e8bd79728b23cb28efc934cc47004b4a",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/key_pills.md": {
+    "mtime": 1791510584.8817835,
+    "seen": 1791511318.7417023,
+    "ast_hash": "8d70ff3898efa7500ffae1e968c85ff4",
+    "semantic_hash": ""
+  },
+  "hardware/verification/14_v15_final_preorder.md": {
+    "mtime": 1791510196.9080229,
+    "seen": 1791511318.7417023,
+    "ast_hash": "7a3ee0f617753f7444a276dc87c687c4",
+    "semantic_hash": ""
+  },
+  "hardware/verification/15_keypad_vs_casio.md": {
+    "mtime": 1791509307.5687094,
+    "seen": 1791511318.7417023,
+    "ast_hash": "136ef63ec8bab27754a31316523ec821",
+    "semantic_hash": ""
+  },
+  "hardware/enclosure/final_assembly_v15_lcd/renders/key_pills_top_row.png": {
+    "mtime": 1791510615.8782346,
+    "seen": 1791511318.7417023,
+    "ast_hash": "0126f0dce4eb0c658ee1d4a104213578",
+    "semantic_hash": ""
+  },
+  "hardware/verification/keypad_ours_vs_casio.png": {
+    "mtime": 1791509268.0514715,
+    "seen": 1791511318.7417023,
+    "ast_hash": "f6d8fe62d49f3a90d4c5770867517028",
+    "semantic_hash": ""
+  },
+  "hardware/verification/keypad_overlay.png": {
+    "mtime": 1791509268.04045,
+    "seen": 1791511318.7417023,
+    "ast_hash": "138c5bf74f4586bfd05eb28699196ed5",
     "semantic_hash": ""
   }
 }

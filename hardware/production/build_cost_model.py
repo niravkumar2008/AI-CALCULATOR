@@ -5,6 +5,10 @@ from openpyxl.utils import get_column_letter as L
 from openpyxl.worksheet.datavalidation import DataValidation
 
 OUT = r"C:\Users\r_kas\OneDrive\Documents\GitHub\AI-CALCULATOR\hardware\production\COST_MODEL.xlsx"
+# LCD panel price at 100 / 1,000. Placeholder until an Alibaba quote exists (hardware/production/lcd_suppliers.json).
+LCD_BULK = [2.50, 2.30]
+LCD_BULK_SRC = ("hardware/production/lcd_suppliers.json (2026-10-08): Alibaba, Zhengzhou Zhongjingyuan (ZJY) ST7789V3 30-pin, $2.50 @100, $2.30 @1,000, MOQ 2 (prices from search snippets; confirm drawing + pin table and get a written quote). Sample: Shenzhen Goldenmorning T190X7-C30-01 $1.85-2.50. No listing gave a short-tail FPC price.")
+LCD100_ALIBABA = 42.22  # Alibaba_Bulk_Sourcing.xlsx 'v15-LCD cost by batch' M23, 2026-10-08 (42.2155 after the 10/8-evening R23 update)
 
 F = "Arial"
 BLUE = Font(name=F, size=10, color="0000FF")
@@ -60,7 +64,7 @@ wsI = wb.active
 wsI.title = "Inputs"
 S = "Inputs"
 put(wsI, "A1", "Inputs: every blue number is an assumption you can edit. Black = formula.", TITLE)
-put(wsI, "A2", "Written 2026-10-06. Sources beside each input. (estimate) = no hard source; confirm by quote.", NOTE)
+put(wsI, "A2", "Written 2026-10-06, updated 2026-10-08 evening (5 v14 testers, v15-LCD verified ORDER with the BuyDisplay ER-TFT019-1 panel, bigger battery). Sources beside each input. (estimate) = no hard source; confirm by quote.", NOTE)
 header(wsI, 4, ["Input", "Value", "Unit", "Source / why"], [46, 12, 14, 110])
 
 inputs = [
@@ -102,8 +106,16 @@ inputs = [
     ("sec", "Your own time (shown, not added to cost at 2-100)"),
     ("own_min", "Your minutes per unit: grind + assemble + QA", 37, "min", NUM, "Grinds with jigs 9-11 min (jigs/README.md), assembly ~15 min (estimate), QA Part A 5 + Part B 6-8 min (QA_TEST_PLAN.md)."),
     ("own_rate", "Value of your hour", 15, "$/h", USD, "Assumption: a student job wage (estimate)."),
+    ("sec", "v15-LCD board change (per board; hardware/stage15_lcd.md §3, verification/13 and 14)"),
+    ("v15_removed", "Parts removed: 17 e-paper parts (J2, L1, Q3, R11, R12, D3-D5, C20-C30)", 0.75, "$/board", USD, "Estimate from LCSC 1-off prices: J2 FPC socket ~$0.30, L1 68 µH ~$0.12, Q3 ~$0.15, 3 × B5819W ~$0.06, C20 + 10 × 1 µF/50 V ~$0.11, 2 resistors. Stage 15: board BOM ≈ $1 cheaper."),
+    ("v15_added", "Parts added: J5 C2919501 $0.36, Q4 AO3401A $0.10, Q5 AO3400A C20917 $0.09, R21/R22/C36, R23 15 Ω C22810", 0.5573, "$/board", USD, "JLCPCB prices 2026-10-08 (stage15_lcd.md §3 table): 0.36 + 0.10 + 0.09 + 3 × 0.002 + R23 C22810 0.0013 (review 14: 22 Ω → 15 Ω)."),
+    ("v15_ext_delta", "Change in JLCPCB extended part types (v15 vs v14)", -1, "types", NUM, "Review 14 stock list: v14 had 14 extended types, v15 has 13. L1 (C135265), Q3 (C469327) and R12 (C23157) leave; J5 (C2919501) and R23 15 Ω (C22810, ~$3 fee) join; J1 keeps C6364666."),
+    ("v15_order", "v15-LCD JLCPCB order: 5 PCBs, 5 assembled, delivered (DHL + ~35 % duty)", 270, "$", USD0, "Estimate (hardware/ORDER_WALKTHROUGH_v15_lcd.md §8): the real v14 total $275 minus one extended-part fee and the ~$0.19/board cheaper BOM, with duty; range ≈ $255-285. Replace with the real quote."),
+    ("v15_reuse", "Assembled v15 boards from that order that go into the pilot", 5, "boards", NUM, "Plan: the 5 bench-tested v15 boards become pilot units 1-5, so the pilot pays for fewer new boards. Set 0 to keep them as spares."),
     ("sec", "Budget"),
     ("budget", "Cash available for supply", 2000, "$", USD0, "Business plan: $2,000 budget."),
+    ("testers", "v14 e-paper testers being built", 5, "units", NUM, "Plan 2026-10-08: 5 testers in Casio shells."),
+    ("pilot_units", "v15-LCD pilot size (knockoff shells)", 10, "units", NUM, "Plan: after the v15 order. Lower it (e.g. 5) if the cash budget goes negative."),
 ]
 
 r = 5
@@ -163,14 +175,14 @@ wsI.freeze_panes = "A5"
 # ---------------------------------------------------------------- Unit cost
 wsU = wb.create_sheet("Unit cost")
 U = "Unit cost"
-put(wsU, "A1", "Cost per finished calculator at 2 / 10 / 100 / 1,000 units", TITLE)
-put(wsU, "A2", "2 = Casio fx-115ES prototypes (v14, retail parts). 10 / 100 / 1,000 = knockoff 991ES-style shell (v15 board). "
+put(wsU, "A1", "Cost per finished calculator at 5 / 10 / 100 / 1,000 units (e-paper version; LCD and big battery on 'Versions')", TITLE)
+put(wsU, "A2", "5 = the v14 e-paper TESTERS in genuine Casio fx-115ES shells (option C of Claude outputs/AI_Calculator_Shopping_List.xlsx). 10 / 100 / 1,000 = knockoff 991ES-style shell (v15 board). "
                "Per-unit prices from Claude outputs/Alibaba_Bulk_Sourcing.xlsx 'Cost by batch' and LAUNCH_ROADMAP.md §3 unless noted.", NOTE)
-header(wsU, 4, ["#", "Item", "2 units", "10 units", "100 units", "1,000 units", "Source / notes"],
+header(wsU, 4, ["#", "Item", "5 testers", "10 units", "100 units", "1,000 units", "Source / notes"],
        [5, 52, 13, 13, 13, 13, 95])
 VOLS = ["C", "D", "E", "F"]
 put(wsU, "B5", "Batch size (units)", BOLD)
-for col, v in zip(VOLS, [2, 10, 100, 1000]):
+for col, v in zip(VOLS, [5, 10, 100, 1000]):
     put(wsU, f"{col}5", v, BLUE, NUM, INPUT_FILL)
 put(wsU, "G5", "Edit to test other batch sizes; the per-unit prices below don't re-scale by themselves.")
 put(wsU, "B6", "Shell used")
@@ -179,13 +191,13 @@ for col, v in zip(VOLS, ["Casio donor", "Clone (retail)", "Clone (Alibaba)", "Cl
 
 put(wsU, "A7", "Per-unit parts (price per unit at that volume)", BOLD)
 rows_var = [
-    ("PCB + PCBA (board, all SMD parts, JLCPCB assembly)", [72.50, 18, 9, 7.30],
-     "2: JLCPCB $145 for 5 PCBs / 2 assembled (Shopping List row 1) ÷ 2. 10/100/1,000: roadmap §3 table [S8]."),
-    ("Shell + key mat + window + screws", [21, 6, 3.99, 3.25],
-     "2: donor fx-115ES ~$21 incl. tax (already owned; value shown). 10: retail clone incl. shipping. 100: Alibaba $3.25-3.99 MOQ 20 [S1]. 1,000: $3.25 (factories quote $1.50-3.50 at 3,000 [S2])."),
-    ("Camera OV5640 AF", [12.99, 12, 6, 4.50], "2: Seeed 114993115 $12.99. Then roadmap / Alibaba OEM [S3]."),
-    ("E-paper 2.13\" raw panel", [6.99, 6.60, 5.50, 4.00], "2: Waveshare $6.99. Then Good Display direct by RFQ (estimate)."),
-    ("LiPo 150 mAh + JST-PH", [5.95, 5.95, 1.80, 1.30], "2/10: Adafruit #1317. 100/1,000: Alibaba cell with PH lead + PCM (estimate)."),
+    ("PCB + PCBA (board, all SMD parts, JLCPCB assembly)", [55.00, 18, 9, 7.30],
+     "5: JLCPCB v14 DELIVERED (incl. DHL + ~35 % duty) ≈ $220 for 2 assembled + $55 for 5 assembled = $275 ÷ 5 (Shopping List rows 1-2). 10/100/1,000: roadmap §3 table [S8]."),
+    ("Shell + key mat + window + screws", [20, 6, 3.99, 3.25],
+     "5: Casio fx-115ES $20 each (3 bought, 2 already owned; value shown for all 5). 10: retail clone incl. shipping. 100: Alibaba $3.25-3.99 MOQ 20 [S1]. 1,000: $3.25 (factories quote $1.50-3.50 at 3,000 [S2])."),
+    ("Camera OV5640 AF", [10.594, 12, 6, 4.50], "5: option C = (3 × Seeed 114993115 $12.99 + 2 × generic $7) ÷ 5. Then roadmap / Alibaba OEM [S3]."),
+    ("E-paper 2.13\" raw panel", [5.994, 6.60, 5.50, 4.00], "5: option C = (3 × Waveshare $6.99 + 2 × GDEY0213B74 $4.50) ÷ 5. Then Good Display direct by RFQ (estimate)."),
+    ("LiPo 150 mAh + JST-PH", [4.77, 5.95, 1.80, 1.30], "5: option C = (3 × Adafruit #1317 $5.95 + 2 × generic 302030 $3) ÷ 5. 10: Adafruit #1317. 100/1,000: Alibaba cell with PH lead + PCM (estimate)."),
     ("Battery dangerous-goods freight surcharge", [0, 0, 0.80, 0.30], "UN3481 air surcharge (estimate)."),
     ("Magnetic connector pair", [6.50, 5.85, 1.80, 1.20], "Adafruit #5358 $6.50 / $5.85 (10+); Alibaba MG04-254-RA $1.80 [S7]."),
     ("Magnetic USB cable (in the box)", [4.95, 4.95, 1.80, 1.40], "Adafruit #5412 $4.95; OEM $1.40-1.80 (estimate)."),
@@ -193,7 +205,7 @@ rows_var = [
     ("Quick-start card (with 'not affiliated with Casio')", [0, 0.10, 0.25, 0.05], "[S10]; small runs estimate."),
     ("Serial / QC label + polybag", [0, 0.15, 0.10, 0.05], "Estimate."),
     ("Tape, Kapton, glue (per-unit share)", [0, 0.50, 0.30, 0.20], "2: bought as bench tools (one-time row below). Estimate."),
-    ("Inbound freight + US import duty (per unit)", [0, 8, 8, 5], "2: paid as a lump (one-time row below). Roadmap: ~35 % duty, low end of 35-92.5 % [S8]. Biggest swing factor."),
+    ("Inbound freight + US import duty (per unit)", [0, 8, 8, 5], "5: JLCPCB freight/duty is inside row 1; other shipping is a lump (one-time row below). Roadmap: ~35 % duty, low end of 35-92.5 % [S8]. Biggest swing factor."),
 ]
 r = 8
 var_first = r
@@ -213,7 +225,7 @@ r += 1
 put(wsU, f"B{r}", "Scrap + spares allowance, %")
 for col, v in zip(VOLS, [0, 0.10, 0.07, 0.05]):
     put(wsU, f"{col}{r}", v, BLUE, PCT, INPUT_FILL)
-put(wsU, f"G{r}", "Alibaba sheet row 15 (estimate). At 2 the spares are a one-time row instead.")
+put(wsU, f"G{r}", "Alibaba sheet row 15 (estimate). At 5 the spares are a one-time row instead.")
 scrap_pct = r
 r += 1
 put(wsU, f"B{r}", "Scrap + spares allowance, $")
@@ -224,7 +236,7 @@ r += 1
 put(wsU, f"B{r}", "Paid assembly labour (box build)")
 for col, v in zip(VOLS, [0, 0, 0, 2.50]):
     put(wsU, f"{col}{r}", v, BLUE, USD, INPUT_FILL)
-put(wsU, f"G{r}", "You build 2-100 yourself (time not costed, see row below). 1,000: EMS box build (roadmap §3, estimate).")
+put(wsU, f"G{r}", "You build 5-100 yourself (time not costed, see row below). 1,000: EMS box build (roadmap §3, estimate).")
 lab_row = r
 r += 1
 put(wsU, f"B{r}", "Variable cost per unit", BOLD)
@@ -236,10 +248,10 @@ r += 2
 put(wsU, f"A{r}", "One-time costs for the batch (whole $ amount)", BOLD)
 r += 1
 rows_once = [
-    ("Shipping + tariff lump (JLCPCB DHL $25 + tariff $40 + Adafruit $15 + Waveshare $20 + Seeed $12)", [112, 0, 0, 0],
-     "Shopping List rows 2, 3, 7, 9, 11. At 10+ freight is per unit (row 13)."),
-    ("Bench tools and consumables (tape, glue, drill bit, vinyl, IPA, glasses, charger)", [69, 0, 0, 0], "Shopping List rows 12-19."),
-    ("Prototype spares (1 extra camera, battery, magnet pair)", [25.44, 0, 0, 0], "Shopping List: 3 cameras, 3 batteries, 3 connectors for 2 units."),
+    ("Other shipping lump (Adafruit $15 + Seeed $12 + Waveshare $20 + AliExpress $10; JLCPCB's is in row 1)", [57, 0, 0, 0],
+     "Shopping List (option C) shipping rows. At 10+ freight is per unit (row 13)."),
+    ("Bench tools and consumables (tape, glue, drill bit, vinyl, IPA, glasses)", [61, 0, 0, 0], "Shopping List supplies section (charger qty 0 = you own one)."),
+    ("Tester spares (option C: 1 spare of each current + generic camera, screen, battery; 1 magnet piece)", [46.93, 0, 0, 0], "12.99 + 7 + 6.99 + 4.50 + 5.95 + 3 + 6.50 (Shopping List qty 6 of each kind)."),
     ("Supplier samples (2 each from 2 suppliers, incl. 4 knockoff shells) + express", [0, 150, 150, 120], "Alibaba sheet row 16 (estimate); KNOCKOFF_SHELL_PLAN.md §1."),
     ("Pogo test jig + fixtures", [0, 0, 100, 150], "Roadmap §5: $50-150 (estimate)."),
     ("Third-party pre-shipment inspection", [0, 0, 0, 300], "~1 man-day (estimate). Only worth it at 1,000."),
@@ -273,7 +285,7 @@ r += 1
 put(wsU, f"B{r}", "Selling legally? (1 = yes, spread the one-time certification over this batch)")
 for col, v in zip(VOLS, [0, 0, 1, 1]):
     put(wsU, f"{col}{r}", v, BLUE, NUM, INPUT_FILL)
-put(wsU, f"G{r}", "2 = your own prototypes; 10 = free / at-cost beta (KNOCKOFF_SHELL_PLAN.md §5). Public sales start at 100.")
+put(wsU, f"G{r}", "5 = testers (not sold); 10 = free / at-cost beta (KNOCKOFF_SHELL_PLAN.md §5). Public sales start at 100.")
 sell_row = r
 r += 1
 put(wsU, f"B{r}", "Certification, lawyer, LLC, trademark, insurance per unit")
@@ -307,6 +319,11 @@ put(wsU, f"B{r}", "Your time per unit, valued (not cash)")
 for col in VOLS:
     put(wsU, f"{col}{r}", f"=IF({col}{lab_row}>0,0,{names['own_min']}/60*{names['own_rate']})", BLACK, USD)
 put(wsU, f"G{r}", "37 min × $15/h. Zero where paid labour takes over.")
+names["once_tot_row"] = once_tot
+names["scrap_pct_row"] = scrap_pct
+names["varc_row"] = varc_row
+names["sell_row"] = sell_row
+names["var_first"] = var_first
 wsU.freeze_panes = "C5"
 
 # ---------------------------------------------------------------- API cost
@@ -382,7 +399,7 @@ wsM = wb.create_sheet("Margins & payback")
 M = "Margins & payback"
 put(wsM, "A1", "Margin on the $225 calculator, margin on the $15 subscription, break-even and payback", TITLE)
 put(wsM, "A2", "Columns = batch size. Unit cost includes the selling-legally costs where 'Selling legally' = 1 on 'Unit cost'.", NOTE)
-header(wsM, 4, ["Item", "2 units", "10 units", "100 units", "1,000 units", "How it's worked out"], [58, 13, 13, 13, 13, 80])
+header(wsM, 4, ["Item", "5 testers", "10 units", "100 units", "1,000 units", "How it's worked out"], [58, 13, 13, 13, 13, 80])
 MC = ["B", "C", "D", "E"]
 rows_m = []
 
@@ -443,24 +460,167 @@ for rr, txt in expect.items():
     assert str(wsM[f"A{rr}"].value).startswith(txt), (rr, wsM[f"A{rr}"].value)
 wsM.freeze_panes = "B5"
 
+# ---------------------------------------------------------------- Versions (LCD, bigger battery)
+wsV = wb.create_sheet("Versions")
+V = "Versions"
+put(wsV, "A1", "Four versions at 10 / 100 / 1,000: e-paper or LCD, 150 mAh or 1,200-1,500 mAh battery", TITLE)
+put(wsV, "A2", "Starts from the e-paper cost on 'Unit cost' and adds only the differences (each difference also carries that column's scrap %). "
+               "LCD = v15-LCD board (hardware/stage15_lcd.md): 1.9\" 170×320 IPS ST7789 30-pin panel instead of the 2.13\" e-paper. "
+               "Big battery = Adafruit #258 1,200 mAh at 10, Alibaba 504060 ~1,500 mAh at 100+ (enclosure/final_assembly/battery_upgrade.md): needs the custom shell pocket (70 × 41 × 5.4 mm) or a knockoff with room (KNOCKOFF_SHELL_PLAN.md K-D7/K-S5).", NOTE)
+header(wsV, 4, ["#", "Item", "10 units", "100 units", "1,000 units", "Source / notes"], [5, 60, 13, 13, 13, 100])
+VC = ["C", "D", "E"]          # columns here
+UCOL = ["D", "E", "F"]        # matching 'Unit cost' columns
+MCOL = ["C", "D", "E"]        # matching 'Margins & payback' columns
+vf = names["var_first"]
+EP_ROW, BAT_ROW, DG_ROW = vf + 3, vf + 4, vf + 5
+assert str(wsU[f"B{EP_ROW}"].value).startswith("E-paper") and str(wsU[f"B{BAT_ROW}"].value).startswith("LiPo") and "dangerous" in str(wsU[f"B{DG_ROW}"].value)
+r = 5
+put(wsV, f"A{r}", "Inputs that differ by version", BOLD)
+r += 1
+vrows = {}
+
+
+def vline(key, label, vals, fmt=USD, src="", formula=False):
+    global r
+    put(wsV, f"B{r}", label)
+    for col, v in zip(VC, vals):
+        if v is None:
+            continue
+        if formula:
+            put(wsV, f"{col}{r}", v, BLACK, fmt)
+        else:
+            put(wsV, f"{col}{r}", v, BLUE, fmt, INPUT_FILL)
+    put(wsV, f"F{r}", src).alignment = WRAP
+    vrows[key] = r
+    r += 1
+
+
+vline("ep", "E-paper panel (from 'Unit cost')", [f"='{U}'!{u}{EP_ROW}" for u in UCOL], src="Unit cost row 4.", formula=True)
+vline("ali_price", "LCD panel price at 10: BuyDisplay ER-TFT019-1 (no touch, datasheet-verified)", [6.22, None, None],
+      src="Given 2026-10-08 (verification/14, LCD_PANEL_OPTIONS.md): ~$6-7 each, $6.22 @10, $5.71 @100.")
+vline("ali_ship", "BuyDisplay shipping per order", [12, None, None], src="Estimate, not quoted: check at checkout and replace.")
+vline("lcd_bulk", "LCD panel price at 100 / 1,000 (Alibaba / panel maker)", [None, LCD_BULK[0], LCD_BULK[1]], src=LCD_BULK_SRC)
+vline("lcd", "LCD panel per unit", [f"=C{vrows['ali_price']}+C{vrows['ali_ship']}/'{U}'!D$5", f"=D{vrows['lcd_bulk']}", f"=E{vrows['lcd_bulk']}"],
+      src="10: BuyDisplay price + one shipping charge shared by the batch. 100/1,000: the line above (Alibaba after a sample check).", formula=True)
+vline("pcb_parts", "v15 PCBA parts change per board (added − removed)", [f"={names['v15_added']}-{names['v15_removed']}"] * 3,
+      src="Inputs: v15-LCD board change.", formula=True)
+vline("pcb_ext", "v15 extended-part fee change per board", [f"={names['v15_ext_delta']}*{names['ext_fee']}/'{U}'!{u}$5" for u in UCOL],
+      src="types change × $3 per order ÷ batch.", formula=True)
+vline("bat", "150 mAh battery + its DG surcharge (from 'Unit cost')", [f"='{U}'!{u}{BAT_ROW}+'{U}'!{u}{DG_ROW}" for u in UCOL], src="Unit cost rows 5-6.", formula=True)
+vline("big", "1,200-1,500 mAh battery", [9.95, 4.00, 3.00],
+      src="10: Adafruit #258 1,200 mAh $9.95 (battery_upgrade.md). 100/1,000: Alibaba 504060 ~1,500 mAh ~$3-5 at MOQ (estimate). Must come with UN38.3 in the seller's name.")
+vline("big_dg", "Its dangerous-goods freight surcharge", [0, 1.20, 0.50],
+      src="Estimate: ~5.5 Wh cell, heavier than the 150 mAh one (UN3481). At 10 it ships ground from Adafruit (in the price).")
+vline("big_lead", "Longer JST-PH lead / extension (the pocket is under the keypad, ~150 mm lead)", [0.50, 0.25, 0.15],
+      src="Estimate. Also R2 20 k → 4.7 k on the board for a ~3 h charge (one resistor, no cost change).")
+r += 1
+put(wsV, f"A{r}", "Differences per unit (incl. scrap %)", BOLD)
+r += 1
+
+
+def dline(key, label, expr, src=""):
+    global r
+    put(wsV, f"B{r}", label)
+    for col, u in zip(VC, UCOL):
+        put(wsV, f"{col}{r}", expr(col, u), BLACK, USD)
+    put(wsV, f"F{r}", src).alignment = WRAP
+    vrows[key] = r
+    r += 1
+
+
+dline("d_lcd", "LCD instead of e-paper",
+      lambda c, u: f"=({c}{vrows['lcd']}-{c}{vrows['ep']}+{c}{vrows['pcb_parts']}+{c}{vrows['pcb_ext']})*(1+'{U}'!{u}{names['scrap_pct_row']})",
+      "(panel − e-paper + board change) × (1 + scrap %).")
+dline("d_big", "Big battery instead of 150 mAh",
+      lambda c, u: f"=({c}{vrows['big']}+{c}{vrows['big_dg']}+{c}{vrows['big_lead']}-{c}{vrows['bat']})*(1+'{U}'!{u}{names['scrap_pct_row']})",
+      "(big cell + its DG + lead − small cell − its DG) × (1 + scrap %).")
+r += 1
+put(wsV, f"A{r}", "Results by version", BOLD)
+r += 1
+variants = [("v_ep", "E-paper, 150 mAh (= 'Unit cost')", ""),
+            ("v_lcd", "LCD, 150 mAh (v15-LCD)", "d_lcd"),
+            ("v_ep_big", "E-paper, 1,200-1,500 mAh", "d_big"),
+            ("v_lcd_big", "LCD, 1,200-1,500 mAh (the long-term target)", "d_lcd+d_big")]
+for i, lab in enumerate(["", "Version", "10 units", "100 units", "1,000 units"], start=1):
+    c = wsV.cell(row=r, column=i, value=lab or None)
+    c.font = BOLD
+    c.fill = HDR_FILL
+r += 1
+
+
+def delta(c, spec):
+    if not spec:
+        return ""
+    return "".join(f"+{c}{vrows[k]}" for k in spec.split("+"))
+
+
+put(wsV, f"B{r}", "Cost per unit before selling-legally costs", BOLD)
+r += 1
+for key, lab, spec in variants:
+    put(wsV, f"B{r}", lab)
+    for col, u in zip(VC, UCOL):
+        put(wsV, f"{col}{r}", f"={names['cpu'][u]}{delta(col, spec)}", BLACK, USD, TOT_FILL if key == "v_lcd" else None)
+    vrows[key] = r
+    r += 1
+put(wsV, f"B{r}", "Cost per unit incl. selling-legally costs (FCC, lawyer, LLC, trademark, insurance)", BOLD)
+r += 1
+for key, lab, spec in variants:
+    put(wsV, f"B{r}", lab)
+    for col, u in zip(VC, UCOL):
+        put(wsV, f"{col}{r}", f"={names['cpu_all'][u]}{delta(col, spec)}", BLACK, USD)
+    vrows[key + "_all"] = r
+    r += 1
+put(wsV, f"B{r}", "Hardware profit per $225 unit (same fees, shipping, warranty, free-month API as 'Margins & payback')", BOLD)
+r += 1
+for key, lab, spec in variants:
+    put(wsV, f"B{r}", lab)
+    for col, m in zip(VC, MCOL):
+        put(wsV, f"{col}{r}", f"='{M}'!{m}7-'{M}'!{m}8-'{M}'!{m}9-'{M}'!{m}10-'{M}'!{m}11-{col}{vrows[key + '_all']}", BLACK, USD)
+    vrows[key + "_profit"] = r
+    r += 1
+put(wsV, f"B{r}", "Variable cost per unit (no one-time costs), for the cash budget", BOLD)
+r += 1
+for key, lab, spec in variants[:2]:
+    put(wsV, f"B{r}", lab)
+    for col, u in zip(VC, UCOL):
+        put(wsV, f"{col}{r}", f"='{U}'!{u}{names['varc_row']}{delta(col, spec)}", BLACK, USD)
+    vrows[key + "_var"] = r
+    r += 1
+r += 1
+put(wsV, f"A{r}", "Battery life (stage15_lcd.md §3): LCD screen-on ≈ 80-90 mA → ~1.5 h on 150 mAh (charge every 1-2 days), 13-17 h on 1,200-1,500 mAh. "
+                  "The e-paper draws almost nothing between refreshes (~3 h screen-on, weekly charging). That is why the big cell matters for the LCD version.", NOTE)
+for key in ["v_ep", "v_lcd", "v_ep_big", "v_lcd_big"]:
+    for suf in ["", "_all", "_profit"]:
+        names["V_" + key[2:] + suf] = {u: f"'{V}'!${c}${vrows[key + suf]}" for c, u in zip(VC, UCOL)}
+names["V_lcd_var10"] = f"'{V}'!$C${vrows['v_lcd_var']}"
+names["V_lcd_unit"] = {u: f"'{V}'!${c}${vrows['lcd']}" for c, u in zip(VC, UCOL)}
+wsV.freeze_panes = "C5"
+
 # ---------------------------------------------------------------- Cash
 wsC = wb.create_sheet("Cash budget")
 C = "Cash budget"
 put(wsC, "A1", "Where the $2,000 goes (supply budget), in order", TITLE)
-put(wsC, "A2", "Cash actually leaving your account. The Casio shells you own are not cash. Nothing is ordered as of 2026-10-06.", NOTE)
+put(wsC, "A2", "Cash actually leaving your account, in the order of the 2026-10-08 plan. The 2 Casio shells you own are not cash. v14 JLCPCB was ordered 10/8; v15-LCD is verified ORDER (review 14) and is next; nothing else is bought yet.", NOTE)
 header(wsC, 4, ["#", "What", "When", "Amount", "Source / notes"], [5, 62, 18, 13, 95])
 cash = [
-    ("Prototype build: JLCPCB v14 (5 PCBs, 2 assembled) + Adafruit + Waveshare + Seeed + bench tools", "Now (after dry fit)", 426.20, True,
-     "AI_Calculator_Shopping_List.xlsx total (=SUM(H5:H23) = $426.20)."),
-    ("Knockoff shell samples: 4 clones, 2 sellers (KNOCKOFF_SHELL_PLAN.md §1)", "This week", 60, True,
+    ("v14 JLCPCB order: 5 PCBs, 5 assembled, delivered (DHL + ~35 % duty)", "Paid 10/8", 275, True,
+     "Shopping List rows 1-2: ≈ $220 for 2 assembled + ≈ $55 for 5 assembled (ranges $200-240 and $50-60). Replace with the real total."),
+    ("5 testers: 3 Casio shells, cameras, screens, batteries, magnet pieces, cables, shipping, supplies (option C)", "Now, before boards land", 388.97, True,
+     "AI_Calculator_Shopping_List.xlsx option C total $663.97 minus the JLCPCB order. Option B would be ≈ $92 less, option A ≈ $2 less."),
+    ("v15-LCD prototype panels: 3 × BuyDisplay ER-TFT019-1 (no touch) + shipping", "Now, with the v15 order", 32.25, True,
+     "Shopping List sheet 'v15-LCD prototype' rows 1-2: 3 × ~$6.75 + ~$12 shipping (estimate). Bench checks at arrival: diode test, tail length, backlight current, 3.3 V."),
+    ("v15-LCD JLCPCB order (verified ORDER, review 14): 5 PCBs, 5 assembled, delivered", "Now", f"={names['v15_order']}", False,
+     "Inputs: v15 order estimate. Files hardware/fab_v15_lcd/, steps hardware/ORDER_WALKTHROUGH_v15_lcd.md."),
+    ("Knockoff shell samples: 4 clones, 2 sellers (KNOCKOFF_SHELL_PLAN.md §1)", "During tester feedback", 60, True,
      "Alibaba pair $40-60 incl. DHL + AliExpress/Amazon pair $10-16 (estimate)."),
-    ("Other supplier samples for the 100 batch (camera, e-paper, battery, magnet pair + cable)", "After shells pass", 90, True,
+    ("Other supplier samples for bulk (camera, bare LCD panels, 150 mAh + 1,200-1,500 mAh cells, magnet pair + cable)", "After shells pass", 90, True,
      "Alibaba sheet row 16 total $150 minus the shells (estimate)."),
-    ("10-unit pilot on the v15 board (all parts, freight, scrap; samples counted above)", "After go / v15", f"='{U}'!D{varc_row}*'{U}'!D5", False,
-     "Variable cost at 10 × 10 ('Unit cost' column 10). Includes 10 assembled v15 boards (≈ $18 each) + $8/unit freight and duty."),
+    ("v15-LCD pilot in knockoff shells: the remaining boards + all parts, freight, scrap", "After the v15 boards pass the bench checks", f"={names['pilot_units']}*{names['V_lcd_var10']}-MIN({names['pilot_units']},{names['v15_reuse']})*'{U}'!$D${var_first}", False,
+     "Pilot size (Inputs) × LCD variable cost at 10 ('Versions'), minus the boards re-used from the v15 order × the $18 board cost at 10 ('Unit cost' row 1). Includes $8/unit freight and duty."),
     ("Proxy hosting, first 3 months", "At beta", f"=3*{names['server_month']}", False, "Inputs: server $/month × 3."),
-    ("Claude API for the beta: 12 users' free month", "At beta", f"=12*{names['api_month']}", False, "2 prototypes + 10 pilot units × 1 month at the typical rate."),
-    ("Lawyer / IP clinic: trade-dress check before any unit leaves the house", "Before beta", 150, True,
+    ("Claude API for the testers' and pilot users' free month", "At beta", f"=({names['testers']}+{names['pilot_units']})*{names['api_month']}", False,
+     "(testers + pilot) × 1 month at the typical rate of the model chosen on Inputs."),
+    ("Lawyer / IP clinic: trade-dress check before any unit leaves the house", "Before testers go out", 150, True,
      "KNOCKOFF_SHELL_PLAN.md §5. University clinic / SCORE can be $0; private $200-500."),
     ("Indiana LLC", "Before taking money", f"={names['llc']}", False, "Inputs (roadmap §4)."),
     ("Domain + email for the link page", "Before beta", 20, True, "Estimate."),
@@ -501,8 +661,8 @@ names["cash_left"] = ref(C, "D", c_left)
 r += 2
 put(wsC, f"A{r}", "Not inside the $2,000: what the first 100 public units need", BOLD)
 r += 1
-put(wsC, f"B{r}", "100-unit batch: variable cost × 100 + its one-time costs (samples, jig)")
-put(wsC, f"D{r}", f"='{U}'!E{varc_row}*'{U}'!E5+'{U}'!E{once_tot}", BLACK, USD0)
+put(wsC, f"B{r}", "100-unit batch (LCD version): variable cost × 100 + its one-time costs (samples, jig)")
+put(wsC, f"D{r}", f"=('{U}'!E{varc_row}+'{V}'!D{vrows['d_lcd']})*'{U}'!E5+'{U}'!E{once_tot}", BLACK, USD0)
 n_batch = r
 r += 1
 put(wsC, f"B{r}", "Selling legally: FCC SDoC, lawyer, LLC, trademark, insurance")
@@ -525,6 +685,8 @@ K = "Checks"
 put(wsK, "A1", "Cross-checks against earlier files", TITLE)
 header(wsK, 3, ["Check", "This model", "Earlier figure", "Difference", "Earlier source"], [60, 13, 13, 13, 70])
 checks = [
+    ("5 testers: cash for the batch minus the 2 owned shells' value", f"{names['batch_cash']['C']}-2*'{U}'!C9", 663.97, "AI_Calculator_Shopping_List.xlsx option C total ($663.97)"),
+    ("LCD version cost per unit at 100 (before selling-legally)", names["V_lcd"]["E"], LCD100_ALIBABA, "Alibaba_Bulk_Sourcing.xlsx 'v15-LCD cost by batch' total @100"),
     ("Cost per unit at 10 (before selling-legally)", names["cpu"]["D"], 92, "Alibaba_Bulk_Sourcing.xlsx 'Cost by batch' (≈ $92)"),
     ("Cost per unit at 100 (before selling-legally)", names["cpu"]["E"], 46, "Alibaba_Bulk_Sourcing.xlsx (≈ $46)"),
     ("Cost per unit at 1,000 (before selling-legally)", names["cpu"]["F"], 34, "Alibaba_Bulk_Sourcing.xlsx (≈ $34)"),
@@ -537,13 +699,13 @@ for i, (lab, f_, earlier, src) in enumerate(checks, start=4):
     put(wsK, f"C{i}", earlier, BLUE, USD if earlier > 1 else '"$"0.0000', INPUT_FILL)
     put(wsK, f"D{i}", f"=B{i}-C{i}", BLACK, USD if earlier > 1 else '"$"0.0000')
     put(wsK, f"E{i}", src)
-put(wsK, "A10", "Differences come from the 2 prototype-only rows, rounding in the earlier sheet, and the cache saving on the system prompt.", NOTE)
+put(wsK, "A12", "Differences come from the tester-only rows, rounding in the earlier sheet, and the cache saving on the system prompt.", NOTE)
 
 # ---------------------------------------------------------------- Summary (first)
 wsS = wb.create_sheet("Summary", 0)
 put(wsS, "A1", "AI Calculator cost model: headline numbers", TITLE)
 put(wsS, "A2", "All values are formulas pointing at the other sheets. Edit blue cells on 'Inputs', 'Unit cost' and 'Cash budget'.", NOTE)
-header(wsS, 4, ["", "2 units", "10 units", "100 units", "1,000 units"], [62, 14, 14, 14, 14])
+header(wsS, 4, ["", "5 testers", "10 units", "100 units", "1,000 units"], [62, 14, 14, 14, 14])
 summ = [
     ("Cost per unit (parts, freight, scrap, batch one-time)", lambda uc, mc: f"={names['cpu'][uc]}", USD),
     ("Cost per unit incl. FCC / lawyer / LLC / trademark / insurance", lambda uc, mc: f"={names['cpu_all'][uc]}", USD),
@@ -559,6 +721,18 @@ for i, (lab, fn, fmt) in enumerate(summ, start=5):
     for uc, mc, col in zip(VOLS, MC, ["B", "C", "D", "E"]):
         put(wsS, f"{col}{i}", fn(uc, mc), BLACK, fmt)
 r = 5 + len(summ) + 1
+put(wsS, f"A{r}", "Versions (10 / 100 / 1,000 only; the 5 testers are e-paper)", BOLD)
+for lab, key in [("LCD version: cost per unit incl. selling-legally", "V_lcd_all"),
+                 ("LCD version: hardware profit per $225 unit", "V_lcd_profit"),
+                 ("E-paper + 1,200-1,500 mAh: cost per unit incl. selling-legally", "V_ep_big_all"),
+                 ("LCD + 1,200-1,500 mAh: cost per unit incl. selling-legally", "V_lcd_big_all"),
+                 ("LCD + 1,200-1,500 mAh: hardware profit per $225 unit", "V_lcd_big_profit")]:
+    r += 1
+    put(wsS, f"A{r}", lab)
+    put(wsS, f"B{r}", "n/a", NOTE)
+    for uc, col in zip(["D", "E", "F"], ["C", "D", "E"]):
+        put(wsS, f"{col}{r}", f"={names[key][uc]}", BLACK, USD)
+r += 2
 put(wsS, f"A{r}", "Claude API", BOLD)
 singles = [
     ("Model", f"={names['model']}", None),
@@ -568,6 +742,7 @@ singles = [
     ("Solves per day that $15 pays for (break-even)", f"={names['api_be_day']}", NUM2),
     ("Suggested fair-use cap (solves/month) for break-even", f"={names['api_be_cap']}", NUM),
     ("Same API cost per month on Sonnet 5.5 (typical)", f"='{A}'!D{names['scen_first']+1}", USD),
+    ("Same on Sonnet 5.5 for a user at the 500 cap", f"='{A}'!F{names['scen_first']+1}", USD),
 ]
 for lab, f_, fmt in singles:
     r += 1
@@ -575,7 +750,7 @@ for lab, f_, fmt in singles:
     put(wsS, f"B{r}", f_, BLACK, fmt)
 r += 2
 put(wsS, f"A{r}", "The $2,000", BOLD)
-for lab, f_, fmt in [("Planned spend (prototypes → 10-unit pilot)", f"={names['cash_total']}", USD),
+for lab, f_, fmt in [("Planned spend (5 testers → v15 order + panels → v15-LCD pilot)", f"={names['cash_total']}", USD),
                      ("Left over", f"={names['cash_left']}", USD),
                      ("Cash needed before the first 100 public units", f"={names['need100']}", USD0),
                      ("Pre-orders at $225 that would fund it", f"={names['preorders']}", NUM)]:

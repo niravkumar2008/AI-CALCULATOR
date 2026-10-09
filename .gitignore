@@ -17,3 +17,4 @@ graphify-out/.graphify_*
 graphify-out/20*/
 
 __pycache__/
+firmware-v15-lcd/.pio/

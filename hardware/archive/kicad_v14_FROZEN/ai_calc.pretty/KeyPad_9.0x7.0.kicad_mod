@@ -1,0 +1,130 @@
+(footprint "KeyPad_9.0x7.0"
+  (version 20241229)
+  (generator "kicad-mcp")
+  (generator_version "9.0")
+  (layer "F.Cu")
+  (descr "Bare ENIG interdigitated key contact for a Casio rubber key pill (number keys). Place on the bottom side. No paste.")
+  (tags "key pad carbon pill membrane calculator")
+
+  (property "Reference" "REF**" (at 0 -4.3 0)
+    (layer "F.SilkS")
+    (uuid "923abf82-e1a0-40ea-87ad-471cfe061a85")
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (property "Value" "KeyPad_9.0x7.0" (at 0 4.3 0)
+    (layer "F.Fab")
+    (uuid "7083181a-2eee-4df3-99a4-f349f6bf0a7c")
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+  (property "Datasheet" "" (at 0 0 0)
+    (layer "F.Fab")
+    (uuid "a7c9d6e6-62f2-4727-b7d8-cef78d8aed10")
+    (effects (font (size 1 1) (thickness 0.15)))
+  )
+
+  (fp_rect (start -4.60 -3.60) (end 4.60 3.60)
+    (stroke (width 0.05) (type default))
+    (fill none)
+    (layer "F.CrtYd")
+    (uuid "d0581e7d-ae61-4cc6-aa92-b7e05d07fa65")
+  )
+
+  (pad "1" smd rect
+    (at 0 -3.2)
+    (size 9 0.6)
+    (layers "F.Cu" "F.Mask")
+    (uuid "f5c06c14-c775-4f68-9016-13d7efc9b047")
+  )
+
+  (pad "2" smd rect
+    (at 0 3.2)
+    (size 9 0.6)
+    (layers "F.Cu" "F.Mask")
+    (uuid "9a4f17db-f0a4-409d-946d-f4abc89593fd")
+  )
+
+  (pad "1" smd rect
+    (at -4.125 -0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "a3f70986-c439-447b-a6e9-ee5a32fc3fba")
+  )
+
+  (pad "2" smd rect
+    (at -3.375 0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "fdd7fa9e-573c-47fc-b3c3-ec4ce489cd77")
+  )
+
+  (pad "1" smd rect
+    (at -2.625 -0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "f9d39213-adab-48ca-a547-a9d0e8d1d107")
+  )
+
+  (pad "2" smd rect
+    (at -1.875 0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "5e3ddddf-95b4-42ed-be6a-22c1d0b7e258")
+  )
+
+  (pad "1" smd rect
+    (at -1.125 -0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "6402ad4f-4706-4a93-b322-2f86a81a3fdc")
+  )
+
+  (pad "2" smd rect
+    (at -0.375 0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "0a903070-564a-45af-af6b-95de7eb17553")
+  )
+
+  (pad "1" smd rect
+    (at 0.375 -0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "fbe4e2c2-dd1e-480b-9f8d-0580a40b6c0e")
+  )
+
+  (pad "2" smd rect
+    (at 1.125 0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "5a183763-f4ea-40cd-b671-acaebb71abbc")
+  )
+
+  (pad "1" smd rect
+    (at 1.875 -0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "4ca18491-f48c-46dd-a750-1f57017cec58")
+  )
+
+  (pad "2" smd rect
+    (at 2.625 0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "0fee88e5-c0cd-4b79-a4a6-f59f5b280523")
+  )
+
+  (pad "1" smd rect
+    (at 3.375 -0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "2ac8d461-507b-4677-a5df-9c96141bd2b6")
+  )
+
+  (pad "2" smd rect
+    (at 4.125 0.15)
+    (size 0.45 5.5)
+    (layers "F.Cu" "F.Mask")
+    (uuid "bb23d2d1-1957-4296-b5e2-691c97ac74ff")
+  )
+
+)

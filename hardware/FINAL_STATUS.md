@@ -1,5 +1,34 @@
 # AI Calculator board: final status (start here)
 
+## Current plan (2026-10-08)
+
+1. **v14 (e-paper) is frozen and ordered.** It was ordered at JLCPCB on 10/8: 5 PCBs, assembly qty 5 assumed (Nirav was choosing 2 vs 5). The git tag is `v14-order`, the files are in `kicad/` and `fab/`, and the archive copy is in `archive/`. Boards arrive about **10/18–22**. Everything below this block describes v14 and still applies to it.
+2. **5 testers in genuine Casio fx-115ES shells** (you own 2, buy 3). Parts option **C** is recommended: units 1–3 use the current Seeed/Waveshare/Adafruit parts and units 4–5 use the generic ones. That comes to **≈ $664 in total**, including the $275 JLCPCB order; option A ≈ $662, option B ≈ $572. Build and test the testers, then collect feedback.
+3. **v15-LCD is the next board, verified "ORDER"** (final pre-order review `verification/14_v15_final_preorder.md`, 2026-10-08 evening). It swaps the e-paper for a 1.9" 170×320 colour IPS LCD. ERC 0, DRC 0/0/0/0, copper-to-hole ≥ 0.25 mm, CPL 20/20, all parts in JLCPCB stock. **Not ordered yet; no panel test is needed before ordering.**
+   - **Order it:** `ORDER_WALKTHROUGH_v15_lcd.md` (same JLCPCB settings as v14: FR-4, 2 layers, 0.8 mm, ENIG 1U", qty 5, tented, min via 0.3, remove mark, Standard PCBA top side, rails right + bottom only, depanel, photo confirmation, review before payment). Expected ≈ $255–285 delivered with 5 assembled (≈ $270).
+   - **Upload files:** `fab_v15_lcd/` (regenerated 2026-10-08 21:38): `ai_calc_v15_lcd_gerbers_JLCPCB.zip`, `ai_calc_v15_lcd_BOM_JLCPCB.csv`, `ai_calc_v15_lcd_CPL_JLCPCB.csv`. v14 stays frozen (tag `v14-order`).
+   - **Panel: BuyDisplay ER-TFT019-1, no touch**, ~$6–7 each ($6.22 @10, $5.71 @100), datasheet-verified pin for pin; buy 3. Adafruit #5394 is only an optional fallback. Bulk: Alibaba Goldenmorning / ZJY (~$2.30–2.50) after a sample check (plastic frame). The ER-CON30HT-1 socket is not needed.
+   - **Changes in review 14:** R23 22 Ω → **15 Ω (C22810**, extended, ~$3 fee; ≈ 26 mA typical backlight, 16–37 mA range); SHIFT (SW1), ALPHA (SW2) and ON (SW50) key pads moved to the original Casio contact positions (`verification/15_keypad_vs_casio.md`), SW1 no longer notched. Review 13 before it: J5 mirrored (`LcdReversed`) at (158.6, 93.1), slot x 180.5–181.5, GPIOs MOSI 5 / DC 6 / SCK 8 / CS 41 / RST 42, LCD_PWR_N 33, backlight PWM 4, KEYPAD_INT 3.
+   - **Bench checks after arrival** (none blocks the order): diode test for the pin-1 end of the tail, backlight current V(R23)/15, panel at 3.3 V, `LCD_INVERT`/RGB flags, tail 36.6 ± 0.3 mm vs rib B, feel of the 3 moved keys. List: `QUESTIONS_AND_ISSUES.md`, `ARRIVAL_CHECKLIST.md` (v15 section).
+   - Docs: `stage15_lcd.md` (the design), `verification/13_v15_lcd_review.md`, `verification/14_v15_final_preorder.md`, `verification/15_keypad_vs_casio.md`, `LCD_PANEL_OPTIONS.md`, firmware `firmware-v15-lcd/`.
+   - v15-LCD guides (published): **Assembly** `enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html` (https://claude.ai/artifact/FU8YVqaksDPk2cfiD2cz3f) and **Power-Up** `bringup_guide_v15_lcd.html` (https://claude.ai/artifact/BeQnacuLhchaHz492CnLRT).
+4. **Later:**
+   - Knockoff shells for bulk (`production/KNOCKOFF_SHELL_PLAN.md`).
+   - A 1,200–1,500 mAh battery in the custom or knockoff shell. The LCD gets ~1.5 h of screen-on time from the 150 mAh cell and 13–17 h from the big one.
+   - A 3D-printed drop-in shell.
+5. **Money:** $225 + $15/month (first month free), on a $2,000 budget.
+   - Cost per unit: LCD ≈ $92 / $42 / $32 at 10 / 100 / 1,000 (BuyDisplay panel at 10, Alibaba from 100); e-paper ≈ $92 / $46 / $34.
+   - With the v15 order (≈ $270) and 3 panels (≈ $32) in the plan, a 10-unit LCD pilot is **≈ $475 over** the $2,000. Re-using the 5 v15 boards: a 5-unit pilot is ≈ $11 over, a 4-unit pilot leaves ≈ $62, 5 units + Sonnet 5.5 leaves ≈ $30.
+   - On Opus 5.5 the API costs ≈ $7.5/user/month and loses money at the 500-solve cap; Sonnet 5.5 covers the cap.
+   - Files:
+     - `production/COST_MODEL.xlsx` (built by `production/build_cost_model.py`)
+     - `production/UNIT_ECONOMICS.md`
+     - `Claude outputs/AI_Calculator_Shopping_List.xlsx`
+     - `Claude outputs/Alibaba_Bulk_Sourcing.xlsx` (sheet "v15-LCD cost by batch")
+     - `Claude outputs/LAUNCH_ROADMAP.md`
+
+---
+
 Rewritten 2026-10-06 (board unchanged since stage 14, 2026-10-04). **This is the single entry point.** If another doc disagrees with this one, this one (and the stage-14 / verification docs it links) wins. The short open list lives in `QUESTIONS_AND_ISSUES.md` → "⭐ Start here".
 
 ## Status
@@ -71,7 +100,13 @@ Guides (published): **Power-Up** https://claude.ai/artifact/PqTARcDutvwxS5aGB8iE
 | `hardware/production/QA_TEST_PLAN.md` | Incoming inspection (Part A) and end-of-line test (Part B) |
 | `server/proxy/README.md` | The AI server: deploy, device tokens, pairing, over-the-air firmware |
 | `firmware-prototype/README.md` | Board firmware: build, USB flash, recovery, phone setup, OTA, serial commands |
-| `hardware/ORDER_WALKTHROUGH.md` / `ORDER_CHECKLIST.md` | Click-by-click JLCPCB order, preview table, engineer answers, meter checks / one-page version |
+| `hardware/ORDER_WALKTHROUGH.md` / `ORDER_CHECKLIST.md` | Click-by-click JLCPCB order, preview table, engineer answers, meter checks / one-page version (v14) |
+| `hardware/ORDER_WALKTHROUGH_v15_lcd.md` | The same for the v15-LCD board (files in `fab_v15_lcd/`, J5/Q4/Q5 in the preview table, bench checks) |
+| `hardware/stage15_lcd.md`, `hardware/LCD_PANEL_OPTIONS.md` | v15-LCD design; panel choice (BuyDisplay ER-TFT019-1) and sources |
+| `hardware/verification/13_v15_lcd_review.md`, `14_v15_final_preorder.md`, `15_keypad_vs_casio.md` | v15 reviews (14 = verified ORDER) and the key-pad comparison |
+| `hardware/kicad_v15_lcd/`, `hardware/fab_v15_lcd/` | v15-LCD KiCad project / upload files (21:38) |
+| `hardware/bringup_guide_v15_lcd.html`, `hardware/enclosure/final_assembly_v15_lcd/` | v15 Power-Up guide source; v15 CAD and Assembly guide source |
+| `firmware-v15-lcd/` | v15 board firmware (never flash it to a v14 board) |
 | `Claude outputs/paper_dry_fit_v14.svg` | Print-at-100 % dry-fit template with the antenna tab and 50 mm check line |
 | `hardware/HANDOFF.md` | Context for a future Claude session (state, must-not-undo list, lessons) |
 | `hardware/verification/05_stage14_recheck.md`, `06_final_review_pcb.md`, `08_second_opinion_pcb.md` | The GO reviews of v14 |

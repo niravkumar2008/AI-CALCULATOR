@@ -1,6 +1,6 @@
 # Arrival checklist: from boxes to a working calculator
 
-Written 2026-10-06 for board v14 and firmware stage14-2026.10.06. One page. Entry point for everything else: `FINAL_STATUS.md`.
+Written 2026-10-06 for board v14 and firmware stage14-2026.10.06 (sections 1–3); v15-LCD boards: section 4 (added 2026-10-08). One page. Entry point for everything else: `FINAL_STATUS.md`.
 
 Guides: **Power-Up** (PU) https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9 · **Grinding** (GR) https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL · **Assembly** (AS) https://claude.ai/artifact/8BTC57FZ3JFwiDdiLprwtY. Section links below add `#id` to those addresses (sources: `bringup_guide.html`, `enclosure/final_assembly/grinding_manual.html`, `enclosure/final_assembly/assembly_guide.html`).
 
@@ -41,3 +41,21 @@ Order list: `Claude outputs/AI_Calculator_Shopping_List.xlsx`. Open each box the
 14. **QA record:** `production/QA_TEST_PLAN.md` Part B on the closed unit; log the JSON (with `firmware_slot`) in `production/qa_log.csv`.
 
 Stuck? PU 12 (`#trouble`) and AS 12 (`#s12`). Then board #2 the same way.
+
+## 4. v15-LCD boards (added 2026-10-08 evening)
+
+The v15-LCD board was verified "ORDER" (`verification/14_v15_final_preorder.md`) and is ordered with `ORDER_WALKTHROUGH_v15_lcd.md`. Same day-one idea as above, but with the v15 guides: **v15 Power-Up** (PU15) https://claude.ai/artifact/BeQnacuLhchaHz492CnLRT (source `bringup_guide_v15_lcd.html`) and **v15 Assembly** (AS15) https://claude.ai/artifact/FU8YVqaksDPk2cfiD2cz3f (source `enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html`). Flash only `firmware-v15-lcd/` to a v15 board, never `firmware-prototype/`.
+
+| From | What (qty) | When | Check on arrival |
+|---|---|---|---|
+| **JLCPCB** | 5 PCBs, 5 assembled (rails removed), v15-LCD | about 10–14 days; ≈ $255–285 delivered (estimate) | Silk reads **"AI CALC v15-LCD 2026-10-08"**. J5 (the 30-pin LCD socket) sits right of the camera area with its opening towards the 1 × 20 mm slot near the right edge; Q4 below it, Q5 and R23 above it. R23 is marked "15R"/"150" (15 Ω), not 22. Then the unpowered inspection (PU15 step 2). |
+| **BuyDisplay** | 3 × **ER-TFT019-1, no touch** | per the checkout | Glass not cracked (corners), tail not creased at its root, 30 fingers, **no touch-panel layer** (no extra small ribbon). Keep it glass-down on a cloth. No ER-CON30HT-1 socket needed. |
+
+**v15 bench checks (review 14 §6; none blocked the order, all fixable on this board):**
+- [ ] **Diode test on the first tail, before plugging it in** (PU15 step 5): meter on diode, red on finger 20, black on finger 22 (the 11th and 9th fingers from the pin-30 end) → LED reading. Mark the finger-1 corner. Plugged in with no twist, finger 1 must land at the **J5 silk tick (bottom end)**, LED fingers in the top half. Otherwise: half twist of the tail.
+- [ ] **Backlight current** (PU15 step 10): mV across R23 ÷ 15 at 100 % = ____ mA. Expect **16–37 mA (≈ 26 typical)**; it can't exceed the 60 mA rating.
+- [ ] **Panel at 3.3 V:** picture clean, no flicker; IDD ≤ 20 mA.
+- [ ] **Colours:** colour bars right? If negative-looking flip `LCD_INVERT`; red/blue swapped flip `LCD_RGB_ORDER` (`firmware-v15-lcd/platformio.ini`).
+- [ ] **Tail length** glass edge → tip **36.6 ± 0.3 mm**; at assembly check the bow clears rib B (AS15, marker dot). A 36.9 mm tail leaves ~0.1 mm.
+- [ ] **The 3 moved keys** SHIFT, ALPHA and ON: press each a few times in the key test; they should feel and register like the rest.
+- [ ] Everything else as v14: magnet meter check (J3 = 1 VBUS, 2 D−, 3 D+, 4 GND), battery polarity, camera ribbon beep test, first USB flash, self-test, AI settings.

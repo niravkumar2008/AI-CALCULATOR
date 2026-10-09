@@ -1,0 +1,1874 @@
+{
+ "pcb": "C:\\Users\\r_kas\\OneDrive\\Documents\\GitHub\\AI-CALCULATOR\\hardware\\kicad_v15_lcd\\ai_calc_v15_lcd.kicad_pcb",
+ "pcb_mtime": 1791509852.8324864,
+ "rows": [
+  {
+   "ref": "SW1",
+   "key": "SHIFT",
+   "pad": [
+    177.75,
+    119.8
+   ],
+   "moved": true,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.8,
+   "casio": {
+    "pill": [
+     177.773,
+     119.815
+    ],
+    "offset": 0.03,
+    "on_bbox": 100.0,
+    "on_copper": 57.8,
+    "gaps": 5,
+    "worst_0p7": 95.0
+   },
+   "model": {
+    "pill": [
+     176.623,
+     120.795
+    ],
+    "offset": 1.5,
+    "on_bbox": 88.5,
+    "on_copper": 58.4,
+    "gaps": 4,
+    "worst_0p7": 67.8
+   }
+  },
+  {
+   "ref": "SW2",
+   "key": "ALPHA",
+   "pad": [
+    167.15,
+    120.8
+   ],
+   "moved": true,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.9,
+   "casio": {
+    "pill": [
+     167.126,
+     121.005
+    ],
+    "offset": 0.21,
+    "on_bbox": 100.0,
+    "on_copper": 59.4,
+    "gaps": 5,
+    "worst_0p7": 89.6
+   },
+   "model": {
+    "pill": [
+     166.026,
+     120.795
+    ],
+    "offset": 1.12,
+    "on_bbox": 99.5,
+    "on_copper": 59.5,
+    "gaps": 4,
+    "worst_0p7": 85.9
+   }
+  },
+  {
+   "ref": "SW3",
+   "key": "MODE",
+   "pad": [
+    133.974,
+    120.795
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.6,
+   "casio": {
+    "pill": [
+     133.444,
+     121.045
+    ],
+    "offset": 0.59,
+    "on_bbox": 100.0,
+    "on_copper": 61.8,
+    "gaps": 4,
+    "worst_0p7": 92.2
+   },
+   "model": {
+    "pill": [
+     133.974,
+     120.795
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.4,
+    "gaps": 5,
+    "worst_0p7": 97.5
+   }
+  },
+  {
+   "ref": "SW4",
+   "key": "CALC",
+   "pad": [
+    176.623,
+    132.45
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.8,
+   "casio": {
+    "pill": [
+     176.803,
+     132.15
+    ],
+    "offset": 0.35,
+    "on_bbox": 100.0,
+    "on_copper": 61.4,
+    "gaps": 5,
+    "worst_0p7": 89.4
+   },
+   "model": {
+    "pill": [
+     176.623,
+     132.45
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 58.9,
+    "gaps": 5,
+    "worst_0p7": 96.0
+   }
+  },
+  {
+   "ref": "SW5",
+   "key": "\u222bdx",
+   "pad": [
+    166.026,
+    132.45
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.8,
+   "casio": {
+    "pill": [
+     166.136,
+     132.26
+    ],
+    "offset": 0.22,
+    "on_bbox": 100.0,
+    "on_copper": 59.0,
+    "gaps": 5,
+    "worst_0p7": 91.7
+   },
+   "model": {
+    "pill": [
+     166.026,
+     132.45
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 58.9,
+    "gaps": 5,
+    "worst_0p7": 96.0
+   }
+  },
+  {
+   "ref": "SW6",
+   "key": "x\u207b\u00b9",
+   "pad": [
+    133.974,
+    132.45
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     134.204,
+     132.36
+    ],
+    "offset": 0.25,
+    "on_bbox": 100.0,
+    "on_copper": 58.9,
+    "gaps": 4,
+    "worst_0p7": 96.4
+   },
+   "model": {
+    "pill": [
+     133.974,
+     132.45
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.0,
+    "gaps": 5,
+    "worst_0p7": 98.2
+   }
+  },
+  {
+   "ref": "SW7",
+   "key": "log\u2090b",
+   "pad": [
+    123.377,
+    132.45
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     122.947,
+     132.42
+    ],
+    "offset": 0.43,
+    "on_bbox": 100.0,
+    "on_copper": 58.8,
+    "gaps": 4,
+    "worst_0p7": 97.3
+   },
+   "model": {
+    "pill": [
+     123.377,
+     132.45
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.0,
+    "gaps": 5,
+    "worst_0p7": 98.2
+   }
+  },
+  {
+   "ref": "SW8",
+   "key": "a/b",
+   "pad": [
+    176.623,
+    141.325
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.7,
+   "casio": {
+    "pill": [
+     176.823,
+     141.595
+    ],
+    "offset": 0.34,
+    "on_bbox": 100.0,
+    "on_copper": 59.8,
+    "gaps": 5,
+    "worst_0p7": 90.1
+   },
+   "model": {
+    "pill": [
+     176.623,
+     141.325
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 58.1,
+    "gaps": 5,
+    "worst_0p7": 96.7
+   }
+  },
+  {
+   "ref": "SW9",
+   "key": "\u221a",
+   "pad": [
+    166.026,
+    141.325
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.8,
+   "casio": {
+    "pill": [
+     166.176,
+     141.695
+    ],
+    "offset": 0.4,
+    "on_bbox": 100.0,
+    "on_copper": 62.4,
+    "gaps": 5,
+    "worst_0p7": 86.8
+   },
+   "model": {
+    "pill": [
+     166.026,
+     141.325
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 58.9,
+    "gaps": 5,
+    "worst_0p7": 96.0
+   }
+  },
+  {
+   "ref": "SW10",
+   "key": "x\u00b2",
+   "pad": [
+    155.298,
+    141.325
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.7,
+   "casio": {
+    "pill": [
+     155.338,
+     141.565
+    ],
+    "offset": 0.24,
+    "on_bbox": 100.0,
+    "on_copper": 59.4,
+    "gaps": 5,
+    "worst_0p7": 91.4
+   },
+   "model": {
+    "pill": [
+     155.298,
+     141.325
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 58.1,
+    "gaps": 5,
+    "worst_0p7": 96.7
+   }
+  },
+  {
+   "ref": "SW11",
+   "key": "x^n",
+   "pad": [
+    144.702,
+    141.325
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.6,
+   "casio": {
+    "pill": [
+     144.762,
+     141.635
+    ],
+    "offset": 0.32,
+    "on_bbox": 100.0,
+    "on_copper": 60.0,
+    "gaps": 5,
+    "worst_0p7": 89.8
+   },
+   "model": {
+    "pill": [
+     144.702,
+     141.325
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.4,
+    "gaps": 5,
+    "worst_0p7": 97.5
+   }
+  },
+  {
+   "ref": "SW12",
+   "key": "log",
+   "pad": [
+    133.974,
+    141.325
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     134.184,
+     141.495
+    ],
+    "offset": 0.27,
+    "on_bbox": 100.0,
+    "on_copper": 59.2,
+    "gaps": 4,
+    "worst_0p7": 94.3
+   },
+   "model": {
+    "pill": [
+     133.974,
+     141.325
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.0,
+    "gaps": 5,
+    "worst_0p7": 98.2
+   }
+  },
+  {
+   "ref": "SW13",
+   "key": "ln",
+   "pad": [
+    123.377,
+    141.325
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     123.377,
+     141.535
+    ],
+    "offset": 0.21,
+    "on_bbox": 100.0,
+    "on_copper": 58.7,
+    "gaps": 5,
+    "worst_0p7": 93.1
+   },
+   "model": {
+    "pill": [
+     123.377,
+     141.325
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.0,
+    "gaps": 5,
+    "worst_0p7": 98.2
+   }
+  },
+  {
+   "ref": "SW14",
+   "key": "(\u2212)",
+   "pad": [
+    176.623,
+    150.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.7,
+   "casio": {
+    "pill": [
+     176.643,
+     150.848
+    ],
+    "offset": 0.12,
+    "on_bbox": 100.0,
+    "on_copper": 58.4,
+    "gaps": 5,
+    "worst_0p7": 93.7
+   },
+   "model": {
+    "pill": [
+     176.623,
+     150.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 58.1,
+    "gaps": 5,
+    "worst_0p7": 96.7
+   }
+  },
+  {
+   "ref": "SW15",
+   "key": "\u00b0'\"",
+   "pad": [
+    166.026,
+    150.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.7,
+   "casio": {
+    "pill": [
+     166.186,
+     150.748
+    ],
+    "offset": 0.16,
+    "on_bbox": 100.0,
+    "on_copper": 58.7,
+    "gaps": 5,
+    "worst_0p7": 95.7
+   },
+   "model": {
+    "pill": [
+     166.026,
+     150.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 58.1,
+    "gaps": 5,
+    "worst_0p7": 96.7
+   }
+  },
+  {
+   "ref": "SW16",
+   "key": "hyp",
+   "pad": [
+    155.298,
+    150.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.6,
+   "casio": {
+    "pill": [
+     155.448,
+     150.848
+    ],
+    "offset": 0.19,
+    "on_bbox": 100.0,
+    "on_copper": 58.2,
+    "gaps": 4,
+    "worst_0p7": 94.5
+   },
+   "model": {
+    "pill": [
+     155.298,
+     150.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.4,
+    "gaps": 5,
+    "worst_0p7": 97.5
+   }
+  },
+  {
+   "ref": "SW17",
+   "key": "sin",
+   "pad": [
+    144.702,
+    150.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.6,
+   "casio": {
+    "pill": [
+     144.672,
+     150.768
+    ],
+    "offset": 0.05,
+    "on_bbox": 100.0,
+    "on_copper": 57.7,
+    "gaps": 5,
+    "worst_0p7": 96.6
+   },
+   "model": {
+    "pill": [
+     144.702,
+     150.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.4,
+    "gaps": 5,
+    "worst_0p7": 97.5
+   }
+  },
+  {
+   "ref": "SW18",
+   "key": "cos",
+   "pad": [
+    133.974,
+    150.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     134.024,
+     150.768
+    ],
+    "offset": 0.06,
+    "on_bbox": 100.0,
+    "on_copper": 57.2,
+    "gaps": 5,
+    "worst_0p7": 97.3
+   },
+   "model": {
+    "pill": [
+     133.974,
+     150.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.0,
+    "gaps": 5,
+    "worst_0p7": 98.2
+   }
+  },
+  {
+   "ref": "SW19",
+   "key": "tan",
+   "pad": [
+    123.377,
+    150.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     123.277,
+     150.728
+    ],
+    "offset": 0.1,
+    "on_bbox": 100.0,
+    "on_copper": 57.5,
+    "gaps": 4,
+    "worst_0p7": 98.2
+   },
+   "model": {
+    "pill": [
+     123.377,
+     150.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.0,
+    "gaps": 5,
+    "worst_0p7": 98.2
+   }
+  },
+  {
+   "ref": "SW20",
+   "key": "RCL",
+   "pad": [
+    176.623,
+    160.265
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.7,
+   "casio": {
+    "pill": [
+     176.683,
+     159.935
+    ],
+    "offset": 0.34,
+    "on_bbox": 100.0,
+    "on_copper": 60.7,
+    "gaps": 5,
+    "worst_0p7": 88.8
+   },
+   "model": {
+    "pill": [
+     176.623,
+     160.265
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 58.1,
+    "gaps": 5,
+    "worst_0p7": 96.7
+   }
+  },
+  {
+   "ref": "SW21",
+   "key": "ENG",
+   "pad": [
+    166.026,
+    160.265
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.6,
+   "casio": {
+    "pill": [
+     166.086,
+     159.945
+    ],
+    "offset": 0.33,
+    "on_bbox": 100.0,
+    "on_copper": 60.1,
+    "gaps": 5,
+    "worst_0p7": 89.8
+   },
+   "model": {
+    "pill": [
+     166.026,
+     160.265
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.4,
+    "gaps": 5,
+    "worst_0p7": 97.5
+   }
+  },
+  {
+   "ref": "SW22",
+   "key": "(",
+   "pad": [
+    155.298,
+    160.265
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.6,
+   "casio": {
+    "pill": [
+     155.368,
+     159.845
+    ],
+    "offset": 0.43,
+    "on_bbox": 100.0,
+    "on_copper": 61.4,
+    "gaps": 5,
+    "worst_0p7": 87.1
+   },
+   "model": {
+    "pill": [
+     155.298,
+     160.265
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.4,
+    "gaps": 5,
+    "worst_0p7": 97.5
+   }
+  },
+  {
+   "ref": "SW23",
+   "key": ")",
+   "pad": [
+    144.702,
+    160.265
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     144.512,
+     159.865
+    ],
+    "offset": 0.44,
+    "on_bbox": 100.0,
+    "on_copper": 61.9,
+    "gaps": 4,
+    "worst_0p7": 89.3
+   },
+   "model": {
+    "pill": [
+     144.702,
+     160.265
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.0,
+    "gaps": 5,
+    "worst_0p7": 98.2
+   }
+  },
+  {
+   "ref": "SW24",
+   "key": "S\u21d4D",
+   "pad": [
+    133.974,
+    160.265
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     133.924,
+     159.895
+    ],
+    "offset": 0.37,
+    "on_bbox": 100.0,
+    "on_copper": 59.4,
+    "gaps": 5,
+    "worst_0p7": 89.3
+   },
+   "model": {
+    "pill": [
+     133.974,
+     160.265
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.0,
+    "gaps": 5,
+    "worst_0p7": 98.2
+   }
+  },
+  {
+   "ref": "SW25",
+   "key": "M+",
+   "pad": [
+    123.377,
+    160.265
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     123.167,
+     159.925
+    ],
+    "offset": 0.4,
+    "on_bbox": 100.0,
+    "on_copper": 61.3,
+    "gaps": 4,
+    "worst_0p7": 90.6
+   },
+   "model": {
+    "pill": [
+     123.377,
+     160.265
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 57.0,
+    "gaps": 5,
+    "worst_0p7": 98.2
+   }
+  },
+  {
+   "ref": "SW26",
+   "key": "7",
+   "pad": [
+    175.695,
+    170.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     175.835,
+     170.678
+    ],
+    "offset": 0.15,
+    "on_bbox": 100.0,
+    "on_copper": 59.7,
+    "gaps": 6,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     175.695,
+     170.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW27",
+   "key": "8",
+   "pad": [
+    162.848,
+    170.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     162.538,
+     170.788
+    ],
+    "offset": 0.32,
+    "on_bbox": 100.0,
+    "on_copper": 62.0,
+    "gaps": 6,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     162.848,
+     170.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW28",
+   "key": "9",
+   "pad": [
+    150.0,
+    170.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     149.96,
+     170.808
+    ],
+    "offset": 0.09,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     150.0,
+     170.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW29",
+   "key": "DEL",
+   "pad": [
+    137.152,
+    170.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     137.112,
+     170.798
+    ],
+    "offset": 0.08,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     137.152,
+     170.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW30",
+   "key": "AC",
+   "pad": [
+    124.305,
+    170.728
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     124.465,
+     170.948
+    ],
+    "offset": 0.27,
+    "on_bbox": 100.0,
+    "on_copper": 61.2,
+    "gaps": 6,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     124.305,
+     170.728
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW31",
+   "key": "4",
+   "pad": [
+    175.695,
+    181.854
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     175.795,
+     181.864
+    ],
+    "offset": 0.1,
+    "on_bbox": 100.0,
+    "on_copper": 60.8,
+    "gaps": 6,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     175.695,
+     181.854
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW32",
+   "key": "5",
+   "pad": [
+    162.848,
+    181.854
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     162.678,
+     181.924
+    ],
+    "offset": 0.18,
+    "on_bbox": 100.0,
+    "on_copper": 59.9,
+    "gaps": 6,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     162.848,
+     181.854
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW33",
+   "key": "6",
+   "pad": [
+    150.0,
+    181.854
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     149.6,
+     182.154
+    ],
+    "offset": 0.5,
+    "on_bbox": 100.0,
+    "on_copper": 61.7,
+    "gaps": 6,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     150.0,
+     181.854
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW34",
+   "key": "\u00d7",
+   "pad": [
+    137.152,
+    181.854
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     137.022,
+     181.934
+    ],
+    "offset": 0.15,
+    "on_bbox": 100.0,
+    "on_copper": 61.0,
+    "gaps": 6,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     137.152,
+     181.854
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW35",
+   "key": "\u00f7",
+   "pad": [
+    124.305,
+    181.854
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     124.305,
+     182.034
+    ],
+    "offset": 0.18,
+    "on_bbox": 100.0,
+    "on_copper": 60.4,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     124.305,
+     181.854
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW36",
+   "key": "1",
+   "pad": [
+    175.695,
+    192.98
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     175.645,
+     193.11
+    ],
+    "offset": 0.14,
+    "on_bbox": 100.0,
+    "on_copper": 59.2,
+    "gaps": 6,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     175.695,
+     192.98
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW37",
+   "key": "2",
+   "pad": [
+    162.848,
+    192.98
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     162.808,
+     193.06
+    ],
+    "offset": 0.09,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     162.848,
+     192.98
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW38",
+   "key": "3",
+   "pad": [
+    150.0,
+    192.98
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     149.98,
+     193.07
+    ],
+    "offset": 0.09,
+    "on_bbox": 100.0,
+    "on_copper": 59.1,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     150.0,
+     192.98
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW39",
+   "key": "+",
+   "pad": [
+    137.152,
+    192.98
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     137.212,
+     193.07
+    ],
+    "offset": 0.11,
+    "on_bbox": 100.0,
+    "on_copper": 60.6,
+    "gaps": 6,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     137.152,
+     192.98
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW40",
+   "key": "\u2212",
+   "pad": [
+    124.305,
+    192.98
+   ],
+   "moved": false,
+   "footprint": "KeyPad_9.0x7.0",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     124.275,
+     193.09
+    ],
+    "offset": 0.11,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   },
+   "model": {
+    "pill": [
+     124.305,
+     192.98
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.5,
+    "gaps": 7,
+    "worst_0p7": 100.0
+   }
+  },
+  {
+   "ref": "SW41",
+   "key": "0",
+   "pad": [
+    175.695,
+    204.106
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 5.0,
+   "casio": {
+    "pill": [
+     175.585,
+     204.096
+    ],
+    "offset": 0.11,
+    "on_bbox": 96.5,
+    "on_copper": 61.3,
+    "gaps": 6,
+    "worst_0p7": 86.3
+   },
+   "model": {
+    "pill": [
+     175.695,
+     204.106
+    ],
+    "offset": 0.0,
+    "on_bbox": 96.3,
+    "on_copper": 61.7,
+    "gaps": 7,
+    "worst_0p7": 87.3
+   }
+  },
+  {
+   "ref": "SW42",
+   "key": ".",
+   "pad": [
+    162.848,
+    204.106
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     162.868,
+     204.056
+    ],
+    "offset": 0.05,
+    "on_bbox": 97.4,
+    "on_copper": 61.4,
+    "gaps": 7,
+    "worst_0p7": 86.9
+   },
+   "model": {
+    "pill": [
+     162.848,
+     204.106
+    ],
+    "offset": 0.0,
+    "on_bbox": 97.2,
+    "on_copper": 62.2,
+    "gaps": 7,
+    "worst_0p7": 87.9
+   }
+  },
+  {
+   "ref": "SW43",
+   "key": "\u00d710^x",
+   "pad": [
+    150.0,
+    204.106
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     149.99,
+     204.126
+    ],
+    "offset": 0.02,
+    "on_bbox": 97.2,
+    "on_copper": 61.2,
+    "gaps": 7,
+    "worst_0p7": 86.9
+   },
+   "model": {
+    "pill": [
+     150.0,
+     204.106
+    ],
+    "offset": 0.0,
+    "on_bbox": 97.2,
+    "on_copper": 62.2,
+    "gaps": 7,
+    "worst_0p7": 87.9
+   }
+  },
+  {
+   "ref": "SW44",
+   "key": "Ans",
+   "pad": [
+    137.152,
+    204.106
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 4.9,
+   "casio": {
+    "pill": [
+     137.122,
+     204.086
+    ],
+    "offset": 0.04,
+    "on_bbox": 97.2,
+    "on_copper": 62.2,
+    "gaps": 7,
+    "worst_0p7": 86.9
+   },
+   "model": {
+    "pill": [
+     137.152,
+     204.106
+    ],
+    "offset": 0.0,
+    "on_bbox": 97.2,
+    "on_copper": 62.2,
+    "gaps": 7,
+    "worst_0p7": 87.9
+   }
+  },
+  {
+   "ref": "SW45",
+   "key": "=",
+   "pad": [
+    124.305,
+    204.106
+   ],
+   "moved": false,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 5.0,
+   "casio": {
+    "pill": [
+     124.415,
+     204.106
+    ],
+    "offset": 0.11,
+    "on_bbox": 96.3,
+    "on_copper": 62.0,
+    "gaps": 6,
+    "worst_0p7": 87.3
+   },
+   "model": {
+    "pill": [
+     124.305,
+     204.106
+    ],
+    "offset": 0.0,
+    "on_bbox": 96.3,
+    "on_copper": 61.7,
+    "gaps": 7,
+    "worst_0p7": 87.3
+   }
+  },
+  {
+   "ref": "SW46",
+   "key": "UP",
+   "pad": [
+    150.0,
+    119.0
+   ],
+   "moved": false,
+   "footprint": "KeyPad_5.0x4.0",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     150.11,
+     118.28
+    ],
+    "offset": 0.73,
+    "on_bbox": 92.2,
+    "on_copper": 60.3,
+    "gaps": 4,
+    "worst_0p7": 70.5
+   },
+   "model": {
+    "pill": [
+     150.0,
+     120.265
+    ],
+    "offset": 1.27,
+    "on_bbox": 75.8,
+    "on_copper": 52.3,
+    "gaps": 4,
+    "worst_0p7": 50.9
+   }
+  },
+  {
+   "ref": "SW47",
+   "key": "DOWN",
+   "pad": [
+    150.0,
+    131.9
+   ],
+   "moved": false,
+   "footprint": "KeyPad_5.0x4.0",
+   "pill_d": 3.4,
+   "casio": {
+    "pill": [
+     150.08,
+     131.62
+    ],
+    "offset": 0.29,
+    "on_bbox": 100.0,
+    "on_copper": 62.3,
+    "gaps": 4,
+    "worst_0p7": 86.0
+   },
+   "model": {
+    "pill": [
+     150.0,
+     130.861
+    ],
+    "offset": 1.04,
+    "on_bbox": 84.3,
+    "on_copper": 55.7,
+    "gaps": 4,
+    "worst_0p7": 60.2
+   }
+  },
+  {
+   "ref": "SW48",
+   "key": "LEFT",
+   "pad": [
+    156.623,
+    125.563
+   ],
+   "moved": false,
+   "footprint": "KeyPad_5.0x4.0",
+   "pill_d": 3.6,
+   "casio": {
+    "pill": [
+     156.643,
+     124.963
+    ],
+    "offset": 0.6,
+    "on_bbox": 94.2,
+    "on_copper": 61.3,
+    "gaps": 4,
+    "worst_0p7": 75.0
+   },
+   "model": {
+    "pill": [
+     156.623,
+     125.563
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 62.7,
+    "gaps": 4,
+    "worst_0p7": 92.2
+   }
+  },
+  {
+   "ref": "SW49",
+   "key": "RIGHT",
+   "pad": [
+    143.377,
+    125.563
+   ],
+   "moved": false,
+   "footprint": "KeyPad_5.0x4.0",
+   "pill_d": 3.4,
+   "casio": {
+    "pill": [
+     143.567,
+     124.763
+    ],
+    "offset": 0.82,
+    "on_bbox": 91.2,
+    "on_copper": 58.8,
+    "gaps": 4,
+    "worst_0p7": 69.4
+   },
+   "model": {
+    "pill": [
+     143.377,
+     125.563
+    ],
+    "offset": 0.0,
+    "on_bbox": 100.0,
+    "on_copper": 60.6,
+    "gaps": 4,
+    "worst_0p7": 94.1
+   }
+  },
+  {
+   "ref": "SW50",
+   "key": "ON",
+   "pad": [
+    122.45,
+    119.55
+   ],
+   "moved": true,
+   "footprint": "KeyPad_6.0x4.5",
+   "pill_d": 3.5,
+   "casio": {
+    "pill": [
+     122.467,
+     119.565
+    ],
+    "offset": 0.02,
+    "on_bbox": 100.0,
+    "on_copper": 55.8,
+    "gaps": 5,
+    "worst_0p7": 97.3
+   },
+   "model": {
+    "pill": [
+     123.377,
+     120.795
+    ],
+    "offset": 1.55,
+    "on_bbox": 84.6,
+    "on_copper": 54.9,
+    "gaps": 4,
+    "worst_0p7": 61.7
+   }
+  }
+ ],
+ "pad_rects": {
+  "SW1": [
+   [
+    180.15,
+    180.6,
+    118.15,
+    121.15,
+    "/Keypad and TCA8418/ROW0"
+   ],
+   [
+    178.65,
+    179.1,
+    118.15,
+    121.15,
+    "/Keypad and TCA8418/ROW0"
+   ],
+   [
+    174.75,
+    180.75,
+    117.55,
+    118.15,
+    "/Keypad and TCA8418/ROW0"
+   ],
+   [
+    177.15,
+    177.6,
+    118.15,
+    121.15,
+    "/Keypad and TCA8418/ROW0"
+   ],
+   [
+    175.65,
+    176.1,
+    118.15,
+    121.15,
+    "/Keypad and TCA8418/ROW0"
+   ],
+   [
+    179.4,
+    179.85,
+    118.45,
+    121.45,
+    "/Keypad and TCA8418/COL0"
+   ],
+   [
+    177.9,
+    178.35,
+    118.45,
+    121.45,
+    "/Keypad and TCA8418/COL0"
+   ],
+   [
+    174.75,
+    180.75,
+    121.45,
+    122.05,
+    "/Keypad and TCA8418/COL0"
+   ],
+   [
+    176.4,
+    176.85,
+    118.45,
+    121.45,
+    "/Keypad and TCA8418/COL0"
+   ],
+   [
+    174.9,
+    175.35,
+    118.45,
+    121.45,
+    "/Keypad and TCA8418/COL0"
+   ]
+  ],
+  "SW2": [
+   [
+    169.55,
+    170.0,
+    119.15,
+    122.15,
+    "/Keypad and TCA8418/ROW0"
+   ],
+   [
+    168.05,
+    168.5,
+    119.15,
+    122.15,
+    "/Keypad and TCA8418/ROW0"
+   ],
+   [
+    164.15,
+    170.15,
+    118.55,
+    119.15,
+    "/Keypad and TCA8418/ROW0"
+   ],
+   [
+    166.55,
+    167.0,
+    119.15,
+    122.15,
+    "/Keypad and TCA8418/ROW0"
+   ],
+   [
+    165.05,
+    165.5,
+    119.15,
+    122.15,
+    "/Keypad and TCA8418/ROW0"
+   ],
+   [
+    168.8,
+    169.25,
+    119.45,
+    122.45,
+    "/Keypad and TCA8418/COL1"
+   ],
+   [
+    167.3,
+    167.75,
+    119.45,
+    122.45,
+    "/Keypad and TCA8418/COL1"
+   ],
+   [
+    164.15,
+    170.15,
+    122.45,
+    123.05,
+    "/Keypad and TCA8418/COL1"
+   ],
+   [
+    165.8,
+    166.25,
+    119.45,
+    122.45,
+    "/Keypad and TCA8418/COL1"
+   ],
+   [
+    164.3,
+    164.75,
+    119.45,
+    122.45,
+    "/Keypad and TCA8418/COL1"
+   ]
+  ],
+  "SW50": [
+   [
+    124.85,
+    125.3,
+    117.9,
+    120.9,
+    "KEY_ON"
+   ],
+   [
+    123.35,
+    123.8,
+    117.9,
+    120.9,
+    "KEY_ON"
+   ],
+   [
+    119.45,
+    125.45,
+    117.3,
+    117.9,
+    "KEY_ON"
+   ],
+   [
+    121.85,
+    122.3,
+    117.9,
+    120.9,
+    "KEY_ON"
+   ],
+   [
+    120.35,
+    120.8,
+    117.9,
+    120.9,
+    "KEY_ON"
+   ],
+   [
+    124.1,
+    124.55,
+    118.2,
+    121.2,
+    "GND"
+   ],
+   [
+    122.6,
+    123.05,
+    118.2,
+    121.2,
+    "GND"
+   ],
+   [
+    119.45,
+    125.45,
+    121.2,
+    121.8,
+    "GND"
+   ],
+   [
+    121.1,
+    121.55,
+    118.2,
+    121.2,
+    "GND"
+   ],
+   [
+    119.6,
+    120.05,
+    118.2,
+    121.2,
+    "GND"
+   ]
+  ]
+ }
+}

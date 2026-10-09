@@ -89,5 +89,10 @@ def decide(device_version, dest_dir=None):
     m = current(dest_dir)
     if m is None:
         return {"update": False, "version": ""}
-    return {"update": m["version"] != (device_version or "").strip(), "version": m["version"],
+    dev = (device_version or "").strip()
+    # The board family is the part before the first "-" ("stage14-…" = v14 e-paper,
+    # "v15lcd-…" = v15 LCD). Never offer one board's image to the other.
+    if dev.split("-", 1)[0] != m["version"].split("-", 1)[0]:
+        return {"update": False, "version": m["version"]}
+    return {"update": m["version"] != dev, "version": m["version"],
             "size": m["size"], "sha256": m["sha256"], "path": IMAGE_PATH}

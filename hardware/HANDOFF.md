@@ -1,6 +1,6 @@
 # AI Calculator PCB: handoff for the next Claude session (from stage 14)
 
-Updated 2026-10-04. Read `hardware/FINAL_STATUS.md` first (status, open items, decisions, history). This file is the short context a new session needs to continue.
+Updated 2026-10-04. **Update 2026-10-08 evening:** v14 was ordered on 10/8 (tag `v14-order`, frozen; the rest of this file describes v14). The next board, **v15-LCD** (`kicad_v15_lcd/`, `fab_v15_lcd/`, `stage15_lcd.md`), is verified "ORDER" in `verification/14_v15_final_preorder.md`: BuyDisplay ER-TFT019-1 panel, J5 `LcdReversed` at (158.6, 93.1), slot x 180.5–181.5, LCD GPIOs MOSI 5 / DC 6 / SCK 8 / CS 41 / RST 42, LCD_PWR_N 33, backlight PWM 4, KEYPAD_INT 3, R23 15 Ω (C22810), SW1/SW2/SW50 moved to the Casio contacts; order steps `ORDER_WALKTHROUGH_v15_lcd.md`. Must-not-undo for v15 as well: J5 mirrored like J1. Read `hardware/FINAL_STATUS.md` first (status, open items, decisions, history). This file is the short context a new session needs to continue.
 
 Repo: `C:\Users\r_kas\OneDrive\Documents\GitHub\AI-CALCULATOR`; all hardware is under `hardware/`. KiCad 10 (`kicad-cli` on Windows). Nirav is new to PCB design: explain non-obvious choices in 1–2 plain sentences, no screenshots of his screen. Deliver each stage as a numbered zip `Claude outputs/ai_calc_pcb_N.zip`; he commits and pushes himself. Query the graph first (`graphify query "…" --budget 800`) and run `graphify update .` after changes.
 

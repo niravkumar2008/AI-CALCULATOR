@@ -62,60 +62,64 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
 
 <div class="wrap">
 <header style="display:flex;flex-direction:column;gap:10px">
-  <div class="eyebrow">Plan · written Sat 2026-10-03 · prices checked 2026-10-03 · status notes added 2026-10-06 (order not yet placed)</div>
+  <div class="eyebrow">Plan · written Sat 2026-10-03 · re-planned Thu 2026-10-08 (v14 ordered; 5 testers; v15-LCD verified ORDER)</div>
   <h1>AI Calculator Launch Roadmap</h1>
-  <p class="lede">Your plan from the first two prototypes to a product that a factory builds and ships without you. It covers what to order first (once the paper dry fit passes), the day-by-day plan to working units, how the cost per calculator falls as you scale, and the legal steps you can't skip. Numbers marked <span class="est">estimate</span> are reasoned guesses, not quotes. Source numbers [S#] are listed at the bottom.</p>
+  <p class="lede">Your plan from the v14 order to a product that a factory builds and ships without you. v14 is ordered (10/8). Next come 5 e-paper testers in Casio shells and, in parallel, the new colour-LCD board (v15-LCD, verified "ORDER" on 10/8), then knockoff shells and bulk. It also covers how the cost per calculator falls as you scale and the legal steps you can't skip. Numbers marked <span class="est">estimate</span> are reasoned guesses, not quotes. Source numbers [S#] are listed at the bottom.</p>
 </header>
 
 <section>
   <div class="lcd-row">
-    <div class="lcd"><span>Monday-night spend</span><b>≈ $430</b><span>$380 core order + $50 local · range $390–460</span></div>
-    <div class="lcd"><span>First working calculator</span><b>≈ 10/19–10/23</b><span>order 10/7 + 10–14 days + 2</span></div>
-    <div class="lcd"><span>Cost per unit</span><b>$138 → $26</b><span>at 2 units → at 10,000 units</span></div>
-    <div class="lcd"><span>Starting budget</span><b>$2,000</b><span>all toward supply</span></div>
+    <div class="lcd"><span>v14 ordered</span><b>10/8</b><span>5 PCBs, 5 assembled · ≈ $275 delivered</span></div>
+    <div class="lcd"><span>5 testers (option C)</span><b>≈ $664</b><span>incl. JLCPCB · A ≈ $662 · B ≈ $572</span></div>
+    <div class="lcd"><span>Boards land</span><b>≈ 10/18–22</b><span>5 testers built ≈ 10/25–29</span></div>
+    <div class="lcd"><span>Cost per unit, LCD</span><b>$92 → $32</b><span>at 10 → at 1,000 units (e-paper $92 → $34)</span></div>
+    <div class="lcd"><span>Starting budget</span><b>$2,000</b><span>≈ $966 spent now · full plan ≈ $475 over</span></div>
     <div class="lcd"><span>Your price</span><b>$225</b><span>+ $15/month subscription, first month free</span></div>
-    <div class="lcd"><span>Profit per calculator</span><b>$128 → $173</b><span>at 10 units → at 1,000 units (estimate)</span></div>
-    <div class="lcd"><span>Profit per subscriber</span><b>≈ $10–12.50</b><span>per month after API, fees and server</span></div>
+    <div class="lcd"><span>Profit per calculator</span><b>$106 → $163</b><span>LCD, at 10 → at 1,000 units</span></div>
   </div>
-  <p class="note"><b>Why the order costs more than the old $190–240:</b> JLCPCB now collects the US tariff at checkout. Its FAQ says 35–92.5 % on Chinese goods [S8]. The old figure also left out tools, charge cables and DHL shipping. And JLCPCB was closed Oct 1–4 for China's National Day holiday, reopening Oct 5 [S9], so Monday orders may sit in a backlog.</p>
+  <p class="note"><b>v15-LCD is verified "ORDER"</b> (<code>hardware/verification/14_v15_final_preorder.md</code>, 10/8 evening): order it with <code>hardware/ORDER_WALKTHROUGH_v15_lcd.md</code> (files <code>hardware/fab_v15_lcd/</code>) and buy 3 × <b>BuyDisplay ER-TFT019-1</b> (no touch, ~$6–7 each), the panel the board was checked against pin for pin. No panel test is needed first; the bench checks (pin-1 diode test, backlight V(R23)/15, panel at 3.3 V, colour flags, tail length, the 3 moved keys) happen when the boards arrive.</p>
 </section>
 
 <section id="money">
   <h2>0 · Your $2,000 and the $225 + $15 plan</h2>
   <h3>Where the $2,000 goes</h3>
-  <p>Everything goes toward supply, but in two waves. Buy the second wave only after prototype v1 works. If v1 shows a board bug, the v2 money pays for the fixed boards instead of 10 copies of the bug.</p>
+  <p>In plan order, from <code>hardware/production/COST_MODEL.xlsx</code> (Cash budget). With the v15 order in it, the full plan with a 10-unit LCD pilot comes to about <b>$475 over</b>. A 4-unit pilot built from the v15 boards fits with about $62 left (5 units ≈ $11 over, or ≈ $30 left with Sonnet 5.5 for the beta).</p>
   <div class="tbl"><table>
-    <tr><th>Wave</th><th>When</th><th>What</th><th class="n">Cost</th></tr>
-    <tr class="key"><td>1 · Prototype v1</td><td>Mon 10/5 (slipped; not ordered as of Tue 10/6)</td><td>JLCPCB 5 boards (2 assembled), batteries, magnet connectors, cables, cameras, e-paper, small tools (§1). You already have the calculators and a multimeter.</td><td class="n">≈ $390 (≈ $425 with the 10/6 import-duty estimate; the difference comes out of the reserve)</td></tr>
-    <tr><td>2 · Beta batch v2</td><td>≈ Nov, after v1 works</td><td>10 boards assembled + parts for 10 units (≈ $82 each at 10, §3)</td><td class="n">≈ $820</td></tr>
-    <tr><td>2 · Beta shells + jig</td><td>≈ Nov</td><td>3D-printed shells for the beta units + pogo-pin test jig parts</td><td class="n">≈ $150</td></tr>
-    <tr><td>Server</td><td>Oct – Dec</td><td>Proxy/linking server hosting + Claude API for your own testing and beta users <span class="est">estimate</span></td><td class="n">≈ $90</td></tr>
-    <tr><td>Reserve</td><td>hold</td><td>Re-spins, a dead part, a broken e-paper, a tariff surprise. Rolls into FCC testing if nothing breaks.</td><td class="n">≈ $550</td></tr>
-    <tr class="total"><td colspan="3">Total</td><td class="n">$2,000</td></tr>
+    <tr><th>Step</th><th>When</th><th>What</th><th class="n">Cost</th></tr>
+    <tr class="key"><td>1 · v14 JLCPCB order</td><td>paid 10/8</td><td>5 PCBs, 5 assembled (2 vs 5 was being chosen), incl. DHL + ~35 % duty</td><td class="n">≈ $275</td></tr>
+    <tr class="key"><td>2 · 5 testers (option C)</td><td>now</td><td>3 Casio shells, cameras, screens, batteries, magnet pieces, cables, shipping, ≈ $61 supplies</td><td class="n">≈ $389</td></tr>
+    <tr><td>3 · v15-LCD panels</td><td>now</td><td>3 × BuyDisplay ER-TFT019-1 (no touch) + shipping <span class="est">estimate</span></td><td class="n">≈ $32</td></tr>
+    <tr class="key"><td>4 · v15-LCD JLCPCB order</td><td>now</td><td>5 PCBs, 5 assembled, incl. DHL + ~35 % duty <span class="est">estimate</span></td><td class="n">≈ $270</td></tr>
+    <tr><td>5 · Knockoff shell samples</td><td>late Oct</td><td>4 clones from 2 sellers</td><td class="n">≈ $60</td></tr>
+    <tr><td>6 · Bulk samples</td><td>after the shells pass</td><td>Camera, bare LCD panels, 150 mAh + 1,200–1,500 mAh cells, magnet pair</td><td class="n">≈ $90</td></tr>
+    <tr><td>7 · v15-LCD pilot, 10 units</td><td>Dec – Jan</td><td>All parts, freight and scrap, in knockoff shells (≈ $77 each), minus the 5 boards re-used from the v15 order</td><td class="n">≈ $679</td></tr>
+    <tr><td>8 · Server + API</td><td>beta</td><td>Proxy hosting 3 months ($75) + free month for 15 users on Opus 5.5 ($113)</td><td class="n">≈ $188</td></tr>
+    <tr><td>9 · Lawyer, LLC, domain</td><td>before units leave / before money</td><td>IP clinic check $150, Indiana LLC $97, domain $20</td><td class="n">≈ $267</td></tr>
+    <tr><td>Contingency</td><td>hold</td><td>10 % for re-orders, a dead part, a tariff surprise</td><td class="n">≈ $225</td></tr>
+    <tr class="total"><td colspan="3">Total (budget $2,000 → ≈ −$475; 4-unit pilot → ≈ +$62)</td><td class="n">≈ $2,475</td></tr>
   </table></div>
 
   <h3>What each calculator earns at $225</h3>
-  <p>Profit = $225 − unit cost (§3, without certification) − card fees (2.9 % + $0.30 = $6.83) − shipping to the customer (≈ $8 <span class="est">estimate</span>).</p>
+  <p>Profit = $225 − unit cost (including the ≈ $3,550 selling-legally bill spread over the batch from 100 units) − card fees ($6.83) − shipping ($6) − a 3 % warranty allowance − the free month of API ($7.52 on Opus) <span class="est">estimate</span>.</p>
   <div class="tbl"><table>
-    <tr><th class="n">Units in the run</th><th class="n">Unit cost</th><th class="n">Profit per unit</th><th class="n">Margin</th></tr>
-    <tr><td class="n">10</td><td class="n">$81.76</td><td class="n">$128</td><td class="n">57 %</td></tr>
-    <tr class="key"><td class="n">100</td><td class="n">$65.42</td><td class="n">$145</td><td class="n">64 %</td></tr>
-    <tr><td class="n">500</td><td class="n">$43.70</td><td class="n">$166</td><td class="n">74 %</td></tr>
-    <tr><td class="n">1,000</td><td class="n">$37.60</td><td class="n">$173</td><td class="n">77 %</td></tr>
-    <tr><td class="n">10,000</td><td class="n">$25.70</td><td class="n">$184</td><td class="n">82 %</td></tr>
+    <tr><th class="n">Units in the run</th><th class="n">Unit cost e-paper</th><th class="n">Unit cost LCD</th><th class="n">Profit e-paper</th><th class="n">Profit LCD</th><th class="n">Profit LCD + big battery</th></tr>
+    <tr><td class="n">10</td><td class="n">$91.56</td><td class="n">$91.92</td><td class="n">$106</td><td class="n">$106</td><td class="n">$101</td></tr>
+    <tr class="key"><td class="n">100</td><td class="n">$81.13</td><td class="n">$77.69</td><td class="n">$117</td><td class="n">$120</td><td class="n">$117</td></tr>
+    <tr><td class="n">1,000</td><td class="n">$37.22</td><td class="n">$35.23</td><td class="n">$161</td><td class="n">$163</td><td class="n">$161</td></tr>
   </table></div>
-  <p class="lede">$225 is about 3–5× the unit cost from 100 units up, which is the healthy range for hardware. Expect returns, warranty swaps and ads to eat part of this <span class="est">estimate</span>.</p>
+  <p class="lede">The LCD version costs the same as the e-paper one at 10 (BuyDisplay panel, $6.22 @10) and a few dollars less from 100 on: the Alibaba panel is $2.30–2.50 instead of $4–6.60, and the board loses 17 booster parts. The 1,200–1,500 mAh cell gives some of that back (≈ +$3 a unit at 100).</p>
 
-  <h3>What each subscriber earns at $15 a month</h3>
+<h3>What each subscriber earns at $15 a month</h3>
   <div class="tbl"><table>
-    <tr><th>How they use it</th><th class="n">API cost</th><th class="n">Card fee</th><th class="n">Server</th><th class="n">You keep</th></tr>
-    <tr><td>Typical, 150 solves, Sonnet</td><td class="n">$3.90</td><td class="n">$0.74</td><td class="n">$0.25</td><td class="n">≈ $10.10</td></tr>
-    <tr class="key"><td>Typical, Haiku first (Sonnet on 20 %)</td><td class="n">$1.56</td><td class="n">$0.74</td><td class="n">$0.25</td><td class="n">≈ $12.45</td></tr>
-    <tr><td>Heavy, 400 solves, Sonnet</td><td class="n">$10.40</td><td class="n">$0.74</td><td class="n">$0.25</td><td class="n">≈ $3.60</td></tr>
+    <tr><th>How they use it</th><th class="n">API cost</th><th class="n">Card fee</th><th>Verdict</th></tr>
+    <tr><td>Typical (5 solves a day), Opus 5.5</td><td class="n">$7.52</td><td class="n">$0.74</td><td>≈ $6.39 left at 100 units (after the server share)</td></tr>
+    <tr class="key"><td>Typical, Sonnet 5.5 (the proxy's default)</td><td class="n">$3.77</td><td class="n">$0.74</td><td>≈ $10 left</td></tr>
+    <tr><td>At the 500-solve cap, Opus 5.5</td><td class="n">$24.72</td><td class="n">$0.74</td><td><b>Loses ≈ $10.81 a month</b>: lower the cap to ≈ 280 or use Sonnet</td></tr>
+    <tr><td>At the 500-solve cap, Sonnet 5.5</td><td class="n">$12.40</td><td class="n">$0.74</td><td>Still covered</td></tr>
   </table></div>
-  <ul>
-    <li><b>The free first month</b> costs you about $1.50–4 in API per buyer. Cheap, and it gets every buyer linked and using it.</li>
-    <li><b>Set a fair-use cap</b> of about 500 solves a month, so a heavy user can never cost more than they pay.</li>
+<ul>
+    <li><b>The free first month</b> costs you about $3.77 (Sonnet) to $7.52 (Opus) in API per buyer. Cheap, and it gets every buyer linked and using it.</li>
+    <li><b>Fair-use cap:</b> 500 solves a month is safe on Sonnet 5.5. On Opus 5.5 it has to come down to about 280, or a heavy user costs more than they pay.</li>
     <li><b>Offer a yearly plan</b> at about $150 (two months free). It brings cash in earlier and keeps people longer.</li>
     <li><b>Bill through Stripe</b> on your own site or companion app, not an app store, so you keep the 30 % an app store would take.</li>
     <li><b>The calculator without a subscription</b> should still work as a normal scientific calculator. That keeps the $225 fair and avoids "bricked device" complaints.</li>
@@ -137,35 +141,36 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
 
 <section id="order">
   <h2>1 · What to buy</h2>
-  <h3>Order first, as soon as the paper dry fit passes (was Monday 10/5; not ordered as of Tue 10/6; fastest shipping)</h3>
+  <h3>Done 10/8: the v14 JLCPCB order</h3>
   <div class="tbl"><table>
-    <tr><th>Item</th><th>Where</th><th class="n">Qty</th><th class="n">Unit</th><th class="n">Total</th><th>Arrives</th><th>Watch out</th></tr>
-    <tr class="key"><td>PCB, 2-layer 0.8 mm ENIG, 5 pcs, <b>2 assembled</b> (Standard PCBA)</td><td>JLCPCB</td><td class="n">1</td><td class="n">–</td><td class="n">$135–155 (final review of the v14 board: 14 extended parts = $42 in fees)</td><td>build 5–7 d + DHL 3–5 d</td><td>Follow <code>hardware/ORDER_WALKTHROUGH.md</code>. The CPL is already rotation-corrected: verify the preview against its step 5, rotate nothing.</td></tr>
-    <tr><td>DHL Express shipping</td><td>JLCPCB checkout</td><td class="n">–</td><td class="n">–</td><td class="n">$20–40 <span class="est">estimate</span></td><td></td><td>Express (3–6 d). Economy (7–15 d) only if express isn't offered</td></tr>
-    <tr><td>US tariff (collected at checkout)</td><td>JLCPCB checkout</td><td class="n">–</td><td class="n">–</td><td class="n">≈ $45–55 <span class="est">estimate</span></td><td></td><td>About 35–37.5 % duty, collected at checkout (de-minimis suspended since 2026-06-24). The exact figure shows at checkout [S8]. JLCPCB delivered ≈ $200–240, door-to-door ≈ 10–14 days (hardware/FAB_VENDOR_COMPARISON.md)</td></tr>
-    <tr><td>LiPo 3.7 V <b>150 mAh</b>, JST-PH (<b>#1317</b>, 26 × 19.75 × 3.8 mm; replaced the 100 mAh #1570 on 10/6)</td><td>Adafruit</td><td class="n">3</td><td class="n">$5.95</td><td class="n">$17.85</td><td>UPS 2-day</td><td>Same price and plug. Peel the lead tape; meter the polarity [S1]</td></tr>
-    <tr><td>Magnetic connector, 4-pin (#5358)</td><td>Adafruit</td><td class="n">3</td><td class="n">$6.50</td><td class="n">$19.50</td><td>same box</td><td>[S2]</td></tr>
-    <tr class="key"><td>Magnetic USB charge cable (#5412)</td><td>Adafruit</td><td class="n">2</td><td class="n">$4.95</td><td class="n">$9.90</td><td>same box</td><td><b>Only 35 in stock (10/6)</b> [S3]. Without it you can't charge or flash.</td></tr>
-    <tr><td>Adafruit shipping</td><td></td><td class="n"></td><td class="n"></td><td class="n">≈ $15 <span class="est">estimate</span></td><td></td><td></td></tr>
-    <tr><td>Waveshare 2.13" e-paper <b>V4 raw panel</b> (SKU 12672)</td><td>Waveshare / Amazon Prime</td><td class="n">2</td><td class="n">$6.31–6.99</td><td class="n">≈ $14</td><td>Prime 1–2 d · direct 4–8 d</td><td>You already have one V4 panel: unplug it from your e-Paper HAT's ribbon socket. Buy 1 for board #2 + 1 spare (the ribbon is fragile). It must say <b>V4</b> [S4].</td></tr>
-    <tr><td>Waveshare shipping</td><td></td><td class="n"></td><td class="n"></td><td class="n">$15–25 <span class="est">estimate</span></td><td></td><td></td></tr>
-    <tr class="key"><td><b>Seeed OV5640 AF</b> camera ("for XIAO ESP32S3 Sense")</td><td>Seeed / US reseller</td><td class="n">3</td><td class="n">≈ $14 <span class="est">estimate</span></td><td class="n">≈ $42</td><td>3–6 d</td><td>Buy <b>this exact module</b>. The board's reversed J1 socket was worked out for its cable [S5].</td></tr>
-    <tr><td>Camera shipping</td><td></td><td class="n"></td><td class="n"></td><td class="n">$10–15 <span class="est">estimate</span></td><td></td><td></td></tr>
-    <tr class="total"><td colspan="4">Core subtotal (JLCPCB delivered ≈ $200–240 incl. shipping + duty, + Adafruit, panels, cameras)</td><td class="n">≈ $350–405</td><td colspan="2">midpoint ≈ $380</td></tr>
+    <tr><th>Item</th><th class="n">Qty</th><th class="n">Delivered</th><th>Notes</th></tr>
+    <tr class="key"><td>v14 PCB, 2-layer 0.8 mm ENIG, Standard PCBA (git tag <code>v14-order</code>)</td><td class="n">5 PCBs · 5 assembled</td><td class="n">≈ $220 + $55 = ≈ $275 <span class="est">estimate</span></td><td>≈ $200–240 for 2 assembled, ≈ $50–60 more for 5. Includes DHL and the ~35 % US duty collected at checkout [S8]. If you chose 2 assembled, set the input in the Shopping List to 2.</td></tr>
   </table></div>
 
-  <h3>Buy locally this weekend</h3>
+  <h3>5 testers in genuine Casio shells: options A / B / C</h3>
+  <p>You own 2 fx-115ES and buy 3 more (≈ $20 each, same edition). Each tester needs a camera, a screen, a battery, a magnet piece (#5358) and a charge cable (#5412). Buy 6 of each part kind, which is 1 spare. Cables are 5.</p>
   <div class="tbl"><table>
-    <tr><th>Item</th><th>Where</th><th class="n">Qty</th><th class="n">Total</th><th>Why</th></tr>
-    <tr><td>Kapton tape 10–20 mm</td><td>Amazon / hardware store</td><td class="n">1</td><td class="n">≈ $9 <span class="est">estimate</span></td><td>Insulates the battery and the back of the e-paper</td></tr>
-    <tr><td>Dremel bits: carbide burr, sanding drums, <b>7 mm drill (9/32") + small pilot bit</b></td><td>hardware store</td><td class="n">1 set</td><td class="n">≈ $12 <span class="est">estimate</span></td><td>Solar box, rib B, magnet notch + the 7 mm camera window (Shell Grinding Guide)</td></tr>
-    <tr><td>Flush cutters + ESD tweezers</td><td>hardware store</td><td class="n">1</td><td class="n">≈ $15 <span class="est">estimate</span></td><td></td></tr>
-    <tr><td>USB-A charger or USB-A(f)→USB-C adapter</td><td>anywhere</td><td class="n">1</td><td class="n">≈ $7 <span class="est">estimate</span></td><td>The magnetic cable ends in USB-A, and flashing goes through it</td></tr>
-    <tr><td>Thin double-sided tape 0.1 mm (<b>not foam</b>) + ≈ 0.15 mm for the e-paper + 99 % isopropyl</td><td>anywhere</td><td class="n">1</td><td class="n">≈ $10 <span class="est">estimate</span></td><td>Holds the camera, battery and e-paper; cleans the gold pads. No foam: 0.3 mm above the battery, 0.5 mm above the lens</td></tr>
-    <tr><td>Matte black vinyl / sticker paper (0.08–0.15 mm) + epoxy or hot glue</td><td>craft / hardware store</td><td class="n">1 each</td><td class="n">≈ $11 <span class="est">estimate</span></td><td>Window mask inside the lens; gluing the magnet piece</td></tr>
-    <tr class="total"><td colspan="3">Local subtotal (you already have calipers, a multimeter and the 2 calculators)</td><td class="n">≈ $40–55</td><td></td></tr>
+    <tr><th>Part</th><th>Current (known-good)</th><th>Generic (cheaper, check first)</th></tr>
+    <tr><td>Camera</td><td><b>Seeed OV5640 AF 114993115</b>, $12.99. J1 was designed for its ribbon [S5]</td><td>OV5640 AF 24-pin, ≈ $7 <span class="est">estimate</span>. Beep test E6 first</td></tr>
+    <tr><td>Screen</td><td><b>Waveshare 2.13" V4</b> raw panel, $6.99 [S4]</td><td><b>GDEY0213B74</b>, ≈ $4.50 <span class="est">estimate</span> [S20]</td></tr>
+    <tr><td>Battery</td><td><b>Adafruit #1317</b> 150 mAh, $5.95 [S1]</td><td>302030 150 mAh JST-PH with PCM, ≈ $3 <span class="est">estimate</span>. Meter the polarity</td></tr>
+    <tr><td>Magnet piece + cable</td><td colspan="2">Adafruit #5358 $6.50 × 6 and #5412 $4.95 × 5 [S2][S3]. <b>#5412 stock is low: order first.</b></td></tr>
   </table></div>
-  <p class="lede">Don't buy yet: more than 3 of anything, a soldering station (the board needs no soldering from you), or a pogo-pin test jig. Those come with v2.</p>
+  <div class="tbl"><table>
+    <tr><th>Option</th><th>What</th><th class="n">5 testers, incl. JLCPCB</th></tr>
+    <tr><td>A</td><td>All current parts</td><td class="n">≈ $662</td></tr>
+    <tr><td>B</td><td>All generic screens, cameras, batteries</td><td class="n">≈ $572</td></tr>
+    <tr class="key"><td><b>C (recommended)</b></td><td>Units 1–3 current, units 4–5 generic, with a spare of each kind. The first 3 isolate board problems; the last 2 test the parts bulk will need.</td><td class="n">≈ $664</td></tr>
+  </table></div>
+  <p class="lede">Each total includes shipping (Adafruit, Seeed, Waveshare, AliExpress as needed) and ≈ $61 of supplies: Kapton, thin tape (no foam), epoxy, a 7 mm drill bit and pilot, matte vinyl, IPA, safety glasses. Full list: <code>Claude outputs/AI_Calculator_Shopping_List.xlsx</code>; the option switch is on its tester sheet.</p>
+
+  <h3>v15-LCD: the order and the panels (verified "ORDER" 10/8)</h3>
+  <div class="tbl"><table>
+    <tr><th>Item</th><th class="n">Qty</th><th class="n">Total</th><th>Why</th></tr>
+    <tr class="key"><td><b>v15-LCD JLCPCB order</b>, 5 PCBs, 5 assembled</td><td class="n">1</td><td class="n">≈ $270 <span class="est">estimate</span></td><td>Same settings as v14 (<code>hardware/ORDER_WALKTHROUGH_v15_lcd.md</code>, files <code>hardware/fab_v15_lcd/</code>). 13 extended part types instead of 14; R23 is now 15 Ω (C22810). JLCPCB places J5, Q4, Q5, R21–R23 and C36.</td></tr>
+    <tr class="key"><td><b>BuyDisplay ER-TFT019-1</b>, no touch</td><td class="n">3</td><td class="n">≈ $32 <span class="est">estimate</span></td><td>~$6–7 each ($6.22 @10, $5.71 @100) + shipping. Datasheet checked pin for pin against J5. No ER-CON30HT-1 socket needed; Adafruit #5394 only as a fallback.</td></tr>
+  </table></div>
+  <p class="lede">Don't buy yet: bulk shells, custom batteries or OEM connectors (samples only), or a soldering station.</p>
 </section>
 
 <section id="timeline">
@@ -173,32 +178,29 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <div class="legend"><span><span class="pill p-you">you</span> your job</span><span><span class="pill p-ext">outside</span> waiting on a supplier</span><span><span class="pill p-both">you + Claude</span> together</span></div>
   <div class="tbl"><table>
     <tr><th>Date</th><th>Task</th><th>Who</th><th>Waits on</th></tr>
-    <tr><td>Sat 10/3</td><td>Overnight, Claude finishes PCB stage 11, the CAD replica and an independent review.</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
-    <tr class="key"><td>Sun 10/4</td><td><b>Remaining measurements</b>: C14, C15, depths D1–D4/D11/D13, ribbons E6/E7, and the F6 flatbed scan if you can. Answer the open questions in the stage-11 doc.</td><td><span class="pill p-you">you</span></td><td>calipers</td></tr>
-    <tr><td>Sun 10/4</td><td>Claude applies the readings, gets DRC to 0/0/0 and regenerates the fab files. You print the 1:1 fit-check outline and lay it in the shell.</td><td><span class="pill p-both">you + Claude</span></td><td>measurements</td></tr>
-    <tr><td>Sun 10/4</td><td><b>Done:</b> the <b>API proxy</b> (<code>server/proxy/</code>) holds the Claude key; the calculator never carries it</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
-    <tr class="key"><td>Mon 10/5 → <b>slipped</b></td><td><b>ORDER</b>: Adafruit (UPS 2-day), cameras, e-paper, then <b>JLCPCB</b>. Not placed on 10/5: order as soon as the paper dry fit passes. Every day it slips moves the rows from 10/15 on by a day (boards ≈ 10/17–10/21 for an order on 10/7: about 10–14 days door-to-door).</td><td><span class="pill p-you">you</span></td><td>fit check</td></tr>
-    <tr><td>Tue 10/6</td><td>JLCPCB engineering review. <b>Reply to their emails within hours</b>: each unanswered question costs about a day.</td><td><span class="pill p-ext">outside</span></td><td>order</td></tr>
-    <tr><td>Tue–Wed</td><td><b>Deploy the proxy</b> (<code>server/proxy/README.md</code>, Power-Up step 10): the Claude API key goes only in the host's environment settings, never in the calculator; make one device token per calculator. The board firmware is done (over-the-air updates, phone setup, low-battery lock-out)</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
-    <tr><td>Wed 10/7</td><td>Prepare the shells: take out the Casio boards (keep the keypad and screws), the 10-minute pre-grind checklist (verification 07 §3), grind zones 1, 2, 5 (5b and 6 only if your shell needs them). <b>Hold the 7 mm camera hole</b> until the camera ribbon is measured</td><td><span class="pill p-you">you</span></td><td>your 2 calculators</td></tr>
-    <tr><td>Thu 10/8</td><td>Adafruit box arrives <span class="est">estimate</span>. Check the battery polarity against J4 (a reversed JST lead is common).</td><td><span class="pill p-ext">outside</span></td><td>Adafruit</td></tr>
-    <tr><td>Sat–Sun 10/10–11</td><td>Firmware: full UI in the simulator + <b>factory self-test mode</b> (keys, display, camera, battery, Wi-Fi)</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
-    <tr><td>Mon 10/12</td><td>JLCPCB ships by DHL <span class="est">estimate</span>. Camera-cable beep test E6 (fingers 2 and 15 beep to GND).</td><td><span class="pill p-ext">outside</span></td><td>build</td></tr>
-    <tr class="key"><td>Thu 10/15 (≈ 10/17–10/21 if ordered 10/7)</td><td><b>Boards arrive.</b> Start at <code>hardware/ARRIVAL_CHECKLIST.md</code>. Board #1 on USB only: inspect, meter checks, VBUS / SYS / 3.3 V / EN, then the first flash, always over USB (First Power-Up Guide)</td><td><span class="pill p-you">you</span></td><td>DHL</td></tr>
-    <tr><td>Fri 10/16</td><td>Plug in the e-paper, then the camera; self-test; battery and charging (about 50 mA); then the AI settings: hotspot, server address, device token (Power-Up step 10)</td><td><span class="pill p-both">you + Claude</span></td><td>bring-up</td></tr>
-    <tr class="key"><td>Sat 10/17 (≈ boards + 2 days)</td><td><b>Assemble in shell #1. Photo → Claude → answer on the e-paper.</b></td><td><span class="pill p-you">you</span></td><td>self-test</td></tr>
-    <tr><td>Sun 10/18</td><td>Board #2; 24-hour battery soak; write the v2 bug list</td><td><span class="pill p-you">you</span></td><td>–</td></tr>
-    <tr><td>Wed 10/21</td><td>Buffer if JLCPCB or DHL slips 2–4 days</td><td><span class="pill p-ext">outside</span></td><td>–</td></tr>
+    <tr class="key"><td>Thu 10/8</td><td><b>v14 ordered at JLCPCB</b> (5 PCBs, PCBA qty 5). Same day: order the tester parts (option C). Do Adafruit first, because #5412 stock is low. Reply to JLCPCB's emails within hours. Evening: <b>v15-LCD verified "ORDER"</b>.</td><td><span class="pill p-you">you</span></td><td>–</td></tr>
+    <tr class="key"><td>from 10/9, your call</td><td><b>v15-LCD order</b> at JLCPCB (<code>hardware/ORDER_WALKTHROUGH_v15_lcd.md</code>) + 3 × BuyDisplay ER-TFT019-1. Boards ≈ 10–14 days after the order.</td><td><span class="pill p-you">you</span></td><td>–</td></tr>
+    <tr><td>10/9–10/15</td><td>JLCPCB builds v14. Meanwhile: buy 3 Casio shells (same edition), prep and grind the 5 shells, deploy the proxy.</td><td><span class="pill p-both">you + Claude</span></td><td>–</td></tr>
+    <tr><td>≈ 10/12–10/16</td><td>Vendor parts arrive <span class="est">estimate</span>. Meter every battery against J4; beep-test the generic cameras (E6).</td><td><span class="pill p-ext">outside</span></td><td>vendors</td></tr>
+    <tr class="key"><td>≈ 10/18–10/22</td><td><b>Boards arrive.</b> Board #1 on USB only (<code>hardware/ARRIVAL_CHECKLIST.md</code>), then display, camera, battery, self-test.</td><td><span class="pill p-you">you</span></td><td>DHL</td></tr>
+    <tr><td>≈ 10/20–10/24</td><td>Board #1 end-to-end in shell #1: <b>photo → Claude → answer on the e-paper</b>.</td><td><span class="pill p-you">you</span></td><td>bring-up</td></tr>
+    <tr class="key"><td>≈ 10/25–10/29</td><td><b>All 5 testers built and tested.</b> Units 1–3 with current parts, 4–5 with generic parts; a 24 h battery soak on each.</td><td><span class="pill p-you">you</span></td><td>boards + parts</td></tr>
+    <tr><td>≈ 10/26–11/9</td><td><b>Tester feedback</b>, about 2 weeks: proxy usage log (solves a day, tokens), battery life, bugs. This becomes the v15 fix list.</td><td><span class="pill p-ext">outside</span></td><td>testers</td></tr>
+    <tr class="key"><td>≈ 10–14 days after the v15 order</td><td><b>v15 boards + panels arrive: bench checks</b> (<code>hardware/ARRIVAL_CHECKLIST.md</code> §4): diode test for the pin-1 end, backlight V(R23)/15 (16–37 mA), panel at 3.3 V, colour flags, tail 36.6 ± 0.3 mm, the 3 moved keys. Bring-up <code>hardware/bringup_guide_v15_lcd.html</code>, assembly <code>hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html</code>.</td><td><span class="pill p-both">you + Claude</span></td><td>JLCPCB, BuyDisplay</td></tr>
+    <tr><td>in parallel, late Oct</td><td>Knockoff shell samples (4 from 2 sellers). LCD panel quotes: ZJY for 100 / 1,000, Goldenmorning samples (<code>hardware/production/lcd_suppliers.json</code>).</td><td><span class="pill p-you">you</span></td><td>–</td></tr>
+    <tr class="key"><td>≈ mid-Nov</td><td><b>Pilot board order</b> (only the boards the pilot still needs), with the tester fixes and the v15 bench-check answers.</td><td><span class="pill p-both">you + Claude</span></td><td>bench checks + feedback</td></tr>
+    <tr><td>Dec – Jan</td><td><b>v15-LCD pilot</b> in knockoff shells: 4–10 units, depending on the budget (the 5 v15 boards count). Bulk samples, including the 1,200–1,500 mAh cell.</td><td><span class="pill p-you">you</span></td><td>knockoff go/no-go</td></tr>
+    <tr><td>2027</td><td><b>Knockoff / bulk:</b> about 36 pre-orders → 100 units after the FCC SDoC, LLC and lawyer. Later: own drop-in shell with the big battery.</td><td><span class="pill p-you">you</span></td><td>pre-orders</td></tr>
   </table></div>
-  <p><b>Critical path:</b> measurements (Sun) → layout fix + fit check (Sun) → <b>JLCPCB order (Mon)</b> → build (5–8 days) → DHL (door-to-door ≈ 10–14 days after the order) → bring-up → working unit (≈ 2 days later). Only the JLCPCB leg is outside your control. Firmware, the proxy and shell prep all run while you wait.</p>
+  <p><b>Critical path:</b> v14 order (10/8) → boards ≈ 10/18–22 → 5 testers ≈ 10/29 → feedback (≈ 2 weeks) → pilot → knockoff/bulk. The <b>v15-LCD order</b> (verified, any day from 10/9) and its bench checks run in parallel. Only the JLCPCB and shipping legs are outside your control.</p>
 
-  <h3>After the first units</h3>
+  <h3>After the testers</h3>
   <div class="steps">
-    <div class="step"><span class="q">Oct 2026 · 2 units</span><h3>Prototype v1</h3><p>Working units in Casio shells.</p><p class="you">You: everything</p></div>
-    <div class="step"><span class="q">Late Oct – Nov · 5–10</span><h3>Prototype v2</h3><p>Fix the v1 bugs, add a test-pad cluster for a pogo jig, second JLCPCB order.</p><p class="you">You: design + test</p></div>
-    <div class="step"><span class="q">Nov – Jan 2027 · 5–10</span><h3>Own shell</h3><p>The fx-115ES-style shell redrawn as your own design, 3D printed (JLC3DP [S15]), with its own keypad.</p><p class="you">You: CAD + fit</p></div>
-    <div class="step"><span class="q">Jan – Mar 2027 · 10–50</span><h3>Pilot batch</h3><p>Testers aged 13 and up, feedback, FCC pre-scan at a lab.</p><p class="you">You: support + fixes</p></div>
-    <div class="step"><span class="q">Mar – Jun 2027 · ~100</span><h3>First sales</h3><p>LLC, FCC SDoC, preorders on Crowd Supply or Kickstarter.</p><p class="you">You: run the business</p></div>
+    <div class="step"><span class="q">Oct – early Nov · 5 units</span><h3>Testers (v14)</h3><p>E-paper units in genuine Casio shells, option C parts, real usage data.</p><p class="you">You: build, test, collect feedback</p></div>
+    <div class="step"><span class="q">Oct – Nov · verified ORDER</span><h3>v15-LCD</h3><p>Colour 1.9" 170×320 LCD board (BuyDisplay ER-TFT019-1), verified "ORDER" on 10/8; bench checks on arrival.</p><p class="you">You: order it, run the bench checks</p></div>
+    <div class="step"><span class="q">Dec – Jan 2027 · 4–10</span><h3>Pilot</h3><p>v15-LCD in knockoff 991ES-style shells. Testers aged 13+, FCC pre-scan.</p><p class="you">You: support + fixes</p></div>
+    <div class="step"><span class="q">Mar – Jun 2027 · ~100</span><h3>First sales</h3><p>LLC, FCC SDoC, about 36 pre-orders fund the batch.</p><p class="you">You: run the business</p></div>
+    <div class="step"><span class="q">2027 · 100+</span><h3>Own shell + big battery</h3><p>3D-printed drop-in shell with a 1,200–1,500 mAh cell (13–17 h of screen-on time).</p><p class="you">You: CAD + fit</p></div>
     <div class="step"><span class="q">H2 2027 · 300–1,000</span><h3>Hundreds</h3><p>Custom battery, OEM magnet connector, an EMS does PCBA + box build, a 3PL ships the orders.</p><p class="you">You: suppliers + software</p></div>
     <div class="step"><span class="q">2028 · 3,000+</span><h3>Injection molding</h3><p>Molds pay off above about 3,300 units.</p><p class="you">You: approve samples, QA</p></div>
     <div class="step"><span class="q">2028–29 · 5k–10k+</span><h3>Contract manufacturer</h3><p>The CM buys parts, builds, tests, packs and ships to FBA or a 3PL.</p><p class="you">You: product, firmware, marketing</p></div>
@@ -211,7 +213,18 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <div class="chart" id="costChart" role="img" aria-label="Per-unit cost by quantity"></div>
   <div class="legend"><span><i style="background:var(--bar1)"></i>Parts, build, freight</span><span><i style="background:var(--bar2)"></i>One-time certification, spread over the run</span></div>
   <div class="tbl"><table id="costTable"></table></div>
-  <p class="lede">At your $225 price the margin is 57 % at 10 units and 77 % at 1,000 (§0). A plain fx-115ES costs $20, so the AI tutor, the linking app and the build quality have to clearly earn the difference.</p>
+  <p class="lede">At your $225 price the profit is about $106–163 a unit from 10 units on (§0). A plain fx-115ES costs $20, so the AI tutor, the linking app and the build quality have to clearly earn the difference.</p>
+
+  <h3>Updated by version (2026-10-08)</h3>
+  <p>From <code>hardware/production/COST_MODEL.xlsx</code> (Versions). These assume a knockoff shell instead of a printed one, so they differ from the long-view chart above. Costs are before the one-time selling-legally bill.</p>
+  <div class="tbl"><table>
+    <tr><th>Version</th><th class="n">10</th><th class="n">100</th><th class="n">1,000</th></tr>
+    <tr><td>E-paper, 150 mAh</td><td class="n">$91.56</td><td class="n">$45.66</td><td class="n">$33.68</td></tr>
+    <tr class="key"><td><b>LCD (v15-LCD), 150 mAh</b></td><td class="n">$91.92</td><td class="n">$42.22</td><td class="n">$31.69</td></tr>
+    <tr><td>E-paper, 1,200–1,500 mAh</td><td class="n">$96.51</td><td class="n">$48.71</td><td class="n">$35.83</td></tr>
+    <tr class="key"><td><b>LCD, 1,200–1,500 mAh</b> (long-term target)</td><td class="n">$96.87</td><td class="n">$45.27</td><td class="n">$33.84</td></tr>
+  </table></div>
+  <p class="lede">LCD panel: BuyDisplay ER-TFT019-1 $6.22 + shipping at 10; Alibaba ZJY $2.50 @100 and $2.30 @1,000 or Goldenmorning (<code>hardware/production/lcd_suppliers.json</code>; confirm by quote and a sample check). The v15 board drops 17 e-paper parts and adds J5 / Q4 / Q5 / R21–R23 (R23 15 Ω) / C36, ≈ $0.19 cheaper <span class="est">estimate</span>. Big battery: Adafruit #258 $9.95, Alibaba 504060 ≈ $4 / $3 <span class="est">estimate</span>.</p>
 
   <h3>When each part switches supplier</h3>
   <div class="tbl"><table>
@@ -221,6 +234,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
     <tr><td class="n">50</td><td>Camera: Seeed → generic OV5640 AF module</td><td>≈ $14 → $4.58–8 [S19]</td><td><b>Check the ribbon pinout and length from every new vendor</b>, because J1 is reversed for one cable direction</td></tr>
     <tr><td class="n">100</td><td>ESP32 module at reel pricing</td><td>$5.00 → $3.63 [S11]</td><td><b>Keep the module</b>: it carries Espressif's FCC approval</td></tr>
     <tr><td class="n">100</td><td>E-paper: Waveshare → Good Display direct</td><td>$6.99 → ≈ $5.50 <span class="est">estimate</span></td><td>Request a quote by email</td></tr>
+    <tr><td class="n">100</td><td>LCD (v15): BuyDisplay ER-TFT019-1 → Alibaba ZJY / Goldenmorning</td><td>$6.22 @10 → $2.50 / $2.30</td><td>Diode-test the pin-1 end on every vendor; plastic frame (~1.4 mm); avoid DJ9853 clones; ask for an 18–20 mm tail</td></tr>
     <tr><td class="n">~500</td><td>Custom LiPo with UN38.3 + IEC 62133 reports</td><td>$4.76 → ≈ $2.00; cells $0.61–1.70 [S14]</td><td>Get the test summary <i>before</i> paying (testing it yourself ≈ $1,500 [S13])</td></tr>
     <tr><td class="n">~500</td><td>OEM magnetic pogo connector</td><td>$5.20 → ≈ $2; pins $0.23–0.25 @ 1k [S18]</td><td>Needs a new board footprint (v3)</td></tr>
     <tr><td class="n">~500–1k</td><td>Hand assembly → EMS box build</td><td>Your time → ≈ $2.50–3 a unit <span class="est">estimate</span></td><td>Your hours go to software + sales</td></tr>
@@ -238,7 +252,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
     <tr><td>Opus 5.5</td><td class="n">$0.052</td><td class="n">$3.12</td><td class="n">$7.80</td><td class="n">$20.80</td></tr>
     <tr><td>Haiku first, Sonnet on 20 %</td><td class="n">$0.010</td><td class="n">$0.62</td><td class="n">$1.56</td><td class="n">$4.16</td></tr>
   </table></div>
-  <p><b>Your plan:</b> $15 a month after a free first month, which leaves about $10–12.50 a month per subscriber (§0). <b>The calculator must never hold your API key</b>: before any unit leaves your hands, route requests through the proxy with per-device tokens, rate limits and a kill switch.</p>
+  <p><b>Your plan:</b> $15 a month after a free first month. On Opus 5.5 (≈ $7.52 typical) that leaves ≈ $6–7 a month per subscriber, but a user at the 500 cap loses money. Sonnet 5.5 (≈ $3.77) covers even the cap (§0). <b>The calculator must never hold your API key</b>: before any unit leaves your hands, route requests through the proxy with per-device tokens, rate limits and a kill switch.</p>
 </section>
 
 <section id="legal">
@@ -280,12 +294,14 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   <h2>6 · Top risks</h2>
   <div class="tbl"><table>
     <tr><th>Risk</th><th>Effect</th><th>What to do</th></tr>
-    <tr class="key"><td>A measurement moves a part after Monday, </td><td>New order + 2 weeks</td><td>1:1 paper fit check Sunday. Measure on one of the same 2 calculators you will build into.</td></tr>
-    <tr><td>JLCPCB holiday backlog + engineering questions</td><td>+2–4 days</td><td>Order as soon as the dry fit passes, reply fast, keep the 10/21 buffer</td></tr>
+    <tr class="key"><td>v15-LCD panel surprises: pin-1 end of the tail, tail length vs rib B, backlight brightness, panel at 3.3 V</td><td>Dark or dim display, at worst a part change next spin</td><td>Two independent drawings put pin 1 at the J5 silk tick; R23 = 15 Ω gives 16–37 mA. Bench checks on arrival; a half twist of the tail fixes a mirrored end.</td></tr>
+    <tr><td>LCD battery life: ~1.5 h of screen-on time on 150 mAh</td><td>Charging every 1–2 days</td><td>Backlight time-out; the 1,200–1,500 mAh cell in the custom or knockoff shell</td></tr>
+    <tr class="key"><td>Budget: with the v15 order the full plan is ≈ $475 over $2,000</td><td>Can't fund a 10-unit pilot</td><td>4–5-unit pilot from the v15 boards, Sonnet for the beta, pre-orders before the 100</td></tr>
+    <tr><td>Generic tester parts (camera pinout, reversed battery lead)</td><td>A dead or dark tester</td><td>Option C keeps them to units 4–5; beep test E6; meter every lead</td></tr>
     <tr><td>Camera ribbon direction (reversed J1) is about 90 % certain (verification 01/03)</td><td>No image</td><td>Same Seeed module. E6 beep test. A 180° cable twist fixes it.</td></tr>
     <tr><td>Tariff higher than expected</td><td>+$30–70 now, +35 % or more at volume</td><td>Check the checkout total and budget the high end</td></tr>
     <tr class="key"><td>API key in firmware / unlimited use</td><td>Stolen key, surprise bill</td><td>Proxy + per-device token + caps</td></tr>
-    <tr><td>Only ~35 #5412 cables in stock</td><td>Can't charge</td><td>Order 2 now. Backup: Jameco / DigiKey.</td></tr>
+    <tr><td>Only ~35 #5412 cables in stock</td><td>Can't charge</td><td>Order the 5 first. Backup: Jameco / DigiKey.</td></tr>
     <tr><td>Selling Casio-branded units; marketing to under-13s</td><td>Takedown, liability</td><td>Own shell before sales; 13+; never "exam approved"</td></tr>
   </table></div>
 </section>

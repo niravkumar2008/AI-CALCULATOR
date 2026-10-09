@@ -1,7 +1,124 @@
 {
   "generated": "2026-10-03",
+  "updated": "2026-10-08 (evening: v15-LCD verified ORDER)",
+  "status_2026-10-08": "v14 ordered at JLCPCB on 2026-10-08 (5 PCBs, PCBA qty 5 assumed; git tag v14-order). Boards about 10/18-22. 5 v14 e-paper testers in genuine Casio shells (option C). v15-LCD verified ORDER the same evening (hardware/verification/14_v15_final_preorder.md; files hardware/fab_v15_lcd/; hardware/ORDER_WALKTHROUGH_v15_lcd.md), panel BuyDisplay ER-TFT019-1 (3 pcs); bench checks after arrival. Knockoff shells and bulk after the testers.",
   "status_2026-10-06": "Not ordered as of Tue 2026-10-06. Boards land about 10-14 days door-to-door after the JLCPCB order (about 10/17-10/21 for an order on 10/7); JLCPCB about $200-240 delivered (US import duty ~35-37.5 % collected at checkout, de-minimis suspended since 2026-06-24, + $20-40 shipping; hardware/FAB_VENDOR_COMPARISON.md); every task dated 10/5 or later moves by the same number of days. Battery is the Adafruit #1317 150 mAh; camera window is 7 mm; tape is 0.1 mm, no foam.",
   "timeline_tasks": [
+    {
+      "date": "2026-10-08",
+      "task": "Order v14 at JLCPCB (5 PCBs, PCBA qty 5); order tester parts (option C); v15-LCD verified ORDER (review 14)",
+      "owner": "Nirav",
+      "depends_on": []
+    },
+    {
+      "date": "2026-10-09",
+      "task": "JLCPCB build (about 5-7 days); answer engineering emails within hours",
+      "owner": "JLCPCB",
+      "depends_on": [
+        "2026-10-08"
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "task": "Buy 3 Casio fx-115ES (same edition), prep and grind 5 shells; deploy the proxy",
+      "owner": "Nirav + Claude",
+      "depends_on": []
+    },
+    {
+      "date": "2026-10-14",
+      "task": "Vendor parts arrive (estimate 10/12-10/16): meter batteries, beep-test generic cameras (E6)",
+      "owner": "Nirav",
+      "depends_on": [
+        "2026-10-08"
+      ]
+    },
+    {
+      "date": "2026-10-18",
+      "task": "Boards arrive (estimate 10/18-10/22): board #1 bring-up on USB, then display, camera, battery, self-test",
+      "owner": "Nirav",
+      "depends_on": [
+        "2026-10-09"
+      ]
+    },
+    {
+      "date": "2026-10-20",
+      "task": "Board #1 end-to-end in shell #1: photo -> Claude -> answer on the e-paper (estimate 10/20-10/24)",
+      "owner": "Nirav",
+      "depends_on": [
+        "2026-10-18"
+      ]
+    },
+    {
+      "date": "2026-10-25",
+      "task": "All 5 testers built and tested (estimate 10/25-10/29); 24 h battery soak each",
+      "owner": "Nirav",
+      "depends_on": [
+        "2026-10-20"
+      ]
+    },
+    {
+      "date": "2026-10-09",
+      "task": "v15-LCD order at JLCPCB (Nirav's call, any day from 10/9; hardware/ORDER_WALKTHROUGH_v15_lcd.md) + 3 x BuyDisplay ER-TFT019-1 (no touch)",
+      "owner": "Nirav",
+      "depends_on": []
+    },
+    {
+      "date": "2026-10-21",
+      "task": "v15 boards + panels arrive (about 10-14 days after the order): bench checks - diode test for pin 1, backlight V(R23)/15 (16-37 mA), panel at 3.3 V, LCD_INVERT/RGB flags, tail 36.6 +/- 0.3 mm vs rib B, feel of SHIFT/ALPHA/ON; v15 bring-up + assembly guides",
+      "owner": "Nirav + Claude",
+      "depends_on": [
+        "2026-10-09"
+      ]
+    },
+    {
+      "date": "2026-10-26",
+      "task": "Tester feedback, about 2 weeks: usage log, battery life, bug list -> v15 fix list",
+      "owner": "testers + Nirav",
+      "depends_on": [
+        "2026-10-25"
+      ]
+    },
+    {
+      "date": "2026-10-26",
+      "task": "Knockoff shell samples (4 from 2 sellers); LCD panel RFQ (ZJY quote, Goldenmorning samples)",
+      "owner": "Nirav",
+      "depends_on": []
+    },
+    {
+      "date": "2026-11-13",
+      "task": "Pilot board order (only the boards the pilot still needs) with tester fixes and the v15 bench-check answers (estimate mid-November)",
+      "owner": "Nirav + Claude",
+      "depends_on": [
+        "2026-10-21",
+        "2026-10-26"
+      ]
+    },
+    {
+      "date": "2026-11-27",
+      "task": "Pilot boards arrive (estimate late Nov - early Dec)",
+      "owner": "Nirav",
+      "depends_on": [
+        "2026-11-13"
+      ]
+    },
+    {
+      "date": "2026-12-07",
+      "task": "v15-LCD pilot in knockoff shells (4-10 units incl. the 5 v15 boards, Dec - Jan); bulk samples incl. 1,200-1,500 mAh cell",
+      "owner": "Nirav",
+      "depends_on": [
+        "2026-11-27"
+      ]
+    },
+    {
+      "date": "2027-03-01",
+      "task": "Knockoff / bulk: pre-orders (about 36 at $225) -> 100 units after FCC SDoC, LLC, lawyer",
+      "owner": "Nirav",
+      "depends_on": [
+        "2026-12-07"
+      ]
+    }
+  ],
+  "timeline_tasks_before_2026-10-08": [
     {
       "date": "2026-10-03",
       "task": "Buy 2-3 fx-115ES (same edition as the measured one) + calipers + multimeter locally",
@@ -191,6 +308,56 @@
   ],
   "phases": [
     {
+      "phase": "Testers (v14 e-paper)",
+      "dates": "2026-10-08 to early Nov 2026",
+      "units": 5,
+      "goal": "5 working units in genuine Casio shells (option C parts) and real usage data"
+    },
+    {
+      "phase": "v15-LCD",
+      "dates": "Oct - Nov 2026",
+      "units": "5 boards (verified ORDER 2026-10-08)",
+      "goal": "1.9in 170x320 colour LCD board (BuyDisplay ER-TFT019-1 panel); bench checks on arrival"
+    },
+    {
+      "phase": "Pilot (knockoff shells)",
+      "dates": "Dec 2026 - Jan 2027",
+      "units": "4-10",
+      "goal": "v15-LCD in 991ES-style clone shells; testers 13+; FCC pre-scan"
+    },
+    {
+      "phase": "First sales",
+      "dates": "Mar - Jun 2027",
+      "units": 100,
+      "goal": "LLC, FCC SDoC, pre-orders fund the batch"
+    },
+    {
+      "phase": "Own shell + big battery",
+      "dates": "2027",
+      "units": "100+",
+      "goal": "3D-printed drop-in shell, 1,200-1,500 mAh cell"
+    },
+    {
+      "phase": "Hundreds",
+      "dates": "H2 2027",
+      "units": "300-1,000",
+      "goal": "custom battery, OEM magnet connector, EMS box build, 3PL"
+    },
+    {
+      "phase": "Injection molding",
+      "dates": "2028",
+      "units": "3,000+",
+      "goal": "molds pay off above about 3,300 units"
+    },
+    {
+      "phase": "Contract manufacturer",
+      "dates": "2028-29",
+      "units": "5k-10k+",
+      "goal": "CM builds, tests, packs, ships"
+    }
+  ],
+  "phases_before_2026-10-08": [
+    {
       "phase": "Prototype v1",
       "dates": "2026-10-03 to 2026-10-21 (planned; the JLCPCB order had not been placed as of 2026-10-06, so dates from 10/5 on slip by the order date)",
       "units": 2,
@@ -239,6 +406,125 @@
       "goal": "CM builds, tests, packs; ships to FBA/3PL; Nirav runs product + software"
     }
   ],
+  "plan_2026_10_08": {
+    "source": "Claude outputs/AI_Calculator_Shopping_List.xlsx and hardware/production/COST_MODEL.xlsx (formulas verified in Python 2026-10-08)",
+    "testers_5_total_usd": {
+      "A_all_current": 662.33,
+      "B_all_generic": 571.75,
+      "C_mixed_recommended": 663.97
+    },
+    "jlcpcb_v14_delivered_usd": {
+      "2_assembled": 220,
+      "extra_for_5_assembled": 55,
+      "assumed_pcba_qty": 5
+    },
+    "v15_lcd_panels_usd": 32.25,
+    "v15_lcd_panels_note": "3 x BuyDisplay ER-TFT019-1 (no touch) at ~6.75 + ~12 shipping (estimates); 6.22 @10, 5.71 @100",
+    "v15_jlcpcb_order_usd": 270,
+    "v15_jlcpcb_order_note": "estimate 255-285 delivered, 5 PCBs / 5 assembled (ORDER_WALKTHROUGH_v15_lcd.md section 8)",
+    "spend_now_usd": 966.22,
+    "budget_usd": 2000,
+    "left_after_now_usd": 1033.78,
+    "full_plan_total_usd": 2475.17,
+    "full_plan_left_usd": -475.17,
+    "pilot_options_left_usd": {
+      "pilot_10": -475.17,
+      "pilot_5": -10.77,
+      "pilot_4": 62.31,
+      "pilot_5_sonnet": 30.44,
+      "note": "the 5 assembled v15 boards are re-used as pilot units"
+    },
+    "cost_per_unit_before_legal_usd": {
+      "quantities": [
+        10,
+        100,
+        1000
+      ],
+      "epaper_150mAh": [
+        91.56,
+        45.66,
+        33.68
+      ],
+      "lcd_150mAh": [
+        91.92,
+        42.22,
+        31.69
+      ],
+      "epaper_1200_1500mAh": [
+        96.51,
+        48.71,
+        35.83
+      ],
+      "lcd_1200_1500mAh": [
+        96.87,
+        45.27,
+        33.84
+      ]
+    },
+    "cost_per_unit_incl_legal_usd": {
+      "quantities": [
+        10,
+        100,
+        1000
+      ],
+      "epaper_150mAh": [
+        91.56,
+        81.13,
+        37.22
+      ],
+      "lcd_150mAh": [
+        91.92,
+        77.69,
+        35.23
+      ],
+      "epaper_1200_1500mAh": [
+        96.51,
+        84.18,
+        39.38
+      ],
+      "lcd_1200_1500mAh": [
+        96.87,
+        80.74,
+        37.39
+      ]
+    },
+    "hardware_profit_at_225_usd": {
+      "quantities": [
+        10,
+        100,
+        1000
+      ],
+      "epaper_150mAh": [
+        106.35,
+        116.78,
+        160.69
+      ],
+      "lcd_150mAh": [
+        105.99,
+        120.22,
+        162.68
+      ],
+      "lcd_1200_1500mAh": [
+        101.04,
+        117.17,
+        160.52
+      ]
+    },
+    "lcd_panel_usd": {
+      "10": "6.22 + ~12 shipping per order (BuyDisplay ER-TFT019-1, datasheet-verified)",
+      "100": 2.5,
+      "1000": 2.3,
+      "source": "BuyDisplay prices given 2026-10-08; 100/1,000: hardware/production/lcd_suppliers.json (Alibaba ZJY / Goldenmorning, search snippets; confirm by quote and a sample check)"
+    },
+    "api_per_user_month_usd": {
+      "opus_5_5_typical": 7.52,
+      "opus_5_5_at_500_cap": 24.72,
+      "sonnet_5_5_typical": 3.77,
+      "sonnet_5_5_at_500_cap": 12.4
+    },
+    "first_100_public_units_cash_usd": 7768.55,
+    "preorders_needed": 36
+  },
   "price_scaling": {
     "units": "USD per finished calculator",
     "date_checked": "2026-10-03",
