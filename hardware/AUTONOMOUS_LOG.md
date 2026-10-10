@@ -46,3 +46,12 @@ Running log for the autonomous task list of 2026-10-10 (tasks: Goldenmorning fit
   - Proxy deploy.
   - Donor edition and photos.
 - **Noticed, not changed (protected file):** FINAL_STATUS "Status" (line 38) and §6, and HANDOFF.md line 10, still say v14 is "not ordered yet", while "Current plan" says it was ordered 10/8.
+
+### Extra: DCXYX OV5640-AF camera (DCXYX-LZTKQJ-5M-339) on v15: FITS with a tuck
+- **Ribbon:** 70.0 mm beyond the module (Seeed: 62), so about 11.3 mm has to be stored.
+- **Fit:** fits with one S-fold (r 1.2 mm) in the empty bay at KiCad y 108–116, x 147–153 (6 mm free height). Closest gaps: floor 0.44, small-ring wall 0.53, board 0.54. Hold the fold with Kapton.
+- **Checks:** interference 0 errors (only intended contacts). Lens ↔ window 0.71 (0.58 if the camera is 5.6 mm tall).
+- **Fallback:** move the camera and its 7 mm hole 8 mm away from J1, to (150, 87.1). That is a shell drill change only; the maximum move is about 8.9 mm.
+- **No change** to the board or the baseline outputs.
+- **Data:** `hardware/enclosure/final_assembly_v15_lcd/variant_camera_dcxyx/`.
+- **Still to confirm on the real part:** the height (the drawing is unreadable; checked at 5.4 and 5.6) and the pin-1 beep test.

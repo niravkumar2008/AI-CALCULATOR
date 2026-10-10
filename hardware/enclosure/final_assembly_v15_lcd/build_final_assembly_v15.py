@@ -81,7 +81,7 @@ zrel = lambda z: Z_F - z   # stage13 section 7 height -> model Z
 # (key, target body, label, how)  -- each is its own timeline feature named "GRIND <key>"
 SOLAR_BOX_CUT = (R.SOLAR_BOX[0] - 0.8, R.SOLAR_BOX[1] + 0.8, R.SOLAR_BOX[2] - 0.8, R.SOLAR_BOX[3] + 0.8)   # frame + grid, rib 1.0 wide
 RIB_B_CAM_K = (143.0, 157.0)        # KiCad x range of rib B ground flat over the camera (14 mm)
-CAM_K = (150.0, 95.1)               # camera module centre (KiCad), window drilled here
+CAM_K = (150.0, 95.1 + float(_opt("cam_dy", 0.0)))   # camera module centre (KiCad), window drilled here; variant cam_dy (- = away from J1)
 CAM_WINDOW_D = 7.0                  # stage13 section 4 (9/32" bit = 7.1)
 # (rev D, 2026-10-05: the LR44-cup grind is gone. Stage 14 put the LiPo on the back floor, so the cup stays: zone 4 = don't grind.)
 MIN_FLOOR = 0.8                     # never grind into the floor below this
@@ -131,10 +131,16 @@ FPC_INSERT = 2.0                    # ribbon tip inside the FPC connector
 EPD_FPC_LEN = 14.3                  # panel edge -> tip (stage 5 / V9); 13.5-15 works
 SLOT_XK = 172.9                     # 1.0 x 14 board slot centre (KiCad x), slot x 172.4-173.4
 SLOT_FPC_XK = 172.55                # the ribbon hugs the slot wall away from J2 (J2's mouth overhangs the slot to x 172.73)
-CAM = (8.5, 8.5, 5.4)               # Seeed OV5640 AF module footprint and height (stage13)
+CAM = (8.5, 8.5, float(_opt("cam_h", 5.4)))   # Seeed OV5640 AF module footprint and height (stage13); variant cam_h
 CAM_TAPE = 0.1
 CAM_LENS_D, CAM_LENS_H, CAM_APERTURE = 6.0, 1.0, 2.8   # lens barrel on top of the VCM (estimate)
 CAM_FPC_W, CAM_FPC_W2, CAM_FPC_LEN = 8.0, 12.5, 70.5   # cable width at the module / at the plug end, length (Seeed)
+# Camera variants (2026-10-10, variant_camera_dcxyx; no options = the baseline): cam_fpc=<mm> ribbon length BEYOND the module
+# (DCXYX-LZTKQJ-5M-339-V1: 78.5 far edge -> tip minus 8.5 = 70.0), cam_fpc_w=<mm> ribbon width, cam_tip=<w>,<len> wider stiffened
+# plug end, cam_route=zfold|dips|straight (the route is solved so the ribbon length is used up exactly, tip FPC_INSERT inside J1),
+# cam_r=<mm> bend radius of the tuck, cam_tuck_y=<front Y> of the z-fold's rise column (between the small ring and rib C).
+CAM_FPC_W = float(_opt("cam_fpc_w", CAM_FPC_W))
+CAM_ROUTE = _opt("cam_route")
 LIPO = (26.02, 19.75, 3.8)          # rev E (2026-10-06): Adafruit #1317 150 mAh (was #1570 31 x 11.5 x 3.8 at (163.4, 69.25))
 LIPO_K = (165.6, 70.24)             # battery_upgrade.md: centre front (-15.6, 68.7), long side along X, lead end (+X) towards J4
 LIPO_ZREL = (2.2, 6.0)              # on the back-cover floor (Z 1.0-4.8; assembly_report fix). stage13 section 7 had (-3.4, 0.4): front plate
@@ -599,6 +605,27 @@ def stage_regrind6(g):
                  "GRIND antenna_relief", "cut", [fb])
     print("zone 6 re-cut: KiCad y %.1f-%.1f, front X %.2f-%.2f, Z %.2f-%.2f" % (ANT_RELIEF_K[0], ANT_RELIEF_K[1], x_in, x_out, R.SEAM_Z - 0.01, R.STUB_Z0))
 
+def stage_regrindcam(g):
+    """Camera variants (2026-10-10): replace the zone-3 cut (GRIND camera_window) in place at CAM_K (cam_dy=0 puts it back)."""
+    bk = comp_named("Back cover")
+    bb = R.body_named(bk, "Back cover")
+    tl = design.timeline
+    for i in range(tl.count - 1, -1, -1):
+        it = tl.item(i)
+        try:
+            nm = it.entity.name
+        except Exception:
+            nm = it.name or ""
+        if nm.startswith("GRIND camera_window"):
+            it.entity.deleteMe()
+    for skt in list(bk.sketches):
+        if skt.name.startswith("GRIND camera_window"):
+            skt.deleteMe()
+    cam = F(*CAM_K)
+    f = xy_circle(bk, cam, CAM_WINDOW_D, -1.0, R.BACK_PLATE + 0.5, "GRIND camera_window", "cut", [bb])
+    save_info(grind=dict(load_info().get("grind", {}), camera_window=f.name))
+    print("camera window re-cut at KiCad (%.2f, %.2f), front (%.2f, %.2f), d %.1f" % (CAM_K[0], CAM_K[1], cam[0], cam[1], CAM_WINDOW_D))
+
 def set_grind(keys, suppressed):
     """Suppress (before) / unsuppress (after) the grind features whose name contains a key."""
     n = 0
@@ -704,6 +731,51 @@ def fit_bow(bow, j5_zmid, tail_len):
     path, r_up = bow(zl)
     return zl, path, r_up
 
+def cam_route(ys, ztop, j1_face, j1_zmid, notes):
+    """Variant camera ribbon route (front view Y, Z), solved so that its length = cam_fpc (module edge -> tip FPC_INSERT inside J1).
+    The run towards J1 is at J1's mid height (the 6 mm DCXYX ribbon misses D2/C16, so it need not drop to D2's underside).
+    zfold: top layer from the module, 180 deg fold down + back (+Y), 180 deg fold down + forward, rise column at cam_tuck_y,
+           over the small ring to J1 (three layers, solved leg length L).
+    dips:  two U-dips towards the back floor: between rib C and the small ring, and inside the big ring (solved common depth).
+    straight: no tuck (camera moved instead): the slack is reported, not modelled."""
+    L_fpc = float(_opt("cam_fpc", 70.0))
+    r = float(_opt("cam_r", 1.2))
+    y_end = j1_face - FPC_INSERT
+    zrun = j1_zmid
+    def mk(p):
+        if CAM_ROUTE == "zfold":
+            yr = float(_opt("cam_tuck_y", 23.3))
+            s_ = 2 * r + 0.05
+            yf1 = yr + 1.6 + r
+            yf2 = yf1 + p
+            pts = [(ys - 0.02, ztop), (yf1, ztop), (yf1, ztop - s_), (yf2, ztop - s_), (yf2, ztop - 2 * s_), (yr, ztop - 2 * s_),
+                   (yr, zrun), (y_end, zrun)]
+        elif CAM_ROUTE == "dips":
+            d1a, d1b, d2a, d2b = [float(v) for v in _opt("cam_dips", "30.5,23.5,5.0,-13.8").split(",")]
+            pts = [(ys - 0.02, ztop), (d1a, ztop), (d1a, p), (d1b, p), (d1b, zrun), (d2a, zrun), (d2a, p), (d2b, p), (d2b, zrun), (y_end, zrun)]
+        else:
+            pts = [(ys - 0.02, ztop), (ys - 1.5, ztop), (ys - 3.5, zrun), (y_end, zrun)]
+        return round_path(pts, r, 24)
+    if CAM_ROUTE == "straight":
+        path = mk(None)
+        save_info(cam_route=dict(route="straight", fpc=L_fpc, path_len=round(path_len(path), 2), slack=round(L_fpc - path_len(path), 2),
+                                 zrun=round(zrun, 3), path=[[round(a, 3), round(b, 3)] for a, b in path]))
+        notes.append("camera FPC (straight): path %.2f vs ribbon %.1f: %.2f slack" % (path_len(path), L_fpc, L_fpc - path_len(path)))
+        return path
+    lo, hi = (0.05, 12.0) if CAM_ROUTE == "zfold" else (zrun - 0.01, 1.0)    # lo = the short end: zfold leg length / dips bottom Z
+    for _ in range(60):
+        mid = (lo + hi) / 2
+        if path_len(mk(mid)) < L_fpc:
+            lo = mid
+        else:
+            hi = mid
+    p = (lo + hi) / 2
+    path = mk(p)
+    save_info(cam_route=dict(route=CAM_ROUTE, fpc=L_fpc, r=r, param=round(p, 3), path_len=round(path_len(path), 2), zrun=round(zrun, 3),
+                             path=[[round(a, 3), round(b, 3)] for a, b in path]))
+    notes.append("camera FPC (%s): r %.2f, parameter %.3f, path %.2f = ribbon %.1f" % (CAM_ROUTE, r, p, path_len(path), L_fpc))
+    return path
+
 def stage_parts(g):
     import adsk.core, adsk.fusion
     I = load_info()
@@ -783,11 +855,19 @@ def stage_parts(g):
     ys = cc[1] - hy
     path = [(ys - 0.02, zt0 - 0.5), (ys - 1.5, zt0 - 0.5), (ys - 3.5, zr), (j1_face + 4.0, zr), (j1_face + 1.5, j1_zmid), (j1_face - FPC_INSERT, j1_zmid)]
     path = round_path(path, 1.0)
+    if CAM_ROUTE:
+        path = cam_route(ys, zt0 - 0.5, j1_face, j1_zmid, notes)
     fpc_pts = band(path, FPC_T)
-    prism(rb, "yz", [(0.0, y, z) for y, z in fpc_pts], cc[0] - CAM_FPC_W / 2, cc[0] + CAM_FPC_W / 2, "Camera FPC")
+    fpc = prism(rb, "yz", [(0.0, y, z) for y, z in fpc_pts], cc[0] - CAM_FPC_W / 2, cc[0] + CAM_FPC_W / 2, "Camera FPC")
     cl = path_len(path)
-    notes.append("camera FPC: path module -> into J1 %.1f mm vs %.1f cable: %.1f mm slack lies in a loop "
-                 "(not modelled); ribbon modelled %.2f mm under the board (tallest part in its path)" % (cl, CAM_FPC_LEN, CAM_FPC_LEN - cl, Z_F - zr))
+    if CAM_ROUTE and _opt("cam_tip"):                   # wider stiffened plug end, joined to the ribbon body (centred on X = 0)
+        tw, tl = [float(v) for v in _opt("cam_tip").split(",")]
+        ye = path[-1][0]
+        q = [(ye, j1_zmid - 0.15), (ye + tl, j1_zmid - 0.15), (ye + tl, j1_zmid + 0.15), (ye, j1_zmid + 0.15)]
+        prism(rb, "yz", [(0.0, y, z) for y, z in q], -tw / 2, tw / 2, "Camera FPC tip", "join", [fpc.bodies.item(0)])
+    if not CAM_ROUTE:
+        notes.append("camera FPC: path module -> into J1 %.1f mm vs %.1f cable: %.1f mm slack lies in a loop "
+                     "(not modelled); ribbon modelled %.2f mm under the board (tallest part in its path)" % (cl, CAM_FPC_LEN, CAM_FPC_LEN - cl, Z_F - zr))
 
     # ---------- LiPo + leads + JST-PH plug in J4 ----------
     lp = clear_comp("LiPo battery")
@@ -810,10 +890,11 @@ def stage_parts(g):
         lend = lc[0] + LIPO[0] / 2                       # LiPo end nearest J4 (front-view X max)
         bay_X = lend + LIPO_WIRE_D / 2 + 0.05            # wire centre just in front of the LiPo end
         lzm = (lz0 + lz1) / 2
+        l_drop, l_stag = [float(v) for v in _opt("lipo_lead", "2.0,1.0").split(",")]   # variant: leads dressed closer to the plug
         for nm, dxw, dz in (("red", 1.0, 0.7), ("black", -1.0, -0.7)):
             yl = lc[1] + dxw * 1.6
-            pts = [(xm + dxw, yface - pl - 0.03, zm + dz * 0.0), (xm + dxw, yface - pl - 2.0 - (dxw + 1), zm + dz),
-                   (bay_X, yface - pl - 2.0 - (dxw + 1), zm + dz), (bay_X, yl, zm + dz), (bay_X, yl, lzm + 0.8 * dz),
+            pts = [(xm + dxw, yface - pl - 0.03, zm + dz * 0.0), (xm + dxw, yface - pl - l_drop - l_stag * (dxw + 1), zm + dz),
+                   (bay_X, yface - pl - l_drop - l_stag * (dxw + 1), zm + dz), (bay_X, yl, zm + dz), (bay_X, yl, lzm + 0.8 * dz),
                    (lend + 0.01, yl, lzm + 0.8 * dz)]
             tbm_add(rb, tube(pts, LIPO_WIRE_D), "LiPo lead %s" % nm)
         notes.append("LiPo leads: plug at front-view X %.1f, LiPo end at X %.1f" % (xm, lend))
@@ -1254,6 +1335,73 @@ def stage_clearances(g):
         log("clear %s/%s - %s/%s: %s" % (ca, na, cb, nb, out[-1]["gap"]))
     json.dump(out, open(os.path.join(OUT, "clearances.json"), "w"), indent=1)
     print("\n".join("%s/%s - %s/%s: %s at %s" % (o["a"][0], o["a"][1], o["b"][0], o["b"][1], o["gap"], o["at"]) for o in out))
+
+def stage_camclear(g):
+    """Camera variants (2026-10-10): smallest gap from every camera body (module + FPC) to every other body within 4 mm
+    (positive = clearance, 0 = touching/overlap: see interference.json). Writes camclear.json."""
+    B = all_bodies()
+    mm = app.measureManager
+    def bb(b):
+        x = b.boundingBox
+        return [x.minPoint.x * 10, x.minPoint.y * 10, x.minPoint.z * 10, x.maxPoint.x * 10, x.maxPoint.y * 10, x.maxPoint.z * 10]
+    cams = [(c, n, b) for c, n, b in B if c == "Camera module" or (c == "Ribbons and wires" and n.startswith("Camera FPC"))]
+    out = []
+    for ca, na, a in cams:
+        A = bb(a)
+        for cb, nb, b in B:
+            if b == a or (cb == ca and ca == "Camera module") or (cb == "Ribbons and wires" and nb.startswith("Camera FPC") and ca == "Ribbons and wires"):
+                continue
+            Bx = bb(b)
+            if any(Bx[k] > A[k + 3] + 4 or A[k] > Bx[k + 3] + 4 for k in range(3)):
+                continue
+            try:
+                r = mm.measureMinimumDistance(a, b)
+            except Exception:
+                continue
+            p1 = r.positionOne
+            X, Y, Z = p1.x * 10, p1.y * 10, p1.z * 10
+            out.append(dict(a=[ca, na], b=[cb, nb], gap=round(r.value * 10, 2), at=[round(X, 2), round(Y, 2), round(Z, 2)],
+                            kicad=[round(CX - X, 2), round(CY - Y, 2)]))
+    out.sort(key=lambda o: o["gap"])
+    seen, ded = set(), []
+    for o in out:                                       # smallest per (camera body, other part)
+        k = (tuple(o["a"]), o["b"][0], o["b"][1] if o["b"][0] != "PCB" else o["b"][1])
+        if k not in seen:
+            seen.add(k); ded.append(o)
+    out = ded
+    json.dump(out, open(os.path.join(OUT, "camclear.json"), "w"), indent=1)
+    print("\n".join("%s/%s - %s/%s: %.2f at %s (KiCad %s)" % (o["a"][0], o["a"][1], o["b"][0], o["b"][1], o["gap"], o["at"], o["kicad"]) for o in out[:40]))
+
+def stage_camrenders(g):
+    """Camera variants: lengthwise section through the camera ribbon (X = camera centre), whole route and tuck close-up,
+    plus the ribbon seen from the back with the back cover hidden. ARGS tag=<file prefix>, tuck_y=<front Y> for the close-up."""
+    os.makedirs(os.path.join(OUT, "renders"), exist_ok=True)
+    tag = ARGS.get("tag", "cam")
+    cam = F(*CAM_K)
+    ty = float(ARGS.get("tuck_y", 27.0))
+    hide_cutters()
+    done = []
+    try:
+        explode(False)
+        show_only(["Magnetic cable plug (detached)"])
+        s = section("yz", cam[0] + 0.01, flip=False)
+        try:
+            yj = -19.0                                  # J1 end (front Y)
+            ym, ext_ = (cam[1] + 5 + yj) / 2, cam[1] + 5 - yj + 4
+            done.append(shoot(tag + "_section_route", (cam[0] + 300, ym, 4), (cam[0], ym, 4), ext=ext_ * 0.3, w=2400, h=560))
+            done.append(shoot(tag + "_section_tuck", (cam[0] + 300, ty, 4), (cam[0], ty, 4), ext=20))
+            done.append(shoot(tag + "_section_camera", (cam[0] + 300, cam[1], 4), (cam[0], cam[1], 4), ext=20))
+            done.append(shoot(tag + "_section_j1", (cam[0] + 300, -14, 5), (cam[0], -14, 5), ext=16))
+        finally:
+            s.deleteMe()
+        show_only(["Back cover", "Screws", "Rubber feet", "Battery lid", "Magnetic cable plug (detached)", "LiPo battery"])
+        done.append(shoot(tag + "_back_open", (-60, ty - 70, -110), (0, 14, 5), ext=80))
+        show_only(["Magnetic cable plug (detached)"])
+        done.append(shoot(tag + "_back_closed", (0, 14, -300), (0, 14, 0), up=(0, 1, 0), ext=90))
+    finally:
+        show_only([])
+        hide_cutters()
+    print("renders:", done)
 
 def stage_lipo_alt(g):
     """What-if: the LiPo pouch moved by dz (Z) and dx (front-view X); checks it against every other body,
