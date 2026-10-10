@@ -181,3 +181,27 @@ Source: `ER-TFT019-1_Datasheet.pdf` (EastRising/BuyDisplay, rev 2.0), pages 5, 6
 | Backlight | Vf 2.8–3.2 V (typ 3.0) at 60 mA | R23 **15 Ω** (C22810) from 3.3 V (was 22 Ω) | yes: ≈ 26 mA typical, 16–37 mA range, ≤ 51 mA worst case (review 14 M1; 22 Ω would have given only 12–27 mA). Measure V(R23)/15 on the first board |
 
 The ER-CON30HT-1 connector in the same download is BuyDisplay's own top-contact ZIF socket. It is **not needed**: the board uses the dual-contact HDGC C2919501 (J5), which takes the ribbon either face up.
+
+## Sungood 1.9" 170×320 (Alibaba, sungoodtech): checked from the listing drawing (2026-10-09)
+
+**Verdict: compatible with the v15-LCD board as drawn.** It is the same panel family as the ER-TFT019-1, Nirav's preferred listing. Source: Nirav's screenshots of the listing's drawing and pin table.
+
+**Drawing (first variant):**
+
+| Item | Value |
+| --- | --- |
+| Backlight outline | 25.8 ± 0.15 × 49.72 ± 0.15 |
+| LCD glass | 24.8 × 48.52 |
+| Visual area | 23.695 × 43.72 |
+| Active area | 22.695 × 42.72 |
+| Thickness | **1.43 ± 0.1** |
+| Tail | **36.6 ± 0.3**, 15.5 ± 0.1 wide, 0.3 ± 0.03 thick |
+| Stiffener | 4.5 ± 0.2 |
+| Contacts | 30 at 0.5 mm pitch (14.5 mm span) |
+| Finger order | "30 … 1" left to right (display face, tail down), same as the drawings used in reviews 13/14 |
+
+**Pin table:** 1 GND, 2 VDD, 3 IM2, 4 IM1, 5 RES, 6 CS, 7 DC (= SPI SCL in 4-wire SPI), 8 WR (= SPI D/C), 9 RD, 10 SDA, 11–18 DB0–DB7, 19 SDO, 20 LEDA, 21–24 LEDK, 25 GND, 26–29 NC, 30 GND. This is pin-for-pin what J5 expects; 21–24 LEDK matches the board's tied cathode group exactly.
+
+**Order the first (plastic-frame) variant: 25.8 × 49.72, 36.6 mm tail.** The listing also shows a second variant marked "胶铁一体化" (glue-and-metal-frame), 25 × 49.32, with a different tail. Don't take that one.
+
+**Ask the seller** for the controller (a genuine ST7789 V3/P3/V2, not a clone such as DJ9853), the backlight Vf/current and the brightness.

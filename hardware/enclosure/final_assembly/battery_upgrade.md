@@ -268,3 +268,21 @@ shank's width from the corner boss. Rib A should then show as a 1 mm sliver belo
    short edge.
 
 **Polarity:** it's Adafruit, so it matches J4 (red = +). It plugs straight in.
+
+## Candidate bulk cell: Taiwoo TW302030 (Alibaba listing, 2026-10-10)
+
+| Item | Value |
+| --- | --- |
+| Capacity | 140 mAh, 3.7 V |
+| Size with PCB | L 30 (+2/−0.5), W 20 ± 0.5, T 3.0 ± 0.3 mm |
+| Connector options | 1.0 / 1.25 / 2.0 mm pitch |
+| PCM / PCB | customised (3.0 V cut-off available) |
+
+**Against the rev E envelope (33.5 × 20.7 × 3.8):** it should fit (worst case 32 × 20.5 × 3.3), but the width margin is only ~0.2 mm, and it is ~4–6 mm longer than the #1317 towards J4 (≈ 7 mm free there). A CAD check is running (see below, if added).
+
+**Order spec:**
+- PCM included.
+- 2.0 mm JST-PH 2-pin, red (+) on pin 2, black on pin 1.
+- 50–80 mm leads.
+- UN38.3 + MSDS.
+- Meter the polarity of every sample.

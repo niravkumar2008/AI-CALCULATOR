@@ -1,11 +1,13 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Calculator Assembly Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo+Narrow:wght@500;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
 /* Layout: one reading column for a phone at the bench. Each step = time + "you'll need", pictures (tap to enlarge),
-   one action per checkbox, then a "Done when" line. Palette from the donor calculator: navy back cover, silver shell,
-   amber for cautions, red for stop rules. */
+   numbered sub-steps (one action per checkbox), why notes, a "check before moving on" box, common mistakes, then "Done when".
+   Palette from the donor calculator: navy back cover, silver shell, amber for cautions, red for stop rules. */
 :root{
   --bg:#f2f3f6; --surface:#ffffff; --fg:#1a1f2e; --muted:#5a6275; --line:#d7dbe4;
   --navy:#2c3a8c; --navy-soft:#e3e7f6; --amber:#9a5b00; --amber-soft:#fbefd9;
@@ -23,19 +25,20 @@
   --navy:#9eaeff; --navy-soft:#1f2645; --amber:#f0b45c; --amber-soft:#3a2a12;
   --stop:#ff8a80; --stop-soft:#3d1a18; --ok:#6fd3a0; --ok-soft:#173226; color-scheme:dark }
 *{box-sizing:border-box}
-body{background:var(--bg);color:var(--fg);font:18px/1.55 var(--f-body);padding-inline:16px;padding-block:24px 72px}
+body{background:var(--bg);color:var(--fg);font:18px/1.55 var(--f-body);padding-inline:16px;padding-block:24px 72px;margin:0}
 .wrap{max-width:44rem;margin-inline:auto;display:flex;flex-direction:column;gap:30px}
 h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.1;margin:0}
 h1{font-size:clamp(2.2rem,8vw,3.1rem);font-weight:700;letter-spacing:-.01em}
 h2{font-size:1.65rem;font-weight:700;display:flex;gap:.7rem;align-items:baseline;flex-wrap:wrap}
 h2 .n{font-family:var(--f-mono);font-size:.95rem;font-weight:600;color:var(--navy);min-width:1.6rem}
 h3{font-size:1.15rem;font-weight:700;margin-top:6px}
+h4{font-family:var(--f-display);font-size:1.02rem;margin:4px 0 0}
 p{margin:0}
 .eyebrow{font-family:var(--f-mono);font-size:.76rem;letter-spacing:.09em;text-transform:uppercase;color:var(--muted)}
 header{display:flex;flex-direction:column;gap:12px}
 .lede{color:var(--muted);max-width:62ch}
-section{display:flex;flex-direction:column;gap:14px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:64px}
-code,.m{font-family:var(--f-mono);font-size:.86em}
+section{display:flex;flex-direction:column;gap:14px;padding-top:24px;border-top:1px solid var(--line);scroll-margin-top:64px;counter-reset:sub}
+code,.m{font-family:var(--f-mono);font-size:.86em;overflow-wrap:anywhere}
 a{color:var(--navy)}
 ul,ol{margin:0;padding-left:1.3rem;display:flex;flex-direction:column;gap:4px}
 .toc{display:flex;flex-wrap:wrap;gap:6px}
@@ -45,8 +48,9 @@ ul,ol{margin:0;padding-left:1.3rem;display:flex;flex-direction:column;gap:4px}
 .callout.stop{background:var(--stop-soft);border-color:var(--stop)}
 .callout.warn{background:var(--amber-soft);border-color:var(--amber)}
 .callout.ok{background:var(--ok-soft);border-color:var(--ok)}
+.callout.info{background:var(--navy-soft);border-color:var(--navy)}
 .callout .tag{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;font-weight:600}
-.callout.stop .tag{color:var(--stop)} .callout.warn .tag{color:var(--amber)} .callout.ok .tag{color:var(--ok)}
+.callout.stop .tag{color:var(--stop)} .callout.warn .tag{color:var(--amber)} .callout.ok .tag{color:var(--ok)} .callout.info .tag{color:var(--navy)}
 .sug,.unsure{font-family:var(--f-mono);font-size:.7rem;border-radius:4px;padding:0 5px;white-space:nowrap;border:1px solid;vertical-align:1px}
 .sug{color:var(--navy);border-color:var(--navy)}
 .unsure{color:var(--amber);border-color:var(--amber)}
@@ -56,14 +60,19 @@ ul,ol{margin:0;padding-left:1.3rem;display:flex;flex-direction:column;gap:4px}
 .time{font-family:var(--f-mono);font-size:.8rem;background:var(--navy-soft);color:var(--navy);padding:2px 8px;border-radius:4px;white-space:nowrap}
 .need{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 14px;font-size:.95rem}
 .need b{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;color:var(--muted);display:block;margin-bottom:2px}
+.need ul{margin-top:2px}
 .done{border-left:4px solid var(--ok);background:var(--ok-soft);padding:9px 14px;border-radius:0 8px 8px 0}
 .done::before{content:"Done when: ";font-weight:700;color:var(--ok)}
-/* checklist */
+.why{border-left:4px solid var(--navy);background:var(--surface);padding:8px 14px;border-radius:0 8px 8px 0;font-size:.95rem}
+.why::before{content:"Why: ";font-weight:700;color:var(--navy)}
+/* checklist; ul.steps items are numbered per section */
 ul.check{list-style:none;padding:0;gap:2px}
 ul.check li{display:grid;grid-template-columns:30px minmax(0,1fr);gap:8px;align-items:start;padding:9px 6px;border-radius:6px}
 ul.check li:hover{background:var(--navy-soft)}
 ul.check input{width:22px;height:22px;margin-top:3px;accent-color:var(--navy);cursor:pointer}
 ul.check label{cursor:pointer;min-width:0}
+ul.steps li{counter-increment:sub}
+ul.steps label::before{content:counter(sub) ". ";font-family:var(--f-mono);font-weight:600;color:var(--navy)}
 ul.check input:checked + label{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
 input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--amber);outline-offset:2px}
 .progress{position:sticky;top:env(safe-area-inset-top,0px);z-index:3;background:var(--bg);padding-block:10px;display:flex;gap:10px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line)}
@@ -84,20 +93,29 @@ figure.tall img{max-height:80vh;width:auto;margin-inline:auto}
 figcaption{font-size:.92rem;color:var(--muted)}
 figcaption b{color:var(--fg)}
 .pair{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
-.tapnote{font-family:var(--f-mono);font-size:.74rem;color:var(--muted)}
+.gal{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:12px}
+.gal figure{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px}
+.gal figure img{border:0;border-radius:6px}
+.gal figcaption{font-size:.84rem}
+.icon{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px;display:flex;flex-direction:column;gap:4px}
+.icon svg{width:100%;height:auto;color:var(--fg)}
+.icon .acc{color:var(--navy)}
 .tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 table{border-collapse:collapse;width:100%;min-width:520px;font-size:.92rem}
 th,td{text-align:left;padding:8px 12px;border-bottom:1px solid var(--line);vertical-align:top}
 th{font-family:var(--f-mono);font-size:.72rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
 tr:last-child td{border-bottom:0}
 td.v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-dl.words{display:grid;grid-template-columns:minmax(0,8.5rem) minmax(0,1fr);gap:8px 14px;margin:0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
-dl.words dt{font-weight:700}
-dl.words dd{margin:0;color:var(--fg)}
-@media (max-width:480px){dl.words{grid-template-columns:minmax(0,1fr)} dl.words dd{margin-bottom:6px}}
+.words{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,200px),1fr));gap:12px}
+.word{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px;display:flex;flex-direction:column;gap:6px}
+.word img{width:100%;height:auto;border-radius:6px;background:#fff;display:block}
+.word b{font-family:var(--f-display);font-size:1.05rem}
+.word p{font-size:.92rem}
 .flow{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,150px),1fr));gap:8px;list-style:none;padding:0}
 .flow li{background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:.92rem}
 .flow b{font-family:var(--f-mono);color:var(--navy);margin-right:4px}
+.deep{border:2px solid var(--navy);border-radius:10px;padding:12px 14px;display:flex;flex-direction:column;gap:12px;background:var(--surface)}
+.deep > .tag{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.07em;text-transform:uppercase;font-weight:600;color:var(--navy)}
 footer{color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;gap:6px}
 </style>
 
@@ -106,9 +124,9 @@ footer{color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;ga
   <p class="eyebrow">AI Calculator · board v14 · Casio fx-115ES shell</p>
   <h1>Calculator Assembly Guide</h1>
   <p class="lede">How to turn a tested v14 board, a ground fx-115ES shell and the bought parts into a finished calculator. Build one calculator at a time, in order. Tick each box as you go. Ticks are saved in this browser only, separately for calculator 1 and calculator 2.</p>
-  <p class="lede">Every picture opens full size when you tap it. Labels: <span class="sug">suggestion</span> = my idea, the project docs say nothing. <span class="unsure">unsure</span> = not checked on real parts, or the docs disagree. Times are rough.</p>
+  <p class="lede">Every step has the same parts: <b>time</b> and <b>what you'll need</b>, pictures, numbered sub-steps (tick each), <b>why</b> notes (what goes wrong if you skip it), a <b>check before moving on</b> box and the <b>common mistakes</b>. Every picture opens full size when you tap it. Labels: <span class="sug">suggestion</span> = my idea, the project docs say nothing. <span class="unsure">unsure</span> = not checked on real parts, or the docs disagree. Times are rough, for a first build; the second calculator goes about twice as fast.</p>
   <nav class="toc" aria-label="Steps">
-    <a href="#words">Words</a><a href="#s0">0 Overview</a><a href="#s1">1 Take apart</a><a href="#s2">2 Grind</a><a href="#s3">3 Test board</a><a href="#s4">4 Prepare</a><a href="#s5">5 E-paper</a><a href="#s6">6 Camera</a><a href="#s7">7 Magnet</a><a href="#s8">8 Board in</a><a href="#s9">9 Battery</a><a href="#s10">10 Close</a><a href="#s11">11 Final test</a><a href="#s12">12 Problems</a>
+    <a href="#parts">Parts &amp; tools</a><a href="#words">Words</a><a href="#s0">0 Overview</a><a href="#s1">1 Take apart</a><a href="#s2">2 Grind</a><a href="#s3">3 Test board</a><a href="#s4">4 Prepare</a><a href="#s5">5 E-paper</a><a href="#s6">6 Camera</a><a href="#s7">7 Magnet</a><a href="#s8">8 Board in</a><a href="#s9">9 Battery</a><a href="#s10">10 Close</a><a href="#s11">11 Final test</a><a href="#qa">QA</a><a href="#s12">12 Problems</a>
   </nav>
 </header>
 
@@ -133,19 +151,73 @@ footer{color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;ga
   </ol>
 </div>
 
+<div class="tablewrap"><table>
+  <thead><tr><th>Step</th><th>What</th><th>Time (first build)</th></tr></thead>
+  <tbody>
+    <tr><td class="v">1</td><td>Take the Casio apart</td><td class="v">20 min</td></tr>
+    <tr><td class="v">2</td><td>Grind the shell (grinding guide)</td><td class="v">1–2 h + drying</td></tr>
+    <tr><td class="v">3</td><td>Test the bare board (power-up guide)</td><td class="v">2–4 h</td></tr>
+    <tr><td class="v">4</td><td>Prepare the parts</td><td class="v">30–40 min</td></tr>
+    <tr><td class="v">5</td><td>E-paper on + window mask</td><td class="v">40 min</td></tr>
+    <tr><td class="v">6</td><td>Camera on</td><td class="v">15 min (+20 if drilling)</td></tr>
+    <tr><td class="v">7</td><td>Magnet piece into J3</td><td class="v">10 min</td></tr>
+    <tr><td class="v">8</td><td>Key mat, board in, key test, glue</td><td class="v">45 min + glue set</td></tr>
+    <tr><td class="v">9</td><td>Battery</td><td class="v">20 min</td></tr>
+    <tr><td class="v">10</td><td>Close up</td><td class="v">10–15 min</td></tr>
+    <tr><td class="v">11</td><td>Final test + QA</td><td class="v">40 min + next-day check</td></tr>
+  </tbody>
+</table></div>
+
+<!-- parts and tools gallery -->
+<section id="parts">
+  <h2><span class="n">··</span>Parts and tools at a glance</h2>
+  <p>Lay everything out on a clean, light-coloured cloth before you start, so small parts don't get lost and you can see dust. One calculator's parts:</p>
+  <div class="gal">
+    <figure><a href="renders/gallery/p_board.jpg"><img src="renders/gallery/p_board.jpg" width="600" height="450" alt="The v14 board seen from its component side" loading="lazy"></a><figcaption><b>Board v14</b> (JLCPCB). Hold it by the edges.</figcaption></figure>
+    <figure><a href="renders/gallery/p_epaper.jpg"><img src="renders/gallery/p_epaper.jpg" width="600" height="450" alt="The bare e-paper panel" loading="lazy"></a><figcaption><b>E-paper panel</b>, Waveshare 2.13" V4, bare glass, 24-pin ribbon.</figcaption></figure>
+    <figure><a href="renders/gallery/p_camera.jpg"><img src="renders/gallery/p_camera.jpg" width="600" height="450" alt="The OV5640 camera module with its orange ribbon" loading="lazy"></a><figcaption><b>Camera</b>, Seeed OV5640 autofocus, 8.5 × 8.5 mm.</figcaption></figure>
+    <figure><a href="renders/gallery/p_battery.jpg"><img src="renders/gallery/p_battery.jpg" width="600" height="450" alt="The flat battery with its leads and white plug" loading="lazy"></a><figcaption><b>Battery</b>, Adafruit #1317, 150 mAh, JST-PH plug.</figcaption></figure>
+    <figure><a href="renders/gallery/p_magnet.jpg"><img src="renders/gallery/p_magnet.jpg" width="600" height="450" alt="The magnetic connector piece with four legs" loading="lazy"></a><figcaption><b>Magnet piece</b>, Adafruit #5358 (+ one #5412 cable).</figcaption></figure>
+    <figure><a href="renders/gallery/p_casio.jpg"><img src="renders/gallery/p_casio.jpg" width="600" height="450" alt="Photo of the silver front shell and navy back cover of the Casio" loading="lazy"></a><figcaption><b>Casio fx-115ES shell</b>: front shell + back cover (your photo).</figcaption></figure>
+    <figure><a href="renders/gallery/p_keymat.jpg"><img src="renders/gallery/p_keymat.jpg" width="600" height="450" alt="Photo of the grey rubber key mat" loading="lazy"></a><figcaption><b>Rubber key mat</b> from the Casio (your photo).</figcaption></figure>
+  </div>
+  <h3>Tools</h3>
+  <div class="gal">
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><rect x="38" y="6" width="44" height="68" rx="6" fill="none" stroke="currentColor" stroke-width="3"/><rect x="45" y="13" width="30" height="16" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="60" cy="48" r="10" fill="none" stroke="currentColor" stroke-width="3"/><path d="M60 48 L66 41" stroke="currentColor" stroke-width="3"/><path class="acc" d="M82 60 C100 60 104 70 112 74" fill="none" stroke="currentColor" stroke-width="3"/><path d="M38 60 C20 60 16 70 8 74" fill="none" stroke="currentColor" stroke-width="3"/></svg><figcaption><b>Multimeter</b>: DC volts, beep, mA.</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><rect x="6" y="30" width="108" height="12" fill="none" stroke="currentColor" stroke-width="3"/><path d="M14 30 V8 h10 v22 M30 42 v28 h10 V42" fill="none" stroke="currentColor" stroke-width="3"/><path class="acc" d="M50 34 h56" stroke="currentColor" stroke-width="2" stroke-dasharray="3 4"/></svg><figcaption><b>Calipers</b>: lengths to 0.1 mm.</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><path d="M8 34 L112 38 M8 46 L112 42" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round"/><path class="acc" d="M8 34 L8 46" stroke="currentColor" stroke-width="4"/></svg><figcaption><b>Fine tweezers</b> (plastic tips are best near sockets).</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><rect x="6" y="30" width="44" height="20" rx="8" fill="none" stroke="currentColor" stroke-width="3"/><path d="M50 40 H104" stroke="currentColor" stroke-width="4"/><path class="acc" d="M104 34 v12 M98 40 h12" stroke="currentColor" stroke-width="3"/></svg><figcaption><b>Small Phillips screwdriver</b>.</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><path d="M10 20 C40 26 50 34 60 40 M10 60 C40 54 50 46 60 40" fill="none" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path class="acc" d="M60 40 L110 30 L100 40 L110 50 Z" fill="none" stroke="currentColor" stroke-width="3"/></svg><figcaption><b>Flush / side cutters</b> and <b>flat pliers</b>.</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><circle cx="42" cy="40" r="28" fill="none" stroke="#c98a1b" stroke-width="10"/><circle cx="42" cy="40" r="12" fill="none" stroke="currentColor" stroke-width="3"/><path d="M70 40 H114 V52 H70" fill="#c98a1b" opacity=".7"/></svg><figcaption><b>Kapton tape</b> (orange, insulating, 5–10 mm wide).</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><circle cx="42" cy="40" r="28" fill="none" stroke="currentColor" stroke-width="6"/><circle cx="42" cy="40" r="12" fill="none" stroke="currentColor" stroke-width="3"/><path class="acc" d="M70 32 H114 V48 H70" fill="none" stroke="currentColor" stroke-width="3"/></svg><figcaption><b>Thin double-sided tape</b>: 0.1 mm (camera, battery) and 0.15 mm (e-paper). No foam.</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><path d="M6 46 H70 L80 38 H6 Z" fill="none" stroke="currentColor" stroke-width="3"/><path class="acc" d="M80 38 L114 30 L104 46 H70" fill="none" stroke="currentColor" stroke-width="3"/></svg><figcaption><b>Craft knife</b> (new blade) + <b>steel ruler</b>, for the window mask.</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><path d="M8 40 h30 M38 30 h40 v20 h-40 Z" fill="none" stroke="currentColor" stroke-width="3"/><path class="acc" d="M78 34 L112 40 L78 46" fill="none" stroke="currentColor" stroke-width="3"/></svg><figcaption><b>Plastic pick / spudger</b> or a fingernail, for socket latches.</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><path d="M20 20 h40 l10 14 v40 h-60 v-40 Z" fill="none" stroke="currentColor" stroke-width="3"/><path class="acc" d="M80 40 h30 l-6 -8 M110 40 l-6 8" fill="none" stroke="currentColor" stroke-width="3"/></svg><figcaption><b>Epoxy or hot glue</b> (magnet); <b>isopropyl alcohol</b> (lens).</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><rect x="12" y="24" width="56" height="32" rx="4" fill="none" stroke="currentColor" stroke-width="3"/><path class="acc" d="M68 40 H112" stroke="currentColor" stroke-width="5"/></svg><figcaption><b>Magnetic USB cable</b>, a <b>phone charger</b> and a <b>PC</b> with VS Code + PlatformIO.</figcaption></div>
+    <div class="icon"><svg viewBox="0 0 120 80" aria-hidden="true"><path d="M10 40 H96" stroke="currentColor" stroke-width="5" stroke-linecap="round"/><path class="acc" d="M96 34 L112 40 L96 46" fill="none" stroke="currentColor" stroke-width="3"/><path d="M22 36 v8 M34 36 v8 M46 36 v8 M58 36 v8" stroke="currentColor" stroke-width="2"/></svg><figcaption><b>Round needle file</b> (only for hole H6, if needed).</figcaption></div>
+  </div>
+  <p>Also: a 2.4 GHz phone hotspot, the grinding kit from the <a href="https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL">Shell Grinding Guide</a>, a small cup for screws, a clean bag for the key mat, a pen and a marker.</p>
+</section>
+
 <!-- glossary -->
 <section id="words">
   <h2><span class="n">··</span>Words you'll meet</h2>
-  <dl class="words">
-    <dt>Ribbon (FPC)</dt><dd>The thin, flat, flexible cable on the e-paper panel and on the camera. FPC means "flexible printed circuit". It has tiny gold fingers at its tip. Bend it gently; never crease it sharp.</dd>
-    <dt>Connector latch (lid)</dt><dd>The small hinged bar on a ribbon socket (J1, J2). Lift it to open the socket, slide the ribbon in, press it flat to lock. A ribbon never goes in or out while the lid is closed.</dd>
-    <dt>J1, J2, J3, J4</dt><dd>Names printed on the board for its connectors. J1 = camera ribbon. J2 = e-paper ribbon. J3 = magnetic charging piece. J4 = battery plug.</dd>
-    <dt>Test pad (TP)</dt><dd>A small round bare copper spot on the board, labelled TP1, TP2… You touch a meter probe or a wire to it. TP1 = BOOT, TP4 = GND (ground, 0 V), TP7 = EN (reset).</dd>
-    <dt>Polarity</dt><dd>Which wire is + and which is −. Battery and charging power only work one way round. Backwards can damage parts.</dd>
-    <dt>VBUS / GND</dt><dd>VBUS is the +5 V wire from a USB cable. GND is ground, the 0 V wire.</dd>
-    <dt>Kapton</dt><dd>Thin, orange, heat-proof tape that doesn't conduct electricity. You put it between parts so nothing bare touches.</dd>
-    <dt>Meter "beep" mode</dt><dd>The continuity setting on your multimeter. It beeps when the two probes are connected by metal.</dd>
-    <dt>Key side / component side</dt><dd>The board's two faces. Key side: the flat side with the key pads, facing the keys and the screen. Component side: the side with all the parts, facing the back cover.</dd>
+  <div class="words">
+    <div class="word"><img src="renders/gallery/g_fpc.jpg" width="600" height="450" alt="The orange flat ribbon of the camera" loading="lazy"><b>Ribbon (FPC)</b><p>The thin, flat, flexible cable on the e-paper panel and on the camera. FPC = "flexible printed circuit". Bend it gently in a curve; never crease it sharp, never pull it at its root.</p></div>
+    <div class="word"><img src="renders/gallery/g_stiffener.png" width="900" height="520" alt="Diagram of a ribbon end: thin ribbon, thicker stiff end, gold fingers" loading="lazy"><b>Stiffener and gold fingers</b><p>The ribbon's last few mm are thicker and stiff (the stiffener) and carry the gold contacts ("fingers"). Only this stiff end goes into a socket.</p></div>
+    <div class="word"><img src="renders/gallery/g_latch.jpg" width="600" height="450" alt="Close-up of socket J1 with its dark hinged bar" loading="lazy"><b>Socket latch (lid)</b><p>The dark hinged bar on a ribbon socket (J1, J2). Flip it up to open, slide the ribbon in, press it flat to lock. On these sockets the bar is on the side <b>away</b> from the opening. A ribbon never goes in or out while it's closed.</p></div>
+    <div class="word"><img src="renders/gallery/g_kapton.jpg" width="600" height="450" alt="An orange Kapton square on the board where the camera sits" loading="lazy"><b>Kapton</b><p>Thin (about 0.06 mm), orange, heat-proof tape that doesn't conduct electricity. It goes between parts so nothing bare touches.</p></div>
+    <div class="word"><img src="renders/gallery/g_jst.jpg" width="600" height="450" alt="The white JST-PH battery plug pushed into socket J4" loading="lazy"><b>JST-PH plug (J4)</b><p>The small white 2-pin plug on the battery and its socket J4. It only fits one way round, but the battery maker decides which wire is +, so you always meter it first.</p></div>
+    <div class="word"><img src="renders/gallery/g_testpad.jpg" width="600" height="450" alt="Board corner with yellow round test pads TP5, TP7, TP2, TP3 labelled" loading="lazy"><b>Test pad (TP)</b><p>A small round bare copper spot, labelled TP1, TP2… You touch a meter probe to it. TP1 = BOOT, TP4 = GND (0 V), TP7 = EN (reset).</p></div>
+  </div>
+  <dl style="display:grid;grid-template-columns:minmax(0,8.5rem) minmax(0,1fr);gap:8px 14px;margin:0;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px">
+    <dt><b>J1, J2, J3, J4</b></dt><dd style="margin:0">Names printed on the board for its connectors. J1 = camera ribbon. J2 = e-paper ribbon. J3 = magnetic charging piece. J4 = battery plug.</dd>
+    <dt><b>Pin 1</b></dt><dd style="margin:0">The end of a connector marked with a small triangle, dot, "1" or "N". Every connector here has a pin-1 end that must meet the part's pin 1.</dd>
+    <dt><b>Polarity</b></dt><dd style="margin:0">Which wire is + and which is −. Battery and charging power only work one way round. Backwards can damage parts.</dd>
+    <dt><b>VBUS / GND</b></dt><dd style="margin:0">VBUS is the +5 V wire from a USB cable. GND is ground, the 0 V wire.</dd>
+    <dt><b>Meter "beep"</b></dt><dd style="margin:0">The continuity setting on your multimeter. It beeps when the two probes are joined by metal. Only on an unpowered board.</dd>
+    <dt><b>Key side / component side</b></dt><dd style="margin:0">The board's two faces. Key side: flat, with the key pads, facing the keys and the screen. Component side: all the parts, facing the back cover.</dd>
+    <dt><b>Rim / parting line</b></dt><dd style="margin:0">The edge where the front shell and the back cover meet.</dd>
   </dl>
 </section>
 
@@ -169,32 +241,30 @@ footer{color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;ga
     <li><b>8</b>Mat, board into shell, glue magnet</li>
     <li><b>9</b>Battery into J4</li>
     <li><b>10</b>Close</li>
-    <li><b>11</b>Final test</li>
+    <li><b>11</b>Final test + QA</li>
   </ol>
-  <p class="callout warn"><span class="tag">Battery is last</span>The board goes into the shell (step 8) before the battery (step 9). The battery lies beside the board and plugs into J4, so it can only go in once the board is seated. It must be the last thing connected.</p>
+  <p class="callout warn"><span class="tag">Battery is last</span>The board goes into the shell (step 8) before the battery (step 9). The battery lies beside the board on the back-cover floor and plugs into J4, so it can only go in once the board is seated. It must be the last thing connected.</p>
 
   <h3>Parts for one calculator</h3>
   <ul class="check">
     <li><input type="checkbox" id="p-board"><label for="p-board">AI CALC v14 board (assembled by JLCPCB).</label></li>
     <li><input type="checkbox" id="p-casio"><label for="p-casio">One Casio fx-115ES with all its pieces: front shell, back cover, rubber key mat, key caps, display window, battery lid, rubber feet, 6 screws. Both calculators should be the same edition (back label: fx-115ES, PLUS or PLUS 2nd edition) <span class="unsure">open question</span>.</label></li>
-    <li><input type="checkbox" id="p-cam"><label for="p-cam">Seeed OV5640 autofocus camera (from the XIAO ESP32S3 Sense kit). 8.5 × 8.5 × 5.4 mm; ribbon 70.5 mm by the drawing, measured from the module's far edge to the tip (measure yours in step 4: it decides where the camera hole goes).</label></li>
+    <li><input type="checkbox" id="p-cam"><label for="p-cam">Seeed OV5640 autofocus camera (from the XIAO ESP32S3 Sense kit). 8.5 × 8.5 × 5.4 mm; ribbon 70.5 mm by the drawing, measured from the module's far edge to the tip (measure yours in step 4: it decides where the camera sits).</label></li>
     <li><input type="checkbox" id="p-epd"><label for="p-epd">Waveshare 2.13" V4 e-paper panel, bare (about 59.0 × 29.2 × 1.05 mm, 24-pin ribbon).</label></li>
     <li><input type="checkbox" id="p-lipo"><label for="p-lipo">Adafruit #1317 battery: 3.7 V, 150 mAh, 26 × 19.75 × 3.8 mm, JST-PH plug.</label></li>
     <li><input type="checkbox" id="p-mag"><label for="p-mag">Adafruit #5358 magnetic connector piece (the calculator half). One #5412 cable works for both calculators. Equivalents: Yiwei MG04254FRA1S1N (same part as #5358) and the Yiwei MG0425-UB-60-4P cable (same pin order as #5412); the meter check is the same.</label></li>
-    <li><input type="checkbox" id="p-cons"><label for="p-cons">Supplies: Kapton tape. Thin double-sided tape, 0.1 mm or less, for the camera (for example 3M 9080, or a loop of Kapton). Double-sided tape about 0.15 mm thick for the e-paper. The same 0.1 mm double-sided tape to hold the battery to the floor (no foam: there is only 0.3 mm above the battery). Epoxy or hot glue for the magnet.</label></li>
+    <li><input type="checkbox" id="p-cons"><label for="p-cons">Supplies: Kapton tape (5 and 10 mm). Thin double-sided tape, 0.1 mm or less (for example 3M 9080 / tesa 4965 type) for the camera and the battery. Double-sided tape about 0.15 mm thick for the e-paper. Matte black sticker paper or vinyl (0.08–0.15 mm) for the window mask. Epoxy or hot glue for the magnet. <b>No foam tape anywhere.</b></label></li>
   </ul>
-  <h3>Tools</h3>
-  <p>Multimeter (volts, beep, mA), calipers, fine tweezers, flat pliers, side cutters, small Phillips screwdriver <span class="sug">suggestion</span>, the grinding kit from the grinding guide, a phone charger (only for the magnet check), a computer USB port, a PC with VS Code + PlatformIO and the repo's <code>firmware-prototype</code>, a 2.4 GHz phone hotspot.</p>
 </section>
 
 <!-- 1 -->
 <section id="s1">
   <h2><span class="n">01</span>Take the Casio apart</h2>
-  <div class="facts"><span class="time">≈ 20 min</span></div>
-  <div class="need"><b>You'll need</b>Small Phillips screwdriver, a soft cloth, a cup for screws, side cutters, a marker, a clean bag for the key mat.</div>
+  <div class="facts"><span class="time">≈ 20 min</span><span>Difficulty: easy</span></div>
+  <div class="need"><b>You'll need</b>Small Phillips screwdriver, a soft cloth, a cup for screws, side cutters, a marker, a clean bag for the key mat, calipers, a tray for loose key caps.</div>
   <p>You keep the outside and throw out the insides. <b>Keep:</b> front shell, back cover, rubber key mat, key caps, display window, battery lid, rubber feet, all 6 screws. <b>Remove:</b> the Casio board, the LCD screen module, the LR44 coin cell. The docs don't describe how this Casio comes apart, so these steps are general practice <span class="sug">suggestion</span>.</p>
   <figure class="tall"><a href="renders/photos/teardown_ann.jpg"><img src="renders/photos/teardown_ann.jpg" width="1500" height="2000" alt="Photo of the opened Casio front shell with its green board and silver LCD module still inside, labelled: remove LCD module, remove Casio board, take the coin cell out first, cut these wires, keep the front shell" loading="lazy"></a><figcaption><b>Look for:</b> the green Casio board and the silver LCD module, which both come out. The grey shell and its posts stay. Cut the wires at the board.</figcaption></figure>
-  <ul class="check">
+  <ul class="check steps">
     <li><input type="checkbox" id="t-cell"><label for="t-cell">Take the LR44 coin cell out first, so nothing can short while you work. It sits in a round cup in the top corner.</label></li>
     <li><input type="checkbox" id="t-face"><label for="t-face">Lay the calculator face down on a soft cloth.</label></li>
     <li><input type="checkbox" id="t-screws"><label for="t-screws">Undo the 6 screws on the back. Put them in a cup.</label></li>
@@ -209,56 +279,71 @@ footer{color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;ga
     <li><input type="checkbox" id="t-label"><label for="t-label">Write "1" or "2" inside both shell halves with a marker, so halves, mats and screws stay together.</label></li>
   </ul>
   <figure><a href="renders/steps/s01_open_shell_ann.png"><img src="renders/steps/s01_open_shell_ann.png" width="1600" height="1200" alt="3D picture of the empty front shell with the black key mat inside, next to the open back cover, labelled key mat, front shell, back cover and display window" loading="lazy"></a><figcaption><b>Look for:</b> this is what you keep: the front shell with the key mat in it, and the empty back cover. (The 3D mat is drawn black; yours is grey.)</figcaption></figure>
+  <p class="why">the coin cell comes out first because a cut wire touching the wrong spot can short it. Labelling the halves matters because the two shells are not quite identical: mixing them gives a cover that rocks.</p>
+  <div class="callout ok"><span class="tag">Check before moving on</span><ul><li>6 screws in the cup, length written down.</li><li>Key mat in its bag, no fingerprints on the black dots.</li><li>No wire stubs left on the posts or in the clips.</li></ul></div>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Prying the cover open with a screwdriver: it marks the rim and can crack a clip. A missed screw is almost always the reason.</li><li>Turning the shell over with loose key caps in it: they fall out and get mixed up.</li><li>Pulling the LCD flex instead of unclipping the LCD.</li></ul></div>
   <p class="done">only the empty shell halves, the key mat, the key caps, the small parts and 6 screws are left, labelled 1 or 2.</p>
 </section>
 
 <!-- 2 -->
 <section id="s2">
   <h2><span class="n">02</span>Grind the shell</h2>
-  <div class="facts"><span class="time">≈ 1–2 h + drying</span></div>
-  <div class="need"><b>You'll need</b>The grinding kit, safety glasses and a mask (all listed in the grinding guide), calipers.</div>
+  <div class="facts"><span class="time">≈ 1–2 h + drying</span><span>Difficulty: medium (go slowly)</span></div>
+  <div class="need"><b>You'll need</b>The grinding kit, safety glasses and a mask (all listed in the grinding guide), calipers, a marker, the printed templates.</div>
   <p>Follow the <a href="https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL">Shell Grinding Guide</a> step by step. It has the tools, safety rules, before/after pictures and the depth to check for each zone. In short:</p>
+  <div class="pair">
+    <figure><a href="renders/grind/overview_back_cover_before_ann.png"><img src="renders/grind/overview_back_cover_before_ann.png" width="1600" height="1000" alt="Back cover inside, top end on the right, with zones 1, 2, 3 and 5b marked in red" loading="lazy"></a><figcaption><b>Back cover</b> (top end on the right): 1 solar box, 2 rib B, 3 camera hole, 5b lip if present.</figcaption></figure>
+    <figure><a href="renders/grind/overview_faceplate_before_ann.png"><img src="renders/grind/overview_faceplate_before_ann.png" width="1600" height="1000" alt="Front shell inside, top end on the right, with zones 5, 6, 6b and 6c marked in red" loading="lazy"></a><figcaption><b>Front shell</b> (top end on the right): 5 magnet notch, 6 side-wall relief, 6b pins and hooks, 6c only if needed. The LR44 cup stays.</figcaption></figure>
+  </div>
   <div class="tablewrap"><table>
     <thead><tr><th>Zone</th><th>Part</th><th>What</th><th>Why</th></tr></thead>
     <tbody>
       <tr><td class="v">1</td><td>Back cover</td><td>Solar box flat to the floor, no stub</td><td>J4 is only 0.41 mm from the floor after this</td></tr>
       <tr><td class="v">2</td><td>Back cover</td><td>Rib B flat for 14 mm over the camera</td><td>The camera lens would hit it by 0.5 mm</td></tr>
-      <tr><td class="v">3</td><td>Back cover</td><td>Camera window: 7 mm drill (small pilot hole first)</td><td>The camera's view. See the note below</td></tr>
+      <tr><td class="v">3</td><td>Back cover</td><td>Camera window: 7 mm drill (small pilot hole first), on the centre line, <b>38.0 mm</b> down from the back cover's own top outer edge</td><td>The camera's view. See the note below</td></tr>
       <tr><td class="v">4</td><td>Front shell</td><td>LR44 cup: <b>don't grind</b></td><td>Not needed with the battery on the back floor</td></tr>
       <tr><td class="v">5</td><td>Front shell</td><td>U-notch in the top wall: 21.5 mm wide, 7.95 mm down from the rim, 6.4–27.9 mm from the right edge (display up)</td><td>The magnet face sits flush in it</td></tr>
       <tr><td class="v">5b</td><td>Back cover</td><td>Lip under the magnet notch, 21.5 mm wide, <b>only if your cover has a lip there</b></td><td>The magnet body would hit it by 0.5 mm</td></tr>
-      <tr><td class="v">6</td><td>Front shell</td><td>Side-wall relief: file 35 mm of the thin inner side-wall rib away (solar-window side, 15–50 mm from the top edge, rim down to 6.5 mm), <b>only if the paper template (with its yellow antenna tab) won't drop in on that side</b></td><td>The board's top corner (0.85 mm) and the ESP32 antenna tab (0.8 mm thick, 4.15 mm past the board edge: 0.4 mm) would hit that rib if it reaches the board plane</td></tr>
+      <tr><td class="v">6, 6b, 6c</td><td>Front shell</td><td>6b: snip the pins and hooks off the inner side-wall ribs. 6: file 35 mm of the inner rib (solar-window side, 15–50 mm from the top edge) <b>only if the paper template (with its yellow antenna tab) won't drop in</b>. 6c: rib ends, only if needed</td><td>The board's top corner and the ESP32 antenna tab would hit that rib if it reaches the board plane</td></tr>
     </tbody>
   </table></div>
-  <figure><a href="renders/grind_camera_window_inside_after.png"><img src="renders/grind_camera_window_inside_after.png" width="1600" height="1200" alt="Inside of the back cover after grinding: rib B ground flat and the 7 mm camera hole drilled in the middle" loading="lazy"></a><figcaption><b>Look for:</b> inside the back cover after zones 2 and 3: the rib ground flat and the round 7 mm hole in the middle of it.</figcaption></figure>
+  <figure><a href="renders/grind/camera_hole_position_ann.png"><img src="renders/grind/camera_hole_position_ann.png" width="1600" height="1200" alt="Back cover from outside: the drill centre 38.0 mm below the cover's top outer edge, on the width centre line, 39.3 mm from each side" loading="lazy"></a><figcaption><b>Camera hole, from outside:</b> on the width centre line, <b>38.0 mm</b> down from the navy back cover's own top edge (39.3 mm from each side in the model = half its 78.7 mm width; halve your own measured width). Older notes said 38.3: that was measured to the top of the whole calculator, where the silver front shell stands about 0.3 mm beyond the cover. Use 38.0 on the loose cover.</figcaption></figure>
   <div class="callout warn"><span class="tag">Before grinding: the 10-minute pre-grind checklist</span>
     <p><code>hardware/verification/07_final_review_fitment.md</code> lists the few shell dimensions the 3D model only guessed. Measure them on your shell before the first cut: the depth of the inner side-wall rib (decides zone 6), the flat strip between the solar window and the display window (must be at least 2.6 mm: the e-paper panel's top edge lies there), the floor thickness at the moulded label on the back (the camera hole and rib B are inside it), whether the back cover has a lip at the magnet notch (zone 5b), and the screw length. Write the numbers on the template.</p>
   </div>
   <div class="callout warn"><span class="tag">Camera hole: drill now or later?</span>
     <p>Measure the camera ribbon from the module's far edge to its tip (bring-up step 5). <b>70.3 mm or more:</b> drill at the normal spot (centre of rib B) now. <b>Shorter:</b> wait. In step 6 the camera moves up to 1.7 mm towards J1, and you drill where the lens really ends up.</p>
   </div>
-  <ul class="check">
-    <li><input type="checkbox" id="g-zones"><label for="g-zones">Zones 1, 2 and 5 done (and 5b if there was a lip, 6 if the antenna tab didn't drop in).</label></li>
+  <ul class="check steps">
     <li><input type="checkbox" id="g-pre"><label for="g-pre">Pre-grind checklist measured and written down (inner-rib depth, solar-frame strip, floor at the label, lip, screw length).</label></li>
+    <li><input type="checkbox" id="g-zones"><label for="g-zones">Zones 1, 2, 5 and 6b done (and 5b if there was a lip, 6 / 6c if the paper template didn't drop in).</label></li>
     <li><input type="checkbox" id="g-floor"><label for="g-floor">Floor still at least 0.8 mm thick everywhere (calipers).</label></li>
-    <li><input type="checkbox" id="g-hole"><label for="g-hole">Zone 3 camera hole drilled, or deliberately left for step 6.</label></li>
+    <li><input type="checkbox" id="g-hole"><label for="g-hole">Zone 3 camera hole drilled (centre line, 38.0 mm from the cover's own top edge, middle of the rib-B gap), or deliberately left for step 6.</label></li>
     <li><input type="checkbox" id="g-posts"><label for="g-posts">Screw posts, locating posts, clips, walls and key holes untouched.</label></li>
     <li><input type="checkbox" id="g-clean"><label for="g-clean">Both halves washed or blown completely clean. Dust under a key dome stops that key working.</label></li>
     <li><input type="checkbox" id="g-dry"><label for="g-dry">If you washed them: both halves fully dry before any electronics come near.</label></li>
   </ul>
+  <div class="pair">
+    <figure><a href="renders/grind/overview_back_cover_after_ann.png"><img src="renders/grind/overview_back_cover_after_ann.png" width="1600" height="1000" alt="Back cover after all grinds: flat floor at the old solar box, gap in rib B with the 7 mm hole" loading="lazy"></a><figcaption><b>Back cover, finished:</b> green outlines show what came off.</figcaption></figure>
+    <figure><a href="renders/grind/overview_faceplate_after_ann.png"><img src="renders/grind/overview_faceplate_after_ann.png" width="1600" height="1000" alt="Front shell after all grinds: notch in the top wall, pins and hooks gone" loading="lazy"></a><figcaption><b>Front shell, finished.</b></figcaption></figure>
+  </div>
+  <p class="why">every zone is there because a part would otherwise hit plastic: J4 by 4.6 mm without zone 1, the lens by 0.5 mm without zone 2, the magnet face by 1.0 mm without zone 5. Too much grinding is worse than too little: a hole in the 1 mm floor can't be undone.</p>
+  <div class="callout ok"><span class="tag">Check before moving on</span><ul><li>Fingernail across each ground spot: no ridge, no stub (zone 1 especially).</li><li>Hold the cover to a light: no thin, glowing spots in the floor.</li><li>The camera hole is round, 7.0–7.1 mm both ways, on the centre line.</li></ul></div>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Leaving a 0.5 mm stub in zone 1: the cover won't close over J4.</li><li>Measuring the camera hole from the calculator's top end (38.3) instead of the loose cover's edge (38.0).</li><li>Grinding the locating posts "to make the board fit". Never: file hole H6 instead (step 8).</li><li>Fitting electronics into a still-damp shell.</li></ul></div>
   <p class="done">all planned zones are ground, nothing else is touched, and the shell is clean and dry.</p>
 </section>
 
 <!-- 3 -->
 <section id="s3">
   <h2><span class="n">03</span>Test the bare board first</h2>
-  <div class="facts"><span class="time">see the power-up guide</span></div>
+  <div class="facts"><span class="time">≈ 2–4 h (power-up guide)</span><span>Difficulty: medium</span></div>
   <div class="need"><b>You'll need</b>The <a href="https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9">First Power-Up Guide</a>, the board, the e-paper panel, the camera, the battery, the magnet piece and cable, the multimeter, the PC.</div>
   <p>Before anything goes into a shell, the bare board must pass the <a href="https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9">First Power-Up Guide</a>: inspection, meter checks, first power on USB, flashing the firmware, the self-test, then screen, camera and battery one at a time. This guide doesn't repeat it.</p>
+  <figure><a href="renders/howto/v14_top_ann.jpg"><img src="renders/howto/v14_top_ann.jpg" width="1600" height="1200" alt="The v14 board's component side with J1, J2, J3, J4 and the test pads TP1 to TP7 labelled" loading="lazy"></a><figcaption><b>Board map</b> (component side): J1 camera, J2 e-paper, J3 magnet (pin 1 = N = VBUS), J4 battery (pin 1 GND, pin 2 +), and the test pads. You'll use this map in steps 5–9.</figcaption></figure>
   <h3>If your e-paper panel is still on the Waveshare HAT</h3>
   <p>The HAT is the blue test board from the prototype. The bare panel's ribbon is held in the HAT's socket by a latch. Free it before the power-up guide connects it to J2.</p>
   <figure class="tall"><a href="renders/photos/epaper_hat_ann.jpg"><img src="renders/photos/epaper_hat_ann.jpg" width="1500" height="2000" alt="Photo of the Waveshare 2.13 inch e-paper HAT held in a hand, with the panel's gold ribbon entering the white socket at the top; labels mark the ribbon, the latch and the socket" loading="lazy"></a><figcaption><b>Look for:</b> the gold ribbon entering the socket at the top edge of the HAT, and the dark hinged bar (the latch) on the socket's far side from the ribbon.</figcaption></figure>
-  <ul class="check">
+  <ul class="check steps">
     <li><input type="checkbox" id="h-unplug"><label for="h-unplug">Unplug the HAT's coloured wire bundle, so the HAT has no power.</label></li>
     <li><input type="checkbox" id="h-latch"><label for="h-latch">With a fingernail, gently lift the <b>dark hinged bar</b> on the socket (the side away from the ribbon) to about 90°. It hinges up; it doesn't come off. If it won't move with light pressure, stop and send a photo: don't pry the white part <span class="unsure">socket type not checked on the real part</span>.</label></li>
     <li><input type="checkbox" id="h-pull"><label for="h-pull">Slide the ribbon straight out. If it resists, the latch isn't open. Never pull hard.</label></li>
@@ -271,241 +356,371 @@ footer{color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;ga
       <li>Self-test with screen and camera connected: <code>display_ok</code>, <code>camera_ok</code>, <code>keypad_scanner_ok</code>, <code>wifi_ok</code> all true. The 50-key test waits until the key mat is on (step 8).</li>
       <li>Battery charging seen in <code>status</code> ("(charging)").</li>
       <li>AI settings in (power-up guide step 10): <code>status</code> shows your hotspot, the proxy address and a device token; <code>account</code> shows the calculator linked.</li>
+      <li>Written down: the camera ribbon length (power-up step 5) and the magnet piece's VBUS leg (power-up step 3).</li>
     </ul>
   </div>
-  <ul class="check">
+  <ul class="check steps">
     <li><input type="checkbox" id="b-pass"><label for="b-pass">Power-up guide finished on this board. SELFTEST_JSON line saved in a text file.</label></li>
     <li><input type="checkbox" id="b-off"><label for="b-off">Battery unplugged from J4 and cable off. The board has no power at all.</label></li>
   </ul>
+  <p class="why">once the board is inside a glued shell, finding a bad solder joint means taking everything apart again. Ten minutes of testing on the bench saves an evening.</p>
+  <div class="callout ok"><span class="tag">Check before moving on</span><ul><li>Nothing is plugged into J4 and the cable is off: ribbons may now be handled.</li><li>If the ribbons are still in J1/J2 from testing and the latches are closed, you can leave them in.</li></ul></div>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Unplugging a ribbon with the battery still in J4.</li><li>Skipping the magnet meter check because "it worked on the computer": a phone charger is the dangerous case.</li></ul></div>
   <p class="done">the board passed every check above and is now unpowered.</p>
 </section>
 
 <!-- 4 -->
 <section id="s4">
   <h2><span class="n">04</span>Prepare the parts</h2>
-  <div class="facts"><span class="time">≈ 30 min</span></div>
-  <div class="need"><b>You'll need</b>Multimeter, phone charger, the #5412 cable, flat pliers, a pen, calipers, Kapton tape, scissors, thin (0.1 mm) double-sided tape.</div>
+  <div class="facts"><span class="time">≈ 30–40 min</span><span>Difficulty: easy, but careful</span></div>
+  <div class="need"><b>You'll need</b>Multimeter, phone charger, the #5412 cable, flat pliers, a pen, calipers, Kapton tape (5 and 10 mm), scissors, thin (0.1 mm) double-sided tape, a needle (only if a plug needs re-pinning).</div>
   <p>Most of these checks are in the power-up guide (its steps 3–5). If you did them there, just tick them here. Do them on the real parts of <b>each</b> calculator.</p>
   <figure><a href="renders/steps/s04_parts_ann.png"><img src="renders/steps/s04_parts_ann.png" width="1600" height="1200" alt="The five parts laid out: the board seen from its component side, the e-paper panel, the camera module, the battery with its plug, and the magnet piece with four legs" loading="lazy"></a><figcaption><b>Look for:</b> the five parts you'll fit, laid out. The ribbons on the screen and the camera are not drawn here.</figcaption></figure>
-  <h3>Magnet piece</h3>
-  <ul class="check">
-    <li><input type="checkbox" id="m-meter"><label for="m-meter">Meter check passed with the real #5412 cable (power-up guide step 3): +5 V leg found on a phone charger, inner legs 0–0.6 V, D− and D+ beep to USB-A pins 2 and 3.</label></li>
-    <li><input type="checkbox" id="m-mark"><label for="m-mark">VBUS (+5 V) leg marked with a pen. It goes into J3 pin 1.</label></li>
-    <li><input type="checkbox" id="m-legs"><label for="m-legs">All 4 legs straightened with flat pliers, pointing straight back out of the body. If they come out more than 1 mm off-centre, bend a small step into them.</label></li>
-  </ul>
-  <h3>Battery</h3>
-  <ul class="check">
-    <li><input type="checkbox" id="m-pol"><label for="m-pol">Polarity checked with the meter (power-up guide step 4): the plug contact that meets J4 "+" is on the red wire and reads a positive voltage. If it was backwards, the crimp pins were swapped and checked again.</label></li>
-    <li><input type="checkbox" id="m-kbat"><label for="m-kbat">Battery wrapped in one layer of Kapton, wire exit left free <span class="sug">suggestion</span>.</label></li>
-    <li><input type="checkbox" id="m-foam"><label for="m-foam">Cut two strips of 0.1 mm double-sided tape for under the battery: <b>6 × 18 mm</b> and <b>4 × 16 mm</b>. <b>No foam pad:</b> the coin-cell holder above the battery leaves only 0.3 mm.</label></li>
-  </ul>
+
+  <div class="deep">
+    <span class="tag">Delicate: the magnet piece's +5 V leg</span>
+    <figure><a href="renders/howto/magnet_meter_check.png"><img src="renders/howto/magnet_meter_check.png" width="1600" height="1180" alt="Diagram: magnet piece snapped onto the cable, charger on, meter red probe on the outer leg at the N end reads +5 V; mark that leg" loading="lazy"></a><figcaption><b>The meter check.</b> The piece hangs on the real cable, the cable is in a phone charger, the legs point down in the air. Red probe on one outer leg, black on the other: +5 V means the red-probe leg is VBUS.</figcaption></figure>
+    <ul class="check steps">
+      <li><input type="checkbox" id="m-meter"><label for="m-meter">Meter check passed with the real #5412 cable (power-up guide step 3): +5 V leg found on a phone charger, inner legs 0–0.6 V, D− and D+ beep to USB-A pins 2 and 3.</label></li>
+      <li><input type="checkbox" id="m-mark"><label for="m-mark">VBUS (+5 V) leg marked with a pen. It should be the leg at the piece's <b>N end</b>, and it goes into J3 pin 1.</label></li>
+      <li><input type="checkbox" id="m-legs"><label for="m-legs">All 4 legs straightened with flat pliers, pointing straight back out of the body. If they come out more than 1 mm off-centre, bend a small step into them.</label></li>
+    </ul>
+    <p class="why">if the piece goes in backwards, the cable's 5 V lands on the board's ground. A computer port cuts out, but a phone charger can push 2 A or more through D7 and the charger chip and burn them. The meter is the only way to know which leg is which on <i>your</i> piece and cable.</p>
+    <p class="callout stop"><span class="tag">Never "turn it over"</span>If the +5 V leg is not at the N end, or the reading is odd, <b>stop and ask</b>. Don't fix it by flipping or reversing the piece: the cable only snaps on one way, so a turned piece lines up the wrong pins with the cable, and the face would no longer sit flush in the notch.</p>
+  </div>
+
+  <div class="deep">
+    <span class="tag">Delicate: battery polarity</span>
+    <figure><a href="renders/howto/j4_polarity_check.png"><img src="renders/howto/j4_polarity_check.png" width="1600" height="1130" alt="Diagram: meter on the battery plug reads +3.9 V with the red probe on the contact that meets J4 plus; on the board J4 pin 1 beeps to TP4 and pin 2 does not" loading="lazy"></a><figcaption><b>Two checks:</b> (1) the battery plug: red probe on the contact that will meet J4 "+", reading positive and on the red wire; (2) the board: J4 pin 1 (left, seen from the component side with the opening towards you) beeps to TP4.</figcaption></figure>
+    <figure><a href="renders/howto/v14_j3_j4_polarity_ann.jpg"><img src="renders/howto/v14_j3_j4_polarity_ann.jpg" width="1600" height="1200" alt="Board render: J3 pin 1 = N = VBUS on the left, J3 pin 4 GND; J4 pin 1 GND black, J4 pin 2 BAT plus red" loading="lazy"></a><figcaption><b>The real board:</b> J4 pin 2 (red, +) is the right-hand pin in this view; pin 1 (black, GND) the left one. J3 pin 1 is the "N / +" end.</figcaption></figure>
+    <ul class="check steps">
+      <li><input type="checkbox" id="m-pol"><label for="m-pol">Polarity checked with the meter (power-up guide step 4): the plug contact that meets J4 "+" is on the red wire and reads a positive voltage. If it was backwards, the crimp pins were swapped and checked again.</label></li>
+      <li><input type="checkbox" id="m-j4beep"><label for="m-j4beep">Board unpowered, meter on beep: J4 pin 1 beeps to TP4, pin 2 doesn't. (Touch the pins where they are soldered, from the back of J4.)</label></li>
+      <li><input type="checkbox" id="m-kbat"><label for="m-kbat">Peel the tape that holds the #1317's lead on <b>top</b> of the cell, slowly, holding the wires flat with a thumbnail at the protection-board edge. Leave the yellow Kapton on the protection board. Lead the wires straight out of the lead end and fix their roots to the cell's <b>end face</b> with a 5 × 10 mm piece of Kapton. Don't wrap the whole cell: nothing may sit on top of it.</label></li>
+      <li><input type="checkbox" id="m-foam"><label for="m-foam">Cut two strips of 0.1 mm double-sided tape for under the battery: <b>6 × 18 mm</b> and <b>4 × 16 mm</b>. <b>No foam pad:</b> the coin-cell holder above the battery leaves only about 0.2 mm.</label></li>
+    </ul>
+    <p class="why">the #1317 ships with its lead taped on top: that makes it 4.9 mm tall and it would hit the coin-cell holder. The wires snap at the solder joints if they bend there, so the Kapton takes the pull instead.</p>
+  </div>
+
   <h3>Camera</h3>
-  <ul class="check">
+  <ul class="check steps">
     <li><input type="checkbox" id="m-beep"><label for="m-beep">Ribbon beep test passed: fingers 2 and 15 beep to each other (both GND).</label></li>
     <li><input type="checkbox" id="m-len"><label for="m-len">Ribbon measured, module far edge → tip: <b>____ mm</b>. Under about 70.3 mm means the camera shifts towards J1 in step 6.</label></li>
     <li><input type="checkbox" id="m-heat"><label for="m-heat">If the camera came with a heat sink that makes it taller than 5.5 mm, leave the heat sink off.</label></li>
   </ul>
   <h3>Kapton</h3>
-  <ul class="check">
-    <li><input type="checkbox" id="m-kcam"><label for="m-kcam">A piece of Kapton on the board where the camera will sit. It insulates the tracks under the module.</label></li>
+  <figure><a href="renders/detail/d05_camera_tape_ann.png"><img src="renders/detail/d05_camera_tape_ann.png" width="1600" height="1200" alt="Component side of the board: an orange Kapton square about 13 by 13 mm where the camera sits, with a smaller blue square of thin tape on it; arrow shows the ribbon runs towards J1" loading="lazy"></a><figcaption><b>The camera spot:</b> a Kapton square (about 13 × 13 mm) on the board first; the camera's thin tape goes on top of it later (blue).</figcaption></figure>
+  <ul class="check steps">
+    <li><input type="checkbox" id="m-kcam"><label for="m-kcam">A piece of Kapton (about 13 × 13 mm) on the board where the camera will sit, smoothed flat with a fingernail, no bubbles. It insulates the tracks under the module. Keep it off TP1, TP4, TP7.</label></li>
     <li><input type="checkbox" id="m-kepd"><label for="m-kepd">On the back of the e-paper: one thin layer of Kapton over the driver-chip end, so nothing bare touches the key pads <span class="sug">suggestion</span>. Keep it off the ribbon's fold. If it makes the panel sit high, leave it off <span class="unsure">not modelled</span>.</label></li>
   </ul>
-  <p class="done">the magnet leg is marked and straight, the battery is checked and wrapped, the camera ribbon is measured, and the Kapton is on.</p>
+  <div class="callout ok"><span class="tag">Check before moving on</span><ul><li>VBUS leg marked; you know which J3 pin it goes in (pin 1, N).</li><li>Battery reads positive on the contact that meets J4 "+".</li><li>Camera ribbon length written down.</li><li>Kapton flat, no wrinkles, test pads bare.</li></ul></div>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Doing the magnet check on a computer port only (a charger is what can do damage, and the check must use the cable you'll really use).</li><li>Bending the battery wires at the protection board while peeling the tape.</li><li>Kapton over a test pad.</li></ul></div>
+  <p class="done">the magnet leg is marked and straight, the battery is checked and its lead re-taped to the end face, the camera ribbon is measured, and the Kapton is on.</p>
 </section>
 
 <!-- 5 -->
 <section id="s5">
   <h2><span class="n">05</span>E-paper screen onto the board</h2>
-  <div class="facts"><span class="time">≈ 20 min</span></div>
-  <div class="need"><b>You'll need</b>E-paper panel, double-sided tape about 0.15 mm thick, scissors, a fingernail or plastic pick, the front shell (for a dry fit).</div>
+  <div class="facts"><span class="time">≈ 25 min + 15 min mask</span><span>Difficulty: delicate</span></div>
+  <div class="need"><b>You'll need</b><ul><li>E-paper panel, double-sided tape about 0.15 mm thick, scissors.</li><li>A fingernail or plastic pick (for J2's latch), clean dry hands.</li><li>The front shell (for a dry fit).</li><li>For the mask: the template, matte black sticker paper, steel ruler, new craft-knife blade, isopropyl alcohol.</li></ul></div>
   <p>The panel lies on the board's <b>key side</b>, screen facing out through the window. Its ribbon leaves the panel's short end, folds back under the panel, runs about 6.6 mm to a <b>1.0 × 14 mm slot</b>, goes through the board and turns straight into <b>J2</b> on the component side.</p>
-  <figure class="tall"><a href="renders/steps/s05c_epaper_on_board_ann.png"><img src="renders/steps/s05c_epaper_on_board_ann.png" width="1123" height="1800" alt="The board seen from its key side with the e-paper panel lying on its upper part; labels mark the panel, the ribbon end and the key pads" loading="lazy"></a><figcaption><b>Look for:</b> where the panel ends up: on the flat key side, near the top, with its ribbon end towards the left edge of the board.</figcaption></figure>
-  <figure><a href="renders/steps/s05a_epaper_fold_ann.png"><img src="renders/steps/s05a_epaper_fold_ann.png" width="1600" height="1200" alt="Cut-away close-up at the ribbon end: the ribbon leaves the top of the panel, folds 180 degrees under it inside the thin tape gap, goes down through the board slot and turns into J2 under the board" loading="lazy"></a><figcaption><b>Look for:</b> the ribbon's path in this cut-away: out of the panel, a 180° fold back under it (inside the tape gap), down through the slot, then sideways into J2.</figcaption></figure>
-  <figure><a href="renders/steps/s05b_epaper_j2_ann.png"><img src="renders/steps/s05b_epaper_j2_ann.png" width="1600" height="1200" alt="Close-up of the component side: the gold ribbon comes up through the board right beside J2 and goes straight into J2's opening" loading="lazy"></a><figcaption><b>Look for:</b> on the component side, the gold ribbon coming up right beside J2 and sliding straight into it, square, all the way in.</figcaption></figure>
+  <div class="pair">
+    <figure><a href="renders/detail/d02_epaper_on_board_ann.png"><img src="renders/detail/d02_epaper_on_board_ann.png" width="1600" height="1200" alt="Key side of the board with the e-paper panel face up on it; the ribbon goes round into the 1 by 14 mm slot" loading="lazy"></a><figcaption><b>Where it ends up:</b> panel face up on the key side, ribbon end at the left, going round into the slot.</figcaption></figure>
+    <figure><a href="renders/steps/s05a_epaper_fold_ann.png"><img src="renders/steps/s05a_epaper_fold_ann.png" width="1600" height="1200" alt="Cut-away close-up at the ribbon end: the ribbon leaves the top of the panel, folds 180 degrees under it inside the thin tape gap, goes down through the board slot and turns into J2 under the board" loading="lazy"></a><figcaption><b>The ribbon's path</b> in a cut-away: out of the panel, a 180° fold back under it (inside the tape gap), down through the slot, then sideways into J2.</figcaption></figure>
+  </div>
   <div class="callout warn"><span class="tag">The ribbon is short</span>
     <p>It is 14.3 mm long (Waveshare drawing, ±0.3). The 3D model's path from the glass edge into J2 needs 12.7 mm with the tip 2 mm inside J2, so the nominal spare is about 1.6 mm; with a 3 mm insertion and a short ribbon it is nearer 0.3 mm. Settled (review 07): <b>treat it as no spare</b>: the fold hugs the panel end, the ribbon hugs the slot's outer wall, and it goes <b>fully</b> into J2. If you measured the stiff end longer than 5 mm before ordering, follow what Claude told you then.</p>
   </div>
-  <ul class="check">
+
+  <div class="deep">
+    <span class="tag">Delicate: opening and closing a ribbon socket (J2 here, J1 in step 6)</span>
+    <figure><a href="renders/howto/fpc_latch_steps.png"><img src="renders/howto/fpc_latch_steps.png" width="1600" height="1720" alt="Four side-view panels: socket closed; dark bar flipped up 90 degrees; ribbon slid 2 to 3 mm in until it stops with the gold fingers hidden; bar pressed flat. Below: ribbon square in the socket versus crooked with gold showing" loading="lazy"></a><figcaption><b>The four moves</b>, seen from the side, and what "square" looks like from above.</figcaption></figure>
+    <div class="pair">
+      <figure><a href="renders/detail/d03_j2_latch_open_ann.png"><img src="renders/detail/d03_j2_latch_open_ann.png" width="1600" height="1200" alt="J2 on the component side: the dark latch bar on the right side, the ribbon comes up the slot on the left" loading="lazy"></a><figcaption><b>J2 open.</b> The dark bar is on the right here; the ribbon comes up through the slot on the left and enters from that side.</figcaption></figure>
+      <figure><a href="renders/detail/d04_j2_latch_closed_ann.png"><img src="renders/detail/d04_j2_latch_closed_ann.png" width="1600" height="1200" alt="J2 with the ribbon all the way in and the latch pressed down" loading="lazy"></a><figcaption><b>J2 closed:</b> ribbon all the way in and square, latch flat. (The 3D model draws the bar the same in both pictures; on the real part it stands up when open.)</figcaption></figure>
+    </div>
+    <h4>Which way the ribbon faces</h4>
+    <p>Don't think about it, just don't twist it. Fold the ribbon back under the panel and feed it straight down the slot: when it comes up beside J2, its gold fingers face the <b>board</b> (down), which is right for J2. J2 makes contact on both faces, but a ribbon that is <b>turned over or twisted</b> puts pin 1 at the wrong end, and the screen stays blank.</p>
+    <h4>How far it goes in</h4>
+    <p>Until it stops by itself, about <b>2–3 mm</b>. All the gold disappears into the mouth, and the edge of the stiff end lines up with the mouth, the same depth at both corners. If gold shows at one corner, it is crooked: open, pull out, try again. Never push with the latch closed.</p>
+    <p class="why">a ribbon that is only half in still works on the bench, then loses one line when the board goes into the shell. A crooked ribbon shifts every pin by one. Pushing into a closed socket bends its contacts for good.</p>
+  </div>
+
+  <h3>Fit the panel</h3>
+  <ul class="check steps">
     <li><input type="checkbox" id="e-off"><label for="e-off">Board unpowered: no battery, no cable.</label></li>
     <li><input type="checkbox" id="e-face"><label for="e-face">Lay the panel face down beside the board's key side, ribbon end towards the slot.</label></li>
-    <li><input type="checkbox" id="e-fold"><label for="e-fold">Fold the ribbon gently back under the panel. Use a fingertip; never make a sharp crease.</label></li>
-    <li><input type="checkbox" id="e-thread"><label for="e-thread">Feed the ribbon tip through the slot from the key side. It hugs the slot's outer wall.</label></li>
-    <li><input type="checkbox" id="e-lid"><label for="e-lid">Turn the board over. Lift J2's lid to about 90° with a fingernail at its centre.</label></li>
-    <li><input type="checkbox" id="e-j2"><label for="e-j2">Slide the ribbon into J2 straight and fully. Press the lid flat.</label></li>
-    <li><input type="checkbox" id="e-tug"><label for="e-tug">Give the ribbon a very light tug: it must not move. (Skip these J2 lines if the ribbon is still in from the power-up test and the lid is closed.)</label></li>
-    <li><input type="checkbox" id="e-place"><label for="e-place">Turn back to the key side and lay the panel flat. Rough position: glass centred along the slot's 14 mm length, its ribbon-end edge about 6.6 mm past the slot's centre line <span class="unsure">from board numbers</span>.</label></li>
-    <li><input type="checkbox" id="e-tape"><label for="e-tape">Put two short strips of the 0.15 mm tape under the glass, away from the ribbon end. Press only lightly for now <span class="sug">strip layout: suggestion</span>. The tape's thickness is the room the fold needs.</label></li>
-    <li><input type="checkbox" id="e-check"><label for="e-check">Dry fit: lower the board onto the front shell's posts (no key mat yet is fine) and look through the window from the front. The screen should be centred. Adjust.</label></li>
-    <li><input type="checkbox" id="e-press"><label for="e-press">Press the tape down firmly.</label></li>
-    
+    <li><input type="checkbox" id="e-fold"><label for="e-fold">Fold the ribbon gently back under the panel. Use a fingertip to make a smooth curve; never make a sharp crease.</label></li>
+    <li><input type="checkbox" id="e-thread"><label for="e-thread">Feed the ribbon tip through the slot from the key side, stiff end first. It hugs the slot's outer wall.</label></li>
+    <li><input type="checkbox" id="e-lid"><label for="e-lid">Turn the board over (support the panel with a finger so it doesn't hang on its ribbon). Lift J2's dark bar to about 90° with a fingernail at its centre.</label></li>
+    <li><input type="checkbox" id="e-j2"><label for="e-j2">Slide the ribbon into J2 straight and fully (2–3 mm, no gold showing). Press the bar flat in the middle.</label></li>
+    <li><input type="checkbox" id="e-tug"><label for="e-tug">Give the ribbon a very light tug: it must not move. (Skip these J2 lines if the ribbon is still in from the power-up test and the bar is closed.)</label></li>
   </ul>
-    <h3>Window mask: hides the ribbon and glass edges</h3>
-  <p>Through the clear window you would see the ribbon's root at the left end and the glass edges. A thin matte-black sticker on the <b>inside</b> of the window lens hides everything except the picture. It sits 1.79 mm above the screen, so it never touches it.</p>
-  <div class="pair">
-    <figure><a href="renders/mask_before_display.png"><img src="renders/mask_before_display.png" width="1600" height="1200" alt="Display window without the mask: the ribbon end and the glass edges are visible" loading="lazy"></a><figcaption><b>Before:</b> the ribbon root (left) and the glass edges show.</figcaption></figure>
-    <figure><a href="renders/mask_after_display.png"><img src="renders/mask_after_display.png" width="1600" height="1200" alt="Display window with the black mask: only the screen's picture area shows inside a black frame" loading="lazy"></a><figcaption><b>After:</b> only the picture shows, inside a black frame.</figcaption></figure>
+  <h3>Tape the panel square</h3>
+  <figure><a href="renders/detail/d01_epaper_tape_ann.png"><img src="renders/detail/d01_epaper_tape_ann.png" width="1600" height="1200" alt="Key side of the board: the dashed panel outline, two blue tape strips along the long edges, no tape at the ribbon end next to the slot" loading="lazy"></a><figcaption><b>Tape layout:</b> two strips of 0.15 mm tape along the panel's long edges, inside the dashed outline. <b>Nothing</b> under the ribbon end (left): the fold lives there.</figcaption></figure>
+  <ul class="check steps">
+    <li><input type="checkbox" id="e-place"><label for="e-place">Turn back to the key side and lay the panel flat, without tape yet. Rough position: glass centred along the slot's 14 mm length, its ribbon-end edge about 6.6 mm past the slot's centre line <span class="unsure">from board numbers</span>. Its edges should run parallel to the board's edges ("square").</label></li>
+    <li><input type="checkbox" id="e-tape"><label for="e-tape">Cut two strips of the 0.15 mm tape a little shorter than the panel's long edges. Stick them on the board along where the long edges go, away from the ribbon end. Peel the liners, lower the panel on, and press only lightly for now <span class="sug">strip layout: suggestion</span>. The tape's thickness is the room the fold needs.</label></li>
+    <li><input type="checkbox" id="e-check"><label for="e-check">Dry fit: lower the board onto the front shell's posts (no key mat yet is fine) and look through the window from the front. The screen should be centred and square. Adjust while the tape is still light.</label></li>
+    <li><input type="checkbox" id="e-press"><label for="e-press">Press the tape down firmly, on the strips only, for 10 s. Never press on the middle of the glass.</label></li>
+  </ul>
+  <figure class="tall"><a href="renders/steps/s05c_epaper_on_board_ann.png"><img src="renders/steps/s05c_epaper_on_board_ann.png" width="1123" height="1800" alt="The board seen from its key side with the e-paper panel lying on its upper part; labels mark the panel, the ribbon end and the key pads" loading="lazy"></a><figcaption><b>Whole board, key side:</b> the panel near the top, ribbon end towards the left edge, key pads below it untouched.</figcaption></figure>
+  <p class="why">foam or thick tape lifts the panel into the window (it has only 1.79 mm to the mask) and leaves no room for the fold. Pressing the glass can crack the panel.</p>
+
+  <div class="deep" id="mask">
+    <span class="tag">Delicate: the window mask (hides the ribbon and glass edges)</span>
+    <p>Through the clear window you would see the ribbon's root at the left end and the glass edges. A thin matte-black sticker on the <b>inside</b> of the window lens hides everything except the picture. It sits 1.79 mm above the screen, so it never touches it.</p>
+    <div class="pair">
+      <figure><a href="renders/mask_before_display.png"><img src="renders/mask_before_display.png" width="1600" height="1200" alt="Display window without the mask: the ribbon end and the glass edges are visible" loading="lazy"></a><figcaption><b>Before:</b> the ribbon root (left) and the glass edges show.</figcaption></figure>
+      <figure><a href="renders/mask_after_display.png"><img src="renders/mask_after_display.png" width="1600" height="1200" alt="Display window with the black mask: only the screen's picture area shows inside a black frame" loading="lazy"></a><figcaption><b>After:</b> only the picture shows, inside a black frame.</figcaption></figure>
+    </div>
+    <div class="need"><b>You'll need</b>The template <a href="window_mask_template.svg">window_mask_template.svg</a> (also in the repo at <code>hardware/enclosure/final_assembly/</code>), matte black sticker paper or black vinyl (0.08–0.15 mm), a steel ruler, a new craft-knife blade, isopropyl alcohol.</div>
+    <ul class="check steps">
+      <li><input type="checkbox" id="w-print"><label for="w-print">Print the template at <b>100 % / Actual size</b>. Measure the 50 mm bar. If it's off, fix the print setting and print again.</label></li>
+      <li><input type="checkbox" id="w-cut1"><label for="w-cut1">Cut the <b>opening</b> first (47.75 × 22.90 mm): ruler + new blade, 2–3 light passes per side, stop exactly at the corners.</label></li>
+      <li><input type="checkbox" id="w-cut2"><label for="w-cut2">Cut the outer edge. Easiest: the <b>blue dashed</b> line (60.35 × 24.00), so the sticker fits through the window and the lens can stay in the faceplate.</label></li>
+      <li><input type="checkbox" id="w-clean"><label for="w-clean">Faceplate open, board not in yet: wipe the inside of the lens with isopropyl and let it dry. Don't touch it with fingers afterwards.</label></li>
+    </ul>
+    <figure><a href="renders/detail/d20_window_mask_off_ann.png"><img src="renders/detail/d20_window_mask_off_ann.png" width="1600" height="1200" alt="Inside of the front shell: the clear lens in the display window, with the black mask held above it, sticky side towards the lens" loading="lazy"></a><figcaption><b>Inside of the front shell, top end up:</b> the mask goes onto the clear lens, sticky side towards the lens.</figcaption></figure>
+    <ul class="check steps">
+      <li><input type="checkbox" id="w-way"><label for="w-way"><b>Which way round:</b> the opening is off-centre on purpose. Seen from the <b>front</b>, the wide black band (11.35 mm) is on the <b>left</b>, the ribbon side. Seen from the inside (as in these pictures) it's on your <b>right</b>.</label></li>
+      <li><input type="checkbox" id="w-stick"><label for="w-stick">Hold the sticker by its edges. Line its edges up with the window's edges, lay one long edge down first, then roll it down with a fingertip from the middle outwards, to avoid bubbles.</label></li>
+      <li><input type="checkbox" id="w-check"><label for="w-check">Check from the front: a black frame with the clear opening a little right of centre, no white border, no bubble in the opening.</label></li>
+    </ul>
+    <figure><a href="renders/detail/d21_window_mask_on_ann.jpg"><img src="renders/detail/d21_window_mask_on_ann.jpg" width="1600" height="1200" alt="Inside of the front shell: the black mask stuck on the lens, the wide black band on the right as seen from inside" loading="lazy"></a><figcaption><b>Mask on, seen from inside:</b> the wide band is on the right here (= left from the front). "Centred" in the label means centred over the picture, not over the window.</figcaption></figure>
+    <p class="why">the wide band covers the ribbon's root; stuck the other way round, the ribbon shows on one side and the picture is cut off on the other.</p>
   </div>
-  <div class="need"><b>You'll need</b>The template <a href="window_mask_template.svg">window_mask_template.svg</a> (also in the repo at <code>hardware/enclosure/final_assembly/</code>), matte black sticker paper or black vinyl (0.08–0.15 mm), a steel ruler, a new craft-knife blade, isopropyl alcohol.</div>
-  <ul class="check">
-    <li><input type="checkbox" id="w-print"><label for="w-print">Print the template at <b>100 % / Actual size</b>. Measure the 50 mm bar. If it's off, fix the print setting and print again.</label></li>
-    <li><input type="checkbox" id="w-cut1"><label for="w-cut1">Cut the <b>opening</b> first (47.75 × 22.90 mm): ruler + new blade, 2–3 light passes per side.</label></li>
-    <li><input type="checkbox" id="w-cut2"><label for="w-cut2">Cut the outer edge. Easiest: the <b>blue dashed</b> line (60.35 × 24.00), so the sticker fits through the window and the lens can stay in the faceplate.</label></li>
-    <li><input type="checkbox" id="w-clean"><label for="w-clean">Faceplate open, board not in yet: wipe the inside of the lens with isopropyl and let it dry.</label></li>
-    <li><input type="checkbox" id="w-way"><label for="w-way"><b>Which way round:</b> the opening is off-centre on purpose. Seen from the <b>front</b>, the wide black band (11.35 mm) is on the <b>left</b>, the ribbon side. Seen from the inside it's on your right.</label></li>
-    <li><input type="checkbox" id="w-stick"><label for="w-stick">Stick it on the inside of the lens, one long edge first, then roll it down from the middle out to avoid bubbles.</label></li>
-    <li><input type="checkbox" id="w-check"><label for="w-check">Check from the front: a black frame with the clear opening a little right of centre.</label></li>
-  </ul>
+  <div class="callout ok"><span class="tag">Check before moving on</span><ul><li>J2's bar is flat and the ribbon doesn't move on a light tug.</li><li>No sharp crease in the fold; the fold isn't pinched under tape.</li><li>Dry fit: screen centred and square in the window.</li><li>Mask: wide band on the ribbon side, no bubbles, no white border.</li></ul></div>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Tape under the ribbon end: the fold has no room and pulls out of J2.</li><li>Ribbon twisted on the way through the slot: blank screen.</li><li>Holding the board by the panel while turning it over: the ribbon tears at its root.</li><li>Mask stuck the wrong way round, or a fingerprint under it.</li></ul></div>
   <p class="done">the panel is taped flat, centred in the window on the dry fit, its ribbon is locked in J2 with no sharp crease, and from the front you see only the picture inside the black mask.</p>
 </section>
 
 <!-- 6 -->
 <section id="s6">
   <h2><span class="n">06</span>Camera onto the board</h2>
-  <div class="facts"><span class="time">≈ 15 min (+ 20 min if you drill now)</span></div>
-  <div class="need"><b>You'll need</b>Camera, thin double-sided tape (0.1 mm or less, <b>not</b> foam tape), tweezers, the back cover; calipers and drill if the hole waits for this step.</div>
-  <p>The camera sits on the component side, lens pointing at the back cover, centred under the 7 mm hole (on the case's centre line). Its ribbon lies flat and runs straight to <b>J1</b>.</p>
-  <figure class="tall"><a href="renders/steps/s06a_camera_ann.png"><img src="renders/steps/s06a_camera_ann.png" width="1267" height="1600" alt="Component side of the board: the camera module near the top with its lens facing up, its orange ribbon running straight down the middle into J1" loading="lazy"></a><figcaption><b>Look for:</b> the camera near the top of the board, lens facing you, and the orange ribbon running straight down to J1 with no twist.</figcaption></figure>
-  <figure><a href="renders/steps/s06b_camera_j1_ann.png"><img src="renders/steps/s06b_camera_j1_ann.png" width="1600" height="1200" alt="Close-up of J1 with the camera ribbon going straight and square into the socket" loading="lazy"></a><figcaption><b>Look for:</b> the ribbon's end going square into J1, all the way, with the gold fingers hidden inside.</figcaption></figure>
-  <ul class="check">
+  <div class="facts"><span class="time">≈ 15 min (+ 20 min if you drill now)</span><span>Difficulty: delicate</span></div>
+  <div class="need"><b>You'll need</b>Camera, thin double-sided tape (0.1 mm or less, <b>not</b> foam tape), tweezers, a fingernail or pick for J1's bar, the back cover; calipers and drill if the hole waits for this step.</div>
+  <p>The camera sits on the component side, on its Kapton square, lens pointing at the back cover, centred under the 7 mm hole (on the case's centre line). Its ribbon lies flat and runs straight down the board to <b>J1</b>, with no twist and no loop.</p>
+  <div class="pair">
+    <figure><a href="renders/detail/d06_camera_ribbon_path_ann.png"><img src="renders/detail/d06_camera_ribbon_path_ann.png" width="1600" height="1200" alt="Component side: the camera near the top with its lens facing up, the orange ribbon running straight and flat down into J1" loading="lazy"></a><figcaption><b>The ribbon path:</b> camera at the top, lens towards the back cover; ribbon flat, straight, no twist, no sag, into J1.</figcaption></figure>
+    <figure><a href="renders/steps/s06a_camera_ann.png"><img src="renders/steps/s06a_camera_ann.png" width="1267" height="1600" alt="Whole component side with the camera and its ribbon running straight down the middle into J1" loading="lazy"></a><figcaption><b>Whole board:</b> the ribbon runs down the middle of the board.</figcaption></figure>
+  </div>
+  <ul class="check steps">
     <li><input type="checkbox" id="c-off"><label for="c-off">Board unpowered.</label></li>
-    <li><input type="checkbox" id="c-tape"><label for="c-tape">Put thin double-sided tape (<b>0.1 mm or less</b>) on the back of the camera. <b>Not foam tape:</b> 1 mm of foam pushes the lens into the cover.</label></li>
+    <li><input type="checkbox" id="c-tape"><label for="c-tape">Cut a square of thin double-sided tape (<b>0.1 mm or less</b>) a little smaller than the camera's base and put it on the back of the camera. <b>Not foam tape:</b> 1 mm of foam pushes the lens into the cover.</label></li>
     <li><input type="checkbox" id="c-pos"><label for="c-pos">Stick the camera centred on its Kapton spot, square to the board (lens axis straight out of the back; a tilt shows as a dark corner in the preview). If your ribbon measured under about 70.3 mm, shift it up to 1.7 mm towards J1, no more. Centre to the hole within about <b>0.8 mm</b>: more than that and the 7 mm hole starts to shade the picture's corners.</label></li>
-    <li><input type="checkbox" id="c-lid"><label for="c-lid">Lift J1's lid to about 90°.</label></li>
-    <li><input type="checkbox" id="c-j1"><label for="c-j1">Slide the ribbon straight into J1: <b>no twist, no flip</b> (the board was designed for that). All the way in.</label></li>
-    <li><input type="checkbox" id="c-close"><label for="c-close">Press the lid flat. Light tug: it must not move.</label></li>
-    <li><input type="checkbox" id="c-flat"><label for="c-flat">Lay the ribbon flat, no S-shaped loop. No slack sagging where it crosses the middle rib (only 0.48 mm to spare there).</label></li>
-    <li><input type="checkbox" id="c-drill"><label for="c-drill">Only if you left the hole for now: measure the lens centre with calipers from the board edge or a post hole, mark the same spot inside the back cover <span class="sug">method: suggestion</span>, then drill as in the grinding guide zone 3 (pilot, then 7 mm). Wash out the dust.</label></li>
+  </ul>
+  <div class="deep">
+    <span class="tag">Delicate: J1 (same moves as J2 in step 5)</span>
+    <div class="pair">
+      <figure><a href="renders/detail/d07_j1_latch_open_ann.png"><img src="renders/detail/d07_j1_latch_open_ann.png" width="1600" height="1200" alt="J1 close-up with its dark latch bar at the front and the pin-1 end marked on the left" loading="lazy"></a><figcaption><b>J1 open:</b> dark bar up. Pin 1 is at the left end in this view. The ribbon enters from the side away from the bar (the top here).</figcaption></figure>
+      <figure><a href="renders/detail/d08_j1_latch_closed_ann.png"><img src="renders/detail/d08_j1_latch_closed_ann.png" width="1600" height="1200" alt="J1 with the camera ribbon straight in from the top and the latch pressed down" loading="lazy"></a><figcaption><b>J1 closed:</b> ribbon straight in all the way, nothing of the contacts showing, bar flat.</figcaption></figure>
+    </div>
+    <p><b>Which way it faces:</b> exactly as it comes off the camera lying lens-up, laid flat down the board. <b>No twist, no flip</b>: the board was designed for that (its contacts then face the board <span class="unsure">from the render, not seen on the real ribbon</span>). <b>How far:</b> until it stops, about 2 mm, square, no gold showing.</p>
+    <ul class="check steps">
+      <li><input type="checkbox" id="c-lid"><label for="c-lid">Lift J1's dark bar to about 90° with a fingernail at its middle.</label></li>
+      <li><input type="checkbox" id="c-j1"><label for="c-j1">Slide the ribbon straight into J1: <b>no twist, no flip</b>. All the way in, the same depth at both corners.</label></li>
+      <li><input type="checkbox" id="c-close"><label for="c-close">Press the bar flat in the middle. Light tug: it must not move.</label></li>
+      <li><input type="checkbox" id="c-flat"><label for="c-flat">Lay the ribbon flat, no S-shaped loop. No slack sagging where it crosses the middle rib of the back cover (only 0.48 mm to spare there). If it has spare length, let it lie as a gentle flat bow, not a loop standing up.</label></li>
+    </ul>
+  </div>
+  <figure><a href="renders/section_camera.png"><img src="renders/section_camera.png" width="1600" height="1200" alt="Cut-away through the camera module under the 7 mm window in the back cover" loading="lazy"></a><figcaption><b>How close it is:</b> the lens top ends about 0.5 mm below the inside of the cover. That's why the tape must be thin.</figcaption></figure>
+  <ul class="check steps">
+    <li><input type="checkbox" id="c-drill"><label for="c-drill">Only if you left the hole for now: measure the lens centre with calipers from the board edge or a post hole, mark the same spot inside the back cover <span class="sug">method: suggestion</span>, then drill as in the grinding guide zone 3 (pilot, then 7 mm). For reference the normal spot is on the centre line, 38.0 mm down from the back cover's own top outer edge; a camera shifted towards J1 moves the hole the same distance further from the top. Wash out the dust.</label></li>
     <li><input type="checkbox" id="c-look"><label for="c-look">Hold the back cover on and look through the hole: the lens is in the middle, with an even ring of lens barrel visible all round (the lens top sits 0.5 mm below the floor's inside face, so a 0.5 mm ring of light can enter beside it; it only lights the board, nothing that matters).</label></li>
     <li><input type="checkbox" id="c-focus"><label for="c-focus">Know the camera's reach: the OV5640 autofocus module focuses from about <b>10 cm</b> to far away. A worksheet is read with the calculator <b>held 15–30 cm above the page</b>, back facing down; it cannot focus lying flat on the page. The firmware runs the autofocus before each shot.</label></li>
   </ul>
-  <figure><a href="renders/section_camera.png"><img src="renders/section_camera.png" width="1600" height="1200" alt="Cut-away through the camera module under the 7 mm window in the back cover" loading="lazy"></a><figcaption><b>Look for:</b> how close it is: the lens top ends about 0.5 mm below the inside of the cover. That's why the tape must be thin.</figcaption></figure>
-  <p class="callout warn"><span class="tag">If the camera fails later</span>J1's pin order is about 90 % sure. If <code>camera_ok</code> is false after reseating once, the known fix is a 180° twist in the ribbon. The power-up test should already have settled this.</p>
+  <p class="why">the camera has only 0.71 mm to the edge of the hole and 0.5 mm to the cover: thick tape, a tilt or an off-centre camera shows up as a dark corner or a cover that won't close. A loop in the ribbon gets pinched by the mid rib.</p>
+  <p class="callout warn"><span class="tag">If the camera fails later</span>J1's pin order is about 90 % sure. If <code>camera_ok</code> is false after reseating once, the known fix is a 180° twist along the ribbon's length (J1 makes contact on both faces). The power-up test should already have settled this.</p>
+  <div class="callout ok"><span class="tag">Check before moving on</span><ul><li>Lens centred in the hole, even ring all round.</li><li>J1 bar flat, ribbon doesn't move.</li><li>Ribbon lies flat along the board, no twist, no standing loop.</li></ul></div>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Foam tape under the camera.</li><li>Touching the lens glass (fingerprint = blurry pictures). Hold the module by its sides with tweezers.</li><li>Flipping the ribbon to "make it reach": it never needs that.</li></ul></div>
   <p class="done">the camera is stuck down under the hole, the lens shows in the middle of the hole, and the ribbon is flat and locked in J1.</p>
 </section>
 
 <!-- 7 -->
 <section id="s7">
   <h2><span class="n">07</span>Magnet piece into J3</h2>
-  <div class="facts"><span class="time">≈ 10 min</span></div>
-  <div class="need"><b>You'll need</b>The magnet piece (VBUS leg marked), side cutters, the multimeter on beep.</div>
+  <div class="facts"><span class="time">≈ 10 min</span><span>Difficulty: easy, polarity critical</span></div>
+  <div class="need"><b>You'll need</b>The magnet piece (VBUS leg marked in step 4), flat pliers, side cutters, the multimeter on beep, the board map (step 3).</div>
   <p>J3 is a sideways socket at the board's top edge, its holes facing the top wall. The magnet piece's legs push into it. Later its face is glued flush in the U-notch. The glue takes the cable's pull, never the legs.</p>
-  <figure><a href="renders/steps/s07_magnet_j3_ann.png"><img src="renders/steps/s07_magnet_j3_ann.png" width="1600" height="1200" alt="Close-up of the magnet piece held just above J3 with its four legs lined up with J3's holes; labels show pin 1 equals N equals VBUS on the left, pin 4 GND on the right, and the push direction" loading="lazy"></a><figcaption><b>Look for:</b> the marked VBUS leg lining up with <b>pin 1</b> (silk "N" / "+"). In this view, from the component side, pin 1 is on the left.</figcaption></figure>
-  <figure><a href="renders/steps/s07b_magnet_in_ann.png"><img src="renders/steps/s07b_magnet_in_ann.png" width="1600" height="1200" alt="The magnet piece pushed fully home with its legs inside J3" loading="lazy"></a><figcaption><b>Look for:</b> the legs hidden inside J3 and the body square to the board edge.</figcaption></figure>
-  <ul class="check">
+  <figure><a href="renders/detail/d09_magnet_j3_ann.png"><img src="renders/detail/d09_magnet_j3_ann.png" width="1600" height="1200" alt="Magnet piece above J3: N mark on the face, the pen-marked leg at the N end lines up with pin 1 = VBUS; pin 4 = GND at the other end" loading="lazy"></a><figcaption><b>Line-up:</b> the pen-marked leg at the <b>N end</b> goes into <b>pin 1</b> (VBUS, silk "N" / "+"); the other outer leg into pin 4 (GND, silk "−"). The face points away from the board, towards the top wall.</figcaption></figure>
+  <ul class="check steps">
     <li><input type="checkbox" id="g-meterdone"><label for="g-meterdone">The magnet meter check from step 4 passed. Don't go on without it.</label></li>
-    <li><input type="checkbox" id="g-push"><label for="g-push"><b>VBUS leg into pin 1</b> (silk "N" / "+"), so the <b>GND leg goes into pin 4</b> (silk "−"). J3 is 1 VBUS, 2 D−, 3 D+, 4 GND.</label></li>
-    <li><input type="checkbox" id="g-depth"><label for="g-depth">Push about 4.5 mm deep. If the legs bottom out before the face would be flush, trim 0.5–1 mm off them with side cutters.</label></li>
+    <li><input type="checkbox" id="g-push"><label for="g-push"><b>VBUS leg into pin 1</b> (silk "N" / "+"), so the <b>GND leg goes into pin 4</b> (silk "−"). J3 is 1 VBUS, 2 D−, 3 D+, 4 GND. Start all four legs in their holes before pushing.</label></li>
+    <li><input type="checkbox" id="g-depth"><label for="g-depth">Push about 4.5 mm deep, body square to the board edge. If the legs bottom out before the face would be flush, trim 0.5–1 mm off them with side cutters (all four the same).</label></li>
     <li><input type="checkbox" id="g-beep"><label for="g-beep">Meter on beep: the leg in pin 4 beeps to TP4 (GND). The leg in pin 1 does <b>not</b>.</label></li>
     <li><input type="checkbox" id="g-why"><label for="g-why">Leave it in. The legs go in sideways, so the piece rides into the shell with the board in step 8. Glue comes at the end of step 8.</label></li>
   </ul>
-  <p class="callout stop"><span class="tag">Why polarity matters here</span>Backwards, the cable's 5 V lands on the board's GND. A phone charger can then push 2 A or more through D7 and the charger chip. Never test that on purpose.</p>
+  <figure><a href="renders/steps/s07b_magnet_in_ann.png"><img src="renders/steps/s07b_magnet_in_ann.png" width="1600" height="1200" alt="The magnet piece pushed fully home with its legs inside J3" loading="lazy"></a><figcaption><b>Pushed home:</b> legs hidden inside J3, body square to the board edge.</figcaption></figure>
+  <p class="callout stop"><span class="tag">Why polarity matters here</span>Backwards, the cable's 5 V lands on the board's GND. A phone charger can then push 2 A or more through D7 and the charger chip. Never test that on purpose. If the beep test says the pin-1 leg is GND: pull the piece out and ask. Never turn it over.</p>
+  <div class="callout ok"><span class="tag">Check before moving on</span><ul><li>Pen mark at pin 1 (N end).</li><li>Pin-4 leg beeps to TP4; pin-1 leg silent.</li><li>Body square, not leaning.</li></ul></div>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Pushing with one leg outside its hole: it folds under the body.</li><li>Gluing now. Glue only after the key test in step 8.</li></ul></div>
   <p class="done">the marked leg is in pin 1, the pin-4 leg beeps to TP4, and the piece sits square on the board edge.</p>
 </section>
 
 <!-- 8 -->
 <section id="s8">
   <h2><span class="n">08</span>Key mat and board into the front shell</h2>
-  <div class="facts"><span class="time">≈ 40 min + glue setting time</span></div>
-  <div class="need"><b>You'll need</b>Soft cloth, the front shell with key caps, the key mat, the board with screen, camera and magnet on it, the back cover, 2 screws, the magnetic cable and PC, epoxy or hot glue.</div>
-  <figure class="tall"><a href="renders/photos/shell_keymat_ann.jpg"><img src="renders/photos/shell_keymat_ann.jpg" width="1500" height="2000" alt="Photo of the empty front shell from inside with the grey rubber key mat in place; labels mark the key mat, locating posts, H6's post, clips, a screw post and where the magnet notch goes" loading="lazy"></a><figcaption><b>Look for:</b> the white posts poking through the grey mat. Post H6 (lower left) is the tightest fit. The magnet notch goes in the top wall, top left in this view <span class="unsure">H6 position read from the model</span>.</figcaption></figure>
-  <figure><a href="renders/steps/s08a_keymat_ann.png"><img src="renders/steps/s08a_keymat_ann.png" width="1600" height="1600" alt="The key mat being lowered into the face-down front shell, domes up, with its holes over the posts" loading="lazy"></a><figcaption><b>Look for:</b> the mat going in flat, domes facing up at you, the two half-round notches at the bottom posts.</figcaption></figure>
-  <ul class="check">
-    <li><input type="checkbox" id="k-caps"><label for="k-caps">Front shell face down on a soft cloth. All key caps in their holes.</label></li>
-    <li><input type="checkbox" id="k-mat"><label for="k-mat">Drop the rubber mat in, domes facing up at you, the two half-round notches at the bottom screw posts.</label></li>
-    <li><input type="checkbox" id="k-matflat"><label for="k-matflat">Every post goes through its hole. The mat lies flat with no fold.</label></li>
+  <div class="facts"><span class="time">≈ 45 min + glue setting time</span><span>Difficulty: medium</span></div>
+  <div class="need"><b>You'll need</b>Soft cloth, the front shell with key caps, the key mat, the board with screen, camera and magnet on it, the back cover, 2 screws, the magnetic cable and PC, epoxy or hot glue, a round needle file (only if H6 binds), a soft brush or air blower.</div>
+  <h3>Key mat</h3>
+  <div class="pair">
+    <figure class="tall"><a href="renders/photos/keymat_contacts_ann.jpg"><img src="renders/photos/keymat_contacts_ann.jpg" width="1200" height="1346" alt="Photo of the grey key mat showing its black contact dots, small post holes and two half-round notches" loading="lazy"></a><figcaption><b>Your key mat,</b> black-dot side: this side faces the board (up at you with the shell face down). The domes bulge the other way, down into the key caps <span class="unsure">side read from the photo</span>.</figcaption></figure>
+    <figure class="tall"><a href="renders/photos/shell_keymat_ann.jpg"><img src="renders/photos/shell_keymat_ann.jpg" width="1500" height="2000" alt="Photo of the empty front shell from inside with the grey rubber key mat in place; labels mark the key mat, locating posts, H6's post, clips, a screw post and where the magnet notch goes" loading="lazy"></a><figcaption><b>Mat in the shell:</b> white posts poke through the grey mat. Post H6 (lower left) is the tightest fit <span class="unsure">H6 position read from the model</span>.</figcaption></figure>
+  </div>
+  <div class="pair">
+    <figure><a href="renders/detail/d13_keymat_lowering_ann.png"><img src="renders/detail/d13_keymat_lowering_ann.png" width="1600" height="1200" alt="Key mat being lowered into the face-down front shell, domes towards the keys, every post through its hole, half-round notches at the bottom posts" loading="lazy"></a><figcaption><b>Lowering it in:</b> domes towards the keys, half-round notches at the bottom screw posts.</figcaption></figure>
+    <figure><a href="renders/detail/d14_keymat_seated_ann.png"><img src="renders/detail/d14_keymat_seated_ann.png" width="1600" height="1200" alt="Key mat seated flat in the front shell, posts poking through" loading="lazy"></a><figcaption><b>Seated:</b> flat, every post through its hole. (The 3D mat is black; yours is grey.)</figcaption></figure>
+  </div>
+  <ul class="check steps">
+    <li><input type="checkbox" id="k-caps"><label for="k-caps">Front shell face down on a soft cloth. All key caps in their holes. Blow out any dust.</label></li>
+    <li><input type="checkbox" id="k-mat"><label for="k-mat">Drop the rubber mat in with its domes pointing down into the key caps (black dots up at you), the two half-round notches at the bottom screw posts. Hold it by its edges.</label></li>
+    <li><input type="checkbox" id="k-matflat"><label for="k-matflat">Every post goes through its hole. The mat lies flat with no fold or bump; run a fingertip over the flat parts (not the dots).</label></li>
   </ul>
-  <figure><a href="renders/steps/s08b_board_in_ann.png"><img src="renders/steps/s08b_board_in_ann.png" width="1466" height="1600" alt="The board, key side down, being lowered onto the posts of the front shell, with the magnet piece riding along at its top edge towards the U-notch" loading="lazy"></a><figcaption><b>Look for:</b> the board going in key side down (screen towards the window), the magnet riding along at the top, and hole H6 meeting its post.</figcaption></figure>
-  <ul class="check">
-    <li><input type="checkbox" id="k-board"><label for="k-board">Lower the board in, key side down, so the magnet face drops into the U-notch from the rim. Let each post find its hole. <b>Never force it.</b></label></li>
-    <li><input type="checkbox" id="k-h6"><label for="k-h6">If it binds at H6 (only about 0.10 mm of play): take it out and file H6's hole a little towards the top of the board. Never file the post.</label></li>
-    <li><input type="checkbox" id="k-flat"><label for="k-flat">Board flat on all posts, no rocking. Screen still centred in the window. Neither ribbon pinched by a post or wall.</label></li>
+  <p class="why">a mat that sits on a post instead of around it lifts the board there: that key and its neighbours stop working, and the board rocks.</p>
+
+  <div class="deep">
+    <span class="tag">Delicate: dropping the board onto the posts</span>
+    <figure><a href="renders/detail/d15_board_drop_ann.png"><img src="renders/detail/d15_board_drop_ann.png" width="1600" height="1200" alt="The board, key side down, being lowered onto the posts; hole H6 and its post circled" loading="lazy"></a><figcaption><b>Line up H6 first,</b> then lower the board flat. The magnet rides along at the top end into the U-notch.</figcaption></figure>
+    <figure><a href="renders/steps/s08b_board_in_ann.png"><img src="renders/steps/s08b_board_in_ann.png" width="1466" height="1600" alt="The board, key side down, being lowered onto the posts of the front shell, with the magnet piece riding along at its top edge towards the U-notch" loading="lazy"></a><figcaption><b>Whole view:</b> key side down (screen towards the window), magnet at the top, H6 meeting its post.</figcaption></figure>
+    <ul class="check steps">
+      <li><input type="checkbox" id="k-board"><label for="k-board">Hold the board by its long edges, key side down. Tilt the top end in first so the magnet face drops into the U-notch from the rim, then lower the rest. Let each post find its hole. <b>Never force it</b>; it should drop the last millimetre under its own weight.</label></li>
+      <li><input type="checkbox" id="k-h6"><label for="k-h6">If it binds at H6 (only about 0.10 mm of play): take it out and file H6's hole a little towards the top of the board, 2–3 strokes at a time, then try again. Never file the post.</label></li>
+    </ul>
+    <figure><a href="renders/howto/h6_file_hole.png"><img src="renders/howto/h6_file_hole.png" width="1600" height="900" alt="Diagram of hole H6 with its off-centre post; the hole's edge towards the board's top end is filed; never the post" loading="lazy"></a><figcaption><b>Filing H6:</b> only the hole's edge towards the board's top end. Blow the dust off before you try again.</figcaption></figure>
+    <p class="why">the posts set where the key pads sit over the domes. File a post and the keys go off-centre for good; a hole can be filed a little without harm.</p>
+  </div>
+  <ul class="check steps">
+    <li><input type="checkbox" id="k-flat"><label for="k-flat">Board flat on all posts, no rocking (press each corner lightly). Screen still centred in the window. Neither ribbon pinched by a post or wall.</label></li>
     <li><input type="checkbox" id="k-ant"><label for="k-ant">Solar-window side: the board's top corner and the ESP32's bare antenna tab sit free of the side wall's inner rib. If the board rocks on that side, that rib needs zone 6 of the grinding guide.</label></li>
     <li><input type="checkbox" id="k-epd"><label for="k-epd">E-paper top edge: the panel is not pressed by the rib between the solar window and the display window (it should clear by about 0.3 mm). If it is, slide the panel 0.5 mm down towards the keys before the tape sets: the picture still fits inside the window and the mask.</label></li>
   </ul>
-  <figure><a href="renders/steps/s08c_magnet_flush_ann.png"><img src="renders/steps/s08c_magnet_flush_ann.png" width="1600" height="1200" alt="Close-up of the top wall: the magnet piece's black face with four gold pads sits in the U-notch, level with the outside of the wall" loading="lazy"></a><figcaption><b>Look for:</b> the black face with its 4 gold pads level with the outside of the top wall, not sunk in and not sticking out.</figcaption></figure>
-  <ul class="check">
-    <li><input type="checkbox" id="k-flush"><label for="k-flush">Magnet face flush with the outside of the top wall, 0.45–7.45 mm below the rim.</label></li>
+  <figure><a href="renders/steps/s08c_magnet_flush_ann.png"><img src="renders/steps/s08c_magnet_flush_ann.png" width="1600" height="1200" alt="Close-up of the top wall: the magnet piece's black face with four gold pads sits in the U-notch, level with the outside of the wall" loading="lazy"></a><figcaption><b>Magnet face flush:</b> the black face with its 4 gold pads level with the outside of the top wall, not sunk in and not sticking out.</figcaption></figure>
+  <ul class="check steps">
+    <li><input type="checkbox" id="k-flush"><label for="k-flush">Magnet face flush with the outside of the top wall, 0.45–7.45 mm below the rim. Run a fingernail across: it doesn't catch.</label></li>
     <li><input type="checkbox" id="k-cover"><label for="k-cover">Lay the back cover on (no screws): the face is still flush and the cover closes.</label></li>
   </ul>
   <h3>Key test before gluing (cable power, no battery)</h3>
-  <ul class="check">
+  <ul class="check steps">
     <li><input type="checkbox" id="k-hold"><label for="k-hold">Back cover on with two screws finger-snug, so the board presses on the mat <span class="sug">suggestion</span>.</label></li>
     <li><input type="checkbox" id="k-cable"><label for="k-cable">Snap the cable onto the magnet. Other end into a computer USB port.</label></li>
     <li><input type="checkbox" id="k-test"><label for="k-test">Serial Monitor: type <code>selftest</code>. Press all 50 keys (ON too) when asked; the screen counts them. Result: <code>keys_ok</code> 50 and <code>keys_missing []</code>.</label></li>
     <li><input type="checkbox" id="k-miss"><label for="k-miss">If a key is missing: cable off, open, check that key's dome for dust and that the mat is flat there, try again.</label></li>
   </ul>
   <h3>Glue the magnet</h3>
-  <ul class="check">
+  <ul class="check steps">
     <li><input type="checkbox" id="k-unplug"><label for="k-unplug">Cable off. Back cover off.</label></li>
-    <li><input type="checkbox" id="k-glue"><label for="k-glue">Glue the magnet body into the notch with epoxy or hot glue. The glue fills the 0.25 mm each side and the 0.7 mm gap underneath. Keep glue off the contact face, out of J3 and off the board.</label></li>
+    <li><input type="checkbox" id="k-glue"><label for="k-glue">Glue the magnet body into the notch with epoxy or hot glue: small beads on the sides and underneath, from the inside. The glue fills the 0.25 mm each side and the 0.7 mm gap underneath. Keep glue off the contact face, out of J3 and off the board.</label></li>
     <li><input type="checkbox" id="k-hot"><label for="k-hot">For the first build, hot glue is easier to undo if you ever need the board out <span class="sug">suggestion</span>.</label></li>
-    <li><input type="checkbox" id="k-cure"><label for="k-cure">Let it set fully (see the glue's packet) before going on.</label></li>
+    <li><input type="checkbox" id="k-cure"><label for="k-cure">Let it set fully (see the glue's packet) before going on. Don't snap the cable on while it sets.</label></li>
   </ul>
+  <p class="why">the cable snaps on and off hundreds of times. Without glue that pull goes into J3's legs and breaks them loose; with glue the shell takes it.</p>
+  <div class="callout ok"><span class="tag">Check before moving on</span><ul><li>Board flat, no rocking, screen centred.</li><li><code>keys_ok</code> 50.</li><li>Magnet flush, glue set, contact face clean.</li></ul></div>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Pressing the board down hard when it binds: it bends round H6 and the keys under it fail.</li><li>Gluing before the key test: if a key fails, the board can't come out easily.</li><li>Glue on the gold pads of the magnet face: no charging, no USB.</li></ul></div>
   <p class="done">the board sits flat, all 50 keys count, and the magnet is glued flush and set.</p>
 </section>
 
 <!-- 9 -->
 <section id="s9">
   <h2><span class="n">09</span>Battery</h2>
-  <div class="facts"><span class="time">≈ 10 min</span></div>
-  <div class="need"><b>You'll need</b>The Kapton-wrapped battery, the 0.1 mm tape strip, the back cover for a test fit.</div>
-  <p>The battery (Adafruit #1317, 150 mAh) lies flat on the <b>back-cover floor</b>, in the top-left corner as seen from the front, beside the board. Its long side (26 mm) runs left to right and the <b>wire end faces right</b>, towards the middle of the cover and J4. The wires stay below the board's level and the plug goes straight into J4. From now on the board is always powered.</p>
-  <p><b>Finding the spot:</b> push the battery's top edge up against the lip of the top wall, then slide it left until there is a 2.5 mm gap (a 2.5 mm drill shank is a good feeler) between its left edge and the round screw post in the corner. The first rib across the cover should then show as a 1 mm sliver below the battery. The battery bridges over the old battery-lid opening; that's fine.</p>
-  <figure><a href="renders/steps/s09_battery_ann.png"><img src="renders/steps/s09_battery_ann.png" width="1600" height="1200" alt="Top corner with the back cover off: the battery lies beside the board, its white plug pushed into J4, its red and black wires short; test pads TP1, TP4 and TP7 are marked keep clear" loading="lazy"></a><figcaption><b>Look for:</b> the white plug fully in J4, the red and black wires tucked low with no sharp bend, and the three test pads left bare.</figcaption></figure>
-  <ul class="check">
-    <li><input type="checkbox" id="l-ribbons"><label for="l-ribbons">Both ribbons fully in, both lids closed.</label></li>
-    <li><input type="checkbox" id="l-plug"><label for="l-plug">Plug the battery into J4. Hold the plug by its body, not the wires. Push firmly until it seats.</label></li>
-    <li><input type="checkbox" id="l-place"><label for="l-place">Lay the battery in its spot (top edge on the lip, 2.5 mm from the corner post, wire end to the right). Route the wires: down past the battery's right edge, over the low rib, then right to J4, into the plug <b>from below</b> (J4's mouth faces the keypad). Fold the spare ~100 mm of wire into a flat S of three runs on the floor between the battery and J4, under 4 mm tall, not over J4 or the camera ribbon, held with one 10 × 15 mm Kapton strip. No sharp bend at the plug.</label></li>
-    <li><input type="checkbox" id="l-foam"><label for="l-foam">Stick the battery to the back-cover floor with the two thin tape strips so it can't rattle. <b>Tape only on solid floor, never on the battery lid</b> (tape on the lid would tear the battery off its wires the day the lid is opened): the 6 × 18 mm strip goes under the wire end, running top to bottom, 1 mm in from the battery's right edge; the 4 × 16 mm strip goes along the bottom edge, running left to right, 1 mm in from the left edge. Both stay 2 mm clear of the lid opening. <b>Nothing on top of it:</b> the faceplate's coin-cell holder sits only 0.3 mm above the battery, so any foam there (over 0.2 mm) stops the cover closing.</label></li>
-    <li><input type="checkbox" id="l-try"><label for="l-try">Try the cover on: the battery must be held, not squeezed.</label></li>
-    <li><input type="checkbox" id="l-tp"><label for="l-tp">No tape, foam or glue on TP1, TP4 or TP7. Kapton wherever a bare pad could touch the battery's foil.</label></li>
+  <div class="facts"><span class="time">≈ 20 min</span><span>Difficulty: delicate (tight space, polarity)</span></div>
+  <div class="need"><b>You'll need</b>The battery (polarity checked, lead re-taped in step 4), the two 0.1 mm tape strips (6 × 18 and 4 × 16 mm), one 10 × 15 mm Kapton strip, the back cover, a 2.5 mm drill bit (as a feeler gauge), tweezers.</div>
+  <p>The battery (Adafruit #1317, 150 mAh) lies flat on the <b>back-cover floor</b>, in the top-left corner as seen from the front, beside the board. Its long side (26 mm) runs left to right and the <b>wire end faces right</b>, towards the middle of the cover and J4. The wires stay below the board's level and the plug goes into J4. From now on the board is always powered.</p>
+  <figure class="tall"><a href="renders/photos/backcover_battery_spot_ann.jpg"><img src="renders/photos/backcover_battery_spot_ann.jpg" width="1500" height="1460" alt="Photo of the navy back cover inside up with the rough battery spot outlined in the top-left corner over the old lid opening, the corner screw post, rib A and the solar box labelled" loading="lazy"></a><figcaption><b>On your own cover</b> (inside up, top end away): the battery's corner, the screw post beside it, rib A below it, the solar box (ground flat in zone 1) to the right. Rough positions; the numbers below decide.</figcaption></figure>
+  <div class="deep">
+    <span class="tag">Delicate: where the tape goes (an L of two strips)</span>
+    <figure><a href="renders/howto/battery_tape_layout.png"><img src="renders/howto/battery_tape_layout.png" width="1600" height="1200" alt="To-scale diagram: the cell outline, the old battery-lid opening under it marked no tape, strip 1 6 by 18 mm under the lead end, strip 2 4 by 16 mm along the bottom edge, leads down past rib A then right into the J4 plug from below, spare lead in a flat S" loading="lazy"></a><figcaption><b>To scale:</b> strip 1 (6 × 18) under the lead end, 1 mm in from the right edge; strip 2 (4 × 16) along the bottom edge, 1 mm in from the left. Both stay off the old lid opening. Leads go down past rib A, then right, and into the plug from below.</figcaption></figure>
+    <figure><a href="renders/detail/d10_battery_tape_ann.png"><img src="renders/detail/d10_battery_tape_ann.png" width="1600" height="1200" alt="3D view of the back-cover floor with the battery outline and two simplified tape strips" loading="lazy"></a><figcaption><b>3D view of the same corner.</b> This render draws the two strips simplified, as two long strips across the outline; follow the L in the diagram above (the strips must not touch the round lid opening) <span class="unsure">render vs. battery_upgrade.md §8</span>.</figcaption></figure>
+    <p class="why">the cell lies over the old battery-lid opening. Tape on the lid would rip the cell off its wires the day someone opens the lid. Anything on top of the cell (foam, a second tape layer) stops the cover closing: the coin-cell holder above it leaves only about 0.2 mm.</p>
+  </div>
+  <figure><a href="renders/detail/d11_battery_placed_ann.png"><img src="renders/detail/d11_battery_placed_ann.png" width="1600" height="1200" alt="The battery flat on the floor in the corner, its leads making a short loop down and across to the white plug for J4" loading="lazy"></a><figcaption><b>Placed:</b> flat on the floor, leads down and across at J4's height, plug ready for J4.</figcaption></figure>
+  <ul class="check steps">
+    <li><input type="checkbox" id="l-ribbons"><label for="l-ribbons">Both ribbons fully in, both bars closed. (After this step you may not touch them again without unplugging the battery.)</label></li>
+    <li><input type="checkbox" id="l-foam"><label for="l-foam">Stick the two thin tape strips to the <b>underside of the cell</b> first (easier to line up than the floor): the 6 × 18 mm strip under the wire end, running top to bottom, 1 mm in from the cell's right edge; the 4 × 16 mm strip along the bottom edge, running left to right, 1 mm in from the left edge. <b>Tape only where there is solid floor, never on the battery lid</b>; both stay 2 mm clear of the lid opening. <b>Nothing on top of the cell.</b></label></li>
+    <li><input type="checkbox" id="l-place"><label for="l-place">Peel the liners and lower the cell into its spot on the back-cover floor: top edge up against the lip of the top wall, then slide left until a 2.5 mm drill shank just fits between its left edge and the round corner screw post. Rib A should show as a 1 mm sliver below the cell. Press 10 s on the strips only, never in the middle over the lid. Route the wires: down past the cell's right edge, over the low rib A, then right towards J4. Fold the spare ~100 mm into a flat S of three runs on the floor between the cell and J4, under 4 mm tall, not over J4 or the camera ribbon, held with the 10 × 15 mm Kapton strip. Leave a free tail long enough to reach J4 with the cover tilted up. No sharp bend at the plug.</label></li>
   </ul>
-  <figure><a href="renders/section_j4_battery.png"><img src="renders/section_j4_battery.png" width="1600" height="1200" alt="Cut-away across J4, its plug and the battery lying on the back-cover floor" loading="lazy"></a><figcaption><b>Look for:</b> how tight it is: J4 ends 0.41 mm above the floor. Any stub left from grinding zone 1 stops the cover closing.</figcaption></figure>
+  <div class="deep">
+    <span class="tag">Delicate: the plug into J4 (pin 1 GND, pin 2 +)</span>
+    <figure><a href="renders/detail/d12_j4_plug_ann.png"><img src="renders/detail/d12_j4_plug_ann.png" width="1600" height="1200" alt="The white JST plug in J4: pin 1 GND black wire, pin 2 plus red wire; push by the plug body" loading="lazy"></a><figcaption><b>J4:</b> pin 1 = GND (black wire), pin 2 = + (red wire). J4's mouth faces the keypad end; the plug slides in along the board, towards the top end. Push by the plug body.</figcaption></figure>
+    <ul class="check steps">
+      <li><input type="checkbox" id="l-polagain"><label for="l-polagain">Last look before plugging: red wire on the side of J4's "+" (pin 2), black on pin 1. If it doesn't match what you metered in step 4, stop.</label></li>
+      <li><input type="checkbox" id="l-plug"><label for="l-plug">Hold the back cover tilted up beside the shell's top end, battery side towards the board <span class="sug">suggestion</span>. Plug the battery into J4: hold the plug by its body, not the wires, line it up square and push firmly until it seats with a small click. Fully in = no gap between the plug and J4's housing.</label></li>
+      <li><input type="checkbox" id="l-try"><label for="l-try">Lower the cover onto the shell (no screws): the battery must be held, not squeezed, and the free bit of lead folds flat beside J4, not on top of it.</label></li>
+      <li><input type="checkbox" id="l-tp"><label for="l-tp">No tape, foam or glue on TP1, TP4 or TP7. Kapton wherever a bare pad could touch the battery's foil.</label></li>
+    </ul>
+    <p class="why">the board has no power switch: from this moment the ESP32 runs whenever it's awake. That's why both ribbons had to be in first. The plug only fits one way, but a cell with swapped crimps fits too: the meter is the only guard.</p>
+  </div>
+  <figure><a href="renders/section_j4_battery.png"><img src="renders/section_j4_battery.png" width="1600" height="1200" alt="Cut-away across J4, its plug and the battery lying on the back-cover floor" loading="lazy"></a><figcaption><b>How tight it is:</b> J4 ends 0.41 mm above the floor. Any stub left from grinding zone 1 stops the cover closing.</figcaption></figure>
+  <div class="callout ok"><span class="tag">Check before moving on</span><ul><li>Plug fully home in J4, red on "+".</li><li>Cell flat, doesn't slide when you nudge it; nothing on top of it.</li><li>Lead bundle under 4 mm, not over J4 or the camera ribbon.</li><li>TP1, TP4, TP7 bare.</li></ul></div>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Tape on the battery lid.</li><li>Leaving the #1317's lead taped on top of the cell (4.9 mm tall: the cover won't close).</li><li>Pulling the plug in or out by the wires.</li><li>A lead loop standing up between the cell and J4.</li></ul></div>
   <p class="done">the plug is home in J4, the battery is snug under the test-fitted cover, and TP1/TP4/TP7 are bare.</p>
 </section>
 
 <!-- 10 -->
 <section id="s10">
   <h2><span class="n">10</span>Close up</h2>
-  <div class="facts"><span class="time">≈ 10 min</span></div>
-  <div class="need"><b>You'll need</b>Back cover, 6 screws, screwdriver, battery lid, rubber feet; meter on mA only for the optional sleep test.</div>
-  <figure><a href="renders/steps/s10a_cover_lowering_ann.png"><img src="renders/steps/s10a_cover_lowering_ann.png" width="1247" height="1600" alt="The back cover being lowered straight onto the face-down calculator, with the six screws above it" loading="lazy"></a><figcaption><b>Look for:</b> the cover coming down straight and level, with its 7 mm hole over the camera.</figcaption></figure>
-  <ul class="check">
-    <li><input type="checkbox" id="z-route"><label for="z-route">Last look: camera ribbon flat, not over a screw post, not sagging onto the middle rib. E-paper ribbon still hugging the slot. Battery wires clear of the rim.</label></li>
+  <div class="facts"><span class="time">≈ 10–15 min</span><span>Difficulty: easy, no force</span></div>
+  <div class="need"><b>You'll need</b>Back cover, 6 screws, small Phillips screwdriver, battery lid, rubber feet, a torch; a marker for the "won't close" check; meter on mA only for the optional sleep test.</div>
+  <ul class="check steps">
+    <li><input type="checkbox" id="z-route"><label for="z-route">Last look: camera ribbon flat, not over a screw post, not sagging onto the middle rib. E-paper ribbon still hugging the slot. Battery wires clear of the rim and low.</label></li>
     <li><input type="checkbox" id="z-sleep"><label for="z-sleep">Optional, now or never (cover must be off): sleep current. Switch off (SHIFT AC), wait 10 s, meter on mA in series with the battery wire. Target <b>40 µA or less</b>. Skip if measured at bring-up.</label></li>
-    <li><input type="checkbox" id="z-lower"><label for="z-lower">Lower the back cover straight down. It must sit fully on the rim by itself, before any screw. If it rocks or leaves a gap, stop (see step 12).</label></li>
-    <li><input type="checkbox" id="z-screws"><label for="z-screws">Put in all 6 screws, a little at a time, crosswise.</label></li>
-    <li><input type="checkbox" id="z-snug"><label for="z-snug"><b>Snug, not tight:</b> stop when the head touches and the cover is firm. These screws strip plastic posts easily.</label></li>
+  </ul>
+  <h3>The cover in four frames</h3>
+  <div class="pair">
+    <figure><a href="renders/detail/d16_cover_close_1_ann.png"><img src="renders/detail/d16_cover_close_1_ann.png" width="1600" height="1200" alt="Frame 1: the back cover held parallel above the shell, its 7 mm window over the camera" loading="lazy"></a><figcaption><b>1.</b> Cover parallel to the shell, 7 mm window over the camera; battery flat, leads tucked.</figcaption></figure>
+    <figure><a href="renders/detail/d17_cover_close_2_ann.png"><img src="renders/detail/d17_cover_close_2_ann.png" width="1600" height="1200" alt="Frame 2: the cover coming down level; the magnet face in its notch" loading="lazy"></a><figcaption><b>2.</b> Keep it level as it comes down. Magnet face in its notch; nothing pinched at the edges.</figcaption></figure>
+    <figure><a href="renders/detail/d18_cover_close_3_ann.png"><img src="renders/detail/d18_cover_close_3_ann.png" width="1600" height="1200" alt="Frame 3: the cover resting on the rim by itself, screws ready" loading="lazy"></a><figcaption><b>3.</b> It must sit on the rim <b>by itself</b>, before any screw. A gap anywhere: stop.</figcaption></figure>
+    <figure><a href="renders/detail/d19_cover_close_4_ann.png"><img src="renders/detail/d19_cover_close_4_ann.png" width="1600" height="1200" alt="Frame 4: the closed back with all six screws snug" loading="lazy"></a><figcaption><b>4.</b> Corner screws first, then the rest, crosswise. Snug, not tight.</figcaption></figure>
+  </div>
+  <ul class="check steps">
+    <li><input type="checkbox" id="z-lower"><label for="z-lower">Lower the back cover straight down, level, the last 10 mm with no tilt. It must sit fully on the rim by itself, before any screw. If it rocks or leaves a gap, stop (see the box below).</label></li>
+    <li><input type="checkbox" id="z-screws"><label for="z-screws">Put in all 6 screws, a little at a time, crosswise (corners first).</label></li>
+    <li><input type="checkbox" id="z-snug"><label for="z-snug"><b>Snug, not tight:</b> stop when the head touches and the cover is firm. These screws strip plastic posts easily. Tip: turn each screw backwards first until you feel it click into its old thread <span class="sug">suggestion</span>.</label></li>
     <li><input type="checkbox" id="z-gap"><label for="z-gap">Run a fingernail round the rim: no gap anywhere, no bulge over the camera, J4 or the magnet.</label></li>
     <li><input type="checkbox" id="z-lid"><label for="z-lid">Battery lid and rubber feet back on.</label></li>
   </ul>
-  <figure class="tall"><a href="renders/steps/s10b_closed_back_ann.png"><img src="renders/steps/s10b_closed_back_ann.png" width="1014" height="1800" alt="The closed calculator from the back: plain navy back cover with the small 7 mm camera window near the top" loading="lazy"></a><figcaption><b>Look for:</b> a normal-looking back. The only change is the small round camera window near the top.</figcaption></figure>
+  <div class="deep">
+    <span class="tag">If the cover won't sit flat</span>
+    <figure><a href="renders/howto/cover_not_flat_checks.png"><img src="renders/howto/cover_not_flat_checks.png" width="1600" height="1200" alt="Back cover off: six numbered spots to check: J4 plug and floor stub, battery, camera, magnet lip, camera ribbon over the mid rib, e-paper ribbon at J2" loading="lazy"></a><figcaption><b>The six usual causes</b>, in the order to check them.</figcaption></figure>
+    <ol>
+      <li>Take the cover off again. Never pull it down with the screws: the board bends and keys fail.</li>
+      <li>Find <b>where</b> it lifts: press the cover lightly at each corner; the corner that springs back is near the cause.</li>
+      <li>Marker trick: colour the tops of the parts there (J4's plug, the camera, the magnet body) with a dry-erase marker, close gently, open: the mark that transferred to the cover shows what hits.</li>
+      <li>Fix that one thing: grind the stub left in zone 1, swap foam for thin tape, re-lay a ribbon loop, notch the 5b lip, peel anything off the top of the battery.</li>
+      <li>Try again: it must sit by itself.</li>
+    </ol>
+  </div>
+  <figure class="tall"><a href="renders/steps/s10b_closed_back_ann.png"><img src="renders/steps/s10b_closed_back_ann.png" width="1014" height="1800" alt="The closed calculator from the back: plain navy back cover with the small 7 mm camera window near the top" loading="lazy"></a><figcaption><b>Done:</b> a normal-looking back. The only change is the small round camera window near the top.</figcaption></figure>
+  <p class="why">every gap at the rim means something inside is being pressed: a ribbon, the camera or the battery. Screws hide it for a week, then a key or the screen fails.</p>
+  <div class="callout ok"><span class="tag">Check before moving on</span><ul><li>Cover flat with no screws in.</li><li>6 screws snug, none spinning (stripped).</li><li>Camera lens visible in the middle of the window from outside.</li></ul></div>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Forcing the cover with the screws.</li><li>Over-tightening: the plastic thread strips and that screw never holds again.</li><li>Lowering the cover at an angle: a ribbon or the battery lead gets caught at the rim.</li></ul></div>
   <p class="done">the cover sits flat with no gap, all 6 screws are snug, and the lid and feet are on.</p>
 </section>
 
 <!-- 11 -->
 <section id="s11">
   <h2><span class="n">11</span>Final test</h2>
-  <div class="facts"><span class="time">≈ 30 min (+ next-day check)</span></div>
+  <div class="facts"><span class="time">≈ 30 min (+ next-day check)</span><span>Difficulty: easy</span></div>
   <div class="need"><b>You'll need</b>The closed calculator, the magnetic cable and PC, a printed maths problem, a 2.4 GHz hotspot and your phone (the server address and token are already in the board from power-up step 10).</div>
   <div class="pair">
     <figure><a href="renders/steps/s11_finished_front_ann.png"><img src="renders/steps/s11_finished_front_ann.png" width="1086" height="1800" alt="The finished calculator from the front, with the e-paper screen behind the display window and the ON key marked" loading="lazy"></a><figcaption><b>Look for:</b> the e-paper screen sitting square in the display window.</figcaption></figure>
     <figure><a href="renders/photos/front_ann.jpg"><img src="renders/photos/front_ann.jpg" width="1500" height="2000" alt="Photo of the calculator front with labels on the SHIFT, ALPHA and ON keys, the display window where the screen shows, the unused solar cell, and the top wall where the magnet goes" loading="lazy"></a><figcaption><b>Look for:</b> the three keys for the self-test: SHIFT and ALPHA on the left, ON on the right.</figcaption></figure>
   </div>
   <h3>Self-test</h3>
-  <ul class="check">
+  <ul class="check steps">
     <li><input type="checkbox" id="f-combo"><label for="f-combo">Calculator off: hold <b>SHIFT + ALPHA</b>, press <b>ON</b>. (Or type <code>selftest</code> with the cable in.)</label></li>
     <li><input type="checkbox" id="f-pass"><label for="f-pass">Checkerboard on the screen, no dead lines, refresh 0.3–9 s. Camera OK (JPEG over 1 KB). Wi-Fi sees a network better than −80 dBm.</label></li>
     <li><input type="checkbox" id="f-keys"><label for="f-keys">All 50 keys pressed and counted. Screen shows <b>SELF-TEST PASS</b>. Save the SELFTEST_JSON line if the cable is in.</label></li>
   </ul>
   <h3>Camera preview</h3>
-  <ul class="check">
+  <ul class="check steps">
     <li><input type="checkbox" id="f-vf"><label for="f-vf">MODE 4 (AI SOLVE): the screen becomes a viewfinder (about 2–2.5 frames a second). Point it at a worksheet: the picture moves the right way, the crosshair is in the middle, "✓ SHARP" appears when held still.</label></li>
     <li><input type="checkbox" id="f-mirror"><label for="f-mirror">If the picture is mirrored or upside down, write it down: <code>hmirror</code>/<code>vflip</code> get set in the preview code's tuning once the camera's real direction in the case is known.</label></li>
   </ul>
   <h3>AI solve through the proxy</h3>
   <p>The hotspot, server address and token went in at power-up step 10 and are still in the board. (Not done yet? Do that step first: it also says how to put the server online and make the token.) Here you check the keypad route a customer uses, then a real solve.</p>
-  <ul class="check">
+  <ul class="check steps">
     <li><input type="checkbox" id="f-wifi"><label for="f-wifi">Phone setup from the keys: <b>SHIFT MODE</b> (SETUP), <b>6</b> (Wi-Fi &amp; key): the screen shows your hotspot and "Key: token …". Press <b>=</b>: <code>SETUP BY PHONE</code> with a network <code>AI-Calc-xxxx</code> and its password.</label></li>
     <li><input type="checkbox" id="f-setup"><label for="f-setup">Join that network on the phone; the form pops up (or open <code>http://192.168.4.1</code>). Pick your hotspot, type its password, leave the address and token as they are (empty token = keep), <b>Save</b>. The screen says "Saved. Closing the setup network…". AC leaves setup.</label></li>
     <li><input type="checkbox" id="f-pair"><label for="f-pair">Linked: <code>account</code> (cable in) shows the trial. If not, <code>pair</code> and <code>&lt;proxy&gt;/link</code> as in power-up step 10 (an unlinked calculator also shows its code when you press = in AI SOLVE).</label></li>
@@ -513,12 +728,34 @@ footer{color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;ga
     <li><input type="checkbox" id="f-brown"><label for="f-brown"><code>status</code> does not say "Last restart: brownout".</label></li>
   </ul>
   <h3>Charging and sleep</h3>
-  <ul class="check">
-    <li><input type="checkbox" id="f-chg"><label for="f-chg">Snap the magnetic cable on: <code>status</code> says "(charging)", later "(USB, full)". Charge current is 50 mA. There's no charge light.</label></li>
+  <ul class="check steps">
+    <li><input type="checkbox" id="f-chg"><label for="f-chg">Snap the magnetic cable on: <code>status</code> says "(charging)", later "(USB, full)". Charge current is 50 mA (a full charge of the 150 mAh cell takes about 3.5 h). There's no charge light.</label></li>
     <li><input type="checkbox" id="f-off"><label for="f-off">Store 7 in A. Unplug, switch off (SHIFT AC).</label></li>
     <li><input type="checkbox" id="f-wake"><label for="f-wake">Next day: ON wakes it in about 0.3 s and RCL A still shows 7. Sleep target 40 µA or less (measured in step 10 or at bring-up).</label></li>
   </ul>
+  <p class="why">the bench test proved the parts; this proves the assembly: no ribbon pulled loose on the way in, no key pressed by the shell, and the antenna still hears Wi-Fi through the case.</p>
+  <div class="callout warn"><span class="tag">Common mistakes</span><ul><li>Testing AI solve only with the cable in: the battery case (brownout) is the one that matters.</li><li>Holding the calculator flat on the page: the camera can't focus closer than about 10 cm.</li></ul></div>
   <p class="done">SELF-TEST PASS, an AI answer came back on battery, charging shows in <code>status</code>, and memory survived a night off.</p>
+</section>
+
+<!-- QA -->
+<section id="qa">
+  <h2><span class="n">QA</span>Final quality check (before you hand it to anyone)</h2>
+  <div class="facts"><span class="time">≈ 10 min</span></div>
+  <p>One last walk round each calculator. Every line must be a yes. Any "no": open it (step 12, reopening safely) and fix that before it leaves the bench. Electrical results come from the <a href="https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9">First Power-Up Guide</a> (bench) and step 11 (closed).</p>
+  <ul class="check steps">
+    <li><input type="checkbox" id="q-bringup"><label for="q-bringup">The <a href="https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9">power-up guide</a> results are saved for this board: TP5 3.25–3.35 V, SELFTEST_JSON line, camera ribbon length, magnet VBUS leg noted.</label></li>
+    <li><input type="checkbox" id="q-selftest"><label for="q-selftest">Closed calculator: SELF-TEST PASS with all 50 keys, on battery.</label></li>
+    <li><input type="checkbox" id="q-ai"><label for="q-ai">One AI solve on battery returned an answer; <code>status</code> shows no brownout.</label></li>
+    <li><input type="checkbox" id="q-charge"><label for="q-charge">Cable snaps on by itself, <code>status</code> says "(charging)". Magnet face flush, no glue on the gold pads.</label></li>
+    <li><input type="checkbox" id="q-sleep"><label for="q-sleep">Memory kept overnight; sleep current 40 µA or less (if measured).</label></li>
+    <li><input type="checkbox" id="q-screen"><label for="q-screen">From the front: only the picture shows inside the black mask; no ribbon, no white edge, no dust or bubble under the window.</label></li>
+    <li><input type="checkbox" id="q-cover"><label for="q-cover">Back cover flat all round (fingernail test), 6 screws snug, none stripped; battery lid and feet on; no rattle when you shake it gently.</label></li>
+    <li><input type="checkbox" id="q-camera"><label for="q-camera">Camera lens centred in the 7 mm window; preview not dark at a corner.</label></li>
+    <li><input type="checkbox" id="q-keys"><label for="q-keys">Every key clicks and returns; no key sticks down or sits higher than its neighbours.</label></li>
+    <li><input type="checkbox" id="q-notes"><label for="q-notes">Notes written: calculator number (1/2), board serial or label, screw length, anything you had to file or change.</label></li>
+  </ul>
+  <p class="done">every line above is ticked for this calculator.</p>
 </section>
 
 <!-- 12 -->
@@ -527,12 +764,12 @@ footer{color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;ga
   <div class="tablewrap"><table>
     <thead><tr><th>Problem</th><th>Likely cause</th><th>What to do</th></tr></thead>
     <tbody>
-      <tr><td>Back cover won't close, gap at the rim</td><td>Stub left on the solar box (J4 has 0.41 mm), camera on foam, magnet hits a lip (5b), pinched ribbon, foam or thick tape on the battery</td><td>Open. Colour the ribs with marker, close gently, open, look for marks. Grind the marked spot; use a thinner pad</td></tr>
+      <tr><td>Back cover won't close, gap at the rim</td><td>Stub left on the solar box (J4 has 0.41 mm), camera on foam, magnet hits a lip (5b), pinched ribbon, foam or thick tape on the battery, lead taped on top of the battery</td><td>Open. Marker on the tall parts, close gently, open, look for marks (step 10 box). Grind the marked spot; use thinner tape</td></tr>
       <tr><td>Board won't drop onto the posts</td><td>H6 (0.10 mm play)</td><td>File H6's hole towards the board's top. Never the post</td></tr>
       <tr><td>Keys missing in the self-test</td><td>Dust on a dome or pad, mat folded, board not pressed down</td><td>Open, clean the dome and pad with a dry brush, re-lay the mat, screws snug</td></tr>
       <tr><td>Screen blank or dead lines</td><td>E-paper ribbon pulled part-way out of J2 when the board went in</td><td>Unplug the battery first, then reseat J2</td></tr>
       <tr><td><code>camera_ok</code> false</td><td>Ribbon not seated, or reversed</td><td>Battery off, reseat J1; then try the 180° twist</td></tr>
-      <tr><td>Camera picture dark at one side</td><td>Hole off-centre from the lens</td><td>Move the camera slightly (within its 1.7 mm) or open the hole carefully</td></tr>
+      <tr><td>Camera picture dark at one side</td><td>Hole off-centre from the lens, or camera tilted</td><td>Move the camera slightly (within its 1.7 mm) or open the hole carefully</td></tr>
       <tr><td>No charging, no COM port</td><td>Magnet face sunk in, legs pulled out of J3, deep sleep</td><td>Press ON. Check the face is flush. Then the TP1 + TP7 rescue</td></tr>
       <tr><td>Restarts during AI SOLVE</td><td>Battery voltage dips (brownout)</td><td>Lower <code>kWifiMaxTxQuarterDbm</code> to 34 in <code>power.h</code></td></tr>
       <tr><td>Sleep current about 330 µA / 0.3–1 mA</td><td>Keypad interrupt stuck / camera pins</td><td>Note the number and ask (firmware fix)</td></tr>
@@ -543,9 +780,9 @@ footer{color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;ga
     </tbody>
   </table></div>
   <h3>Reopening safely</h3>
-  <ul class="check">
+  <ul class="check steps">
     <li><input type="checkbox" id="r-cable"><label for="r-cable">Cable off. Calculator switched off.</label></li>
-    <li><input type="checkbox" id="r-screws"><label for="r-screws">Face down on a cloth. Undo the 6 screws, lift the back cover straight up.</label></li>
+    <li><input type="checkbox" id="r-screws"><label for="r-screws">Face down on a cloth. Undo the 6 screws, lift the back cover straight up (the battery comes up with it, still plugged in: lift slowly).</label></li>
     <li><input type="checkbox" id="r-bat"><label for="r-bat"><b>Unplug the battery from J4 first</b> (by the plug body), before touching any ribbon or test pad.</label></li>
     <li><input type="checkbox" id="r-flash"><label for="r-flash">To rescue the firmware with the cover off: hold TP1 to TP4, tap TP7 to TP4 for about 0.2 s, let go of TP1, upload, tap TP7 again. Serial backup on TP2/TP3. (With the battery unplugged you can instead hold TP1 to GND while plugging in the cable.)</label></li>
   </ul>
@@ -553,7 +790,7 @@ footer{color:var(--muted);font-size:.86rem;display:flex;flex-direction:column;ga
 </section>
 
 <footer>
-  <p>Sources: hardware/FINAL_STATUS.md, HANDOFF.md, ORDER_WALKTHROUGH.md §9, stage13_heights.md, stage14_verification_fixes.md, stage11_epaper_calipers.md, QUESTIONS_AND_ISSUES.md, enclosure/final_assembly/README.md and assembly_report.md, enclosure/replica/photo_notes.md, verification/07_final_review_fitment.md, firmware-prototype/README.md (firmware stage14-2026.10.06), server/proxy/README.md. 3D pictures from the Fusion final-assembly model (battery on the back floor); photos are Nirav's own.</p>
+  <p>Sources: hardware/FINAL_STATUS.md, HANDOFF.md, ORDER_WALKTHROUGH.md §9, stage13_heights.md, stage14_verification_fixes.md, stage11_epaper_calipers.md, QUESTIONS_AND_ISSUES.md, ARRIVAL_CHECKLIST.md, enclosure/final_assembly/README.md, assembly_report.md, battery_upgrade.md §8, window_mask.md, enclosure/replica/photo_notes.md, verification/01, 03, 07 and 12, bringup_guide.html, firmware-prototype/README.md (firmware stage14-2026.10.06), server/proxy/README.md. 3D pictures from the Fusion final-assembly model (battery on the back floor); close-ups in renders/detail and renders/grind; drawn how-to pictures in renders/howto (assembly_howto_pictures.py); photos are Nirav's own.</p>
   <p>Linked: <a href="https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9">First Power-Up Guide</a> · <a href="https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL">Shell Grinding Guide</a> · entry point <code>hardware/FINAL_STATUS.md</code></p>
 </footer>
 </div>

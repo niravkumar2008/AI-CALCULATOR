@@ -338,7 +338,7 @@ def grind():
         cv.dim(pts["e1"], pts["e0"], "7 mm", "r", 90)
         cv.label("Drill centre", pts["c"], (330, -260), "r")
         cv.panel("Camera window: where to drill (outside view)", ["On the width centre line", "%.1f mm down from the top outer edge" % top_mm,
-                                                                   "(grinding manual: about 38.3 from the model)", "Pilot hole first, then 7 mm",
+                                                                   "(cover's own top edge; 38.3 from the faceplate top)", "Pilot hole first, then 7 mm",
                                                                    "Check from inside: middle of the 14 mm gap"], corner="bl", c="b")
         cv.scalebar(R_["px_per_mm"], 10, "br")
         out.append(save(cv.finish(), os.path.join(D, nm + "_ann.png")))

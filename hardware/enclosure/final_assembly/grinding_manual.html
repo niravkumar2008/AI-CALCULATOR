@@ -1,9 +1,10 @@
+<meta charset="utf-8">
 <title>Shell Grinding Guide</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Source+Sans+3:wght@400;600;700&family=IBM+Plex+Mono:wght@400;600&display=swap">
 <style>
-/* Layout: one narrow reading column for a phone at the bench; zone cards with a spec strip, before/after pair, then steps. */
+/* Layout: one narrow reading column for a phone at the bench; zone cards with a spec strip, diagrams, before/after pair, then steps. */
 :root {
   --bg: #f3f4f6;
   --surface: #ffffff;
@@ -20,6 +21,13 @@
   --ok-soft: #e4f3e8;
   --skip: #6b6f7a;
   --skip-soft: #eceef1;
+  /* diagram materials */
+  --pl: #d3d6de; --pl-edge: #8b91a1;          /* silver front shell */
+  --nv: #7c7fbd; --nv-edge: #3d3f8f; --rib: #a6a9dc; /* navy back cover + its ribs */
+  --part: #9fcfaa; --part-edge: #3d7a4e; --board: #4f8f5f;
+  --cut: rgba(179, 38, 30, 0.26);
+  --tool: #c2c6cf; --tool-edge: #6b7080;
+  --wood: #ddc196; --tab: #f2cf3a;
   --font-display: "Barlow Condensed", "Arial Narrow", "Roboto Condensed", sans-serif;
   --font-body: "Source Sans 3", "Segoe UI", system-ui, -apple-system, sans-serif;
   --font-mono: "IBM Plex Mono", ui-monospace, "Cascadia Mono", Consolas, monospace;
@@ -30,6 +38,9 @@
     --accent: #a9adf5; --accent-soft: #262a48;
     --warn: #f0a35e; --warn-soft: #3a2a1c; --stop: #ff8a80; --stop-soft: #3d1f1f;
     --ok: #79d29a; --ok-soft: #1b3324; --skip: #a3a8b5; --skip-soft: #262933;
+    --pl: #5a6078; --pl-edge: #a3aac0; --nv: #3f4282; --nv-edge: #8f93e0; --rib: #6267b0;
+    --part: #3f7350; --part-edge: #8fd1a2; --board: #5aa36d;
+    --cut: rgba(255, 138, 128, 0.32); --tool: #6b7183; --tool-edge: #b9bfcc; --wood: #7a6447; --tab: #b8981f;
     color-scheme: dark;
   }
 }
@@ -38,6 +49,9 @@
   --accent: #a9adf5; --accent-soft: #262a48;
   --warn: #f0a35e; --warn-soft: #3a2a1c; --stop: #ff8a80; --stop-soft: #3d1f1f;
   --ok: #79d29a; --ok-soft: #1b3324; --skip: #a3a8b5; --skip-soft: #262933;
+  --pl: #5a6078; --pl-edge: #a3aac0; --nv: #3f4282; --nv-edge: #8f93e0; --rib: #6267b0;
+  --part: #3f7350; --part-edge: #8fd1a2; --board: #5aa36d;
+  --cut: rgba(255, 138, 128, 0.32); --tool: #6b7183; --tool-edge: #b9bfcc; --wood: #7a6447; --tab: #b8981f;
   color-scheme: dark;
 }
 * { box-sizing: border-box; }
@@ -53,13 +67,14 @@ h3 { font-size: 1.3rem; }
 p { margin: 0; }
 ul, ol { margin: 0; padding-left: 1.3rem; display: grid; gap: 6px; }
 .num, code { font-family: var(--font-mono); font-size: 0.92em; font-variant-numeric: tabular-nums; }
+code { overflow-wrap: anywhere; }
 .eyebrow { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); }
 section { display: grid; gap: 14px; }
 a { color: var(--accent); }
 
 header.top { display: grid; gap: 12px; }
 header.top .lede { color: var(--muted); max-width: 40rem; }
-figure { margin: 0; display: grid; gap: 6px; }
+figure { margin: 0; display: grid; gap: 6px; min-width: 0; }
 figure img { width: 100%; height: auto; display: block; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); }
 figcaption { font-size: 0.85rem; color: var(--muted); }
 
@@ -89,12 +104,13 @@ figcaption { font-size: 0.85rem; color: var(--muted); }
 .pill.do { background: var(--accent-soft); color: var(--accent); }
 .pill.skip { background: var(--skip-soft); color: var(--skip); }
 .pill.check { background: var(--warn-soft); color: var(--warn); }
+.pill.need { background: var(--stop-soft); color: var(--stop); }
 
-.zone { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 16px; display: grid; gap: 16px; scroll-margin-top: 12px; }
+.zone { background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 18px 16px; display: grid; gap: 16px; scroll-margin-top: 12px; min-width: 0; }
 .zone.skipped { background: var(--skip-soft); }
 .zone-head { display: grid; gap: 6px; }
 .zone-head .row { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; }
-.spec { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+.spec { display: grid; grid-template-columns: repeat(auto-fit, minmax(9.5rem, 1fr)); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; margin: 0; }
 .spec div { background: var(--surface); padding: 10px 12px; display: grid; gap: 2px; min-width: 0; }
 .zone.skipped .spec div { background: var(--skip-soft); }
 .spec dt { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); }
@@ -104,12 +120,16 @@ figcaption { font-size: 0.85rem; color: var(--muted); }
 .steps { display: grid; gap: 8px; }
 .steps li::marker { font-family: var(--font-mono); color: var(--accent); }
 .sub { font-family: var(--font-mono); font-size: 0.78rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--accent); }
+.rc { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.05em; text-transform: uppercase; background: var(--warn-soft); color: var(--warn); border: 1px solid var(--warn); border-radius: 4px; padding: 1px 6px; margin-right: 4px; white-space: nowrap; }
+.why { display: grid; gap: 6px; }
 
 .tablewrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); }
 table { border-collapse: collapse; width: 100%; font-size: 0.95rem; }
 th, td { text-align: left; padding: 8px 10px; border-bottom: 1px solid var(--line); vertical-align: top; }
 th { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.05em; text-transform: uppercase; color: var(--muted); font-weight: 600; }
 tr:last-child td { border-bottom: 0; }
+td.num, th.num { white-space: nowrap; }
+tfoot td { font-weight: 700; }
 
 .check { list-style: none; padding: 0; display: grid; gap: 6px; }
 .check label { display: grid; grid-template-columns: 1.5rem 1fr; gap: 10px; align-items: start; padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 8px; cursor: pointer; }
@@ -117,22 +137,90 @@ tr:last-child td { border-bottom: 0; }
 .check input:checked + span { color: var(--muted); text-decoration: line-through; }
 .check input:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
 .small { font-size: 0.9rem; color: var(--muted); }
+
+/* diagrams */
+.diagram { background: var(--surface); border: 1px solid var(--line); border-radius: 8px; padding: 10px; }
+.diagrams { display: grid; grid-template-columns: 1fr; gap: 10px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 0.85rem; color: var(--muted); }
+.legend span::before { content: ""; display: inline-block; width: 0.9em; height: 0.9em; border-radius: 2px; margin-right: 6px; vertical-align: -0.1em; border: 2px solid; }
+.legend .l-red::before { border-color: var(--stop); background: var(--cut); }
+.legend .l-or::before { border-color: var(--warn); background: var(--warn-soft); }
+.legend .l-gr::before { border-color: var(--ok); background: var(--ok-soft); }
+.legend .l-pt::before { border-color: var(--part-edge); background: var(--part); }
+.dg { display: block; width: 100%; height: auto; max-width: 36rem; margin-inline: auto; }
+.dg text { font-family: var(--font-body); font-size: 13px; fill: var(--ink); }
+.dg .ts { font-size: 12px; }
+.dg .tb { font-weight: 700; }
+.dg .tm { font-family: var(--font-mono); font-size: 12px; }
+.dg .tr { fill: var(--stop); font-weight: 700; }
+.dg .tg { fill: var(--ok); font-weight: 700; }
+.dg .to { fill: var(--warn); font-weight: 700; }
+.dg .tdisp { font-family: var(--font-mono); font-size: 15px; fill: #1b1f2a; }
+.dg .pl { fill: var(--pl); stroke: var(--pl-edge); stroke-width: 1.2; }
+.dg .nv, .dg .nvg { fill: var(--nv); stroke: var(--nv-edge); stroke-width: 1.2; }
+.dg .nvl { fill: var(--accent-soft); stroke: var(--nv-edge); stroke-width: 1.2; }
+.dg .keepl { stroke: var(--ok); stroke-width: 4; }
+.dg .rib { fill: var(--rib); stroke: var(--nv-edge); stroke-width: 1; }
+.dg .cut { fill: var(--cut); stroke: var(--stop); stroke-width: 1.6; stroke-dasharray: 4 3; }
+.dg .cutc { fill: var(--cut); stroke: var(--stop); stroke-width: 2; }
+.dg .lcut { fill: none; stroke: var(--stop); stroke-width: 2.2; }
+.dg .keep { fill: none; stroke: var(--ok); stroke-width: 2.5; }
+.dg .keepf { fill: var(--ok-soft); stroke: var(--ok); stroke-width: 1.4; stroke-dasharray: 4 3; }
+.dg .hole { fill: var(--surface); }
+.dg .hole2 { fill: none; stroke: var(--stop); stroke-width: 2; stroke-dasharray: 5 3; }
+.dg .ghost, .dg .ghostw { fill: none; stroke: var(--ink); stroke-width: 1; stroke-dasharray: 3 3; }
+.dg .opt { fill: var(--warn-soft); stroke: var(--warn); stroke-width: 1.6; stroke-dasharray: 4 3; }
+.dg .part { fill: var(--part); stroke: var(--part-edge); stroke-width: 1.2; }
+.dg .partd { fill: var(--part); fill-opacity: 0.6; stroke: var(--part-edge); stroke-width: 1.2; stroke-dasharray: 5 3; }
+.dg .board { fill: var(--board); }
+.dg .lens { fill: var(--ink); opacity: 0.55; }
+.dg .tool { fill: var(--tool); stroke: var(--tool-edge); stroke-width: 1.2; }
+.dg .bit { fill: var(--tool-edge); }
+.dg .disp { fill: #cfe3c8; }
+.dg .rod { stroke: var(--ink); stroke-width: 2.5; }
+.dg .dot, .dg .red, .dg .pilot { fill: var(--stop); }
+.dg .dot { fill: var(--ink); }
+.dg .ln { stroke: var(--ink); stroke-width: 1.2; fill: none; }
+.dg .ext { stroke: var(--muted); stroke-width: 0.8; }
+.dg .dim { stroke: var(--muted); stroke-width: 1; }
+.dg .cl { stroke: var(--accent); stroke-width: 1.2; stroke-dasharray: 8 3 2 3; }
+.dg .lead { stroke: var(--ink); stroke-width: 1; fill: none; }
+.dg .lr { stroke: var(--stop); stroke-width: 2.5; fill: none; }
+.dg .tape { fill: var(--tab); fill-opacity: 0.22; stroke: var(--warn); stroke-dasharray: 3 3; }
+.dg .wood { fill: var(--wood); }
+.dg .chan { fill: var(--surface); stroke: var(--pl-edge); stroke-dasharray: 2 3; }
+.dg .bo { fill: none; stroke: var(--board); stroke-width: 2.5; }
+.dg .tab { fill: var(--tab); fill-opacity: 0.75; stroke: var(--warn); }
+.dg .warnc { fill: none; stroke: var(--warn); stroke-width: 2.5; }
+.dg .fpc { fill: none; stroke: var(--warn); stroke-width: 3; }
+.mk-dim { fill: var(--muted); } .mk-ink { fill: var(--ink); } .mk-red { fill: var(--stop); }
+
+/* render slots the Fusion agent fills later (see the script at the bottom) */
+figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; padding: 18px 12px; text-align: center; color: var(--muted); font-family: var(--font-mono); font-size: 0.8rem; background: var(--surface); }
 </style>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <defs>
+    <marker id="ad" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" class="mk-dim"/></marker>
+    <marker id="al" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" class="mk-ink"/></marker>
+    <marker id="ar" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M0,1 L10,5 L0,9 Z" class="mk-red"/></marker>
+  </defs>
+</svg>
 
 <div class="wrap">
 
 <header class="top">
   <span class="eyebrow">AI calculator · fx-115ES shell · grinding</span>
   <h1>Shell Grinding Guide</h1>
-  <p class="lede">How to grind your Casio fx-115ES shell so the AI-calculator board, camera, battery and magnet connector fit. Three jobs on the back cover (zones 1&ndash;3), one on the front shell (zone 5), plus two "only if your shell needs it" jobs (5b and 6). Zone 4 (the LR44 cup) is kept, not ground. Go slowly: every step can be checked with your calipers before you go further.</p>
+  <p class="lede">How to grind your Casio fx-115ES shell so the AI-calculator board, camera, battery and magnet connector fit. Three jobs on the back cover (zones 1&ndash;3), the magnet notch on the front shell (zone 5), the side-wall jobs on the front shell (zones 6 and 6b), and two "only if your shell needs it" jobs (5b and 6c). Zone 4 (the LR44 cup) is kept, not ground. Every zone below has: why it's needed, the exact numbers, the tool, diagrams, steps with depth-rod checks, how to know you're done, and the usual mistakes. Go slowly: you can check every step with your calipers before you go further.</p>
   <figure>
     <img src="renders/hero_back.png" alt="The finished calculator seen from the back, with the camera window in the back cover." loading="lazy">
     <figcaption>What you are working towards: the finished calculator from the back (3D model).</figcaption>
   </figure>
   <nav class="toc" aria-label="Sections">
-    <a href="#tools">Tools</a><a href="#safety">Safety</a><a href="#rules">Golden rules</a><a href="#order">Order</a>
-    <a href="#z1">1 Solar box</a><a href="#z2">2 Rib B</a><a href="#z3">3 Camera window</a><a href="#z4">4 LR44 cup</a><a href="#z5">5 Magnet notch</a><a href="#z5b">5b Lip</a><a href="#z6">6 Antenna relief</a><a href="#z6b">6b Pins + hooks</a><a href="#z6c">6c Rib ends</a>
-    <a href="#fit">Test fit</a><a href="#final">Checklist</a><a href="#fix">Went too far?</a>
+    <a href="#map">Map</a><a href="#tools">Tools</a><a href="#safety">Safety</a><a href="#measure">Measuring</a><a href="#rules">Golden rules</a><a href="#order">Order</a><a href="#time">Time</a>
+    <a href="#z1">1 Solar box</a><a href="#z2">2 Rib B</a><a href="#z3">3 Camera window</a><a href="#z4">4 LR44 cup</a><a href="#z5">5 Magnet notch</a><a href="#z5b">5b Lip</a><a href="#z6">6 Rib relief</a><a href="#z6b">6b Pins + hooks</a><a href="#z6c">6c Rib ends</a>
+    <a href="#v15">v15-LCD</a><a href="#fit">Test fit</a><a href="#final">Checklist</a><a href="#fix">Troubleshooting</a>
   </nav>
 </header>
 
@@ -141,44 +229,109 @@ tr:last-child td { border-bottom: 0; }
   <p>The back-cover floor is only about <span class="num">1.0 mm</span> thick (your reading D5). You may never go below <span class="num">0.8 mm</span>. That leaves you just <span class="num">0.2 mm</span> of room for mistakes when you grind things "flat to the floor". Aim to stop <em>at</em> the floor, never <em>into</em> it.</p>
 </div>
 
+<section id="map">
+  <h2>The map: what comes off, on your own shell</h2>
+  <p>These are your photos with the zones drawn on. Red = remove. Orange = only if your shell needs it. Green = leave alone. The positions on the photos are rough (the camera looks at the shell at an angle); the printed grind maps and your calipers decide the exact spots.</p>
+  <div class="legend"><span class="l-red">remove</span><span class="l-or">only if needed</span><span class="l-gr">leave / keep clear</span></div>
+  <div class="pair">
+    <figure><img src="renders/photos/grind_backcover_zones_ann.jpg" alt="Nirav's navy back cover, inside up, with zone 1 (solar box), 2 (rib B), 3 (camera hole) and 5b (lip) marked; screw posts, rings and the v15 camera bay marked to leave." loading="lazy"><figcaption>Back cover, inside up, top end away: zones 1, 2, 3 and 5b. Leave the posts and rings; keep the v15 camera bay clean.</figcaption></figure>
+    <figure><img src="renders/photos/grind_frontshell_zones_ann.jpg" alt="Nirav's silver front shell, keys down, with zone 5 (magnet notch), 6 (rib relief), 6b (pins and hooks) and 6c marked and the LR44 cup marked keep." loading="lazy"><figcaption>Front shell, keys down, top end away: zones 5, 6, 6b, 6c. The solar window is on your left in this view.</figcaption></figure>
+  </div>
+  <p>The same two parts from the 3D model, straight on from the inside, with every zone numbered. In these four pictures the calculator's <strong>top end is on the right</strong> (turn your phone sideways). Before: red = what comes off. After: green outline = where it was. The 10 mm bar in the corner is to scale.</p>
+  <div class="pair">
+    <figure><a href="renders/grind/overview_back_cover_before_ann.png"><img src="renders/grind/overview_back_cover_before_ann.png" width="1600" height="1000" loading="lazy" alt="Back cover inside, straight on, top end on the right: zone 1 solar box, zone 2 rib B (14 mm), zone 3 camera window and zone 5b lip marked in red."></a><figcaption><strong>Back cover, before:</strong> 1 solar box, 2 the 14 mm of rib B, 3 the camera window, 5b the lip (only if yours has one).</figcaption></figure>
+    <figure><a href="renders/grind/overview_back_cover_after_ann.png"><img src="renders/grind/overview_back_cover_after_ann.png" width="1600" height="1000" loading="lazy" alt="Back cover inside after all zones: the solar box gone, a 14 mm gap in rib B with the 7 mm hole, the lip notched."></a><figcaption><strong>Back cover, after:</strong> flat floor where the solar box was, the gap in rib B with the hole in its middle.</figcaption></figure>
+  </div>
+  <div class="pair">
+    <figure><a href="renders/grind/overview_faceplate_before_ann.png"><img src="renders/grind/overview_faceplate_before_ann.png" width="1600" height="1000" loading="lazy" alt="Front shell inside, straight on, top end on the right: zone 5 magnet U-notch, zone 6 side-wall relief, zone 6b pins and hooks on both walls, zone 6c rib ends; the LR44 cup stays."></a><figcaption><strong>Front shell, before:</strong> 5 the magnet U-notch, 6 the side-wall relief, 6b pins and hooks on both walls, 6c rib ends (only if needed). The round LR44 cup stays.</figcaption></figure>
+    <figure><a href="renders/grind/overview_faceplate_after_ann.png"><img src="renders/grind/overview_faceplate_after_ann.png" width="1600" height="1000" loading="lazy" alt="Front shell inside after all zones: notch cut in the top wall, rib relieved, pins and hooks snipped."></a><figcaption><strong>Front shell, after:</strong> notch open in the top wall, rib relieved, pins and hooks gone, everything else untouched.</figcaption></figure>
+  </div>
+</section>
+
 <section id="tools">
   <h2>What you'll need</h2>
   <div class="box">
     <p class="sub">Cutting</p>
     <ul>
-      <li><strong>Dremel</strong> (or any rotary tool with a speed dial).</li>
-      <li><strong>Carbide burr</strong>, cylinder or ball shape: for removing most of the solar box and for the magnet notch.</li>
-      <li><strong>Sanding drum</strong> (fine grit if you have a choice): for the last few tenths, to get the ground spots flat and smooth.</li>
-      <li><strong>7 mm drill bit</strong> (a <span class="num">9/32"</span> bit is <span class="num">7.1 mm</span> and is fine) plus a small pilot bit. A 7 mm bit will not fit a Dremel collet, so use a hand drill or drill press for it.</li>
-      <li>A flat needle file or sandpaper on a flat stick, if you have one, for squaring the notch corners.</li>
+      <li><strong>Rotary tool</strong> with a speed dial (a Dremel or any similar tool). Cordless is fine.</li>
+      <li><strong>Carbide burr</strong>, about <span class="num">3 mm</span>, cylinder or ball shape (1/8&Prime; shank): for taking most of the solar box down and for the magnet notch. Carbide cuts plastic cleanly at low speed; the grey stone bits melt it.</li>
+      <li><strong>Sanding drum</strong>, small (about <span class="num">6 mm</span>), the finest grit you have (120 or finer): for the last few tenths, to get the ground spots flat and smooth.</li>
+      <li><strong>Drill bits:</strong> <span class="num">2 mm</span> pilot, and <span class="num">7 mm</span> (a <span class="num">9/32&Prime;</span> bit is <span class="num">7.1 mm</span>: fine), or a step drill. A 7 mm bit won't fit a rotary-tool collet: use a hand drill or a drill press.</li>
+      <li><strong>Flush cutters</strong> (the small electronics side-cutters with one flat face): for the pins and hooks (zone 6b).</li>
+      <li><strong>Needle files</strong>: flat and half-round. A flat sanding stick (sandpaper glued on a lolly stick) works too.</li>
     </ul>
     <p class="sub">Measuring and marking</p>
     <ul>
-      <li><strong>Calipers with a depth rod</strong> (the thin rod that slides out of the end).</li>
-      <li>A steel ruler, to lay across the rim as a reference for depth readings.</li>
+      <li><strong>Calipers with a depth rod</strong> (the thin rod that slides out of the end). Digital is easiest.</li>
+      <li>A thin <strong>steel ruler</strong>, to lay across the rim as a reference for depth readings.</li>
       <li>Fine permanent marker.</li>
       <li><strong>Masking tape</strong> to protect surfaces you are not cutting, and <strong>Kapton tape</strong> (it doesn't melt).</li>
-      <li>The two printed grind maps at <span class="num">100 %</span> (see "Templates" below).</li>
+      <li>The two printed grind maps at <span class="num">100 %</span> (see "Templates" below), and the 3D-printed <strong>dummy board</strong> if you have it.</li>
     </ul>
     <p class="sub">Holding and safety</p>
     <ul>
-      <li><strong>Safety glasses</strong> and a <strong>dust mask</strong>.</li>
+      <li><strong>Safety glasses</strong> and a <strong>dust mask</strong> (FFP2 / N95).</li>
       <li>A <strong>vise or clamp</strong>, with a rag or wood between the jaws so the shell isn't scratched or cracked.</li>
       <li>A <strong>spare shell</strong> to practise on.</li>
     </ul>
   </div>
-  <div class="callout warn">
-    <strong class="tag">Speed</strong>
-    <p>Plastic melts long before it cuts cleanly at high speed. Use the <strong>low end</strong> of your Dremel's dial: about <strong>2–4 on a 1–10 dial</strong>. If the plastic smears, strings or goes shiny and soft, you are too fast or pressing too hard: stop, let it cool, slow down. (This is general rotary-tool advice, not a number from our model; trust what the plastic shows you.)</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Zone</th><th>Main tool</th><th>Finish with</th><th>Speed</th></tr></thead>
+      <tbody>
+        <tr><td>1 solar box</td><td>3 mm carbide burr (or jig A + router bit)</td><td>sanding drum, then a flat sanding block</td><td class="num">5–10k RPM</td></tr>
+        <tr><td>2 rib B</td><td>sanding drum (burr if slow)</td><td>flat sanding block / scraping blade</td><td class="num">5–10k RPM</td></tr>
+        <tr><td>3 camera window</td><td>2 mm pilot, then 7 mm in a hand drill</td><td>half-round needle file / sandpaper</td><td>slow drill</td></tr>
+        <tr><td>5 magnet notch</td><td>3 mm carbide burr (or jig B + razor saw)</td><td>flat needle file</td><td class="num">5–10k RPM</td></tr>
+        <tr><td>5b lip</td><td>burr or flush cutters</td><td>flat needle file</td><td class="num">5–10k RPM</td></tr>
+        <tr><td>6 rib relief</td><td>flat needle file (by hand)</td><td>sanding stick</td><td>hand</td></tr>
+        <tr><td>6b pins + hooks</td><td>flush cutters</td><td>needle file</td><td>hand</td></tr>
+        <tr><td>6c rib ends</td><td>flat needle file</td><td>&mdash;</td><td>hand</td></tr>
+      </tbody>
+    </table>
   </div>
+  <div class="callout warn">
+    <strong class="tag">Speed: about 5,000–10,000 RPM</strong>
+    <p>Plastic melts long before it cuts cleanly at high speed. Use the <strong>low end</strong> of your tool's dial: about <strong>5,000–10,000 RPM</strong>. If the dial is printed in thousands (5&ndash;35), set it to <span class="num">5–10</span>. If it is numbered 1&ndash;10, start at <span class="num">1–2</span> and check your tool's manual for the RPM of each setting. If the plastic smears, strings or goes shiny and soft, you are too fast or pressing too hard: stop, let it cool, slow down. (General rotary-tool advice, not a number from our model; trust what the plastic shows you.)</p>
+  </div>
+  <figure class="diagram">
+    <!--dg:tool_angle--><svg class="dg" viewBox="0 0 420 232" role="img" aria-label="How to hold the rotary tool: burr at an angle, sanding drum flat, never the tip straight down"><title>How to hold the rotary tool: burr at an angle, sanding drum flat, never the tip straight down</title>
+  <rect x="10" y="140" width="125" height="14" rx="0" class="nv"/>
+  <path d="M85.4,133.8 L163.2,79.3 L150.6,61.3 L72.8,115.8 Z" class="tool"/>
+  <path d="M65.0,139.6 L81.4,128.1 L76.8,121.5 L60.4,133.0 Z" class="bit"/>
+  <text x="72" y="30" text-anchor="middle" class="ts"><tspan x="72" dy="0em">Burr: 30-45 deg,</tspan><tspan x="72" dy="1.2em">side of the burr cuts</tspan></text>
+  <text x="72" y="176" text-anchor="middle" class="ts"><tspan x="72" dy="0em">move it side to side,</tspan><tspan x="72" dy="1.2em">light touch</tspan></text>
+  <rect x="148" y="140" width="125" height="14" rx="0" class="nv"/>
+  <path d="M216.0,144.0 L311.0,144.0 L311.0,122.0 L216.0,122.0 Z" class="tool"/>
+  <path d="M196.0,140.0 L216.0,140.0 L216.0,126.0 L196.0,126.0 Z" class="bit"/>
+  <text x="210" y="30" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Sanding drum: axis</tspan><tspan x="210" dy="1.2em">flat to the surface</tspan></text>
+  <text x="210" y="176" text-anchor="middle" class="ts"><tspan x="210" dy="0em">it rides along like</tspan><tspan x="210" dy="1.2em">a rolling pin</tspan></text>
+  <rect x="286" y="140" width="125" height="14" rx="0" class="nv"/>
+  <path d="M359.0,120.0 L359.0,25.0 L337.0,25.0 L337.0,120.0 Z" class="tool"/>
+  <path d="M352.0,140.0 L352.0,120.0 L344.0,120.0 L344.0,140.0 Z" class="bit"/>
+  <line x1="320" y1="40" x2="376" y2="96" class="lr"/>
+  <line x1="376" y1="40" x2="320" y2="96" class="lr"/>
+  <text x="348" y="176" text-anchor="middle" class="tr ts"><tspan x="348" dy="0em">never the tip straight</tspan><tspan x="348" dy="1.2em">down into the floor</tspan></text>
+  <text x="210" y="214" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Speed 5,000-10,000 RPM (low end of the dial). Shiny, stringy or soft</tspan><tspan x="210" dy="1.2em">plastic = too fast: stop, cool, slow down.</tspan></text>
+</svg><!--/dg:tool_angle-->
+    <figcaption>How to hold the tool. A burr cuts with its side, held at 30&ndash;45&deg;. A sanding drum rides flat, like a rolling pin. Never push the tip straight down into the floor: that drills a pit.</figcaption>
+  </figure>
   <div class="box">
     <h3>Templates</h3>
     <p>Two 1:1 maps live in the repo at <code>hardware/fitcheck/</code>:</p>
     <ul>
       <li><code>grind_map_back_cover.svg</code>: lay it in the <strong>back cover</strong>, inside up. It is printed mirrored on purpose.</li>
-      <li><code>grind_map_front_shell.svg</code>: lay it in the <strong>front shell</strong> (keys down), printed side up.</li>
+      <li><code>grind_map_front_shell.svg</code>: lay it in the <strong>front shell</strong> (keys down), printed side up. Cut it out <strong>with</strong> its yellow antenna tab.</li>
     </ul>
     <p>Print each from a browser at <strong>100 % / actual size</strong>, then measure the <span class="num">50 mm</span> line on the sheet with your calipers. If it isn't 50 mm, the print is scaled: fix the print settings before you trust it. Cut along the outline and lay it in the shell. The red dashed shapes are what to grind.</p>
+  </div>
+  <div class="box">
+    <h3>Jigs (optional, faster and the same every time)</h3>
+    <p>3D-printed jigs in <code>hardware/enclosure/jigs/</code> (print in PETG if you can; PLA softens where the bit rubs): <strong>A</strong> back-cover plate (zones 1 + 2, holds A2), <strong>A2</strong> camera drill bush (zone 3 pilot), <strong>A3</strong> 7.2 mm depth gauge (sets the router bit), <strong>B</strong> magnet-notch saddle (zone 5 + 5b). There is no jig for zones 6, 6b, 6c: they are file and cutter jobs.</p>
+    <div class="pair">
+      <figure><img src="renders/jigs/jig_A_back_cover_plate.jpg" alt="Jig A, a 3 mm plate with a window over the solar box and a 16 mm hole over the camera spot, sitting on the back cover's screw bosses." loading="lazy"><figcaption>Jig A on the back cover: the window is exactly zone 1; the 16 mm hole covers zone 2 and holds the A2 drill bush.</figcaption></figure>
+      <figure><img src="renders/jigs/jig_B_magnet_saddle.jpg" alt="Jig B, a saddle clipped over the front shell's top wall with a window the size of the magnet notch." loading="lazy"><figcaption>Jig B on the top wall: its window is the U-notch, 21.5 &times; 7.95 mm. It sets the position by itself.</figcaption></figure>
+    </div>
   </div>
 </section>
 
@@ -186,21 +339,88 @@ tr:last-child td { border-bottom: 0; }
   <h2>Safety</h2>
   <div class="box">
     <ul>
-      <li>Glasses on before the Dremel is plugged in. Bits shatter and chips fly.</li>
-      <li>Dust mask on. Hot plastic dust and fumes are not good to breathe; work by an open window.</li>
-      <li>Clamp the part. Never hold a small shell in your hand while grinding near your fingers.</li>
+      <li><strong>Glasses</strong> on before the tool is plugged in. Bits shatter and hot chips fly.</li>
+      <li><strong>Mask</strong> on. Plastic dust and the smell of hot ABS are not good to breathe.</li>
+      <li><strong>Ventilation:</strong> work by an open window or with a fan blowing the dust away from you (not into your face). Vacuum the bench afterwards rather than blowing the dust around the room.</li>
+      <li><strong>Clamp the part.</strong> Never hold a small shell in your hand while grinding near your fingers. Soft jaws (rag, wood) and only light clamping pressure: the shell cracks if you squeeze it.</li>
+      <li><strong>Melting plastic = too fast.</strong> Smoke, a sharp smell, shiny strings or a blob building up on the bit all mean: stop, let it cool for a minute, turn the speed down, press lighter.</li>
       <li>Let the tool stop before you put it down. Unplug it when you change bits.</li>
       <li>Loose sleeves, hair and cords away from the bit.</li>
-      <li>Ground plastic gets hot. Touch it only after it has cooled.</li>
-      <li>No electronics near the shell while you grind. The board goes in only after the shell is cleaned.</li>
+      <li>Ground plastic and the bit get hot. Touch them only after they have cooled.</li>
+      <li>No electronics near the shell while you grind. The board goes in only after the shell is washed or blown clean.</li>
     </ul>
   </div>
+</section>
+
+<section id="measure">
+  <h2>How to measure (you will do this a lot)</h2>
+  <p>Almost every step below says <span class="rc">depth rod</span>. This is how. You lay a steel ruler across the rim, so you have a flat bridge to measure down from, and you use the calipers' depth rod to measure how far down the plastic is. You never need the absolute number for "flat to the floor": you only compare two readings taken the same way.</p>
+  <figure class="diagram">
+    <!--dg:rim_method--><svg class="dg" viewBox="0 0 420 262" role="img" aria-label="Ruler across the rim: compare the depth-rod reading over the floor (R) with the reading over the feature (F)"><title>Ruler across the rim: compare the depth-rod reading over the floor (R) with the reading over the feature (F)</title>
+  <path d="M30,70 H44 V190 H376 V70 H390 V206 H30 Z" class="nv"/>
+  <rect x="232" y="130" width="22" height="60" rx="0" class="cut"/>
+  <text x="262" y="160" text-anchor="start" class="ts">wall to grind</text>
+  <rect x="10" y="58" width="400" height="12" rx="0" class="tool"/>
+  <text x="400" y="52" text-anchor="end" class="ts">steel ruler on the rim</text>
+  <line x1="20" y1="58" x2="20" y2="70" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="14" y="68" text-anchor="end" class="tm">t</text>
+  <rect x="100" y="22" width="30" height="36" rx="0" class="tool"/>
+  <line x1="115" y1="70" x2="115" y2="190" class="rod"/>
+  <text x="115" y="16" text-anchor="middle" class="tb">R</text>
+  <text x="124" y="110" text-anchor="start" class="ts"><tspan x="124" dy="0em">R = reading over</tspan><tspan x="124" dy="1.2em">the bare floor</tspan></text>
+  <rect x="228" y="22" width="30" height="36" rx="0" class="tool"/>
+  <line x1="243" y1="70" x2="243" y2="130" class="rod"/>
+  <text x="243" y="16" text-anchor="middle" class="tb">F</text>
+  <text x="270" y="95" text-anchor="start" class="ts"><tspan x="270" dy="0em">F = reading over</tspan><tspan x="270" dy="1.2em">the part you grind</tspan></text>
+  <text x="210" y="226" text-anchor="middle" class="ts"><tspan x="210" dy="0em">F smaller than R: plastic still standing. F = R: flush, stop. F bigger</tspan><tspan x="210" dy="1.2em">than R: you are into the floor. (Not to scale; the rod passes just</tspan><tspan x="210" dy="1.2em">beside the ruler's edge.)</tspan></text>
+</svg><!--/dg:rim_method-->
+    <figcaption>The "ruler across the rim" method. First measure the bare floor next to the feature: that is <strong>R</strong>. Then measure over the feature: <strong>F</strong>. Keep going until F = R.</figcaption>
+  </figure>
+  <figure class="diagram">
+    <!--dg:depth_rod--><svg class="dg" viewBox="0 0 420 236" role="img" aria-label="How to take a depth-rod reading with digital calipers"><title>How to take a depth-rod reading with digital calipers</title>
+  <path d="M40,160 H60 V196 H360 V160 H380 V212 H40 Z" class="pl"/>
+  <rect x="30" y="150" width="360" height="10" rx="0" class="tool"/>
+  <rect x="170" y="20" width="26" height="130" rx="0" class="tool"/>
+  <rect x="196" y="40" width="92" height="52" rx="4" class="tool"/>
+  <rect x="204" y="50" width="76" height="22" rx="2" class="disp"/>
+  <text x="242" y="67" text-anchor="middle" class="tdisp">6.95</text>
+  <line x1="183" y1="160" x2="183" y2="196" class="rod"/>
+  <circle cx="183" cy="196" r="2.5" class="dot"/>
+  <text x="24" y="34" text-anchor="start" class="ts"><tspan x="24" dy="0em">1  Close the jaws,</tspan><tspan x="24" dy="1.2em">    press ZERO.</tspan></text>
+  <text x="24" y="96" text-anchor="start" class="ts"><tspan x="24" dy="0em">2  End face flat on</tspan><tspan x="24" dy="1.2em">    the ruler, upright.</tspan></text>
+  <text x="298" y="112" text-anchor="start" class="ts"><tspan x="298" dy="0em">3  Rod down until</tspan><tspan x="298" dy="1.2em">    it just touches.</tspan></text>
+  <text x="210" y="230" text-anchor="middle" class="ts">4  Read it. Take 3 readings a few mm apart; trust the middle one.</text>
+</svg><!--/dg:depth_rod-->
+    <figcaption>Taking one reading with the depth rod.</figcaption>
+  </figure>
+  <div class="callout warn">
+    <strong class="tag">The ruler's thickness</strong>
+    <p>If the calipers' end sits on top of the ruler, every reading includes the ruler's thickness <strong>t</strong> (measure it once with the jaws; usually <span class="num">0.5–1.0 mm</span>). For "same as the floor" checks (zones 1, 2) that doesn't matter: both readings include it. For a target like "7.0 mm below the rim" (zones 6, 6c), subtract t, or rest the calipers' end directly on the wall's own rim. Measure the same way you did when you got your <span class="num">4.5–5.0</span> readings on 2026-10-06, and write down which way that was.</p>
+  </div>
+  <figure class="diagram">
+    <!--dg:good_bad--><svg class="dg" viewBox="0 0 420 200" role="img" aria-label="Good and bad grinds in cross-section"><title>Good and bad grinds in cross-section</title>
+  <text x="70" y="22" text-anchor="middle" class="tg tb">GOOD: flush</text>
+  <path d="M10,120 H130 V140 H10 Z" class="nv"/>
+  <text x="70" y="112" text-anchor="middle" class="tm">F = R</text>
+  <text x="70" y="162" text-anchor="middle" class="ts"><tspan x="70" dy="0em">floor 1.0 mm</tspan><tspan x="70" dy="1.2em">left as it was</tspan></text>
+  <text x="210" y="22" text-anchor="middle" class="tr tb">BAD: stub left</text>
+  <path d="M150,120 H195 V112 H225 V120 H270 V140 H150 Z" class="nv"/>
+  <rect x="185" y="50" width="50" height="56" rx="0" class="part"/>
+  <text x="210" y="82" text-anchor="middle" class="tb">J4</text>
+  <text x="210" y="162" text-anchor="middle" class="ts"><tspan x="210" dy="0em">0.5 mm stub: J4 has</tspan><tspan x="210" dy="1.2em">only 0.41 mm. It hits.</tspan></text>
+  <text x="350" y="22" text-anchor="middle" class="tr tb">BAD: gouge</text>
+  <path d="M290,120 H325 Q350,134 375,120 H410 V140 H290 Z" class="nv"/>
+  <text x="350" y="112" text-anchor="middle" class="tm">F &gt; R</text>
+  <text x="350" y="162" text-anchor="middle" class="ts"><tspan x="350" dy="0em">floor under 0.8 mm:</tspan><tspan x="350" dy="1.2em">weak, may crack</tspan></text>
+</svg><!--/dg:good_bad-->
+    <figcaption>What "done" looks like in cross-section. A stub you can barely feel is still too much near J4; a dip into the floor makes it thin and weak.</figcaption>
+  </figure>
 </section>
 
 <section id="rules">
   <h2>Golden rules</h2>
   <ol class="rules">
-    <li><span><strong>Low to medium speed, light pressure.</strong> Let the bit do the work.</span></li>
+    <li><span><strong>Low speed (5,000–10,000 RPM), light pressure.</strong> Let the bit do the work.</span></li>
     <li><span><strong>Short passes.</strong> A few seconds, lift off, look.</span></li>
     <li><span><strong>Measure every 30 seconds.</strong> Blow the dust off, take a depth reading, then decide.</span></li>
     <li><span><strong>Never grind into the floor.</strong> Keep at least <span class="num">0.8 mm</span> of plastic everywhere (it starts at about <span class="num">1.0</span>).</span></li>
@@ -220,16 +440,39 @@ tr:last-child td { border-bottom: 0; }
   <ol class="order">
     <li><span class="n">1</span><span>Solar box flat to the floor<br><span class="part">back cover</span></span><span class="pill do">grind</span></li>
     <li><span class="n">2</span><span>Rib B flat over the camera, 14 mm<br><span class="part">back cover</span></span><span class="pill do">grind</span></li>
-    <li><span class="n">3</span><span>Camera window, Ø 7 mm<br><span class="part">back cover</span></span><span class="pill do">drill</span></li>
+    <li><span class="n">3</span><span>Camera window, Ø 7 mm (only once the camera and its ribbon route are decided)<br><span class="part">back cover</span></span><span class="pill do">drill</span></li>
     <li><span class="n">4</span><span>LR44 coin-cell cup<br><span class="part">front shell</span></span><span class="pill skip">not needed</span></li>
     <li><span class="n">5</span><span>Magnet U-notch in the top wall<br><span class="part">front shell</span></span><span class="pill do">cut</span></li>
     <li><span class="n">5b</span><span>Back-cover lip under the magnet notch<br><span class="part">back cover</span></span><span class="pill check">only if there</span></li>
+    <li><span class="n">6b</span><span>Snip the 3 round pins and the 3 wire hooks off the inner rib, both side walls (do this before 6)<br><span class="part">front shell</span></span><span class="pill do">snip</span></li>
     <li><span class="n">6</span><span>Side-wall relief: notch the inner side-wall rib 2–2.5 mm deep (to 7 mm below the rim), 15–50 mm from the top, solar-window side<br><span class="part">front shell</span></span><span class="pill do">file</span></li>
-    <li><span class="n">6b</span><span>Snip the 3 round pins and the 3 wire hooks off the inner rib, both side walls<br><span class="part">front shell</span></span><span class="pill do">snip</span></li>
     <li><span class="n">6c</span><span>Lower end of the inner ribs where the board widens<br><span class="part">front shell</span></span><span class="pill check">only if the paper's wide corners ride up</span></li>
   </ol>
-  <p class="small"><strong>Before any of this (10 minutes, real shell in hand):</strong> do the pre-grind checklist in <code>hardware/verification/07_final_review_fitment.md</code>: it measures the few things the 3D model only guessed (inner-rib depth, solar-frame strip, floor thickness at the label, lip, screw length) and tells you whether zone 5b applies to <em>your</em> shell. Zone 6 and 6b are settled (depth rod 2026-10-06, <code>hardware/verification/12_rib_pin_recheck.md</code>): the rib, pins and hooks all sit at board height on both walls.</p>
+  <p class="small"><strong>Before any of this (10 minutes, real shell in hand):</strong> do the pre-grind checklist in <code>hardware/verification/07_final_review_fitment.md</code> §3: it measures the few things the 3D model only guessed (inner-rib depth, solar-frame strip, floor thickness at the moulded label, lip, screw length) and tells you whether zone 5b applies to <em>your</em> shell. Zones 6 and 6b are settled (depth rod 2026-10-06, <code>hardware/verification/12_rib_pin_recheck.md</code>): the rib, pins and hooks all sit at board height on both walls.</p>
   <p class="small">The big ring on the back cover does <strong>not</strong> need grinding (D2 and C16 clear it). Leave all other ribs alone.</p>
+</section>
+
+<section id="time">
+  <h2>How long it takes</h2>
+  <p>Per unit, once you've done one. Your first shell will take about twice as long; add 10 minutes for the pre-grind checklist and time for a practice zone on the spare shell.</p>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Zone</th><th>Freehand</th><th>With jigs</th></tr></thead>
+      <tbody>
+        <tr><td>1 solar box</td><td class="num">8–12 min</td><td class="num">3–4 min (jig A)</td></tr>
+        <tr><td>2 rib B</td><td class="num">2 min</td><td class="num">0.5–1 min (jig A)</td></tr>
+        <tr><td>3 camera window</td><td class="num">4–5 min</td><td class="num">1–1.5 min (jig A2)</td></tr>
+        <tr><td>5 + 5b magnet notch (+ lip)</td><td class="num">10–15 min</td><td class="num">4–5 min (jig B)</td></tr>
+        <tr><td>6b pins + hooks</td><td class="num">2 min</td><td class="num">2 min (no jig)</td></tr>
+        <tr><td>6 rib relief</td><td class="num">3–5 min</td><td class="num">3–5 min (no jig)</td></tr>
+        <tr><td>6c rib ends (only if needed)</td><td class="num">2–3 min</td><td class="num">2–3 min (no jig)</td></tr>
+      </tbody>
+      <tfoot>
+        <tr><td>Total</td><td class="num">≈ 30–44 min</td><td class="num">≈ 15–21 min</td></tr>
+      </tfoot>
+    </table>
+  </div>
+  <p class="small">Zones 1, 2, 3, 5 times are from <code>hardware/enclosure/jigs/README.md</code>; 6, 6b from verification 12; 6c is an estimate. Plus the test fit (paper, dummy board): about 10 minutes.</p>
 </section>
 
 <!-- ZONE 1 -->
@@ -237,37 +480,86 @@ tr:last-child td { border-bottom: 0; }
   <div class="zone-head">
     <div class="row"><span class="eyebrow">Zone 1 · back cover</span><span class="pill do">grind</span></div>
     <h2>Solar box: flat to the floor</h2>
-    <p><strong>Why:</strong> the box of thin walls (a frame with a grid inside) that hangs down from the back cover sits right over the battery socket J4, the magnet header J3 and the power parts. Without this grind J4 hits it by <span class="num">4.6 mm</span>. It is also where the LiPo will lie.</p>
+  </div>
+  <div class="why">
+    <p><strong>Why (what would hit):</strong> the box of thin walls (a frame with a grid inside) that hangs down from the back cover sits right over the battery socket J4, the magnet header J3 and the power parts. Without this grind <strong>J4 runs <span class="num">4.6 mm</span> into it</strong> and the cover can't close. It is also where the end of the LiPo will lie.</p>
   </div>
   <dl class="spec">
     <div><dt>Size</dt><dd class="num">≈ 33 × 12 mm</dd></div>
     <div><dt>Height to remove</dt><dd class="num">5–5.5 mm (D6, D13)</dd></div>
     <div><dt>Target</dt><dd>Flush with the floor, no stub</dd></div>
     <div><dt>Floor left</dt><dd class="num">≥ 0.8 mm (≈ 1.0)</dd></div>
-    <div><dt>Bits</dt><dd>Carbide burr, then sanding drum</dd></div>
-    <div><dt>Speed</dt><dd>Low (dial 2–4)</dd></div>
+    <div><dt>Bits</dt><dd>3 mm carbide burr, then sanding drum</dd></div>
+    <div><dt>Speed</dt><dd class="num">5,000–10,000 RPM</dd></div>
   </dl>
+  <div class="diagrams">
+    <figure class="diagram"><!--dg:z1_top--><svg class="dg" viewBox="0 0 420 236" role="img" aria-label="Zone 1 top view: the solar box, about 33 by 12 mm, all of it removed"><title>Zone 1 top view: the solar box, about 33 by 12 mm, all of it removed</title>
+  <rect x="20" y="30" width="390" height="170" rx="0" class="nvl"/>
+  <rect x="50" y="56" width="280.5" height="102" rx="0" class="cut"/>
+  <line x1="106.1" y1="56" x2="106.1" y2="158" class="lcut"/>
+  <line x1="162.2" y1="56" x2="162.2" y2="158" class="lcut"/>
+  <line x1="218.3" y1="56" x2="218.3" y2="158" class="lcut"/>
+  <line x1="274.4" y1="56" x2="274.4" y2="158" class="lcut"/>
+  <circle cx="372" cy="76" r="13" class="keep"/>
+  <circle cx="372" cy="76" r="4" class="hole"/>
+  <text x="372" y="106" text-anchor="middle" class="tg ts"><tspan x="372" dy="0em">screw post:</tspan><tspan x="372" dy="1.2em">leave it</tspan></text>
+  <line x1="50" y1="56" x2="50" y2="42" class="ext"/>
+  <line x1="330.5" y1="56" x2="330.5" y2="42" class="ext"/>
+  <line x1="50" y1="46" x2="330.5" y2="46" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="190.25" y="41" text-anchor="middle" class="tm">~ 33 mm</text>
+  <line x1="38" y1="56" x2="38" y2="158" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="32" y="111" text-anchor="end" class="tm">12</text>
+  <text x="190.25" y="180" text-anchor="middle" class="tr">remove ALL of it: frame + grid</text>
+  <text x="210" y="218" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Model: frame 7.2-19.2 mm in from the cover's top outer edge, near end</tspan><tspan x="210" dy="1.2em">10.7 mm from the side edge.</tspan></text>
+</svg><!--/dg:z1_top--><figcaption>Top view (inside of the back cover). Everything red goes, frame and grid.</figcaption></figure>
+    <figure class="diagram"><!--dg:z1_sec--><svg class="dg" viewBox="0 0 420 236" role="img" aria-label="Zone 1 cross-section: 5 to 5.5 mm tall walls on a 1.0 mm floor; J4 needs them gone with no stub"><title>Zone 1 cross-section: 5 to 5.5 mm tall walls on a 1.0 mm floor; J4 needs them gone with no stub</title>
+  <rect x="10" y="170" width="400" height="14" rx="0" class="nv"/>
+  <rect x="110" y="93" width="7" height="77" rx="0" class="cut"/>
+  <rect x="165" y="93" width="7" height="77" rx="0" class="cut"/>
+  <rect x="215" y="93" width="7" height="77" rx="0" class="cut"/>
+  <rect x="255" y="93" width="7" height="77" rx="0" class="cut"/>
+  <rect x="300" y="93" width="7" height="77" rx="0" class="cut"/>
+  <rect x="333" y="93" width="7" height="77" rx="0" class="cut"/>
+  <rect x="0" y="20" width="420" height="12" rx="0" class="board"/>
+  <text x="410" y="15" text-anchor="end" class="ts">board</text>
+  <rect x="150" y="32" width="120" height="132.26" rx="0" class="partd"/>
+  <text x="210" y="52" text-anchor="middle" class="tb">J4 (battery socket)</text>
+  <text x="210" y="68" text-anchor="middle" class="ts">5.5 mm tall</text>
+  <line x1="360" y1="93" x2="360" y2="170" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="366" y="135.5" text-anchor="start" class="tm">5-5.5</text>
+  <text x="12" y="128" text-anchor="start" class="ts"><tspan x="12" dy="0em">after zone 1:</tspan><tspan x="12" dy="1.2em">0.41 mm gap</tspan><tspan x="12" dy="1.2em">under J4</tspan></text>
+  <line x1="70" y1="156" x2="148" y2="167" class="lead" marker-end="url(#al)"/>
+  <text x="12" y="200" text-anchor="start" class="ts">floor 1.0 mm (keep at least 0.8)</text>
+  <text x="210" y="222" text-anchor="middle" class="ts">Red = remove. Without zone 1, J4 runs 4.6 mm into these walls.</text>
+</svg><!--/dg:z1_sec--><figcaption>Cross-section. After the grind J4 has only <span class="num">0.41 mm</span> to the floor, so the floor must be clean and flush.</figcaption></figure>
+  </div>
   <div class="pair">
     <figure><img src="renders/grind_solar_box_before.png" alt="Back cover inside: the solar box, a walled grid, next to a corner screw post." loading="lazy"><figcaption>Before: the walled grid box. Note the corner screw post right next to it.</figcaption></figure>
     <figure><img src="renders/grind_solar_box_after.png" alt="Back cover inside after grinding: the solar box is gone, floor flat." loading="lazy"><figcaption>After: nothing left but flat floor.</figcaption></figure>
   </div>
+  <div class="pair">
+    <figure><a href="renders/grind/z1_solar_box_before_ann.png"><img src="renders/grind/z1_solar_box_before_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 1, before, with the cut marked."></a><figcaption>Zone 1, before, with the cut marked.</figcaption></figure>
+    <figure><a href="renders/grind/z1_solar_box_after_ann.png"><img src="renders/grind/z1_solar_box_after_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 1, after."></a><figcaption>Zone 1, after.</figcaption></figure>
+  </div>
   <div class="box">
     <p class="sub">Where</p>
-    <p>You can't miss it: it's the only box with a grid inside, near the top end of the back cover, beside a corner screw post. From the model, its outer frame runs about <span class="num">7.2 to 19.2 mm</span> in from the cover's top outer edge, and its near end is about <span class="num">10.7 mm</span> in from the nearest side edge. Confirm with the back-cover template ("GRIND 1").</p>
+    <p>You can't miss it: it's the only box with a grid inside, near the top end of the back cover, beside a corner screw post (top right with the cover inside up and the top end away from you). From the model, its outer frame runs about <span class="num">7.2 to 19.2 mm</span> in from the cover's top outer edge, and its near end is about <span class="num">10.7 mm</span> in from the nearest side edge. Confirm with the back-cover template ("GRIND 1").</p>
   </div>
   <div class="box">
-    <p class="sub">Steps</p>
+    <p class="sub">Steps (freehand)</p>
     <ol class="steps">
-      <li>Mask the corner screw post and the outer wall next to the box with tape.</li>
-      <li><strong>Take a reference reading.</strong> Lay the steel ruler across the back cover's rim over the box. Put the end of the calipers on the ruler and slide the depth rod down to the bare floor <em>next to</em> the box. Write this number down: call it R.</li>
-      <li>With the carbide burr, take the grid walls down first, then the outer frame, a little at a time, working across the whole box so it goes down evenly.</li>
-      <li>Every 30 seconds: blow off the dust, measure at several spots over the box. While the reading is smaller than R, there is still plastic standing up.</li>
-      <li>When the walls are about <span class="num">0.5 mm</span> above the floor (reading ≈ R − 0.5), switch to the sanding drum and finish gently.</li>
-      <li>Check with a fingertip and the depth rod across the whole area, especially the area nearest the screw post where J4 will sit.</li>
+      <li>Mask the corner screw post and the outer wall next to the box with tape. Clamp the cover inside up, soft jaws, light pressure.</li>
+      <li><span class="rc">depth rod</span> <strong>Reference reading R.</strong> Ruler across the rim over the box; rod down to the bare floor <em>next to</em> the box. Write R on the tape.</li>
+      <li>Burr at 30&ndash;45&deg;, 5,000&ndash;10,000 RPM. Take the grid walls down first, then the outer frame, a little at a time, working across the whole box so it goes down evenly. Think "lawnmower", not "drill".</li>
+      <li><span class="rc">depth rod</span> Every 30 seconds: blow off the dust and measure at 4&ndash;5 spots over the box. While F is smaller than R, plastic is still standing.</li>
+      <li>When the walls are about <span class="num">0.5 mm</span> above the floor (F ≈ R − 0.5), switch to the sanding drum, held flat, and finish gently.</li>
+      <li><span class="rc">depth rod</span> Final check on a grid: four corners, the middle, and especially the end nearest the screw post (where J4 sits). Every reading = R (± 0.05).</li>
+      <li>Fingernail test across the old walls: no ridge.</li>
     </ol>
+    <p class="small"><strong>With jig A:</strong> drop A in (pins into the 4 boss holes), set a 3.2 mm flat-end router bit with gauge A3 (7.2 mm below the base), run the router inside the window with the shank against the window wall, remove A, then sand the last <span class="num">0.2 mm</span> skin flat with a sanding block.</p>
   </div>
   <div class="callout ok">
-    <strong class="tag">Stop when</strong>
+    <strong class="tag">Done when</strong>
     <p>Every reading over the old box equals R (the floor next to it), and you can't feel a ridge with your fingernail. Stop the moment the readings match. Going past R means you are into the floor.</p>
   </div>
   <div class="callout stop">
@@ -282,6 +574,7 @@ tr:last-child td { border-bottom: 0; }
       <li>Leaving the frame's base "almost flat". It has to be flush.</li>
       <li>Catching the screw post with the side of the burr. Tape it and keep the burr pointing away from it.</li>
       <li>Too much speed: the walls melt and fold over instead of cutting. Slow down.</li>
+      <li>Pushing the burr's tip into the floor at the end of a pass: it leaves little pits. Lift off before you reverse.</li>
     </ul>
   </div>
 </article>
@@ -291,40 +584,96 @@ tr:last-child td { border-bottom: 0; }
   <div class="zone-head">
     <div class="row"><span class="eyebrow">Zone 2 · back cover</span><span class="pill do">grind</span></div>
     <h2>Rib B over the camera: 14 mm flat</h2>
-    <p><strong>Why:</strong> the camera module is <span class="num">5.4 mm</span> tall and this <span class="num">1 mm</span> rib runs across it; without the grind the lens hits by <span class="num">0.5 mm</span>. Only the middle 14 mm of the rib comes off. The rest of rib B stays.</p>
+  </div>
+  <div class="why">
+    <p><strong>Why (what would hit):</strong> the camera module is <span class="num">5.4 mm</span> tall and this <span class="num">1 mm</span> rib runs right across it; without the grind <strong>the lens hits the rib by about <span class="num">0.5 mm</span></strong> and the camera can't sit flat over its window. Only the middle 14 mm of the rib comes off. The rest of rib B stays.</p>
   </div>
   <dl class="spec">
-    <div><dt>Length</dt><dd class="num">14 mm, centred</dd></div>
+    <div><dt>Length</dt><dd class="num">14 mm, centred (7 + 7)</dd></div>
     <div><dt>Height to remove</dt><dd class="num">1 mm</dd></div>
     <div><dt>Target</dt><dd>Flush with the floor</dd></div>
     <div><dt>Floor left</dt><dd class="num">≥ 0.8 mm (≈ 1.0)</dd></div>
     <div><dt>Bits</dt><dd>Sanding drum (burr if slow)</dd></div>
-    <div><dt>Speed</dt><dd>Low (dial 2–4)</dd></div>
+    <div><dt>Speed</dt><dd class="num">5,000–10,000 RPM</dd></div>
   </dl>
+  <div class="diagrams">
+    <figure class="diagram"><!--dg:z2_top--><svg class="dg" viewBox="0 0 420 240" role="img" aria-label="Zone 2 top view: only the middle 14 mm of rib B comes off, centred on the camera spot"><title>Zone 2 top view: only the middle 14 mm of rib B comes off, centred on the camera spot</title>
+  <rect x="10" y="30" width="400" height="170" rx="0" class="nvl"/>
+  <rect x="24" y="117" width="380" height="6" rx="0" class="rib"/>
+  <rect x="194" y="117" width="84" height="6" rx="0" class="cut"/>
+  <rect x="104" y="117" width="90" height="6" rx="0" class="opt"/>
+  <line x1="236" y1="34" x2="236" y2="196" class="cl"/>
+  <text x="240" y="46" text-anchor="start" class="ts">width centre line</text>
+  <circle cx="236" cy="120" r="21" class="hole2"/>
+  <rect x="210.5" y="94.5" width="51" height="51" rx="0" class="ghost"/>
+  <line x1="194" y1="116" x2="194" y2="78" class="ext"/>
+  <line x1="278" y1="116" x2="278" y2="78" class="ext"/>
+  <line x1="194" y1="82" x2="278" y2="82" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="236" y="77" text-anchor="middle" class="tm">14 mm</text>
+  <line x1="194" y1="124" x2="194" y2="168" class="ext"/>
+  <line x1="236" y1="124" x2="236" y2="168" class="ext"/>
+  <line x1="194" y1="164" x2="236" y2="164" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="215" y="178" text-anchor="middle" class="tm">7</text>
+  <line x1="236" y1="124" x2="236" y2="168" class="ext"/>
+  <line x1="278" y1="124" x2="278" y2="168" class="ext"/>
+  <line x1="236" y1="164" x2="278" y2="164" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="257" y="178" text-anchor="middle" class="tm">7</text>
+  <text x="92" y="62" text-anchor="middle" class="to ts"><tspan x="92" dy="0em">v15-LCD only, if the tail</tspan><tspan x="92" dy="1.2em">bow is squeezed: ~15 mm more</tspan></text>
+  <line x1="110" y1="88" x2="149" y2="114" class="lead" marker-end="url(#al)"/>
+  <text x="286" y="150" text-anchor="start" class="ts"><tspan x="286" dy="0em">camera 8.5 x 8.5</tspan><tspan x="286" dy="1.2em">and the 7 mm window</tspan></text>
+  <text x="210" y="222" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Camera spot on rib B: 38.0 mm down from the back cover's own top outer</tspan><tspan x="210" dy="1.2em">edge, on the centre line (model). Check it on the template.</tspan></text>
+</svg><!--/dg:z2_top--><figcaption>Top view. Red: the 14 mm that comes off. Orange: the v15-LCD extra, only if the LCD tail's bow is squeezed (see the v15 section).</figcaption></figure>
+    <figure class="diagram"><!--dg:z2_sec--><svg class="dg" viewBox="0 0 420 236" role="img" aria-label="Zone 2 cross-section along rib B: 1 mm of rib under the camera lens comes off"><title>Zone 2 cross-section along rib B: 1 mm of rib under the camera lens comes off</title>
+  <rect x="10" y="170" width="400" height="14" rx="0" class="nv"/>
+  <rect x="10" y="156" width="400" height="14" rx="0" class="rib"/>
+  <rect x="161" y="156" width="98" height="14" rx="0" class="cut"/>
+  <rect x="180.25" y="52" width="59.5" height="66" rx="0" class="partd"/>
+  <rect x="191.8" y="118" width="36.4" height="42.06" rx="0" class="lens"/>
+  <text x="210" y="88" text-anchor="middle" class="tb">camera</text>
+  <text x="236" y="140" text-anchor="start" class="ts">lens</text>
+  <line x1="161" y1="46" x2="161" y2="36" class="ext"/>
+  <line x1="259" y1="46" x2="259" y2="36" class="ext"/>
+  <line x1="161" y1="40" x2="259" y2="40" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="210" y="35" text-anchor="middle" class="tm">14 mm</text>
+  <line x1="400" y1="156" x2="400" y2="170" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="394" y="167" text-anchor="end" class="tm">1.0</text>
+  <text x="14" y="150" text-anchor="start" class="ts">rib B</text>
+  <text x="14" y="200" text-anchor="start" class="ts">floor 1.0 mm under the rib</text>
+  <text x="210" y="222" text-anchor="middle" class="ts">Before: the lens hits the rib by ~0.5 mm. After: 0.71 mm clear.</text>
+</svg><!--/dg:z2_sec--><figcaption>Cross-section along the rib: the camera lens sits right over it.</figcaption></figure>
+  </div>
   <div class="pair">
     <figure><img src="renders/grind_rib_b_before.png" alt="Back cover inside: the long 1 mm ribs, rib B crossing the camera spot." loading="lazy"><figcaption>Before: rib B crosses the camera spot.</figcaption></figure>
     <figure><img src="renders/grind_rib_b_after.png" alt="Back cover inside after grinding: a 14 mm gap in rib B." loading="lazy"><figcaption>After: a 14 mm gap in the rib.</figcaption></figure>
   </div>
+  <div class="pair">
+    <figure><a href="renders/grind/z2_rib_b_before_ann.png"><img src="renders/grind/z2_rib_b_before_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 2, before."></a><figcaption>Zone 2, before.</figcaption></figure>
+    <figure><a href="renders/grind/z2_rib_b_after_ann.png"><img src="renders/grind/z2_rib_b_after_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 2, after."></a><figcaption>Zone 2, after.</figcaption></figure>
+  </div>
   <div class="box">
     <p class="sub">Where</p>
-    <p>The camera window's centre is on the <strong>centre line of the cover's width</strong> (measure the full width, halve it), about <span class="num">38.3 mm</span> down from the cover's top outer edge (from the model). Rib B runs across the cover right there. Mark the centre point on the rib, then mark <span class="num">7 mm</span> each side of it: that's your 14 mm. The back-cover template shows it as "GRIND 2".</p>
+    <p>The camera window's centre is on the <strong>centre line of the cover's width</strong> (measure the full width, halve it), <span class="num">38.0 mm</span> down from the <strong>back cover's own top outer edge</strong>, measured along that centre line (from the model; zone 3, "Measuring the drill point", says why older notes said 38.3). Rib B is the middle one of the three long ribs below the solar box; it runs across the cover right there. Mark the centre point on the rib, then mark <span class="num">7 mm</span> each side of it: that's your 14 mm. The back-cover template shows it as "GRIND 2".</p>
   </div>
   <div class="box">
     <p class="sub">Steps</p>
     <ol class="steps">
-      <li>Mark the 14 mm with two marker lines. Put tape on the floor on both sides of the rib if you like.</li>
-      <li>Reference reading R next to the rib, exactly as in zone 1.</li>
-      <li>Sand the rib down between your marks with the sanding drum, held so it rides along the rib.</li>
-      <li>Check every 30 seconds until the reading on the old rib equals R.</li>
+      <li>Before you start: pre-grind check 4 (floor thickness at the moulded label outside, 32&ndash;48 mm from the top). ≥ 0.9 mm: grind flush as below. 0.8&ndash;0.9: stop <span class="num">0.1–0.2 mm</span> proud. Under 0.8: use the spare cover.</li>
+      <li>Measure the width, halve it, mark the centre on rib B. Mark 7 mm each side. Lay the template in and check the marks agree.</li>
+      <li><span class="rc">depth rod</span> Reference reading R on the floor next to the rib.</li>
+      <li>Sanding drum held so it rides along the rib (axis across the rib), 5,000&ndash;10,000 RPM, between your marks only. Short passes.</li>
+      <li><span class="rc">depth rod</span> Every 30 seconds: measure at both ends and the middle of the 14 mm. Stop when F = R everywhere.</li>
+      <li>Square the two cut ends with a needle file. Fingernail across: no ridge.</li>
     </ol>
+    <p class="small"><strong>With jig A:</strong> router inside the Ø16 hole across the rib (it takes 16 mm instead of 14: fine), then scrape the last <span class="num">0.2 mm</span> off with a flat chisel blade so the camera sits flat.</p>
   </div>
-  <div class="callout ok"><strong class="tag">Stop when</strong><p>The 14 mm stretch reads the same as the floor beside it. Leave your two marker lines visible: they show you where the camera goes.</p></div>
+  <div class="callout ok"><strong class="tag">Done when</strong><p>The 14 mm stretch reads the same as the floor beside it, at both ends and in the middle. Leave your two marker lines visible: they show you where the camera goes.</p></div>
   <div class="box">
     <p class="sub">Common mistakes</p>
     <ul>
       <li>Grinding the whole rib instead of just 14 mm.</li>
       <li>Getting the centre wrong. Measure twice and cross-check with the template before you start.</li>
-      <li>Touching the 4 mm "mid rib" further down: the camera ribbon passes over it with half a millimetre to spare, but it does not need grinding. Leave it.</li>
+      <li>Rounding the floor next to the rib with the edge of the drum. Keep the drum flat and only on the rib.</li>
+      <li>Touching the 4 mm "mid rib" or the rings further down: the camera ribbon passes over them with half a millimetre to spare, but they don't need grinding. Leave them.</li>
     </ul>
   </div>
 </article>
@@ -334,40 +683,107 @@ tr:last-child td { border-bottom: 0; }
   <div class="zone-head">
     <div class="row"><span class="eyebrow">Zone 3 · back cover</span><span class="pill do">drill</span></div>
     <h2>Camera window: drill Ø 7 mm</h2>
-    <p><strong>Why:</strong> the camera looks out of the back. Nothing hits here; this hole is the camera's view. The lens does not need to poke into the hole.</p>
+  </div>
+  <div class="why">
+    <p><strong>Why:</strong> the camera looks out of the back. Nothing hits here; this hole is the camera's view. The lens does not need to poke into the hole. It is the one cut you can't undo, so it waits until the camera and its ribbon route are decided (the ribbon length sets exactly where the module sits).</p>
   </div>
   <dl class="spec">
     <div><dt>Hole</dt><dd class="num">Ø 7 mm (9/32" OK)</dd></div>
-    <div><dt>Centre</dt><dd>On rib B's centre mark</dd></div>
+    <div><dt>Centre</dt><dd>On rib B's centre mark, width centre line</dd></div>
     <div><dt>Board ref.</dt><dd class="num">KiCad (150, 95.1)</dd></div>
-    <div><dt>Tools</dt><dd>Pilot bit, then 7 mm in a hand drill</dd></div>
-    <div><dt>Speed</dt><dd>Slow</dd></div>
+    <div><dt>Tools</dt><dd>2 mm pilot, then 7 mm in a hand drill (or step drill)</dd></div>
+    <div><dt>Speed</dt><dd>Slow drill, light pressure</dd></div>
     <div><dt>Do after</dt><dd>Zone 2</dd></div>
   </dl>
+  <div class="diagrams">
+    <figure class="diagram"><!--dg:z3_top--><svg class="dg" viewBox="0 0 420 236" role="img" aria-label="Zone 3, seen from outside: one 7 mm hole on the width centre line, over the middle of the ground rib-B gap"><title>Zone 3, seen from outside: one 7 mm hole on the width centre line, over the middle of the ground rib-B gap</title>
+  <rect x="10" y="20" width="400" height="170" rx="0" class="nvl"/>
+  <rect x="130" y="45" width="140" height="110" rx="0" class="tape"/>
+  <text x="276" y="60" text-anchor="start" class="ts"><tspan x="276" dy="0em">masking tape on</tspan><tspan x="276" dy="1.2em">the outside: less</tspan><tspan x="276" dy="1.2em">chipping</tspan></text>
+  <circle cx="200" cy="100" r="35" class="cutc"/>
+  <circle cx="200" cy="100" r="10" class="pilot"/>
+  <line x1="150" y1="100" x2="250" y2="100" class="cl"/>
+  <line x1="200" y1="50" x2="200" y2="150" class="cl"/>
+  <line x1="165" y1="138" x2="165" y2="170" class="ext"/>
+  <line x1="235" y1="138" x2="235" y2="170" class="ext"/>
+  <line x1="165" y1="166" x2="235" y2="166" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="200" y="180" text-anchor="middle" class="tm">7.0 (9/32 in = 7.1 OK)</text>
+  <text x="24" y="46" text-anchor="start" class="ts">pilot 2 mm first</text>
+  <line x1="80" y1="52" x2="189" y2="96" class="lead" marker-end="url(#al)"/>
+  <text x="210" y="218" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Drill only after zone 2, and only once the camera route is decided</tspan><tspan x="210" dy="1.2em">(v15 DCXYX: see the v15 section).</tspan></text>
+</svg><!--/dg:z3_top--><figcaption>Seen from the outside: tape, pilot, then the 7 mm hole on the centre lines.</figcaption></figure>
+    <figure class="diagram"><!--dg:z3_sec--><svg class="dg" viewBox="0 0 420 230" role="img" aria-label="Zone 3 drilling in three steps: pilot, open to 7 mm, deburr"><title>Zone 3 drilling in three steps: pilot, open to 7 mm, deburr</title>
+  <text x="70" y="20" text-anchor="middle" class="tb">1  Pilot 2 mm</text>
+  <rect x="10" y="150" width="120" height="26" rx="0" class="wood"/>
+  <text x="70" y="168" text-anchor="middle" class="ts">scrap wood</text>
+  <path d="M10,136 H65 V150 H10 Z M75,136 H130 V150 H75 Z" class="nv"/>
+  <rect x="66" y="40" width="8" height="106" rx="0" class="bit"/>
+  <text x="70" y="196" text-anchor="middle" class="ts"><tspan x="70" dy="0em">straight up</tspan><tspan x="70" dy="1.2em">and down</tspan></text>
+  <text x="210" y="20" text-anchor="middle" class="tb">2  Open to 7 mm</text>
+  <rect x="150" y="150" width="120" height="26" rx="0" class="wood"/>
+  <text x="210" y="168" text-anchor="middle" class="ts">scrap wood</text>
+  <path d="M150,136 H175 V150 H150 Z M245,136 H270 V150 H245 Z" class="nv"/>
+  <path d="M180,40 H240 V122 L210,140 L180,122 Z" class="bit"/>
+  <text x="210" y="196" text-anchor="middle" class="ts"><tspan x="210" dy="0em">slow; ease off</tspan><tspan x="210" dy="1.2em">at the end</tspan></text>
+  <text x="350" y="20" text-anchor="middle" class="tb">3  Deburr</text>
+  <rect x="290" y="150" width="120" height="26" rx="0" class="wood"/>
+  <text x="350" y="168" text-anchor="middle" class="ts">scrap wood</text>
+  <path d="M290,136 H315 V150 H290 Z M385,136 H410 V150 H385 Z" class="nv"/>
+  <path d="M310.0,132.0 L320.0,126.0 L362.0,56.0 L352.0,50.0 Z" class="tool"/>
+  <text x="350" y="196" text-anchor="middle" class="ts"><tspan x="350" dy="0em">file or sandpaper;</tspan><tspan x="350" dy="1.2em">don't widen it</tspan></text>
+</svg><!--/dg:z3_sec--><figcaption>The three steps, with a scrap block of wood underneath so the bit has something to go into.</figcaption></figure>
+  </div>
   <div class="pair">
     <figure><img src="renders/grind_camera_window_before.png" alt="Back cover outside before drilling." loading="lazy"><figcaption>Outside, before.</figcaption></figure>
     <figure><img src="renders/grind_camera_window_after.png" alt="Back cover outside with the 7 mm camera window." loading="lazy"><figcaption>Outside, after: one round 7 mm hole.</figcaption></figure>
     <figure><img src="renders/grind_camera_window_inside_before.png" alt="Back cover inside at the camera spot before drilling." loading="lazy"><figcaption>Inside, before (rib B already ground).</figcaption></figure>
     <figure><img src="renders/grind_camera_window_inside_after.png" alt="Back cover inside with the camera window drilled." loading="lazy"><figcaption>Inside, after.</figcaption></figure>
   </div>
+  <div class="pair">
+    <figure><a href="renders/grind/z3_camera_window_outside_before_ann.png"><img src="renders/grind/z3_camera_window_outside_before_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 3, before."></a><figcaption>Zone 3, before.</figcaption></figure>
+    <figure><a href="renders/grind/z3_camera_window_outside_after_ann.png"><img src="renders/grind/z3_camera_window_outside_after_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 3, after."></a><figcaption>Zone 3, after.</figcaption></figure>
+  </div>
+  <div class="pair">
+    <figure><a href="renders/grind/z3_camera_window_inside_before_ann.png"><img src="renders/grind/z3_camera_window_inside_before_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 3 from inside, before: the ground 14 mm gap in rib B with the drill spot marked in its middle."></a><figcaption><strong>From inside, before:</strong> the drill spot is the middle of the 14 mm gap you ground in zone 2.</figcaption></figure>
+    <figure><a href="renders/grind/z3_camera_window_inside_after_ann.png"><img src="renders/grind/z3_camera_window_inside_after_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 3 from inside, after: one round 7 mm hole in the middle of the gap."></a><figcaption><strong>From inside, after:</strong> one round 7 mm hole, centred in the gap.</figcaption></figure>
+  </div>
+  <figure><a href="renders/grind/camera_hole_position_ann.png"><img src="renders/grind/camera_hole_position_ann.png" width="1600" height="1200" loading="lazy" alt="Back cover from the outside, top end up: the drill centre is 38.0 mm down from the cover's top outer edge and 39.3 mm in from the side edge, which is half of the 78.7 mm width; hole 7 mm."></a><figcaption><strong>Where to drill, seen from the outside</strong> (top end up): <span class="num">38.0 mm</span> down from the back cover's own top edge, on the width centre line (<span class="num">39.3 mm</span> from each side in the model = half of its <span class="num">78.7 mm</span>).</figcaption></figure>
+  <div class="box">
+    <p class="sub">Measuring the drill point (which edge, which number)</p>
+    <p>The hole centre comes from the board: the camera's centre is at <span class="num">KiCad (150, 95.1)</span>. The model turns board numbers into shell numbers with X = 150 &minus; x and Y = 138.94 &minus; y (<code>build_final_assembly.py</code>), so the hole is at X = 0 (the width centre line) and Y = <span class="num">43.84 mm</span> above the shell's middle.</p>
+    <ul>
+      <li><strong>Top distance: measure from the navy back cover's own top outer edge, along the centre line: <span class="num">38.0 mm</span>.</strong> In the model that edge is at Y 81.79, and 81.79 &minus; 43.84 = 37.95. This is the number to use with the cover off the calculator, which is how you drill it.</li>
+      <li>Older notes said "about 38.3". That was measured to Y 82.1, the top of the <em>whole calculator's</em> outline, where the silver front shell's top wall stands about 0.3 mm beyond the navy cover's edge. Same hole, different edge. Don't use 38.3 on the loose back cover.</li>
+      <li><strong>Side distance: half of your cover's width, measured at the same height.</strong> The model's cover is <span class="num">78.7 mm</span> across there, so <span class="num">39.3 mm</span> from each side. Your shell may differ by a few tenths, so measure it and halve it; the two side readings must match (the 7 mm hole has only about <span class="num">0.7 mm</span> to spare round the lens).</li>
+      <li>Measure to the <em>outer</em> edge, with the caliper square to that edge.</li>
+      <li>Cross-check from the inside: the point must land in the middle of the 14 mm gap in rib B. If the outside number and the gap disagree by more than <span class="num">0.5 mm</span>, stop and find out why before drilling (both come from the same model point).</li>
+    </ul>
+  </div>
   <div class="box">
     <p class="sub">Steps</p>
     <ol class="steps">
-      <li>Find the centre on the inside: the middle of your 14 mm marks on the ground rib, on the width centre line. Check it against the template.</li>
+      <li>Find the centre on the inside: the middle of your 14 mm marks on the ground rib, on the width centre line. Check it against the template. <span class="rc">calipers</span> measure from both side edges: the two numbers must match.</li>
       <li>Push a pin or the point of a scriber through to make a small dent at the centre.</li>
       <li>Clamp the cover on a scrap block of wood so the drill has something to go into. Put masking tape on the outside where the hole will come out (less chipping).</li>
-      <li>Drill a small pilot hole first, straight up and down.</li>
-      <li>Open it to 7 mm with the hand drill, slowly and with light pressure. Plastic likes to grab a big bit just as it breaks through: ease off at the end.</li>
-      <li>Clean the edge with a fingertip of sandpaper. Don't make the hole bigger.</li>
+      <li>Drill the <span class="num">2 mm</span> pilot first, straight up and down (or through the A2 bush in jig A).</li>
+      <li>Open it to 7 mm with the hand drill, slowly and with light pressure, or from the outside with a step drill (it centres on the pilot). Plastic likes to grab a big bit just as it breaks through: ease off at the end.</li>
+      <li>Deburr both edges with a half-round needle file or a fingertip of sandpaper. Don't make the hole bigger.</li>
+      <li><span class="rc">calipers</span> Inside jaws: <span class="num">7.0–7.1 mm</span> in two directions (round, not oval).</li>
     </ol>
   </div>
-  <div class="callout ok"><strong class="tag">Stop when</strong><p>The hole is round, 7 mm across (check with the calipers' inside jaws) and clean on both sides.</p></div>
+  <div class="callout ok"><strong class="tag">Done when</strong><p>The hole is round, 7 mm across in both directions (calipers' inside jaws), centred on the marks and clean on both sides.</p></div>
   <figure><img src="renders/section_camera.png" alt="Cut-away through the camera module under the 7 mm window." loading="lazy"><figcaption>Cut through the camera: the lens sits just under the window, with <span class="num">0.71 mm</span> to the hole's edge.</figcaption></figure>
+  <div class="callout warn">
+    <strong class="tag">v15 with the DCXYX camera</strong>
+    <p>The recommended route keeps this hole exactly where it is (the ribbon's extra length goes into an S-fold, see the v15 section). Only if the build uses the fallback "camera moved 8 mm" route does the window move: <span class="num">8 mm</span> towards the top end (centre about <span class="num">30.0 mm</span> from the back cover's own top outer edge, still on the centre line). That hole crosses the moulded label's top border outside (cosmetic only: pilot first). Confirm which route before you drill.</p>
+  </div>
   <div class="box">
     <p class="sub">Common mistakes</p>
     <ul>
       <li>Drilling straight in with the 7 mm bit: it wanders and grabs. Always pilot first.</li>
       <li>Drilling at an angle. Keep the drill upright, or use a drill press.</li>
+      <li>Pushing hard as the bit breaks through: it grabs and cracks the floor round the hole. Ease off.</li>
+      <li>Drilling before the camera route is decided.</li>
       <li>Later: mounting the camera on foam tape. Use thin tape only (<span class="num">≤ 0.1 mm</span>) under the module, with Kapton on the board below it.</li>
     </ul>
   </div>
@@ -390,6 +806,7 @@ tr:last-child td { border-bottom: 0; }
       <li>The solar-box grind (zone 1): the battery's end sits where the box was.</li>
       <li>Hold the battery to the floor with thin (<span class="num">0.1 mm</span>) double-sided tape. <strong>No foam:</strong> the coin-cell cup sits only <span class="num">0.3 mm</span> above the battery.</li>
       <li>The battery lies over the old LR44 hole in the back floor. The battery lid still closes that hole.</li>
+      <li>Pre-grind check 3: if the cup is taller than <span class="num">5.8 mm</span>, the jig-C trim (battery upgrade study) is the fallback.</li>
     </ul>
     <p class="small">The front-shell map (regenerated 2026-10-06) now shows the cup in green with "zone 4 (KEEP)". If you still have an older print that says "LR44 cup: TRIM FLAT", throw it away and print the new one.</p>
   </div>
@@ -400,44 +817,102 @@ tr:last-child td { border-bottom: 0; }
   <div class="zone-head">
     <div class="row"><span class="eyebrow">Zone 5 · front shell</span><span class="pill do">cut</span></div>
     <h2>Magnet slot: U-notch in the top wall</h2>
-    <p><strong>Why:</strong> the magnetic charging connector's face (<span class="num">21 × 7 mm</span>) sits flush in the top end wall. Without the notch it runs <span class="num">1.0 mm</span> into the wall. The notch is <span class="num">21.5 mm</span> wide, so there is <span class="num">0.25 mm</span> each side: glue fills that.</p>
+  </div>
+  <div class="why">
+    <p><strong>Why (what would hit):</strong> the magnetic charging connector's face (<span class="num">21 × 7 mm</span>) sits flush in the top end wall. Without the notch <strong>it runs <span class="num">1.0 mm</span> into the wall</strong>. The notch is <span class="num">21.5 mm</span> wide, so there is <span class="num">0.25 mm</span> each side: glue fills that. It is a notch open at the rim, not a closed window: a closed window would leave a strip only <span class="num">0.45 mm</span> thick at the rim, which would break.</p>
   </div>
   <dl class="spec">
     <div><dt>Width</dt><dd class="num">21.5 mm</dd></div>
     <div><dt>Depth from rim</dt><dd class="num">7.95 mm</dd></div>
     <div><dt>Through</dt><dd class="num">the 1.2 mm wall</dd></div>
     <div><dt>From right edge</dt><dd class="num">6.4 → 27.9 mm</dd></div>
-    <div><dt>Bits</dt><dd>Carbide burr, then file</dd></div>
-    <div><dt>Speed</dt><dd>Low (dial 2–4)</dd></div>
+    <div><dt>Bits</dt><dd>3 mm carbide burr, then flat needle file</dd></div>
+    <div><dt>Speed</dt><dd class="num">5,000–10,000 RPM</dd></div>
   </dl>
+  <div class="diagrams">
+    <figure class="diagram"><!--dg:z5_top--><svg class="dg" viewBox="0 0 420 236" role="img" aria-label="Zone 5: the U-notch seen from outside the top wall, shell face down, rim up"><title>Zone 5: the U-notch seen from outside the top wall, shell face down, rim up</title>
+  <path d="M32.0,90 H271.66 V126.57 H370.56 V90 H400 V140.6 H32.0 Z" class="pl"/>
+  <rect x="271.66" y="90" width="98.9" height="36.57" rx="0" class="cut"/>
+  <rect x="272.81" y="92.07" width="96.6" height="32.2" rx="0" class="ghost"/>
+  <text x="321.11" y="112" text-anchor="middle" class="ts">magnet face</text>
+  <line x1="271.66" y1="90" x2="271.66" y2="74" class="ext"/>
+  <line x1="370.56" y1="90" x2="370.56" y2="74" class="ext"/>
+  <line x1="271.66" y1="78" x2="370.56" y2="78" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="321.11" y="73" text-anchor="middle" class="tm">21.5</text>
+  <line x1="370.56" y1="90" x2="370.56" y2="74" class="ext"/>
+  <line x1="400" y1="90" x2="400" y2="74" class="ext"/>
+  <line x1="370.56" y1="78" x2="400" y2="78" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="385.28" y="73" text-anchor="middle" class="tm">6.4</text>
+  <line x1="271.66" y1="74" x2="271.66" y2="42" class="ext"/>
+  <line x1="400" y1="74" x2="400" y2="42" class="ext"/>
+  <line x1="271.66" y1="46" x2="400" y2="46" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="335.83" y="41" text-anchor="middle" class="tm">27.9</text>
+  <line x1="257.66" y1="90" x2="257.66" y2="126.57" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="251.66" y="112.285" text-anchor="end" class="tm">7.95</text>
+  <text x="400" y="24" text-anchor="end" class="ts">measured from this outer edge (solar-window side)</text>
+  <text x="36" y="84" text-anchor="start" class="ts">rim (parting line)</text>
+  <text x="36" y="158.6" text-anchor="start" class="ts">display face down on the bench</text>
+  <text x="210" y="200" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Between the notch and the centre are the comb snap tabs: leave them.</tspan><tspan x="210" dy="1.2em">The corner screw post sits just behind the notch's outer end.</tspan></text>
+</svg><!--/dg:z5_top--><figcaption>Looking at the top wall from outside, shell face down, rim up. Red: the notch. Dashed: where the magnet's face will sit.</figcaption></figure>
+    <figure class="diagram"><!--dg:z5_sec--><svg class="dg" viewBox="0 0 420 230" role="img" aria-label="Zone 5 cross-section: the notch goes right through the 1.2 mm wall; the magnet face ends flush with the outside"><title>Zone 5 cross-section: the notch goes right through the 1.2 mm wall; the magnet face ends flush with the outside</title>
+  <rect x="0" y="18" width="420" height="22" rx="0" class="nvg"/>
+  <text x="410" y="14" text-anchor="end" class="ts">back cover (on top when face down)</text>
+  <path d="M230,40 H244.4 V184 H230 Z" class="pl"/>
+  <rect x="230" y="40" width="14.4" height="95.4" rx="0" class="cut"/>
+  <rect x="150" y="45.4" width="94.4" height="84" rx="0" class="partd"/>
+  <text x="192" y="88" text-anchor="middle" class="tb">magnet</text>
+  <line x1="160" y1="129.4" x2="160" y2="160" class="ln"/>
+  <line x1="175" y1="129.4" x2="175" y2="160" class="ln"/>
+  <text x="168" y="175.6" text-anchor="middle" class="ts">legs to J3</text>
+  <line x1="246" y1="40" x2="304" y2="40" class="ext"/>
+  <line x1="246" y1="135.4" x2="304" y2="135.4" class="ext"/>
+  <line x1="300" y1="40" x2="300" y2="135.4" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="306" y="91.7" text-anchor="start" class="tm">7.95 notch</text>
+  <line x1="148" y1="45.4" x2="116" y2="45.4" class="ext"/>
+  <line x1="148" y1="129.4" x2="116" y2="129.4" class="ext"/>
+  <line x1="120" y1="45.4" x2="120" y2="129.4" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="114" y="91.4" text-anchor="end" class="tm"><tspan x="114" dy="0em">face 0.45-7.45</tspan><tspan x="114" dy="1.2em">below the rim</tspan></text>
+  <line x1="230" y1="198" x2="244.4" y2="198" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="237.2" y="212" text-anchor="middle" class="tm">1.2 wall</text>
+  <text x="320" y="172" text-anchor="start" class="ts">outside</text>
+  <text x="40" y="172" text-anchor="start" class="ts">inside</text>
+</svg><!--/dg:z5_sec--><figcaption>Cut through the wall at the notch: the magnet sits in the opening, face flush with the outside.</figcaption></figure>
+  </div>
   <div class="pair">
     <figure><img src="renders/grind_magnet_slot_before.png" alt="Top end of the calculator before the notch." loading="lazy"><figcaption>Before: solid top wall.</figcaption></figure>
     <figure><img src="renders/grind_magnet_slot_after.png" alt="Top end of the calculator with a U-notch open from the parting line." loading="lazy"><figcaption>After: a U-notch open at the parting line, where the back cover meets the front shell.</figcaption></figure>
   </div>
+  <div class="pair">
+    <figure><a href="renders/grind/z5_magnet_notch_before_ann.png"><img src="renders/grind/z5_magnet_notch_before_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 5, before."></a><figcaption>Zone 5, before.</figcaption></figure>
+    <figure><a href="renders/grind/z5_magnet_notch_after_ann.png"><img src="renders/grind/z5_magnet_notch_after_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 5, after."></a><figcaption>Zone 5, after.</figcaption></figure>
+  </div>
+  <figure><a href="renders/grind/magnet_notch_dims_ann.png"><img src="renders/grind/magnet_notch_dims_ann.png" width="1600" height="1200" loading="lazy" alt="The magnet U-notch straight on from the top end, rim on top: 21.5 mm wide, 7.95 mm deep from the rim, 6.4 mm and 27.9 mm from the right edge."></a><figcaption><strong>The notch with its numbers</strong>, looking straight at the top end wall (display side down, rim on top): 21.5 wide, 7.95 deep from the rim, from 6.4 to 27.9 mm in from the right edge. Rounded inner corners of about 1 mm are fine.</figcaption></figure>
   <div class="box">
     <p class="sub">Where</p>
-    <p>Hold the front shell <strong>display side up, top end away from you</strong>. On the top end wall, measure from the <strong>right-hand side edge</strong>: the notch runs from <span class="num">6.4 mm</span> to <span class="num">27.9 mm</span> in. That puts it on the same side as the solar window. From the <strong>rim</strong> (the parting line, where the back cover sits) it goes <span class="num">7.95 mm</span> down towards the display face. It's a notch open at the rim, not a closed window: a closed window would leave a strip only <span class="num">0.45 mm</span> thick at the rim, which would break.</p>
+    <p>Hold the front shell <strong>display side up, top end away from you</strong>. On the top end wall, measure from the <strong>right-hand side edge</strong>: the notch runs from <span class="num">6.4 mm</span> to <span class="num">27.9 mm</span> in. That puts it on the same side as the solar window. (Turn the shell face down and look at the wall from outside, like the diagram, and it is still measured from the solar-window corner.) From the <strong>rim</strong> (the parting line, where the back cover sits) it goes <span class="num">7.95 mm</span> down towards the display face. Between the notch and the centre are the comb snap tabs: leave them.</p>
   </div>
   <div class="box">
-    <p class="sub">Steps</p>
+    <p class="sub">Steps (freehand)</p>
     <ol class="steps">
-      <li>Tape the outside of the top wall. Draw the notch on the tape: two vertical lines at 6.4 and 27.9 mm from the right edge, and the bottom line 7.95 mm from the rim. Use the calipers' depth rod against the rim to mark the depth at both ends.</li>
-      <li>Check the marked width is <span class="num">21.5 mm</span> before you cut.</li>
-      <li>Clamp the shell with the top wall facing you, soft jaws, no squeezing on the display window.</li>
+      <li>Tape the outside of the top wall. Draw the notch on the tape: two vertical lines at 6.4 and 27.9 mm from the solar-window side edge, and the bottom line 7.95 mm from the rim. <span class="rc">depth rod</span> against the rim to mark the depth at both ends.</li>
+      <li><span class="rc">calipers</span> Check the marked width is <span class="num">21.5 mm</span> before you cut.</li>
+      <li>Clamp the shell with the top wall facing you, soft jaws, no squeezing on the display window. Tape the corner screw post behind the wall.</li>
       <li>With the burr, cut <em>inside</em> your lines, starting at the rim and working down. Stay about <span class="num">0.5 mm</span> inside the lines.</li>
-      <li>Finish to the lines with the file or sanding drum. Keep the bottom edge straight and parallel to the rim.</li>
-      <li>Measure: width <span class="num">21.5</span>, depth from the rim <span class="num">7.95</span> at both ends.</li>
+      <li>Finish to the lines with the flat needle file. Keep the bottom edge straight and parallel to the rim.</li>
+      <li><span class="rc">calipers</span> Width <span class="num">21.5</span> at the rim and at the bottom; <span class="rc">depth rod</span> depth from the rim <span class="num">7.95</span> at both ends.</li>
       <li>When the magnet part arrives: its face should sit <span class="num">0.45–7.45 mm</span> below the rim, flush with the outside. Only glue it after the case closes and the face is flush.</li>
     </ol>
+    <p class="small"><strong>With jig B:</strong> clip it over the top wall (shell face down; it wraps the right-hand top corner, so no measuring). Saw down both window edges with a fine razor saw to the window bottom, cut the bottom with flush cutters, file flat to the window's edge with light strokes, round the two inner corners (r 1).</p>
   </div>
-  <div class="callout ok"><strong class="tag">Stop when</strong><p>The notch measures <span class="num">21.5 mm</span> wide and <span class="num">7.95 mm</span> deep from the rim, with clean square corners. Too tight is easy to fix; too wide isn't, so creep up on the lines.</p></div>
+  <div class="callout ok"><strong class="tag">Done when</strong><p>The notch measures <span class="num">21.5 mm</span> wide and <span class="num">7.95 mm</span> deep from the rim, with clean square corners and a straight bottom edge. Too tight is easy to fix; too wide isn't, so creep up on the lines.</p></div>
   <figure><img src="renders/section_magnet_slot.png" alt="Cut-away through the magnet connector in its notch, legs into header J3." loading="lazy"><figcaption>Cut through the magnet in its notch, legs pushed into header J3.</figcaption></figure>
   <div class="box">
     <p class="sub">Common mistakes</p>
     <ul>
-      <li>Measuring from the left edge or with the shell upside down. Display up, top away, measure from the right.</li>
+      <li>Measuring from the wrong edge or with the shell the wrong way up. The notch is on the solar-window side.</li>
       <li>Cutting to the line straight away with the burr. It always takes a bit more than you think: stay inside, then file.</li>
       <li>Hitting the top-corner screw post behind the wall. It's close to the notch's outer end: tape it, keep the burr shallow.</li>
+      <li>A sloping bottom edge: the magnet then sits crooked. File it parallel to the rim, checking the depth at both ends.</li>
     </ul>
   </div>
 </article>
@@ -447,25 +922,135 @@ tr:last-child td { border-bottom: 0; }
   <div class="zone-head">
     <div class="row"><span class="eyebrow">Zone 5b · back cover</span><span class="pill check">only if there</span></div>
     <h2>Back-cover lip under the magnet notch</h2>
-    <p><strong>Why:</strong> our 3D model guessed a <span class="num">1.5 mm</span> locating lip round the back cover's rim (it was never measured). If your back cover really has a lip where the magnet sits, the magnet body hits it by <span class="num">0.5 mm</span>.</p>
+  </div>
+  <div class="why">
+    <p><strong>Why (what would hit):</strong> our 3D model guessed a <span class="num">1.5 mm</span> locating lip round the back cover's rim (it was never measured). If your back cover really has a lip where the magnet sits, <strong>the magnet body hits it by about <span class="num">0.5 mm</span></strong> and the cover won't close over the magnet. Pre-grind check 5 tells you.</p>
+  </div>
+  <dl class="spec">
+    <div><dt>Width</dt><dd class="num">21.5 mm, in line with the notch</dd></div>
+    <div><dt>Where</dt><dd class="num">6.4 → 27.9 mm from the solar-side edge</dd></div>
+    <div><dt>Down to</dt><dd>level with the back cover's rim</dd></div>
+    <div><dt>Tools</dt><dd>burr or flush cutters, then flat needle file</dd></div>
+    <div><dt>Speed</dt><dd class="num">5,000–10,000 RPM (or by hand)</dd></div>
+    <div><dt>Time</dt><dd class="num">≈ 0.5–2 min</dd></div>
+  </dl>
+  <figure class="diagram"><!--dg:z5b--><svg class="dg" viewBox="0 0 420 236" role="img" aria-label="Zone 5b: if the back cover has a locating lip at the top end, cut 21.5 mm of it to the rim, in line with the notch"><title>Zone 5b: if the back cover has a locating lip at the top end, cut 21.5 mm of it to the rim, in line with the notch</title>
+  <rect x="0" y="40" width="420" height="30" rx="0" class="nvg"/>
+  <text x="10" y="34" text-anchor="start" class="ts">back cover rim (seen from the side)</text>
+  <path d="M230,70 H244.4 V202 H230 Z" class="pl"/>
+  <rect x="150" y="75.4" width="94.4" height="84" rx="0" class="partd"/>
+  <rect x="206" y="70" width="14" height="18" rx="0" class="cut"/>
+  <text x="180" y="136" text-anchor="middle" class="tb">magnet</text>
+  <text x="60" y="86" text-anchor="middle" class="to ts"><tspan x="60" dy="0em">lip? (model</tspan><tspan x="60" dy="1.2em">guess 1.5 mm)</tspan></text>
+  <line x1="96" y1="82" x2="204" y2="78" class="lead" marker-end="url(#al)"/>
+  <text x="256" y="90" text-anchor="start" class="ts"><tspan x="256" dy="0em">the magnet's top edge is</tspan><tspan x="256" dy="1.2em">0.45 below the rim: a 1.5</tspan><tspan x="256" dy="1.2em">lip hits it by ~0.5 mm</tspan></text>
+  <text x="210" y="214" text-anchor="middle" class="ts"><tspan x="210" dy="0em">No lip at the top end of your cover? Skip 5b. Lip there? Burr or snip</tspan><tspan x="210" dy="1.2em">it off, 21.5 mm wide, level with the rim.</tspan></text>
+</svg><!--/dg:z5b--><figcaption>Side cut at the notch: a lip hanging down from the back cover would sit right where the magnet's top edge is.</figcaption></figure>
+  <div class="pair">
+    <figure><a href="renders/grind/z5b_lip_before_ann.png"><img src="renders/grind/z5b_lip_before_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 5b, before."></a><figcaption>Zone 5b, before.</figcaption></figure>
+    <figure><a href="renders/grind/z5b_lip_after_ann.png"><img src="renders/grind/z5b_lip_after_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 5b, after."></a><figcaption>Zone 5b, after.</figcaption></figure>
   </div>
   <div class="box">
     <p class="sub">Steps</p>
     <ol class="steps">
-      <li>Look at your back cover's rim at the top end. No raised lip there? You're done with this zone.</li>
+      <li>Look at your back cover's rim at the top end, on the solar-box side (top right with the cover inside up, top end away). No raised lip there? You're done with this zone.</li>
       <li>If there is one: put the back cover on the notched front shell and mark the lip with the marker through the notch, on both sides.</li>
-      <li>Take the lip off between the marks, <span class="num">21.5 mm</span> wide, down to the back cover's rim. Burr, then file. Don't touch the outer wall.</li>
+      <li><span class="rc">calipers</span> Check the marks are <span class="num">21.5 mm</span> apart and line up with the notch.</li>
+      <li>Take the lip off between the marks, down to the back cover's rim: burr, or two snips with flush cutters, then file. Don't touch the outer wall.</li>
+      <li>Close the halves without the magnet: the cut must sit right behind the notch.</li>
     </ol>
   </div>
-  <div class="callout ok"><strong class="tag">Stop when</strong><p>The marked stretch of lip is level with the rim and 21.5 mm wide, lined up with the notch.</p></div>
+  <div class="callout ok"><strong class="tag">Done when</strong><p>The marked stretch of lip is level with the rim and 21.5 mm wide, lined up with the notch, and the halves still close with no gap.</p></div>
+  <div class="box">
+    <p class="sub">Common mistakes</p>
+    <ul>
+      <li>Cutting the lip on the wrong end or side: always mark it through the notch with the halves together.</li>
+      <li>Cutting the outer wall of the back cover instead of the lip: the outside would then show a gap.</li>
+    </ul>
+  </div>
+</article>
+
+<!-- ZONE 6b -->
+<article class="zone" id="z6b">
+  <div class="zone-head">
+    <div class="row"><span class="eyebrow">Zone 6b · front shell · do before 6</span><span class="pill need">needed</span></div>
+    <h2>Snip the 3 round pins and the 3 wire hooks off the inner rib, on BOTH side walls</h2>
+  </div>
+  <div class="why">
+    <p><strong>Why (what would hit):</strong> the depth rod (2026-10-06) put the round pins <span class="num">5.1–5.5 mm</span> (outer two) and <span class="num">6.0–6.1 mm</span> (middle) below the rim and the U-shaped wire hooks at <span class="num">5.5 mm</span>; the board occupies 5.5–6.3 mm. So every pin and hook is at board height. On the J2 side their tips are 0–0.5 mm from the board's edge (the paper edge runs through the pin bosses in your photo); on the solar side <strong>the two upper hooks sit <span class="num">1.1–1.4 mm</span> inside the board's top corner and the pins reach <span class="num">1 mm</span> into the antenna tab</strong>. They held Casio's solar-cell wires; nothing of ours runs along those walls (the LiPo leads go straight into J4). Verification 12, hits 1&ndash;5 and 8&ndash;11.</p>
+  </div>
+  <dl class="spec">
+    <div><dt>Where</dt><dd>both screen-section side walls: 3 round pins (26, 35, 45 mm from the top) and 3 hooks (17, 22 and 56–59 mm; the lowest is the wider wire holder)</dd></div>
+    <div><dt>What</dt><dd>cut each pin and hook off flush with the rib it grows from</dd></div>
+    <div><dt>Leave</dt><dd>the rib itself (zone 6 only notches it on the solar side), the posts, the snap tabs</dd></div>
+    <div><dt>Tools</dt><dd>flush cutters; a needle file for the stubs</dd></div>
+    <div><dt>Time</dt><dd class="num">≈ 2 minutes</dd></div>
+  </dl>
+  <div class="pair">
+    <figure><img src="renders/photos/grind_solar_wall_6_6b_ann.jpg" alt="Nirav's photo of the solar-side wall with the old wires: two U hooks and three round pins circled in red, the inner rib marked orange." loading="lazy"><figcaption>Your solar-side wall: the hooks and pins to snip (red), and the rib that zone 6 files down (orange).</figcaption></figure>
+    <figure><img src="renders/photos/grind_j2_wall_6b_ann.jpg" alt="Nirav's photo of the J2-side wall with the paper template in: pins and hooks circled in red, the rib's lower end marked orange." loading="lazy"><figcaption>Your J2-side wall: snip everything circled. Orange is zone 6c, only if needed.</figcaption></figure>
+  </div>
+  <figure class="diagram"><!--dg:z6b--><svg class="dg" viewBox="0 0 420 236" role="img" aria-label="Zone 6b: flush cutters flat against the rib; good cut versus a stub"><title>Zone 6b: flush cutters flat against the rib; good cut versus a stub</title>
+  <text x="100" y="20" text-anchor="middle" class="tb"><tspan x="100" dy="0em">Flat side of the cutters</tspan><tspan x="100" dy="1.2em">against the rib</tspan></text>
+  <rect x="30" y="50" width="14" height="140" rx="0" class="pl"/>
+  <rect x="44" y="108" width="34" height="12" rx="0" class="cut"/>
+  <text x="88" y="118" text-anchor="start" class="ts">pin</text>
+  <path d="M46,96 L150,70 L156,84 L52,106 Z" class="tool"/>
+  <path d="M46,132 L150,158 L156,144 L52,122 Z" class="tool"/>
+  <text x="100" y="210" text-anchor="middle" class="ts">cut at the root</text>
+  <text x="250" y="32" text-anchor="middle" class="tg tb">GOOD</text>
+  <rect x="243" y="50" width="14" height="140" rx="0" class="pl"/>
+  <text x="250" y="210" text-anchor="middle" class="ts"><tspan x="250" dy="0em">flush: a fingernail</tspan><tspan x="250" dy="1.2em">doesn't catch</tspan></text>
+  <text x="360" y="32" text-anchor="middle" class="tr tb">BAD</text>
+  <rect x="353" y="50" width="14" height="140" rx="0" class="pl"/>
+  <rect x="367" y="108" width="8" height="12" rx="0" class="cut"/>
+  <text x="380" y="104" text-anchor="start" class="tr ts">stub</text>
+  <text x="360" y="210" text-anchor="middle" class="ts">file it off</text>
+</svg><!--/dg:z6b--><figcaption>Flat face of the cutters against the rib, so the cut is flush. Anything left standing gets a stroke of the file.</figcaption></figure>
+  <div class="pair">
+    <figure><a href="renders/grind/z6b_pins_hooks_both_walls_before_ann.png"><img src="renders/grind/z6b_pins_hooks_both_walls_before_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 6b, before."></a><figcaption>Zone 6b, before.</figcaption></figure>
+    <figure><a href="renders/grind/z6b_pins_hooks_both_walls_after_ann.png"><img src="renders/grind/z6b_pins_hooks_both_walls_after_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 6b, after."></a><figcaption>Zone 6b, after.</figcaption></figure>
+  </div>
+  <p class="small">Close-up of one wall (the other wall has the same set):</p>
+  <div class="pair">
+    <figure><a href="renders/grind/z6b_pins_hooks_before_ann.png"><img src="renders/grind/z6b_pins_hooks_before_ann.png" width="1600" height="1200" loading="lazy" alt="Close-up of one inner rib: three round pins and three wire hooks marked in red."></a><figcaption><strong>Before, close-up:</strong> 3 round pins and 3 wire hooks (one wide) on the rib. Red = snip off.</figcaption></figure>
+    <figure><a href="renders/grind/z6b_pins_hooks_after_ann.png"><img src="renders/grind/z6b_pins_hooks_after_ann.png" width="1600" height="1200" loading="lazy" alt="Close-up of the same rib with the pins and hooks snipped flush."></a><figcaption><strong>After:</strong> the rib's face is flat. The rib itself stays.</figcaption></figure>
+  </div>
+  <div class="box">
+    <p class="sub">Steps</p>
+    <ol class="steps">
+      <li>Pull out Casio's old solar-cell wires if they are still in the hooks.</li>
+      <li>Front shell face down. Find the thin inner rib beside the screen opening on each side; the pins and the U-hooks grow from its inner face.</li>
+      <li>Flush cutters with the flat face against the rib: snip each pin at its root. Same for the three hooks (cut the arm where it meets the rib; the U falls off). Hold a finger over the piece so it doesn't fly off.</li>
+      <li>Run a needle file along the rib so nothing stands proud; a fingernail drawn along the rib should not catch.</li>
+      <li>Repeat on the other wall. Count: 6 pins and 6 hooks in the bin. Blow the chips out.</li>
+    </ol>
+  </div>
+  <div class="callout ok"><strong class="tag">Done when</strong><p>Both inner ribs are smooth from the top wall down to where the thick wall ends: 6 pins and 6 hooks gone, no stubs.</p></div>
+  <div class="box">
+    <p class="sub">Common mistakes</p>
+    <ul>
+      <li>Cutters the wrong way round (bevel against the rib): leaves a stub about 0.5 mm long. Flip them.</li>
+      <li>Twisting the cutters: the rib is thin and can crack. Straight squeeze only.</li>
+      <li>Forgetting the J2-side wall. Both walls.</li>
+      <li>Missing the lowest, wider holder (56&ndash;59 mm from the top).</li>
+    </ul>
+  </div>
 </article>
 
 <!-- ZONE 6 -->
 <article class="zone" id="z6">
   <div class="zone-head">
-    <div class="row"><span class="eyebrow">Zone 6 · front shell</span><span class="pill">needed</span></div>
+    <div class="row"><span class="eyebrow">Zone 6 · front shell</span><span class="pill need">needed</span></div>
     <h2>Side-wall relief: 2–2.5 mm off the inner side-wall rib, 15–50 mm from the top (board corner + antenna)</h2>
-    <p><strong>Why:</strong> on the <strong>solar-window side</strong> the screen-section side wall is an outer skin, a wire channel and a thin <strong>inner rib</strong> (the one the three round pins stick out of). Your depth rod (2026-10-06) put the rib's top edge <span class="num">4.5–5.0 mm</span> below the rim; the board sits 5.5–6.3 mm below the rim, so the rib runs right through where the board goes. Two things on the board reach into it: the board's own top corner, a strip 15–26 mm from the top outer edge that the board keeps at full width (up to <span class="num">0.7 mm</span> into the rib), and the ESP32 module's antenna end, a bare <span class="num">0.8 mm</span> tab that sticks out <span class="num">4.15 mm</span> past the board's edge 32–48 mm from the top (<span class="num">0.3 mm</span> into the rib). Either one stops the board seating. Only the part of the rib between 4.5 and 7 mm below the rim is in the way, so this is a 2–2.5 mm deep notch along the rib, not the whole rib (verification 12).</p>
+  </div>
+  <div class="why">
+    <p><strong>Why (what would hit):</strong> on the <strong>solar-window side</strong> the screen-section side wall is an outer skin, a wire channel and a thin <strong>inner rib</strong> (the one the three round pins stick out of). Your depth rod (2026-10-06) put the rib's top edge <span class="num">4.5–5.0 mm</span> below the rim; the board sits 5.5–6.3 mm below the rim, so the rib runs right through where the board goes. Two things on the board reach into it:</p>
+    <ul>
+      <li>the board's own top corner, a strip 15–26 mm from the top outer edge that the board keeps at full width: <strong>up to <span class="num">0.7 mm</span> into the rib</strong>;</li>
+      <li>the ESP32 module's antenna end, a bare <span class="num">0.8 mm</span> tab that sticks out <span class="num">4.15 mm</span> past the board's edge 32–48 mm from the top: <strong><span class="num">0.3 mm</span> into the rib</strong>.</li>
+    </ul>
+    <p>Either one stops the board seating. Only the part of the rib between 4.5 and 7 mm below the rim is in the way, so this is a 2–2.5 mm deep notch along the rib, not the whole rib (verification 12).</p>
   </div>
   <dl class="spec">
     <div><dt>Where</dt><dd class="num">solar-window side; 15–50 mm from the top outer edge (board corner 15–27, antenna tab 31–50)</dd></div>
@@ -475,49 +1060,123 @@ tr:last-child td { border-bottom: 0; }
     <div><dt>Tools</dt><dd>flat needle file or a small sanding stick; steel ruler across the rim + depth rod to check</dd></div>
     <div><dt>Check</dt><dd>the paper template with its yellow tab lies flat; depth rod on the filed rib reads 7.0 everywhere between the marks</dd></div>
   </dl>
+  <div class="diagrams">
+    <figure class="diagram"><!--dg:z6_top--><svg class="dg" viewBox="0 0 420 262" role="img" aria-label="Zone 6 top view along the solar-side wall: the rib, its pins and hooks, and what reaches into it"><title>Zone 6 top view along the solar-side wall: the rib, its pins and hooks, and what reaches into it</title>
+  <rect x="34" y="40" width="357.5" height="10" rx="0" class="pl"/>
+  <text x="34" y="34" text-anchor="start" class="ts">outer skin (don't touch)</text>
+  <rect x="34" y="50" width="357.5" height="30" rx="0" class="chan"/>
+  <text x="39.5" y="69" text-anchor="start" class="ts">wire channel</text>
+  <rect x="34" y="80" width="321.2" height="7" rx="0" class="rib"/>
+  <rect x="116.5" y="80" width="192.5" height="7" rx="0" class="cut"/>
+  <rect x="173" y="87" width="8" height="9" rx="0" class="cut"/>
+  <rect x="222.5" y="87" width="8" height="9" rx="0" class="cut"/>
+  <rect x="277.5" y="87" width="8" height="9" rx="0" class="cut"/>
+  <path d="M121.5,87 v10 h12 v-10" class="lcut"/>
+  <path d="M149.0,87 v10 h12 v-10" class="lcut"/>
+  <path d="M342.0,87 v10 h16.5 v-10" class="lcut"/>
+  <path d="M116.5,88 H182.5 V128 H116.5" class="bo"/>
+  <rect x="204.5" y="86" width="104.5" height="22" rx="0" class="tab"/>
+  <text x="149.5" y="110" text-anchor="middle" class="ts"><tspan x="149.5" dy="0em">board</tspan><tspan x="149.5" dy="1.2em">corner</tspan></text>
+  <text x="256.75" y="122" text-anchor="middle" class="ts">antenna tab</text>
+  <text x="256.75" y="135" text-anchor="middle" class="ts">(0.8 mm bare PCB)</text>
+  <text x="369.5" y="116" text-anchor="middle" class="to ts"><tspan x="369.5" dy="0em">rib end</tspan><tspan x="369.5" dy="1.2em">(6c)</tspan></text>
+  <line x1="34" y1="176" x2="34" y2="186" class="ln"/>
+  <text x="34" y="198" text-anchor="middle" class="tm">0</text>
+  <line x1="61.5" y1="176" x2="61.5" y2="182" class="ln"/>
+  <line x1="89" y1="176" x2="89" y2="186" class="ln"/>
+  <text x="89" y="198" text-anchor="middle" class="tm">10</text>
+  <line x1="116.5" y1="176" x2="116.5" y2="182" class="ln"/>
+  <line x1="144" y1="176" x2="144" y2="186" class="ln"/>
+  <text x="144" y="198" text-anchor="middle" class="tm">20</text>
+  <line x1="171.5" y1="176" x2="171.5" y2="182" class="ln"/>
+  <line x1="199" y1="176" x2="199" y2="186" class="ln"/>
+  <text x="199" y="198" text-anchor="middle" class="tm">30</text>
+  <line x1="226.5" y1="176" x2="226.5" y2="182" class="ln"/>
+  <line x1="254" y1="176" x2="254" y2="186" class="ln"/>
+  <text x="254" y="198" text-anchor="middle" class="tm">40</text>
+  <line x1="281.5" y1="176" x2="281.5" y2="182" class="ln"/>
+  <line x1="309" y1="176" x2="309" y2="186" class="ln"/>
+  <text x="309" y="198" text-anchor="middle" class="tm">50</text>
+  <line x1="336.5" y1="176" x2="336.5" y2="182" class="ln"/>
+  <line x1="364" y1="176" x2="364" y2="186" class="ln"/>
+  <text x="364" y="198" text-anchor="middle" class="tm">60</text>
+  <line x1="391.5" y1="176" x2="391.5" y2="182" class="ln"/>
+  <line x1="34" y1="176" x2="391.5" y2="176" class="ln"/>
+  <text x="391.5" y="212" text-anchor="end" class="ts">mm from the top outer edge</text>
+  <line x1="116.5" y1="96" x2="116.5" y2="158" class="ext"/>
+  <line x1="309" y1="96" x2="309" y2="158" class="ext"/>
+  <line x1="116.5" y1="162" x2="309" y2="162" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="212.75" y="157" text-anchor="middle" class="tm">zone 6: 15 to 50 mm</text>
+  <text x="210" y="232" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Red: rib top filed down (zone 6) and the pins + hooks snipped (6b).</tspan><tspan x="210" dy="1.2em">Board corner 15-27 mm, antenna tab 31-50 mm.</tspan></text>
+</svg><!--/dg:z6_top--><figcaption>Looking down on the solar-side wall (drawn sideways: the top of the calculator is on the left). Red on the rib: the 15&ndash;50 mm stretch filed down. Green outline: the board's corner; yellow: the antenna tab.</figcaption></figure>
+    <figure class="diagram"><!--dg:z6_sec--><svg class="dg" viewBox="0 0 420 336" role="img" aria-label="Zone 6 cross-section across the wall: rib top 4.5 to 5.0 below the rim, board 5.5 to 6.3, file the rib to 7.0"><title>Zone 6 cross-section across the wall: rib top 4.5 to 5.0 below the rim, board 5.5 to 6.3, file the rib to 7.0</title>
+  <rect x="0" y="30" width="420" height="10" rx="0" class="tool"/>
+  <text x="410" y="26" text-anchor="end" class="ts">ruler across the rim</text>
+  <path d="M20,40 H36 V265.6 H20 Z" class="pl"/>
+  <rect x="36" y="256" width="130" height="9.6" rx="0" class="pl"/>
+  <rect x="150" y="148" width="16" height="108" rx="0" class="pl"/>
+  <rect x="150" y="148" width="16" height="60" rx="0" class="cut"/>
+  <rect x="166" y="162.4" width="16" height="8.4" rx="0" class="cut"/>
+  <rect x="155" y="172" width="135" height="19.2" rx="0" class="board"/>
+  <text x="225" y="186" text-anchor="middle" class="tb">board</text>
+  <line x1="158" y1="40" x2="158" y2="208" class="rod"/>
+  <line x1="140" y1="208" x2="176" y2="208" class="lr"/>
+  <line x1="300" y1="40" x2="300" y2="217.6" class="ln"/>
+  <line x1="296" y1="154" x2="304" y2="154" class="ln"/>
+  <text x="307" y="158" text-anchor="start" class="tm">4.5-5.0 rib now</text>
+  <line x1="296" y1="172" x2="304" y2="172" class="ln"/>
+  <text x="307" y="176" text-anchor="start" class="tm">5.5 board</text>
+  <line x1="296" y1="191.2" x2="304" y2="191.2" class="ln"/>
+  <text x="307" y="195.2" text-anchor="start" class="tm">6.3 board</text>
+  <line x1="296" y1="208" x2="304" y2="208" class="ln"/>
+  <text x="307" y="212" text-anchor="start" class="tm tr">7.0 target</text>
+  <line x1="166" y1="148" x2="296" y2="148" class="ext"/>
+  <line x1="290" y1="191.2" x2="296" y2="191.2" class="ext"/>
+  <line x1="176" y1="208" x2="296" y2="208" class="ext"/>
+  <text x="46" y="92" text-anchor="start" class="ts"><tspan x="46" dy="0em">pin (6b) on the</tspan><tspan x="46" dy="1.2em">rib's inner face</tspan></text>
+  <line x1="110" y1="116" x2="172" y2="164.4" class="lead" marker-end="url(#al)"/>
+  <text x="46" y="160" text-anchor="start" class="ts"><tspan x="46" dy="0em">depth rod: 7.0</tspan><tspan x="46" dy="1.2em">when you're done</tspan></text>
+  <line x1="100" y1="182" x2="156" y2="204" class="lead" marker-end="url(#al)"/>
+  <text x="44" y="250" text-anchor="start" class="ts">channel floor</text>
+  <text x="14" y="283.6" text-anchor="start" class="ts">outer skin</text>
+  <text x="140" y="283.6" text-anchor="start" class="ts">inner rib (1 mm)</text>
+  <text x="210" y="305.6" text-anchor="middle" class="ts"><tspan x="210" dy="0em">6.5 is the bare minimum (the board's far face is at 6.3); 7.0 leaves</tspan><tspan x="210" dy="1.2em">0.7 mm of air.</tspan></text>
+</svg><!--/dg:z6_sec--><figcaption>Cut across the wall: the rib's top 2&ndash;2.5 mm (red) is where the board edge would be. File it down until the rod reads 7.0.</figcaption></figure>
+  </div>
   <div class="pair">
     <figure><img src="renders/grind_antenna_relief_before.png" alt="Inside of the front shell: the inner rib beside the screen on the antenna side." loading="lazy"><figcaption>Before: the inner rib of the thick side wall beside the screen (picture from rev F: in your shell its top edge is 4.5–5 mm below the rim, and the pins and hooks sit at board height).</figcaption></figure>
     <figure><img src="renders/grind_antenna_relief_after.png" alt="Inside of the front shell with 35 mm of the inner rib filed away." loading="lazy"><figcaption>After: the rib notched between the marks down to 7 mm below the rim.</figcaption></figure>
+  </div>
+  <figure><img src="renders/photos/grind_paper_tab_ann.jpg" alt="Nirav's photo of the paper template in the front shell: the yellow antenna tab and the board's top corner lying on the inner rib, pins circled." loading="lazy"><figcaption>Your paper template before zone 6: the yellow tab and the board's top corner lie <em>on</em> the rib. After zones 6b and 6 they must drop in flat.</figcaption></figure>
+  <div class="pair">
+    <figure><a href="renders/grind/z6_antenna_relief_before_ann.png"><img src="renders/grind/z6_antenna_relief_before_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 6, before."></a><figcaption>Zone 6, before.</figcaption></figure>
+    <figure><a href="renders/grind/z6_antenna_relief_after_ann.png"><img src="renders/grind/z6_antenna_relief_after_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 6, after."></a><figcaption>Zone 6, after.</figcaption></figure>
   </div>
   <div class="box">
     <p class="sub">Steps</p>
     <ol class="steps">
       <li>Do zone 6b first (pins and hooks off, both walls).</li>
-      <li>Front shell face down, top end away from you. The antenna side is on your <strong>left</strong> now (it is the right-hand, solar-window side when you use the calculator).</li>
-      <li>Mark 15 and 50 mm down from the top outer edge on the rim of that wall.</li>
-      <li>Between the marks, file the top edge of the inner rib down until the depth rod reads <span class="num">7.0 mm</span> from the ruler on the rim. Keep the file flat along the rib; check every 10 mm.</li>
+      <li>Front shell face down, top end away from you. The solar-window side is on your <strong>left</strong> now (it is the right-hand side when you use the calculator).</li>
+      <li>Mark 15 and 50 mm down from the top outer edge on the rim of that wall. Put tape on the outer skin's rim so a slip only scuffs tape.</li>
+      <li><span class="rc">depth rod</span> Take a "before" reading on the rib's top edge at 20, 30 and 40 mm (should be about 4.5&ndash;5.0, measured your usual way).</li>
+      <li>File the top edge of the inner rib between the marks. Keep the file flat along the rib and push it only lengthwise; the file can't reach the outer skin if it rides on the rib.</li>
+      <li><span class="rc">depth rod</span> After every few strokes: read at 15, 20, 25 &hellip; 50 mm. Aim for <span class="num">7.0</span> everywhere (never less than 6.5).</li>
       <li>Don't touch the outer skin (the wall you see from outside) or the wire-channel floor.</li>
-      <li>Lay the paper template in again: the tab and the top corner beside it must drop in flat. Then the dummy board / real board.</li>
+      <li>Lay the paper template in again: the yellow tab and the top corner beside it must drop in flat. Then the dummy board / real board.</li>
     </ol>
   </div>
-  <div class="callout ok"><strong class="tag">Stop when</strong><p>Between 15 and 50 mm from the top the depth rod reads 7.0 mm on the rib, and the yellow paper tab lies flat on the posts with the rest of the template.</p></div>
+  <div class="callout ok"><strong class="tag">Done when</strong><p>Between 15 and 50 mm from the top the depth rod reads 7.0 mm on the rib (6.5 minimum), and the yellow paper tab lies flat on the posts with the rest of the template.</p></div>
   <figure><img src="renders/section_antenna.png" alt="Section across the ESP32 antenna tab and the faceplate's side wall." loading="lazy"><figcaption>Cut across the antenna tab (0.8 mm, bottom left) and the side wall: without the relief the tab runs 0.3 mm into the inner rib.</figcaption></figure>
-</article>
-
-<!-- ZONE 6b -->
-<article class="zone" id="z6b">
-  <div class="zone-head">
-    <div class="row"><span class="eyebrow">Zone 6b · front shell</span><span class="pill">needed</span></div>
-    <h2>Snip the 3 round pins and the 3 wire hooks off the inner rib, on BOTH side walls</h2>
-    <p><strong>Why:</strong> the depth rod (2026-10-06) put the round pins <span class="num">5.1–5.5 mm</span> (outer two) and <span class="num">6.0–6.1 mm</span> (middle) below the rim and the U-shaped wire hooks at <span class="num">5.5 mm</span>; the board occupies 5.5–6.3 mm. So every pin and hook is at board height. On the J2 side their tips are 0–0.5 mm from the board's edge (the paper edge runs through the pin bosses in your photo); on the solar side the two upper hooks sit <span class="num">1.1–1.4 mm</span> inside the board's top corner and the pins reach <span class="num">1 mm</span> into the antenna tab. They held Casio's solar-cell wires; nothing of ours runs along those walls (the LiPo leads go straight into J4). Verification 12, hits 1–5 and 8–11.</p>
-  </div>
-  <dl class="spec">
-    <div><dt>Where</dt><dd>both screen-section side walls: 3 round pins (26, 35, 45 mm from the top) and 3 hooks (17, 22 and 56–59 mm from the top; the lowest one is the wider wire holder)</dd></div>
-    <div><dt>What</dt><dd>cut each pin and hook off flush with the rib it grows from</dd></div>
-    <div><dt>Leave</dt><dd>the rib itself (zone 6 only notches it on the solar side), the posts, the snap tabs</dd></div>
-    <div><dt>Tools</dt><dd>flush cutters; a needle file for the stubs</dd></div>
-    <div><dt>Time</dt><dd>2 minutes</dd></div>
-  </dl>
   <div class="box">
-    <p class="sub">Steps</p>
-    <ol class="steps">
-      <li>Front shell face down. Find the thin inner rib beside the screen opening on each side; the pins and the U-hooks grow from its inner face.</li>
-      <li>Flush cutters flat against the rib: snip each pin at its root. Same for the three hooks (cut the arm where it meets the rib; the U falls off).</li>
-      <li>Run a needle file along the rib so nothing stands proud; a fingernail drawn along the rib should not catch.</li>
-      <li>Repeat on the other wall. Blow the chips out.</li>
-    </ol>
+    <p class="sub">Common mistakes</p>
+    <ul>
+      <li>Filing the outer skin instead of the inner rib: the outside of the calculator then shows a dip. Look for the thin rib the pins grew from.</li>
+      <li>Stopping at 6.0 because "it looks low enough": the board's far face is at 6.3. Measure.</li>
+      <li>Forgetting the ruler thickness: your 7.0 is then really 6.3. Measure the same way every time.</li>
+      <li>Using the rotary tool here: the rib is 1 mm thin and snaps or melts. Hand file only.</li>
+      <li>Filing outside 15&ndash;50 mm: the rest of the rib holds the plate. Leave it.</li>
+    </ul>
   </div>
-  <div class="callout ok"><strong class="tag">Stop when</strong><p>Both inner ribs are smooth from the top wall down to where the thick wall ends: 6 pins and 6 hooks gone.</p></div>
 </article>
 
 <!-- ZONE 6c -->
@@ -525,22 +1184,119 @@ tr:last-child td { border-bottom: 0; }
   <div class="zone-head">
     <div class="row"><span class="eyebrow">Zone 6c · front shell</span><span class="pill check">only if needed</span></div>
     <h2>Lower end of the inner ribs, where the board widens</h2>
-    <p><strong>Why:</strong> the board goes from 64.75 mm wide (beside the screen) to its full width between 59.5 and 63 mm from the top, with a diagonal on each side. In the model the thick wall (and its inner rib) stops at 58.4 mm from the top; your photo of the J2 side suggests it may run to 60–62. If it does, the end of the rib catches the diagonal (up to 0.9 mm). The paper dry fit tells you: today the paper's wide corner on the J2 side did not lie flat beside the lowest hook; zone 6b removes that hook, and this zone is for what is left.</p>
+  </div>
+  <div class="why">
+    <p><strong>Why (what might hit):</strong> the board goes from 64.75 mm wide (beside the screen) to its full width between 59.5 and 63 mm from the top, with a diagonal on each side. In the model the thick wall (and its inner rib) stops at 58.4 mm from the top; your photo of the J2 side suggests it may run to 60–62. If it does, <strong>the end of the rib catches the diagonal by up to <span class="num">0.9 mm</span></strong>. The paper dry fit tells you: on 2026-10-06 the paper's wide corner on the J2 side did not lie flat beside the lowest hook; zone 6b removes that hook, and this zone is for what is left.</p>
   </div>
   <dl class="spec">
     <div><dt>Where</dt><dd>the last 2–3 mm of each inner rib's lower end (56–63 mm from the top), whichever side the paper still rides up on</dd></div>
     <div><dt>Depth</dt><dd class="num">down to 7.0 mm below the rim, like zone 6</dd></div>
     <div><dt>Decides it</dt><dd>after 6b: the paper template's wide corners both lie flat, skip. One rides up: file that side.</dd></div>
-    <div><dt>Tools</dt><dd>needle file</dd></div>
+    <div><dt>Tools</dt><dd>flat needle file</dd></div>
   </dl>
-  <div class="callout ok"><strong class="tag">Stop when</strong><p>Both wide corners of the paper (and then the dummy board) lie flat with every post in its hole.</p></div>
+  <figure class="diagram"><!--dg:z6c--><svg class="dg" viewBox="0 0 420 262" role="img" aria-label="Zone 6c top view: the board widens 59.5 to 63 mm from the top; if the rib's lower end reaches there, file it back 2 to 3 mm"><title>Zone 6c top view: the board widens 59.5 to 63 mm from the top; if the rib's lower end reaches there, file it back 2 to 3 mm</title>
+  <rect x="40" y="30" width="14" height="162" rx="0" class="pl"/>
+  <rect x="54" y="30" width="9" height="75.6" rx="0" class="rib"/>
+  <rect x="54" y="105.6" width="9" height="27.9" rx="0" class="cut"/>
+  <path d="M120,30 V115.5 L60,147 V192" class="bo"/>
+  <circle cx="63" cy="138" r="6" class="warnc"/>
+  <line x1="20" y1="30" x2="34" y2="30" class="ln"/>
+  <text x="16" y="34" text-anchor="end" class="tm">50</text>
+  <line x1="20" y1="75" x2="34" y2="75" class="ln"/>
+  <text x="16" y="79" text-anchor="end" class="tm">55</text>
+  <line x1="20" y1="120" x2="34" y2="120" class="ln"/>
+  <text x="16" y="124" text-anchor="end" class="tm">60</text>
+  <line x1="20" y1="165" x2="34" y2="165" class="ln"/>
+  <text x="16" y="169" text-anchor="end" class="tm">65</text>
+  <text x="134" y="44" text-anchor="start" class="ts">board edge beside the screen</text>
+  <text x="150" y="85.8" text-anchor="start" class="to ts"><tspan x="150" dy="0em">the rib may run to 60-62 mm:</tspan><tspan x="150" dy="1.2em">file this end back 2-3 mm</tspan></text>
+  <line x1="146" y1="97.5" x2="66" y2="118.2" class="lead" marker-end="url(#al)"/>
+  <text x="150" y="152.4" text-anchor="start" class="ts"><tspan x="150" dy="0em">the diagonal (board widens)</tspan><tspan x="150" dy="1.2em">crosses the rib line about</tspan><tspan x="150" dy="1.2em">61.4-62.1 mm from the top</tspan></text>
+  <line x1="146" y1="157.8" x2="70" y2="140.7" class="lead" marker-end="url(#al)"/>
+  <text x="210" y="230" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Only if the paper's (or the dummy board's) wide corner rides up after</tspan><tspan x="210" dy="1.2em">6b. Depth: 7.0 below the rim, like zone 6.</tspan></text>
+</svg><!--/dg:z6c--><figcaption>Top view at the rib's lower end. The orange-circled spot is where the board's diagonal crosses the rib line.</figcaption></figure>
+  <div class="pair">
+    <figure><a href="renders/grind/z6c_rib_ends_before_ann.png"><img src="renders/grind/z6c_rib_ends_before_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 6c, before."></a><figcaption>Zone 6c, before.</figcaption></figure>
+    <figure><a href="renders/grind/z6c_rib_ends_after_ann.png"><img src="renders/grind/z6c_rib_ends_after_ann.png" width="1600" height="1200" loading="lazy" alt="Zone 6c, after."></a><figcaption>Zone 6c, after.</figcaption></figure>
+  </div>
+  <div class="box">
+    <p class="sub">Steps</p>
+    <ol class="steps">
+      <li>After 6b (and 6), lay the paper template in. Look at both wide corners (where the board's outline steps out, about 60&ndash;63 mm from the top).</li>
+      <li>Both flat? Skip this zone. One rides up? Mark the end of the rib under it.</li>
+      <li>File the rib's end back <span class="num">2–3 mm</span> and down. <span class="rc">depth rod</span> <span class="num">7.0</span> below the rim, like zone 6.</li>
+      <li>Paper in again, then the dummy board. Repeat in small steps until the corner drops.</li>
+    </ol>
+  </div>
+  <div class="callout ok"><strong class="tag">Done when</strong><p>Both wide corners of the paper (and then the dummy board) lie flat with every post in its hole.</p></div>
+  <div class="box">
+    <p class="sub">Common mistakes</p>
+    <ul>
+      <li>Doing it "just in case" on both sides: only file where the paper rides up.</li>
+      <li>Filing the outer skin at the corner: it's the inner rib's end you want.</li>
+    </ul>
+  </div>
 </article>
+
+<section id="v15">
+  <h2>v15-LCD board: what's different</h2>
+  <p><strong>Same zones, same numbers.</strong> The v15-LCD board (ER-TFT019-1 panel) fits the ground shell with no new grind, and no grind can be skipped (<code>hardware/enclosure/final_assembly_v15_lcd/REPORT.md</code>). Two things to know:</p>
+  <div class="box">
+    <h3>1. Rib B and the LCD tail's bow</h3>
+    <p>The LCD's flex tail goes down through the slot and makes one U-bow under the board before it goes up into J5. The bottom of that bow passes <span class="num">0.25 mm</span> over the part of rib B you <em>don't</em> grind (nominal 36.6 mm tail). Each 0.3 mm of extra tail drops the bow 0.15 mm.</p>
+    <figure class="diagram"><!--dg:v15_bow--><svg class="dg" viewBox="0 0 420 276" role="img" aria-label="v15-LCD: the LCD tail's U-bow passes 0.25 mm over the un-ground part of rib B"><title>v15-LCD: the LCD tail's U-bow passes 0.25 mm over the un-ground part of rib B</title>
+  <rect x="0" y="215" width="420" height="14" rx="0" class="nv"/>
+  <rect x="150" y="195" width="270" height="20" rx="0" class="rib"/>
+  <text x="410" y="209" text-anchor="end" class="ts">rib B (not ground here)</text>
+  <rect x="0" y="79" width="420" height="16" rx="0" class="board"/>
+  <text x="410" y="73" text-anchor="end" class="ts">board</text>
+  <path d="M110,95.0 V166.0 A24.0,24.0 0 0 0 134.0,190.0 H296.0 A24.0,24.0 0 0 0 320,166.0 V106.6" class="fpc"/>
+  <text x="215" y="130" text-anchor="middle" class="ts"><tspan x="215" dy="0em">LCD tail: one U-bow</tspan><tspan x="215" dy="1.2em">(corners r 1.2 mm)</tspan></text>
+  <text x="250" y="172" text-anchor="middle" class="tm">0.25 mm gap</text>
+  <line x1="250" y1="177" x2="250" y2="193" class="lead" marker-end="url(#al)"/>
+  <text x="10" y="22" text-anchor="start" class="tm">Tail 36.3 / 36.6 / 36.9 / 37.2 mm</text>
+  <text x="10" y="40" text-anchor="start" class="tm">gap  0.40 / 0.25 / 0.10 / touches</text>
+  <text x="210" y="250" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Tail over ~37 mm, or the bow squeezed? Grind zone 2 about 15 mm</tspan><tspan x="210" dy="1.2em">further toward the slot side.</tspan></text>
+</svg><!--/dg:v15_bow--><figcaption>The tail's bow over rib B. A light touch is harmless.</figcaption></figure>
+    <ul>
+      <li>Measure the tail in assembly step 4. Up to <span class="num">37.0 mm</span> is fine.</li>
+      <li>If a tail measures over about <span class="num">37 mm</span>, or the step-10 marker dot shows the bow squeezed by the closed cover: <strong>grind zone 2 about <span class="num">15 mm</span> further towards the slot side</strong>, at the same depth (flush with the floor). With the cover inside up and its top end away, the slot side is the left side (the solar box is top right). The bow's lowest point sits about 30 mm left of the centre line: make sure the flat part covers the spot the marker dot shows.</li>
+      <li>Don't fold the tail tighter instead; sharper corners don't fit either.</li>
+    </ul>
+  </div>
+  <div class="box">
+    <h3>2. DCXYX camera: keep the S-fold bay clear</h3>
+    <p>If the build uses the DCXYX OV5640-AF camera (longer ribbon), the recommended route keeps the camera and the 7 mm window where they are and tucks the extra ribbon into one S-fold (bend radius 1.2 mm) in the bay <strong>between rib C and the small ring</strong> on the back cover (KiCad y 108&ndash;116, x 147&ndash;153: about 51&ndash;59 mm from the top outer edge, within about 3 mm of the centre line). The ribbon passes only <span class="num">0.44 mm</span> over the floor there and <span class="num">0.53 mm</span> under the small ring's top (<code>variant_camera_dcxyx/results.json</code>).</p>
+    <figure class="diagram"><!--dg:v15_sfold--><svg class="dg" viewBox="0 0 420 262" role="img" aria-label="v15 DCXYX camera: the ribbon's S-fold lies in the bay between rib C and the small ring, 0.44 mm over the floor"><title>v15 DCXYX camera: the ribbon's S-fold lies in the bay between rib C and the small ring, 0.44 mm over the floor</title>
+  <rect x="0" y="190" width="420" height="14" rx="0" class="nv"/>
+  <rect x="0" y="54" width="420" height="16" rx="0" class="board"/>
+  <text x="410" y="48" text-anchor="end" class="ts">board</text>
+  <rect x="56" y="170" width="10" height="20" rx="0" class="rib"/>
+  <text x="61" y="164" text-anchor="middle" class="ts">rib C</text>
+  <rect x="350" y="110" width="10" height="80" rx="0" class="rib"/>
+  <text x="372" y="150" text-anchor="start" class="ts"><tspan x="372" dy="0em">small</tspan><tspan x="372" dy="1.2em">ring</tspan></text>
+  <path d="M10,85.19999999999999 H280 A24.0,24.0 0 0 1 280,133.2 H110 A24.0,24.0 0 0 0 110,181.2 H300 C330,181.2 320,99.39999999999999 350,99.39999999999999 H415" class="fpc"/>
+  <line x1="76" y1="190" x2="330" y2="190" class="keepl"/>
+  <text x="200" y="159" text-anchor="middle" class="tm">0.44 mm over the floor</text>
+  <line x1="200" y1="163" x2="200" y2="179.2" class="lead" marker-end="url(#al)"/>
+  <text x="10" y="22" text-anchor="start" class="ts">camera ribbon: one S-fold, bends r 1.2 mm</text>
+  <text x="203" y="222" text-anchor="middle" class="tg">keep this floor bare and flat</text>
+  <text x="210" y="240" text-anchor="middle" class="ts"><tspan x="210" dy="0em">No stubs, epoxy blobs, tape or debris here: KiCad y 108-116, x 147-153</tspan><tspan x="210" dy="1.2em">(within ~3 mm of the centre line).</tspan></text>
+</svg><!--/dg:v15_sfold--><figcaption>The S-fold in the bay. Nothing may stand on that floor.</figcaption></figure>
+    <ul>
+      <li>Don't grind there (it isn't needed), and don't leave dust, chips, tape, labels or epoxy repairs on that floor.</li>
+      <li>Leave rib C and the small ring alone: they set the bay.</li>
+      <li>If you had to patch the floor near there, sand the patch flush with the depth rod (F = R).</li>
+    </ul>
+  </div>
+</section>
 
 <section id="fit">
   <h2>Test fit</h2>
   <div class="box">
     <h3>1. Paper template</h3>
     <p>Lay the cut-out grind maps back in each half (cut the front-shell one out <em>with</em> its yellow antenna tab). Every red zone you meant to grind should now sit over bare floor (or the notch), and the antenna tab must lie flat beside the side wall. The green LR44 cup stays.</p>
+    <figure><img src="renders/photos/grind_paper_not_flat_ann.jpg" alt="Nirav's photo of the paper template lifting at one corner inside the front shell." loading="lazy"><figcaption>Not flat yet: something still stands in the way where the paper lifts.</figcaption></figure>
   </div>
   <div class="box">
     <h3>2. Dummy board (3D print)</h3>
@@ -562,21 +1318,33 @@ tr:last-child td { border-bottom: 0; }
     </ul>
   </div>
   <figure><img src="renders/back_cover_off.png" alt="The assembled calculator with the back cover removed: board, camera, LiPo, J4 plug and magnet." loading="lazy"><figcaption>Back cover off: where the board, camera, LiPo, J4 plug and magnet end up.</figcaption></figure>
+  <h3>Test-fit checklist</h3>
+  <p class="small">Tick as you go. Ticks are saved on this phone only.</p>
+  <ul class="check">
+    <li><label for="f1"><input type="checkbox" id="f1"><span>Template print checked: the 50 mm line measures 50 mm on both maps.</span></label></li>
+    <li><label for="f2"><input type="checkbox" id="f2"><span>Back-cover map: every red zone sits over bare floor; the camera mark is over the 7 mm hole.</span></label></li>
+    <li><label for="f3"><input type="checkbox" id="f3"><span>Front-shell map (with the yellow tab): every post in its hole, the tab lies flat, both wide corners lie flat.</span></label></li>
+    <li><label for="f4"><input type="checkbox" id="f4"><span>Magnet notch lines up with the map's magnet outline.</span></label></li>
+    <li><label for="f5"><input type="checkbox" id="f5"><span>Dummy board drops in without force; it doesn't rock on any corner.</span></label></li>
+    <li><label for="f6"><input type="checkbox" id="f6"><span>Back cover closes over the dummy and the battery block with no gap at the rim and without pressing.</span></label></li>
+    <li><label for="f7"><input type="checkbox" id="f7"><span>Marker test: no marker transferred onto the dummy (or each mark traced and fixed, then re-tested).</span></label></li>
+    <li><label for="f8"><input type="checkbox" id="f8"><span>v15-LCD / DCXYX builds: the S-fold bay floor is bare and flat; rib B extended only if the bow check asked for it.</span></label></li>
+  </ul>
 </section>
 
 <section id="final">
   <h2>Final checklist</h2>
   <p class="small">Tick as you go. Ticks are saved on this phone only.</p>
   <ul class="check">
+    <li><label for="c6c"><input type="checkbox" id="c6c"><span>Pre-grind checklist (verification/07 §3) done and its numbers written down: inner-rib depth, solar-frame strip ≥ 2.6 mm, floor ≥ 0.9 mm at the moulded label, lip, screw length.</span></label></li>
     <li><label for="c1"><input type="checkbox" id="c1"><span>Solar box gone; reads the same as the floor everywhere; no stub near J4.</span></label></li>
     <li><label for="c2"><input type="checkbox" id="c2"><span>Rib B flat for 14 mm, centred on the camera spot.</span></label></li>
-    <li><label for="c3"><input type="checkbox" id="c3"><span>Camera window Ø 7 mm, clean, in the right place.</span></label></li>
+    <li><label for="c3"><input type="checkbox" id="c3"><span>Camera window Ø 7 mm, clean, in the right place (route decided first).</span></label></li>
     <li><label for="c4"><input type="checkbox" id="c4"><span>LR44 cup left alone.</span></label></li>
-    <li><label for="c5"><input type="checkbox" id="c5"><span>Magnet notch 21.5 wide × 7.95 deep from the rim, 6.4–27.9 mm from the right edge.</span></label></li>
+    <li><label for="c5"><input type="checkbox" id="c5"><span>Magnet notch 21.5 wide × 7.95 deep from the rim, 6.4–27.9 mm from the solar-side edge.</span></label></li>
     <li><label for="c6"><input type="checkbox" id="c6"><span>Back-cover lip at the notch: checked, and cut if it was there.</span></label></li>
-    <li><label for="c6b"><input type="checkbox" id="c6b"><span>Side-wall relief (zone 6): rib filed to 7.0 mm below the rim between 15 and 50 mm from the top on the solar-window side; the paper template with its tab drops in flat.</span></label></li>
     <li><label for="c6d"><input type="checkbox" id="c6d"><span>Zone 6b: all 3 pins and 3 hooks snipped flush on BOTH side walls; zone 6c checked (wide corners of the paper lie flat).</span></label></li>
-    <li><label for="c6c"><input type="checkbox" id="c6c"><span>Pre-grind checklist (verification/07) done and its numbers written down: inner-rib depth, solar-frame strip ≥ 2.6 mm, floor ≥ 0.9 mm at the moulded label, lip, screw length.</span></label></li>
+    <li><label for="c6b"><input type="checkbox" id="c6b"><span>Side-wall relief (zone 6): rib filed to 7.0 mm below the rim between 15 and 50 mm from the top on the solar-window side; the paper template with its tab drops in flat.</span></label></li>
     <li><label for="c7"><input type="checkbox" id="c7"><span>Floor at least 0.8 mm everywhere you ground (no light through it, no soft spots).</span></label></li>
     <li><label for="c8"><input type="checkbox" id="c8"><span>Screw posts, locating posts, clips and outer walls untouched.</span></label></li>
     <li><label for="c9"><input type="checkbox" id="c9"><span>Both halves washed or blown clean of dust and plastic hairs.</span></label></li>
@@ -585,25 +1353,33 @@ tr:last-child td { border-bottom: 0; }
 </section>
 
 <section id="fix">
-  <h2>If you went too far</h2>
+  <h2>Troubleshooting (and if you went too far)</h2>
   <div class="tablewrap">
     <table>
-      <thead><tr><th>What happened</th><th>Fix</th></tr></thead>
+      <thead><tr><th>What happened</th><th>Why</th><th>Fix</th></tr></thead>
       <tbody>
-        <tr><td>Thin spot or small dip in the floor (still solid)</td><td>Fill with 2-part epoxy or plastic filler from the inside, let it cure fully, sand flat to the floor. Re-check with the depth rod: a bump here can hit J4.</td></tr>
-        <tr><td>Hole through the floor</td><td>Kapton or a thin plastic patch on the outside, epoxy over it from the inside, sand flat. If it's near J4 or the camera, use the spare shell instead.</td></tr>
-        <tr><td>Magnet notch too wide</td><td>The glue fills small gaps. If it's more than about a millimetre, build the side up with epoxy and file it back.</td></tr>
-        <tr><td>Notch too deep</td><td>Fine for fitting; fill the gap under the magnet with glue when you glue it in.</td></tr>
-        <tr><td>Camera hole off-centre or too big</td><td>Move the camera module to sit under the hole (it's held by tape). If it's badly off, use the spare back cover.</td></tr>
-        <tr><td>Nicked a post, clip or the outer wall</td><td>Stop. A small nick can be epoxied. A cracked or broken screw post: use the spare shell.</td></tr>
-        <tr><td>Plastic melted and smeared</td><td>Let it cool fully, cut the blobs off with a sharp knife, then sand at lower speed.</td></tr>
+        <tr><td>Ground too deep: thin spot or small dip in the floor (still solid)</td><td>Pressed into the floor, or kept going past F = R</td><td>Fill with 2-part epoxy or plastic filler from the inside, let it cure fully, sand flat to the floor. <span class="rc">depth rod</span> F = R again: a bump here can hit J4 or the v15 camera ribbon.</td></tr>
+        <tr><td>Hole through the floor</td><td>Same, further</td><td>Kapton or a thin plastic patch on the outside, epoxy over it from the inside, sand flat. If it's near J4 or the camera, use the spare shell instead.</td></tr>
+        <tr><td>Cracked wall or rib</td><td>Clamped too hard, twisted the cutters, or the burr grabbed</td><td>Thin super glue (cyanoacrylate) wicked into the crack, or epoxy on the inside; sand flush. A crack through an outer wall or a screw post: use the spare shell.</td></tr>
+        <tr><td>Plastic melted and smeared, or a blob on the bit</td><td>Too fast (above ~10,000 RPM) or pressing too hard</td><td>Let it cool fully, cut the blobs off with a sharp knife, then sand at lower speed. Clean the burr with a brass brush.</td></tr>
+        <tr><td>Rough, fuzzy or hairy edges</td><td>Normal for ABS; worse with a coarse drum</td><td>Scrape with a sharp blade held upright, or a few strokes of a fine needle file. Don't use the rotary tool on fuzz: it melts it.</td></tr>
+        <tr><td>A ridge or stub you can feel</td><td>Stopped just short, or the drum's edge rode on the floor</td><td>Sanding block held flat, a few strokes. <span class="rc">depth rod</span> again.</td></tr>
+        <tr><td>Burr skates or jumps</td><td>Tip used instead of the side; too little speed for the bit</td><td>Hold at 30–45° and use the side; take lighter passes.</td></tr>
+        <tr><td>Depth readings jump around</td><td>Dust under the rod, ruler not flat on the rim, calipers tilted</td><td>Blow the dust off, press the ruler flat on both rims, take 3 readings and use the middle one.</td></tr>
+        <tr><td>Magnet notch too wide</td><td>Cut to the line with the burr</td><td>The glue fills small gaps. If it's more than about a millimetre, build the side up with epoxy and file it back.</td></tr>
+        <tr><td>Notch too deep</td><td>Didn't check the depth at both ends</td><td>Fine for fitting; fill the gap under the magnet with glue when you glue it in.</td></tr>
+        <tr><td>Camera hole off-centre or too big</td><td>No pilot, or the bit wandered</td><td>Move the camera module to sit under the hole (it's held by tape). If it's badly off, use the spare back cover.</td></tr>
+        <tr><td>Paper template still rides up</td><td>A pin stub, a hook, the rib or its end still in the way</td><td>Find the high spot (look from the side at eye level), take a little more off, try again (6b stubs, zone 6 depth, 6c).</td></tr>
+        <tr><td>Marker from the ribs on the dummy board</td><td>A rib or stub touches the board</td><td>Mark that spot on the shell, take it down a little, test again.</td></tr>
+        <tr><td>Cover won't close / gap at the rim</td><td>Lip (5b) still there, a stub under J4, or the magnet sitting proud</td><td>Close it without the magnet to find out which, then fix that zone.</td></tr>
+        <tr><td>Nicked a post, clip or the outer wall</td><td>Slip of the tool</td><td>Stop. A small nick can be epoxied. A cracked or broken screw post: use the spare shell.</td></tr>
       </tbody>
     </table>
   </div>
   <div class="callout ok"><strong class="tag">Remember</strong><p>You have a spare shell. A mistake costs you a shell, not the project.</p></div>
 </section>
 
-<p class="small">Sources: <code>hardware/enclosure/final_assembly/assembly_report.md</code>, <code>hardware/stage13_heights.md</code>, <code>hardware/fitcheck/</code>, <code>hardware/measurements_2026-10-03.md</code>. Distances marked "from the model" come from the CAD replica: always confirm them with the printed template before cutting. Linked: <a href="https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9">First Power-Up Guide</a> · <a href="https://claude.ai/artifact/8BTC57FZ3JFwiDdiLprwtY">Calculator Assembly Guide</a> · entry point <code>hardware/FINAL_STATUS.md</code>.</p>
+<p class="small">Sources: <code>hardware/enclosure/final_assembly/assembly_report.md</code>, <code>hardware/verification/07_final_review_fitment.md</code>, <code>hardware/verification/12_rib_pin_recheck.md</code>, <code>hardware/enclosure/jigs/README.md</code>, <code>hardware/enclosure/final_assembly_v15_lcd/REPORT.md</code>, <code>hardware/enclosure/final_assembly_v15_lcd/variant_camera_dcxyx/results.json</code>, <code>hardware/stage13_heights.md</code>, <code>hardware/fitcheck/</code>, <code>hardware/measurements_2026-10-03.md</code>. Distances marked "from the model" come from the CAD replica: always confirm them with the printed template before cutting. Diagrams are schematic (<code>grind_diagrams.py</code>); photo marks are approximate (<code>annotate_grind_photos.py</code>). Speeds are general rotary-tool advice. Linked: <a href="https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9">First Power-Up Guide</a> · <a href="https://claude.ai/artifact/8BTC57FZ3JFwiDdiLprwtY">Calculator Assembly Guide</a> · entry point <code>hardware/FINAL_STATUS.md</code>.</p>
 
 </div>
 
@@ -619,6 +1395,21 @@ tr:last-child td { border-bottom: 0; }
       state[b.id] = b.checked;
       try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {}
     });
+  });
+  // Render slots: show renders/<data-pending> (annotated Fusion render) if it exists, else renders/<data-fallback> (plain render), else keep the slot.
+  document.querySelectorAll('figure.pending[data-pending]').forEach(function (fig) {
+    var img = new Image();
+    img.alt = fig.querySelector('figcaption') ? fig.querySelector('figcaption').textContent : '';
+    img.onload = function () {
+      var slot = fig.querySelector('.slot');
+      if (slot) fig.replaceChild(img, slot);
+      fig.classList.remove('pending');
+    };
+    img.onerror = function () {
+      var fb = fig.getAttribute('data-fallback');
+      if (fb && img.src.indexOf(fb) < 0) img.src = 'renders/' + fb;
+    };
+    img.src = 'renders/' + fig.getAttribute('data-pending');
   });
 })();
 </script>
