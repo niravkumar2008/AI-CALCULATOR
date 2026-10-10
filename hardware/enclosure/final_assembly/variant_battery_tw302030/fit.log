@@ -1,0 +1,42 @@
+18:42:57 run v14 revE
+18:43:25 v14 revE: 0 overlaps
+18:43:25 run v14 revE done
+18:43:35 run v14 nominal
+18:44:10 v14 nominal: 0 overlaps
+18:44:10 run v14 nominal done
+18:44:26 run v14 nominal
+18:45:07 v14 nominal: 0 overlaps
+18:45:07 run v14 nominal done
+18:45:08 run v14 worst
+18:45:42 v14 worst: 2 overlaps
+18:45:42 run v14 worst done
+18:46:21 run v14 worst 1
+18:46:55 v14 worst: 0 overlaps
+18:46:55 run v14 worst 1 done
+18:46:59 run v14 nominal 1
+18:47:34 v14 nominal: 0 overlaps
+18:47:34 run v14 nominal 1 done
+18:48:14 run v15 revE 
+18:48:57 v15 revE: 0 overlaps
+18:48:57 run v15 revE  done
+18:49:01 run v15 nominal 
+18:50:03 v15 nominal: 0 overlaps
+18:50:03 run v15 nominal  done
+18:50:07 run v15 worst 
+18:51:11 v15 worst: 2 overlaps
+18:51:11 run v15 worst  done
+18:51:13 run v15 nominal 1
+18:52:13 v15 nominal: 0 overlaps
+18:52:13 run v15 nominal 1 done
+18:52:16 run v15 worst 1
+18:53:06 v15 worst: 0 overlaps
+18:53:06 run v15 worst 1 done
+18:53:57 run v15 nominal 1
+18:54:41 v15 nominal: 0 overlaps
+18:54:41 run v15 nominal 1 done
+18:56:32 run v14 off 
+18:56:35 candidate removed, #1317 shown again
+18:56:35 run v14 off  done
+18:56:35 run v15 off 
+18:56:36 candidate removed, #1317 shown again
+18:56:36 run v15 off  done

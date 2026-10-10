@@ -278,7 +278,18 @@ shank's width from the corner boss. Rib A should then show as a 1 mm sliver belo
 | Connector options | 1.0 / 1.25 / 2.0 mm pitch |
 | PCM / PCB | customised (3.0 V cut-off available) |
 
-**Against the rev E envelope (33.5 × 20.7 × 3.8):** it should fit (worst case 32 × 20.5 × 3.3), but the width margin is only ~0.2 mm, and it is ~4–6 mm longer than the #1317 towards J4 (≈ 7 mm free there). A CAD check is running (see below, if added).
+**Against the rev E envelope (33.5 × 20.7 × 3.8):** it should fit (worst case 32 × 20.5 × 3.3), but the width margin is only ~0.2 mm, and it is ~4–6 mm longer than the #1317 towards J4 (≈ 7 mm free there). CAD check: see below.
+
+**CAD check (2026-10-10, v14 and v15, `variant_battery_tw302030/results.json`): fits, with conditions.** Modelled on the
+0.1 mm tape at nominal 30 × 20 × 3.0 and worst case 32 × 20.5 × 3.3, leads routed like the #1317's:
+- Put it **1 mm further left** than the #1317: left edge ~1.7 mm from the corner post (a 1.5 mm drill shank), top edge
+  0.8 mm from the lip. At the #1317's own corner a 32 mm cell pushes the leads, which run down past the lead end, into
+  J4's body. With the 1 mm shift: 0 overlaps; worst case leads 0.9 mm from J4, rib A 0.3, LR44 holder 0.7, board 2.6 mm
+  (nominal: rib A 0.8, holder 1.0, leads 2.9 mm from J4).
+- A cell wider than ~20.3 mm: push its top edge against the lip so it clears rib A.
+- The tape L is unchanged (same strips, measured from the new cell's edges; all on solid floor, clear of the lid opening).
+- Lead length used ≈ 32–35 mm, so 50–80 mm leads are right. The v15 camera S-fold bay is 27 mm away.
+- Picture: `renders/detail/d22_battery_tw302030_ann.png` (both guide folders).
 
 **Order spec:**
 - PCM included.

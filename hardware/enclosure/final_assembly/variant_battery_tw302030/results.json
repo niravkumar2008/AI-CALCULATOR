@@ -1,0 +1,1630 @@
+{
+ "summary": {
+  "verdict": "FITS WITH CONDITIONS",
+  "cell": "Taiwoo TW302030, 140 mAh, L 30 (+2/-0.5) x W 20 +-0.5 x T 3.0 +-0.3 mm incl. PCB, JST-PH leads",
+  "model": "fit_tw302030.py (final_assembly/variant_battery_tw302030): cell modelled on 0.1 mm tape (Z 1.1), rounded corners r 1, leads 1.1 mm, same lead route as the #1317 model; baseline files untouched, nothing saved",
+  "recommended_placement": "Same corner as the #1317 but 1 mm further left: left edge front X -29.61 (about 1.7 mm from the top-left corner post), top edge Y 78.58 (0.8 mm from the top lip), long side left-right, lead end (+X) towards J4. KiCad x 149.61..179.61 (nominal 30 mm: x 149.61 lead end), y 60.36..80.36.",
+  "conditions": [
+   "Place it 1 mm further left than the #1317 (left edge ~1.7 mm from the corner post, a 1.5 mm drill shank). At the #1317's own corner (2.6 mm) a 32 mm worst-case cell pushes the down-running leads into J4's body (overlap 0.27 / 0.15 mm3); 1 mm left gives 0.9 mm to J4. Nominal 30 mm cells also fit at the #1317 corner (leads 1.9 mm from J4).",
+   "Width: a 20.5 mm worst-case cell leaves only 0.28 mm to rib A when its top edge is 0.8 mm from the lip; push the top edge up against the lip if a cell measures over 20.3 mm.",
+   "Leads must leave the lead end face (short edge) and be at least 50 mm (about 32-35 mm used; order 50-80 mm)."
+  ],
+  "tape_L": "Still works unchanged (same strip sizes, same rules measured from the new cell's edges): both strips 100 % on solid, flat floor; strip 1 is 5.8-8.8 mm from the lid opening, strip 2 0.4 mm (nominal) / 0.9 mm (W 20.5). Note for the #1317 (rev E): strip 2 is only ~0.2 mm below the lid opening's lowest point (battery_upgrade.md says 0.5) - see revE entry.",
+  "clearances_mm": {
+   "nominal 30x20x3.0 (1 mm left)": {
+    "corner post": 1.69,
+    "rib A": 0.8,
+    "top lip": 0.82,
+    "LR44 holder above": 1.0,
+    "board": 2.9,
+    "J4 (cell / leads)": [
+     4.06,
+     2.91
+    ],
+    "JST plug": 5.01,
+    "camera module": 10.64,
+    "camera FPC": 19.1,
+    "lid": 0.52,
+    "overlaps": 0
+   },
+   "worst 32x20.5x3.3 (1 mm left)": {
+    "corner post": 1.69,
+    "rib A": 0.29,
+    "top lip": 0.82,
+    "LR44 holder above": 0.7,
+    "board": 2.6,
+    "J4 (cell / leads)": [
+     2.06,
+     0.91
+    ],
+    "JST plug": 3.01,
+    "camera module": 10.1,
+    "camera FPC": 18.6,
+    "lid": 0.52,
+    "overlaps": 0
+   },
+   "worst 32x20.5x3.3 at the #1317 corner": {
+    "J4 (cell / leads)": [
+     1.06,
+     0.0
+    ],
+    "overlaps": "leads into J4 body (0.27 + 0.15 mm3)"
+   }
+  },
+  "keys": "revE = today's #1317 tape-L check only; nominal / worst = #1317 corner; *_shift1 = 1 mm further left (recommended)"
+ },
+ "revE": {
+  "case": "revE",
+  "ver": "v14",
+  "L": 26.02,
+  "W": 19.75,
+  "T": 3.8,
+  "Z": [
+   1.1,
+   4.9
+  ],
+  "tape_under_cell_mm": 0.1,
+  "cell_front_X": [
+   -28.61,
+   -2.59
+  ],
+  "cell_front_Y": [
+   58.83,
+   78.58
+  ],
+  "cell_kicad_x": [
+   152.59,
+   178.61
+  ],
+  "cell_kicad_y": [
+   60.36,
+   80.11
+  ],
+  "time": "2026-10-10 18:42",
+  "tape": {
+   "strip 1 (6 x 18, under the lead end)": {
+    "rect_X": [
+     -9.59,
+     -3.59
+    ],
+    "rect_Y": [
+     59.83,
+     77.83
+    ],
+    "points": 1825,
+    "points_not_on_solid_floor": 0,
+    "points_with_something_on_the_floor": 0,
+    "gap_to_lid_opening": 2.81
+   },
+   "strip 2 (4 x 16, along the bottom edge)": {
+    "rect_X": [
+     -27.61,
+     -11.61
+    ],
+    "rect_Y": [
+     59.83,
+     63.83
+    ],
+    "points": 1105,
+    "points_not_on_solid_floor": 0,
+    "points_with_something_on_the_floor": 0,
+    "gap_to_lid_opening": 0.17
+   }
+  },
+  "lid_opening_bbox_at_floor": [
+   -24.2,
+   -12.4,
+   64.0,
+   77.1
+  ]
+ },
+ "nominal": {
+  "case": "nominal",
+  "ver": "v14",
+  "L": 30.0,
+  "W": 20.0,
+  "T": 3.0,
+  "Z": [
+   1.1,
+   4.1
+  ],
+  "tape_under_cell_mm": 0.1,
+  "cell_front_X": [
+   -28.61,
+   1.39
+  ],
+  "cell_front_Y": [
+   58.58,
+   78.58
+  ],
+  "cell_kicad_x": [
+   148.61,
+   178.61
+  ],
+  "cell_kicad_y": [
+   60.36,
+   80.36
+  ],
+  "time": "2026-10-10 18:44",
+  "tape": {
+   "strip 1 (6 x 18, under the lead end)": {
+    "rect_X": [
+     -5.61,
+     0.39
+    ],
+    "rect_Y": [
+     59.58,
+     77.58
+    ],
+    "points": 1825,
+    "points_not_on_solid_floor": 0,
+    "points_with_something_on_the_floor": 0,
+    "gap_to_lid_opening": 6.79
+   },
+   "strip 2 (4 x 16, along the bottom edge)": {
+    "rect_X": [
+     -27.61,
+     -11.61
+    ],
+    "rect_Y": [
+     59.58,
+     63.58
+    ],
+    "points": 1105,
+    "points_not_on_solid_floor": 0,
+    "points_with_something_on_the_floor": 0,
+    "gap_to_lid_opening": 0.42
+   }
+  },
+  "lid_opening_bbox_at_floor": [
+   -24.2,
+   -12.4,
+   64.0,
+   77.1
+  ],
+  "hits": [],
+  "nearest": [
+   {
+    "what": "Cell",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.1,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.49,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Battery lid",
+     "Battery lid"
+    ],
+    "gap": 0.52,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 0.7,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 1.59,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 1.61,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 1.91,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 1.91,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 2.32,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 2.54,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.66,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 2.69,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.78,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 2.9,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 3.06,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Rubber feet",
+     "Foot 2"
+    ],
+    "gap": 3.16,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 3.24,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 3.27,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Screws",
+     "Screw corner L"
+    ],
+    "gap": 3.54,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper active area (marker)"
+    ],
+    "gap": 3.59,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 3.82,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 3.85,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 3.97,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "LiPo battery",
+     "JST-PH plug (in J4)"
+    ],
+    "gap": 4.01,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 4.09,
+    "overlap_mm3": 0.0
+   }
+  ],
+  "named": {
+   "corner post (top-left screw boss)": {
+    "cell": 2.69,
+    "leads": 32.86
+   },
+   "rib A (cross rib below the cell)": {
+    "cell": 0.8,
+    "leads": 0.91
+   },
+   "top lip / comb snap (top wall inside)": {
+    "cell": 0.84,
+    "leads": 9.34
+   },
+   "LR44 holder (front shell, above the cell)": {
+    "cell": 0.7,
+    "lead_red": 2.69,
+    "lead_black": 4.09
+   },
+   "board (PCB laminate)": {
+    "cell": 2.9,
+    "lead_red": 1.59,
+    "lead_black": 2.32
+   },
+   "J4 (battery socket on the board)": {
+    "cell": 3.06,
+    "lead_red": 1.91,
+    "lead_black": 1.91
+   },
+   "JST-PH plug in J4": {
+    "cell": 4.01
+   },
+   "camera module": {
+    "cell": 10.64,
+    "leads": 6.11
+   },
+   "camera FPC": {
+    "cell": 19.14,
+    "leads": 14.62
+   },
+   "battery lid (sits in the opening, top 0.42 below the floor)": {
+    "cell": 0.52,
+    "lead_red": 12.02,
+    "lead_black": 11.88
+   },
+   "back-cover floor (tape layer)": {
+    "cell": 0.1
+   },
+   "lid opening (in the floor, the cell bridges it)": {
+    "opening_X": [
+     -24.2,
+     -12.4
+    ],
+    "opening_Y": [
+     64.0,
+     77.1
+    ],
+    "from_cell_left_edge": 4.41,
+    "short_of_lead_edge": 13.79,
+    "above_cell_bottom": 5.42,
+    "below_cell_top": 1.48
+   }
+  },
+  "leads": {
+   "bay_X": 1.99,
+   "plug_X": 8.4,
+   "plug_mouth_Y": 58.67,
+   "used_mm": {
+    "red": 33.2,
+    "black": 23.8
+   },
+   "spec_mm": [
+    50.0,
+    80.0
+   ],
+   "spare_mm": [
+    16.8,
+    56.2
+   ]
+  }
+ },
+ "worst": {
+  "case": "worst",
+  "ver": "v14",
+  "L": 32.0,
+  "W": 20.5,
+  "T": 3.3,
+  "Z": [
+   1.1,
+   4.4
+  ],
+  "tape_under_cell_mm": 0.1,
+  "cell_front_X": [
+   -28.61,
+   3.39
+  ],
+  "cell_front_Y": [
+   58.08,
+   78.58
+  ],
+  "cell_kicad_x": [
+   146.61,
+   178.61
+  ],
+  "cell_kicad_y": [
+   60.36,
+   80.86
+  ],
+  "time": "2026-10-10 18:45",
+  "tape": {
+   "strip 1 (6 x 18, under the lead end)": {
+    "rect_X": [
+     -3.61,
+     2.39
+    ],
+    "rect_Y": [
+     59.08,
+     77.08
+    ],
+    "points": 1825,
+    "points_not_on_solid_floor": 0,
+    "points_with_something_on_the_floor": 0,
+    "gap_to_lid_opening": 8.79
+   },
+   "strip 2 (4 x 16, along the bottom edge)": {
+    "rect_X": [
+     -27.61,
+     -11.61
+    ],
+    "rect_Y": [
+     59.08,
+     63.08
+    ],
+    "points": 1105,
+    "points_not_on_solid_floor": 0,
+    "points_with_something_on_the_floor": 0,
+    "gap_to_lid_opening": 0.92
+   }
+  },
+  "lid_opening_bbox_at_floor": [
+   -24.2,
+   -12.4,
+   64.0,
+   77.1
+  ],
+  "hits": [
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 0.0,
+    "overlap_mm3": 0.27
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 0.0,
+    "overlap_mm3": 0.153
+   }
+  ],
+  "nearest": [
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 0.0,
+    "overlap_mm3": 0.27
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 0.0,
+    "overlap_mm3": 0.153
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.1,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Battery lid",
+     "Battery lid"
+    ],
+    "gap": 0.52,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.64,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 0.66,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 0.7,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 0.96,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 1.06,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 1.59,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 1.72,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 1.81,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "LiPo battery",
+     "JST-PH plug (in J4)"
+    ],
+    "gap": 2.01,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 2.32,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 2.54,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 2.6,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Rubber feet",
+     "Foot 2"
+    ],
+    "gap": 2.68,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 2.69,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 3.24,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 3.27,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Screws",
+     "Screw corner L"
+    ],
+    "gap": 3.54,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 3.55,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper active area (marker)"
+    ],
+    "gap": 3.59,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 3.97,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 4.09,
+    "overlap_mm3": 0.0
+   }
+  ],
+  "named": {
+   "corner post (top-left screw boss)": {
+    "cell": 2.69,
+    "leads": 34.87
+   },
+   "rib A (cross rib below the cell)": {
+    "cell": 0.28,
+    "leads": 0.91
+   },
+   "top lip / comb snap (top wall inside)": {
+    "cell": 0.84,
+    "leads": 10.02
+   },
+   "LR44 holder (front shell, above the cell)": {
+    "cell": 0.7,
+    "lead_red": 2.69,
+    "lead_black": 4.09
+   },
+   "board (PCB laminate)": {
+    "cell": 2.6,
+    "lead_red": 1.59,
+    "lead_black": 2.32
+   },
+   "J4 (battery socket on the board)": {
+    "cell": 1.06,
+    "lead_red": 0.0,
+    "lead_black": 0.0
+   },
+   "JST-PH plug in J4": {
+    "cell": 2.01
+   },
+   "camera module": {
+    "cell": 10.1,
+    "leads": 6.11
+   },
+   "camera FPC": {
+    "cell": 18.61,
+    "leads": 14.62
+   },
+   "battery lid (sits in the opening, top 0.42 below the floor)": {
+    "cell": 0.52,
+    "lead_red": 14.02,
+    "lead_black": 13.89
+   },
+   "back-cover floor (tape layer)": {
+    "cell": 0.1
+   },
+   "lid opening (in the floor, the cell bridges it)": {
+    "opening_X": [
+     -24.2,
+     -12.4
+    ],
+    "opening_Y": [
+     64.0,
+     77.1
+    ],
+    "from_cell_left_edge": 4.41,
+    "short_of_lead_edge": 15.79,
+    "above_cell_bottom": 5.92,
+    "below_cell_top": 1.48
+   }
+  },
+  "leads": {
+   "bay_X": 3.99,
+   "plug_X": 8.4,
+   "plug_mouth_Y": 58.67,
+   "used_mm": {
+    "red": 30.8,
+    "black": 21.4
+   },
+   "spec_mm": [
+    50.0,
+    80.0
+   ],
+   "spare_mm": [
+    19.2,
+    58.6
+   ]
+  }
+ },
+ "worst_shift1": {
+  "case": "worst",
+  "ver": "v14",
+  "L": 32.0,
+  "W": 20.5,
+  "T": 3.3,
+  "Z": [
+   1.1,
+   4.4
+  ],
+  "tape_under_cell_mm": 0.1,
+  "cell_front_X": [
+   -29.61,
+   2.39
+  ],
+  "cell_front_Y": [
+   58.08,
+   78.58
+  ],
+  "cell_kicad_x": [
+   147.61,
+   179.61
+  ],
+  "cell_kicad_y": [
+   60.36,
+   80.86
+  ],
+  "time": "2026-10-10 18:46",
+  "tape": {
+   "strip 1 (6 x 18, under the lead end)": {
+    "rect_X": [
+     -4.61,
+     1.39
+    ],
+    "rect_Y": [
+     59.08,
+     77.08
+    ],
+    "points": 1825,
+    "points_not_on_solid_floor": 0,
+    "points_with_something_on_the_floor": 0,
+    "gap_to_lid_opening": 7.79
+   },
+   "strip 2 (4 x 16, along the bottom edge)": {
+    "rect_X": [
+     -28.61,
+     -12.61
+    ],
+    "rect_Y": [
+     59.08,
+     63.08
+    ],
+    "points": 1105,
+    "points_not_on_solid_floor": 0,
+    "points_with_something_on_the_floor": 0,
+    "gap_to_lid_opening": 0.92
+   }
+  },
+  "lid_opening_bbox_at_floor": [
+   -24.2,
+   -12.4,
+   64.0,
+   77.1
+  ],
+  "hits": [],
+  "nearest": [
+   {
+    "what": "Cell",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.1,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Battery lid",
+     "Battery lid"
+    ],
+    "gap": 0.52,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.64,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 0.7,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 0.91,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 0.91,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 1.59,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 1.66,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 1.72,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 1.84,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.06,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 2.32,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 2.54,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Screws",
+     "Screw corner L"
+    ],
+    "gap": 2.54,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 2.6,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Rubber feet",
+     "Foot 2"
+    ],
+    "gap": 2.68,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 2.69,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.81,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "LiPo battery",
+     "JST-PH plug (in J4)"
+    ],
+    "gap": 3.01,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 3.24,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 3.27,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 3.55,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper active area (marker)"
+    ],
+    "gap": 3.59,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 3.97,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 4.09,
+    "overlap_mm3": 0.0
+   }
+  ],
+  "named": {
+   "corner post (top-left screw boss)": {
+    "cell": 1.69,
+    "leads": 33.87
+   },
+   "rib A (cross rib below the cell)": {
+    "cell": 0.29,
+    "leads": 0.91
+   },
+   "top lip / comb snap (top wall inside)": {
+    "cell": 0.82,
+    "leads": 9.75
+   },
+   "LR44 holder (front shell, above the cell)": {
+    "cell": 0.7,
+    "lead_red": 2.69,
+    "lead_black": 4.09
+   },
+   "board (PCB laminate)": {
+    "cell": 2.6,
+    "lead_red": 1.59,
+    "lead_black": 2.32
+   },
+   "J4 (battery socket on the board)": {
+    "cell": 2.06,
+    "lead_red": 0.91,
+    "lead_black": 0.91
+   },
+   "JST-PH plug in J4": {
+    "cell": 3.01
+   },
+   "camera module": {
+    "cell": 10.1,
+    "leads": 6.11
+   },
+   "camera FPC": {
+    "cell": 18.61,
+    "leads": 14.62
+   },
+   "battery lid (sits in the opening, top 0.42 below the floor)": {
+    "cell": 0.52,
+    "lead_red": 13.03,
+    "lead_black": 12.89
+   },
+   "back-cover floor (tape layer)": {
+    "cell": 0.1
+   },
+   "lid opening (in the floor, the cell bridges it)": {
+    "opening_X": [
+     -24.2,
+     -12.4
+    ],
+    "opening_Y": [
+     64.0,
+     77.1
+    ],
+    "from_cell_left_edge": 5.41,
+    "short_of_lead_edge": 14.79,
+    "above_cell_bottom": 5.92,
+    "below_cell_top": 1.48
+   }
+  },
+  "leads": {
+   "bay_X": 2.99,
+   "plug_X": 8.4,
+   "plug_mouth_Y": 58.67,
+   "used_mm": {
+    "red": 31.8,
+    "black": 22.4
+   },
+   "spec_mm": [
+    50.0,
+    80.0
+   ],
+   "spare_mm": [
+    18.2,
+    57.6
+   ]
+  },
+  "shift_left_mm": 1.0
+ },
+ "nominal_shift1": {
+  "case": "nominal",
+  "ver": "v14",
+  "L": 30.0,
+  "W": 20.0,
+  "T": 3.0,
+  "Z": [
+   1.1,
+   4.1
+  ],
+  "tape_under_cell_mm": 0.1,
+  "cell_front_X": [
+   -29.61,
+   0.39
+  ],
+  "cell_front_Y": [
+   58.58,
+   78.58
+  ],
+  "cell_kicad_x": [
+   149.61,
+   179.61
+  ],
+  "cell_kicad_y": [
+   60.36,
+   80.36
+  ],
+  "time": "2026-10-10 18:46",
+  "tape": {
+   "strip 1 (6 x 18, under the lead end)": {
+    "rect_X": [
+     -6.61,
+     -0.61
+    ],
+    "rect_Y": [
+     59.58,
+     77.58
+    ],
+    "points": 1825,
+    "points_not_on_solid_floor": 0,
+    "points_with_something_on_the_floor": 0,
+    "gap_to_lid_opening": 5.79
+   },
+   "strip 2 (4 x 16, along the bottom edge)": {
+    "rect_X": [
+     -28.61,
+     -12.61
+    ],
+    "rect_Y": [
+     59.58,
+     63.58
+    ],
+    "points": 1105,
+    "points_not_on_solid_floor": 0,
+    "points_with_something_on_the_floor": 0,
+    "gap_to_lid_opening": 0.42
+   }
+  },
+  "lid_opening_bbox_at_floor": [
+   -24.2,
+   -12.4,
+   64.0,
+   77.1
+  ],
+  "hits": [],
+  "nearest": [
+   {
+    "what": "Cell",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.1,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.49,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Battery lid",
+     "Battery lid"
+    ],
+    "gap": 0.52,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 1.0,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 1.59,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 1.61,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 2.32,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 2.54,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Screws",
+     "Screw corner L"
+    ],
+    "gap": 2.54,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 2.69,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 2.9,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.91,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.91,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "Rubber feet",
+     "Foot 2"
+    ],
+    "gap": 3.16,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 3.24,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 3.27,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "E-paper panel",
+     "E-paper active area (marker)"
+    ],
+    "gap": 3.59,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead red",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 3.66,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 3.76,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 3.85,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 3.97,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 4.06,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 4.09,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Lead black",
+    "part": [
+     "E-paper panel",
+     "E-paper active area (marker)"
+    ],
+    "gap": 4.37,
+    "overlap_mm3": 0.0
+   },
+   {
+    "what": "Cell",
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 4.55,
+    "overlap_mm3": 0.0
+   }
+  ],
+  "named": {
+   "corner post (top-left screw boss)": {
+    "cell": 1.69,
+    "leads": 31.86
+   },
+   "rib A (cross rib below the cell)": {
+    "cell": 0.8,
+    "leads": 0.91
+   },
+   "top lip / comb snap (top wall inside)": {
+    "cell": 0.82,
+    "leads": 9.27
+   },
+   "LR44 holder (front shell, above the cell)": {
+    "cell": 1.0,
+    "lead_red": 2.69,
+    "lead_black": 4.09
+   },
+   "board (PCB laminate)": {
+    "cell": 2.9,
+    "lead_red": 1.59,
+    "lead_black": 2.32
+   },
+   "J4 (battery socket on the board)": {
+    "cell": 4.06,
+    "lead_red": 2.91,
+    "lead_black": 2.91
+   },
+   "JST-PH plug in J4": {
+    "cell": 5.01
+   },
+   "camera module": {
+    "cell": 10.64,
+    "leads": 6.11
+   },
+   "camera FPC": {
+    "cell": 19.14,
+    "leads": 14.62
+   },
+   "battery lid (sits in the opening, top 0.42 below the floor)": {
+    "cell": 0.52,
+    "lead_red": 11.04,
+    "lead_black": 10.89
+   },
+   "back-cover floor (tape layer)": {
+    "cell": 0.1
+   },
+   "lid opening (in the floor, the cell bridges it)": {
+    "opening_X": [
+     -24.2,
+     -12.4
+    ],
+    "opening_Y": [
+     64.0,
+     77.1
+    ],
+    "from_cell_left_edge": 5.41,
+    "short_of_lead_edge": 12.79,
+    "above_cell_bottom": 5.42,
+    "below_cell_top": 1.48
+   }
+  },
+  "leads": {
+   "bay_X": 0.99,
+   "plug_X": 8.4,
+   "plug_mouth_Y": 58.67,
+   "used_mm": {
+    "red": 34.2,
+    "black": 24.8
+   },
+   "spec_mm": [
+    50.0,
+    80.0
+   ],
+   "spare_mm": [
+    15.8,
+    55.2
+   ]
+  },
+  "shift_left_mm": 1.0
+ }
+}

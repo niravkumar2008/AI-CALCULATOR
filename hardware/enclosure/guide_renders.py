@@ -3,6 +3,8 @@
     python guide_renders.py ver=v15 set=grind [only=z1,z3]     grinding close-ups  -> final_assembly/renders/grind/
     python guide_renders.py ver=v14 set=detail [only=d05]      v14 assembly close-ups -> final_assembly/renders/detail/
     python guide_renders.py ver=v15 set=detail15               v15 assembly close-ups -> final_assembly_v15_lcd/renders/detail/
+    (d22_battery_tw302030 in both detail sets needs the TW302030 candidate in the document first:
+     final_assembly/variant_battery_tw302030/fit_tw302030.py ver=.. case=nominal shift=1, then case=off after the shot)
 
 Fusion must be open with the FusionMCPBridge add-in and the matching final-assembly document loaded (v14: root occurrences
 "Final - ...", v15: "V15 - ..."; File > Open the exported .f3d is enough). The build script of that version is loaded as a
@@ -118,7 +120,27 @@ D_BACK, D_FRONT, D_SIDE = (0.28, -0.42, -1.0), (0.28, -0.42, 1.0), (1.0, -0.55, 
 SHELL = ["Front shell", "Keymat", "Keycaps", "Window lens", "Window mask", "Solar cell (dummy)"]
 BSET14 = [PCB, "E-paper panel", "Camera module", "Magnet connector", "Ribbons and wires"]
 COVER = ["Back cover", "Battery lid", "Screws"]
-LIPO_BOX = (-28.6, -2.6, 58.83, 78.58)
+LIPO_BOX = (-28.61, -2.59, 58.83, 78.58)
+LID_OPEN = (-24.2, -12.4, 64.0, 77.1)        # battery-lid opening in the floor (front X, Y), measured at Z 0.95: round + a small tab at the top
+LID_C, LID_R = (-18.3, 70.0), 5.95
+def lid_ring(z, n=36):
+    return [(LID_C[0] + LID_R * math.cos(2 * math.pi * k / n), LID_C[1] + LID_R * math.sin(2 * math.pi * k / n), z) for k in range(n)]
+# Taiwoo TW302030 candidate (final_assembly/variant_battery_tw302030): nominal 30 x 20 x 3.0 placed 1 mm further left than
+# the #1317 (left edge X -29.61, top edge Y 78.58), worst case 32 x 20.5 x 3.3 outline; the fit script must have left
+# the nominal cell in the document ("TW302030 candidate") before the d22 shot is rendered.
+TW = (-29.61, 0.39, 58.58, 78.58)
+TW_WORST = (-29.61, 2.39, 58.08, 78.58)
+J4_BOX = (4.45, 12.35, 62.69, 71.29)
+def d22_shot(extra_hide):
+    zt = 1.1 + 3.0 + 0.02
+    return dict(name="d22_battery_tw302030", show=BACK + ["LiPo battery", "Ribbons and wires", "TW302030 candidate"],
+                hide_b=["LiPo pouch", "LiPo lead", "Camera FPC"] + extra_hide, target=(-12, 66, 2.0), d=(0.3, -0.6, 1.0), up=UPY, ext=62,
+                polys=dict(worst=box_pts(TW_WORST[0], TW_WORST[1], TW_WORST[2], TW_WORST[3], 4.42),
+                           tape1=box_pts(TW[1] - 7.0, TW[1] - 1.0, TW[2] + 1.0, TW[2] + 19.0, zt),
+                           tape2=box_pts(TW[0] + 1.0, TW[0] + 17.0, TW[2] + 1.0, TW[2] + 5.0, zt),
+                           lid=lid_ring(zt), j4=box_pts(*J4_BOX, 1.6)),
+                anchors=dict(cell=(-14.6, 70.5, 4.1), post=(-34.05, 74.05, 4.0), rib=(-14.0, 57.3, 2.0), lip=(-14.0, 79.8, 2.0),
+                             leads=(0.99, 57.5, 3.5), plug=(8.4, 60.6, 4.2), leadend=(0.39, 66.0, 2.6)))
 
 DETAIL14 = [
     dict(name="d01_epaper_tape", show=[PCB], target=(0, 42, 8), d=D_FRONT, ext=88,
@@ -144,9 +166,14 @@ DETAIL14 = [
     dict(name="d09_magnet_j3", show=[PCB, "Magnet connector"], move={"Magnet connector": (0, 7.5, 0)},
          target=(22.5, 74, 5.5), d=D_BACK, ext=32,
          anchors=dict(pin1=J3_PIN1, pin4=J3_PIN4, nleg=(26.25, 80.5, 5.7), face=(22.5, 88.5, 5.7), nface=(26.5, 89.2, 5.7))),
+    # tape L (battery_upgrade.md section 8): strip 1 6 x 18 under the lead end (outer edge 1 mm in from the lead edge,
+    # from 1 mm above the bottom edge), strip 2 4 x 16 along the bottom edge (1 mm in from the left edge); both on solid
+    # floor only. LID_OPEN = the battery-lid opening in the floor, measured in the model at Z 0.95 (fit_tw302030.py).
     dict(name="d10_battery_tape", show=BACK, target=(-14, 66, 1.0), d=(0.3, -0.6, 1.0), up=UPY, ext=52,
-         polys=dict(outline=box_pts(*LIPO_BOX, 1.02), tape1=box_pts(-26.0, -5.0, 61.0, 65.0, 1.02), tape2=box_pts(-26.0, -5.0, 72.0, 76.0, 1.02)),
-         anchors=dict(c=(-15.6, 68.7, 1.0), j4end=(-2.6, 68.7, 1.0))),
+         polys=dict(outline=box_pts(*LIPO_BOX, 1.02), tape1=box_pts(LIPO_BOX[1] - 7.0, LIPO_BOX[1] - 1.0, LIPO_BOX[2] + 1.0, LIPO_BOX[2] + 19.0, 1.03),
+                    tape2=box_pts(LIPO_BOX[0] + 1.0, LIPO_BOX[0] + 17.0, LIPO_BOX[2] + 1.0, LIPO_BOX[2] + 5.0, 1.03),
+                    lid=lid_ring(1.02)),
+         anchors=dict(c=(-15.6, 68.7, 1.0), j4end=(-2.6, 68.7, 1.0), post=(-34.05, 74.05, 3.0), rib=(-14.0, 57.3, 2.0))),
     dict(name="d11_battery_placed", show=BACK + ["LiPo battery", "Ribbons and wires"], hide_b=["E-paper FPC", "Camera FPC"],
          target=(-9, 66, 2.0), d=(0.3, -0.6, 1.0), up=UPY, ext=56,
          anchors=dict(battery=(-15.6, 68.7, 4.8), leads=(-1.5, 70.5, 3.0), plug=(8.4, 63, 3.0))),
@@ -229,6 +256,9 @@ DETAIL15 = [
          target=(0, 14, 5), d=(-0.35, -0.6, -1.0), up=UPY, ext=82,
          anchors=dict(camera=CAMC, ribbon=(0, 15, 6.0), j1=(0, -19.6, 5.5))),
 ]
+
+DETAIL14.append(d22_shot(["E-paper FPC"]))
+DETAIL15.append(d22_shot(["LCD FPC"]))
 
 SETS = {"grind": ("v15", os.path.join(ENC, "final_assembly", "renders", "grind"), GRIND_SHOTS),
         "detail": ("v14", os.path.join(ENC, "final_assembly", "renders", "detail"), DETAIL14),

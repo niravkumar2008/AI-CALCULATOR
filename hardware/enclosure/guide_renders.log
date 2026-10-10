@@ -100,3 +100,17 @@
 18:05:30 run detail15 e09
 18:05:35 detail15 e09_keys_vs_pills 5 s
 18:05:38 run detail15 e09 done
+18:54:43 run detail d10,d22
+18:54:45 detail d10_battery_tape 1 s
+18:54:45 detail d22_battery_tw302030 1 s
+18:54:46 run detail d10,d22 done
+18:54:46 run detail15 d22
+18:54:52 detail15 d22_battery_tw302030 5 s
+18:54:55 run detail15 d22 done
+18:55:25 run detail d10,d22
+18:55:26 detail d10_battery_tape 1 s
+18:55:26 detail d22_battery_tw302030 1 s
+18:55:27 run detail d10,d22 done
+18:55:27 run detail15 d22
+18:55:33 detail15 d22_battery_tw302030 6 s
+18:55:36 run detail15 d22 done

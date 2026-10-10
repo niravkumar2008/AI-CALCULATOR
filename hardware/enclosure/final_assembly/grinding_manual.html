@@ -445,7 +445,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
     <li><span class="n">5</span><span>Magnet U-notch in the top wall<br><span class="part">front shell</span></span><span class="pill do">cut</span></li>
     <li><span class="n">5b</span><span>Back-cover lip under the magnet notch<br><span class="part">back cover</span></span><span class="pill check">only if there</span></li>
     <li><span class="n">6b</span><span>Snip the 3 round pins and the 3 wire hooks off the inner rib, both side walls (do this before 6)<br><span class="part">front shell</span></span><span class="pill do">snip</span></li>
-    <li><span class="n">6</span><span>Side-wall relief: notch the inner side-wall rib 2–2.5 mm deep (to 7 mm below the rim), 15–50 mm from the top, solar-window side<br><span class="part">front shell</span></span><span class="pill do">file</span></li>
+    <li><span class="n">6</span><span>Side-wall relief: notch the inner side-wall rib 2–2.5 mm deep (to 7 mm below the rim), 14–49 mm from the shell's own top outer edge at that wall, solar-window side<br><span class="part">front shell</span></span><span class="pill do">file</span></li>
     <li><span class="n">6c</span><span>Lower end of the inner ribs where the board widens<br><span class="part">front shell</span></span><span class="pill check">only if the paper's wide corners ride up</span></li>
   </ol>
   <p class="small"><strong>Before any of this (10 minutes, real shell in hand):</strong> do the pre-grind checklist in <code>hardware/verification/07_final_review_fitment.md</code> §3: it measures the few things the 3D model only guessed (inner-rib depth, solar-frame strip, floor thickness at the moulded label, lip, screw length) and tells you whether zone 5b applies to <em>your</em> shell. Zones 6 and 6b are settled (depth rod 2026-10-06, <code>hardware/verification/12_rib_pin_recheck.md</code>): the rib, pins and hooks all sit at board height on both walls.</p>
@@ -510,7 +510,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
   <line x1="38" y1="56" x2="38" y2="158" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
   <text x="32" y="111" text-anchor="end" class="tm">12</text>
   <text x="190.25" y="180" text-anchor="middle" class="tr">remove ALL of it: frame + grid</text>
-  <text x="210" y="218" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Model: frame 7.2-19.2 mm in from the cover's top outer edge, near end</tspan><tspan x="210" dy="1.2em">10.7 mm from the side edge.</tspan></text>
+  <text x="210" y="218" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Model: outer frame 6.3-19.3 mm down from the back cover's own top</tspan><tspan x="210" dy="1.2em">outer edge (straight down at the box's middle), near end 9.9 mm in</tspan><tspan x="210" dy="1.2em">from the side edge.</tspan></text>
 </svg><!--/dg:z1_top--><figcaption>Top view (inside of the back cover). Everything red goes, frame and grid.</figcaption></figure>
     <figure class="diagram"><!--dg:z1_sec--><svg class="dg" viewBox="0 0 420 236" role="img" aria-label="Zone 1 cross-section: 5 to 5.5 mm tall walls on a 1.0 mm floor; J4 needs them gone with no stub"><title>Zone 1 cross-section: 5 to 5.5 mm tall walls on a 1.0 mm floor; J4 needs them gone with no stub</title>
   <rect x="10" y="170" width="400" height="14" rx="0" class="nv"/>
@@ -543,7 +543,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
   </div>
   <div class="box">
     <p class="sub">Where</p>
-    <p>You can't miss it: it's the only box with a grid inside, near the top end of the back cover, beside a corner screw post (top right with the cover inside up and the top end away from you). From the model, its outer frame runs about <span class="num">7.2 to 19.2 mm</span> in from the cover's top outer edge, and its near end is about <span class="num">10.7 mm</span> in from the nearest side edge. Confirm with the back-cover template ("GRIND 1").</p>
+    <p>You can't miss it: it's the only box with a grid inside, near the top end of the back cover, beside a corner screw post (top right with the cover inside up and the top end away from you). From the model, its outer frame runs about <span class="num">6.3 to 19.3 mm</span> down from the <strong>back cover's own top outer edge</strong> (the outside-face edge, the same datum as the camera hole's 38.0 mm), measured straight down at the middle of the box; because the top edge curves down towards the corners it reads 5.8&ndash;18.8 mm at the screw-post end and 6.4&ndash;19.4 mm at the far end. Its near end is about <span class="num">9.9 mm</span> in from the nearest side edge (outside face). Confirm with the back-cover template ("GRIND 1").</p>
   </div>
   <div class="box">
     <p class="sub">Steps (freehand)</p>
@@ -657,7 +657,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
   <div class="box">
     <p class="sub">Steps</p>
     <ol class="steps">
-      <li>Before you start: pre-grind check 4 (floor thickness at the moulded label outside, 32&ndash;48 mm from the top). ≥ 0.9 mm: grind flush as below. 0.8&ndash;0.9: stop <span class="num">0.1–0.2 mm</span> proud. Under 0.8: use the spare cover.</li>
+      <li>Before you start: pre-grind check 4 (floor thickness at the moulded label outside, 32&ndash;48 mm down from the back cover's own top outer edge). ≥ 0.9 mm: grind flush as below. 0.8&ndash;0.9: stop <span class="num">0.1–0.2 mm</span> proud. Under 0.8: use the spare cover.</li>
       <li>Measure the width, halve it, mark the centre on rib B. Mark 7 mm each side. Lay the template in and check the marks agree.</li>
       <li><span class="rc">depth rod</span> Reference reading R on the floor next to the rib.</li>
       <li>Sanding drum held so it rides along the rib (axis across the rib), 5,000&ndash;10,000 RPM, between your marks only. Short passes.</li>
@@ -980,7 +980,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
     <p><strong>Why (what would hit):</strong> the depth rod (2026-10-06) put the round pins <span class="num">5.1–5.5 mm</span> (outer two) and <span class="num">6.0–6.1 mm</span> (middle) below the rim and the U-shaped wire hooks at <span class="num">5.5 mm</span>; the board occupies 5.5–6.3 mm. So every pin and hook is at board height. On the J2 side their tips are 0–0.5 mm from the board's edge (the paper edge runs through the pin bosses in your photo); on the solar side <strong>the two upper hooks sit <span class="num">1.1–1.4 mm</span> inside the board's top corner and the pins reach <span class="num">1 mm</span> into the antenna tab</strong>. They held Casio's solar-cell wires; nothing of ours runs along those walls (the LiPo leads go straight into J4). Verification 12, hits 1&ndash;5 and 8&ndash;11.</p>
   </div>
   <dl class="spec">
-    <div><dt>Where</dt><dd>both screen-section side walls: 3 round pins (26, 35, 45 mm from the top) and 3 hooks (17, 22 and 56–59 mm; the lowest is the wider wire holder)</dd></div>
+    <div><dt>Where</dt><dd>both screen-section side walls: 3 round pins (25, 34, 44 mm from the shell's own top outer edge at that wall) and 3 hooks (16, 21 and 55–58 mm; the lowest is the wider wire holder)</dd></div>
     <div><dt>What</dt><dd>cut each pin and hook off flush with the rib it grows from</dd></div>
     <div><dt>Leave</dt><dd>the rib itself (zone 6 only notches it on the solar side), the posts, the snap tabs</dd></div>
     <div><dt>Tools</dt><dd>flush cutters; a needle file for the stubs</dd></div>
@@ -1033,7 +1033,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
       <li>Cutters the wrong way round (bevel against the rib): leaves a stub about 0.5 mm long. Flip them.</li>
       <li>Twisting the cutters: the rib is thin and can crack. Straight squeeze only.</li>
       <li>Forgetting the J2-side wall. Both walls.</li>
-      <li>Missing the lowest, wider holder (56&ndash;59 mm from the top).</li>
+      <li>Missing the lowest, wider holder (55&ndash;58 mm from the top outer edge at that wall).</li>
     </ul>
   </div>
 </article>
@@ -1042,18 +1042,18 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
 <article class="zone" id="z6">
   <div class="zone-head">
     <div class="row"><span class="eyebrow">Zone 6 · front shell</span><span class="pill need">needed</span></div>
-    <h2>Side-wall relief: 2–2.5 mm off the inner side-wall rib, 15–50 mm from the top (board corner + antenna)</h2>
+    <h2>Side-wall relief: 2–2.5 mm off the inner side-wall rib, 14–49 mm from the top (board corner + antenna)</h2>
   </div>
   <div class="why">
     <p><strong>Why (what would hit):</strong> on the <strong>solar-window side</strong> the screen-section side wall is an outer skin, a wire channel and a thin <strong>inner rib</strong> (the one the three round pins stick out of). Your depth rod (2026-10-06) put the rib's top edge <span class="num">4.5–5.0 mm</span> below the rim; the board sits 5.5–6.3 mm below the rim, so the rib runs right through where the board goes. Two things on the board reach into it:</p>
     <ul>
-      <li>the board's own top corner, a strip 15–26 mm from the top outer edge that the board keeps at full width: <strong>up to <span class="num">0.7 mm</span> into the rib</strong>;</li>
-      <li>the ESP32 module's antenna end, a bare <span class="num">0.8 mm</span> tab that sticks out <span class="num">4.15 mm</span> past the board's edge 32–48 mm from the top: <strong><span class="num">0.3 mm</span> into the rib</strong>.</li>
+      <li>the board's own top corner, a strip 14–25 mm from the top outer edge that the board keeps at full width: <strong>up to <span class="num">0.7 mm</span> into the rib</strong>;</li>
+      <li>the ESP32 module's antenna end, a bare <span class="num">0.8 mm</span> tab that sticks out <span class="num">4.15 mm</span> past the board's edge 31–47 mm from the top: <strong><span class="num">0.3 mm</span> into the rib</strong>.</li>
     </ul>
     <p>Either one stops the board seating. Only the part of the rib between 4.5 and 7 mm below the rim is in the way, so this is a 2–2.5 mm deep notch along the rib, not the whole rib (verification 12).</p>
   </div>
   <dl class="spec">
-    <div><dt>Where</dt><dd class="num">solar-window side; 15–50 mm from the top outer edge (board corner 15–27, antenna tab 31–50)</dd></div>
+    <div><dt>Where</dt><dd class="num">solar-window side; 14–49 mm from the shell's own top outer edge, measured along that wall from the rim's outer edge right above the rib (board corner 14–26, antenna tab 30–49). That point is about 1 mm lower than the middle of the top end, because the top end curves down towards the corners.</dd></div>
     <div><dt>What</dt><dd>the thin inner rib (1 mm), not the outer skin, not the channel floor</dd></div>
     <div><dt>Depth</dt><dd class="num">from the rib's top edge (4.5–5 below the rim) down to 7.0 mm below the rim (6.5 is the minimum: the board's far face is at 6.3)</dd></div>
     <div><dt>Pins and hooks</dt><dd>gone first (zone 6b), so the file has a clear run</dd></div>
@@ -1066,20 +1066,20 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
   <text x="34" y="34" text-anchor="start" class="ts">outer skin (don't touch)</text>
   <rect x="34" y="50" width="357.5" height="30" rx="0" class="chan"/>
   <text x="39.5" y="69" text-anchor="start" class="ts">wire channel</text>
-  <rect x="34" y="80" width="321.2" height="7" rx="0" class="rib"/>
-  <rect x="116.5" y="80" width="192.5" height="7" rx="0" class="cut"/>
-  <rect x="173" y="87" width="8" height="9" rx="0" class="cut"/>
-  <rect x="222.5" y="87" width="8" height="9" rx="0" class="cut"/>
-  <rect x="277.5" y="87" width="8" height="9" rx="0" class="cut"/>
-  <path d="M121.5,87 v10 h12 v-10" class="lcut"/>
-  <path d="M149.0,87 v10 h12 v-10" class="lcut"/>
-  <path d="M342.0,87 v10 h16.5 v-10" class="lcut"/>
-  <path d="M116.5,88 H182.5 V128 H116.5" class="bo"/>
-  <rect x="204.5" y="86" width="104.5" height="22" rx="0" class="tab"/>
-  <text x="149.5" y="110" text-anchor="middle" class="ts"><tspan x="149.5" dy="0em">board</tspan><tspan x="149.5" dy="1.2em">corner</tspan></text>
-  <text x="256.75" y="122" text-anchor="middle" class="ts">antenna tab</text>
-  <text x="256.75" y="135" text-anchor="middle" class="ts">(0.8 mm bare PCB)</text>
-  <text x="369.5" y="116" text-anchor="middle" class="to ts"><tspan x="369.5" dy="0em">rib end</tspan><tspan x="369.5" dy="1.2em">(6c)</tspan></text>
+  <rect x="34" y="80" width="315.7" height="7" rx="0" class="rib"/>
+  <rect x="111" y="80" width="192.5" height="7" rx="0" class="cut"/>
+  <rect x="167.5" y="87" width="8" height="9" rx="0" class="cut"/>
+  <rect x="217" y="87" width="8" height="9" rx="0" class="cut"/>
+  <rect x="272" y="87" width="8" height="9" rx="0" class="cut"/>
+  <path d="M116.0,87 v10 h12 v-10" class="lcut"/>
+  <path d="M143.5,87 v10 h12 v-10" class="lcut"/>
+  <path d="M336.5,87 v10 h16.5 v-10" class="lcut"/>
+  <path d="M111.0,88 H177.0 V128 H111.0" class="bo"/>
+  <rect x="199" y="86" width="104.5" height="22" rx="0" class="tab"/>
+  <text x="144" y="110" text-anchor="middle" class="ts"><tspan x="144" dy="0em">board</tspan><tspan x="144" dy="1.2em">corner</tspan></text>
+  <text x="251.25" y="122" text-anchor="middle" class="ts">antenna tab</text>
+  <text x="251.25" y="135" text-anchor="middle" class="ts">(0.8 mm bare PCB)</text>
+  <text x="364" y="116" text-anchor="middle" class="to ts"><tspan x="364" dy="0em">rib end</tspan><tspan x="364" dy="1.2em">(6c)</tspan></text>
   <line x1="34" y1="176" x2="34" y2="186" class="ln"/>
   <text x="34" y="198" text-anchor="middle" class="tm">0</text>
   <line x1="61.5" y1="176" x2="61.5" y2="182" class="ln"/>
@@ -1102,13 +1102,13 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
   <text x="364" y="198" text-anchor="middle" class="tm">60</text>
   <line x1="391.5" y1="176" x2="391.5" y2="182" class="ln"/>
   <line x1="34" y1="176" x2="391.5" y2="176" class="ln"/>
-  <text x="391.5" y="212" text-anchor="end" class="ts">mm from the top outer edge</text>
-  <line x1="116.5" y1="96" x2="116.5" y2="158" class="ext"/>
-  <line x1="309" y1="96" x2="309" y2="158" class="ext"/>
-  <line x1="116.5" y1="162" x2="309" y2="162" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
-  <text x="212.75" y="157" text-anchor="middle" class="tm">zone 6: 15 to 50 mm</text>
-  <text x="210" y="232" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Red: rib top filed down (zone 6) and the pins + hooks snipped (6b).</tspan><tspan x="210" dy="1.2em">Board corner 15-27 mm, antenna tab 31-50 mm.</tspan></text>
-</svg><!--/dg:z6_top--><figcaption>Looking down on the solar-side wall (drawn sideways: the top of the calculator is on the left). Red on the rib: the 15&ndash;50 mm stretch filed down. Green outline: the board's corner; yellow: the antenna tab.</figcaption></figure>
+  <text x="391.5" y="212" text-anchor="end" class="ts">mm from the shell's top outer edge at this wall</text>
+  <line x1="111" y1="96" x2="111" y2="158" class="ext"/>
+  <line x1="303.5" y1="96" x2="303.5" y2="158" class="ext"/>
+  <line x1="111" y1="162" x2="303.5" y2="162" class="dim" marker-end="url(#ad)" marker-start="url(#ad)"/>
+  <text x="207.25" y="157" text-anchor="middle" class="tm">zone 6: 14 to 49 mm</text>
+  <text x="210" y="232" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Red: rib top filed down (zone 6) and the pins + hooks snipped (6b).</tspan><tspan x="210" dy="1.2em">Board corner 14-26 mm, antenna tab 30-49 mm. Measured from the rim's</tspan><tspan x="210" dy="1.2em">top outer edge right above the rib (about 1 mm lower than the middle</tspan><tspan x="210" dy="1.2em">of the top end).</tspan></text>
+</svg><!--/dg:z6_top--><figcaption>Looking down on the solar-side wall (drawn sideways: the top of the calculator is on the left). Red on the rib: the 14&ndash;49 mm stretch filed down. Green outline: the board's corner; yellow: the antenna tab.</figcaption></figure>
     <figure class="diagram"><!--dg:z6_sec--><svg class="dg" viewBox="0 0 420 336" role="img" aria-label="Zone 6 cross-section across the wall: rib top 4.5 to 5.0 below the rim, board 5.5 to 6.3, file the rib to 7.0"><title>Zone 6 cross-section across the wall: rib top 4.5 to 5.0 below the rim, board 5.5 to 6.3, file the rib to 7.0</title>
   <rect x="0" y="30" width="420" height="10" rx="0" class="tool"/>
   <text x="410" y="26" text-anchor="end" class="ts">ruler across the rim</text>
@@ -1157,7 +1157,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
     <ol class="steps">
       <li>Do zone 6b first (pins and hooks off, both walls).</li>
       <li>Front shell face down, top end away from you. The solar-window side is on your <strong>left</strong> now (it is the right-hand side when you use the calculator).</li>
-      <li>Mark 15 and 50 mm down from the top outer edge on the rim of that wall. Put tape on the outer skin's rim so a slip only scuffs tape.</li>
+      <li>Mark 14 and 49 mm down from the top outer edge on the rim of that wall (zero = the rim's outer edge right above the rib, where the top end curves into this wall). Put tape on the outer skin's rim so a slip only scuffs tape.</li>
       <li><span class="rc">depth rod</span> Take a "before" reading on the rib's top edge at 20, 30 and 40 mm (should be about 4.5&ndash;5.0, measured your usual way).</li>
       <li>File the top edge of the inner rib between the marks. Keep the file flat along the rib and push it only lengthwise; the file can't reach the outer skin if it rides on the rib.</li>
       <li><span class="rc">depth rod</span> After every few strokes: read at 15, 20, 25 &hellip; 50 mm. Aim for <span class="num">7.0</span> everywhere (never less than 6.5).</li>
@@ -1165,7 +1165,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
       <li>Lay the paper template in again: the yellow tab and the top corner beside it must drop in flat. Then the dummy board / real board.</li>
     </ol>
   </div>
-  <div class="callout ok"><strong class="tag">Done when</strong><p>Between 15 and 50 mm from the top the depth rod reads 7.0 mm on the rib (6.5 minimum), and the yellow paper tab lies flat on the posts with the rest of the template.</p></div>
+  <div class="callout ok"><strong class="tag">Done when</strong><p>Between 14 and 49 mm from the top outer edge the depth rod reads 7.0 mm on the rib (6.5 minimum), and the yellow paper tab lies flat on the posts with the rest of the template.</p></div>
   <figure><img src="renders/section_antenna.png" alt="Section across the ESP32 antenna tab and the faceplate's side wall." loading="lazy"><figcaption>Cut across the antenna tab (0.8 mm, bottom left) and the side wall: without the relief the tab runs 0.3 mm into the inner rib.</figcaption></figure>
   <div class="box">
     <p class="sub">Common mistakes</p>
@@ -1174,7 +1174,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
       <li>Stopping at 6.0 because "it looks low enough": the board's far face is at 6.3. Measure.</li>
       <li>Forgetting the ruler thickness: your 7.0 is then really 6.3. Measure the same way every time.</li>
       <li>Using the rotary tool here: the rib is 1 mm thin and snaps or melts. Hand file only.</li>
-      <li>Filing outside 15&ndash;50 mm: the rest of the rib holds the plate. Leave it.</li>
+      <li>Filing outside 14&ndash;49 mm: the rest of the rib holds the plate. Leave it.</li>
     </ul>
   </div>
 </article>
@@ -1186,20 +1186,20 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
     <h2>Lower end of the inner ribs, where the board widens</h2>
   </div>
   <div class="why">
-    <p><strong>Why (what might hit):</strong> the board goes from 64.75 mm wide (beside the screen) to its full width between 59.5 and 63 mm from the top, with a diagonal on each side. In the model the thick wall (and its inner rib) stops at 58.4 mm from the top; your photo of the J2 side suggests it may run to 60–62. If it does, <strong>the end of the rib catches the diagonal by up to <span class="num">0.9 mm</span></strong>. The paper dry fit tells you: on 2026-10-06 the paper's wide corner on the J2 side did not lie flat beside the lowest hook; zone 6b removes that hook, and this zone is for what is left.</p>
+    <p><strong>Why (what might hit):</strong> the board goes from 64.75 mm wide (beside the screen) to its full width between 58.5 and 62 mm from the top (all zone 6/6b/6c distances: from the shell's own top outer edge at that wall), with a diagonal on each side. In the model the thick wall (and its inner rib) stops at 57.4 mm from the top; your photo of the J2 side suggests it may run to 59–61. If it does, <strong>the end of the rib catches the diagonal by up to <span class="num">0.9 mm</span></strong>. The paper dry fit tells you: on 2026-10-06 the paper's wide corner on the J2 side did not lie flat beside the lowest hook; zone 6b removes that hook, and this zone is for what is left.</p>
   </div>
   <dl class="spec">
-    <div><dt>Where</dt><dd>the last 2–3 mm of each inner rib's lower end (56–63 mm from the top), whichever side the paper still rides up on</dd></div>
+    <div><dt>Where</dt><dd>the last 2–3 mm of each inner rib's lower end (55–62 mm from the top outer edge at that wall), whichever side the paper still rides up on</dd></div>
     <div><dt>Depth</dt><dd class="num">down to 7.0 mm below the rim, like zone 6</dd></div>
     <div><dt>Decides it</dt><dd>after 6b: the paper template's wide corners both lie flat, skip. One rides up: file that side.</dd></div>
     <div><dt>Tools</dt><dd>flat needle file</dd></div>
   </dl>
-  <figure class="diagram"><!--dg:z6c--><svg class="dg" viewBox="0 0 420 262" role="img" aria-label="Zone 6c top view: the board widens 59.5 to 63 mm from the top; if the rib's lower end reaches there, file it back 2 to 3 mm"><title>Zone 6c top view: the board widens 59.5 to 63 mm from the top; if the rib's lower end reaches there, file it back 2 to 3 mm</title>
-  <rect x="40" y="30" width="14" height="162" rx="0" class="pl"/>
-  <rect x="54" y="30" width="9" height="75.6" rx="0" class="rib"/>
-  <rect x="54" y="105.6" width="9" height="27.9" rx="0" class="cut"/>
-  <path d="M120,30 V115.5 L60,147 V192" class="bo"/>
-  <circle cx="63" cy="138" r="6" class="warnc"/>
+  <figure class="diagram"><!--dg:z6c--><svg class="dg" viewBox="0 0 420 262" role="img" aria-label="Zone 6c top view: the board widens 58.5 to 62 mm from the top outer edge at this wall; if the rib's lower end reaches there, file it back 2 to 3 mm"><title>Zone 6c top view: the board widens 58.5 to 62 mm from the top outer edge at this wall; if the rib's lower end reaches there, file it back 2 to 3 mm</title>
+  <rect x="40" y="30" width="14" height="153" rx="0" class="pl"/>
+  <rect x="54" y="30" width="9" height="66.6" rx="0" class="rib"/>
+  <rect x="54" y="96.6" width="9" height="27.9" rx="0" class="cut"/>
+  <path d="M120,30 V106.5 L60,138 V183" class="bo"/>
+  <circle cx="63" cy="129" r="6" class="warnc"/>
   <line x1="20" y1="30" x2="34" y2="30" class="ln"/>
   <text x="16" y="34" text-anchor="end" class="tm">50</text>
   <line x1="20" y1="75" x2="34" y2="75" class="ln"/>
@@ -1209,10 +1209,10 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
   <line x1="20" y1="165" x2="34" y2="165" class="ln"/>
   <text x="16" y="169" text-anchor="end" class="tm">65</text>
   <text x="134" y="44" text-anchor="start" class="ts">board edge beside the screen</text>
-  <text x="150" y="85.8" text-anchor="start" class="to ts"><tspan x="150" dy="0em">the rib may run to 60-62 mm:</tspan><tspan x="150" dy="1.2em">file this end back 2-3 mm</tspan></text>
-  <line x1="146" y1="97.5" x2="66" y2="118.2" class="lead" marker-end="url(#al)"/>
-  <text x="150" y="152.4" text-anchor="start" class="ts"><tspan x="150" dy="0em">the diagonal (board widens)</tspan><tspan x="150" dy="1.2em">crosses the rib line about</tspan><tspan x="150" dy="1.2em">61.4-62.1 mm from the top</tspan></text>
-  <line x1="146" y1="157.8" x2="70" y2="140.7" class="lead" marker-end="url(#al)"/>
+  <text x="150" y="76.8" text-anchor="start" class="to ts"><tspan x="150" dy="0em">the rib may run to 59-61 mm:</tspan><tspan x="150" dy="1.2em">file this end back 2-3 mm</tspan></text>
+  <line x1="146" y1="88.5" x2="66" y2="109.2" class="lead" marker-end="url(#al)"/>
+  <text x="150" y="143.4" text-anchor="start" class="ts"><tspan x="150" dy="0em">the diagonal (board widens)</tspan><tspan x="150" dy="1.2em">crosses the rib line about</tspan><tspan x="150" dy="1.2em">60.4-61.1 mm from the top</tspan></text>
+  <line x1="146" y1="148.8" x2="70" y2="131.7" class="lead" marker-end="url(#al)"/>
   <text x="210" y="230" text-anchor="middle" class="ts"><tspan x="210" dy="0em">Only if the paper's (or the dummy board's) wide corner rides up after</tspan><tspan x="210" dy="1.2em">6b. Depth: 7.0 below the rim, like zone 6.</tspan></text>
 </svg><!--/dg:z6c--><figcaption>Top view at the rib's lower end. The orange-circled spot is where the board's diagonal crosses the rib line.</figcaption></figure>
   <div class="pair">
@@ -1222,7 +1222,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
   <div class="box">
     <p class="sub">Steps</p>
     <ol class="steps">
-      <li>After 6b (and 6), lay the paper template in. Look at both wide corners (where the board's outline steps out, about 60&ndash;63 mm from the top).</li>
+      <li>After 6b (and 6), lay the paper template in. Look at both wide corners (where the board's outline steps out, about 59&ndash;62 mm from the top).</li>
       <li>Both flat? Skip this zone. One rides up? Mark the end of the rib under it.</li>
       <li>File the rib's end back <span class="num">2–3 mm</span> and down. <span class="rc">depth rod</span> <span class="num">7.0</span> below the rim, like zone 6.</li>
       <li>Paper in again, then the dummy board. Repeat in small steps until the corner drops.</li>
@@ -1266,7 +1266,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
   </div>
   <div class="box">
     <h3>2. DCXYX camera: keep the S-fold bay clear</h3>
-    <p>If the build uses the DCXYX OV5640-AF camera (longer ribbon), the recommended route keeps the camera and the 7 mm window where they are and tucks the extra ribbon into one S-fold (bend radius 1.2 mm) in the bay <strong>between rib C and the small ring</strong> on the back cover (KiCad y 108&ndash;116, x 147&ndash;153: about 51&ndash;59 mm from the top outer edge, within about 3 mm of the centre line). The ribbon passes only <span class="num">0.44 mm</span> over the floor there and <span class="num">0.53 mm</span> under the small ring's top (<code>variant_camera_dcxyx/results.json</code>).</p>
+    <p>If the build uses the DCXYX OV5640-AF camera (longer ribbon), the recommended route keeps the camera and the 7 mm window where they are and tucks the extra ribbon into one S-fold (bend radius 1.2 mm) in the bay <strong>between rib C and the small ring</strong> on the back cover (KiCad y 108&ndash;116, x 147&ndash;153: about 51&ndash;59 mm from the back cover's own top outer edge, within about 3 mm of the centre line). The ribbon passes only <span class="num">0.44 mm</span> over the floor there and <span class="num">0.53 mm</span> under the small ring's top (<code>variant_camera_dcxyx/results.json</code>).</p>
     <figure class="diagram"><!--dg:v15_sfold--><svg class="dg" viewBox="0 0 420 262" role="img" aria-label="v15 DCXYX camera: the ribbon's S-fold lies in the bay between rib C and the small ring, 0.44 mm over the floor"><title>v15 DCXYX camera: the ribbon's S-fold lies in the bay between rib C and the small ring, 0.44 mm over the floor</title>
   <rect x="0" y="190" width="420" height="14" rx="0" class="nv"/>
   <rect x="0" y="54" width="420" height="16" rx="0" class="board"/>
@@ -1344,7 +1344,7 @@ figure.pending .slot { border: 2px dashed var(--line); border-radius: 6px; paddi
     <li><label for="c5"><input type="checkbox" id="c5"><span>Magnet notch 21.5 wide × 7.95 deep from the rim, 6.4–27.9 mm from the solar-side edge.</span></label></li>
     <li><label for="c6"><input type="checkbox" id="c6"><span>Back-cover lip at the notch: checked, and cut if it was there.</span></label></li>
     <li><label for="c6d"><input type="checkbox" id="c6d"><span>Zone 6b: all 3 pins and 3 hooks snipped flush on BOTH side walls; zone 6c checked (wide corners of the paper lie flat).</span></label></li>
-    <li><label for="c6b"><input type="checkbox" id="c6b"><span>Side-wall relief (zone 6): rib filed to 7.0 mm below the rim between 15 and 50 mm from the top on the solar-window side; the paper template with its tab drops in flat.</span></label></li>
+    <li><label for="c6b"><input type="checkbox" id="c6b"><span>Side-wall relief (zone 6): rib filed to 7.0 mm below the rim between 14 and 49 mm from the top outer edge on the solar-window side; the paper template with its tab drops in flat.</span></label></li>
     <li><label for="c7"><input type="checkbox" id="c7"><span>Floor at least 0.8 mm everywhere you ground (no light through it, no soft spots).</span></label></li>
     <li><label for="c8"><input type="checkbox" id="c8"><span>Screw posts, locating posts, clips and outer walls untouched.</span></label></li>
     <li><label for="c9"><input type="checkbox" id="c9"><span>Both halves washed or blown clean of dust and plastic hairs.</span></label></li>

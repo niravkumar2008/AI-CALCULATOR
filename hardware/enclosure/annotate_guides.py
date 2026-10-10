@@ -252,12 +252,12 @@ G = {
         after=[("Level with the rim", "c", (-80, -330), "g")],
         dims=[("l", "r", "21.5 mm", "b", -110)]),
     "z6_antenna_relief": dict(
-        panel=("Zone 6 - front shell: side-wall relief", ["Solar-window side wall, inner rib only", "15 -> 50 mm from the top outer edge",
+        panel=("Zone 6 - front shell: side-wall relief", ["Solar-window side wall, inner rib only", "14 -> 49 mm from the top outer edge (at this wall)",
                                                           "File down to 7.0 mm below the rim", "(6.5 is the minimum)", "Do zone 6b (pins, hooks) first",
                                                           "Don't touch the outer skin"]),
         before=[("Thin inner rib (1 mm):\nnotch it between the marks", "rib", (-430, 40), "r")],
         after=[("Rib notched to 7.0 mm\nbelow the rim", "rib", (-430, 40), "g")],
-        dims=[("y15", "y50", "15 -> 50 mm from the top", "b", 110), ("zr", "z7", "7.0 mm", "o", -60)]),
+        dims=[("y15", "y50", "14 -> 49 mm from the top", "b", 110), ("zr", "z7", "7.0 mm", "o", -60)]),
     "z6b_pins_hooks": dict(
         panel=("Zone 6b - front shell: pins and hooks", ["3 round pins + 3 wire hooks", "on BOTH side walls", "Flush cutters flat on the rib",
                                                          "Needle-file the stubs", "Leave the rib, posts and snap tabs"]),
@@ -272,7 +272,7 @@ G = {
         dims=[]),
     "z6c_rib_ends": dict(
         panel=("Zone 6c - rib lower ends (only if needed)", ["Decide after 6b with the paper template:", "wide corners lie flat -> skip",
-                                                             "one rides up -> file that side", "Last 2-3 mm of the rib (56-63 mm from top)",
+                                                             "one rides up -> file that side", "Last 2-3 mm of the rib (55-62 mm from top)",
                                                              "Down to 7.0 mm below the rim", "(not in the 3D model: shown as a guide)"]),
         before=[("Lower end of the inner rib", "y58", (-330, 180), "r")],
         after=[("Filed to 7.0 mm\nbelow the rim", "y58", (-330, 180), "g")],
@@ -365,6 +365,18 @@ def grind():
 # label = (text, anchor | (x, y), offset, colour); polys = {poly: (rgb, alpha, outline colour, dashed)}
 # ═════════════════════════════════════════════════════════════════════════════
 BLUE_T, ORANGE_T, YELLOW_T, GREEN_T, GREY_T = (40, 110, 230), (240, 140, 20), (250, 210, 40), (20, 170, 90), (90, 90, 100)
+# Taiwoo TW302030 candidate (final_assembly/variant_battery_tw302030/results.json), same picture in the v14 and v15 sets
+D22 = dict(polys={"worst": ((255, 255, 255), 0.0, (200, 90, 0), True), "lid": ((235, 30, 45), 0.0, (200, 20, 60), True),
+                  "tape1": (BLUE_T, 0.35, (0, 60, 180), True), "tape2": (BLUE_T, 0.35, (0, 60, 180), True), "j4": ((255, 255, 255), 0.0, (30, 30, 40), True)},
+           labels=[("TW302030 (30 x 20 x 3.0)\n1 mm further left than the #1317", "cell", (-60, -360), "k"),
+                   ("Worst case 32 x 20.5 (dashed):\nstill 2.1 mm short of J4", ("poly", "worst", 2), (330, -290), "o"),
+                   ("Tape L underneath\n(same strips, same rules)", ("poly", "tape2", 2), (120, 330), "b"),
+                   ("Lid opening below:\nno tape there", ("poly", "lid", 18), (-330, 280), "r"),
+                   ("Leads: down past the\nlead end, over rib A", "leads", (330, 280), "o"), ("J4 (on the board,\ncover closed)", ("poly", "j4", 1), (380, -80), "k"),
+                   ("Corner post: 1.7 mm", "post", (-60, -250), "k")],
+           panel=("Candidate bulk cell: Taiwoo TW302030", ["Rib A 0.8 (0.3 worst)  lip 0.8  LR44 holder 1.0 (0.7)",
+                                                         "Leads to J4 2.9 (0.9 worst)  0 overlaps", "Leads 50-80 mm: ~34 mm used"], "br", ),
+           fs_panel=26)
 D14 = {
     "d01_epaper_tape": dict(polys={"panel": ((255, 255, 255), 0.0, (30, 30, 40), True), "tape1": (BLUE_T, 0.55, (0, 60, 180), False),
                                    "tape2": (BLUE_T, 0.55, (0, 60, 180), False)},
@@ -390,11 +402,16 @@ D14 = {
     "d09_magnet_j3": dict(labels=[("N end = pin 1 = VBUS (+)", "pin1", (-380, 200), "r"), ("Pin 4 = GND (-)", "pin4", (330, 200), "k"),
                                   ("Pen-mark this leg", "nleg", (-380, -60), "r"), ("Magnet face: N mark here", "nface", (-380, 60), "r")],
                           panel=("Magnet piece into J3", ["N end to pin 1 (VBUS)", "Straightened legs pushed fully in", "Face goes into the U-notch"])),
-    "d10_battery_tape": dict(polys={"outline": ((255, 255, 255), 0.0, (240, 240, 240), True), "tape1": (BLUE_T, 0.6, (0, 60, 180), False),
-                                    "tape2": (BLUE_T, 0.6, (0, 60, 180), False)},
-        labels=[("Battery outline 26 x 19.75 mm", ("poly", "outline", 0), (-330, -200), "k"), ("2 strips thin tape 0.1 mm\n(no foam: 0.3 mm under the cup)", ("poly", "tape2", 2), (330, -230), "b"),
-                ("Lead end toward J4", "j4end", (300, 160), "o")],
-        panel=("Battery #1317 (rev E): back-cover floor", ["Where the solar box was (zone 1)", "Tape on the floor, battery on the tape", "Nothing on top of the battery"])),
+    "d10_battery_tape": dict(polys={"outline": ((255, 255, 255), 0.0, (240, 240, 240), True), "lid": ((235, 30, 45), 0.18, (200, 20, 60), True),
+                                    "tape1": (BLUE_T, 0.7, (0, 60, 180), False), "tape2": (BLUE_T, 0.7, (0, 60, 180), False)},
+        labels=[("Battery outline 26 x 19.75 mm", ("poly", "outline", 1), (250, 170), "k"),
+                ("Strip 1: 6 x 18 mm, under the lead end\n(1 mm in from the right edge)", ("poly", "tape1", 1), (330, -250), "b"),
+                ("Strip 2: 4 x 16 mm, along the bottom edge\n(1 mm in from the left edge)", ("poly", "tape2", 3), (-60, 300), "b"),
+                ("Battery-lid opening:\nNO tape here", ("poly", "lid", 9), (-60, -330), "r"),
+                ("Lead end toward J4", "j4end", (330, 140), "o"), ("Corner post", "post", (-200, 220), "k")],
+        panel=("Battery #1317 (rev E): back-cover floor", ["Top-left corner (inside view, top end away)", "Tape L: 2 strips of 0.1 mm tape, solid floor only",
+                                                           "Strips on the cell first, then lower it in", "Nothing on the lid, nothing on top"], "br")),
+    "d22_battery_tw302030": D22,
     "d11_battery_placed": dict(labels=[("Battery 150 mAh (#1317)\nflat on the floor", "battery", (-300, -280), "o"), ("Leads: short loop,\nat J4 height", "leads", (60, -300), "k"),
                                        ("Plug into J4", "plug", (200, 230), "b")]),
     "d12_j4_plug": dict(labels=[("Pin 1 = GND (black wire)", "p1", (-420, -160), "k"), ("Pin 2 = + (red wire)", "p2", (360, -180), "r"),
@@ -450,6 +467,7 @@ D15 = {
     "e10_window_mask_off": dict(labels=[("v15 mask: opening 43.7 x 23.7 mm\n(0.5 mm OUTSIDE the active area)", "mask", (380, 260), "k"),
                                         ("Clear lens", "lens", (-380, -300), "b")],
                                 panel=("v15 window mask", ["Template: window_mask_template_v15.svg", "Sticker side toward the lens", "The LCD's own black border hides the rest"])),
+    "d22_battery_tw302030": D22,
     "e11_window_mask_on": dict(labels=[("Mask on the lens, opening centred", "mask", (-380, 300), "k"), ("Edge", "edge", (230, 280), "g")]),
     "e12_seeed_route_section": dict(labels=[("Camera", "camera", (-200, -300), "g"), ("Seeed ribbon: straight, flat", "ribbon", (0, -330), "r"),
                                             ("J1", "j1", (120, -300), "b"), ("Rib C", "rib_c", (60, 260), "k"), ("Back-cover floor", "floor", (-60, 300), "k")],
@@ -476,7 +494,7 @@ def details(setname, table):
             cv.poly(polys[k], rgb, alpha, oc, 5, dash)
         if spec.get("panel"):
             p = spec["panel"]
-            cv.panel(p[0], p[1], corner=p[2] if len(p) > 2 else "bl", c="b")
+            cv.panel(p[0], p[1], corner=p[2] if len(p) > 2 else "bl", c="b", fs=spec.get("fs_panel", 31))
         if spec.get("bar"):
             cv.scalebar(R_["px_per_mm"], 2 if R_["px_per_mm"] > 40 else 10, "br")
         for k, r, c in spec.get("circles", []):

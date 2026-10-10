@@ -189,7 +189,7 @@ def z1_top():
     d.dimh(x0, x0 + 33 * s, 46, "~ 33 mm", y0)
     d.dimv(y0, y0 + 12 * s, 38, "12", "l")
     d.text(x0 + 33 * s / 2, y0 + 12 * s + 22, "remove ALL of it: frame + grid", "tr", "middle")
-    d.note(218, "Model: frame 7.2-19.2 mm in from the cover's top outer edge, near end 10.7 mm from the side edge.", 70)
+    d.note(218, "Model: outer frame 6.3-19.3 mm down from the back cover's own top outer edge (straight down at the box's middle), near end 9.9 mm in from the side edge.", 70)
     return d.svg()
 
 
@@ -354,27 +354,29 @@ def z6_top():
     d.text(X(0), 34, "outer skin (don't touch)", "ts")
     d.rect(X(0), 50, 65 * s, 30, "chan")
     d.text(X(1), 69, "wire channel", "ts")
-    d.rect(X(0), 80, 58.4 * s, 7, "rib")
-    d.rect(X(15), 80, 35 * s, 7, "cut")
-    for mm in (26, 35, 45):
+    # datum: the rim's top outer edge right above the rib (~1.0 mm lower than the middle of the top end, geometry "top")
+    d.rect(X(0), 80, 57.4 * s, 7, "rib")
+    d.rect(X(14), 80, 35 * s, 7, "cut")
+    for mm in (25, 34, 44):
         d.rect(X(mm) - 4, 87, 8, 9, "cut")
-    for mm in (17, 22):
+    for mm in (16, 21):
         d.path(f"M{X(mm) - 6},87 v10 h12 v-10", "lcut")
-    d.path(f"M{X(56)},87 v10 h{3 * s} v-10", "lcut")
-    d.path(f"M{X(15)},88 H{X(27)} V128 H{X(15)}", "bo")
-    d.rect(X(31), 86, 19 * s, 22, "tab")
-    d.text(X(21), 110, "board\ncorner", "ts", "middle")
-    d.text(X(40.5), 122, "antenna tab", "ts", "middle")
-    d.text(X(40.5), 135, "(0.8 mm bare PCB)", "ts", "middle")
-    d.text(X(61), 116, "rib end\n(6c)", "to ts", "middle")
+    d.path(f"M{X(55)},87 v10 h{3 * s} v-10", "lcut")
+    d.path(f"M{X(14)},88 H{X(26)} V128 H{X(14)}", "bo")
+    d.rect(X(30), 86, 19 * s, 22, "tab")
+    d.text(X(20), 110, "board\ncorner", "ts", "middle")
+    d.text(X(39.5), 122, "antenna tab", "ts", "middle")
+    d.text(X(39.5), 135, "(0.8 mm bare PCB)", "ts", "middle")
+    d.text(X(60), 116, "rib end\n(6c)", "to ts", "middle")
     for mm in range(0, 66, 5):
         d.line(X(mm), 176, X(mm), 182 if mm % 10 else 186, "ln")
         if mm % 10 == 0:
             d.text(X(mm), 198, str(mm), "tm", "middle")
     d.line(X(0), 176, X(65), 176, "ln")
-    d.text(X(65), 212, "mm from the top outer edge", "ts", "end")
-    d.dimh(X(15), X(50), 162, "zone 6: 15 to 50 mm", 96)
-    d.note(232, "Red: rib top filed down (zone 6) and the pins + hooks snipped (6b). Board corner 15-27 mm, antenna tab 31-50 mm.", 70)
+    d.text(X(65), 212, "mm from the shell's top outer edge at this wall", "ts", "end")
+    d.dimh(X(14), X(49), 162, "zone 6: 14 to 49 mm", 96)
+    d.note(232, "Red: rib top filed down (zone 6) and the pins + hooks snipped (6b). Board corner 14-26 mm, antenna tab 30-49 mm. "
+                "Measured from the rim's top outer edge right above the rib (about 1 mm lower than the middle of the top end).", 70)
     return d.svg()
 
 
@@ -432,22 +434,22 @@ def z6b():
 
 
 def z6c():
-    d = D(420, 262, "Zone 6c top view: the board widens 59.5 to 63 mm from the top; if the rib's lower end reaches there, file it back 2 to 3 mm")
+    d = D(420, 262, "Zone 6c top view: the board widens 58.5 to 62 mm from the top outer edge at this wall; if the rib's lower end reaches there, file it back 2 to 3 mm")
     s, y0 = 9, 30
-    Y = lambda mm: y0 + (mm - 50) * s
-    d.rect(40, y0, 14, Y(68) - y0, "pl")
-    d.rect(54, y0, 9, Y(58.4) - y0, "rib")
-    d.rect(54, Y(58.4), 9, Y(61.5) - Y(58.4), "cut")
-    d.path(f"M120,{y0} V{Y(59.5)} L60,{Y(63)} V{Y(68)}", "bo")
-    d.circle(63, Y(62.0), 6, "warnc")
+    Y = lambda mm: y0 + (mm - 50) * s          # mm from the rim's top outer edge right above the rib (= geometry "top" - 1.0)
+    d.rect(40, y0, 14, Y(67) - y0, "pl")
+    d.rect(54, y0, 9, Y(57.4) - y0, "rib")
+    d.rect(54, Y(57.4), 9, Y(60.5) - Y(57.4), "cut")
+    d.path(f"M120,{y0} V{Y(58.5)} L60,{Y(62)} V{Y(67)}", "bo")
+    d.circle(63, Y(61.0), 6, "warnc")
     for mm in (50, 55, 60, 65):
         d.line(20, Y(mm), 34, Y(mm), "ln")
         d.text(16, Y(mm) + 4, str(mm), "tm", "end")
     d.text(134, 44, "board edge beside the screen", "ts")
-    d.text(150, Y(56.2), "the rib may run to 60-62 mm:\nfile this end back 2-3 mm", "to ts")
-    d.lead(146, Y(57.5), 66, Y(59.8))
-    d.text(150, Y(63.6), "the diagonal (board widens)\ncrosses the rib line about\n61.4-62.1 mm from the top", "ts")
-    d.lead(146, Y(64.2), 70, Y(62.3))
+    d.text(150, Y(55.2), "the rib may run to 59-61 mm:\nfile this end back 2-3 mm", "to ts")
+    d.lead(146, Y(56.5), 66, Y(58.8))
+    d.text(150, Y(62.6), "the diagonal (board widens)\ncrosses the rib line about\n60.4-61.1 mm from the top", "ts")
+    d.lead(146, Y(63.2), 70, Y(61.3))
     d.note(230, "Only if the paper's (or the dummy board's) wide corner rides up after 6b. Depth: 7.0 below the rim, like zone 6.", 70)
     return d.svg()
 

@@ -8,8 +8,8 @@
  "note": "Render/annotation only: no model geometry, board file or fit result was changed. *_ann.png = labelled version.",
  "counts": {
   "hardware/enclosure/final_assembly/renders/grind": 52,
-  "hardware/enclosure/final_assembly/renders/detail": 42,
-  "hardware/enclosure/final_assembly_v15_lcd/renders/detail": 32,
+  "hardware/enclosure/final_assembly/renders/detail": 44,
+  "hardware/enclosure/final_assembly_v15_lcd/renders/detail": 34,
   "hardware/renders_bringup": 24,
   "hardware/renders_bringup/raw": 4
  },
@@ -162,25 +162,25 @@
    "path": "hardware/enclosure/final_assembly/renders/grind/z6_antenna_relief_before.png",
    "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
    "step": "Zone 6 side-wall relief",
-   "caption": "Before: solar-side inner rib notched 15-50 mm from the top, down to 7.0 mm below the rim (plain render)"
+   "caption": "Before: solar-side inner rib notched 14-49 mm from the top outer edge at that wall, down to 7.0 mm below the rim (plain render)"
   },
   {
    "path": "hardware/enclosure/final_assembly/renders/grind/z6_antenna_relief_before_ann.png",
    "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
    "step": "Zone 6 side-wall relief",
-   "caption": "Before: solar-side inner rib notched 15-50 mm from the top, down to 7.0 mm below the rim (labelled, red = material to remove)"
+   "caption": "Before: solar-side inner rib notched 14-49 mm from the top outer edge at that wall, down to 7.0 mm below the rim (labelled, red = material to remove)"
   },
   {
    "path": "hardware/enclosure/final_assembly/renders/grind/z6_antenna_relief_after.png",
    "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
    "step": "Zone 6 side-wall relief",
-   "caption": "After: solar-side inner rib notched 15-50 mm from the top, down to 7.0 mm below the rim (plain render)"
+   "caption": "After: solar-side inner rib notched 14-49 mm from the top outer edge at that wall, down to 7.0 mm below the rim (plain render)"
   },
   {
    "path": "hardware/enclosure/final_assembly/renders/grind/z6_antenna_relief_after_ann.png",
    "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
    "step": "Zone 6 side-wall relief",
-   "caption": "After: solar-side inner rib notched 15-50 mm from the top, down to 7.0 mm below the rim (labelled, green outline = ground away)"
+   "caption": "After: solar-side inner rib notched 14-49 mm from the top outer edge at that wall, down to 7.0 mm below the rim (labelled, green outline = ground away)"
   },
   {
    "path": "hardware/enclosure/final_assembly/renders/grind/z6b_pins_hooks_before.png",
@@ -438,13 +438,13 @@
    "path": "hardware/enclosure/final_assembly/renders/detail/d10_battery_tape.png",
    "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
    "step": "Step 9 battery",
-   "caption": "Back-cover floor: battery outline (#1317, rev E) and the two thin tape strips (plain render)"
+   "caption": "Back-cover floor: battery outline (#1317, rev E), round lid opening and the tape L (strip 1 6 x 18 under the lead end, strip 2 4 x 16 along the bottom edge, solid floor only) (plain render)"
   },
   {
    "path": "hardware/enclosure/final_assembly/renders/detail/d10_battery_tape_ann.png",
    "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
    "step": "Step 9 battery",
-   "caption": "Back-cover floor: battery outline (#1317, rev E) and the two thin tape strips (labelled)"
+   "caption": "Back-cover floor: battery outline (#1317, rev E), round lid opening and the tape L (strip 1 6 x 18 under the lead end, strip 2 4 x 16 along the bottom edge, solid floor only) (labelled)"
   },
   {
    "path": "hardware/enclosure/final_assembly/renders/detail/d11_battery_placed.png",
@@ -937,6 +937,30 @@
    "guide": "bench / power-up guide (bring-up)",
    "step": "Source render",
    "caption": "v15 LCD (hardware/kicad_v15_lcd): kicad-cli 3D render bottom, 3200 x 2400 transparent"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d22_battery_tw302030.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Battery (candidate cell, not in the build yet)",
+   "caption": "Candidate bulk cell Taiwoo TW302030 (30 x 20 x 3.0) in the rev E corner, 1 mm further left than the #1317; worst case 32 x 20.5 dashed, tape L, leads to J4 (variant_battery_tw302030) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d22_battery_tw302030_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Battery (candidate cell, not in the build yet)",
+   "caption": "Candidate bulk cell Taiwoo TW302030 (30 x 20 x 3.0) in the rev E corner, 1 mm further left than the #1317; worst case 32 x 20.5 dashed, tape L, leads to J4 (variant_battery_tw302030) (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/d22_battery_tw302030.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Battery (candidate cell, not in the build yet)",
+   "caption": "Candidate bulk cell Taiwoo TW302030 (30 x 20 x 3.0) in the rev E corner, 1 mm further left than the #1317; worst case 32 x 20.5 dashed, tape L, leads to J4 (variant_battery_tw302030) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/d22_battery_tw302030_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Battery (candidate cell, not in the build yet)",
+   "caption": "Candidate bulk cell Taiwoo TW302030 (30 x 20 x 3.0) in the rev E corner, 1 mm further left than the #1317; worst case 32 x 20.5 dashed, tape L, leads to J4 (variant_battery_tw302030) (labelled)"
   }
  ]
 }
