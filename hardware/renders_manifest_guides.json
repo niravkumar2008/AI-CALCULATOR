@@ -1,0 +1,942 @@
+{
+ "generated": "2026-10-10",
+ "made_by": [
+  "hardware/enclosure/guide_renders.py (Fusion renders + anchors)",
+  "hardware/enclosure/annotate_guides.py (labels)",
+  "hardware/renders_bringup/make_bringup.py (kicad-cli + labels)"
+ ],
+ "note": "Render/annotation only: no model geometry, board file or fit result was changed. *_ann.png = labelled version.",
+ "counts": {
+  "hardware/enclosure/final_assembly/renders/grind": 52,
+  "hardware/enclosure/final_assembly/renders/detail": 42,
+  "hardware/enclosure/final_assembly_v15_lcd/renders/detail": 32,
+  "hardware/renders_bringup": 24,
+  "hardware/renders_bringup/raw": 4
+ },
+ "images": [
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z1_solar_box_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 1 solar box",
+   "caption": "Before: solar box on the back cover: grind the walled grid flat to the floor (33 x 12 mm, 5-5.5 mm tall, keep >= 0.8 mm floor) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z1_solar_box_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 1 solar box",
+   "caption": "Before: solar box on the back cover: grind the walled grid flat to the floor (33 x 12 mm, 5-5.5 mm tall, keep >= 0.8 mm floor) (labelled, red = material to remove)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z1_solar_box_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 1 solar box",
+   "caption": "After: solar box on the back cover: grind the walled grid flat to the floor (33 x 12 mm, 5-5.5 mm tall, keep >= 0.8 mm floor) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z1_solar_box_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 1 solar box",
+   "caption": "After: solar box on the back cover: grind the walled grid flat to the floor (33 x 12 mm, 5-5.5 mm tall, keep >= 0.8 mm floor) (labelled, green outline = ground away)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z2_rib_b_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 2 rib B",
+   "caption": "Before: rib B over the camera: only the middle 14 mm, 1 mm down to the floor (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z2_rib_b_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 2 rib B",
+   "caption": "Before: rib B over the camera: only the middle 14 mm, 1 mm down to the floor (labelled, red = material to remove)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z2_rib_b_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 2 rib B",
+   "caption": "After: rib B over the camera: only the middle 14 mm, 1 mm down to the floor (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z2_rib_b_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 2 rib B",
+   "caption": "After: rib B over the camera: only the middle 14 mm, 1 mm down to the floor (labelled, green outline = ground away)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z3_camera_window_inside_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 3 camera window",
+   "caption": "Before: camera window seen from inside: drill 7 mm in the middle of the 14 mm rib B gap (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z3_camera_window_inside_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 3 camera window",
+   "caption": "Before: camera window seen from inside: drill 7 mm in the middle of the 14 mm rib B gap (labelled, red = material to remove)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z3_camera_window_inside_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 3 camera window",
+   "caption": "After: camera window seen from inside: drill 7 mm in the middle of the 14 mm rib B gap (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z3_camera_window_inside_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 3 camera window",
+   "caption": "After: camera window seen from inside: drill 7 mm in the middle of the 14 mm rib B gap (labelled, green outline = ground away)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z3_camera_window_outside_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 3 camera window",
+   "caption": "Before: camera window seen from outside: where the 7 mm drill comes out (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z3_camera_window_outside_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 3 camera window",
+   "caption": "Before: camera window seen from outside: where the 7 mm drill comes out (labelled, red = material to remove)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z3_camera_window_outside_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 3 camera window",
+   "caption": "After: camera window seen from outside: where the 7 mm drill comes out (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z3_camera_window_outside_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 3 camera window",
+   "caption": "After: camera window seen from outside: where the 7 mm drill comes out (labelled, green outline = ground away)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z5_magnet_notch_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 5 magnet slot",
+   "caption": "Before: magnet U-notch in the front shell top wall: 21.5 mm wide, 7.95 mm deep from the rim (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z5_magnet_notch_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 5 magnet slot",
+   "caption": "Before: magnet U-notch in the front shell top wall: 21.5 mm wide, 7.95 mm deep from the rim (labelled, red = material to remove)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z5_magnet_notch_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 5 magnet slot",
+   "caption": "After: magnet U-notch in the front shell top wall: 21.5 mm wide, 7.95 mm deep from the rim (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z5_magnet_notch_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 5 magnet slot",
+   "caption": "After: magnet U-notch in the front shell top wall: 21.5 mm wide, 7.95 mm deep from the rim (labelled, green outline = ground away)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z5b_lip_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 5b back-cover lip",
+   "caption": "Before: back-cover lip under the magnet notch (only if your cover has one): level with the rim, 21.5 mm wide (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z5b_lip_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 5b back-cover lip",
+   "caption": "Before: back-cover lip under the magnet notch (only if your cover has one): level with the rim, 21.5 mm wide (labelled, red = material to remove)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z5b_lip_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 5b back-cover lip",
+   "caption": "After: back-cover lip under the magnet notch (only if your cover has one): level with the rim, 21.5 mm wide (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z5b_lip_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 5b back-cover lip",
+   "caption": "After: back-cover lip under the magnet notch (only if your cover has one): level with the rim, 21.5 mm wide (labelled, green outline = ground away)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6_antenna_relief_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6 side-wall relief",
+   "caption": "Before: solar-side inner rib notched 15-50 mm from the top, down to 7.0 mm below the rim (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6_antenna_relief_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6 side-wall relief",
+   "caption": "Before: solar-side inner rib notched 15-50 mm from the top, down to 7.0 mm below the rim (labelled, red = material to remove)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6_antenna_relief_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6 side-wall relief",
+   "caption": "After: solar-side inner rib notched 15-50 mm from the top, down to 7.0 mm below the rim (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6_antenna_relief_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6 side-wall relief",
+   "caption": "After: solar-side inner rib notched 15-50 mm from the top, down to 7.0 mm below the rim (labelled, green outline = ground away)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6b_pins_hooks_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6b pins + hooks",
+   "caption": "Before: 3 round pins and 3 wire hooks on the inner rib: snip flush (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6b_pins_hooks_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6b pins + hooks",
+   "caption": "Before: 3 round pins and 3 wire hooks on the inner rib: snip flush (labelled, red = material to remove)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6b_pins_hooks_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6b pins + hooks",
+   "caption": "After: 3 round pins and 3 wire hooks on the inner rib: snip flush (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6b_pins_hooks_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6b pins + hooks",
+   "caption": "After: 3 round pins and 3 wire hooks on the inner rib: snip flush (labelled, green outline = ground away)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6b_pins_hooks_both_walls_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6b pins + hooks",
+   "caption": "Before: pins and hooks on BOTH side walls (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6b_pins_hooks_both_walls_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6b pins + hooks",
+   "caption": "Before: pins and hooks on BOTH side walls (labelled, red = material to remove)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6b_pins_hooks_both_walls_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6b pins + hooks",
+   "caption": "After: pins and hooks on BOTH side walls (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6b_pins_hooks_both_walls_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6b pins + hooks",
+   "caption": "After: pins and hooks on BOTH side walls (labelled, green outline = ground away)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6c_rib_ends_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6c rib ends",
+   "caption": "Before: lower ends of the inner ribs (only if the paper template's wide corners ride up): to 7.0 mm below the rim; shown with a temporary cut, not in the model (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6c_rib_ends_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6c rib ends",
+   "caption": "Before: lower ends of the inner ribs (only if the paper template's wide corners ride up): to 7.0 mm below the rim; shown with a temporary cut, not in the model (labelled, red = material to remove)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6c_rib_ends_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6c rib ends",
+   "caption": "After: lower ends of the inner ribs (only if the paper template's wide corners ride up): to 7.0 mm below the rim; shown with a temporary cut, not in the model (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/z6c_rib_ends_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 6c rib ends",
+   "caption": "After: lower ends of the inner ribs (only if the paper template's wide corners ride up): to 7.0 mm below the rim; shown with a temporary cut, not in the model (labelled, green outline = ground away)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/overview_back_cover_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Overview / order of operations",
+   "caption": "Back cover inside, straight on, every grind zone numbered (before)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/overview_back_cover_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Overview / order of operations",
+   "caption": "Back cover inside, straight on, every grind zone numbered (before), labelled"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/overview_back_cover_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Overview / order of operations",
+   "caption": "Back cover inside, straight on, every grind zone numbered (after)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/overview_back_cover_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Overview / order of operations",
+   "caption": "Back cover inside, straight on, every grind zone numbered (after), labelled"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/overview_faceplate_before.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Overview / order of operations",
+   "caption": "Front shell (faceplate) inside, straight on, every grind zone numbered (before)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/overview_faceplate_before_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Overview / order of operations",
+   "caption": "Front shell (faceplate) inside, straight on, every grind zone numbered (before), labelled"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/overview_faceplate_after.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Overview / order of operations",
+   "caption": "Front shell (faceplate) inside, straight on, every grind zone numbered (after)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/overview_faceplate_after_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Overview / order of operations",
+   "caption": "Front shell (faceplate) inside, straight on, every grind zone numbered (after), labelled"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/camera_hole_position.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 3 camera window",
+   "caption": "Camera window drill position from outside: distance from the top edge and the side edge, 7 mm hole"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/magnet_notch_dims.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 5 magnet slot",
+   "caption": "Magnet U-notch straight on: 21.5 x 7.95 mm, 6.4 / 27.9 mm from the right edge"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/camera_hole_position_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 3 camera window",
+   "caption": "Camera window drill position from outside: distance from the top edge and the side edge, 7 mm hole, labelled"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/grind/magnet_notch_dims_ann.png",
+   "guide": "hardware/enclosure/final_assembly/grinding_manual.html",
+   "step": "Zone 5 magnet slot",
+   "caption": "Magnet U-notch straight on: 21.5 x 7.95 mm, 6.4 / 27.9 mm from the right edge, labelled"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d01_epaper_tape.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 5 e-paper",
+   "caption": "Board key side: where the two tape strips go under the e-paper panel (no tape under the ribbon end) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d01_epaper_tape_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 5 e-paper",
+   "caption": "Board key side: where the two tape strips go under the e-paper panel (no tape under the ribbon end) (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d02_epaper_on_board.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 5 e-paper",
+   "caption": "E-paper panel on the key side, ribbon going round into the slot (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d02_epaper_on_board_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 5 e-paper",
+   "caption": "E-paper panel on the key side, ribbon going round into the slot (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d03_j2_latch_open.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 5 e-paper",
+   "caption": "J2 with the latch open, ribbon not yet in (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d03_j2_latch_open_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 5 e-paper",
+   "caption": "J2 with the latch open, ribbon not yet in (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d04_j2_latch_closed.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 5 e-paper",
+   "caption": "J2 with the ribbon fully in and the latch closed (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d04_j2_latch_closed_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 5 e-paper",
+   "caption": "J2 with the ribbon fully in and the latch closed (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d05_camera_tape.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 6 camera",
+   "caption": "Camera spot on the component side: Kapton square and thin tape outline (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d05_camera_tape_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 6 camera",
+   "caption": "Camera spot on the component side: Kapton square and thin tape outline (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d06_camera_ribbon_path.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 6 camera",
+   "caption": "Camera taped on, ribbon straight and flat into J1 (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d06_camera_ribbon_path_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 6 camera",
+   "caption": "Camera taped on, ribbon straight and flat into J1 (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d07_j1_latch_open.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 6 camera",
+   "caption": "J1 latch open, pin-1 end marked (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d07_j1_latch_open_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 6 camera",
+   "caption": "J1 latch open, pin-1 end marked (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d08_j1_latch_closed.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 6 camera",
+   "caption": "J1 with the ribbon in and the latch closed (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d08_j1_latch_closed_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 6 camera",
+   "caption": "J1 with the ribbon in and the latch closed (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d09_magnet_j3.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 7 magnet",
+   "caption": "Magnet piece above J3: N end = pin 1 = VBUS, pin 4 = GND (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d09_magnet_j3_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 7 magnet",
+   "caption": "Magnet piece above J3: N end = pin 1 = VBUS, pin 4 = GND (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d10_battery_tape.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 9 battery",
+   "caption": "Back-cover floor: battery outline (#1317, rev E) and the two thin tape strips (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d10_battery_tape_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 9 battery",
+   "caption": "Back-cover floor: battery outline (#1317, rev E) and the two thin tape strips (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d11_battery_placed.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 9 battery",
+   "caption": "Battery on the floor, short lead loop to the J4 plug (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d11_battery_placed_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 9 battery",
+   "caption": "Battery on the floor, short lead loop to the J4 plug (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d12_j4_plug.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 9 battery",
+   "caption": "JST-PH plug in J4: pin 1 GND (black), pin 2 + (red) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d12_j4_plug_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 9 battery",
+   "caption": "JST-PH plug in J4: pin 1 GND (black), pin 2 + (red) (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d13_keymat_lowering.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 8 key mat",
+   "caption": "Key mat going onto the faceplate posts (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d13_keymat_lowering_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 8 key mat",
+   "caption": "Key mat going onto the faceplate posts (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d14_keymat_seated.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 8 key mat",
+   "caption": "Key mat seated, posts through (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d14_keymat_seated_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 8 key mat",
+   "caption": "Key mat seated, posts through (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d15_board_drop.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 8 board in",
+   "caption": "Board lowering onto the posts, H6 and its post highlighted (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d15_board_drop_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 8 board in",
+   "caption": "Board lowering onto the posts, H6 and its post highlighted (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d16_cover_close_1.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 10 back cover",
+   "caption": "Closing the back cover, frame 1 of 4 (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d16_cover_close_1_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 10 back cover",
+   "caption": "Closing the back cover, frame 1 of 4 (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d17_cover_close_2.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 10 back cover",
+   "caption": "Closing the back cover, frame 2 of 4 (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d17_cover_close_2_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 10 back cover",
+   "caption": "Closing the back cover, frame 2 of 4 (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d18_cover_close_3.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 10 back cover",
+   "caption": "Closing the back cover, frame 3 of 4 (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d18_cover_close_3_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 10 back cover",
+   "caption": "Closing the back cover, frame 3 of 4 (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d19_cover_close_4.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 10 back cover",
+   "caption": "Closing the back cover, frame 4 of 4: screws in (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d19_cover_close_4_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Step 10 back cover",
+   "caption": "Closing the back cover, frame 4 of 4: screws in (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d20_window_mask_off.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Window mask",
+   "caption": "Window mask above the clear lens (inside of the front shell) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d20_window_mask_off_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Window mask",
+   "caption": "Window mask above the clear lens (inside of the front shell) (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d21_window_mask_on.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Window mask",
+   "caption": "Window mask stuck on the lens, opening centred (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly/renders/detail/d21_window_mask_on_ann.png",
+   "guide": "hardware/enclosure/final_assembly/assembly_guide.html",
+   "step": "Window mask",
+   "caption": "Window mask stuck on the lens, opening centred (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e01_lcd_jig.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "Paper position jig on the key side: window = LCD backlight outline, slot cut-out (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e01_lcd_jig_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "Paper position jig on the key side: window = LCD backlight outline, slot cut-out (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e02_lcd_on_board.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "LCD panel placed in the jig outline, tail toward the slot (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e02_lcd_on_board_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "LCD panel placed in the jig outline, tail toward the slot (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e03_tail_section_side.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "Side section: tail down the slot with one gentle bow into J5 (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e03_tail_section_side_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "Side section: tail down the slot with one gentle bow into J5 (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e04_tail_3d.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "3D view from the component side: tail through the slot, the bow, J5 (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e04_tail_3d_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "3D view from the component side: tail through the slot, the bow, J5 (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e05_j5_finger1.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "Finger-1 dot at the J5 silk tick (pin-1 end) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e05_j5_finger1_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "Finger-1 dot at the J5 silk tick (pin-1 end) (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e06_j5_latch_open.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "J5 latch open, pin-1 end marked (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e06_j5_latch_open_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "J5 latch open, pin-1 end marked (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e07_j5_latch_closed.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "J5 with the tail in and the latch closed (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e07_j5_latch_closed_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 5 LCD",
+   "caption": "J5 with the tail in and the latch closed (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e08_bow_vs_rib_b.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 10 back cover",
+   "caption": "Section: the tail bow over un-ground rib B, 0.25 mm gap (0.10 with the longest tail) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e08_bow_vs_rib_b_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 10 back cover",
+   "caption": "Section: the tail bow over un-ground rib B, 0.25 mm gap (0.10 with the longest tail) (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e09_keys_vs_pills.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 8 key mat",
+   "caption": "Moved SHIFT / ALPHA / ON pads vs the Casio key-mat pills and the old v14 positions (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e09_keys_vs_pills_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 8 key mat",
+   "caption": "Moved SHIFT / ALPHA / ON pads vs the Casio key-mat pills and the old v14 positions (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e10_window_mask_off.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Window mask",
+   "caption": "v15 window mask above the lens (43.7 x 23.7 opening) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e10_window_mask_off_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Window mask",
+   "caption": "v15 window mask above the lens (43.7 x 23.7 opening) (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e11_window_mask_on.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Window mask",
+   "caption": "v15 window mask on the lens (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e11_window_mask_on_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Window mask",
+   "caption": "v15 window mask on the lens (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e12_seeed_route_section.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 6 camera",
+   "caption": "Seeed camera (baseline): straight ribbon route, lengthwise section, for comparison (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e12_seeed_route_section_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 6 camera",
+   "caption": "Seeed camera (baseline): straight ribbon route, lengthwise section, for comparison (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e13_seeed_route_back.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 6 camera",
+   "caption": "Seeed camera (baseline): straight route seen from the back (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e13_seeed_route_back_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 6 camera",
+   "caption": "Seeed camera (baseline): straight route seen from the back (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/f01_dcxyx_sfold_route.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 6 camera (DCXYX)",
+   "caption": "DCXYX OV5640: whole route with one S-fold in the tuck bay (from the zfold variant render) (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/f01_dcxyx_sfold_route_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 6 camera (DCXYX)",
+   "caption": "DCXYX OV5640: whole route with one S-fold in the tuck bay (from the zfold variant render) (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/f02_dcxyx_sfold_closeup.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 6 camera (DCXYX)",
+   "caption": "DCXYX S-fold close-up: pre-bend round a 2.4 mm rod, Kapton strip on the floor (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/f02_dcxyx_sfold_closeup_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 6 camera (DCXYX)",
+   "caption": "DCXYX S-fold close-up: pre-bend round a 2.4 mm rod, Kapton strip on the floor (labelled)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/f03_dcxyx_back_open.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 6 camera (DCXYX)",
+   "caption": "DCXYX route from the back, fold location in the tuck bay (plain render)"
+  },
+  {
+   "path": "hardware/enclosure/final_assembly_v15_lcd/renders/detail/f03_dcxyx_back_open_ann.png",
+   "guide": "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html",
+   "step": "Step 6 camera (DCXYX)",
+   "caption": "DCXYX route from the back, fold location in the tuck bay (labelled)"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_top.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Board overview",
+   "caption": "v14 e-paper (hardware/kicad) board, component side, plain render"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_top_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Board overview",
+   "caption": "v14 e-paper (hardware/kicad) board, component side: every test pad TP1-TP7 with its voltage, J3/J4 polarity, J1 and screen-socket pin 1"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_bottom.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Board overview",
+   "caption": "v14 e-paper (hardware/kicad) board, key side, plain render"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_bottom_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Board overview",
+   "caption": "v14 e-paper (hardware/kicad) board, key side: key pads, screen area"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_tp_power_corner_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Test pads",
+   "caption": "v14 e-paper (hardware/kicad) board, zoom on the power corner: TP5 3V3, TP6 BAT+, TP7 EN, TP2/TP3 UART, J3/J4 pins"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_boot_recovery_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "BOOT / EN recovery",
+   "caption": "v14 e-paper (hardware/kicad) board, short TP1 to TP4, tap TP7 to GND, release TP1"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_meter_3v3_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Check 1: 3V3",
+   "caption": "v14 e-paper (hardware/kicad) board, meter probes: red TP5, black TP4, expect 3.25-3.35 V"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_meter_bat_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Check 2: battery",
+   "caption": "v14 e-paper (hardware/kicad) board, meter probes: red TP6, black TP4, expect 3.0-4.2 V"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_meter_vbus_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Check 3: VBUS",
+   "caption": "v14 e-paper (hardware/kicad) board, meter probes: red J3 pin 1, black TP4, expect 4.8-5.2 V"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_j1_pin1_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Connectors",
+   "caption": "v14 e-paper (hardware/kicad) board, J1 camera socket pin-1 end"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_j2_pin1_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Connectors",
+   "caption": "v14 e-paper (hardware/kicad) board, J2 e-paper socket pin-1 end"
+  },
+  {
+   "path": "hardware/renders_bringup/v14_j3_j4_polarity_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Polarity",
+   "caption": "v14 e-paper (hardware/kicad) board, J3 pin 1 = N = VBUS, pin 4 GND; J4 pin 1 GND, pin 2 BAT+"
+  },
+  {
+   "path": "hardware/renders_bringup/raw/v14_top.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Source render",
+   "caption": "v14 e-paper (hardware/kicad): kicad-cli 3D render top, 3200 x 2400 transparent"
+  },
+  {
+   "path": "hardware/renders_bringup/raw/v14_bottom.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Source render",
+   "caption": "v14 e-paper (hardware/kicad): kicad-cli 3D render bottom, 3200 x 2400 transparent"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_top.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Board overview",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, component side, plain render"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_top_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Board overview",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, component side: every test pad TP1-TP7 with its voltage, J3/J4 polarity, J1 and screen-socket pin 1"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_bottom.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Board overview",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, key side, plain render"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_bottom_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Board overview",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, key side: key pads, screen area"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_tp_power_corner_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Test pads",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, zoom on the power corner: TP5 3V3, TP6 BAT+, TP7 EN, TP2/TP3 UART, J3/J4 pins"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_boot_recovery_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "BOOT / EN recovery",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, short TP1 to TP4, tap TP7 to GND, release TP1"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_meter_3v3_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Check 1: 3V3",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, meter probes: red TP5, black TP4, expect 3.25-3.35 V"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_meter_bat_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Check 2: battery",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, meter probes: red TP6, black TP4, expect 3.0-4.2 V"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_meter_vbus_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Check 3: VBUS",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, meter probes: red J3 pin 1, black TP4, expect 4.8-5.2 V"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_j1_pin1_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Connectors",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, J1 camera socket pin-1 end"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_j5_pin1_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Connectors",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, J5 LCD socket pin-1 end (finger-1 dot goes here)"
+  },
+  {
+   "path": "hardware/renders_bringup/v15_j3_j4_polarity_ann.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Polarity",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd) board, J3 pin 1 = N = VBUS, pin 4 GND; J4 pin 1 GND, pin 2 BAT+"
+  },
+  {
+   "path": "hardware/renders_bringup/raw/v15_top.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Source render",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd): kicad-cli 3D render top, 3200 x 2400 transparent"
+  },
+  {
+   "path": "hardware/renders_bringup/raw/v15_bottom.png",
+   "guide": "bench / power-up guide (bring-up)",
+   "step": "Source render",
+   "caption": "v15 LCD (hardware/kicad_v15_lcd): kicad-cli 3D render bottom, 3200 x 2400 transparent"
+  }
+ ]
+}
