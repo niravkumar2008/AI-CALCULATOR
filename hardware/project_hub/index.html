@@ -151,6 +151,19 @@ tr.grp td{background:var(--surface2);font-weight:700;font-size:13px}
 .phase .u{font-size:12px;color:var(--muted)}
 .two{display:grid;grid-template-columns:1.2fr 1fr;gap:20px;align-items:start}
 
+/* animations */
+.anim-tabs{display:flex;gap:8px;margin:0 0 14px}
+.anim-tabs label{cursor:pointer;font-size:13.5px;font-weight:600;padding:5px 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--muted)}
+#av15:checked~.anim-tabs label[for=av15],#av14:checked~.anim-tabs label[for=av14]{background:var(--accent-soft);color:var(--accent);border-color:var(--accent)}
+.anim-set{display:none;grid-template-columns:1.5fr 1fr;gap:12px}
+#av15:checked~.anim-v15,#av14:checked~.anim-v14{display:grid}
+.anim-set .side{display:grid;gap:12px}
+.anim-set figure{margin:0;background:#fff;border:1px solid var(--line);border-radius:12px;overflow:hidden;display:flex;flex-direction:column}
+.anim-set figure img{width:100%;height:auto;aspect-ratio:4/3;object-fit:contain;background:#fff}
+.anim-set figcaption{font-size:12.5px;padding:8px 10px;color:#444;background:#fafaf8;border-top:1px solid #e6e3dc;flex:1}
+.vh{position:absolute;opacity:0;pointer-events:none}
+@media (max-width:900px){.anim-set{grid-template-columns:1fr}}
+
 footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
 
 @media (max-width:900px){
@@ -175,7 +188,7 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
 <header class="top"><div class="wrap">
   <b>AI Calculator Hub</b>
   <nav>
-    <a href="#builds">Builds</a><a href="#status">Status</a><a href="#guides">Guides</a><a href="#how">How it works</a><a href="#parts">Parts</a><a href="#money">Money</a><a href="#timeline">Timeline</a>
+    <a href="#motion">Animations</a><a href="#builds">Builds</a><a href="#status">Status</a><a href="#guides">Guides</a><a href="#how">How it works</a><a href="#parts">Parts</a><a href="#money">Money</a><a href="#timeline">Timeline</a>
   </nav>
 </div></header>
 
@@ -203,6 +216,29 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
   <figure><img src="img/back_camera_window.jpg" alt="Back of the calculator with the 7 mm camera window" loading="lazy"><figcaption>Back: the 7 mm camera window</figcaption></figure>
 </div>
 <p class="src">Sources: <code>Claude outputs/LAUNCH_ROADMAP.md</code> §0 (price, SAT/ACT, works without subscription), <code>hardware/QUESTIONS_AND_ISSUES.md</code> (proxy: 30-day trial, 500 cap), <code>hardware/FINAL_STATUS.md</code> "Current plan". Renders: <code>hardware/enclosure/final_assembly/renders/</code>, <code>final_assembly_v15_lcd/renders/</code>.</p>
+
+<!-- 1b. ANIMATIONS -->
+<section id="motion">
+  <h2>See it come together</h2>
+  <p class="sub">Rendered from the 1:1 Fusion 360 assembly (the same model the guides use), parts moving in the order you build it.</p>
+  <input type="radio" name="av" id="av15" class="vh" checked><input type="radio" name="av" id="av14" class="vh">
+  <div class="anim-tabs" role="group" aria-label="Choose a build"><label for="av15">v15 colour LCD</label><label for="av14">v14 e-paper</label></div>
+  <div class="anim-set anim-v15">
+    <figure><picture><source media="(prefers-reduced-motion: reduce)" srcset="img/anim_assembly_v15_poster.jpg"><img src="img/anim_assembly_v15.gif" alt="v15 colour LCD: animation of the parts going into the faceplate in build order, ending on the finished calculator" width="960" height="720" loading="lazy"></picture><figcaption>Assembly in build order: key mat, screen, board, camera, magnet, battery, back cover, then the screen comes on (real firmware screenshot)</figcaption></figure>
+    <div class="side">
+      <figure><picture><source media="(prefers-reduced-motion: reduce)" srcset="img/anim_turntable_v15_poster.jpg"><img src="img/anim_turntable_v15.gif" alt="v15 colour LCD: the closed calculator turning a full circle, front and back" width="960" height="720" loading="lazy"></picture><figcaption>360° turntable, closed (front and back)</figcaption></figure>
+      <figure><picture><source media="(prefers-reduced-motion: reduce)" srcset="img/anim_xray_v15_poster.jpg"><img src="img/anim_xray_v15.gif" alt="v15 colour LCD: see-through shells, the parts spreading apart and coming back together" width="960" height="720" loading="lazy"></picture><figcaption>X-ray: exploded ↔ assembled, shells see-through</figcaption></figure>
+    </div>
+  </div>
+  <div class="anim-set anim-v14">
+    <figure><picture><source media="(prefers-reduced-motion: reduce)" srcset="img/anim_assembly_v14_poster.jpg"><img src="img/anim_assembly_v14.gif" alt="v14 e-paper: animation of the parts going into the faceplate in build order, ending on the finished calculator" width="960" height="720" loading="lazy"></picture><figcaption>Assembly in build order: key mat, screen, board, camera, magnet, battery, back cover</figcaption></figure>
+    <div class="side">
+      <figure><picture><source media="(prefers-reduced-motion: reduce)" srcset="img/anim_turntable_v14_poster.jpg"><img src="img/anim_turntable_v14.gif" alt="v14 e-paper: the closed calculator turning a full circle, front and back" width="960" height="720" loading="lazy"></picture><figcaption>360° turntable, closed (front and back)</figcaption></figure>
+      <figure><picture><source media="(prefers-reduced-motion: reduce)" srcset="img/anim_xray_v14_poster.jpg"><img src="img/anim_xray_v14.gif" alt="v14 e-paper: see-through shells, the parts spreading apart and coming back together" width="960" height="720" loading="lazy"></picture><figcaption>X-ray: exploded ↔ assembled, shells see-through</figcaption></figure>
+    </div>
+  </div>
+  <p class="src">Source: <code>hardware/enclosure/animate_assembly.py</code> (Fusion renders + Pillow), full-size files and how to regenerate them in <code>hardware/animations/README.md</code>. Screen image: <code>hardware/renders_ui_v15/05_calc_result_functions.png</code>.</p>
+</section>
 
 <!-- 2. TWO BUILDS -->
 <section id="builds">
