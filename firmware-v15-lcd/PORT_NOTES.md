@@ -115,8 +115,8 @@ lives in PSRAM and the e-paper library's buffers are gone. No compiler warnings 
     2026-10-10 it also knows core's replacement glyphs and icons; see "UI fixes" below. The PC
     screenshot harness `tools/ui_sim_v15/` shows every screen without the board.)
 12. OTA from a v14 image to v15 is **not** safe (different hardware): keep separate version strings and
-    proxy images per board (bump `kFirmwareVersion` in `claude_client.h` to a `v15-` prefix before the
-    first OTA upload).
+    proxy images per board (done: `kFirmwareVersion` = `v15lcd-2026.10.10`; the proxy stores one image per
+    family and refuses cross-family downloads).
 
 ## UI fixes from the PC screenshots (2026-10-10)
 
@@ -151,11 +151,32 @@ unchanged; core tests 548 passed; `pio run -e v15lcd` no warnings from `src/`.
   fps / "off in" placed first; hints `= Scan`, `▶ Focus`, `AC Back` (Effort dropped when it would collide;
   the mode text shows it).
 
+## Proxy follow-ups (2026-10-10, from server/proxy/FINAL_REVIEW_server.md)
+
+Same changes in `firmware-prototype/` (v14) except the system-prompt flag. Version now `v15lcd-2026.10.10`.
+Build: RAM 28.8 % (94,404 B), flash 68.3 % (1,343,637 B), no warnings from `src/` or `core/`.
+
+- **Preview Send timeout is an idle limit now** (`src/main.cpp`, `SendStep::Solving`): was a 120 s *total*
+  (`kSendSolveTimeoutMs`), so a long `xhigh`/`max` solve still streaming at 2 minutes was reported "took too
+  long". Now `kSendSolveIdleMs` = 150 s without a byte to or from the proxy (above `kIdleMs` = 120 s in
+  `claude_client.cpp`, which normally reports first and stays unchanged) and `kSendSolveMaxMs` = 300 s overall.
+  `claude_client.cpp` stores `millis()` of every byte sent/received (`claudeLastActivityMs()`, atomic, read
+  by the loop task); the proxy's `: ping` every 15 s keeps it moving while Claude thinks. Only activity after
+  the Send started counts. The message text is unchanged (no screenshot re-render needed).
+- **`rate_limited`** (core `classifyFailure`): the proxy's burst limit shows its message ("wait a minute")
+  instead of "busy". Older firmware gets `fair_use_exceeded` from the proxy (chosen by `x-firmware` date).
+- **No `system` in the upload** (`-DCALC_SEND_SYSTEM_PROMPT=0` in `platformio.ini`; core
+  `buildSolveRequest(..., withSystem)`): ~5 KB less per solve; the proxy owns the prompt. Needs the proxy of
+  2026-10-10 or later (older proxies forwarded the device's prompt). For the proxy's `PROMPT_SOURCE=device`
+  bench mode build with `-DCALC_SEND_SYSTEM_PROMPT=1`. `output_config.format` is still sent. The simulators
+  call Claude directly and still send `system` (default `true`).
+
 ## Open items / later
 
 - Touch panel pins 26-29 are unused (no spare GPIOs).
 - `cameraPreviewFrame()` (JPEG → grey) is dead code in this project; remove once the RGB565 path is
   proven, or keep as the fallback path (`cameraFrame` for the laptop preview page still uses JPEG).
-- `kFirmwareVersion` still says `stage14-2026.10.06`: change to a v15 string before the first OTA.
+- ~~`kFirmwareVersion` still says `stage14-2026.10.06`~~: done, `v15lcd-2026.10.10` (the proxy keeps one
+  image per board family since 2026-10-10, so v14 and v15 can be updated at the same time).
 - The core's `View::Look` (Plain / LCD dots) has no effect on the LCD; it could become the brightness page.
 - `graphify update .` was run after the port (AST only).

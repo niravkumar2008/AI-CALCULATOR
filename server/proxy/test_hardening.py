@@ -619,3 +619,217 @@ def test_firmware_image_board_family(http, tmp_path):
     assert http.get("/v1/firmware/image", headers={**h, "x-firmware": "stage14-2026.10.06"}).status_code == 404
     assert http.get("/v1/firmware/image", headers={**h, "x-firmware": "v15lcd-2026.10.08"}).status_code == 200
     assert http.get("/v1/firmware", headers={**h, "x-firmware": "stage14-2026.10.06"}).json()["update"] is False
+
+
+# ================================================================ follow-ups (2026-10-10, second pass)
+import hashlib  # noqa: E402
+NEW_FW = {"stage14": "stage14-2026.10.10", "v15lcd": "v15lcd-2026.10.10"}  # firmware that shows rate_limited
+
+
+def fw_image(tmp_path, name, fill):
+    p = tmp_path / name
+    p.write_bytes(b"\xe9" + bytes([fill]) * 149_999)
+    return str(p)
+
+
+# ---------------------------------------------------------------- rate_limited, with old firmware kept working
+def test_rate_limit_type_follows_the_firmware_version():
+    t = policy.rate_limit_error_type
+    assert t("stage14-2026.10.10") == t("v15lcd-2026.10.10") == t("v15lcd-2026.11.02b") == "rate_limited"
+    assert t("stage14-2027.1.5") == "rate_limited"
+    # older builds, unknown boards, missing or odd versions: the type every firmware displays
+    for v in ("stage14-2026.10.06", "v15lcd-2026.10.08", "stage14-2026.10.09", "", None, "x", "stage14",
+              "proto-2030.01.01", "stage14-junk", "STAGE14-2026.10.10"):
+        assert t(v) == "fair_use_exceeded", v
+    assert policy.LEGACY_RATE_LIMIT_ERROR_TYPE in ACCOUNT_ERRORS
+
+
+def test_burst_limit_http_type_per_firmware(http, fake):
+    fake({"claude-sonnet-5-5": []})
+    dev_id, h, email = linked_device()
+    lease = proxy_app.limiter.acquire("solve:" + dev_id, 1, 0)
+    try:
+        types = {}
+        for fw in ("stage14-2026.10.06", NEW_FW["stage14"], NEW_FW["v15lcd"], ""):
+            r = http.post("/v1/solve", headers={**h, "x-firmware": fw} if fw else h, json=calculator_body())
+            assert r.status_code == 429 and r.headers["retry-after"] and len(r.json()["error"]["message"]) <= 110
+            types[fw] = r.json()["error"]["type"]
+    finally:
+        lease.release()
+    assert types == {"stage14-2026.10.06": "fair_use_exceeded", NEW_FW["stage14"]: "rate_limited",
+                     NEW_FW["v15lcd"]: "rate_limited", "": "fair_use_exceeded"}
+    assert used(email) == 0
+    # the monthly cap keeps its own type (all firmware shows it)
+    config.MONTHLY_CAP = 0
+    r = http.post("/v1/solve", headers={**h, "x-firmware": NEW_FW["v15lcd"]}, json=calculator_body())
+    assert r.json()["error"]["type"] == "fair_use_exceeded"
+
+
+def test_small_endpoint_limit_type_per_firmware(http, monkeypatch):
+    monkeypatch.setattr(config, "OTHER_PER_MINUTE", 1)
+    _, h, _ = linked_device()
+    assert http.get("/v1/device/status", headers=h).status_code == 200
+    old = http.get("/v1/device/status", headers={**h, "x-firmware": "stage14-2026.10.06"})
+    new = http.post("/v1/pair/start", headers={**h, "x-firmware": NEW_FW["stage14"]})
+    assert (old.status_code, old.json()["error"]["type"]) == (429, "fair_use_exceeded")
+    assert (new.status_code, new.json()["error"]["type"]) == (429, "rate_limited")
+
+
+def test_request_without_system_prompt():
+    b = calculator_body()
+    del b["system"]
+    system, _, fmt, _, _ = solve.clean_request(b)  # the server's prompt (PROMPT_SOURCE=server)
+    assert system == solve.server_prompt()[0] and fmt["schema"]["required"][0] == "readable"
+    config.PROMPT_SOURCE = "device"  # bench mode needs a firmware built with CALC_SEND_SYSTEM_PROMPT=1
+    with pytest.raises(solve.BadRequest):
+        solve.clean_request(b)
+    b2 = calculator_body()
+    del b2["output_config"]["format"]  # the schema is still required
+    config.PROMPT_SOURCE = "server"
+    with pytest.raises(solve.BadRequest):
+        solve.clean_request(b2)
+
+
+# ---------------------------------------------------------------- one firmware image per board family
+def test_firmware_one_image_per_family(tmp_path):
+    d = str(tmp_path / "fw")
+    v14 = firmware.publish(fw_image(tmp_path, "a.bin", 0x11), "stage14-2026.10.10", d)
+    v15 = firmware.publish(fw_image(tmp_path, "b.bin", 0x22), "v15lcd-2026.10.10", d)
+    assert v14["sha256"] != v15["sha256"]
+    assert set(firmware.published(d)) == {"stage14", "v15lcd"}
+    a = firmware.decide("stage14-2026.10.06", d)
+    b = firmware.decide("v15lcd-2026.10.08", d)
+    assert (a["update"], a["version"], a["sha256"]) == (True, "stage14-2026.10.10", v14["sha256"])
+    assert (b["update"], b["version"], b["sha256"]) == (True, "v15lcd-2026.10.10", v15["sha256"])
+    assert firmware.decide("stage14-2026.10.10", d)["update"] is False
+    assert firmware.decide("proto-1", d) == {"update": False, "version": ""}  # unknown board: nothing
+    assert firmware.decide("", d) == {"update": False, "version": ""}
+    assert firmware.image_for("", d) is None  # two families and no header: never guess
+    # publishing a new v15 build leaves the v14 image alone
+    v15b = firmware.publish(fw_image(tmp_path, "c.bin", 0x33), "v15lcd-2026.10.11", d)
+    assert firmware.current("stage14", d)["sha256"] == v14["sha256"]
+    assert firmware.current("v15lcd", d)["sha256"] == v15b["sha256"]
+    with pytest.raises(ValueError):
+        firmware.publish(fw_image(tmp_path, "e.bin", 1), "../evil-1", d)
+    with pytest.raises(ValueError):
+        firmware.publish(fw_image(tmp_path, "f.bin", 1), "Stage14-1", d)
+
+
+def test_firmware_legacy_single_image_still_served(tmp_path):
+    """An image published by the older proxy (FIRMWARE_DIR/firmware.bin) keeps working for its family."""
+    d = tmp_path / "fw"
+    d.mkdir()
+    src = fw_image(tmp_path, "old.bin", 0x44)
+    (d / firmware.IMAGE).write_bytes(open(src, "rb").read())
+    (d / firmware.MANIFEST).write_text(json.dumps({"version": "stage14-2026.10.07", "size": 150_000,
+                                                   "sha256": firmware.sha256_of(src)}))
+    assert firmware.decide("stage14-2026.10.06", str(d))["update"] is True
+    assert firmware.decide("v15lcd-2026.10.08", str(d))["update"] is False
+    assert firmware.image_for("", str(d))["version"] == "stage14-2026.10.07"  # the only image
+    # once the family has its own folder, that one wins
+    firmware.publish(fw_image(tmp_path, "new.bin", 0x55), "stage14-2026.10.10", str(d))
+    assert firmware.current("stage14", str(d))["version"] == "stage14-2026.10.10"
+
+
+def test_firmware_both_families_over_http(http, tmp_path, monkeypatch):
+    monkeypatch.setattr(config, "FIRMWARE_DIR", str(tmp_path / "fw"))
+    v14 = firmware.publish(fw_image(tmp_path, "a.bin", 0x66), "stage14-2026.10.10")
+    v15 = firmware.publish(fw_image(tmp_path, "b.bin", 0x77), "v15lcd-2026.10.10")
+    _, h, _ = linked_device()
+    for old, new, m in (("stage14-2026.10.06", "stage14-2026.10.10", v14), ("v15lcd-2026.10.08", "v15lcd-2026.10.10", v15)):
+        man = http.get("/v1/firmware", headers={**h, "x-firmware": old}).json()
+        assert (man["update"], man["version"], man["sha256"]) == (True, new, m["sha256"])
+        img = http.get(man["path"], headers={**h, "x-firmware": old})
+        assert img.status_code == 200 and img.headers["x-firmware-version"] == new
+        assert hashlib.sha256(img.content).hexdigest() == m["sha256"]
+    # cross-family: a board whose family has no image gets nothing, never the other board's image
+    r = http.get("/v1/firmware/image", headers={**h, "x-firmware": "proto-2026.10.10"})
+    assert r.status_code == 404
+    assert http.get("/v1/firmware/image", headers=h).status_code == 404  # no header, two images
+    monkeypatch.setattr(config, "FIRMWARE_DIR", str(tmp_path / "fw2"))
+    firmware.publish(fw_image(tmp_path, "c.bin", 0x78), "v15lcd-2026.10.10")
+    assert http.get("/v1/firmware/image", headers={**h, "x-firmware": "stage14-2026.10.06"}).status_code == 404
+    assert http.get("/v1/firmware", headers={**h, "x-firmware": "stage14-2026.10.06"}).json()["update"] is False
+
+
+# ---------------------------------------------------------------- retry on the other model before the first content byte
+def error_events(error_type, model, with_start=True):
+    ev = []
+    if with_start:
+        ev.append(solve.sse("message_start", {"type": "message_start", "message": {
+            "id": "msg_x", "type": "message", "role": "assistant", "model": model, "content": [], "usage": {}}}))
+        ev.append(solve.sse("ping", {"type": "ping"}))
+    ev.append(solve.sse("error", {"type": "error", "error": {"type": error_type, "message": "Overloaded"}}))
+    return b"".join(ev)
+
+
+@pytest.mark.parametrize("early", ["overloaded_event", "error_event_first", "dropped", "ended_silently"])
+def test_early_stream_failure_retries_on_the_other_model(http, fake, early):
+    first = {"overloaded_event": FakeUpstream(error_events("overloaded_error", "claude-sonnet-5-5")),
+             "error_event_first": FakeUpstream(error_events("api_error", "claude-sonnet-5-5", with_start=False)),
+             # message_start arrives, then the connection drops (fail_after counts 50-byte chunks)
+             "dropped": FakeUpstream(claude_events(ANSWER, "claude-sonnet-5-5"), chunk=50, fail_after=2),
+             "ended_silently": FakeUpstream(solve.sse(
+                 "message_start", {"type": "message_start", "message": {"model": "claude-sonnet-5-5"}}))}[early]
+    c = fake({"claude-sonnet-5-5": [first],
+              "claude-opus-5-5": [FakeUpstream(claude_events(ANSWER, "claude-opus-5-5"))]})
+    _, h, email = linked_device()
+    r = http.post("/v1/solve", headers=h, json=calculator_body())
+    text, finished, error = stream_reader(r.content)
+    assert finished and not error and json.loads(text)["answer"] == "4"
+    assert [x["model"] for x in c.calls] == ["claude-sonnet-5-5", "claude-opus-5-5"]
+    assert r.content.count(b"event: message_start") == 1  # the failed attempt's prelude was dropped
+    assert used(email) == 1
+
+
+def test_failure_after_content_is_not_retried(http, fake):
+    data = claude_events(ANSWER, "claude-sonnet-5-5")
+    c = fake({"claude-sonnet-5-5": [FakeUpstream(data, chunk=50, fail_after=len(data) // 50 - 2)],
+              "claude-opus-5-5": [FakeUpstream(claude_events(ANSWER, "claude-opus-5-5"))]})
+    _, h, email = linked_device()
+    r = http.post("/v1/solve", headers=h, json=calculator_body())
+    text, finished, error = stream_reader(r.content)
+    assert text and not finished and error == "overloaded_error"  # calculator: "busy", as before
+    assert len(c.calls) == 1 and used(email) == 0
+    # an error event after content: passed through unchanged, not retried
+    mid = data[:data.index(b"event: content_block_stop")] + error_events("overloaded_error", "", with_start=False)
+    c = fake({"claude-sonnet-5-5": [FakeUpstream(mid)], "claude-opus-5-5": [FakeUpstream(data)]})
+    r = http.post("/v1/solve", headers=h, json=calculator_body())
+    assert stream_reader(r.content)[2] == "overloaded_error" and len(c.calls) == 1
+
+
+def test_early_failure_without_a_fallback(http, fake):
+    # non-retryable error event before content: passed on, no second model
+    c = fake({"claude-sonnet-5-5": [FakeUpstream(error_events("invalid_request_error", "claude-sonnet-5-5"))],
+              "claude-opus-5-5": []})
+    dev_id, h, email = linked_device()
+    r = http.post("/v1/solve", headers=h, json=calculator_body())
+    assert stream_reader(r.content)[2] == "invalid_request_error" and len(c.calls) == 1
+    # fallback switched off: the overloaded error reaches the calculator ("busy")
+    config.MODEL_FALLBACK = False
+    c = fake({"claude-sonnet-5-5": [FakeUpstream(error_events("overloaded_error", "claude-sonnet-5-5"))]})
+    r = http.post("/v1/solve", headers=h, json=calculator_body())
+    assert stream_reader(r.content)[2] == "overloaded_error" and len(c.calls) == 1
+    # the fallback model is down too: the first failure is reported, once
+    config.MODEL_FALLBACK = True
+    c = fake({"claude-sonnet-5-5": [FakeUpstream(error_events("overloaded_error", "claude-sonnet-5-5"))],
+              "claude-opus-5-5": [api_status_error(529)]})
+    r = http.post("/v1/solve", headers=h, json=calculator_body())
+    assert stream_reader(r.content)[2] == "overloaded_error" and r.content.count(b"event: error") == 1
+    assert [x["model"] for x in c.calls] == ["claude-sonnet-5-5", "claude-opus-5-5"]
+    # the stream that already fell back at connect time has no third model to try
+    c = fake({"claude-sonnet-5-5": [api_status_error(529)],
+              "claude-opus-5-5": [FakeUpstream(error_events("overloaded_error", "claude-opus-5-5"))]})
+    r = http.post("/v1/solve", headers=h, json=calculator_body())
+    assert stream_reader(r.content)[2] == "overloaded_error" and len(c.calls) == 2
+    assert used(email) == 0
+    # the lease was released every time (another one can be taken at once)
+    proxy_app.limiter.acquire("solve:" + dev_id, 1, 0).release()
+
+
+def test_event_helpers():
+    assert solve.event_type(solve.sse("message_start", {"type": "message_start"})) == "message_start"
+    assert solve.event_type(b'data: {"type":"ping"}\n\n') == "ping"
+    assert solve.event_type(solve.KEEPALIVE) == ""
+    assert solve.event_error_type(error_events("overloaded_error", "", with_start=False)) == "overloaded_error"
+    assert solve.event_error_type(solve.sse("message_stop", {"type": "message_stop"})) == ""

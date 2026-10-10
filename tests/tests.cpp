@@ -279,6 +279,16 @@ static void testClaudeApi() {
   CHECK(Json::parse(buildSolveRequest("J", "", effortApp.effortParam()), reqE, err));
   CHECK(reqE["output_config"]["effort"].asString() == "xhigh");
 
+  // Behind the proxy the calculator may leave the system prompt out (the proxy owns it);
+  // the schema stays (the proxy's request check requires output_config.format).
+  Json reqNoSys;
+  const std::string noSys = buildSolveRequest("J", "", "high", false);
+  CHECK(Json::parse(noSys, reqNoSys, err));
+  CHECK(!reqNoSys["system"].isString() && noSys.find("\"system\"") == std::string::npos);
+  CHECK(reqNoSys["output_config"]["format"]["schema"]["required"].items().size() == 9);
+  CHECK(reqNoSys["messages"].items()[0]["content"].items().size() == 2);
+  CHECK(buildSolveRequest("J").size() > noSys.size() + 1000);
+
   // With a close-up: two images, then the text that says which is which.
   Json req2;
   CHECK(Json::parse(buildSolveRequest("FULL", "CLOSE"), req2, err));
@@ -934,6 +944,13 @@ static void testStage13() {
     CHECK(classifyFailure(429, "{\"type\":\"error\",\"error\":{\"type\":\"fair_use_exceeded\",\"message\":\"500 solves used\"}}",
                           sr, f, det));
     CHECK(f == Failure::Account);
+    // The proxy's burst limit (firmware with this check) shows its message, not "busy".
+    CHECK(classifyFailure(429, "{\"type\":\"error\",\"error\":{\"type\":\"rate_limited\",\"message\":\"Wait a moment, then try again.\"}}",
+                          sr, f, det));
+    CHECK(f == Failure::Account && det == "Wait a moment, then try again.");
+    // Without a message it is still just "busy".
+    CHECK(classifyFailure(429, "{\"type\":\"error\",\"error\":{\"type\":\"rate_limited\"}}", sr, f, det));
+    CHECK(f == Failure::ApiBusy);
     CHECK(classifyFailure(429, "{\"type\":\"error\",\"error\":{\"type\":\"rate_limit_error\",\"message\":\"x\"}}", sr, f, det));
     CHECK(f == Failure::ApiBusy);
     CHECK(std::string(solveSchema()).find("\"check\"") != std::string::npos);

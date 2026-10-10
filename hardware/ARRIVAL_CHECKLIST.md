@@ -1,6 +1,6 @@
 # Arrival checklist: from boxes to a working calculator
 
-Written 2026-10-06 for board v14 and firmware stage14-2026.10.06 (sections 1–3); v15-LCD boards: section 4 (added 2026-10-08). One page. Entry point for everything else: `FINAL_STATUS.md`.
+Written 2026-10-06 for board v14 and firmware stage14-2026.10.10 (sections 1–3); v15-LCD boards: section 4 (added 2026-10-08). One page. Entry point for everything else: `FINAL_STATUS.md`.
 
 Guides: **Power-Up** (PU) https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9 · **Grinding** (GR) https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL · **Assembly** (AS) https://claude.ai/artifact/8BTC57FZ3JFwiDdiLprwtY. Section links below add `#id` to those addresses (sources: `bringup_guide.html`, `enclosure/final_assembly/grinding_manual.html`, `enclosure/final_assembly/assembly_guide.html`).
 
@@ -30,7 +30,7 @@ Order list: `Claude outputs/AI_Calculator_Shopping_List.xlsx`. Open each box the
 3. **Battery polarity:** PU 4 (`#battery`). Red wire on J4 "+".
 4. **Camera ribbon:** beep 2 ↔ 15 and measure module far edge → tip: PU 5 (`#ribbon`). Under about 70.3 mm: the module shifts up to 1.7 mm towards J1 later; drill the 7 mm hole where the lens really sits (GR `#z3`, AS 6).
 5. **First power, computer USB only** (no battery, panel or camera): PU 6 (`#power`).
-6. **First flash, always over USB** (the two-slot OTA partition table can't arrive over the air): PU 7 (`#flash`). `status` → `Firmware: stage14-2026.10.06 (slot app0)`. Recovery: TP1 to TP4, tap TP7.
+6. **First flash, always over USB** (the two-slot OTA partition table can't arrive over the air): PU 7 (`#flash`). `status` → `Firmware: stage14-2026.10.10 (slot app0)`. Recovery: TP1 to TP4, tap TP7.
 7. **Self-test** (`selftest`, `q` skips keys), save the `SELFTEST_JSON` line (has `firmware_slot`): PU 8 (`#selftest`).
 8. **E-paper → self-test, camera → self-test, battery → charging:** PU 9 (`#attach`). Cable out before every ribbon.
 9. **AI settings:** PU 10 (`#ai`): `wifi`, `proxy`, `token` in the Serial Monitor, or the phone page (`setup`; on a finished calculator **SHIFT MODE, 6, =**), then `pair` → `<server>/link`.

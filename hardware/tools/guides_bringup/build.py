@@ -167,7 +167,7 @@ def build(v):
     # ---------------------------------------------------------------- flashing
     folder = "firmware-v15-lcd" if v15 else "firmware-prototype"
     env = "v15lcd" if v15 else "prototype"
-    ver = "v15lcd-2026.10.08" if v15 else "stage14-2026.10.06"
+    ver = "v15lcd-2026.10.10" if v15 else "stage14-2026.10.10"
     term_extra = '\n<span class="m">Screen: 320x170 LCD ok, brightness 60 % (now 60 %), dim after 20 s, ...</span>' if v15 else ""
     flash = f'''<h3>What it looks like</h3>
   <figure>{pio_svg(env, folder)}<figcaption>The PlatformIO buttons live in the blue bar at the bottom of VS Code. If the bar doesn't show <code>env:{env}</code>, the wrong folder is open.</figcaption></figure>
@@ -199,7 +199,7 @@ Battery: 0% (0 mV)                                     <span class="m">&lt;- no 
 
     # ---------------------------------------------------------------- self-test annotated JSON
     if v15:
-        fields = [("firmware", '"v15lcd-2026.10.08"', "The build that is running. Must start with v15lcd."),
+        fields = [("firmware", '"v15lcd-2026.10.10"', "The build that is running. Must start with v15lcd."),
                   ("firmware_slot", '"app0"', "app0 after a USB flash; app1 after the first over-the-air update."),
                   ("device_id", '"calc-\u2026"', "This board's id. Write it on the bag."),
                   ("reset_reason", '"\u2026"', "Why it last restarted. 'brownout' = power dipped."),
@@ -215,7 +215,7 @@ Battery: 0% (0 mV)                                     <span class="m">&lt;- no 
                   ("keys_ok / keys_missing", "50 / []", "Every key pressed. 'q' skips: then false, fine on the bench."),
                   ("pass", "true", "Everything above. On the bare board it is false: that's fine here.")]
     else:
-        fields = [("firmware", '"stage14-2026.10.06"', "The build that is running."),
+        fields = [("firmware", '"stage14-2026.10.10"', "The build that is running."),
                   ("firmware_slot", '"app0"', "app0 after a USB flash; app1 after the first over-the-air update."),
                   ("device_id", '"calc-\u2026"', "This board's id. Write it on the bag."),
                   ("reset_reason", '"\u2026"', "Why it last restarted. 'brownout' = power dipped."),

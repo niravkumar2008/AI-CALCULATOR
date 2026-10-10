@@ -55,7 +55,11 @@ constexpr uint32_t kSolveWifiWaitMs = 12000;       // after the photo: a slow ho
 constexpr uint32_t kSerialWifiWaitMs = 15000;      // pair / account / update: time to join
 constexpr uint32_t kSerialWifiHoldMs = 30000;      // ...and how long Wi-Fi stays on for them
 constexpr uint32_t kSendWifiWaitMs = 25000;        // preview Send: hotspot after leaving the AP
-constexpr uint32_t kSendSolveTimeoutMs = 120000;   // preview Send: Claude's answer
+// Preview Send: Claude's answer. An idle limit, not a total one: a long xhigh/max solve keeps
+// streaming (and the proxy sends ": ping" every 15 s while Claude thinks), so it may take minutes.
+// The idle limit is above the client's own kIdleMs (120 s), which normally reports first.
+constexpr uint32_t kSendSolveIdleMs = 150000;      // no byte to or from the proxy this long
+constexpr uint32_t kSendSolveMaxMs = 300000;       // ...and a cap even while it still streams
 constexpr uint32_t kViewfinderLogEveryMs = 10000;  // fps / battery line while the viewfinder runs
 constexpr uint32_t kSetupAfterSaveMs = 3000;       // phone setup: the "Saved" page is sent, then the network closes
 constexpr uint32_t kOtaConfirmAfterMs = 15000;     // a freshly installed image confirms itself after this
@@ -728,8 +732,14 @@ void serviceSend() {
     case SendStep::Solving:
       // The reply or failure arrives through handleEvent. A user who pressed
       // AC on the calculator cancelled it: bring the page back anyway.
-      if (g_dev.activeRequest() != g_sendId || millis() - g_sendAt > kSendSolveTimeoutMs)
-        sendFinished("", "The scan was cancelled or took too long.");
+      {
+        const uint32_t now = millis(), act = claudeLastActivityMs();
+        // Bytes of this request only: activity from before the Send started doesn't count.
+        const uint32_t quietSince = int32_t(act - g_sendAt) > 0 ? act : g_sendAt;
+        if (g_dev.activeRequest() != g_sendId || now - quietSince > kSendSolveIdleMs ||
+            now - g_sendAt > kSendSolveMaxMs)
+          sendFinished("", "The scan was cancelled or took too long.");
+      }
       return;
   }
 }

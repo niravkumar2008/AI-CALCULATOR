@@ -124,3 +124,21 @@ more than one instance); the real Stripe Checkout page and the shop's sign-in ar
    request check).
 4. Still open from above: replace `firmware/src/claude_client.*` with the proxy client; keep `kIdleMs`
    >= 120 s (the proxy's `: ping` comments are already ignored by `StreamReader`); CA refresh before 2031.
+
+## Follow-ups applied (2026-10-10, second pass: device and server)
+
+Tests: `python -m pytest -q` in `server/proxy` -> **65 passed** (was 51; 14 new in `test_hardening.py`).
+Core tests (`tests\msvc\build_and_run.bat`) -> **557 passed, 0 failed**. `pio run -e v15lcd` SUCCESS
+(RAM 28.8 % 94,404 B, flash 68.3 % 1,343,637 B); `firmware-prototype` `pio run` SUCCESS (RAM 30.7 %
+100,440 B, flash 63.4 % 1,245,869 B); no warnings from own sources in either. Nothing committed.
+
+| Request | Done |
+| --- | --- |
+| Firmware 2: Send timeout was a total limit | `firmware-v15-lcd/src/main.cpp` and `firmware-prototype/src/main.cpp` (same pattern, same fix): `kSendSolveTimeoutMs` 120 s total -> `kSendSolveIdleMs` 150 s with no byte to/from the proxy + `kSendSolveMaxMs` 300 s overall. `claude_client.cpp` (both) records the last byte sent/received (`claudeLastActivityMs()`, atomic); the proxy's 15 s pings count. `kIdleMs` stays 120 s. |
+| Firmware 1 + server: `rate_limited` | `core/claude_api.cpp` classifyFailure shows `rate_limited` messages (test added). `policy.RATE_LIMIT_ERROR_TYPE = "rate_limited"`, but `policy.rate_limit_error_type(x-firmware)` sends it only to firmware that knows it: `<family>-YYYY.MM.DD` with family `stage14`/`v15lcd` and date >= 2026.10.10 (`RATE_LIMITED_SINCE`). Older builds, unknown boards, missing/unreadable versions get `fair_use_exceeded` (same message; displays on every firmware). Firmware versions bumped to `stage14-2026.10.10` / `v15lcd-2026.10.10` so the proxy can tell them apart (guides and checklists updated to the new strings). |
+| Firmware 3: drop `system` | Done for v15 only: core `buildSolveRequest(..., bool withSystem = true)`; `firmware-v15-lcd/platformio.ini` `-DCALC_SEND_SYSTEM_PROMPT=0`. v14 keeps sending it (default 1) so it still works against an older proxy that forwarded the device prompt. Simulators call Claude directly and keep it. `PROMPT_SOURCE=device` bench mode: build with `-DCALC_SEND_SYSTEM_PROMPT=1` (the proxy refuses a device-mode request without `system`, tested). `output_config.format` always sent. |
+| Server: one image per board family | `firmware.py`: `FIRMWARE_DIR/<family>/firmware.bin + firmware.json`; `publish` writes to the version's family (family validated: 1-20 lowercase letters/digits, no slashes); `current(family)`, `published()`, `decide()`, `image_for()`. `/v1/firmware/image` serves the calculator's own family (by `x-firmware`); without the header only when exactly one family is published. The old single image in `FIRMWARE_DIR` is still served to its family until that family is republished. `admin.py firmware` lists every family. Tests: both families at once, per-family update, cross-family refusal, no-header with two images, legacy image, bad family names. |
+| Server: retry before the first content byte | `app.relay` holds `message_start`/`ping` events until the first content event. If the stream fails before that (error event `overloaded_error`/`api_error`/`rate_limit_error`/`timeout_error`, a dropped connection, or an end with no content), it reopens on the next model of `solve.model_chain` (`MODEL_FALLBACK`), discarding the failed prelude; at most the two-model chain, so one retry. If the fallback fails too, the first failure goes to the calculator as before. After content has started a failure is passed on unchanged ("busy"), because the calculator has already shown part of the answer (`peekAnswer` partials) and `StreamReader` appends text, so a restart would glue two answers together, and the first one's tokens are already paid for. Non-retryable error events (e.g. `invalid_request_error`) are passed on. Log line has `early_retries=`. One behaviour change: a stream that ends with no content and no exception now ends with an `overloaded_error` event ("busy") instead of a silent cut ("reply was cut off"). |
+
+Still open (server): the burst limiter is per process (Redis/DB before more than one instance); real Stripe
+Checkout and the shop sign-in; `firmware/` (stage 13) still holds the API key path.

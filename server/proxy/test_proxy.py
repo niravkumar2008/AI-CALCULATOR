@@ -149,14 +149,14 @@ class Firmware(unittest.TestCase):
         self.bin = fake_image(os.path.join(self.dir, "build.bin"))
 
     def test_nothing_published(self):
-        self.assertIsNone(firmware.current(self.dir))
+        self.assertIsNone(firmware.current("stage14", self.dir))
         self.assertEqual(firmware.decide("stage14-2026.10.06", self.dir), {"update": False, "version": ""})
 
     def test_publish_and_decide(self):
         m = firmware.publish(self.bin, "stage14-2026.10.07", self.dir)
         self.assertEqual(m["size"], 150_000)
         self.assertEqual(m["sha256"], hashlib.sha256(open(self.bin, "rb").read()).hexdigest())
-        cur = firmware.current(self.dir)
+        cur = firmware.current("stage14", self.dir)
         self.assertEqual(cur["version"], "stage14-2026.10.07")
         self.assertTrue(os.path.exists(cur["file"]))
         same = firmware.decide("stage14-2026.10.07", self.dir)
@@ -182,9 +182,9 @@ class Firmware(unittest.TestCase):
 
     def test_tampered_image_is_not_served(self):
         firmware.publish(self.bin, "v2", self.dir)
-        with open(os.path.join(self.dir, firmware.IMAGE), "ab") as f:
+        with open(firmware.current("v2", self.dir)["file"], "ab") as f:
             f.write(b"junk")  # size no longer matches the manifest
-        self.assertIsNone(firmware.current(self.dir))
+        self.assertIsNone(firmware.current("v2", self.dir))
 
 
 try:
@@ -223,7 +223,7 @@ class FirmwareHttp(unittest.TestCase):
                          ("stage14-2026.10.07", m["size"], m["sha256"], "/v1/firmware/image"))
         r = self.client.get("/v1/firmware", headers={**self.headers, "x-firmware": "stage14-2026.10.07"})
         self.assertFalse(r.json()["update"])
-        img = self.client.get("/v1/firmware/image", headers=self.headers)
+        img = self.client.get("/v1/firmware/image", headers={**self.headers, "x-firmware": "stage14-2026.10.06"})
         self.assertEqual(img.status_code, 200)
         self.assertEqual(len(img.content), m["size"])
         self.assertEqual(hashlib.sha256(img.content).hexdigest(), m["sha256"])

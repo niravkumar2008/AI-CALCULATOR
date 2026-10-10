@@ -117,8 +117,10 @@ a Ans, # DEL, $ AC, m MODE, o ON, [ SHIFT, ] ALPHA, < > u d arrows, p π, ! x!, 
 
 1. Build (`pio run`). The image is `.pio/build/prototype/firmware.bin`; bump `kFirmwareVersion` in
    `src/claude_client.h` first (the proxy compares version strings, so any change counts as "different").
-2. On the server: `python admin.py firmware .pio/build/prototype/firmware.bin stage14-2026.10.07`.
-   That copies the image into `FIRMWARE_DIR` with its size and SHA-256.
+2. On the server: `python admin.py firmware .pio/build/prototype/firmware.bin stage14-2026.10.10`.
+   That copies the image into `FIRMWARE_DIR/stage14/` with its size and SHA-256. The proxy keeps one
+   image per board family, so a v15 LCD image (`v15lcd-...`) can be published at the same time and
+   is never offered to these boards (nor this one to v15 boards).
 3. On a calculator: either type `update` in the Serial Monitor, or just **switch it off (SHIFT AC)
    with the cable in**: 20 s later it joins the hotspot, asks the proxy (`GET /v1/firmware` with its
    version), and if the server has a different image it shows `UPDATING ... 45%`, checks the SHA-256,
@@ -130,6 +132,21 @@ a Ans, # DEL, $ AC, m MODE, o ON, [ SHIFT, ] ALPHA, < > u d arrows, p π, ! x!, 
 
 The image travels over TLS to the root-pinned proxy and is accepted only when its hash matches the
 manifest; there is no signing key in the firmware or the repo (nothing secret is in either).
+
+### Proxy follow-ups in `stage14-2026.10.10` (small, safe changes)
+
+- **Preview Send no longer gives up on a long answer.** `kSendSolveTimeoutMs` (120 s *total*) became an
+  idle limit, `kSendSolveIdleMs` = 150 s without a byte to or from the proxy (the client's own `kIdleMs`
+  of 120 s still reports first), plus an overall cap `kSendSolveMaxMs` = 300 s (`src/main.cpp`). The
+  proxy's `: ping` every 15 s counts as activity, so an `xhigh`/`max` solve that is still thinking or
+  streaming isn't called "took too long" at 2 minutes. `src/claude_client.cpp` notes the time of the last
+  byte sent or received (`claudeLastActivityMs()`).
+- **Burst-limit message.** The proxy can now answer its burst limit as `429 rate_limited`; `core`'s
+  `classifyFailure` shows its message like the other account errors. The proxy sends the old
+  `fair_use_exceeded` to firmware older than 2026-10-10 (by `x-firmware`), so boards still on
+  `stage14-2026.10.06` keep showing the message too.
+- The request still carries the system prompt on v14 (`CALC_SEND_SYSTEM_PROMPT` defaults to 1), so these
+  boards also work with an older proxy. Build result unchanged: RAM 30.7 %, flash 63.4 %, no warnings.
 
 ## 5. Serial log
 

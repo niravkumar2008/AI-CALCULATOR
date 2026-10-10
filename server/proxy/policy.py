@@ -4,17 +4,36 @@ Pure decisions on database rows, so they are easy to test. Error types and messa
 are what the calculator shows (core/claude_api.cpp: classifyFailure), so keep messages
 short (<= 110 characters). The calculator shows the message for exactly these types:
 device_unknown, device_not_linked, subscription_inactive, fair_use_exceeded,
-free_tier_exhausted. Anything else with 429/5xx only shows "Claude is busy".
+free_tier_exhausted, and (firmware of 2026-10-10 or later) rate_limited. Anything else
+with 429/5xx only shows "Claude is busy".
 """
+import re
 from dataclasses import dataclass, field
 
 import config
 import db
 
 # The burst limiter (limits.py) answers with this type so the calculator shows the message
-# ("wait a minute") instead of a generic "busy". A dedicated "rate_limited" type needs a
-# firmware change first (classifyFailure's list); see FINAL_REVIEW_server.md.
-RATE_LIMIT_ERROR_TYPE = "fair_use_exceeded"
+# ("wait a minute") instead of a generic "busy". classifyFailure shows "rate_limited" since
+# the firmware of 2026-10-10. Older firmware only shows the message for the five types above,
+# so it gets LEGACY_RATE_LIMIT_ERROR_TYPE (same message, same 429 + retry-after).
+RATE_LIMIT_ERROR_TYPE = "rate_limited"
+LEGACY_RATE_LIMIT_ERROR_TYPE = "fair_use_exceeded"
+# Per board family (x-firmware "<family>-YYYY.MM.DD..."), the first firmware date that knows
+# "rate_limited". Older dates, unknown families and a missing/unreadable version get the legacy
+# type: it displays on every firmware, so guessing "old" is always safe.
+RATE_LIMITED_SINCE = {"stage14": (2026, 10, 10), "v15lcd": (2026, 10, 10)}
+_FW_DATE = re.compile(r"^([a-z0-9]+)-(\d{4})\.(\d{1,2})\.(\d{1,2})")
+
+
+def rate_limit_error_type(firmware_version):
+    """The burst-limit error type a calculator running `firmware_version` can display."""
+    m = _FW_DATE.match((firmware_version or "").strip())
+    if m:
+        since = RATE_LIMITED_SINCE.get(m.group(1))
+        if since is not None and tuple(int(g) for g in m.groups()[1:]) >= since:
+            return RATE_LIMIT_ERROR_TYPE
+    return LEGACY_RATE_LIMIT_ERROR_TYPE
 
 RATE_MESSAGES = {
     "concurrency": "This calculator is already solving a photo. Wait for that answer, then try again.",

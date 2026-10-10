@@ -143,7 +143,8 @@ std::string base64Encode(const std::string& in) {
 const char* solveInstructions() { return kInstructions; }
 const char* solveSchema() { return kSchema; }
 
-std::string buildSolveRequest(const std::string& jpeg, const std::string& detail, const char* effort) {
+std::string buildSolveRequest(const std::string& jpeg, const std::string& detail, const char* effort,
+                              bool withSystem) {
   auto image = [](const std::string& bytes) {
     return "{\"type\":\"image\",\"source\":{\"type\":\"base64\",\"media_type\":\"image/jpeg\","
            "\"data\":\"" + base64Encode(bytes) + "\"}},";
@@ -156,7 +157,7 @@ std::string buildSolveRequest(const std::string& jpeg, const std::string& detail
                           "Solve the problem.";
   return std::string("{\"model\":\"") + kModel + "\",\"max_tokens\":32000,\"stream\":true,"
          "\"thinking\":{\"type\":\"adaptive\"},"
-         "\"system\":" + jsonString(kInstructions) + ","
+         + (withSystem ? "\"system\":" + jsonString(kInstructions) + "," : std::string()) +
          "\"output_config\":{\"effort\":\"" + effort + "\",\"format\":{\"type\":\"json_schema\",\"schema\":" + kSchema + "}},"
          "\"messages\":[{\"role\":\"user\",\"content\":[" +
          image(jpeg) + (detail.empty() ? std::string() : image(detail)) +
@@ -234,12 +235,14 @@ bool classifyFailure(int status, const std::string& body, const StreamReader& st
   if (status != 200) {
     // The calculator's proxy (server/proxy) answers account problems with its own error
     // types and a short message meant for the screen (it may carry the pairing code).
+    // "rate_limited" is the proxy's burst limit ("wait a minute"); older proxies sent it as
+    // "fair_use_exceeded", which still works. Claude's own "rate_limit_error" stays "busy".
     Json j;
     std::string err;
     if (Json::parse(body, j, err) && j["error"]["type"].isString() && j["error"]["message"].isString()) {
       const std::string type = j["error"]["type"].asString();
       if (type == "device_unknown" || type == "device_not_linked" || type == "subscription_inactive" ||
-          type == "fair_use_exceeded" || type == "free_tier_exhausted") {
+          type == "fair_use_exceeded" || type == "free_tier_exhausted" || type == "rate_limited") {
         f = Failure::Account;
         detail = j["error"]["message"].asString().substr(0, 110);
         return true;

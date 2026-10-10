@@ -4,6 +4,7 @@
 // calculator parses exactly what it would get from the Claude API.
 // Runs on its own task; results come back through callbacks.
 #pragma once
+#include <cstdint>
 #include <functional>
 #include <string>
 
@@ -33,6 +34,10 @@ int proxyRequest(const Settings& s, const char* method, const std::string& path,
 int proxyDownload(const Settings& s, const std::string& path, const std::function<bool(const char*, size_t)>& sink,
                   size_t& contentLength, std::string& error);
 
+// millis() of the last byte sent or received on a proxy connection (any task). A solve
+// that is still streaming (or receiving the proxy's keep-alive pings) keeps moving it.
+uint32_t claudeLastActivityMs();
+
 // Sent to the proxy as x-firmware and reported by status/selftest. The proxy's
 // /v1/firmware compares it with the image it holds (OTA, see ota.h).
-constexpr const char* kFirmwareVersion = "v15lcd-2026.10.08";
+constexpr const char* kFirmwareVersion = "v15lcd-2026.10.10";

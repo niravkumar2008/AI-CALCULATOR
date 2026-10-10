@@ -93,17 +93,20 @@ def device_from(authorization, hw_id):
 UNKNOWN = ("device_unknown", "This calculator isn't registered with the AI server. Check its token.")
 
 
-def limited(e: limits.Limited, kind=None):
+def limited(e: limits.Limited, kind=None, firmware_version=""):
+    """429 for the burst limiter. The error type depends on the calculator's firmware
+    (policy.rate_limit_error_type): "rate_limited" where it is understood, else the older
+    "fair_use_exceeded", so every calculator shows the message instead of "busy"."""
     log.info("rate limited: %s", e.reason)
-    return err(429, policy.RATE_LIMIT_ERROR_TYPE, policy.RATE_MESSAGES[kind or e.reason],
+    return err(429, policy.rate_limit_error_type(firmware_version), policy.RATE_MESSAGES[kind or e.reason],
                headers={"retry-after": str(e.retry_after)})
 
 
-def small_request_limit(dev):
+def small_request_limit(dev, firmware_version=""):
     try:
         limiter.hit("other:" + dev["id"], config.OTHER_PER_MINUTE)
     except limits.Limited as e:
-        return limited(e, "other")
+        return limited(e, "other", firmware_version)
     return None
 
 
@@ -142,7 +145,7 @@ async def solve_endpoint(request: Request, authorization: str = Header(""), x_de
         lease = limiter.acquire("solve:" + dev["id"], config.SOLVE_CONCURRENCY,
                                 config.SOLVES_PER_MINUTE, config.SOLVES_PER_HOUR)
     except limits.Limited as e:
-        return limited(e)
+        return limited(e, firmware_version=request.headers.get("x-firmware", ""))
 
     def counted():
         for subject, period in decision.count:
@@ -173,18 +176,28 @@ async def solve_endpoint(request: Request, authorization: str = Header(""), x_de
 
     rid = logs.request_id.get()
     started = time.monotonic()
+    chain = solve.model_chain(first)
+    rest = chain[chain.index(model) + 1:] if model in chain else []
+
+    def reopen():
+        """The next model in the chain for an answer that failed before its first content
+        event, or None when there is none left (raises like open_main_stream)."""
+        if not rest:
+            return None
+        opened = solve.open_main_stream(params, list(rest))
+        del rest[:rest.index(opened[2]) + 1]
+        return opened
+
     return StreamingResponse(
-        relay(upstream, cm, lease, counted, dev["id"], model, decision.tier, prompt_version, rid, started),
+        relay(upstream, cm, lease, counted, dev["id"], model, decision.tier, prompt_version, rid, started, reopen),
         media_type="text/event-stream", headers={"cache-control": "no-cache", "x-accel-buffering": "no"})
 
 
 _END = object()
 
 
-def relay(upstream, cm, lease, counted, device_id, model, tier, prompt_version, rid, started):
-    """Passes Claude's events through, whole events at a time, with a ": ping" comment every
-    KEEPALIVE_SECONDS while Claude is quiet (long thinking), so the calculator's 120 s idle
-    timeout never fires. Only finished answers (message_stop) count towards the cap."""
+def _start_pump(upstream):
+    """Reads upstream.iter_bytes() on a thread into a queue (chunks, an exception, then _END)."""
     q = queue.Queue()
     stop = threading.Event()
 
@@ -200,8 +213,33 @@ def relay(upstream, cm, lease, counted, device_id, model, tier, prompt_version, 
             q.put(_END)
 
     threading.Thread(target=pump, name="sse-pump", daemon=True).start()
+    return q, stop
+
+
+def _close(cm):
+    try:
+        cm.__exit__(None, None, None)
+    except Exception:  # noqa: BLE001
+        pass
+
+
+def relay(upstream, cm, lease, counted, device_id, model, tier, prompt_version, rid, started, reopen=None):
+    """Passes Claude's events through, whole events at a time, with a ": ping" comment every
+    KEEPALIVE_SECONDS while Claude is quiet (long thinking), so the calculator's 120 s idle
+    timeout never fires. Only finished answers (message_stop) count towards the cap.
+
+    Retry before the first content event: message_start (and Claude's own pings) are held
+    back until the first content_block_start / message_delta / message_stop. If the stream
+    fails before that (an error event such as overloaded_error, or a dropped connection),
+    nothing the calculator reads has been sent yet (only ": ping" comments), so the request
+    is opened again on the next model of the chain (reopen) and the calculator never knows.
+    After content has started the failure is passed on as before (the calculator shows
+    "busy"): the calculator has already shown part of the answer (peekAnswer) and its
+    StreamReader appends text, so a second answer would be glued onto the first, and the
+    tokens of the first one are already paid for."""
+    q, stop = _start_pump(upstream)
     framer = solve.SseFramer()
-    pings = 0
+    pings, committed, held, retries = 0, False, [], 0
     try:
         while True:
             try:
@@ -210,43 +248,90 @@ def relay(upstream, cm, lease, counted, device_id, model, tier, prompt_version, 
                 pings += 1
                 yield solve.KEEPALIVE
                 continue
+            failure = None  # (kind, error event bytes or None) when the stream failed
             if item is _END:
-                tail = framer.flush()
-                if tail:
-                    yield tail
-                break
-            if isinstance(item, Exception):
-                if not framer.seen_stop:  # the half-received event is dropped
+                events = [t] if (t := framer.flush()) else []
+            elif isinstance(item, Exception):
+                events, failure = [], ("dropped", None)
+            else:
+                events = framer.feed(item)
+            out = []
+            for ev in events:
+                if committed:
+                    out.append(ev)
+                    continue
+                etype = solve.event_type(ev)
+                if etype == "error":
+                    failure = ("error", ev)
+                    break
+                if etype in solve.PRELUDE_EVENTS:
+                    held.append(ev)
+                    continue
+                committed = True
+                out += held + [ev]
+                held = []
+            if out:
+                yield b"".join(out)
+            ended = item is _END or failure is not None
+            if not ended:
+                continue
+            if not committed and not framer.seen_stop:
+                if failure is None:
+                    failure = ("dropped", None)  # ended before any content
+                if (failure[0] == "dropped" or solve.event_error_type(failure[1]) in solve.RETRYABLE_EVENT_ERRORS) \
+                        and reopen is not None:
+                    try:
+                        opened = reopen()
+                    except Exception as e:  # noqa: BLE001 (the fallback failed too: report the first failure)
+                        log.warning("solve %s: fallback after an early stream failure failed: %s", device_id,
+                                    solve._describe(e))
+                        opened = None
+                    if opened is not None:
+                        stop.set()
+                        _close(cm)
+                        cm, upstream, new_model = opened
+                        log.warning("solve %s: %s failed before any content (%s): retrying on %s", device_id, model,
+                                    failure[0] if failure[1] is None else solve.event_error_type(failure[1]),
+                                    new_model)
+                        model, retries, held = new_model, retries + 1, []
+                        framer = solve.SseFramer()
+                        q, stop = _start_pump(upstream)
+                        continue
+                if held:
+                    yield b"".join(held)
+                    held = []
+            if failure is not None:
+                if failure[1] is not None:
+                    yield failure[1]  # Claude's own error event, as before
+                elif not framer.seen_stop:  # the half-received event is dropped
                     yield solve.error_event("overloaded_error", "The connection to Claude dropped: try again.")
-                break
-            yield from framer.feed(item)
+            elif held:
+                yield b"".join(held)
+            break
     finally:
         stop.set()
-        try:
-            cm.__exit__(None, None, None)
-        except Exception:  # noqa: BLE001
-            pass
+        _close(cm)
         lease.release()
         if framer.seen_stop:
             counted()
         token = logs.request_id.set(rid)
         try:
             u = framer.usage
-            log.info("solve %s: model=%s%s tier=%s prompt=%s %s in=%s cache_read=%s cache_write=%s out=%s pings=%d %.1fs",
+            log.info("solve %s: model=%s%s tier=%s prompt=%s %s in=%s cache_read=%s cache_write=%s out=%s pings=%d early_retries=%d %.1fs",
                      device_id, model, f" (answered by {framer.model})" if framer.model and framer.model != model else "",
                      tier, prompt_version, "done" if framer.seen_stop else "UNFINISHED",
                      u.get("input_tokens"), u.get("cache_read_input_tokens"), u.get("cache_creation_input_tokens"),
-                     u.get("output_tokens"), pings, time.monotonic() - started)
+                     u.get("output_tokens"), pings, retries, time.monotonic() - started)
         finally:
             logs.request_id.reset(token)
 
 
 @app.post("/v1/pair/start")
-def pair_start(authorization: str = Header(""), x_device_id: str = Header("")):
+def pair_start(authorization: str = Header(""), x_device_id: str = Header(""), x_firmware: str = Header("")):
     dev = device_from(authorization, x_device_id)
     if dev is None:
         return err(401, *UNKNOWN)
-    if (r := small_request_limit(dev)) is not None:
+    if (r := small_request_limit(dev, x_firmware)) is not None:
         return r
     code = db.new_pair_code(dev["id"])
     return {"code": code, "link_url": config.PUBLIC_URL + "/link", "expires_in": config.PAIR_CODE_MINUTES * 60,
@@ -254,11 +339,11 @@ def pair_start(authorization: str = Header(""), x_device_id: str = Header("")):
 
 
 @app.get("/v1/device/status")
-def device_status(authorization: str = Header(""), x_device_id: str = Header("")):
+def device_status(authorization: str = Header(""), x_device_id: str = Header(""), x_firmware: str = Header("")):
     dev = device_from(authorization, x_device_id)
     if dev is None:
         return err(401, *UNKNOWN)
-    if (r := small_request_limit(dev)) is not None:
+    if (r := small_request_limit(dev, x_firmware)) is not None:
         return r
     return policy.status_json(dev)
 
@@ -269,9 +354,9 @@ def firmware_manifest(authorization: str = Header(""), x_device_id: str = Header
     dev = device_from(authorization, x_device_id)
     if dev is None:
         return err(401, *UNKNOWN)
-    if (r := small_request_limit(dev)) is not None:
+    if (r := small_request_limit(dev, x_firmware)) is not None:
         return r
-    answer = firmware.decide(x_firmware)
+    answer = firmware.decide(x_firmware)  # only this calculator's board family (firmware.py)
     if answer["update"]:
         log.info("firmware %s: %s -> %s", dev["id"], (x_firmware or "?")[:40], answer["version"])
     return answer
@@ -282,14 +367,13 @@ def firmware_image(authorization: str = Header(""), x_device_id: str = Header(""
     dev = device_from(authorization, x_device_id)
     if dev is None:
         return err(401, *UNKNOWN)
-    if (r := small_request_limit(dev)) is not None:
+    if (r := small_request_limit(dev, x_firmware)) is not None:
         return r
-    m = firmware.current()
+    # One image per board family: the calculator's own (x-firmware, which every firmware sends).
+    # Without the header only a lone published image is served (never a guess between boards).
+    m = firmware.image_for(x_firmware)
     if m is None:
-        return err(404, "not_found", "No firmware is published.")
-    # Same board-family check as the manifest (a calculator that sends x-firmware must match).
-    if x_firmware and not firmware.same_family(x_firmware, m["version"]):
-        return err(404, "not_found", "No firmware for this calculator's board.")
+        return err(404, "not_found", "No firmware for this calculator's board." if x_firmware else "No firmware is published.")
     return FileResponse(m["file"], media_type="application/octet-stream", filename=firmware.IMAGE,
                         headers={"x-firmware-version": m["version"], "x-firmware-sha256": m["sha256"]})
 

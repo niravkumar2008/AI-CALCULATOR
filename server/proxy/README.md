@@ -17,6 +17,9 @@ What it does for every AI solve:
 4. Keeps only the photos and the short instruction from the calculator's request. **The system prompt and
    the JSON schema are the server's** (`prompts/solver_v1.txt`, `prompts/solver_v1.schema.json`), so a
    prompt fix needs no firmware flash and a stolen token can't be used for anything but photo solves.
+   The v15 firmware no longer uploads `system` at all (`CALC_SEND_SYSTEM_PROMPT=0`, about 5 KB less per
+   solve); the v14 firmware still does, so it also works with an older proxy. `PROMPT_SOURCE=device`
+   (bench testing the prompt in `core/claude_api.cpp`) needs a firmware built with `-DCALC_SEND_SYSTEM_PROMPT=1`.
 5. Picks the model by tier and streams Claude's reply back event by event, with a `: ping` comment every
    15 s while Claude thinks, so the calculator's 120 s idle timeout never fires.
 
@@ -141,8 +144,8 @@ python admin.py account someone@example.com     subscription state, tier, solves
 python admin.py paid someone@example.com 2026-12-31   mark paid by hand (without Stripe)
 python admin.py usage                           solves per account this month
 python admin.py prompt                          the prompt version the proxy sends (also in every solve's log line)
-python admin.py firmware <firmware.bin> <version>   publish an over-the-air update
-python admin.py firmware                        what is published now
+python admin.py firmware <firmware.bin> <version>   publish an over-the-air update for that version's board family
+python admin.py firmware                        what is published now, per board family
 ```
 With `ADMIN_TOKEN` set, devices can also be created over HTTP:
 `curl -X POST "https://<proxy>/v1/admin/devices?label=board%201" -H "x-admin-token: <ADMIN_TOKEN>"`.
@@ -169,16 +172,38 @@ into its second app slot (rollback if the new one crashes). The board family (`s
 `v15lcd-...` = v15 LCD) must match, on the manifest and on the image download.
 
 ```
-python admin.py firmware ../../firmware-v15-lcd/.pio/build/<env>/firmware.bin v15lcd-2026.10.10
+python admin.py firmware ../../firmware-prototype/.pio/build/prototype/firmware.bin stage14-2026.10.10
+python admin.py firmware ../../firmware-v15-lcd/.pio/build/v15lcd/firmware.bin v15lcd-2026.10.10
+python admin.py firmware          (what is published, per family)
 ```
-Only one image is published at a time.
+One image **per board family** (`FIRMWARE_DIR/<family>/firmware.bin` + `firmware.json`; the version's part
+before the first `-` picks the folder), so v14 and v15 calculators can be offered updates at the same time;
+publishing one family's build never touches the other's. A calculator is only ever offered, and only ever
+downloads, its own family's image (by `x-firmware`, which every firmware sends); a request without
+`x-firmware` gets the image only when exactly one family has one. An image published by an older proxy
+(`FIRMWARE_DIR/firmware.bin`) is still served to its own family until that family is published again.
 
 ## Errors the calculator understands
 
 `401 device_unknown`, `402 device_not_linked` (message carries the pairing code), `402 subscription_inactive`
-(free month over / payment failed / subscription ended), `429 fair_use_exceeded` (monthly cap, and for now
-also the burst limits, with `retry-after`), `429 free_tier_exhausted`. The calculator shows these messages
-(<= 110 characters). `503 overloaded_error` (and an SSE `error` event if Claude drops mid-answer) shows "busy".
+(free month over / payment failed / subscription ended), `429 fair_use_exceeded` (monthly cap),
+`429 rate_limited` (burst limits, with `retry-after`), `429 free_tier_exhausted`. The calculator shows these
+messages (<= 110 characters). `503 overloaded_error` (and an SSE `error` event if Claude drops mid-answer)
+shows "busy".
+
+`rate_limited` is only shown by firmware of 2026-10-10 or later (`core/claude_api.cpp` classifyFailure).
+The rule (`policy.rate_limit_error_type`): if `x-firmware` reads `<family>-YYYY.MM.DD...` with a known family
+(`stage14`, `v15lcd`) and a date on or after `RATE_LIMITED_SINCE` (2026.10.10 for both), the burst limit is
+sent as `rate_limited`; anything else (older builds such as `stage14-2026.10.06` / `v15lcd-2026.10.08`, an
+unknown board, no or unreadable header) gets `fair_use_exceeded` with the same message, which every
+firmware displays. Guessing "old" is always safe; only the type name differs.
+
+**Early failures are retried:** if Claude's stream fails before the first content event (an `error` event
+such as `overloaded_error` / `api_error` / `rate_limit_error`, or the connection drops / ends right after
+`message_start`), the proxy has only sent `: ping` comments so far, so it quietly opens the request again on
+the other model (`MODEL_FALLBACK`). Once content has started, a failure is passed on as before ("busy"): the
+calculator has already shown part of the answer and its `StreamReader` appends text, so a second answer
+would be glued onto the first (and the first one's tokens are already paid for).
 
 ## Security checklist (before selling)
 

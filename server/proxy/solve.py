@@ -320,6 +320,39 @@ class SseFramer:
                 self.error_type = (d.get("error") or {}).get("type", "error")
 
 
+# Events that come before any content: held back so an early failure can be retried on the
+# other model (app.relay). Claude's own "ping" events can come at any time.
+PRELUDE_EVENTS = {"message_start", "ping"}
+# Error events worth one retry on the other model when they arrive before any content.
+RETRYABLE_EVENT_ERRORS = {"overloaded_error", "api_error", "rate_limit_error", "timeout_error"}
+
+
+def _event_data(event):
+    for line in event.split(b"\n"):
+        if line.startswith(b"data:"):
+            try:
+                d = json.loads(line[5:])
+            except ValueError:
+                return None
+            return d if isinstance(d, dict) else None
+    return None
+
+
+def event_type(event):
+    """The type of one whole SSE event ("event:" line, else the data's "type"); "" for a comment."""
+    for line in event.split(b"\n"):
+        if line.startswith(b"event:"):
+            return line[6:].strip().decode("utf-8", "replace")
+    d = _event_data(event)
+    return str(d.get("type", "")) if d else ""
+
+
+def event_error_type(event):
+    """error.type of an SSE error event ("" if it isn't one)."""
+    d = _event_data(event or b"")
+    return str((d.get("error") or {}).get("type", "")) if d and d.get("type") == "error" else ""
+
+
 def synth_stream(text, model):
     """A complete Messages API event stream carrying `text`, so the calculator reads a Haiku
     answer exactly like a streamed main-model answer."""

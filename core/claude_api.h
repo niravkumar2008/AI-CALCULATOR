@@ -18,7 +18,11 @@ constexpr const char* kApiVersion = "2023-06-01";
 // full-resolution close-up of the writing in the same photo (see focus.h),
 // sent as a second image so small characters get more pixels.
 // `effort`: "high", "xhigh" or "max" (App::effortParam()).
-std::string buildSolveRequest(const std::string& jpeg, const std::string& detail = "", const char* effort = "high");
+// `withSystem`: false leaves out "system" (about 5 KB). Only for the calculator behind the
+// proxy (server/proxy owns the prompt and ignores the device's); the simulators call Claude
+// directly and must send it. output_config.format is always sent (the proxy requires it).
+std::string buildSolveRequest(const std::string& jpeg, const std::string& detail = "", const char* effort = "high",
+                              bool withSystem = true);
 
 std::string base64Encode(const std::string& bytes);
 

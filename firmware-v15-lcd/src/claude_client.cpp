@@ -4,6 +4,8 @@
 #include <WiFi.h>
 #include <WiFiClientSecure.h>
 
+#include <atomic>
+
 #include "claude_api.h"
 #include "root_ca.h"
 
@@ -12,6 +14,18 @@ using namespace calc;
 namespace {
 constexpr uint32_t kConnectMs = 15000;
 constexpr uint32_t kIdleMs = 120000;  // no bytes for 2 minutes = timed out (as in the simulator)
+
+// Behind the proxy the system prompt is the server's (server/proxy/prompts), so it need not be
+// uploaded (~5 KB per solve). Default 1 = sent (what older proxies need); platformio.ini sets 0
+// where the new proxy is assumed. Build with 1 for the proxy's PROMPT_SOURCE=device bench mode.
+#ifndef CALC_SEND_SYSTEM_PROMPT
+#define CALC_SEND_SYSTEM_PROMPT 1
+#endif
+
+// millis() when the last byte went out or came in on any proxy connection; the preview
+// Send in main.cpp uses it as an idle timer (the proxy's ": ping" every 15 s counts).
+std::atomic<uint32_t> g_lastActivityMs{0};
+void noteActivity() { g_lastActivityMs.store(millis(), std::memory_order_relaxed); }
 
 struct Url {
   std::string host, base;  // base: path prefix without trailing slash ("" or "/calc")
@@ -44,6 +58,7 @@ bool readLine(WiFiClientSecure& c, std::string& line, const std::function<bool()
       continue;
     }
     last = millis();
+    noteActivity();
     if (ch == '\n') {
       if (!line.empty() && line.back() == '\r') line.pop_back();
       return true;
@@ -56,6 +71,7 @@ bool writeAll(WiFiClientSecure& c, const char* p, size_t n) {
   while (n) {
     size_t w = c.write(reinterpret_cast<const uint8_t*>(p), n < 4096 ? n : 4096);
     if (w == 0) return false;
+    noteActivity();
     p += w;
     n -= w;
   }
@@ -88,6 +104,7 @@ std::string open(WiFiClientSecure& c, const Settings& s, const char* method, con
     f = code != 0 ? Failure::ApiError : Failure::NoConnection;
     return code != 0 ? std::string("Secure connection failed: ") + err : "Can't reach the AI server.";
   }
+  noteActivity();
   const std::string head = std::string(method) + " " + url.base + path + " HTTP/1.1\r\n" +
                            "Host: " + url.host + "\r\n" +
                            "authorization: Bearer " + s.deviceToken + "\r\n" +
@@ -154,6 +171,7 @@ bool readBody(WiFiClientSecure& c, bool chunked, const std::function<bool()>& ca
     const int got = c.read(reinterpret_cast<uint8_t*>(buf), want);
     if (got <= 0) continue;
     last = millis();
+    noteActivity();
     if (chunked) {
       chunkLeft -= got;
       if (chunkLeft == 0) readLine(c, line, cancelled);  // the CRLF after each chunk
@@ -163,13 +181,15 @@ bool readBody(WiFiClientSecure& c, bool chunked, const std::function<bool()>& ca
 }
 }  // namespace
 
+uint32_t claudeLastActivityMs() { return g_lastActivityMs.load(std::memory_order_relaxed); }
+
 void claudeSolve(const Settings& s, const std::string& jpeg, const std::string& closeUp, const char* effort,
                  bool tutor, const SolveCallbacks& cb) {
   if (WiFi.status() != WL_CONNECTED) return cb.fail(Failure::NoConnection, "");
 
   // The same Messages API request the simulators send; the proxy checks it, picks the
   // model and adds the API key. "tutor" is read (and removed) by the proxy.
-  std::string body = buildSolveRequest(jpeg, closeUp, effort);
+  std::string body = buildSolveRequest(jpeg, closeUp, effort, CALC_SEND_SYSTEM_PROMPT != 0);
   if (tutor && !body.empty() && body.back() == '}') body.insert(body.size() - 1, ",\"tutor\":true");
   WiFiClientSecure c;
   Failure f = Failure::NoConnection;

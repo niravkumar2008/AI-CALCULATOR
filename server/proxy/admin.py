@@ -9,10 +9,12 @@
   python admin.py account someone@example.com      -> subscription state, tier, solves this month
   python admin.py prompt                           -> the system prompt version the proxy sends
   python admin.py usage                            -> solves per account / device this month
-  python admin.py firmware <firmware.bin> <version>  -> publish a firmware image for over-the-air updates
-                                                      (firmware-prototype/.pio/build/prototype/firmware.bin;
-                                                      version = kFirmwareVersion in claude_client.h)
-  python admin.py firmware                         -> what is published now
+  python admin.py firmware <firmware.bin> <version>  -> publish a firmware image for over-the-air updates, one per
+                                                      board family (the version's part before "-"):
+                                                      stage14-... = v14 e-paper (firmware-prototype/.pio/build/prototype/firmware.bin)
+                                                      v15lcd-...  = v15 LCD (firmware-v15-lcd/.pio/build/v15lcd/firmware.bin)
+                                                      version = kFirmwareVersion in that project's claude_client.h
+  python admin.py firmware                         -> what is published now, per board family
 """
 import sys
 import time
@@ -79,11 +81,18 @@ def main(argv):
         except (OSError, ValueError) as e:
             print(f"not published: {e}")
             return 1
-        print(f"published {m['version']}: {m['size']} bytes, sha256 {m['sha256']}\n"
-              f"in {config.FIRMWARE_DIR}. Calculators switched off on a cable install it on their next check.")
+        fam = firmware.family(m["version"])
+        print(f"published {m['version']} for board family {fam} "
+              f"({firmware.KNOWN_FAMILIES.get(fam, 'not a known board: no calculator will match it')}): "
+              f"{m['size']} bytes, sha256 {m['sha256']}\n"
+              f"in {config.FIRMWARE_DIR}. Only {fam} calculators are offered it; the other family's image is unchanged.\n"
+              f"Calculators switched off on a cable install it on their next check.")
     elif cmd == "firmware":
-        m = firmware.current()
-        print("nothing published" if m is None else f"{m['version']}: {m['size']} bytes, sha256 {m['sha256']} ({m['file']})")
+        found = firmware.published()
+        if not found:
+            print("nothing published")
+        for fam, m in found.items():
+            print(f"{fam:8s} {m['version']}: {m['size']} bytes, sha256 {m['sha256']} ({m['file']})")
     elif cmd == "usage":
         with db.conn() as c:
             for r in c.execute("SELECT * FROM usage WHERE period=? ORDER BY count DESC", (db.month(),)):

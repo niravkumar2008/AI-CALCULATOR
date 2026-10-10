@@ -1,22 +1,22 @@
 # Graph Report - AI-CALCULATOR  (2026-10-10)
 
 ## Corpus Check
-- 414 files · ~5,903,937 words
+- 424 files · ~7,167,596 words
 - Verdict: corpus is large enough that graph structure adds value.
-- Unclassified: 327 file(s) not represented in the graph (top: .kicad_mod 81, .stl 69, .step 39)
+- Unclassified: 328 file(s) not represented in the graph (top: .kicad_mod 81, .stl 69, .step 39)
 
 ## Summary
-- 4604 nodes · 8949 edges · 276 communities (230 shown, 46 thin omitted)
-- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 905 edges (avg confidence: 0.85)
+- 4874 nodes · 9632 edges · 296 communities (242 shown, 54 thin omitted)
+- Extraction: 90% EXTRACTED · 10% INFERRED · 0% AMBIGUOUS · INFERRED: 933 edges (avg confidence: 0.85)
 - Token cost: 0 input · 0 output
 
 ## Graph Freshness
-- Built from commit: `095057e5`
+- Built from commit: `833235db`
 - Run `git rev-parse HEAD` and compare to check if the graph is stale.
 - Run `graphify update .` after code changes (no API cost).
 
 ## Community Hubs (Navigation)
-- DIR
+- tests.cpp
 - device.cpp
 - mm
 - Tok
@@ -37,11 +37,11 @@
 - firmware-prototype/src/main.cpp
 - AI Answer Flow
 - Stage 4: full calculator
-- make_screens.py
+- animate_assembly.py
 - AI Calculator PCB Handoff
 - check_requirements_11.py
 - AI Calculator launch roadmap
-- tests.cpp
+- vector
 - build_fx115es_replica.py
 - stage_front
 - firmware-prototype/src/setup_portal.cpp
@@ -54,15 +54,15 @@
 - Router
 - Framebuffer
 - firmware/src/preview.cpp
-- Json
+- sys
 - Independent electrical + manufacturability review (2026-10-03)
-- hardware/geometry/derive_geometry.py
+- ai_calc_pcb_8/hardware/geometry/derive_geometry.py
 - Back cover (engraved 'AI CALCULATOR rev A, 6 x M2x10')
-- .function
+- test_hardening.py
 - AI Calculator Board Concept Layout v2
-- F
+- stage_parts
 - hardware/tools/build_board.py
-- pilroute.py
+- linking.py
 - 08 — Second-opinion PCB check (v14), re-derived from the raw files
 - app.py
 - font.h
@@ -71,17 +71,17 @@
 - firmware-prototype/src/camera.cpp
 - selfTestRun
 - AI Calculator Multiple Choice Test
-- hardware/tools/fixroute.py
+- fit_tw302030.py
 - stage_fitcheck
 - View
 - Competitor analysis: AI calculators (checked 2026-10-03)
 - firmware-prototype/src/power.cpp
-- claudeSolve
+- jlc_cpl.py
 - Stage 10: moving the board to the Casio fx-115ES shell
 - Breadboard Wiring Diagram (exact, camera up)
-- ai_calc_pcb_8/hardware/geometry/derive_geometry.py
+- ai_calc_pcb_8/hardware/tools/fixroute.py
 - Stage-8 board ai_calc.kicad_pcb (72.3x148.8 mm, 0.8 mm, 2 layers, 140 footprints, 4630 tracks, 322 vias, 92 nets, GND pour)
-- policy.py
+- publish
 - stage_cell
 - host_hw.cpp
 - Prototype firmware README (board inside the Casio)
@@ -95,7 +95,7 @@
 - Num
 - PR_hardware-stage11-roadmap.md
 - Tester firmware README (Stage 4)
-- gen.py
+- make_bringup.py
 - ai_calc_pcb_8/hardware/tools/build_board.py
 - Overlay
 - SerialCmd
@@ -111,7 +111,7 @@
 - U1 ESP32-S3-MINI-1-N4R2 (MCU module)
 - calc_engine.cpp
 - 03 — External interfaces, end to end (stage 13b board)
-- build_jigs.py
+- Parser
 - fx-115ES shell replica (unbranded)
 - Board geometry from the scan: assumptions and confidence
 - Photo notes for the fx-115ES replica
@@ -121,7 +121,7 @@
 - Fit check: our PCB in the fx-115ES replica
 - Stage 13: the three height problems (J4 battery socket, J3 magnet, camera)
 - Final pre-order review (2026-10-04, stage 13b board)
-- ai_calc_pcb_8/hardware/tools/prepass.py
+- string
 - guide_renders.py
 - firmware-prototype/src/claude_client.cpp
 - stage13_progress.md
@@ -139,13 +139,13 @@
 - pinmap_crossref.py
 - Final assembly progress (resume here)
 - Firmware stage-13 work: progress notes
-- Event
+- Kind
 - graphify skill trigger (/graphify)
 - firmware-prototype/src/keys.cpp
 - AI Calculator PCB - KiCad design summary
-- make_bringup.py
+- assembly_howto_pictures.py
 - firmware-prototype/src/screen.cpp
-- v15-LCD final assembly: does everything fit? (final board + ER-TFT019-1)
+- stage_tailcase
 - sim/web/build.sh
 - Browser simulator page (page.html)
 - ui.cpp
@@ -163,87 +163,87 @@
 - CameraPins
 - 05: Independent re-check of stage 14 (v14) before the one-shot order
 - AI Calculator PCB - KiCad design summary
-- Settings
-- Panel
-- CameraPins
+- billing.py
+- viewfinder.cpp
+- firmware-v15-lcd/src/settings.cpp
 - hardware/tools/make_outputs.sh
 - hardware/tools/prepass.py
-- OtaInfo
-- bootMessage
+- annotate_guide_v15.py
+- IdlePolicy
 - AI Calculator board: final status (start here)
 - Slide case mods (LATER: not needed for testing)
 - Stage 14 progress (verification fixes)
-- calc_engine.h
+- fbtext.cpp
 - clearance_table_full.md
-- glyphdraw.h
+- CameraPins
 - Grinding jigs (3D-printed) for the donor fx-115ES shell
-- SolveCallbacks
-- assembly_howto_pictures.py
+- sim_state
+- annotate_guides.py
 - Who should build the board? JLCPCB vs the alternatives
 - spline
 - firmware-prototype/src/settings.cpp
 - Stage 15: v15-LCD, the 2.13" e-paper replaced by a 1.9" colour IPS LCD
-- firmware-prototype/src/preview.cpp
+- build_jigs.py
 - archive/README.md
 - 13 — Independent review of the v15-LCD board, re-derived from the raw files
 - lcd.cpp
 - Knockoff shell plan: measuring a 991ES-style clone and refitting the board (v15)
 - rrect_pts
 - build_cost_model.py
-- firmware-v15-lcd/src/keys.cpp
+- gen.py
 - 06 — Final adversarial review of PCB v14 (before ordering)
-- firmware.py
+- app.cpp
 - Goldenmorning T190X7-C30-01H: does it fit the v15-LCD build?
 - Unit economics: what each calculator costs and earns
 - Keypad 8x10 matrix (ROW0-7, COL0-9, SW1-SW50)
 - Arrival checklist: from boxes to a working calculator
 - 11 — Requirements trace: is everything we decided actually on the v14 board?
 - LCD panel options for the v15-LCD board
-- window_mask_template_v15.py
+- window_mask_template.py
 - check_hole_clearance.py
 - firmware-v15-lcd/src/claude_client.cpp
-- f
+- bringUp
 - Router
-- viewfinder.cpp
+- config.py
 - firmware-v15-lcd/src/camera.cpp
 - make_outputs_v15.sh
-- Ask
-- sys
+- What changed, file by file
+- previewStart
 - Firmware for the stage-13 board
-- SolveCallbacks
-- Findings
+- pilroute.py
+- all_bodies
 - firmware-v15-lcd/src/preview.cpp
-- SolveCallbacks
-- make_fitcheck.py
+- glyphdraw.h
+- time
 - onWifiEvent
-- stage_parts
+- cam_route
 - SerialCmd
-- selftest_tu.cpp
+- wifi
 - t218/clearance_table_full.md
 - Event
 - 14 — Final pre-order verification of the v15-LCD board (ER-TFT019-1 panel)
-- Failure
-- final_assembly_v15_lcd/clearance_table_full.md
-- SetupInfo
 - Kind
-- v15 colour LCD: real UI screenshots
-- testClaudeApi
+- final_assembly_v15_lcd/clearance_table_full.md
+- FakeClient
+- Event
+- harness.cpp
+- StreamReader
 - FrameInfo
-- CamFocus
-- Button
+- Failure
+- make_screens.py
 - JLCPCB order walkthrough: v15-LCD board (silk "AI CALC v15-LCD 2026-10-08")
-- restoreState
+- firmware-v15-lcd/src/claude_client.h
 - 15. v15-LCD key pads vs the original Casio fx-115ES keyboard PCB
 - build_final_assembly_v15.py
-- Board firmware for v15-LCD (colour screen + live camera preview)
-- SetupInfo
+- ai_calc_pcb_8/hardware/tools/prepass.py
+- DIR
 - Decode
-- cstdint
-- Wake
-- ScanNote
+- AI Calculator proxy
+- SolveCallbacks
+- Panel
 - SendStep
-- harness.cpp
-- IdlePolicy
+- cameraShot
+- Status
 - 2026-10-10
 - Wake
 - t203/clearance_table_full.md
@@ -252,22 +252,37 @@
 - firmware/src/settings.cpp
 - firmware/src/main.cpp
 - Tuning
-- Com
-- Line
-- cameraCapture
+- hardware/tools/fixroute.py
+- probe
 - firmware-v15-lcd/src/setup_portal.cpp
-- previewStart
-- HistoryItem
+- selfTestRun
 - annotate_guide.py
 - key_pills.md
-- onWifiEvent
-- app.h
+- F
+- Key
+- CalcError
+- View
+- esp_random
+- vf_lcd.cpp
+- Settings
+- window_mask_template_v15.py
+- Router
 - check_hole_clearance_v15.py
-- Tuning
+- compute
+- picture
+- v15 colour LCD: real UI screenshots
+- HistoryItem
+- ScanNote
+- restoreState
+- Animations of the finished calculator
+- pil
 - cameraPreviewRelease
-- Tuning
-- SendStep
+- Crop
+- Button
 - firmware-v15-lcd/src/power.cpp
+- Tuning
+- Com
+- SendStep
 
 ## God Nodes (most connected - your core abstractions)
 1. `Device` - 122 edges
@@ -282,16 +297,16 @@
 10. `Framebuffer` - 33 edges
 
 ## Surprising Connections (you probably didn't know these)
-- `Firmware changes requested` --references--> `StreamReader`  [INFERRED]
-  server/proxy/FINAL_REVIEW_server.md → core/claude_api.h
+- `Proxy follow-ups (2026-10-10, from server/proxy/FINAL_REVIEW_server.md)` --references--> `classifyFailure()`  [INFERRED]
+  firmware-v15-lcd/PORT_NOTES.md → core/claude_api.cpp
 - `4. Keypad (50 contacts = 49 matrix + ON)` --references--> `DKey`  [INFERRED]
   hardware/geometry_assumptions.md → core/device.h
+- `First setup (Serial Monitor)` --references--> `account()`  [INFERRED]
+  firmware/FIRMWARE_STAGE13.md → server/proxy/db.py
+- `What changed` --references--> `account()`  [INFERRED]
+  firmware/FIRMWARE_STAGE13.md → server/proxy/db.py
 - `Tester hardware: ESP32-S3-CAM (OV3660) + Waveshare 2.13in e-paper HAT V4` --semantically_similar_to--> `U1 ESP32-S3-MINI-1-N4R2 (MCU module)`  [INFERRED] [semantically similar]
   firmware/README.md → Claude outputs/ai_calc_pcb_8/hardware/kicad/DESIGN_SUMMARY.md
-- `Files` --references--> `App`  [INFERRED]
-  hardware/renders_ui_v15/README.md → core/app.h
-- `v15 colour LCD: real UI screenshots` --references--> `App`  [INFERRED]
-  hardware/renders_ui_v15/README.md → core/app.h
 
 ## Import Cycles
 - None detected.
@@ -315,19 +330,19 @@
 - **Enclosure assembly stack (front shell, keymat, display, PCB, back cover)** — hardware_enclosure_renders_side_front_shell, hardware_enclosure_renders_section_keys_tpu_keymat, hardware_enclosure_renders_section_display_epaper_stack, hardware_enclosure_renders_section_left_pcb, hardware_enclosure_renders_iso_back_back_cover [INFERRED 0.95]
 - **Same wiring drawn in three orientations** — claude_outputs_bb_exact_wiring_diagram, claude_outputs_bb_real_wiring_diagram, claude_outputs_bb_top_wiring_diagram [INFERRED 0.95]
 
-## Communities (276 total, 46 thin omitted)
+## Communities (296 total, 54 thin omitted)
 
-### Community 0 - "DIR"
-Cohesion: 0.22
-Nodes (10): closedir(), DIR, e, fd, first, h, dirent, d_name (+2 more)
+### Community 0 - "tests.cpp"
+Cohesion: 0.14
+Nodes (20): exprText(), tokText(), parseSolveResult(), calcText(), fakeFrame(), keys(), main(), page() (+12 more)
 
 ### Community 1 - "device.cpp"
-Cohesion: 0.10
-Nodes (40): evaluate(), clockText(), continuesAns(), clearEntry, drawMenu, drawStatus, endExam, engText (+32 more)
+Cohesion: 0.15
+Nodes (26): evaluate(), continuesAns(), clearEntry, endExam, equals, insert, keyAi, keyCalc (+18 more)
 
 ### Community 2 - "mm"
-Cohesion: 0.09
-Nodes (20): net_pts(), pad_pts(), Router, arc(), rect(), seg(), utext(), net() (+12 more)
+Cohesion: 0.14
+Nodes (16): anchor_points(), net_pts(), pad_pts(), net_pts(), pad_pts(), arc(), rect(), seg() (+8 more)
 
 ### Community 3 - "Tok"
 Cohesion: 0.03
@@ -338,12 +353,12 @@ Cohesion: 0.06
 Nodes (65): appearance(), _blocks(), body_named(), chamfer(), check_outline(), circle(), cm(), comp_named() (+57 more)
 
 ### Community 5 - "win32_main.cpp"
-Cohesion: 0.10
-Nodes (17): advanceRequest(), exifOrientation(), fakeCameraFrame(), handleEvent(), loadSettings(), onAiReady(), paint(), photoToJpeg() (+9 more)
+Cohesion: 0.07
+Nodes (26): keysForChar(), get, advanceRequest(), Event, confidence, failure, id, kind (+18 more)
 
 ### Community 6 - "Device"
 Cohesion: 0.04
-Nodes (39): errorText(), Device, alpha_, angle_, app_, back_, battery_, blink_ (+31 more)
+Nodes (41): Device, alpha_, angle_, app_, back_, battery_, blink_, charging_ (+33 more)
 
 ### Community 7 - "geometry"
 Cohesion: 0.08
@@ -355,10 +370,10 @@ Nodes (8): Assumptions made in this stage, Caliper readings, how each was used, 
 
 ### Community 9 - "DKey"
 Cohesion: 0.04
-Nodes (52): DKey, AC, Add, Alpha, Ans, Calc, Close, Cos (+44 more)
+Nodes (53): DKey, AC, Add, Alpha, Ans, Calc, Close, Cos (+45 more)
 
 ### Community 10 - "Json"
-Cohesion: 0.07
+Cohesion: 0.08
 Nodes (17): Json, a_, b_, n_, o_, parse, s_, JsonParser (+9 more)
 
 ### Community 11 - "Ann"
@@ -375,10 +390,10 @@ Nodes (5): 1. Paper dry fit and grind maps (1:1), 1b. Clearance table, 2. Dummy 
 
 ### Community 14 - "web_main.cpp"
 Cohesion: 0.10
-Nodes (33): solveInstructions(), solveSchema(), sim_active_request(), sim_alloc(), sim_api_url(), sim_api_version(), sim_build_request(), sim_classify() (+25 more)
+Nodes (34): jsonEscape(), numText(), sim_active_request(), sim_alloc(), sim_api_url(), sim_api_version(), sim_build_request(), sim_classify() (+26 more)
 
 ### Community 15 - "firmware/src/camera.cpp"
-Cohesion: 0.12
+Cohesion: 0.10
 Nodes (25): applyAll(), autoTuneLocked(), cameraAutoTune(), cameraBegin(), cameraCapture(), cameraFocusScore(), cameraFrame(), cameraHoldEstimateMs() (+17 more)
 
 ### Community 16 - "battery_envelope.py"
@@ -390,8 +405,8 @@ Cohesion: 0.11
 Nodes (17): CHECK, Discretes, FATAL, Findings by severity, Full tables, J1 camera (OV5640 MJY5OAF-F3M-V1), CamReversed, rot 180, pad row y = 162.58, J2 e-paper (Waveshare 2.13" V4, SSD1680), plain numbering, rot −90, pad column x = 179.48, J3 / J4 (+9 more)
 
 ### Community 18 - "firmware-prototype/src/main.cpp"
-Cohesion: 0.12
-Nodes (44): cameraName(), accountCommand(), applySettings(), chargeText(), drawSetupScreen(), effortName(), failureText(), handleEvent() (+36 more)
+Cohesion: 0.07
+Nodes (61): cameraName(), cameraSleep(), accountCommand(), applySettings(), chargeText(), drawSetupScreen(), effortName(), Event (+53 more)
 
 ### Community 19 - "AI Answer Flow"
 Cohesion: 0.07
@@ -401,61 +416,61 @@ Nodes (34): AI Answer Screen, AI Answer Flow, AI Error States, AI Hold-to-Captur
 Cohesion: 0.09
 Nodes (25): core static library (core/*.cpp, C++17), Win32 simulator executable (sim/win32_main.cpp), tests executable (tests/tests.cpp), AI Calculator project, AI SOLVE mode (MODE 4), Browser simulator (Emscripten build of core), Casio fx-300ES PLUS (COMP mode emulation), Claude Sonnet 5.5 model (+17 more)
 
-### Community 21 - "make_screens.py"
-Cohesion: 0.10
-Nodes (15): corners(), green_mask(), _hull(), label(), persp_coeffs(), screen_on(), side_by_side(), contact_sheet() (+7 more)
+### Community 21 - "animate_assembly.py"
+Cohesion: 0.09
+Nodes (16): assembly_frames(), compose(), epd_image(), lerp(), norm(), render(), rot_x(), screen_quad() (+8 more)
 
 ### Community 22 - "AI Calculator PCB Handoff"
 Cohesion: 0.06
 Nodes (64): Board Geometry Assumptions, Battery Bay (LR44 corner), Firmware Row-2 Key Mismatch (Abs, x^3, x^-1, log_a b), Keypad Edge = Casio Edge - 0.25 mm, keys.csv / features.json, KiCad Top View = Back-Cover View; Keys on B.Cu, Magnetic Connector Top-Wall Slot, Scale 7.55 px/mm (+56 more)
 
 ### Community 23 - "check_requirements_11.py"
-Cohesion: 0.08
-Nodes (32): board_summary(), kids(), main(), natkey(), parse(), props(), sheet_summary(), board_summary() (+24 more)
+Cohesion: 0.05
+Nodes (36): board_summary(), kids(), main(), natkey(), parse(), props(), sheet_summary(), board_summary() (+28 more)
 
 ### Community 24 - "AI Calculator launch roadmap"
 Cohesion: 0.09
 Nodes (22): 0. The short version, 1. What to buy now (`AI_Calculator_Shopping_List.xlsx`), 1A. The JLCPCB order (done 10/8), 1B. Tester parts: options A / B / C (5 testers, 1 spare of each kind), 1C. v15-LCD order and panels (verified "ORDER", 2026-10-08), 1D. Don't buy yet, 2. Timeline, 2A. From the order to v15 (estimate) (+14 more)
 
-### Community 25 - "tests.cpp"
-Cohesion: 0.17
-Nodes (18): exprText(), tokText(), calcText(), fakeFrame(), keys(), main(), page(), readFile() (+10 more)
+### Community 25 - "vector"
+Cohesion: 0.12
+Nodes (8): Effort, Careful, Max, Normal, Verify, Mismatch, None, Verified
 
 ### Community 26 - "build_fx115es_replica.py"
-Cohesion: 0.11
-Nodes (14): appearance(), board_info(), find_design(), send(), set_visible(), _sexp_blocks(), side_band(), stage_explode() (+6 more)
+Cohesion: 0.10
+Nodes (18): appearance(), cavity(), chain(), crossings(), find_design(), log(), send(), set_visible() (+10 more)
 
 ### Community 27 - "stage_front"
 Cohesion: 0.20
 Nodes (24): body_named(), build_slide_case(), circle(), cm(), combine(), comp_named(), cut_groove(), edge_loop_at() (+16 more)
 
 ### Community 28 - "firmware-prototype/src/setup_portal.cpp"
-Cohesion: 0.13
-Nodes (16): escape(), field(), formPage(), hexVal(), route(), savedPage(), scanNetworks(), setupSavedAgoMs() (+8 more)
+Cohesion: 0.14
+Nodes (18): escape(), field(), formHandler(), formPage(), hexVal(), noCache(), redirectHandler(), route() (+10 more)
 
 ### Community 29 - "db.py"
-Cohesion: 0.16
-Nodes (20): main(), link_submit(), account_by_email(), claim_pair_code(), conn(), count_solve(), create_device(), current_pair_code() (+12 more)
+Cohesion: 0.07
+Nodes (52): main(), account(), account_by_customer(), account_by_email(), account_tier(), claim_pair_code(), clean_code(), conn() (+44 more)
 
 ### Community 30 - "App"
-Cohesion: 0.07
-Nodes (43): App, accepts, activeId_, busySinceMs_, captured_, computed_, effortParam, expression_ (+35 more)
+Cohesion: 0.05
+Nodes (35): App, activeId_, busySinceMs_, captured_, computed_, effortParam, expression_, hasKey_ (+27 more)
 
 ### Community 31 - "12: Inner rib / pins / hooks re-check against the v14 board (2026-10-06, before ordering)"
 Cohesion: 0.10
 Nodes (19): 07: Final fitment review, v14 board in the ground fx-115ES shell (2026-10-06), 1. Findings, 2.1 ESP32 module (U1) vs its neighbours, 2.2 Every part vs every shell feature, 2.3 Before the grinds (what each grind fixes, rev F), 2. Fusion rev F: the full check (closed case, grinds applied), 3. Pre-grind checklist (10 minutes, real shell + calipers with the depth rod, before the first cut), 4. Every check made (with the passes) (+11 more)
 
 ### Community 32 - "Focus"
-Cohesion: 0.12
-Nodes (23): analyseFocus(), Crop, h, use, w, x, y, detailCrop() (+15 more)
+Cohesion: 0.16
+Nodes (17): analyseFocus(), detailCrop(), Exposure, clipped, dark, paper, Focus, found (+9 more)
 
 ### Community 33 - "Stage 12: second caliper batch, new photos, CAD fit check (ai_calc_pcb_12)"
 Cohesion: 0.20
 Nodes (9): 1. What changed on the board, and why, 2. The screen-section width (was blocking), 3. Heights: what's behind the board (F side faces the back cover), 4. E-paper (P3: 59.0 × 29.2), 5. C15 and residuals (hole positions), 6. CAD fit-check collisions (fitcheck_report.md, STEP of 18:10) and what was done, 7. Parts and cost (checked live on JLCPCB's parts API, 2026-10-03), 8. Robustness checks (+1 more)
 
 ### Community 34 - "Vars"
-Cohesion: 0.17
-Nodes (12): Vars, a, ans, b, c, d, e, f (+4 more)
+Cohesion: 0.12
+Nodes (17): Vars, a, ans, b, c, d, e, f (+9 more)
 
 ### Community 35 - "Router"
 Cohesion: 0.17
@@ -463,55 +478,55 @@ Nodes (3): poly_pts(), polyline(), Router
 
 ### Community 36 - "Framebuffer"
 Cohesion: 0.12
-Nodes (21): render, Framebuffer, clear, drawText, drawTextPx, fillRect, get, icons_ (+13 more)
+Nodes (20): render, Framebuffer, clear, drawText, drawTextPx, fillRect, icons_, invertRect (+12 more)
 
 ### Community 37 - "firmware/src/preview.cpp"
-Cohesion: 0.25
-Nodes (20): authorised(), autotuneHandler(), detailHandler(), focusHandler(), frameHandler(), getUri(), jsonText(), lastHandler() (+12 more)
+Cohesion: 0.37
+Nodes (16): authorised(), autotuneHandler(), detailHandler(), focusHandler(), frameHandler(), lastHandler(), noCache(), pageHandler() (+8 more)
 
-### Community 38 - "Json"
-Cohesion: 0.07
-Nodes (15): crect(), rect(), full.sh build pipeline, add_via(), free(), obstacles(), via_near_pad(), crect() (+7 more)
+### Community 38 - "sys"
+Cohesion: 0.05
+Nodes (17): crect(), rect(), full.sh build pipeline, add_via(), free(), obstacles(), via_near_pad(), net_pts() (+9 more)
 
 ### Community 39 - "Independent electrical + manufacturability review (2026-10-03)"
 Cohesion: 0.12
 Nodes (15): B1. `fab/` outputs and the DRC report are stale relative to the board file, BLOCKER, Checked and OK (no action), Independent electrical + manufacturability review (2026-10-03), LCSC check (2026-10-03, lcsc.com product pages; all exist and are active), NICE (optional), Plain-English summary, S1. R20 (CHG_STAT pull-up to +3V3) back-feeds the charger and leaks about 20 µA in standby (+7 more)
 
-### Community 40 - "hardware/geometry/derive_geometry.py"
-Cohesion: 0.27
-Nodes (8): board_polygon(), front_silhouette(), keys(), main(), mm(), overlays(), poly_mm(), to_back()
+### Community 40 - "ai_calc_pcb_8/hardware/geometry/derive_geometry.py"
+Cohesion: 0.10
+Nodes (19): board_polygon(), front_silhouette(), keys(), main(), mm(), overlays(), poly_mm(), to_back() (+11 more)
 
 ### Community 41 - "Back cover (engraved 'AI CALCULATOR rev A, 6 x M2x10')"
 Cohesion: 0.13
 Nodes (22): Front view render (enclosure), Display window with 'AI CALCULATOR' wordmark, Round D-pad (4-way cursor key), Casio-style keypad layout (SHIFT/ALPHA/D-pad/MODE/ON, Abs x^3 x^-1 log_a b row, 5-col number block), Isometric back render (back cover), Back cover (engraved 'AI CALCULATOR rev A, 6 x M2x10'), 6x M2x10 countersunk screw fastening, Back cover camera window (OV5640) (+14 more)
 
-### Community 42 - ".function"
-Cohesion: 0.25
-Nodes (7): exactPlus(), exactTimes(), gcdLL(), makeExact(), mulOk(), ofDouble, ofInt
+### Community 42 - "test_hardening.py"
+Cohesion: 0.12
+Nodes (40): clean_request(), sse(), api_status_error(), calculator_body(), claude_events(), connection_error(), error_events(), fake() (+32 more)
 
 ### Community 43 - "AI Calculator Board Concept Layout v2"
 Cohesion: 0.16
 Nodes (20): AI Calculator Board Concept Layout v2, Charger + 3.3 V regulator + ESD block, E-paper socket + driver and window, ESP32-S3 MINI-1 module, Keypad layout (fx-300ES style key grid), LiPo 401230 battery (~110 mAh), Magnetic connector (5358) in solar-cell slot, OV5640 camera + 24-pin socket (+12 more)
 
-### Community 44 - "F"
-Cohesion: 0.11
-Nodes (21): appearance(), clear_comp(), comp_named(), F(), mask_geom(), move_body(), new_sketch(), offline_numbers() (+13 more)
+### Community 44 - "stage_parts"
+Cohesion: 0.16
+Nodes (19): clear_comp(), comp_named(), F(), mask_geom(), move_body(), new_sketch(), prism(), save_info() (+11 more)
 
 ### Community 45 - "hardware/tools/build_board.py"
 Cohesion: 0.23
 Nodes (7): add_edge_keepout(), add_epaper_slot(), add_rule_areas(), fp_path(), main(), patch_rules(), rule_area()
 
-### Community 46 - "pilroute.py"
-Cohesion: 0.21
-Nodes (6): connect_all(), island_at(), islands(), item_pts(), net_pts(), pad_pts()
+### Community 46 - "linking.py"
+Cohesion: 0.10
+Nodes (13): _b64(), _key(), make_token(), read_token(), _unb64(), ContextFilter, new_request_id(), redact() (+5 more)
 
 ### Community 47 - "08 — Second-opinion PCB check (v14), re-derived from the raw files"
 Cohesion: 0.14
 Nodes (13): 08 — Second-opinion PCB check (v14), re-derived from the raw files, 1. CPL rotation vs EasyEDA footprint — PASS (77/77 parts), 2.1 J1 — OV5640 24-pin FPC (`_CamReversed`, rot 180, pads at y 162.58, pad 1 at x 144.25, pad 24 at x 155.75), 2.2 J2 — 2.13" e-paper 24-pin FPC (rot −90, pad 1 at (179.48, 87.08), pad 24 at (179.48, 98.58), contact k = pad k), 2.3 J3 — magnet USB piece (KiCad pad 1 at x 123.69 … pad 4 at x 131.31, y 72.00), 2.4 J4 — JST-PH 2-pin (pad 1 at x 141.60 = GND, pad 2 at x 143.60 = BAT+; EE pin 1 at the same place), 2. Connector pad-by-pad netlists, 3. ESP32-S3-MINI-1-N4R2 pin table — PASS (+5 more)
 
 ### Community 48 - "app.py"
-Cohesion: 0.14
-Nodes (13): admin_new_device(), billing_webhook(), device_from(), device_status(), err(), firmware_image(), firmware_manifest(), healthz() (+5 more)
+Cohesion: 0.10
+Nodes (24): admin_new_device(), billing_webhook(), client_ip(), device_from(), device_status(), err(), finish_link(), firmware_image() (+16 more)
 
 ### Community 49 - "font.h"
 Cohesion: 0.16
@@ -522,44 +537,40 @@ Cohesion: 0.14
 Nodes (18): Stage-8 KiCad Design Summary (routed board), U4/U5 ME6211 camera LDOs (2.8 V / 1.5 V), E-paper boost circuit (L1 68uH, Q3 SI1308, D3-D5, R12 3R), J1 Camera FPC 24P dual-contact (OV5640, reversed), J2 E-paper FPC 24P dual-contact (2.13in V4), kicad_summary.py (summary generator), Net +3V3, Net SYS (load-shared system rail) (+10 more)
 
 ### Community 51 - "solve.py"
-Cohesion: 0.12
-Nodes (13): solve_endpoint(), counted(), relay(), BadRequest, clean_request(), client(), error_body(), haiku_params() (+5 more)
+Cohesion: 0.06
+Nodes (27): _close(), relay(), solve_endpoint(), counted(), reopen(), _start_pump(), BadRequest, client() (+19 more)
 
 ### Community 52 - "firmware-prototype/src/camera.cpp"
-Cohesion: 0.10
-Nodes (23): applyAll(), autoTuneLocked(), cameraAutoTune(), cameraBegin(), cameraFrame(), cameraHoldUntil(), cameraLastDetail(), cameraLastPhoto() (+15 more)
+Cohesion: 0.05
+Nodes (77): applyAll(), autoTuneLocked(), cameraAutoTune(), cameraBegin(), cameraCapture(), cameraFocusScore(), cameraFrame(), cameraHoldEstimateMs() (+69 more)
 
 ### Community 53 - "selfTestRun"
-Cohesion: 0.18
-Nodes (12): keysScannerOk(), bootMessage(), serviceOtaConfirm(), otaConfirm(), otaPendingVerify(), otaSlotName(), resetReasonText(), Json (+4 more)
+Cohesion: 0.15
+Nodes (13): keysScannerOk(), bootMessage(), serviceOtaConfirm(), otaConfirm(), otaPendingVerify(), otaSlotName(), resetReasonText(), Json (+5 more)
 
 ### Community 54 - "AI Calculator Multiple Choice Test"
 Cohesion: 0.17
 Nodes (13): AI Calculator Multiple Choice Test, Multiple Choice Answer Key and Score Sheet, CHOICE + option label output format, Closest-option selection when exact answer absent, MC Handwritten Round (H1-H4), Option label styles (A-D row, A-D stacked, (a)-(e), 1-4), AI Calculator Test Worksheet, Worksheet Answer Key and Score Sheet (+5 more)
 
-### Community 55 - "hardware/tools/fixroute.py"
-Cohesion: 0.20
-Nodes (4): anchor_points(), items_geom(), raster(), route()
+### Community 55 - "fit_tw302030.py"
+Cohesion: 0.18
+Nodes (11): drop_candidate(), main(), measure(), old_bodies(), overlap(), piece(), proxies(), run_case() (+3 more)
 
 ### Community 56 - "stage_fitcheck"
-Cohesion: 0.16
-Nodes (7): F(), fit_compare(), fit_proxies(), fit_vs_clearance_table(), _parse_report(), stage_fitcheck(), write_fit_report()
+Cohesion: 0.12
+Nodes (10): board_info(), F(), fit_compare(), fit_proxies(), fit_vs_clearance_table(), _parse_report(), _sexp_blocks(), stage_fitcheck() (+2 more)
 
 ### Community 57 - "View"
-Cohesion: 0.09
-Nodes (21): View, Ai, Calc, Clr, ClrConfirm, Error, ExamInfo, Hyp (+13 more)
+Cohesion: 0.14
+Nodes (14): View, Ai, Calc, Clr, ClrConfirm, Error, ExamInfo, Hyp (+6 more)
 
 ### Community 58 - "Competitor analysis: AI calculators (checked 2026-10-03)"
 Cohesion: 0.12
 Nodes (15): 0. The short version, 1.1 Product facts, 1.2 What customers say (their own review page, 63 reviews, 4.8★) [S4], 1.3 Areas where VovoCorp beats us (ranked by how much it matters), 1.4 Where VovoCorp is weak (our openings), 1. VovoCorp in detail, 2. Other competitors, 3(a) PCB / hardware: what's possible before Monday's order (+7 more)
 
 ### Community 59 - "firmware-prototype/src/power.cpp"
-Cohesion: 0.13
-Nodes (20): serviceBattery(), batteryMillivolts(), batteryOkForAi(), batteryOkForOta(), batteryPercent(), chargeState(), floatPin(), holdLevel() (+12 more)
-
-### Community 60 - "claudeSolve"
-Cohesion: 0.38
-Nodes (4): claudeSolve(), lower(), readLine(), writeAll()
+Cohesion: 0.11
+Nodes (26): keysHeld(), serviceBattery(), setup(), updateCommand(), batteryMillivolts(), batteryOkForAi(), batteryOkForOta(), batteryPercent() (+18 more)
 
 ### Community 61 - "Stage 10: moving the board to the Casio fx-115ES shell"
 Cohesion: 0.22
@@ -569,25 +580,25 @@ Nodes (8): Board changes made in stage 10 (DRC: 0 errors, 0 unconnected, 0 schem
 Cohesion: 0.23
 Nodes (14): Calculator Buttons (=, AC, Up, Down), 2.13in E-Paper Display, ESP32-S3-CAM Board, LONG Breadboard, MEDIUM Breadboard, Breadboard Wiring Diagram (exact, camera up), Breadboard Wiring Diagram (real orientation, USB away), Breadboard Wiring Diagram (top, USB toward you) (+6 more)
 
-### Community 63 - "ai_calc_pcb_8/hardware/geometry/derive_geometry.py"
-Cohesion: 0.09
-Nodes (14): board_polygon(), front_silhouette(), keys(), main(), mm(), overlays(), poly_mm(), to_back() (+6 more)
+### Community 63 - "ai_calc_pcb_8/hardware/tools/fixroute.py"
+Cohesion: 0.20
+Nodes (4): anchor_points(), items_geom(), raster(), route()
 
 ### Community 64 - "Stage-8 board ai_calc.kicad_pcb (72.3x148.8 mm, 0.8 mm, 2 layers, 140 footprints, 4630 tracks, 322 vias, 92 nets, GND pour)"
 Cohesion: 0.19
 Nodes (11): Custom footprint library ai_calc.pretty (stage 8), Stage-8 board ai_calc.kicad_pcb (72.3x148.8 mm, 0.8 mm, 2 layers, 140 footprints, 4630 tracks, 322 vias, 92 nets, GND pour), AI Calculator custom case (rev A) README, build_case.py (parametric Fusion case from KiCad), fusion_run.py (sends script to Fusion), FusionMCPBridge add-in, TPU keymat (46 caps + REPLAY rocker), Case Z stack-up (77.7 x 156.2 x 13.6 mm) (+3 more)
 
-### Community 65 - "policy.py"
-Cohesion: 0.23
-Nodes (8): subscription_state(), used(), decide(), Decision, _deny(), link_hint(), short_url(), status_json()
+### Community 65 - "publish"
+Cohesion: 0.19
+Nodes (11): current(), family(), _load(), _paths(), publish(), published(), same_family(), sha256_of() (+3 more)
 
 ### Community 66 - "stage_cell"
-Cohesion: 0.17
-Nodes (7): adsk_refresh(), poly_pts(), stage_cell(), tbm_add(), tube(), P(), rect()
+Cohesion: 0.20
+Nodes (7): adsk_refresh(), appearance(), poly_pts(), stage_cell(), tbm_add(), tube(), P()
 
 ### Community 67 - "host_hw.cpp"
-Cohesion: 0.10
-Nodes (6): autoSave(), fill(), flush(), pushed(), pushRaw(), save()
+Cohesion: 0.05
+Nodes (10): autoSave(), fill(), flush(), pushed(), pushRaw(), save(), cameraSelfTest(), deviceId() (+2 more)
 
 ### Community 68 - "Prototype firmware README (board inside the Casio)"
 Cohesion: 0.24
@@ -606,24 +617,24 @@ Cohesion: 0.09
 Nodes (21): D, depth_rod(), esc(), good_bad(), rim_method(), tool_angle(), v15_bow(), v15_sfold() (+13 more)
 
 ### Community 72 - "os"
-Cohesion: 0.06
-Nodes (21): export_netlist(), find_kicad_cli(), header_pins(), main(), u1_nets(), export_netlist(), find_kicad_cli(), header_pins() (+13 more)
+Cohesion: 0.09
+Nodes (10): export_netlist(), find_kicad_cli(), header_pins(), main(), u1_nets(), export_netlist(), find_kicad_cli(), header_pins() (+2 more)
 
 ### Community 73 - "build_final_assembly.py"
 Cohesion: 0.05
 Nodes (63): adsk_refresh(), all_bodies(), appearance(), band(), bodies_under(), _case_vs_all(), _check(), clear_comp() (+55 more)
 
 ### Community 74 - "SolveResult"
-Cohesion: 0.12
-Nodes (12): parseSolveResult(), SolveResult, answer, check, choice, confidence, expression, readable (+4 more)
+Cohesion: 0.17
+Nodes (10): SolveResult, answer, check, choice, confidence, expression, readable, readAs (+2 more)
 
 ### Community 78 - "make_lcd_sheet.py"
 Cohesion: 0.17
 Nodes (11): block(), instance(), label(), lib_symbol_custom(), main(), place(), no_connect(), pins_of() (+3 more)
 
 ### Community 79 - "Num"
-Cohesion: 0.18
-Nodes (11): asInt(), isInt(), Num, den, exact, num, v, Parser (+3 more)
+Cohesion: 0.22
+Nodes (8): asInt(), isInt(), Num, den, exact, num, ofInt, v
 
 ### Community 80 - "PR_hardware-stage11-roadmap.md"
 Cohesion: 0.50
@@ -633,17 +644,17 @@ Nodes (3): Reviewer notes, What changed, Why
 Cohesion: 0.13
 Nodes (19): Tester firmware README (Stage 4), src/claude_client (HTTPS streaming to Claude), core/ shared calculator logic, Exam mode (Wi-Fi off, persisted, USB unlock or 12 h), src/screen (125x61 calc screen on 250x122 e-paper), Tester hardware: ESP32-S3-CAM (OV3660) + Waveshare 2.13in e-paper HAT V4, buildKeys(), claudeScan() (scan via host sampleFn) (+11 more)
 
-### Community 82 - "gen.py"
-Cohesion: 0.11
-Nodes (29): all_meas(), badge(), bezel(), board_map(), board_map_bottom(), callout(), edge_point(), F() (+21 more)
+### Community 82 - "make_bringup.py"
+Cohesion: 0.16
+Nodes (16): arrow(), column_labels(), edge_bbox(), fit(), font(), footprints(), holes_px(), labels() (+8 more)
 
 ### Community 85 - "ai_calc_pcb_8/hardware/tools/build_board.py"
 Cohesion: 0.26
 Nodes (7): add_edge_keepout(), add_epaper_slot(), add_rule_areas(), fp_path(), main(), patch_rules(), rule_area()
 
 ### Community 86 - "Overlay"
-Cohesion: 0.10
-Nodes (19): bind(), bracket(), FocusState, Fixed, Focused, Focusing, None, greyThumb() (+11 more)
+Cohesion: 0.13
+Nodes (14): FocusState, Fixed, Focused, Focusing, None, Overlay, battery, charging (+6 more)
 
 ### Community 87 - "SerialCmd"
 Cohesion: 0.13
@@ -655,10 +666,10 @@ Nodes (16): explode(), grind_renders(), hide_cutters(), load_info(), place(), se
 
 ### Community 89 - "Viewfinder"
 Cohesion: 0.08
-Nodes (22): Viewfinder, flipped_, frameH_, frameW_, fullEvery, ghostBudget, haveShown_, image_ (+14 more)
+Nodes (20): Viewfinder, flipped_, fps, frameH_, frameW_, fullEvery, ghostBudget, haveShown_ (+12 more)
 
 ### Community 90 - "algorithm"
-Cohesion: 0.11
+Cohesion: 0.12
 Nodes (13): Charge, Charging, Full, NoCable, chargeState(), Point, mv, pct (+5 more)
 
 ### Community 91 - "Fit check: our PCB in the fx-115ES replica"
@@ -674,8 +685,8 @@ Cohesion: 0.38
 Nodes (4): drc(), full.sh script, route.sh script, run.sh script
 
 ### Community 95 - "firmware-v15-lcd/src/main.cpp"
-Cohesion: 0.12
-Nodes (46): cameraIsOn(), cameraName(), accountCommand(), applySettings(), chargeText(), drawSetupScreen(), effortName(), failureText() (+38 more)
+Cohesion: 0.10
+Nodes (51): lipoPercent(), cameraName(), cameraSleep(), accountCommand(), applySettings(), chargeText(), drawSetupScreen(), effortName() (+43 more)
 
 ### Community 96 - "Stage 14: fixing the 4-part verification findings"
 Cohesion: 0.18
@@ -693,9 +704,9 @@ Nodes (24): addOk(), Alias, text, tok, endsOperand(), Fail, e, pos (+16 more)
 Cohesion: 0.17
 Nodes (11): 03 — External interfaces, end to end (stage 13b board), CHECK, FATAL, Findings (most severe first), LIKELY PROBLEM, OK, Table A — camera trace, Table B — e-paper trace (+3 more)
 
-### Community 100 - "build_jigs.py"
-Cohesion: 0.18
-Nodes (9): arc(), band(), build(), check(), clip_half(), export(), main(), renders() (+1 more)
+### Community 100 - "Parser"
+Cohesion: 0.19
+Nodes (10): exactPlus(), exactTimes(), gcdLL(), makeExact(), mulOk(), ofDouble, Parser, depth_ (+2 more)
 
 ### Community 101 - "fx-115ES shell replica (unbranded)"
 Cohesion: 0.22
@@ -725,17 +736,17 @@ Nodes (9): 1. The new numbers, 2. Results per part, 3. The magnet connector (J3)
 Cohesion: 0.20
 Nodes (9): Check during the order (preview / engineer questions), Final pre-order review (2026-10-04, stage 13b board), Findings, by severity, JLCPCB ordering walkthrough, Low (nice to fix later, no action for this order), Previous review (2026-10-03): status of every item, Verdict: **ready to order: YES**, with three checks in JLCPCB's parts preview, What I changed (+1 more)
 
-### Community 110 - "ai_calc_pcb_8/hardware/tools/prepass.py"
-Cohesion: 0.25
-Nodes (3): connect_tree(), pad(), stub()
+### Community 110 - "string"
+Cohesion: 0.27
+Nodes (11): engText, onReply, pullScan, resultText, saveState, pad(), putNum(), putU32() (+3 more)
 
 ### Community 111 - "guide_renders.py"
-Cohesion: 0.07
-Nodes (25): drop_candidate(), log(), main(), measure(), old_bodies(), overlap(), piece(), proxies() (+17 more)
+Cohesion: 0.12
+Nodes (13): box8(), box_pts(), d22_shot(), drop_temp(), gpair(), lid_ring(), log(), measure() (+5 more)
 
 ### Community 112 - "firmware-prototype/src/claude_client.cpp"
-Cohesion: 0.24
-Nodes (14): lower(), open(), parseUrl(), proxyDownload(), proxyRequest(), readBody(), readHead(), readLine() (+6 more)
+Cohesion: 0.20
+Nodes (17): claudeLastActivityMs(), claudeSolve(), lower(), noteActivity(), open(), parseUrl(), proxyDownload(), proxyRequest() (+9 more)
 
 ### Community 114 - "Calculator Mode"
 Cohesion: 0.40
@@ -758,7 +769,7 @@ Cohesion: 0.13
 Nodes (15): SerialCmd, Account, Changed, ExamOff, Keys, None, Pair, Preview (+7 more)
 
 ### Community 119 - "firmware/src/screen.cpp"
-Cohesion: 0.29
+Cohesion: 0.33
 Nodes (3): draw(), screenBegin(), screenShow()
 
 ### Community 120 - "Battery upgrade study: a bigger LiPo without changing the board (2026-10-06)"
@@ -782,7 +793,7 @@ Cohesion: 0.07
 Nodes (6): calculator_body(), fake_image(), Firmware, FirmwareHttp, Policy, Requests
 
 ### Community 125 - "pinmap_crossref.py"
-Cohesion: 0.10
+Cohesion: 0.11
 Nodes (26): doc_gpio_claims(), doc_text(), gpio_of_pinname(), iter_blocks(), kicad_cli_netlist(), kid(), kids(), main() (+18 more)
 
 ### Community 126 - "Final assembly progress (resume here)"
@@ -793,40 +804,40 @@ Nodes (6): 3-part shell + slide case + window mask (2026-10-05), Battery upgrade
 Cohesion: 0.40
 Nodes (4): Firmware stage-13 work: progress notes, Log, Plan, Setup facts (2026-10-03)
 
-### Community 128 - "Event"
-Cohesion: 0.13
-Nodes (14): Event, confidence, failure, id, kind, text, Kind, Captured (+6 more)
+### Community 128 - "Kind"
+Cohesion: 0.40
+Nodes (5): Kind, Captured, Fail, Partial, Reply
 
 ### Community 130 - "firmware-prototype/src/keys.cpp"
-Cohesion: 0.15
-Nodes (17): beginOn(), keysBegin(), keysHeld(), keysPoll(), keysPrepareSleep(), keysWokeByOn(), pollOn(), Repeat (+9 more)
+Cohesion: 0.09
+Nodes (29): beginOn(), keysBegin(), keysPoll(), keysPrepareSleep(), keysWokeByOn(), onOnChange(), pollOn(), Repeat (+21 more)
 
 ### Community 131 - "AI Calculator PCB - KiCad design summary"
 Cohesion: 0.18
 Nodes (10): AI Calculator PCB - KiCad design summary, Board (`ai_calc.kicad_pcb`), Custom footprint library `ai_calc.pretty`, Hierarchy, Sheet: Camera OV5640 (`camera.kicad_sch`), Sheet: Connectors (magnet USB, battery) (`connectors.kicad_sch`), Sheet: E-paper driver (`epaper.kicad_sch`), Sheet: ESP32-S3 MCU (`mcu.kicad_sch`) (+2 more)
 
-### Community 132 - "make_bringup.py"
-Cohesion: 0.16
-Nodes (16): arrow(), column_labels(), edge_bbox(), fit(), font(), footprints(), holes_px(), labels() (+8 more)
+### Community 132 - "assembly_howto_pictures.py"
+Cohesion: 0.26
+Nodes (18): battery_tape(), blank(), cover_check(), fpc_latch(), fpc_side(), gallery(), h6_file(), j4_polarity() (+10 more)
 
 ### Community 133 - "firmware-prototype/src/screen.cpp"
-Cohesion: 0.12
-Nodes (11): Camera preview (viewfinder), cameraSleep(), stopViewfinder(), powerCameraPinsSafe(), draw(), fnv1a(), screenBegin(), screenEndPanel() (+3 more)
+Cohesion: 0.15
+Nodes (4): draw(), fnv1a(), screenShow(), screenTestPattern()
 
-### Community 134 - "v15-LCD final assembly: does everything fit? (final board + ER-TFT019-1)"
-Cohesion: 0.18
-Nodes (10): 1. Interference (closed case, every body pair, 3D boolean), 2. Clearances (mm), 3. Height stack (Z from the outside of the back cover): unchanged, 4. Tail route and the rib-B margin, 5. Moved key pads vs pills (`key_pills.md`, `renders/key_pills_top_row.png`), 6. Pin 1 and backlight (from report 14, no CAD change), 7. What changes for Nirav, 8. Files (+2 more)
+### Community 134 - "stage_tailcase"
+Cohesion: 0.10
+Nodes (16): band(), fit_bow(), round_path_r(), bow(), stage_tailcase(), bow(), 1. Interference (closed case, every body pair, 3D boolean), 2. Clearances (mm) (+8 more)
 
 ### Community 138 - "ui.cpp"
-Cohesion: 0.07
-Nodes (49): UI fixes from the PC screenshots (2026-10-10), Cell, cp, inverted, raw, rows, underline, decode() (+41 more)
+Cohesion: 0.17
+Nodes (19): UI fixes from the PC screenshots (2026-10-10), begin(), clockText(), cursorCellOf(), drawCalc(), drawGenericRows(), drawGridRow(), drawStatusBar() (+11 more)
 
 ### Community 139 - "Part B: end-of-line test, every finished unit"
 Cohesion: 0.11
 Nodes (16): A1. Visual, no tools, A2. Under the loupe (assembled boards), A3. Meter before first power (board alone, nothing plugged in), A4. First power (USB only, no battery, no panels), B1. Look and feel (1 min), B2. Factory self-test (3–4 min), B3. Charge check (2 min, can overlap with B4/B5), B4. Camera focus target card (+8 more)
 
 ### Community 140 - "arduino"
-Cohesion: 0.14
+Cohesion: 0.13
 Nodes (8): hexOf(), lower(), otaCheck(), otaInstall(), hexOf(), lower(), otaCheck(), otaInstall()
 
 ### Community 141 - "Decode"
@@ -866,7 +877,7 @@ Cohesion: 0.17
 Nodes (11): 10. Rev F: side-wall inner rib to the rim, zone 6, full clearance table (2026-10-06, review 07), 1. Real collisions (need a decision), 2. Contacts that are meant to be there (not problems), 3. Tight spots (they fit, but check them on the real parts), 4. What each grind fixes (same check with the shell *before* grinding), 5. What the model is sure about, and what it isn't, 6. Stage 14 re-check (2026-10-04 17:40), 7. 2-part body re-check (2026-10-05) (+3 more)
 
 ### Community 150 - "CameraPins"
-Cohesion: 0.11
+Cohesion: 0.10
 Nodes (18): CameraPins, d0, d1, d2, d3, d4, d5, d6 (+10 more)
 
 ### Community 151 - "05: Independent re-check of stage 14 (v14) before the one-shot order"
@@ -877,29 +888,29 @@ Nodes (12): 05: Independent re-check of stage 14 (v14) before the one-shot order
 Cohesion: 0.18
 Nodes (10): AI Calculator PCB - KiCad design summary, Board (`ai_calc_v15_lcd.kicad_pcb`), Custom footprint library `ai_calc.pretty`, Hierarchy, Sheet: Camera OV5640 (`camera.kicad_sch`), Sheet: Connectors (magnet USB, battery) (`connectors.kicad_sch`), Sheet: ESP32-S3 MCU (`mcu.kicad_sch`), Sheet: Keypad and TCA8418 (`keypad.kicad_sch`) (+2 more)
 
-### Community 153 - "Settings"
-Cohesion: 0.29
-Nodes (5): Settings, deviceToken, password, proxyUrl, ssid
+### Community 153 - "billing.py"
+Cohesion: 0.14
+Nodes (11): _apply(), apply_event(), _email_of(), _find_account(), _period_end(), SignatureError, StripeVerifier, _tier_of() (+3 more)
 
-### Community 154 - "Panel"
-Cohesion: 0.15
-Nodes (12): Panel, clear, drawText, fillRect, get, kBytesPerRow, kHeight, kStride (+4 more)
+### Community 154 - "viewfinder.cpp"
+Cohesion: 0.26
+Nodes (11): bracket(), focusMeasure(), hLine(), diff, drawText, toAscii, render, renderStarting (+3 more)
 
-### Community 155 - "CameraPins"
-Cohesion: 0.11
-Nodes (18): CameraPins, d0, d1, d2, d3, d4, d5, d6 (+10 more)
+### Community 155 - "firmware-v15-lcd/src/settings.cpp"
+Cohesion: 0.18
+Nodes (17): Ask, Nothing, Password, Proxy, Ssid, Token, deviceId(), handle() (+9 more)
 
 ### Community 157 - "hardware/tools/prepass.py"
 Cohesion: 0.25
 Nodes (3): connect_tree(), pad(), stub()
 
-### Community 158 - "OtaInfo"
+### Community 158 - "annotate_guide_v15.py"
 Cohesion: 0.29
-Nodes (6): OtaInfo, available, path, sha256, size, version
+Nodes (7): arrow(), draw(), font(), label_box(), px_points(), run(), trim()
 
-### Community 159 - "bootMessage"
-Cohesion: 0.38
-Nodes (6): keysScannerOk(), bootMessage(), serviceOtaConfirm(), otaConfirm(), otaPendingVerify(), otaSlotName()
+### Community 159 - "IdlePolicy"
+Cohesion: 0.40
+Nodes (5): IdlePolicy, dimSeconds, offSeconds, sleepSeconds, setIdlePolicy()
 
 ### Community 160 - "AI Calculator board: final status (start here)"
 Cohesion: 0.18
@@ -913,41 +924,41 @@ Nodes (5): Results (model, 2026-10-05, `case_fit.json`), Slide case mods (LATER:
 Cohesion: 0.50
 Nodes (3): Notes, Stage 14 progress (verification fixes), Status
 
-### Community 163 - "calc_engine.h"
-Cohesion: 0.08
-Nodes (23): AngleUnit, Deg, Gra, Rad, CalcError, Argument, Math, None (+15 more)
+### Community 163 - "fbtext.cpp"
+Cohesion: 0.11
+Nodes (19): Cell, cp, inverted, raw, rows, underline, decode(), decodeScaled() (+11 more)
 
-### Community 165 - "glyphdraw.h"
-Cohesion: 0.25
-Nodes (12): advance(), bits(), glyph(), radical(), text(), textCentered(), textFit(), textRight() (+4 more)
+### Community 165 - "CameraPins"
+Cohesion: 0.11
+Nodes (18): CameraPins, d0, d1, d2, d3, d4, d5, d6 (+10 more)
 
 ### Community 166 - "Grinding jigs (3D-printed) for the donor fx-115ES shell"
 Cohesion: 0.33
 Nodes (5): A + A2 + A3: back-cover plate (solar box, rib B, camera window), B: magnet-notch saddle, C: LR44 trim sled (battery upgrade only), Grinding jigs (3D-printed) for the donor fx-115ES shell, Time summary (per unit, estimates)
 
-### Community 169 - "SolveCallbacks"
-Cohesion: 0.40
-Nodes (4): SolveCallbacks, fail, partial, reply
+### Community 168 - "sim_state"
+Cohesion: 0.08
+Nodes (18): AngleUnit, Deg, Gra, Rad, NormMode, Norm1, Norm2, Mode (+10 more)
 
-### Community 170 - "assembly_howto_pictures.py"
-Cohesion: 0.09
-Nodes (31): arrow(), Canvas, dcxyx(), details(), diff_mask(), font(), grind(), keys_vs_pills() (+23 more)
+### Community 170 - "annotate_guides.py"
+Cohesion: 0.13
+Nodes (13): arrow(), Canvas, dcxyx(), details(), diff_mask(), font(), grind(), keys_vs_pills() (+5 more)
 
 ### Community 172 - "Who should build the board? JLCPCB vs the alternatives"
 Cohesion: 0.22
 Nodes (8): Comparison table, Correction to the cost in the order docs, Risks with JLCPCB and how to reduce them, Sources (all accessed 2026-10-06), The order, as it actually is, Verdict (one line), Who should build the board? JLCPCB vs the alternatives, Why JLCPCB wins this particular order
 
 ### Community 174 - "firmware-prototype/src/settings.cpp"
-Cohesion: 0.21
-Nodes (16): deviceId(), handle(), help(), tokenHint, settingsCheckProxy(), settingsCheckToken(), settingsCheckWifi(), settingsLoad() (+8 more)
+Cohesion: 0.17
+Nodes (18): Ask, Nothing, Password, Proxy, Ssid, Token, deviceId(), handle() (+10 more)
 
 ### Community 175 - "Stage 15: v15-LCD, the 2.13" e-paper replaced by a 1.9" colour IPS LCD"
 Cohesion: 0.18
 Nodes (10): 1. What stayed exactly as in v14, 2. The LCD choice (plain English), 3. Electrical design, 4. Layout (as on the board after review 13), 5. Checks run, 6. Pin-1 of the ribbon at J5 (the J1 lesson, applied in review 13), 7. Firmware TODO (written before the port; now done in `firmware-v15-lcd/`, see its README and PORT_NOTES; kept for the reasoning), 8. How to re-make v15 from scratch (for the next session) (+2 more)
 
-### Community 176 - "firmware-prototype/src/preview.cpp"
-Cohesion: 0.37
-Nodes (17): authorised(), autotuneHandler(), detailHandler(), focusHandler(), frameHandler(), lastHandler(), noCache(), pageHandler() (+9 more)
+### Community 176 - "build_jigs.py"
+Cohesion: 0.13
+Nodes (10): rect(), arc(), band(), build(), check(), clip_half(), export(), main() (+2 more)
 
 ### Community 178 - "13 — Independent review of the v15-LCD board, re-derived from the raw files"
 Cohesion: 0.13
@@ -955,7 +966,7 @@ Nodes (14): 13 — Independent review of the v15-LCD board, re-derived from the 
 
 ### Community 179 - "lcd.cpp"
 Cohesion: 0.07
-Nodes (26): Build result, Needs the real panel to verify (bench checklist), Open items / later, Port notes: v14 e-paper firmware → v15-LCD (2026-10-08), Preview frame-rate estimate, applyLevel(), begin(), dutyFor() (+18 more)
+Nodes (27): Build result, Needs the real panel to verify (bench checklist), Open items / later, Port notes: v14 e-paper firmware → v15-LCD (2026-10-08), Preview frame-rate estimate, Proxy follow-ups (2026-10-10, from server/proxy/FINAL_REVIEW_server.md), applyLevel(), begin() (+19 more)
 
 ### Community 180 - "Knockoff shell plan: measuring a 991ES-style clone and refitting the board (v15)"
 Cohesion: 0.15
@@ -969,17 +980,17 @@ Nodes (3): fit_features(), rrect_pts(), shape_pts()
 Cohesion: 0.18
 Nodes (3): dline(), put(), vline()
 
-### Community 183 - "firmware-v15-lcd/src/keys.cpp"
-Cohesion: 0.13
-Nodes (19): onOnChange(), onBootChange(), beginOn(), keysBegin(), keysPoll(), keysPrepareSleep(), keysWokeByOn(), onOnChange() (+11 more)
+### Community 183 - "gen.py"
+Cohesion: 0.25
+Nodes (18): bezel(), board_map(), board_map_bottom(), callout(), edge_point(), lcd_sims(), M(), preview_mock() (+10 more)
 
 ### Community 184 - "06 — Final adversarial review of PCB v14 (before ordering)"
 Cohesion: 0.20
 Nodes (9): 06 — Final adversarial review of PCB v14 (before ordering), Checks done and results, FATAL, Findings, ranked, MINOR, NOTE, SERIOUS, Verdict: **GO** (no FATAL, no SERIOUS found; nothing in the files needs to change before ordering) (+1 more)
 
-### Community 185 - "firmware.py"
-Cohesion: 0.15
-Nodes (4): _load_dotenv(), _paths(), publish(), sha256_of()
+### Community 185 - "app.cpp"
+Cohesion: 0.26
+Nodes (15): accepts, onFailure, onKey, onPartialAnswer, onReply, scrollBy, setLines, showMessage (+7 more)
 
 ### Community 186 - "Goldenmorning T190X7-C30-01H: does it fit the v15-LCD build?"
 Cohesion: 0.29
@@ -1005,161 +1016,161 @@ Nodes (6): 11 — Requirements trace: is everything we decided actually on the v
 Cohesion: 0.17
 Nodes (11): Alibaba.com suppliers (2026-10-08), Board changes needed, BuyDisplay ER-TFT019-1: checked against its datasheet (2026-10-08), Comparison, Fit limits used (from REPORT.md and stage15_lcd.md), LCD panel options for the v15-LCD board, Original research verdict (2026-10-08 morning, superseded), Practical notes (+3 more)
 
-### Community 192 - "window_mask_template_v15.py"
-Cohesion: 0.25
-Nodes (3): dxf(), rrect_path(), svg()
+### Community 192 - "window_mask_template.py"
+Cohesion: 0.18
+Nodes (7): Checks (model, 2026-10-05), Steps, dxf(), rrect_path(), svg(), The part, Window mask (black sticker inside the display lens)
 
 ### Community 193 - "check_hole_clearance.py"
 Cohesion: 0.38
 Nodes (3): inter(), sd(), ss()
 
 ### Community 194 - "firmware-v15-lcd/src/claude_client.cpp"
-Cohesion: 0.24
-Nodes (14): lower(), open(), parseUrl(), proxyDownload(), proxyRequest(), readBody(), readHead(), readLine() (+6 more)
+Cohesion: 0.21
+Nodes (17): claudeLastActivityMs(), claudeSolve(), lower(), noteActivity(), open(), parseUrl(), proxyDownload(), proxyRequest() (+9 more)
 
-### Community 195 - "f"
-Cohesion: 0.20
-Nodes (8): cavity(), chain(), crossings(), log(), stage_check(), stage_export(), wall_fun(), f()
+### Community 195 - "bringUp"
+Cohesion: 0.15
+Nodes (14): applyAll(), beginIn(), bringUp(), cameraPreviewBegin(), cameraResetTuning(), configFor(), loadTuning(), Mode (+6 more)
 
-### Community 197 - "viewfinder.cpp"
-Cohesion: 0.25
-Nodes (10): bracket(), focusMeasure(), hLine(), diff, invert, fps, render, renderStarting (+2 more)
+### Community 197 - "config.py"
+Cohesion: 0.12
+Nodes (5): _load_dotenv(), ConsoleMailer, get_mailer(), Mailer, SmtpMailer
 
 ### Community 198 - "firmware-v15-lcd/src/camera.cpp"
-Cohesion: 0.09
-Nodes (44): What changed, file by file, Files, applyAll(), autoTuneLocked(), beginIn(), bringUp(), cameraAutoTune(), cameraBegin() (+36 more)
+Cohesion: 0.15
+Nodes (28): autoTuneLocked(), cameraAutoTune(), cameraBegin(), cameraCapture(), cameraFocusScore(), cameraFrame(), cameraHoldEstimateMs(), cameraHoldUntil() (+20 more)
 
-### Community 209 - "Ask"
-Cohesion: 0.33
-Nodes (6): Ask, Nothing, Password, Proxy, Ssid, Token
+### Community 209 - "What changed, file by file"
+Cohesion: 0.18
+Nodes (11): What changed, file by file, Board firmware for v15-LCD (colour screen + live camera preview), Build and flash, Files, Pins (from `hardware/kicad_v15_lcd/pins_v15_lcd.h`), Screen and backlight, Self-test, Using the live preview (+3 more)
+
+### Community 210 - "previewStart"
+Cohesion: 0.21
+Nodes (11): previewEnded(), endPreview(), getUri(), jsonText(), previewResume(), previewSetResult(), previewStart(), previewSuspend() (+3 more)
 
 ### Community 211 - "Firmware for the stage-13 board"
-Cohesion: 0.10
-Nodes (19): Bring-up checklist for the first board, Deploy the proxy (short version; full steps in `server/proxy/README.md`), Factory self-test, Files, Firmware for the stage-13 board, First setup (Serial Monitor), Flash it over the magnetic USB, Power facts (+11 more)
+Cohesion: 0.14
+Nodes (12): Bring-up checklist for the first board, Camera preview (viewfinder), Deploy the proxy (short version; full steps in `server/proxy/README.md`), Factory self-test, Files, Firmware for the stage-13 board, First setup (Serial Monitor), Flash it over the magnetic USB (+4 more)
 
-### Community 212 - "SolveCallbacks"
-Cohesion: 0.40
-Nodes (4): SolveCallbacks, fail, partial, reply
+### Community 212 - "pilroute.py"
+Cohesion: 0.14
+Nodes (4): connect_all(), island_at(), islands(), item_pts()
 
-### Community 213 - "Findings"
-Cohesion: 0.25
-Nodes (7): Changes made, FATAL, Findings, Firmware changes requested, SERIOUS, Server-side review: server/proxy (stopped early, 2026-10-06 ~01:35 USEDT), Verdict
+### Community 213 - "all_bodies"
+Cohesion: 0.15
+Nodes (10): all_bodies(), _case_vs_all(), _check(), leaves(), _lipo_alt(), occ_named(), stage_camclear(), stage_case_check() (+2 more)
 
 ### Community 214 - "firmware-v15-lcd/src/preview.cpp"
-Cohesion: 0.18
-Nodes (29): cameraSaveTuning(), previewEnded(), authorised(), autotuneHandler(), detailHandler(), endPreview(), focusHandler(), frameHandler() (+21 more)
+Cohesion: 0.37
+Nodes (17): authorised(), autotuneHandler(), detailHandler(), focusHandler(), frameHandler(), lastHandler(), noCache(), pageHandler() (+9 more)
 
-### Community 215 - "SolveCallbacks"
-Cohesion: 0.33
-Nodes (5): SolveCallbacks, cancelled, fail, partial, reply
+### Community 215 - "glyphdraw.h"
+Cohesion: 0.40
+Nodes (11): advance(), bits(), glyph(), radical(), text(), textCentered(), textFit(), textRight() (+3 more)
 
-### Community 216 - "make_fitcheck.py"
+### Community 216 - "time"
 Cohesion: 0.12
 Nodes (5): main(), newest(), box(), cy_box(), ring_path()
 
-### Community 218 - "stage_parts"
-Cohesion: 0.15
-Nodes (14): band(), cam_route(), mk(), fit_bow(), obround_pts(), _opt(), path_len(), round_path() (+6 more)
+### Community 218 - "cam_route"
+Cohesion: 0.29
+Nodes (5): cam_route(), mk(), _opt(), path_len(), round_path()
 
 ### Community 219 - "SerialCmd"
 Cohesion: 0.12
 Nodes (17): SerialCmd, Account, Bright, Changed, ExamOff, Keys, None, Pair (+9 more)
 
-### Community 220 - "selftest_tu.cpp"
-Cohesion: 0.14
-Nodes (4): cameraSelfTest(), deviceId(), hostRunSelfTest(), keysHeld()
+### Community 220 - "wifi"
+Cohesion: 0.29
+Nodes (4): claudeSolve(), lower(), readLine(), writeAll()
 
 ### Community 222 - "Event"
-Cohesion: 0.13
-Nodes (14): Event, confidence, failure, id, kind, text, Kind, Captured (+6 more)
+Cohesion: 0.18
+Nodes (11): Event, confidence, failure, id, kind, text, Kind, Captured (+3 more)
 
 ### Community 223 - "14 — Final pre-order verification of the v15-LCD board (ER-TFT019-1 panel)"
 Cohesion: 0.15
 Nodes (12): 14 — Final pre-order verification of the v15-LCD board (ER-TFT019-1 panel), 1. Findings, 2. Check list (all PASS unless marked), 3. Changes made in this pass (all logged; v14 untouched), 4. The J5 pin-1 derivation, step by step (check 2), 5. Backlight (check 3), numbers, 6. Bench checks (none blocks the order), 7. Files touched (absolute) (+4 more)
 
-### Community 224 - "Failure"
-Cohesion: 0.08
-Nodes (22): Failure, Account, ApiBusy, ApiError, BadReply, Camera, LowBattery, NoApiKey (+14 more)
-
-### Community 226 - "SetupInfo"
-Cohesion: 0.40
-Nodes (4): SetupInfo, apName, apPass, url
-
-### Community 227 - "Kind"
+### Community 224 - "Kind"
 Cohesion: 0.40
 Nodes (5): Kind, Captured, Fail, Partial, Reply
 
-### Community 228 - "v15 colour LCD: real UI screenshots"
-Cohesion: 0.40
-Nodes (4): Fixed in the firmware (2026-10-10), How these can differ from the real panel, Regenerate, v15 colour LCD: real UI screenshots
+### Community 226 - "FakeClient"
+Cohesion: 0.20
+Nodes (3): install(), FakeClient, FakeCM
 
-### Community 229 - "testClaudeApi"
-Cohesion: 0.18
-Nodes (19): base64Encode(), buildSolveRequest(), classifyFailure(), jsonString(), peekAnswer(), StreamReader, buf_, errorMessage_ (+11 more)
+### Community 227 - "Event"
+Cohesion: 0.15
+Nodes (13): Event, confidence, failure, id, kind, text, Kind, Captured (+5 more)
+
+### Community 228 - "harness.cpp"
+Cohesion: 0.09
+Nodes (12): cameraFrame(), key(), loadPpm(), main(), shot(), status(), type(), HostEsp (+4 more)
+
+### Community 229 - "StreamReader"
+Cohesion: 0.10
+Nodes (28): base64Encode(), buildSolveRequest(), classifyFailure(), jsonString(), peekAnswer(), solveInstructions(), solveSchema(), StreamReader (+20 more)
 
 ### Community 230 - "FrameInfo"
 Cohesion: 0.12
 Nodes (17): Focus3, Focusing, Moving, Sharp, Starting, FrameInfo, hi, lo (+9 more)
 
-### Community 231 - "CamFocus"
-Cohesion: 0.50
-Nodes (4): CamFocus, Focused, Focusing, NoAf
+### Community 231 - "Failure"
+Cohesion: 0.18
+Nodes (10): Failure, Account, ApiBusy, ApiError, BadReply, Camera, LowBattery, NoApiKey (+2 more)
 
-### Community 232 - "Button"
-Cohesion: 0.33
-Nodes (6): Button, key, lastMs, nextRepeat, pin, pressed
+### Community 232 - "make_screens.py"
+Cohesion: 0.23
+Nodes (8): contact_sheet(), framed(), label_font(), main(), run_harness(), sample_photo(), selftest_names(), status_sheet()
 
 ### Community 233 - "JLCPCB order walkthrough: v15-LCD board (silk "AI CALC v15-LCD 2026-10-08")"
 Cohesion: 0.17
 Nodes (11): 0. Before you start, 1. Upload the gerbers, 2. PCB options, 3. PCB Assembly, 4. BOM and CPL, 5. Placement preview: what each part must look like, 6. Order notes (paste into the "remark" box), 7. If JLCPCB's engineers email you (+3 more)
 
-### Community 234 - "restoreState"
-Cohesion: 0.46
-Nodes (4): restoreState, Reader, ok, pos
+### Community 234 - "firmware-v15-lcd/src/claude_client.h"
+Cohesion: 0.09
+Nodes (15): OtaInfo, available, path, sha256, size, version, Settings, deviceToken (+7 more)
 
 ### Community 235 - "15. v15-LCD key pads vs the original Casio fx-115ES keyboard PCB"
 Cohesion: 0.18
 Nodes (10): 15. v15-LCD key pads vs the original Casio fx-115ES keyboard PCB, Changes to make (for the v15 board editor), Every pad, How it was measured, Images, Key mapping vs the firmware, Other observations (no action requested), REPLAY ring and ON (+2 more)
 
 ### Community 236 - "build_final_assembly_v15.py"
-Cohesion: 0.09
-Nodes (20): all_bodies(), bodies_under(), _case_vs_all(), _check(), collision_table(), grind_cuts(), info_path(), leaves() (+12 more)
+Cohesion: 0.10
+Nodes (14): bodies_under(), collision_table(), grind_cuts(), info_path(), log(), obround_pts(), offline_numbers(), stage_clearances() (+6 more)
 
-### Community 237 - "Board firmware for v15-LCD (colour screen + live camera preview)"
+### Community 237 - "ai_calc_pcb_8/hardware/tools/prepass.py"
 Cohesion: 0.25
-Nodes (7): Board firmware for v15-LCD (colour screen + live camera preview), Build and flash, Pins (from `hardware/kicad_v15_lcd/pins_v15_lcd.h`), Screen and backlight, Self-test, Using the live preview, What is different from v14
+Nodes (3): connect_tree(), pad(), stub()
 
-### Community 239 - "SetupInfo"
-Cohesion: 0.40
-Nodes (4): SetupInfo, apName, apPass, url
+### Community 239 - "DIR"
+Cohesion: 0.22
+Nodes (10): closedir(), DIR, e, fd, first, h, dirent, d_name (+2 more)
 
 ### Community 241 - "Decode"
 Cohesion: 0.18
 Nodes (10): Decode, cx, cy, fullH, fullW, lastYield, out, outH (+2 more)
 
-### Community 242 - "cstdint"
-Cohesion: 0.09
-Nodes (6): HostEsp, HostRestart, HostSerial, printf, quiet, esp_chip_info()
+### Community 242 - "AI Calculator proxy"
+Cohesion: 0.15
+Nodes (11): rate_limit_error_type(), Admin commands, AI Calculator proxy, Deploy (Render, Railway or Fly.io), Environment variables, Errors the calculator understands, Files, Firmware updates over the air (+3 more)
 
-### Community 243 - "Wake"
+### Community 243 - "SolveCallbacks"
 Cohesion: 0.40
-Nodes (5): Wake, ColdBoot, Keypad, OnKey, Other
+Nodes (4): SolveCallbacks, fail, partial, reply
 
-### Community 244 - "ScanNote"
-Cohesion: 0.50
-Nodes (4): ScanNote, None, Ok, Unclear
+### Community 244 - "Panel"
+Cohesion: 0.17
+Nodes (11): Panel, clear, fillRect, get, invert, kBytesPerRow, kHeight, kStride (+3 more)
 
 ### Community 245 - "SendStep"
 Cohesion: 0.50
 Nodes (4): SendStep, Idle, Solving, WaitWifi
 
-### Community 246 - "harness.cpp"
-Cohesion: 0.13
-Nodes (11): powerOff, setOnline, tick, cameraFrame(), key(), loadPpm(), main(), setup() (+3 more)
-
-### Community 247 - "IdlePolicy"
-Cohesion: 0.40
-Nodes (5): IdlePolicy, dimSeconds, offSeconds, sleepSeconds, setIdlePolicy()
+### Community 247 - "Status"
+Cohesion: 0.24
+Nodes (11): batteryIcon(), drawOff(), rightCluster(), Status, battery, charging, lowBattery, wifiConnected (+3 more)
 
 ### Community 248 - "2026-10-10"
 Cohesion: 0.22
@@ -1173,93 +1184,145 @@ Nodes (5): Wake, ColdBoot, Keypad, OnKey, Other
 Cohesion: 0.29
 Nodes (6): OtaInfo, available, path, sha256, size, version
 
+### Community 252 - "string"
+Cohesion: 0.06
+Nodes (25): Line, header, text, SolveCallbacks, fail, partial, reply, Wake (+17 more)
+
 ### Community 253 - "firmware/src/settings.cpp"
-Cohesion: 0.16
-Nodes (16): cameraName(), setup(), statusText(), Ask, Key, Nothing, Password, Ssid (+8 more)
+Cohesion: 0.23
+Nodes (11): Ask, Key, Nothing, Password, Ssid, handle(), help(), save() (+3 more)
 
 ### Community 254 - "firmware/src/main.cpp"
-Cohesion: 0.07
-Nodes (42): dkeyName(), keysForChar(), cameraHoldUntil(), applySettings(), connectWifi(), Event, confidence, failure (+34 more)
+Cohesion: 0.12
+Nodes (28): cameraHoldUntil(), cameraName(), applySettings(), connectWifi(), failureText(), handleEvent(), loop(), onWifiEvent() (+20 more)
 
 ### Community 255 - "Tuning"
 Cohesion: 0.40
 Nodes (5): Tuning, def, max, min, name
 
-### Community 257 - "Line"
-Cohesion: 0.67
-Nodes (3): Line, header, text
+### Community 256 - "hardware/tools/fixroute.py"
+Cohesion: 0.22
+Nodes (3): items_geom(), raster(), route()
 
-### Community 258 - "cameraCapture"
-Cohesion: 0.12
-Nodes (21): cameraCapture(), cameraFocusScore(), cameraHoldEstimateMs(), cameraPreviewFrame(), Decode, cx, cy, data (+13 more)
+### Community 257 - "probe"
+Cohesion: 0.22
+Nodes (6): all_meas(), badge(), meas(), probe(), tag_box(), text_size()
 
 ### Community 259 - "firmware-v15-lcd/src/setup_portal.cpp"
-Cohesion: 0.07
-Nodes (43): Ask, Nothing, Password, Proxy, Ssid, Token, deviceId(), examLoad() (+35 more)
+Cohesion: 0.15
+Nodes (20): escape(), field(), formHandler(), formPage(), hexVal(), noCache(), redirectHandler(), route() (+12 more)
 
-### Community 261 - "previewStart"
-Cohesion: 0.21
-Nodes (11): previewEnded(), endPreview(), getUri(), jsonText(), previewResume(), previewSetResult(), previewStart(), previewSuspend() (+3 more)
-
-### Community 263 - "HistoryItem"
-Cohesion: 0.50
-Nodes (3): HistoryItem, expr, value
+### Community 264 - "selfTestRun"
+Cohesion: 0.12
+Nodes (13): keysScannerOk(), bootMessage(), serviceOtaConfirm(), otaConfirm(), otaPendingVerify(), otaSlotName(), resetReasonText(), Json (+5 more)
 
 ### Community 265 - "annotate_guide.py"
-Cohesion: 0.10
-Nodes (15): arrow(), draw(), font(), label_box(), px_points(), run(), trim(), arrow() (+7 more)
+Cohesion: 0.29
+Nodes (7): arrow(), draw(), font(), label_box(), px_points(), run(), trim()
 
-### Community 271 - "app.h"
-Cohesion: 0.07
-Nodes (23): Effort, Careful, Max, Normal, Key, AC, Down, Eq (+15 more)
+### Community 269 - "F"
+Cohesion: 0.36
+Nodes (7): F(), net(), place(), route(), silk_line(), track(), via()
+
+### Community 271 - "Key"
+Cohesion: 0.25
+Nodes (8): Key, AC, Down, Eq, Off, On, Tutor, Up
+
+### Community 272 - "CalcError"
+Cohesion: 0.17
+Nodes (11): CalcError, Argument, Math, None, Stack, Syntax, errorText(), EvalResult (+3 more)
+
+### Community 273 - "View"
+Cohesion: 0.31
+Nodes (4): load(), mm2raw(), raw(), View
+
+### Community 274 - "esp_random"
+Cohesion: 0.23
+Nodes (10): previewEnded(), endPreview(), getUri(), jsonText(), previewResume(), previewSetResult(), previewStart(), startNetwork() (+2 more)
+
+### Community 275 - "vf_lcd.cpp"
+Cohesion: 0.18
+Nodes (6): rgb(), bind(), bracket(), greyThumb(), showFrame(), showStarting()
+
+### Community 276 - "Settings"
+Cohesion: 0.29
+Nodes (5): Settings, deviceToken, password, proxyUrl, ssid
+
+### Community 277 - "window_mask_template_v15.py"
+Cohesion: 0.25
+Nodes (3): dxf(), rrect_path(), svg()
 
 ### Community 279 - "check_hole_clearance_v15.py"
 Cohesion: 0.38
 Nodes (3): inter(), sd(), ss()
 
-### Community 285 - "Tuning"
+### Community 280 - "compute"
+Cohesion: 1.00
+Nodes (3): compute(), cover(), worst()
+
+### Community 282 - "v15 colour LCD: real UI screenshots"
 Cohesion: 0.40
-Nodes (5): Tuning, def, max, min, name
+Nodes (4): Fixed in the firmware (2026-10-10), How these can differ from the real panel, Regenerate, v15 colour LCD: real UI screenshots
+
+### Community 283 - "HistoryItem"
+Cohesion: 0.50
+Nodes (3): HistoryItem, expr, value
+
+### Community 284 - "ScanNote"
+Cohesion: 0.50
+Nodes (4): ScanNote, None, Ok, Unclear
+
+### Community 285 - "restoreState"
+Cohesion: 0.46
+Nodes (4): restoreState, Reader, ok, pos
 
 ### Community 288 - "cameraPreviewRelease"
 Cohesion: 0.60
 Nodes (4): cameraPreviewGrab(), cameraPreviewMode(), cameraPreviewRelease(), grabTask()
 
-### Community 289 - "Tuning"
+### Community 289 - "Crop"
+Cohesion: 0.33
+Nodes (6): Crop, h, use, w, x, y
+
+### Community 290 - "Button"
+Cohesion: 0.33
+Nodes (6): Button, key, lastMs, nextRepeat, pin, pressed
+
+### Community 294 - "firmware-v15-lcd/src/power.cpp"
+Cohesion: 0.10
+Nodes (30): powerBegin(), screenBegin(), keysHeld(), serviceBattery(), setup(), batteryMillivolts(), batteryOkForAi(), batteryOkForOta() (+22 more)
+
+### Community 295 - "Tuning"
 Cohesion: 0.40
 Nodes (5): Tuning, def, max, min, name
 
-### Community 291 - "SendStep"
+### Community 297 - "SendStep"
 Cohesion: 0.50
 Nodes (4): SendStep, Idle, Solving, WaitWifi
-
-### Community 294 - "firmware-v15-lcd/src/power.cpp"
-Cohesion: 0.09
-Nodes (34): lipoPercent(), cameraSleep(), keysHeld(), serviceBattery(), setup(), batteryMillivolts(), batteryOkForAi(), batteryOkForOta() (+26 more)
 
 ## Ambiguous Edges - Review These
 - `AI Hold-to-Capture Flow` → `Exam Mode`  [AMBIGUOUS]
   tests/golden/exam_confirm.txt · relation: conceptually_related_to
 
 ## Knowledge Gaps
-- **1230 isolated node(s):** `make_outputs.sh script`, `On`, `Off`, `AC`, `Eq` (+1225 more)
-  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 1986 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
-- **46 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
+- **1232 isolated node(s):** `make_outputs.sh script`, `On`, `Off`, `AC`, `Eq` (+1227 more)
+  These have ≤1 connection - possible missing edges or undocumented components. (Counts symbols only; 2076 node(s) total have ≤1 connection when file, concept and rationale nodes are included.)
+- **54 thin communities (<3 nodes) omitted from report** — run `graphify query` to explore isolated nodes.
 
 ## Suggested Questions
 _Questions this graph is uniquely positioned to answer:_
 
 - **What is the exact relationship between `AI Hold-to-Capture Flow` and `Exam Mode`?**
   _Edge tagged AMBIGUOUS (relation: conceptually_related_to) - confidence is low._
-- **Why does `Device` connect `Device` to `Failure`, `device.cpp`, `Vars`, `Tok`, `calc_engine.h`, `HistoryItem`, `restoreState`, `ui.cpp`, `Num`, `font.h`, `ScanNote`, `harness.cpp`, `tests.cpp`, `View`, `App`?**
+- **Why does `Device` connect `Device` to `tests.cpp`, `device.cpp`, `Tok`, `ui.cpp`, `CalcError`, `vector`, `HistoryItem`, `ScanNote`, `restoreState`, `App`, `Vars`, `sim_state`, `font.h`, `View`, `Num`, `harness.cpp`, `Failure`, `string`, `Status`?**
   _High betweenness centrality (0.047) - this node is a cross-community bridge._
-- **Why does `Viewfinder` connect `Viewfinder` to `v15 colour LCD: real UI screenshots`, `viewfinder.cpp`, `FrameInfo`, `firmware-prototype/src/screen.cpp`, `firmware-v15-lcd/src/camera.cpp`, `ui.cpp`, `firmware-prototype/src/main.cpp`, `Overlay`, `harness.cpp`, `Panel`, `string`, `firmware-v15-lcd/src/main.cpp`?**
-  _High betweenness centrality (0.032) - this node is a cross-community bridge._
-- **Why does `DKey` connect `DKey` to `device.cpp`, `firmware-prototype/src/keys.cpp`, `calc_engine.h`, `win32_main.cpp`, `firmware-v15-lcd/src/power.cpp`, `Board geometry from the scan: assumptions and confidence`, `Button`, `firmware-prototype/src/main.cpp`, `selftest_tu.cpp`, `harness.cpp`, `firmware-v15-lcd/src/keys.cpp`, `tests.cpp`, `string`, `firmware/src/main.cpp`, `firmware-v15-lcd/src/main.cpp`?**
-  _High betweenness centrality (0.027) - this node is a cross-community bridge._
+- **Why does `Viewfinder` connect `Viewfinder` to `harness.cpp`, `firmware-prototype/src/screen.cpp`, `FrameInfo`, `v15 colour LCD: real UI screenshots`, `What changed, file by file`, `firmware-prototype/src/main.cpp`, `Panel`, `cameraShot`, `Overlay`, `viewfinder.cpp`, `Status`, `firmware-v15-lcd/src/main.cpp`?**
+  _High betweenness centrality (0.038) - this node is a cross-community bridge._
+- **Why does `Tok` connect `Tok` to `tests.cpp`, `device.cpp`, `calc_engine.cpp`, `Parser`, `Device`, `Num`, `vector`, `HistoryItem`?**
+  _High betweenness centrality (0.026) - this node is a cross-community bridge._
 - **Are the 4 inferred relationships involving `Device` (e.g. with `Files` and `sim_state()`) actually correct?**
   _`Device` has 4 INFERRED edges - model-reasoned connections that need verification._
 - **Are the 2 inferred relationships involving `App` (e.g. with `Files` and `v15 colour LCD: real UI screenshots`) actually correct?**
   _`App` has 2 INFERRED edges - model-reasoned connections that need verification._
 - **What connects `make_outputs.sh script`, `On`, `Off` to the rest of the system?**
-  _1230 weakly-connected nodes found - possible documentation gaps or missing edges._
+  _1232 weakly-connected nodes found - possible documentation gaps or missing edges._
