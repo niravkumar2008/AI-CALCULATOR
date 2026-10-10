@@ -30,6 +30,28 @@ ENC = os.path.join(REPO, "hardware", "enclosure")
 OUT = os.path.join(ENC, "final_assembly_v15_lcd")
 REPLICA_PY = os.path.join(ENC, "build_fx115es_replica.py")          # read only (rev G shell)
 STEP = os.path.join(OUT, "board", "ai_calc_v15_lcd_board.step")
+
+def _opt(key, default=None):
+    """Variant options (2026-10-09), from ARGS inside Fusion or key=value on the command line. Defaults = the baseline."""
+    A = globals().get("ARGS")
+    if A is not None:
+        return A.get(key, default)
+    for a in sys.argv[1:]:
+        if a.startswith(key + "="):
+            return a.split("=", 1)[1]
+    return default
+# Panel variants: out=<subfolder of final_assembly_v15_lcd> writes every output there (placement.json and board_snapshot.json are seeded
+# from the baseline's on first use; the board STEP is still read from the baseline); lcd_dt=<mm> adds that much panel thickness
+# in the backlight/frame (glass stack, ledge and tail exit move up by lcd_dt); lcd_tape=<mm> changes the tape under it.
+# No options = the baseline exactly.
+OUT_BASE = OUT
+if _opt("out"):
+    OUT = os.path.join(OUT_BASE, _opt("out"))
+    os.makedirs(OUT, exist_ok=True)
+    import shutil
+    for _fn in ("placement.json", "board_snapshot.json"):          # board_snapshot.json: read by the replica (rev G mat)
+        if not os.path.exists(os.path.join(OUT, _fn)) and os.path.exists(os.path.join(OUT_BASE, _fn)):
+            shutil.copy(os.path.join(OUT_BASE, _fn), os.path.join(OUT, _fn))
 PCB_V15 = os.path.join(REPO, "hardware", "kicad_v15_lcd", "ai_calc_v15_lcd.kicad_pcb")   # read only
 DOC_NAME = "AI Calculator v15-LCD - Final Assembly 1:1"
 PREFIX = "V15 - "
@@ -139,6 +161,8 @@ LCD_GL_X = (127.04, 175.56)         # TFT glass (KiCad x); y = 93.1 +- 12.4; CF 
 LCD_GL_H = 24.8
 LCD_LEDGE = 2.6
 LCD_T = dict(tape=0.10, bl=0.65, tft=0.35, cf=0.30, pol=0.13)   # tape = 0.1 mm double-sided tape under the backlight
+LCD_T["bl"] += float(_opt("lcd_dt", 0.0))                         # variant: thicker panel, extra in the backlight/frame
+LCD_T["tape"] = float(_opt("lcd_tape", LCD_T["tape"]))
 LCD_FPC_W, LCD_FPC_LEN, LCD_FPC_T, LCD_STIFF = 15.5, 36.6, 0.30, 4.5
 LCD_FPC_DY = 0.5                    # tail centre this far towards +y KiCad (finger 1) from the panel centre line (ER p.6, report 14 M4)
 LCD_FPC_LEN_WORST = 36.9            # 36.6 + 0.3 tolerance: stage tailcase   # tail width, length from the glass edge, thickness, tip stiffener
