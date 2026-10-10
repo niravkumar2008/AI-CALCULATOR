@@ -106,7 +106,7 @@ Record `device_id`, `firmware` and `firmware_slot` from the JSON on the label.
 Cable on, through the inline USB meter.
 | # | Measure | Pass |
 |---|---|---|
-| 1 | Current at 5 V, battery between 3.6 and 4.0 V, calculator idle | **40–60 mA** with R2 = 20 k (50 mA set point) **(v15 with R2 = 4.7 k and the big cell: 190–230 mA)**. **< 20 mA = STAT stuck / cell full / bad J4; > 80 mA (v14) = wrong R2 or a short** |
+| 1 | Current at 5 V, battery between 3.6 and 4.0 V, calculator idle | **40–60 mA** with R2 = 20 k (50 mA set point) **(future big-battery shell board with R2 = 4.7 k: 190–230 mA. Both v14 and v15-LCD have R2 = 20 k, so 40–60 mA)**. **< 20 mA = STAT stuck / cell full / bad J4; > 80 mA (v14) = wrong R2 or a short** |
 | 2 | `status` on the serial monitor (or the battery icon) | "charging", `vbus` true |
 | 3 | Pull the cable | `vbus` false within 1 s; calculator keeps running on the cell |
 | 4 | Magnet pull-off | Cable pulls off sideways without lifting the piece; the piece doesn't move (glue) |
