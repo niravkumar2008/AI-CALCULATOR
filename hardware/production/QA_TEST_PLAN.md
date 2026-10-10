@@ -155,7 +155,7 @@ On the finished unit (shell closed): snap the cable on, charger plugged in, mete
 ### B7. Label and pack
 - Serial label inside the battery-lid recess: `serial / device_id / firmware / QA date / initials`.
 - Battery at **40–80 %** for shipping (B2 step 3).
-- In the box: calculator, #5412 cable (or OEM cable from the same supplier as the piece), quick-start card with "not affiliated with Casio" and, once you have it, the FCC SDoC line.
+- In the box: calculator, #5412 cable (or OEM cable from the same supplier as the piece; the Yiwei MG0425-UB-60-4P is a known equivalent of the #5412 and reads GND, D+, D−, V+ from its N end, matching the Yiwei MG04254FRA1S1N piece = #5358), quick-start card with "not affiliated with Casio" and, once you have it, the FCC SDoC line.
 - Run `pair` once to confirm the pairing code prints, but **don't link it** (there is no unlink command yet): the buyer links it at `<proxy>/link` and starts their own free month. Note the unit's device id (`python admin.py devices`) next to its serial.
 
 ---

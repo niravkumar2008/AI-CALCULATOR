@@ -26,7 +26,7 @@ Order list: `Claude outputs/AI_Calculator_Shopping_List.xlsx`. Open each box the
 ## 3. Day one, in order (one board at a time)
 
 1. **Inspect unpowered:** PU 2 (`#inspect`) + QA plan A1–A3.
-2. **Magnet piece meter check** with the real #5412 cable, before any gluing: PU 3 (`#magnet`). VBUS leg into J3 pin 1 (silk N / +).
+2. **Magnet piece meter check** with the real #5412 cable (or the equivalent Yiwei MG0425-UB-60-4P, if that is the cable you use), before any gluing: PU 3 (`#magnet`). VBUS leg into J3 pin 1 (silk N / +).
 3. **Battery polarity:** PU 4 (`#battery`). Red wire on J4 "+".
 4. **Camera ribbon:** beep 2 ↔ 15 and measure module far edge → tip: PU 5 (`#ribbon`). Under about 70.3 mm: the module shifts up to 1.7 mm towards J1 later; drill the 7 mm hole where the lens really sits (GR `#z3`, AS 6).
 5. **First power, computer USB only** (no battery, panel or camera): PU 6 (`#power`).
@@ -58,4 +58,4 @@ The v15-LCD board was verified "ORDER" (`verification/14_v15_final_preorder.md`)
 - [ ] **Colours:** colour bars right? If negative-looking flip `LCD_INVERT`; red/blue swapped flip `LCD_RGB_ORDER` (`firmware-v15-lcd/platformio.ini`).
 - [ ] **Tail length** glass edge → tip **36.6 ± 0.3 mm**; at assembly check the bow clears rib B (AS15, marker dot). A 36.9 mm tail leaves ~0.1 mm.
 - [ ] **The 3 moved keys** SHIFT, ALPHA and ON: press each a few times in the key test; they should feel and register like the rest.
-- [ ] Everything else as v14: magnet meter check (J3 = 1 VBUS, 2 D−, 3 D+, 4 GND), battery polarity, camera ribbon beep test, first USB flash, self-test, AI settings.
+- [ ] Everything else as v14: magnet meter check (J3 = 1 VBUS, 2 D−, 3 D+, 4 GND; same check for the Yiwei MG04254FRA1S1N piece / MG0425-UB-60-4P cable, the equivalents of #5358 / #5412), battery polarity, camera ribbon beep test, first USB flash, self-test, AI settings.

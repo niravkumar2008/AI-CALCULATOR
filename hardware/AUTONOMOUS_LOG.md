@@ -19,3 +19,11 @@ Running log for the autonomous task list of 2026-10-10 (tasks: Goldenmorning fit
 - **v14 firmware:** `firmware-prototype` still builds: SUCCESS, 0 warnings, RAM 30.7 %, flash 63.4 %.
 - **Tests:** core 548 passed / 0 failed; proxy 15 passed.
 - **New:** `tests/msvc/build_and_run.bat` plus `tests/msvc/shim/` builds and runs the core tests on Windows with the MSVC Build Tools (no GCC). Verified: 548 passed, 0 failed.
+
+### Task 2: magnet connector alternates: DONE
+- **What:** Yiwei MG04254FRA1S1N (the same part as Adafruit #5358) and the Yiwei MG0425-UB-60-4P cable (the equivalent of #5412; it reads GND, D+, D−, V+ from its N end, like #5412) are recorded as alternates.
+- **Docs:** v15 BOM notes (`stage15_lcd.md`), FINAL_STATUS §2/§3 (additions only), both order walkthroughs, the arrival checklist, HANDOFF, the QA plan, unit economics, and the parts lists of the four guides.
+- **Spreadsheets:** notes in the shopping list; notes and two supplier rows in the bulk-sourcing sheet. Totals re-checked in Python and unchanged (A/B/C $662.33 / $571.75 / $663.97; LCD per-unit $91.92 / $42.22 / $31.69).
+- **Unchanged:** J3 = 1 VBUS, 2 D−, 3 D+, 4 GND, with the piece's N end at pin 1. The meter check before gluing is kept.
+- **Search:** no live "turn the magnet piece over" advice anywhere; only warnings against it.
+- **Open:** prices not checked; no supplier contacted.

@@ -134,6 +134,7 @@ Over a year, one buyer's subscription is worth about **$34 of profit** at 100 un
 ## 6. Next sourcing actions
 
 1. **Order the tester parts now** (Shopping List option C). Do the Adafruit order first, because #5412 cable stock is low.
+   - Alternate / bulk source for the magnet parts (added 2026-10-10): Yiwei **MG04254FRA1S1N** = Adafruit #5358 (same part) and Yiwei **MG0425-UB-60-4P** cable = equivalent of #5412 (GND, D+, D−, V+ from its N end). Prices not checked yet; `Alibaba_Bulk_Sourcing.xlsx` 'Supplier options' rows 47–48.
 2. **Order v15 and 3 × BuyDisplay ER-TFT019-1 (no touch)** (`../ORDER_WALKTHROUGH_v15_lcd.md`, Shopping List sheet "v15-LCD prototype"). No panel test is needed before ordering any more (review 14). When boards and panels arrive (`../ARRIVAL_CHECKLIST.md`, v15 section):
    - Diode test on the first tail: finger 1 at the J5 silk tick, the LED fingers in the top half of J5.
    - Backlight current = V(R23) / 15: expect 16–37 mA.

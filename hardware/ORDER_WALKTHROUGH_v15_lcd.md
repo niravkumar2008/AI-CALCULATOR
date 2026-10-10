@@ -132,7 +132,7 @@ With only 2 assembled the total drops to about $195–235. Timing: about **10–
 
 None of these blocked the order; all are recoverable on this board (review 14 §6). Step by step: the **v15 Power-Up guide** `bringup_guide_v15_lcd.html` (https://claude.ai/artifact/BeQnacuLhchaHz492CnLRT) and the **v15 Assembly guide** (https://claude.ai/artifact/FU8YVqaksDPk2cfiD2cz3f); checklist: `ARRIVAL_CHECKLIST.md`, v15 section.
 
-- **Magnet piece, battery polarity, camera ribbon:** exactly as v14 (`ORDER_WALKTHROUGH.md` step 9; J3 is 1 VBUS, 2 D−, 3 D+, 4 GND).
+- **Magnet piece, battery polarity, camera ribbon:** exactly as v14 (`ORDER_WALKTHROUGH.md` step 9; J3 is 1 VBUS, 2 D−, 3 D+, 4 GND). Magnet parts: Adafruit #5358 + #5412, or the equivalent Yiwei MG04254FRA1S1N piece (same part as #5358) + MG0425-UB-60-4P cable (GND, D+, D−, V+ from its N end, like #5412); meter check before gluing either way.
 - **Pin-1 end of the panel tail: diode test on the first ER-TFT019-1, before it is plugged in.** The LED sits between finger 20 (anode) and finger 22 (cathode), i.e. the 11th and 9th fingers from the pin-30 end. Mark the finger-1 corner. Plugged in with no twist, finger 1 must land at the **J5 silk tick (bottom)**, the LED fingers in the top half. If not: nothing is damaged; a half twist of the tail fixes it.
 - **Backlight current:** volts across R23 ÷ 15 at 100 %. Expect **16–37 mA (≈ 26 mA typical)**; it cannot exceed the 60 mA rating.
 - **Panel at 3.3 V:** picture quality (3.3 V is the top of its 2.4–3.3 V range); IDD ≤ 20 mA.

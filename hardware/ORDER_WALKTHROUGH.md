@@ -147,6 +147,8 @@ If the quote is far above this (for example over $200 before shipping), somethin
 
 J3 is wired, from pin 1 (silk "N" and "+", the leftmost pin seen from the component side with the top edge away from you): **VBUS, D−, D+, GND**.
 
+Alternates (added 2026-10-10): the Yiwei **MG04254FRA1S1N** piece is the same part as the #5358, and the Yiwei **MG0425-UB-60-4P** cable is the equivalent of the #5412 (its face reads GND, D+, D−, V+ from its N end, like the #5412). Do exactly the same steps with whichever cable you actually use.
+
 1. Straighten the 4 legs of the #5358 piece, but don't fit it yet. Snap the cable's magnet end onto it. The magnets only latch one way.
 2. Plug the cable's USB-A end into a **phone charger**. Set the meter to DC volts.
    - Black probe on one **outer** leg, red on the other outer leg. You should see about **+5 V**. The red-probe leg is **VBUS**; mark it with a pen.
