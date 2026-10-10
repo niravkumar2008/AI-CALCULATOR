@@ -86,18 +86,16 @@ All files are 320 × 170, which is exactly the panel's pixels. `x3/<name>_x3.png
 - **The cursor.** It blinks on the real screen. Every screenshot is taken in its "on" phase.
 - **Fake time.** The self-test runs on a fake clock. The "86 s left" and the key count (`21 of 50`) are what a fast tester would see.
 
-### Things the screenshots show about the firmware itself
+### Fixed in the firmware (2026-10-10)
 
-The firmware was not changed. These are worth fixing in `ui.cpp`, `fbtext.cpp` and `vf_lcd.cpp`:
+The first run of these screenshots showed six UI bugs. They are fixed in `firmware-v15-lcd/src` (details in `firmware-v15-lcd/PORT_NOTES.md`, "UI fixes"):
 
-1. **√ shows as `?` in the expression** (`02`, `03`). `fbtext::match()` only searches `calc::kGlyphs[]`. It does not search the replacement glyphs in `core/font.cpp` (`kExtra`: √ ≈ ⌟ ▲ ▼ ◀ ▶ padlock ✓ ⚠ Wi-Fi), so those cells decode as raw. `drawCalc()` turns raw cells into `?`. Menu and answer rows draw raw cells as pixels, so ✓ looks right there.
-2. **The ▲▼ scroll arrows never appear** (`24`–`26`). This has the same cause: `statusFromGrid()` looks for `0x25B2` / `0x25BC`, but those cells are raw.
-3. **The HOLD STILL countdown digits are garbled** (`21`). Core draws them at 2× with `drawTextPx`, which the 5 × 7 cell decoder can't read.
-4. **Status bar overlaps.** The battery % text overlaps the Wi-Fi icon, for example `.64%` in `31`–`33`. The AI indicator overlaps the % text in `20` and `36`.
-5. **Text clipped at the right edge:**
-   - the calculator soft keys ("SHIFT 2nd" is cut to "SH")
-   - "Downloading v15lcd-2026.10.20" (29 characters at 11 px)
-   - the self-test caption "…grey ramp, border A1B2C3"
-6. **Viewfinder text collisions:**
-   - In the top band, a long focus text runs into the centred mode text ("FIXED FOCUSNormal" in `75`; "FOCUSED" touches "Careful +Tutor" in `74`).
-   - In the bottom band, the "AC Back" hint runs into the fps / "off in" text on the right.
+1. √ printed as `?`, and ▲▼ scroll arrows never appeared: the decoder now knows core's replacement glyphs and icons. √ is drawn as a real radical sign; ✓ is green, ⚠ amber.
+2. HOLD STILL countdown garbled: the 2× text is read back at 2× and shown as a large amber number.
+3. Status bar overlaps: laid out from measured widths.
+4. Text cut off at the right (soft keys, "Downloading …", self-test caption): measured, tighter spacing or fewer keys.
+5. Viewfinder band collisions: measured layout; the mode or the Effort hint is left out when there's no room.
+
+Before / after: `sheet_before_after.png` (every changed screen; the old images are in `before_fixes/`). Rebuild it with `python tools/ui_sim_v15/before_after.py` after `make_screens.py`.
+
+Known trade-offs: the calculator soft key says `MODE 4 AI` (not "AI solve"), and the AI SOLVE home shows three soft keys (Effort ▲▼ and 1:Tutor are written on the page). With a fixed-focus module and a long mode such as "Careful +Tutor", the top band shows "FIXED" instead of "FIXED FOCUS".

@@ -8,7 +8,7 @@ not re-run because core/ is untouched). Nothing committed. No API key anywhere. 
 
 | Project | RAM | Flash (1.9 MB OTA slot) |
 | --- | --- | --- |
-| `firmware-v15-lcd` (`env:v15lcd`) | **28.8 %** (94,372 B) | **68.0 %** (1,336,201 B) |
+| `firmware-v15-lcd` (`env:v15lcd`) | **28.8 %** (94,396 B) | **68.3 %** (1,343,269 B) (after the 2026-10-10 UI fixes; was 94,372 B / 1,336,201 B) |
 | `firmware-prototype` (v14, unchanged) | 30.7 % (100,440 B) | 63.4 % (1,245,549 B) |
 
 LovyanGFX 1.2.32 adds ~90 KB of flash over GxEPD2; internal RAM went *down* because the 320x170 canvas
@@ -111,10 +111,45 @@ lives in PSRAM and the e-paper library's buffers are gone. No compiler warnings 
 10. **UI legibility** at 0.13 mm pixels: 2x menu text (10x14 px) may be small; `kTextScale` in `ui.cpp`
     is the single knob (3x fits 18 columns; the core wraps at 25, so rows would need re-flowing).
 11. The decoder (`fbtext`) must recognise every glyph the core draws; an unrecognised cell shows as raw
-    pixels at 2x (still correct, just small). Run through every menu once and look for them.
+    pixels at 2x (still correct, just small). Run through every menu once and look for them. (Since
+    2026-10-10 it also knows core's replacement glyphs and icons; see "UI fixes" below. The PC
+    screenshot harness `tools/ui_sim_v15/` shows every screen without the board.)
 12. OTA from a v14 image to v15 is **not** safe (different hardware): keep separate version strings and
     proxy images per board (bump `kFirmwareVersion` in `claude_client.h` to a `v15-` prefix before the
     first OTA upload).
+
+## UI fixes from the PC screenshots (2026-10-10)
+
+Found with `tools/ui_sim_v15/make_screens.py` (real `ui.cpp` / `fbtext.cpp` / `vf_lcd.cpp` /
+`selftest.cpp` on PC LovyanGFX). Before/after: `hardware/renders_ui_v15/sheet_before_after.png`
+(old images kept in `hardware/renders_ui_v15/before_fixes/`). `core/` and `firmware-prototype/`
+unchanged; core tests 548 passed; `pio run -e v15lcd` no warnings from `src/`.
+
+- **Replacement glyphs** (`fbtext.cpp` `drawnGlyphs()` / `match()`): core/font.cpp swaps some glyphs
+  for hand-drawn ones (its private `kExtra`: √ ≈ ⌟ ▲ ▼ ◀ ▶ ✓ ⚠, padlock U+E000, Wi-Fi U+E001).
+  The decoder now reads them back through core's public `findGlyph()` / `hasGlyph()` and matches them
+  first. √ no longer prints `?` in the expression; the ▲▼ scroll arrows (AI pages, calculator history)
+  appear; ✓ is drawn green and ⚠ amber (`ui.cpp` `symbolColor()`).
+- **Real √** (`glyphdraw.h` `radical()`): at 2x and up, √ is drawn as an anti-aliased radical whose bar
+  runs into the next cell.
+- **HOLD STILL countdown** (`fbtext::decodeScaled()`, `ui.cpp` `drawGenericRows()`): core draws it at
+  2x with `drawTextPx`. A row with raw cells is tried as 2x text (every font pixel must be a solid 2x2
+  block, so normal text never passes); found → the number at 5x and the unit at 3x, amber.
+- **Status bar** (`ui.cpp` `rightCluster()`, `statusFromGrid()`): laid out right to left from measured
+  widths (battery icon, % with the tight advance, Wi-Fi). "AI" and the exam padlock + clock are packed
+  against it. The exam clock comes from `Device::examElapsedMs()` (its last digit runs into the core's
+  battery outline in the 1-bit picture, so it was cut to "0:0").
+- **Soft keys** (`ui.cpp` `softKeys()`): measured; tight advance if needed; a key that would not fit
+  whole is left out. Calculator: `MODE Menu`, `MODE 4 AI`, `SHIFT 2nd`. AI ready: `= Scan`, `▶ Camera`,
+  `AC Back` (Effort ▲▼ and 1:Tutor are on the page itself).
+- **Long lines** (`glyphdraw.h` `textFit()`): `showLines` / `showProgress` / status-bar titles use the
+  tight advance when a line is too long, then cut with "..". "Downloading v15lcd-2026.10.20" now fits.
+- **Self-test caption** (`selftest.cpp` `lcdPattern()`): "SELF-TEST: bars, ramp" left, the device id
+  right-aligned, measured.
+- **Viewfinder bands** (`vf_lcd.cpp` `showFrame()`): top band = right cluster first, then the focus text,
+  then the mode centred in the space left (falls back to "FIXED", then drops the mode). Bottom band =
+  fps / "off in" placed first; hints `= Scan`, `▶ Focus`, `AC Back` (Effort dropped when it would collide;
+  the mode text shows it).
 
 ## Open items / later
 

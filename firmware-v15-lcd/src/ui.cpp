@@ -28,6 +28,7 @@ constexpr uint32_t kBlinkMs = 500;
 
 uint32_t g_shownHash = 0;
 fbtext::Grid g_grid;
+const Framebuffer* g_fb = nullptr;  // the core picture being shown (for decodeScaled)
 
 uint32_t fnv1a(const std::string& s, uint32_t h = 2166136261u) {
   for (unsigned char c : s) h = (h ^ c) * 16777619u;
@@ -70,51 +71,92 @@ void wifiIcon(LGFX_Sprite& s, int x, int y, const Status& st) {
   }
 }
 
+// The right end of the status bar, laid out right to left from measured widths: the
+// battery icon at the edge, its % before it, the Wi-Fi bars before that. Returns the x
+// where the cluster starts (anything on the left must end before it).
+int rightCluster(LGFX_Sprite& s, const Status& st, bool onRed) {
+  constexpr int kBatW = 24, kWifiW = 11, kGap = 5;
+  int x = kW - 4 - kBatW;
+  batteryIcon(s, x, 5, st);
+  if (st.battery >= 0) {
+    const std::string pct = std::to_string(st.battery > 100 ? 100 : st.battery) + "%";
+    const int adv = gd::tight(kTextScale);
+    const uint16_t col = onRed ? color::white : st.battery <= 20 && !st.charging ? color::error : color::dim;
+    gd::textRight(s, x - kGap + 2, 4, pct, kTextScale, col, adv);  // +2: the font's own gap column
+    x -= kGap + gd::width(pct, kTextScale, adv) - 2;
+  }
+  if (st.wifiOn || st.wifiConnected) {
+    x -= kGap + 1 + kWifiW;
+    wifiIcon(s, x, 5, st);
+  }
+  return x;
+}
+
 }  // namespace
 
 void drawStatusBar(const Status& st, const char* leftText) {
   LGFX_Sprite& s = lcd::canvas();
   s.fillRect(0, 0, kW, kStatusH, color::bar);
-  if (leftText) gd::text(s, kMarginX, 4, leftText, kTextScale, color::text);
-  wifiIcon(s, 250, 5, st);
-  batteryIcon(s, 292, 5, st);
-  if (st.battery >= 0) gd::textRight(s, 288, 4, std::to_string(st.battery > 100 ? 100 : st.battery) + "%",
-                                     kTextScale, st.battery <= 20 && !st.charging ? color::error : color::dim);
+  const int right = rightCluster(s, st, false);
+  if (leftText) gd::textFit(s, kMarginX, 4, leftText, kTextScale, color::text, right - 6 - kMarginX);
 }
 
 namespace {
 
+std::string clockText(uint32_t ms) {  // h:mm, as core's status row shows it
+  const uint32_t min = ms / 60000;
+  char b[16];
+  snprintf(b, sizeof b, "%u:%02u", unsigned(min / 60), unsigned(min % 60));
+  return b;
+}
+
 // The core's status row (SHIFT, ALPHA, M, STO/RCL, D/R/G, EXAM clock, AI) typeset into the
-// bar; its own battery/Wi-Fi glyphs and scroll arrows are replaced by ours.
-void statusFromGrid(const Status& st, bool& up, bool& down) {
+// bar; its own battery/Wi-Fi glyphs and scroll arrows are replaced by ours. Cells 0-11 keep
+// their column; the right-hand items (AI, the exam clock) are packed against our battery /
+// Wi-Fi cluster, measured, so nothing overlaps.
+void statusFromGrid(const Device& dev, const Status& st, bool& up, bool& down) {
   LGFX_Sprite& s = lcd::canvas();
-  const bool exam = g_grid.rowInverted(0) && g_grid.text(0).find("EXAM") != std::string::npos;
+  const bool exam = dev.examActive();
   s.fillRect(0, 0, kW, kStatusH, exam ? color::error : color::bar);
-  int x = kMarginX;
   up = g_grid.cell[0][23].cp == 0x25B2;
   down = g_grid.cell[0][24].cp == 0x25BC;
-  for (int c = 0; c < 21; ++c) {  // cells 21-22 hold the core's battery outline, 23-24 the arrows
+  const int right = rightCluster(s, st, exam);
+  for (int c = 0; c < 12; ++c) {
     const fbtext::Cell& cell = g_grid.cell[0][c];
     const int cx = kMarginX + c * (gd::kGlyphW * kTextScale + 1);
     if (cell.raw) {
-      gd::bits(s, cx, 4, cell.rows, kTextScale, color::text);
+      gd::bits(s, cx, 4, cell.rows, kTextScale, exam ? color::white : color::text);
       continue;
     }
     if (cell.cp == ' ') continue;
-    if (cell.cp == 0xE001) continue;  // the Wi-Fi glyph: ours is on the right
     uint16_t col = color::text;
     if (c == 0 && cell.cp == 'S') col = color::warn;    // SHIFT
     if (c == 1 && cell.cp == 'A') col = color::error;   // ALPHA
     if (c == 9) col = color::accent;                    // D / R / G
-    if (c >= 19 && cell.cp != ' ') col = color::accent; // AI
     gd::glyph(s, cx, 4, calc::findGlyph(cell.cp), kTextScale, exam ? color::white : col);
-    x = cx;
   }
-  (void)x;
-  wifiIcon(s, 250, 5, st);
-  batteryIcon(s, 292, 5, st);
-  if (st.battery >= 0) gd::textRight(s, 288, 4, std::to_string(st.battery > 100 ? 100 : st.battery) + "%",
-                                     kTextScale, st.battery <= 20 && !st.charging ? color::error : color::dim);
+  // Cells 12-20: "AI" (19-20) or the exam padlock + clock (12-21; its last digit runs into
+  // the core's battery outline at 21-22, so the clock comes from the Device instead).
+  std::string tail;
+  if (exam) {
+    tail = "\xEE\x80\x80" "EXAM " + clockText(dev.examElapsedMs());
+  } else {
+    std::vector<uint32_t> cps;
+    for (int c = 12; c < 21; ++c) {
+      const fbtext::Cell& cell = g_grid.cell[0][c];
+      if (cell.raw || cell.cp == 0xE001) continue;  // the Wi-Fi glyph: ours is in the cluster
+      if (cell.cp != ' ' || !cps.empty()) cps.push_back(cell.cp);
+    }
+    while (!cps.empty() && cps.back() == ' ') cps.pop_back();
+    tail = calc::encodeUtf8(cps);
+  }
+  if (!tail.empty()) {
+    const int adv = gd::advance(kTextScale);
+    const int lo = kMarginX + 11 * (gd::kGlyphW * kTextScale + 1);  // after the D/R/G cell
+    int x = right - 8 - gd::width(tail, kTextScale, adv);
+    if (x < lo) x = lo;
+    gd::text(s, x, 4, tail, kTextScale, exam ? color::white : color::accent, adv);
+  }
 }
 
 void scrollArrows(bool up, bool down) {
@@ -123,18 +165,40 @@ void scrollArrows(bool up, bool down) {
   if (down) gd::glyph(s, kW - 14, kContentY + kContentH - 16, calc::findGlyph(0x25BC), kTextScale, color::accent);
 }
 
+// The soft-key bar: [key] what, ... Measured first: the normal spacing if everything fits,
+// else the tight advance and smaller gaps; a key that still would not fit whole is left
+// out (never cut in half at the edge).
 void softKeys(const std::vector<std::pair<std::string, std::string>>& keys) {
   LGFX_Sprite& s = lcd::canvas();
   const int y = kH - kSoftH;
   s.fillRect(0, y, kW, kSoftH, color::bar);
+  const int avail = kW - 2 * kMarginX;
+  int adv = gd::advance(kTextScale), gap = 12;
+  auto groupW = [&](const std::pair<std::string, std::string>& k) {
+    return gd::width(k.first, kTextScale, adv) + 6 + 3 + gd::width(k.second, kTextScale, adv);
+  };
+  int total = -gap;
+  for (const auto& k : keys) total += groupW(k) + gap;
+  if (total > avail) {
+    adv = gd::tight(kTextScale);
+    gap = 8;
+  }
   int x = kMarginX;
   for (const auto& k : keys) {
-    const int kw = gd::width(k.first, kTextScale) + 6;
+    if (x + groupW(k) > kW - kMarginX + 2) break;  // +2: the last glyph's blank gap column
+    const int kw = gd::width(k.first, kTextScale, adv) + 6 - (adv < gd::advance(kTextScale) ? 2 : 0);
     s.fillRoundRect(x, y + 3, kw, 14, 3, color::dim);
-    gd::text(s, x + 3, y + 3, k.first, kTextScale, color::black);
-    x += kw + 4;
-    x = gd::text(s, x, y + 3, k.second, kTextScale, color::dim) + 12;
+    gd::text(s, x + 3, y + 3, k.first, kTextScale, color::black, adv);
+    x += kw + 3;
+    x = gd::text(s, x, y + 3, k.second, kTextScale, color::dim, adv) + gap;
   }
+}
+
+// Colour for symbols in decoded text: the verified tick green, the warning amber.
+uint16_t symbolColor(uint32_t cp, uint16_t textColor) {
+  if (cp == 0x2713) return color::good;
+  if (cp == 0x26A0) return color::warn;
+  return textColor;
 }
 
 // One decoded core row typeset at 2x: inverted cells on an accent block, underlined rows
@@ -150,7 +214,8 @@ void drawGridRow(int row, int y, uint16_t textColor) {
     if (cell.inverted) s.fillRect(x - 1, y - 2, adv + 1, gd::kGlyphH * kTextScale + 4, color::accent);
     const uint16_t col = cell.inverted ? color::black : textColor;
     if (cell.raw) gd::bits(s, x, y, cell.rows, kTextScale, col);
-    else if (cell.cp != ' ') gd::glyph(s, x, y, calc::findGlyph(cell.cp), kTextScale, col);
+    else if (cell.cp != ' ')
+      gd::glyph(s, x, y, calc::findGlyph(cell.cp), kTextScale, cell.inverted ? col : symbolColor(cell.cp, col));
   }
   if (underline) {
     const int w = gd::width(g_grid.text(row), kTextScale);
@@ -158,10 +223,38 @@ void drawGridRow(int row, int y, uint16_t textColor) {
   }
 }
 
+bool rowHasRaw(int row) {
+  for (int c = 0; c < fbtext::kCols; ++c)
+    if (g_grid.cell[row][c].raw) return true;
+  return false;
+}
+
 void drawGenericRows(uint16_t textColor = color::text) {
   LGFX_Sprite& s = lcd::canvas();
   for (int r = 1; r < fbtext::kRows; ++r) {
     const int y = kContentY + (r - 1) * kRowPitch + 3;
+    // Text the core drew at 2x (the HOLD STILL countdown, drawTextPx one pixel below the
+    // row) spans this row and the next: read it at 2x and show it as large amber digits.
+    if (g_fb && r + 1 < fbtext::kRows && rowHasRaw(r)) {
+      std::string big;
+      for (int dy : {1, 0}) {
+        big = fbtext::decodeScaled(*g_fb, 0, r * 8 + dy, 2);
+        if (!big.empty()) break;
+      }
+      if (!big.empty()) {
+        // "3 s": the number large, its unit smaller on the same baseline.
+        std::string unit;
+        const size_t sp = big.rfind(' ');
+        if (sp != std::string::npos && sp > 0) {
+          unit = big.substr(sp + 1);
+          big.resize(sp);
+        }
+        const int x = gd::text(s, kMarginX, y, big, 5, color::warn);
+        if (!unit.empty()) gd::text(s, x + 4, y + gd::kGlyphH * (5 - 3), unit, 3, color::warn);
+        ++r;  // the next row holds the bottom half
+        continue;
+      }
+    }
     const bool header = r == 1 && [&] {
       for (int c = 0; c < fbtext::kCols; ++c)
         if (g_grid.cell[1][c].underline && g_grid.cell[1][c].cp != ' ') return true;
@@ -275,6 +368,7 @@ void showDevice(const Device& dev, const Framebuffer& fb, const Status& st, uint
   if (!force && h == g_shownHash) return;
   g_shownHash = h;
   fbtext::decode(fb, g_grid);
+  g_fb = &fb;
   LGFX_Sprite& s = lcd::canvas();
   if (dev.isOff()) {
     drawOff(st);
@@ -283,17 +377,18 @@ void showDevice(const Device& dev, const Framebuffer& fb, const Status& st, uint
   }
   s.fillSprite(color::bg);
   bool up = false, down = false;
-  statusFromGrid(st, up, down);
+  statusFromGrid(dev, st, up, down);
   switch (dev.view()) {
     case View::Calc:
       drawCalc(dev, nowMs);
       if (shiftShown()) softKeys({{"MODE", "Setup"}, {"\xE2\x96\xB2\xE2\x96\xBC", "Light"}, {"AC", "Off"}});
-      else softKeys({{"MODE", "Menu"}, {"MODE 4", "AI solve"}, {"SHIFT", "2nd"}});
+      else softKeys({{"MODE", "Menu"}, {"MODE 4", "AI"}, {"SHIFT", "2nd"}});
       break;
     case View::Ai:
       drawGenericRows();
       if (dev.ai().screen() == calc::Screen::Ready)
-        softKeys({{"=", "Scan"}, {"\xE2\x96\xB6", "Camera"}, {"\xE2\x96\xB2\xE2\x96\xBC", "Effort"}, {"1", "Tutor"}, {"AC", "Back"}});
+        // Effort (▲▼) and Tutor (1) are on the page itself; the bar holds the three main keys.
+        softKeys({{"=", "Scan"}, {"\xE2\x96\xB6", "Camera"}, {"AC", "Back"}});
       else if (dev.ai().screen() == calc::Screen::Result)
         softKeys({{"\xE2\x96\xB2\xE2\x96\xBC", "Scroll"}, {"=", "Again"}, {"AC", "Back"}});
       else
@@ -326,7 +421,7 @@ void showLines(const std::vector<std::string>& lines, const Status& st) {
     const int y = kContentY + int(i - 1) * kRowPitch + 3;
     const std::string& t = lines[i];
     const bool hint = t.rfind("AC", 0) == 0 || t.find("Next:") == 0;
-    gd::text(s, kMarginX, y, t, kTextScale, hint ? color::accent : color::text);
+    gd::textFit(s, kMarginX, y, t, kTextScale, hint ? color::accent : color::text, kW - 2 * kMarginX);
   }
   s.fillRect(0, kH - kSoftH, kW, kSoftH, color::bar);
   lcd::flush();
@@ -341,8 +436,8 @@ void showProgress(const std::string& title, const std::string& line1, const std:
   LGFX_Sprite& s = lcd::canvas();
   s.fillSprite(color::bg);
   drawStatusBar(st, title.c_str());
-  gd::text(s, kMarginX, kContentY + 6, line1, kTextScale, color::text);
-  gd::text(s, kMarginX, kContentY + 30, line2, kTextScale, color::dim);
+  gd::textFit(s, kMarginX, kContentY + 6, line1, kTextScale, color::text, kW - 2 * kMarginX);
+  gd::textFit(s, kMarginX, kContentY + 30, line2, kTextScale, color::dim, kW - 2 * kMarginX);
   const int bx = kMarginX, by = kContentY + 62, bw = kW - 2 * kMarginX, bh = 18;
   s.drawRoundRect(bx, by, bw, bh, 4, color::dim);
   if (percent > 0) s.fillRoundRect(bx + 2, by + 2, (bw - 4) * (percent > 100 ? 100 : percent) / 100, bh - 4, 3, color::accent);

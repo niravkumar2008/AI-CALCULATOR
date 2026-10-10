@@ -93,45 +93,88 @@ void showFrame(uint8_t* rgb565, const Overlay& o) {
   }
 
   // Top band: focus state on the left, mode in the middle, battery / Wi-Fi on the right.
+  // Laid out from measured widths with the font's tight advance (the band is 16 px):
+  // right cluster first, then the focus text, then the mode centred in what is left.
   s.fillRect(0, 0, kW, kTopBand, black);
+  const int adv = gd::tight(2);
   const char* focusText = "";
+  const char* focusShort = "";
   uint16_t focusColor = dim;
   switch (o.focus) {
-    case FocusState::Focusing: focusText = "FOCUSING"; focusColor = warn; break;
-    case FocusState::Focused: focusText = "FOCUSED"; focusColor = good; break;
-    case FocusState::Fixed: focusText = "FIXED FOCUS"; focusColor = dim; break;
-    case FocusState::None: focusText = "NO AF"; focusColor = dim; break;
+    case FocusState::Focusing: focusText = focusShort = "FOCUSING"; focusColor = warn; break;
+    case FocusState::Focused: focusText = focusShort = "FOCUSED"; focusColor = good; break;
+    case FocusState::Fixed: focusText = "FIXED FOCUS"; focusShort = "FIXED"; focusColor = dim; break;
+    case FocusState::None: focusText = focusShort = "NO AF"; focusColor = dim; break;
   }
   if (o.info.state == calc::Focus3::Moving) {
-    focusText = "HOLD STILL";
+    focusText = focusShort = "HOLD STILL";
     focusColor = warn;
   }
+  int right = kW - 4;
+  if (o.battery >= 0) {
+    char pct[24];
+    snprintf(pct, sizeof pct, "%s%d%%", o.charging ? "+" : "", o.battery);
+    gd::textRight(s, right + 2, 1, pct, 2, o.battery <= 20 && !o.charging ? ui::color::error : dim, adv);
+    right -= gd::width(pct, 2, adv) + 4;
+  }
+  if (o.wifiConnected) {
+    right -= 8;
+    s.fillRect(right, 4, 8, 8, accent);
+    right -= 6;
+  }
   s.fillCircle(8, kTopBand / 2, 3, focusColor);
-  gd::text(s, 16, 1, focusText, 2, focusColor);
-  gd::textCentered(s, kW / 2 + 10, 1, o.mode, 2, accent);
-  char right[24];
-  snprintf(right, sizeof right, "%s%d%%", o.charging ? "+" : "", o.battery < 0 ? 0 : o.battery);
-  if (o.battery >= 0) gd::textRight(s, kW - 4, 1, right, 2, o.battery <= 20 && !o.charging ? ui::color::error : dim);
-  if (o.wifiConnected) s.fillRect(kW - 50, 4, 8, 8, accent);
+  // The mode centred between the focus text and the right cluster; if it doesn't fit, the
+  // short focus text ("FIXED"), and if it still doesn't, the mode is left out (the focus
+  // state matters more while aiming).
+  const int modeW = gd::width(o.mode, 2, adv);
+  const char* f = focusText;
+  int left = 16 + gd::width(f, 2, adv) + 8;
+  if (right - left < modeW) {
+    f = focusShort;
+    left = 16 + gd::width(f, 2, adv) + 8;
+  }
+  gd::text(s, 16, 1, f, 2, focusColor, adv);
+  if (right - left >= modeW) {
+    int mx = (kW - modeW) / 2 + 10;  // centred on the screen when there's room
+    if (mx < left) mx = left;
+    if (mx + modeW > right) mx = right - modeW;
+    gd::text(s, mx, 1, o.mode, 2, accent, adv);
+  }
 
-  // Bottom band: key hints, time left, fps.
+  // Bottom band: key hints on the left, the time-out or fps on the right. The right text
+  // is placed first; a hint that would run into it is left out (Effort goes first: the
+  // mode text above shows it).
   s.fillRect(0, kH - kBottomBand, kW, kBottomBand, black);
-  int x = 4;
-  auto hint = [&](const char* key, const char* what) {
-    const int kw = gd::width(key, 2) + 4;
-    s.fillRoundRect(x, kH - kBottomBand + 2, kw, 14, 2, dim);
-    gd::text(s, x + 2, kH - kBottomBand + 2, key, 2, black);
-    x += kw + 3;
-    x = gd::text(s, x, kH - kBottomBand + 2, what, 2, dim) + 8;
-  };
-  hint("=", "Scan");
-  hint("\xE2\x96\xB6", "Focus");
-  hint("\xE2\x96\xB2\xE2\x96\xBC", "Effort");
-  hint("AC", "Back");
   char tail[24];
   if (o.secondsLeft <= 10) snprintf(tail, sizeof tail, "off in %lus", (unsigned long)o.secondsLeft);
   else snprintf(tail, sizeof tail, "%.0f fps", o.fps);
-  gd::textRight(s, kW - 4, kH - kBottomBand + 2, tail, 2, o.secondsLeft <= 10 ? warn : dim);
+  const int tailX = kW - 4 - gd::width(tail, 2, adv) + 2;
+  gd::text(s, tailX, kH - kBottomBand + 2, tail, 2, o.secondsLeft <= 10 ? warn : dim, adv);
+  struct Hint {
+    const char* key;
+    const char* what;
+  };
+  auto hintW = [&](const Hint& h) { return gd::width(h.key, 2, adv) + 2 + 3 + gd::width(h.what, 2, adv); };
+  const Hint all[] = {{"=", "Scan"}, {"\xE2\x96\xB6", "Focus"}, {"\xE2\x96\xB2\xE2\x96\xBC", "Effort"}, {"AC", "Back"}};
+  constexpr int kHintGap = 6;
+  bool use[4] = {true, true, true, true};
+  auto total = [&] {
+    int w = 4;
+    for (int i = 0; i < 4; ++i)
+      if (use[i]) w += hintW(all[i]) + kHintGap;
+    return w;
+  };
+  if (total() > tailX - 4) use[2] = false;  // Effort
+  if (total() > tailX - 4) use[1] = false;  // Focus
+  int x = 4;
+  for (int i = 0; i < 4; ++i) {
+    if (!use[i]) continue;
+    const int kw = gd::width(all[i].key, 2, adv) + 2;
+    s.fillRoundRect(x, kH - kBottomBand + 2, kw, 14, 2, dim);
+    gd::text(s, x + 2, kH - kBottomBand + 2, all[i].key, 2, black, adv);
+    x += kw + 3;
+    x = gd::text(s, x, kH - kBottomBand + 2, all[i].what, 2, dim, adv) + kHintGap;
+  }
 
   lcd::pushRaw(0, reinterpret_cast<const uint16_t*>(rgb565 + size_t(kCropY) * kFrameW * 2), kH);
 }

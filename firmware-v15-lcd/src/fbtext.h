@@ -39,4 +39,9 @@ struct Grid {
 
 void decode(const calc::Framebuffer& fb, Grid& out);
 
+// Text core drew `scale` times larger with Framebuffer::drawTextPx() (the AI page's HOLD
+// STILL countdown), read from pixel (x, y) to the right edge. "" unless every character
+// cell there is a solid-block scaled glyph (so ordinary 1x text never passes).
+std::string decodeScaled(const calc::Framebuffer& fb, int x, int y, int scale);
+
 }  // namespace fbtext

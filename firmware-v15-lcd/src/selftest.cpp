@@ -79,7 +79,14 @@ uint32_t lcdPattern() {
   s.drawRect(0, 0, 320, 170, ui::color::white);
   s.drawRect(1, 1, 318, 168, ui::color::white);
   s.fillRect(0, 144, 320, 24, ui::color::black);
-  glyphdraw::text(s, 6, 148, "SELF-TEST: bars, grey ramp, border  " + deviceId(), 2, ui::color::white);
+  // Caption: what to look at on the left, this board's id on the right (measured, so the
+  // two never overlap and nothing runs off the 320-px edge).
+  const std::string id = deviceId();
+  const int idX = 314 - glyphdraw::width(id, 2) + 2;
+  glyphdraw::text(s, idX, 148, id, 2, ui::color::dim);
+  std::string caption = "SELF-TEST: bars, ramp";
+  if (6 + glyphdraw::width(caption, 2) > idX - 8) caption = "SELF-TEST";
+  glyphdraw::textFit(s, 6, 148, caption, 2, ui::color::white, idX - 8 - 6);
   lcd::flush();
   return lcd::lastFlushMs();
 }

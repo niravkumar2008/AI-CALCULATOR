@@ -13,11 +13,45 @@ bool sameRows(const uint8_t* a, const uint8_t* b) {
   return true;
 }
 
+// The glyphs core actually draws but kGlyphs[] doesn't hold as such: core/font.cpp swaps
+// some kGlyphs entries for hand-drawn replacements (its private kExtra table: √ ≈ ⌟ ▲ ▼
+// ◀ ▶ ✓ ⚠) and adds private-use icons (U+E000 padlock, U+E001 Wi-Fi). That table isn't
+// exported, so it is read back through core's public findGlyph()/hasGlyph(): whatever
+// findGlyph() returns is exactly what Framebuffer::drawText() put on the screen.
+struct Drawn {
+  uint32_t cp;
+  const uint8_t* rows;
+};
+
+const std::vector<Drawn>& drawnGlyphs() {
+  static std::vector<Drawn> t;
+  static bool built = false;
+  if (built) return t;
+  built = true;
+  auto add = [](uint32_t cp) {
+    if (!calc::hasGlyph(cp)) return;
+    const calc::Glyph* g = calc::findGlyph(cp);
+    if (g->cp != cp) return;  // normalised onto another character: that one is matched itself
+    for (const Drawn& d : t)
+      if (d.cp == cp) return;
+    t.push_back({cp, g->rows});
+  };
+  // kGlyphs entries that findGlyph() replaces (the pointer differs from the table's own).
+  for (int i = 0; i < calc::kGlyphCount; ++i)
+    if (calc::findGlyph(calc::kGlyphs[i].cp) != &calc::kGlyphs[i]) add(calc::kGlyphs[i].cp);
+  // The replacements and icons by code point (some have no kGlyphs entry at all).
+  for (uint32_t cp : {0x2248u, 0x221Au, 0x231Fu, 0x25B2u, 0x25BCu, 0x25C0u, 0x25B6u, 0x2713u, 0x26A0u}) add(cp);
+  for (uint32_t cp = 0xE000; cp < 0xE020; ++cp) add(cp);
+  return t;
+}
+
 // The code point whose glyph is exactly `rows`, or 0.
 uint32_t match(const uint8_t* rows) {
   bool any = false;
   for (int i = 0; i < 7; ++i) any |= rows[i] != 0;
   if (!any) return ' ';
+  for (const Drawn& d : drawnGlyphs())  // first: what core really draws
+    if (sameRows(rows, d.rows)) return d.cp;
   for (int i = 0; i < calc::kGlyphCount; ++i)
     if (sameRows(rows, calc::kGlyphs[i].rows)) return calc::kGlyphs[i].cp;
   return 0;
@@ -100,6 +134,32 @@ void decode(const Framebuffer& fb, Grid& out) {
       cell.underline = gap != cell.inverted;
     }
   }
+}
+
+std::string decodeScaled(const Framebuffer& fb, int x, int y, int scale) {
+  if (scale < 2) return "";
+  std::vector<uint32_t> cps;
+  const int cw = calc::kCharW * scale;
+  for (int cx = x; cx + (calc::kCharW - 1) * scale <= Framebuffer::kWidth; cx += cw) {
+    uint8_t rows[7];
+    for (int j = 0; j < 7; ++j) {
+      uint8_t bits = 0;
+      for (int i = 0; i < 5; ++i) {
+        // Every font pixel must be a solid scale x scale block, or this isn't scaled text.
+        const bool v = fb.get(cx + i * scale, y + j * scale);
+        for (int dy = 0; dy < scale; ++dy)
+          for (int dx = 0; dx < scale; ++dx)
+            if (fb.get(cx + i * scale + dx, y + j * scale + dy) != v) return "";
+        if (v) bits |= uint8_t(0x10 >> i);
+      }
+      rows[j] = bits;
+    }
+    const uint32_t cp = match(rows);
+    if (!cp) return "";
+    cps.push_back(cp);
+  }
+  while (!cps.empty() && cps.back() == ' ') cps.pop_back();
+  return calc::encodeUtf8(cps);
 }
 
 }  // namespace fbtext
