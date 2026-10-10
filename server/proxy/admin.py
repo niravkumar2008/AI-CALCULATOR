@@ -3,7 +3,11 @@
   python admin.py new-device "Nirav's board #1"   -> prints the device token ONCE (type it into the calculator: token)
   python admin.py devices                          -> every device, linked account, revoked?
   python admin.py revoke dev_1a2b3c                -> the token stops working at once
-  python admin.py paid someone@example.com 2026-12-31   -> subscription paid until that date (until billing is wired)
+  python admin.py paid someone@example.com 2026-12-31   -> subscription paid until that date (manual / no Stripe)
+  python admin.py tier someone@example.com pro      -> put an account on the pro (Opus) or base (Sonnet) tier
+  python admin.py tiers                            -> the tiers: model, fallback, monthly cap, burst limits
+  python admin.py account someone@example.com      -> subscription state, tier, solves this month
+  python admin.py prompt                           -> the system prompt version the proxy sends
   python admin.py usage                            -> solves per account / device this month
   python admin.py firmware <firmware.bin> <version>  -> publish a firmware image for over-the-air updates
                                                       (firmware-prototype/.pio/build/prototype/firmware.bin;
@@ -11,6 +15,7 @@
   python admin.py firmware                         -> what is published now
 """
 import sys
+import time
 from datetime import datetime, timezone
 
 import config
@@ -38,14 +43,43 @@ def main(argv):
         until = datetime.strptime(argv[3], "%Y-%m-%d").replace(tzinfo=timezone.utc)
         n = db.set_paid_until(argv[2], until.timestamp() + 86399)
         print("updated" if n else "no such account (it is created when a calculator is linked)")
+    elif cmd == "tier" and len(argv) > 3:
+        try:
+            n = db.set_tier(argv[2], argv[3])
+        except ValueError as e:
+            print(e)
+            return 1
+        print("updated" if n else "no such account (it is created when a calculator is linked)")
+    elif cmd == "tiers":
+        import policy
+        import solve
+        for tier in db.TIERS:
+            model = policy.model_for(tier)
+            chain = " -> ".join(solve.model_chain(model))
+            print(f"{tier:5s} model {chain:40s} cap {policy.cap_for(tier)}/month")
+        print(f"burst: {config.SOLVE_CONCURRENCY} at a time, {config.SOLVES_PER_MINUTE}/minute, "
+              f"{config.SOLVES_PER_HOUR}/hour per calculator; trial {config.TRIAL_DAYS} days; "
+              f"past-due grace {config.PAST_DUE_GRACE_DAYS} days; prompt cache {'on' if config.PROMPT_CACHE else 'off'}")
+    elif cmd == "account" and len(argv) > 2:
+        a = db.account_by_email(argv[2])
+        if a is None:
+            print("no such account")
+            return 1
+        fmt = lambda ts: time.strftime("%Y-%m-%d", time.gmtime(ts)) if ts else "-"  # noqa: E731
+        print(f"{a['email']}: {db.subscription_state(a)} (billing status {a['sub_status'] or '-'}), tier {db.account_tier(a)}, "
+              f"trial ends {fmt(a['trial_ends_at'])}, paid until {fmt(a['paid_until'])}, "
+              f"solves this month {db.used('acct:' + str(a['id']), db.month())}")
+    elif cmd == "prompt":
+        import solve
+        system, _, version = solve.server_prompt()
+        print(f"{version}: {config.SYSTEM_PROMPT_FILE} ({len(system)} characters), source={config.PROMPT_SOURCE}")
     elif cmd == "firmware" and len(argv) > 3:
         try:
             m = firmware.publish(argv[2], argv[3])
         except (OSError, ValueError) as e:
             print(f"not published: {e}")
             return 1
-        print(f"published {m['version']}: {m['size']} bytes, sha256 {m['sha256']}
-"
+        print(f"published {m['version']}: {m['size']} bytes, sha256 {m['sha256']}\n"
               f"in {config.FIRMWARE_DIR}. Calculators switched off on a cable install it on their next check.")
     elif cmd == "firmware":
         m = firmware.current()

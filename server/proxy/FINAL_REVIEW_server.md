@@ -85,3 +85,42 @@ None in `server/`. (Only scratch files outside the repo.)
 2. Keep `kIdleMs` >= 120 s; if the proxy later adds SSE keep-alive comments (`: ping`), the
    `StreamReader` already ignores non-`data:` lines.
 3. Schedule a root-CA bundle refresh before 2031 (DigiCert Global Root CA expiry).
+
+## Fixes applied (2026-10-10, hardening for paying users)
+
+Tests: `python -m pytest -q` in `server/proxy` -> **51 passed** (was 15). New `test_hardening.py` (36 tests)
+runs offline against a fake Anthropic client; `conftest.py` gives every run a throw-away database.
+
+| Finding | Fix |
+| --- | --- |
+| S1 model default / no 429-5xx fallback | Tiers: `base` = `claude-sonnet-5-5` (default, per UNIT_ECONOMICS), `pro` = `claude-opus-5-5` (`accounts.tier`, `admin.py tier`, or the Stripe price). `solve.open_main_stream` tries the tier's model, then the other one on 408/409/429/5xx/529 or a connection error (`MODEL_FALLBACK`, `CLAUDE_MAX_RETRIES=1` per model); 400/401 are not retried. Effort always sent (Opus 5.5 defaults to medium). Refusal fallback unchanged (`"default"` form, beta `server-side-fallback-2026-07-01`). |
+| (new) prompt caching | System prompt sent as one text block with `cache_control: ephemeral` (`PROMPT_CACHE`); ~1.4k tokens, above the 512-token minimum on Sonnet/Opus 5.5. Cache read/write tokens logged per solve. |
+| M3 device-owned prompt | `prompts/solver_v1.txt` + `prompts/solver_v1.schema.json` (decoded byte-for-byte from `core/claude_api.cpp`, so answers don't change). Device `system` and schema ignored (`PROMPT_SOURCE=server`; `device` for bench tests). Version `solver_v1+<hash>` logged per solve; `admin.py prompt`. Request schema unchanged; content check tightened (one text block <= 1000 chars, non-empty base64). |
+| S2 no burst limit | `limits.py`: per calculator 1 solve in flight, 4/minute, 40/hour; 30/minute on pairing/status/firmware; 10/minute per IP on `/link`. Leases expire after 15 min. Monthly cap per tier (`MONTHLY_CAP` 500, `PRO_MONTHLY_CAP` 280 = Opus break-even at $15). Burst refusals are `429 fair_use_exceeded` + `retry-after` with a <= 110-char message, because that is a type the firmware already displays. In memory: run one worker (Dockerfile does). |
+| S3 `/link` unauthenticated | `LINK_MODE=email` (default): `/link` validates the code and e-mails a link signed with HMAC-SHA256 (`LINK_SECRET`, 30 min); `GET /link/confirm` only shows a button (mail scanners link nothing); `POST /link/confirm` links. Single use (the code is consumed). `parse_qs` form parsing, e-mail validation, CSP / no-referrer / nosniff headers. One free month per calculator (`devices.first_linked_at`): relinking to a new e-mail doesn't restart the trial. SMTP or console mailer (`mailer.py`). |
+| M2 `claim_pair_code` race | One `BEGIN IMMEDIATE` transaction: select, delete code, `INSERT OR IGNORE` account, update device. 8-thread test: exactly one winner. `note_hw_id` only writes when the hw id is still empty. |
+| S4 billing stub | `billing.py`: `WebhookVerifier` interface, `StripeVerifier` (`Stripe-Signature` t/v1, HMAC-SHA256 over `t.body`, 300 s tolerance, constant-time compare). Events: checkout.session.completed, customer.subscription.created/updated/deleted, invoice.paid, invoice.payment_failed; replays ignored (`billing_events`). States trial / active / past_due (3-day grace) / canceled; first month free from linking. Old `x-billing-secret` endpoint removed (`admin.py paid` still works by hand). |
+| M1 `/healthz` leak | Returns only `{"ok": true, "version": ...}`. Docs, redoc and openapi.json off. |
+| M4 idle timeout | Relay re-frames upstream bytes into whole SSE events and sends `: ping` every 15 s (`KEEPALIVE_SECONDS`) only between events; otherwise byte-for-byte Claude's stream (tested with a Python port of `StreamReader`). An upstream drop mid-answer now ends with an SSE `error` event `overloaded_error` (calculator: "busy") and isn't counted. |
+| M5 logging | `logs.py`: `x-request-id` per request (accepted from the caller if sane), in every log line and response header; redaction of `sk-ant-`, `dt_`, `whsec_`, bearer values, `?t=` link tokens, long base64. Bodies, photos and answers never logged. Per solve: device, model (and the model that actually answered), tier, prompt version, token usage, pings, duration. |
+| (new) OTA board family | `/v1/firmware/image` also refuses an image of another board family when the calculator sends `x-firmware`. |
+| (new) `admin.py` didn't run | A literal newline inside an f-string (in HEAD) was a SyntaxError: every admin command failed. Fixed; new commands `tiers`, `tier`, `account`, `prompt`. |
+| (new) Docker | Copies `prompts/`, runs as a non-root user, one worker, `--forwarded-allow-ips`. |
+
+Still open (server): only one OTA image at a time, so v14 and v15 calculators can't both be offered
+updates at once (needs one manifest per board family); a mid-stream `overloaded` error after the first
+byte isn't retried on the other model; the burst limiter is per process (move to Redis/DB before running
+more than one instance); the real Stripe Checkout page and the shop's sign-in are outside this folder.
+
+### Firmware changes requested (2026-10-10)
+1. `core/claude_api.cpp` `classifyFailure`: add `"rate_limited"` to the account error types shown as a
+   message (and optionally read `retry-after`). Then set `policy.RATE_LIMIT_ERROR_TYPE = "rate_limited"`;
+   until then the proxy reuses `fair_use_exceeded`, which already displays.
+2. `firmware-v15-lcd/src/main.cpp:58` `kSendSolveTimeoutMs = 120000` is a *total* limit on the preview
+   Send, not an idle limit: a long `xhigh`/`max` solve that is still streaming (or pinging) is reported as
+   "took too long" at 120 s. Raise it (e.g. 300 s) or reset it whenever bytes arrive.
+3. Optional, saves ~5 KB upload per solve: stop sending `system` in `buildSolveRequest` (the proxy
+   ignores it and accepts its absence). Keep sending `output_config.format` (still required by the
+   request check).
+4. Still open from above: replace `firmware/src/claude_client.*` with the proxy client; keep `kIdleMs`
+   >= 120 s (the proxy's `: ping` comments are already ignored by `StreamReader`); CA refresh before 2031.

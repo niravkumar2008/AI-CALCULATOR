@@ -84,6 +84,15 @@ def current(dest_dir=None):
     return m
 
 
+def family(version):
+    """The board family: the part before the first "-" ("stage14-..." = v14 e-paper, "v15lcd-..." = v15 LCD)."""
+    return (version or "").strip().split("-", 1)[0]
+
+
+def same_family(device_version, image_version):
+    return bool(family(device_version)) and family(device_version) == family(image_version)
+
+
 def decide(device_version, dest_dir=None):
     """What GET /v1/firmware answers a calculator running `device_version`."""
     m = current(dest_dir)
@@ -92,7 +101,7 @@ def decide(device_version, dest_dir=None):
     dev = (device_version or "").strip()
     # The board family is the part before the first "-" ("stage14-…" = v14 e-paper,
     # "v15lcd-…" = v15 LCD). Never offer one board's image to the other.
-    if dev.split("-", 1)[0] != m["version"].split("-", 1)[0]:
+    if not same_family(dev, m["version"]):
         return {"update": False, "version": m["version"]}
     return {"update": m["version"] != dev, "version": m["version"],
             "size": m["size"], "sha256": m["sha256"], "path": IMAGE_PATH}

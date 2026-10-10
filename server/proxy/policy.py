@@ -1,13 +1,27 @@
-"""Who may solve right now: device link, subscription, monthly fair-use cap, free tier.
+"""Who may solve right now: device link, subscription state, monthly fair-use cap per tier, free tier.
 
 Pure decisions on database rows, so they are easy to test. Error types and messages
 are what the calculator shows (core/claude_api.cpp: classifyFailure), so keep messages
-short (the e-paper wraps them at 25 characters, about 110 characters in all).
+short (<= 110 characters). The calculator shows the message for exactly these types:
+device_unknown, device_not_linked, subscription_inactive, fair_use_exceeded,
+free_tier_exhausted. Anything else with 429/5xx only shows "Claude is busy".
 """
 from dataclasses import dataclass, field
 
 import config
 import db
+
+# The burst limiter (limits.py) answers with this type so the calculator shows the message
+# ("wait a minute") instead of a generic "busy". A dedicated "rate_limited" type needs a
+# firmware change first (classifyFailure's list); see FINAL_REVIEW_server.md.
+RATE_LIMIT_ERROR_TYPE = "fair_use_exceeded"
+
+RATE_MESSAGES = {
+    "concurrency": "This calculator is already solving a photo. Wait for that answer, then try again.",
+    "minute": "Too many AI solves in a minute. Wait a moment, then try again.",
+    "hour": "Too many AI solves this hour. Take a short break, then try again.",
+    "other": "Too many requests from this calculator. Wait a minute, then try again.",
+}
 
 
 @dataclass
@@ -16,12 +30,21 @@ class Decision:
     status: int = 200
     error_type: str = ""
     message: str = ""
+    tier: str = "base"
     # usage counters to bump after a successful solve: [(subject, period), ...]
     count: list = field(default_factory=list)
 
 
 def _deny(status, error_type, message):
-    return Decision(False, status, error_type, message)
+    return Decision(False, status, error_type, message[:110])
+
+
+def cap_for(tier):
+    return config.PRO_MONTHLY_CAP if tier == "pro" else config.MONTHLY_CAP
+
+
+def model_for(tier):
+    return config.PRO_MODEL if tier == "pro" else config.BASE_MODEL
 
 
 def decide(device, ts=None):
@@ -38,17 +61,23 @@ def decide(device, ts=None):
 
     account = db.account(device["account_id"])
     subject = "acct:" + str(account["id"])
-    state = db.subscription_state(account)
-    if state in ("trial", "active"):
-        if db.used(subject, month) >= config.MONTHLY_CAP:
-            return _deny(429, "fair_use_exceeded",
-                         f"Fair use: {config.MONTHLY_CAP} AI solves used this month. More on the 1st.")
-        return Decision(True, count=[(subject, month)])
+    tier = db.account_tier(account)
+    state = db.subscription_state(account, ts)
+    allowed = state in ("trial", "active") or (state == "past_due" and account["paid_until"] > (ts or db.now()))
+    if allowed:
+        cap = cap_for(tier)
+        if db.used(subject, month) >= cap:
+            return _deny(429, "fair_use_exceeded", f"Fair use: {cap} AI solves used this month. More on the 1st.")
+        return Decision(True, tier=tier, count=[(subject, month)])
     if config.FREE_DAILY > 0:
         if db.used(subject, day) >= config.FREE_DAILY:
             return _deny(429, "free_tier_exhausted",
                          f"{config.FREE_DAILY} free solves used today. Subscribe at {short_url()} for more.")
         return Decision(True, count=[(subject, day), (subject, month)])
+    if state == "past_due":
+        return _deny(402, "subscription_inactive", f"Payment failed. Update your card at {short_url()} to keep AI solving.")
+    if state == "canceled":
+        return _deny(402, "subscription_inactive", f"Subscription ended. Subscribe at {short_url()} to keep AI solving.")
     return _deny(402, "subscription_inactive", f"Free month over. Subscribe at {short_url()} to keep AI solving.")
 
 
@@ -69,9 +98,12 @@ def status_json(device, ts=None):
         out["link_url"] = config.PUBLIC_URL + "/link"
         return out
     a = db.account(device["account_id"])
+    tier = db.account_tier(a)
     out.update({
         "account": a["email"],
-        "subscription": db.subscription_state(a),
+        "subscription": db.subscription_state(a, ts),
+        "tier": tier,
+        "monthly_cap": cap_for(tier),
         "trial_ends_at": a["trial_ends_at"],
         "paid_until": a["paid_until"],
         "solves_this_month": db.used("acct:" + str(a["id"]), db.month(ts)),
