@@ -11,11 +11,21 @@
 
 namespace calc {
 
-enum class Key { On, Off, AC, Eq, Up, Down };
+enum class Key { On, Off, AC, Eq, Up, Down, Tutor };
 
 enum class Screen { Off, Ready, Busy, Warning, Result, Message };
 
-enum class Failure { NoConnection, NoApiKey, Timeout, ApiBusy, ApiError, BadReply, Camera };
+enum class Failure { NoConnection, NoApiKey, Timeout, ApiBusy, ApiError, BadReply, Camera,
+                     Account,      // the proxy refused: not linked / subscription / monthly cap (detail = its message)
+                     LowBattery }; // the platform won't start Wi-Fi on a nearly empty cell
+
+// Whether the calculator's own engine agreed with Claude's final number (SolveResult::check).
+enum class Verify : uint8_t { None, Verified, Mismatch };
+
+// Re-computes `check` (calculator notation) with the calculator engine and compares it with the
+// first number in `answer` (after a multiple-choice label or the last '='). None when either
+// side has no number. `computed` gets the engine's value as the calculator would show it.
+Verify verifyAnswer(const std::string& answer, const std::string& check, std::string& computed);
 
 // How hard Claude thinks: chosen with ▲ ▼ on the AI SOLVE screen. More is
 // slower and costs more, and reads tricky math (exponents, limits) better.
@@ -28,6 +38,10 @@ class App {
   void onKey(Key k);
   void setOnline(bool online) { online_ = online; }
   void setHasApiKey(bool has) { hasKey_ = has; }
+  // The platform refuses Wi-Fi and the camera on a nearly empty battery (review S2):
+  // the AI SOLVE screen says so and = shows BATTERY LOW instead of starting a scan.
+  void setLowBattery(bool low) { lowBattery_ = low; }
+  bool lowBattery() const { return lowBattery_; }
   // What the "no API key" message tells the user to do.
   void setNoKeyHelp(const std::string& help) { noKeyHelp_ = help; }
 
@@ -60,6 +74,12 @@ class App {
   int activeRequest() const { return activeId_; }  // 0 when nothing is in flight
 
   Effort effort() const { return effort_; }
+  void setEffort(Effort e) { effort_ = e; }
+  // Tutor mode: a reply shows the question and one step at a time (= for the next hint);
+  // the answer comes last. Toggled with Key::Tutor on the AI SOLVE home screen.
+  bool tutor() const { return tutor_; }
+  void setTutor(bool on) { tutor_ = on; }
+  Verify verified() const { return verify_; }
   const char* effortParam() const;  // the API's name for it: "high", "xhigh", "max"
 
   Screen screen() const { return screen_; }
@@ -76,6 +96,7 @@ class App {
   void setLines(const std::string& title, const std::vector<std::string>& paragraphs,
                 const std::string& hint);
   void showResult(bool unclear);
+  void showTutor();
   void showMessage(const std::string& title, const std::string& body, bool retryable);
   void scrollBy(int d);
   bool accepts(int id) const;
@@ -84,9 +105,15 @@ class App {
   Effort effort_ = Effort::Normal;
   bool online_ = true;
   bool hasKey_ = true;
+  bool lowBattery_ = false;
   bool captured_ = false;
   bool retryable_ = false;
   bool streaming_ = false;  // showing an early answer while steps arrive
+  bool tutor_ = false;
+  int revealed_ = 0;        // tutor mode: steps shown so far
+  bool tutorShown_ = false; // the result screen is the tutor's
+  Verify verify_ = Verify::None;
+  std::string computed_;    // the engine's value for result_.check
   std::string noKeyHelp_ = "Run setup: hold AC while turning on.";
   int nextId_ = 1;
   int activeId_ = 0;

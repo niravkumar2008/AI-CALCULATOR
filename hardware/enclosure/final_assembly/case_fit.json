@@ -1,0 +1,41 @@
+{
+ "Slide case (in use)": {
+  "hits": [],
+  "min_gaps": {
+   "Front shell": 0.05,
+   "Back cover": 0.0,
+   "Keycaps (closest)": 6.93,
+   "Window lens": 7.858,
+   "Rubber feet": 0.0,
+   "Camera module": 2.059,
+   "Magnet connector": 2.5,
+   "Magnetic cable plug (detached)": 11.834
+  }
+ },
+ "Slide case (stored)": {
+  "hits": [],
+  "min_gaps": {
+   "Front shell": 0.05,
+   "Back cover": 0.05,
+   "Keycaps (closest)": 0.3,
+   "Window lens": 1.385,
+   "Rubber feet": 10.499,
+   "Camera module": 6.2,
+   "Magnet connector": 3.9,
+   "Magnetic cable plug (detached)": 12.207
+  }
+ },
+ "camera_covered_without_hole": true,
+ "magnet_face_Y": 81.6669424566787,
+ "case_open_end_Y": 82.1,
+ "magnet_blocked": false,
+ "thickness": {
+  "body_top": 11.8,
+  "body_keys": 11.3,
+  "key_tops": 12.8,
+  "feet": 0.3,
+  "in_use_total": 14.3,
+  "in_use_top_part": 13.3,
+  "stored_total": 14.6
+ }
+}

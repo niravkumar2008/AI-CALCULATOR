@@ -1,0 +1,872 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>v15 First Power-Up</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: one reading column, a bench-log of numbered stages; each stage is a checklist; readings sit in mono "meter" chips. */
+:root{
+  --bg:#f3f5f1; --surface:#ffffff; --fg:#1b241f; --muted:#56625b; --line:#d6ddd6;
+  --mask:#1f6b4a; --mask-soft:#e1efe7; --copper:#a8571b; --copper-soft:#f8e9dc;
+  --stop:#b3261e; --stop-soft:#fbe6e4; --ok:#1f6b4a;
+  --f-display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --f-body:"Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --f-mono:"JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#111613; --surface:#18201b; --fg:#e4ebe6; --muted:#9aa8a0; --line:#2c3831;
+  --mask:#5fc796; --mask-soft:#1b3428; --copper:#e39a5c; --copper-soft:#3a2617;
+  --stop:#ff8a80; --stop-soft:#3d1a18; --ok:#5fc796; color-scheme:dark }}
+:root[data-theme="dark"]{
+  --bg:#111613; --surface:#18201b; --fg:#e4ebe6; --muted:#9aa8a0; --line:#2c3831;
+  --mask:#5fc796; --mask-soft:#1b3428; --copper:#e39a5c; --copper-soft:#3a2617;
+  --stop:#ff8a80; --stop-soft:#3d1a18; --ok:#5fc796; color-scheme:dark }
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font:16px/1.6 var(--f-body);padding-inline:16px;padding-block:24px 64px}
+.wrap{max-width:46rem;margin-inline:auto;display:flex;flex-direction:column;gap:28px}
+h1,h2,h3{font-family:var(--f-display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(2rem,6vw,2.8rem);font-weight:800;letter-spacing:-.01em}
+h2{font-size:1.45rem;font-weight:800;display:flex;gap:.6rem;align-items:baseline}
+h2 .n{font-family:var(--f-mono);font-size:.9rem;color:var(--mask);font-weight:600}
+h3{font-size:1.05rem;font-weight:600;margin-top:4px}
+p{margin:0}
+.eyebrow{font-family:var(--f-mono);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+header{display:flex;flex-direction:column;gap:12px}
+.lede{color:var(--muted);max-width:62ch}
+section{display:flex;flex-direction:column;gap:14px;padding-top:22px;border-top:1px solid var(--line)}
+code,.m{font-family:var(--f-mono);font-size:.88em}
+.m{background:var(--mask-soft);color:var(--fg);padding:1px 6px;border-radius:4px;white-space:nowrap;font-variant-numeric:tabular-nums}
+.rules{background:var(--stop-soft);border:1px solid var(--stop);border-radius:8px;padding:14px 16px;display:flex;flex-direction:column;gap:8px}
+.rules strong{color:var(--stop)}
+.rules ol{margin:0;padding-left:1.3rem;display:flex;flex-direction:column;gap:4px}
+.note{border-left:3px solid var(--copper);background:var(--copper-soft);padding:10px 14px;border-radius:0 6px 6px 0}
+.stop{border-left:3px solid var(--stop);background:var(--stop-soft);padding:10px 14px;border-radius:0 6px 6px 0}
+.unsure{font-size:.82rem;font-family:var(--f-mono);color:var(--copper);border:1px solid var(--copper);border-radius:4px;padding:0 5px;white-space:nowrap}
+ul.check{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:2px}
+ul.check li{display:grid;grid-template-columns:28px minmax(0,1fr);gap:8px;align-items:start;padding:8px 6px;border-radius:6px}
+ul.check li:hover{background:var(--mask-soft)}
+ul.check input{width:20px;height:20px;margin-top:3px;accent-color:var(--mask);cursor:pointer}
+ul.check label{cursor:pointer}
+ul.check input:checked + label{color:var(--muted);text-decoration:line-through;text-decoration-color:var(--line)}
+ul.check ul{margin:6px 0 0;padding-left:1.1rem;text-decoration:none}
+input:focus-visible,button:focus-visible,a:focus-visible{outline:3px solid var(--copper);outline-offset:2px}
+.progress{position:sticky;top:env(safe-area-inset-top,0px);z-index:2;background:var(--bg);padding-block:10px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;border-bottom:1px solid var(--line)}
+.bar{flex:1 1 160px;height:8px;background:var(--line);border-radius:4px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;background:var(--mask);transition:width .3s}
+@media (prefers-reduced-motion:reduce){.bar i{transition:none}}
+.progress span{font-family:var(--f-mono);font-size:.85rem;font-variant-numeric:tabular-nums}
+button{font:600 .85rem var(--f-mono);background:var(--surface);color:var(--fg);border:1px solid var(--line);border-radius:6px;padding:6px 10px;cursor:pointer}
+button.armed{border-color:var(--stop);color:var(--stop)}
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:560px;font-size:.92rem}
+th,td{text-align:left;padding:9px 12px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-family:var(--f-mono);font-size:.75rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+td.v{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+figure{margin:0;display:flex;flex-direction:column;gap:6px}
+figure img{border:1px solid var(--line);border-radius:8px;background:var(--surface);max-width:100%;height:auto}
+figcaption{font-size:.85rem;color:var(--muted)}
+.figs{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:14px}
+.kit{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr));gap:10px}
+pre{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;overflow-x:auto;font:.8rem/1.5 var(--f-mono);margin:0;white-space:pre-wrap;word-break:break-all}
+a{color:var(--mask)}
+footer{color:var(--muted);font-size:.85rem}
+.pins td:first-child{font-family:var(--f-mono);white-space:nowrap}
+svg.fing{width:100%;height:auto;display:block;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+svg.fing text{font-family:var(--f-mono);fill:var(--fg)}
+svg.fing .gold{fill:#c9a227} svg.fing .led{fill:var(--copper)} svg.fing .p1{fill:var(--mask)}
+svg.fing .tail{fill:var(--copper-soft);stroke:var(--line)}
+
+/* ---- visual additions (2026-10-10): tools, board map, measurement cards, diagrams ---- */
+.primer h2 .n{color:var(--copper)}
+.meas{display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:14px;align-items:start;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:12px}
+@media (max-width:600px){.meas{grid-template-columns:minmax(0,1fr)}}
+.meas img{width:100%;height:auto;border:1px solid var(--line);border-radius:8px;display:block}
+.meas h4{margin:0 0 6px;font:700 1rem var(--f-display)}
+.meas dl{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 12px;margin:0;font-size:.92rem}
+.meas dt{font-family:var(--f-mono);font-size:.74rem;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);padding-top:3px}
+.meas dd{margin:0}
+.meas dd.exp{font-family:var(--f-mono);font-weight:600;color:var(--ok)}
+.meas dd.bad{color:var(--stop)}
+.meas .side{display:flex;flex-direction:column;gap:8px}
+.meas svg.mtr{max-width:150px}
+.cards{display:flex;flex-direction:column;gap:12px}
+.dia{width:100%;height:auto;display:block;background:var(--surface);border:1px solid var(--line);border-radius:8px}
+.dia text{font-family:var(--f-body);fill:var(--fg)}
+.dia .mono{font-family:var(--f-mono)}
+.dia .mut{fill:var(--muted)}
+.dia .ln{stroke:var(--fg);fill:none}
+.dia .lnm{stroke:var(--muted);fill:none}
+.dia .bx{fill:var(--bg);stroke:var(--line)}
+.dia .bxs{fill:var(--surface);stroke:var(--fg)}
+.dia .ok{fill:var(--mask-soft);stroke:var(--ok)}
+.dia .okt{fill:var(--ok)}
+.dia .no{fill:var(--stop-soft);stroke:var(--stop)}
+.dia .not{fill:var(--stop)}
+.dia .cu{fill:var(--copper-soft);stroke:var(--copper)}
+.dia .cut{fill:var(--copper)}
+.dia .red{fill:#e53935;stroke:#e53935}
+.dia .blk{fill:#222;stroke:#888}
+.dia .gold{fill:#d4a72c}
+.dia .pcb{fill:#2f4a36}
+.dia .chip{fill:#26292b}
+.dia .silk{fill:#f4f4f0}
+.dia .tin{fill:#c7cbd1}
+.dia .lcd{fill:#b9c9ad}
+.dia .lcdt{fill:#1d2a1d;font-family:var(--f-mono)}
+.dia .sel{fill:var(--copper);stroke:var(--copper)}
+.dia .selt{fill:#fff;font-weight:700}
+.scroll{overflow-x:auto;border-radius:8px}
+.scroll > svg{min-width:540px}
+.gal{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,210px),1fr));gap:12px}
+.gal figure{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:8px}
+.gal figcaption code{font-size:.8rem}
+.json{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);border:1px solid var(--line);border-radius:8px;overflow:hidden;background:var(--surface);font-size:.88rem}
+.json > div{padding:6px 10px;border-bottom:1px solid var(--line)}
+.json > div:nth-last-child(-n+2){border-bottom:0}
+.json .k{font-family:var(--f-mono);font-size:.8rem;word-break:break-all;background:var(--mask-soft)}
+.json .k b{color:var(--copper)}
+@media (max-width:600px){.json{grid-template-columns:minmax(0,1fr)}.json .k{border-bottom:0}}
+.term{background:#0f1411;color:#d7e3da;border-radius:8px;padding:12px 14px;font:.8rem/1.55 var(--f-mono);overflow-x:auto;white-space:pre;border:1px solid var(--line)}
+.term .c{color:#ffd166}.term .g{color:#7ee0a5}.term .m{color:#8aa197}.term .r{color:#ff8a80}
+.cmd{display:flex;flex-direction:column;gap:6px}
+.cmd code{display:block;background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:8px 10px;overflow-x:auto;white-space:nowrap}
+.legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:.85rem;color:var(--muted)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:5px;vertical-align:-1px}
+</style>
+
+<div class="wrap">
+<header>
+  <p class="eyebrow">AI Calculator · board v15-LCD (review 13, 2026-10-08) · firmware v15lcd-2026.10.08 (<code>firmware-v15-lcd</code>) · not for v14 boards</p>
+  <h1>v15 First Power-Up</h1>
+  <p class="lede">The power-up guide for the <strong>colour-screen board</strong>: the v14 board with the e-paper swapped for a 1.9" IPS LCD on socket J5. Do the steps in order, one at a time, the day the boards arrive. Every check is there to catch a fault <em>before</em> it can hurt the board. Ticks are saved in this browser only, separately from the v14 guide.</p>
+  <p class="note"><strong>Which board do I have?</strong> The silk in the middle of the component side says <span class="m">AI CALC v15-LCD 2026-10-08</span>, and there is a long 20 mm slot near the right-hand edge with a 30-pin socket J5 next to it. A v14 board says v14 and has J2 for the e-paper: use the v14 <a href="https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9">First Power-Up Guide</a> for that one. <strong>Never flash v15 firmware onto a v14 board, or v14 firmware onto this one.</strong></p>
+  <div class="rules">
+    <p><strong>Five rules for the whole day</strong></p>
+    <ol>
+      <li>If anything gets warm, smells, or a reading is wrong: <strong>unplug first, think second.</strong></li>
+      <li>Never plug or unplug a ribbon (LCD, camera) while the board has any power. Once the battery is in, the board is always powered, so ribbons go in <em>before</em> the battery. <span class="unsure">general practice</span></li>
+      <li>First power comes from a <strong>computer USB port</strong>, not a phone charger. A computer port cuts the current quickly on a fault; a charger may push 2 A or more.</li>
+      <li>Never connect the battery until its polarity has been metered (step 4), and never plug the LCD tail in until its finger-1 end has been found with the meter (step 5).</li>
+      <li>Never burn eFuses, enable secure boot or flash encryption. They are the only things that can lock you out for good.</li>
+    </ol>
+  </div>
+</header>
+
+<div class="progress" aria-live="polite">
+  <div class="bar" aria-hidden="true"><i id="barfill"></i></div>
+  <span id="count">0 / 0 done</span>
+  <button type="button" id="reset">Clear ticks</button>
+</div>
+
+<section id="kit">
+  <h2><span class="n">01</span>What you need</h2>
+  <div class="kit">
+    <ul class="check" data-step="kit">
+      <li><input type="checkbox" id="k1"><label for="k1">Multimeter with DC volts, continuity (beep), <strong>diode mode</strong> and mA</label></li>
+      <li><input type="checkbox" id="k2"><label for="k2">Adafruit #5412 magnetic cable and the #5358 magnet piece (or the equivalent Yiwei MG0425-UB-60-4P cable and MG04254FRA1S1N piece; same check)</label></li>
+      <li><input type="checkbox" id="k3"><label for="k3">A USB phone charger (only for the magnet check)</label></li>
+      <li><input type="checkbox" id="k8"><label for="k8">The LCD panel: <strong>BuyDisplay ER-TFT019-1</strong>, the version without touch (checked pin for pin against J5 in review 14). Only if you used the fallback Adafruit #5394 breakout: take the panel off it first (v15 Assembly Guide step 4). Later, for bulk: the same bare 30-pin panel from Alibaba after a sample check.</label></li>
+    </ul>
+    <ul class="check" data-step="kit">
+      <li><input type="checkbox" id="k4"><label for="k4">USB-A to USB-C adapter, if your PC has only USB-C ports</label></li>
+      <li><input type="checkbox" id="k5"><label for="k5">Kapton tape, tweezers, two short wires for the test pads, two sewing pins (fine probe tips for the LCD fingers)</label></li>
+      <li><input type="checkbox" id="k6"><label for="k6">PC with VS Code + PlatformIO and the repo's <code>firmware-v15-lcd</code> folder (<strong>not</strong> <code>firmware-prototype</code>: that one is v14)</label></li>
+      <li><input type="checkbox" id="k7"><label for="k7">For step 11: a 2.4 GHz phone hotspot, your AI server's https address and one device token for this board</label></li>
+    </ul>
+  </div>
+  <p class="note">Test points on the board, all on the component side, labelled on the silkscreen, same places as v14: <span class="m">TP1 BOOT</span> <span class="m">TP2 TX</span> <span class="m">TP3 RX</span> <span class="m">TP4 GND</span> <span class="m">TP5 3V3</span> <span class="m">TP6 BAT</span> <span class="m">TP7 EN</span>. The black meter probe goes on TP4 for every voltage reading below.</p>
+</section>
+
+<section id="tools" class="primer">
+  <h2><span class="n">A</span>Meet your tools</h2>
+  <p>Ten minutes here saves a board later. You only need four meter settings all day. Your meter's dial may look different; look for the same <strong>symbols</strong>, not the same positions.</p>
+  <div class="gal">
+    <figure><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter on DC volts" style="max-width:220px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">3.30</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><rect x="151" y="108" width="30" height="24" rx="6" class="sel"/><text x="166" y="126" text-anchor="middle" font-size="14" class="selt">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="140" y2="145" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg><figcaption><strong>DC volts (V⎓ or V with a straight line).</strong> Red lead in <strong>VΩ</strong>, black in <strong>COM</strong>. Used for every rail: VBUS, SYS, 3V3, EN, BAT. Pick the 20 V range if it isn't auto-ranging. The meter is just "looking": it can't hurt anything in this mode.</figcaption></figure>
+    <figure><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter on resistance" style="max-width:220px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">1.2k</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><text x="166" y="126" text-anchor="middle" font-size="13" class="mut">V⎓</text><rect x="175" y="167" width="21" height="24" rx="6" class="sel"/><text x="186" y="185" text-anchor="middle" font-size="14" class="selt">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="150" y2="176" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg><figcaption><strong>Resistance (Ω).</strong> Same sockets. <strong>Board unpowered only.</strong> Used before first power to prove 3V3 and BAT aren't shorted to GND. The number climbs for a few seconds while the capacitors charge: wait 5 s, then read.</figcaption></figure>
+    <figure><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter on diode / beep" style="max-width:220px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">2.62</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><text x="166" y="126" text-anchor="middle" font-size="13" class="mut">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><rect x="115" y="219" width="84" height="24" rx="6" class="sel"/><text x="157" y="237" text-anchor="middle" font-size="14" class="selt">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="135" y2="204" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg><figcaption><strong>Diode / beep (→| and •))).</strong> Same sockets, unpowered. <strong>Beep</strong> = the two points are connected (under ~30 Ω). <strong>Diode</strong> shows the voltage a diode or LED needs (the LCD backlight test, step 5). "OL" or "1" = open, no connection.</figcaption></figure>
+    <figure><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter on milliamps, red lead in the mA socket" style="max-width:220px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">50.2</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><text x="166" y="126" text-anchor="middle" font-size="13" class="mut">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><rect x="48" y="219" width="30" height="24" rx="6" class="sel"/><text x="63" y="237" text-anchor="middle" font-size="14" class="selt">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="85" y2="204" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="red" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="bx" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg><figcaption><strong>Current (mA).</strong> The <strong>red lead moves to the mA socket</strong>, and the meter goes <em>in</em> the wire (in series), never across two points. Only for the optional charge and sleep-current steps.</figcaption></figure>
+  </div>
+  <svg class="dia" viewBox="0 0 420 200" role="img" aria-label="Danger: red lead left in the mA socket while measuring volts makes the meter a short circuit"><rect x="14" y="20" width="392" height="164" rx="10" class="no"/><text x="30" y="50" font-size="17" font-weight="700" class="not">Never measure volts with the red lead in mA</text><text x="30" y="78" font-size="14">In the mA socket the meter is almost a wire (a few ohms).</text><text x="30" y="98" font-size="14">Touch 3V3 and GND like that and it shorts the supply:</text><text x="30" y="118" font-size="14">the meter fuse blows, or the regulator / USB port is hurt.</text><text x="30" y="148" font-size="14" font-weight="700">Rule: after every current reading, red lead back to VΩ first.</text><text x="30" y="170" font-size="13" class="mut">A meter that suddenly reads 0 mA everywhere has a blown fuse.</text></svg>
+  <h3>How the leads go in, every time</h3>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Measuring</th><th>Dial</th><th>Black lead</th><th>Red lead</th></tr></thead>
+    <tbody>
+      <tr><td>Volts (a rail)</td><td>V⎓, 20 V</td><td>COM → TP4 GND</td><td>VΩ → the point named in the step</td></tr>
+      <tr><td>Short check / beep / diode</td><td>Ω or →|•)))</td><td>COM</td><td>VΩ</td></tr>
+      <tr><td>Current</td><td>mA</td><td>COM</td><td><strong>mA socket</strong>, then straight back to VΩ afterwards</td></tr>
+    </tbody></table></div>
+  <h3>The other tools</h3>
+  <div class="gal">
+    <figure><svg class="dia" viewBox="0 0 420 150" role="img" aria-label="The magnetic USB cable: USB-A plug at one end for the computer, a round magnetic head at the other that snaps onto the magnet piece in J3">
+<rect x="14" y="52" width="70" height="46" rx="5" class="bxs" stroke-width="2"/><rect x="84" y="60" width="38" height="30" class="tin"/>
+<rect x="92" y="67" width="24" height="5" class="gold"/><rect x="92" y="78" width="24" height="5" class="gold"/>
+<path d="M14 75 C-10 75 -10 75 14 75" class="ln"/>
+<path d="M84 75 L150 75 C190 75 200 30 250 30 C300 30 300 75 330 75" class="ln" stroke-width="6" stroke-linecap="round"/>
+<rect x="330" y="56" width="64" height="38" rx="19" class="bxs" stroke-width="2"/><rect x="384" y="62" width="10" height="26" rx="3" class="cu"/>
+<text x="50" y="122" text-anchor="middle" font-size="13">USB-A: into the PC</text>
+<text x="362" y="122" text-anchor="middle" font-size="13">magnet head</text>
+<text x="362" y="138" text-anchor="middle" font-size="12" class="mut">snaps on one way only</text>
+<text x="210" y="140" text-anchor="middle" font-size="12" class="mut">Adafruit #5412 (or Yiwei MG0425-UB-60-4P)</text></svg><figcaption>The magnetic cable is also the data cable: flashing and the Serial Monitor go through it. A <strong>USB-C</strong> PC port needs a USB-A→C adapter; any data-capable one works.</figcaption></figure>
+    <figure><svg class="dia" viewBox="0 0 420 150" role="img" aria-label="Tweezers: hold small parts and lift socket lids; metal tips can short neighbouring pads">
+<path d="M20 60 L330 70 L395 74 L330 76 L20 82 Z" class="tin" stroke="var(--muted)"/>
+<path d="M20 64 L330 72 M20 78 L330 74" class="lnm"/>
+<circle cx="398" cy="74" r="12" fill="none" stroke="var(--stop)" stroke-width="2"/>
+<text x="20" y="112" font-size="13">Tweezers: lift lids, steer ribbons, hold a wire on a pad.</text>
+<text x="20" y="132" font-size="13" class="not">The metal tip conducts: never touch two pads at once with power on</text>
+<text x="20" y="146" font-size="12" class="mut">(TP1 and TP4 are only 2.7 mm apart: that is useful in recovery, dangerous elsewhere).</text></svg><figcaption>Fine-tip tweezers, plastic-tipped if you have them for the socket lids.</figcaption></figure>
+    <figure><svg class="dia" viewBox="0 0 420 170" role="img" aria-label="Static safety: touch a grounded metal object, hold boards by the edges, keep them on the anti-static bag">
+<rect x="20" y="30" width="110" height="80" rx="6" class="bx"/><text x="75" y="66" text-anchor="middle" font-size="13">PC case /</text><text x="75" y="84" text-anchor="middle" font-size="13">radiator</text>
+<path d="M150 70 C170 50 190 90 210 70" class="ln" stroke-width="3"/>
+<text x="180" y="50" text-anchor="middle" font-size="12">touch first</text>
+<rect x="240" y="40" width="160" height="70" rx="6" class="pcb"/><rect x="232" y="34" width="176" height="82" rx="8" fill="none" stroke="var(--muted)" stroke-dasharray="4 4"/>
+<circle cx="246" cy="75" r="9" class="tin"/><circle cx="394" cy="75" r="9" class="tin"/>
+<text x="320" y="132" text-anchor="middle" font-size="12" class="mut">hold by the edges, on its pink/silver bag</text>
+<text x="20" y="150" font-size="13">1 Touch bare grounded metal first. 2 Edges only, never the gold.</text>
+<text x="20" y="166" font-size="13">3 No carpet, no fleece. 4 Ribbons and panels stay in their bags until used.</text></svg><figcaption>Static (ESD) can kill the ESP32 or the LCD without any visible mark. <span class="unsure">general practice</span></figcaption></figure>
+  </div>
+  <ul class="check" data-step="tools">
+    <li><input type="checkbox" id="t1"><label for="t1">Meter check: set it to beep and touch the probe tips together. It beeps. Set DC volts: it reads 0.00. (Dead battery in the meter = strange readings all day.)</label></li>
+    <li><input type="checkbox" id="t2"><label for="t2">Sewing pins pushed onto the probe tips for the 0.5 mm ribbon fingers; a strip of tape so the two pins can't touch.</label></li>
+  </ul>
+</section>
+<section id="map" class="primer">
+  <h2><span class="n">B</span>Board map</h2>
+  <p>Every name used below, on the real board (3D render of the v15-LCD files). Yellow tags = test pads, blue = sockets, green = chips, red = parts whose turn matters most. Hold the board the same way: <strong>component side up, magnet header (J3) at the top</strong>. Tap a picture to open it full size.</p>
+  <div class="figs">
+    <figure><a href="renders_bringup/v15/map_top.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/map_top.jpg" alt="Labelled render of the component side: test pads TP1 to TP7, J1 camera, J5 LCD, J3 magnet header with pins VBUS, D minus, D plus, GND, J4 battery, U1 ESP32, U2 charger, U3 regulator, U7 USB protection, U6 keypad chip" loading="lazy" width="1000" height="2033"></a><figcaption>Component side. TP4 (GND) is at the left edge below the ESP32, next to TP1.</figcaption></figure>
+    <figure><a href="renders_bringup/v15/map_bottom.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/map_bottom.jpg" alt="Render of the key side with the gold key pads" loading="lazy" width="700" height="1423"></a><figcaption>Key side, seen from below (so left and right are swapped). Nothing to measure here; keep the gold pads clean.</figcaption></figure>
+  </div>
+  <h3>Zoomed in</h3>
+  <div class="figs">
+    <figure><a href="renders_bringup/v15/zoom_power.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/zoom_power.jpg" alt="Zoom A: power corner with J3 pins 1 to 4 labelled VBUS, D minus, D plus, GND; D7 with its band on the right; U3, U2, D1, J4 pin 1 GND and pin 2 plus; Q1, Q2, U7; TP5, TP6, TP7, TP2, TP3" loading="lazy" width="900" height="753"></a><figcaption><strong>A · Power corner.</strong> J3 pin 1 (VBUS) is the left pin, beside the silk N and +. J4: pin 1 GND left, pin 2 + right.</figcaption></figure>
+    <figure><a href="renders_bringup/v15/zoom_esp32.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/zoom_esp32.jpg" alt="Zoom B: the ESP32 module U1 with its pin-1 dot at the lower left, and the pads TP1 BOOT, TP4 GND, TP7 EN, TP5 3V3" loading="lazy" width="700" height="952"></a><figcaption><strong>B · ESP32 and the recovery pads.</strong> TP1 and TP4 sit 2.7 mm apart.</figcaption></figure>
+    <figure><a href="renders_bringup/v15/zoom_screen.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/zoom_screen.jpg" alt="Zoom D: the LCD socket J5" loading="lazy" width="800"></a><figcaption><strong>D · LCD socket J5.</strong> Pad 1 is the bottom end at the silk tick; Q5 and R23 above, Q4 and C19 below; the long slot on the right.</figcaption></figure>
+    <figure><a href="renders_bringup/v15/zoom_camera.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/zoom_camera.jpg" alt="Zoom C: camera socket J1 with its camera regulators U4 and U5" loading="lazy" width="900" height="519"></a><figcaption><strong>C · Camera socket J1</strong>, near the bottom of the board, with its two small regulators.</figcaption></figure>
+  </div>
+  <div class="tablewrap"><table>
+    <thead><tr><th>Pad / part</th><th>What it is</th><th>You use it for</th></tr></thead>
+    <tbody>
+      <tr><td><span class="m">TP4 GND</span></td><td>Ground, 0 V</td><td>Black probe, every voltage reading</td></tr>
+      <tr><td><span class="m">TP5 3V3</span></td><td>The 3.3 V rail from U3</td><td>Short check, first-power reading</td></tr>
+      <tr><td><span class="m">TP6 BAT</span></td><td>Battery + after Q1</td><td>Short check, battery reading</td></tr>
+      <tr><td><span class="m">TP7 EN</span></td><td>ESP32 enable (reset when pulled to GND)</td><td>Reading; the "tap" in recovery</td></tr>
+      <tr><td><span class="m">TP1 BOOT</span></td><td>GPIO0; held low at reset = download mode</td><td>Recovery</td></tr>
+      <tr><td><span class="m">TP2 TX</span> <span class="m">TP3 RX</span></td><td>Spare serial port</td><td>Last-resort flashing with a 3.3 V USB-serial adapter</td></tr>
+      <tr><td>J3</td><td>Magnet header: 1 VBUS (N end), 2 D−, 3 D+, 4 GND</td><td>Power and USB data</td></tr>
+      <tr><td>J4</td><td>Battery socket: 1 GND (left), 2 + (right)</td><td>The LiPo, after step 4</td></tr>
+      <tr><td>U1 / U2 / U3 / U7</td><td>ESP32-S3 / LiPo charger / 3.3 V regulator / USB protection</td><td>Heat check at first power</td></tr>
+      <tr><td>J1 / J5</td><td>Camera socket / LCD socket</td><td>Ribbons, step 9</td></tr>
+    </tbody></table></div>
+</section>
+
+<section id="inspect">
+  <h2><span class="n">02</span>Inspect the bare board</h2>
+  <p>Unpowered, under good light (a phone camera zoomed in works). Hold it like the render: component side up, top edge (magnet header) away from you.</p>
+  <div class="figs">
+    <figure><img src="fab_v15_lcd/render_top.png" alt="Render of the v15 board's component side, top edge at the top; J5 and the long ribbon slot are at the upper right" loading="lazy"><figcaption>Component side. "Top-left" below means as seen here. J5 is the tall socket at the upper right; the long slot is to its right.</figcaption></figure>
+    <figure><img src="fab_v15_lcd/render_bottom.png" alt="Render of the v15 board's other side with the key pads" loading="lazy"><figcaption>Other side (key pads). The LCD lies on this side, behind the window.</figcaption></figure>
+  </div>
+  <h3>What good and wrong look like (loupe checklist)</h3>
+  <p>Use a 10× loupe or the phone camera at 2–3× zoom with the torch on. Compare each part with the drawings, then with zoom A / B / C / D in the board map. JLCPCB also e-mails placement photos: compare those too.</p>
+  <div class="gal">
+    <figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="✓ GOOD: D7: grey body, dark band on the RIGHT (towards J3)"><rect x="2" y="2" width="196" height="116" rx="8" class="ok" stroke-width="2"/><rect x="40" y="48" width="18" height="32" class="tin"/><rect x="142" y="48" width="18" height="32" class="tin"/><rect x="56" y="44" width="88" height="40" rx="4" class="tin" style="filter:brightness(.82)"/><rect x="128" y="44" width="10" height="40" fill="#555"/><text x="168" y="70" font-size="12">J3 →</text><text x="100" y="104" text-anchor="middle" font-size="11" class="mut">D7 (grey SMF body)</text><text x="10" y="20" font-size="13" font-weight="700" class="okt">✓ GOOD</text></svg><figcaption>D7: grey body, dark band on the RIGHT (towards J3)</figcaption></figure><figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="✗ WRONG: D7 band on the left: VBUS meets the wrong end"><rect x="2" y="2" width="196" height="116" rx="8" class="no" stroke-width="2"/><rect x="40" y="48" width="18" height="32" class="tin"/><rect x="142" y="48" width="18" height="32" class="tin"/><rect x="56" y="44" width="88" height="40" rx="4" class="tin" style="filter:brightness(.82)"/><rect x="64" y="44" width="10" height="40" fill="#555"/><text x="168" y="70" font-size="12">J3 →</text><text x="100" y="104" text-anchor="middle" font-size="11" class="mut">D7 (grey SMF body)</text><text x="10" y="20" font-size="13" font-weight="700" class="not">✗ WRONG</text></svg><figcaption>D7 band on the left: VBUS meets the wrong end</figcaption></figure>
+    <figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="✓ GOOD: U2 / U3 / U4 / U5: dot top-left, 3 pins on the left"><rect x="2" y="2" width="196" height="116" rx="8" class="ok" stroke-width="2"/><rect x="62" y="38" width="16" height="9" class="tin"/><rect x="62" y="61" width="16" height="9" class="tin"/><rect x="62" y="84" width="16" height="9" class="tin"/><rect x="122" y="44" width="16" height="9" class="tin"/><rect x="122" y="78" width="16" height="9" class="tin"/><rect x="76" y="32" width="48" height="66" rx="3" class="chip"/><circle cx="85" cy="41" r="4" class="silk"/><path d="M58 24 l6 9 l6 -9 z" class="silk" stroke="var(--fg)" stroke-width=".7"/><text x="100" y="69" text-anchor="middle" font-size="11" fill="#ddd">U3</text><text x="146" y="30" font-size="10" class="mut">silk ▼ = pin 1</text><text x="100" y="112" text-anchor="middle" font-size="11" class="mut">3 pins left, dot top-left</text><text x="10" y="20" font-size="13" font-weight="700" class="okt">✓ GOOD</text></svg><figcaption>U2 / U3 / U4 / U5: dot top-left, 3 pins on the left</figcaption></figure><figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="✗ WRONG: Dot at the other corner: chip turned 180°"><rect x="2" y="2" width="196" height="116" rx="8" class="no" stroke-width="2"/><g transform="rotate(180 100 65)"><rect x="62" y="38" width="16" height="9" class="tin"/><rect x="62" y="61" width="16" height="9" class="tin"/><rect x="62" y="84" width="16" height="9" class="tin"/><rect x="122" y="44" width="16" height="9" class="tin"/><rect x="122" y="78" width="16" height="9" class="tin"/><rect x="76" y="32" width="48" height="66" rx="3" class="chip"/><circle cx="85" cy="41" r="4" class="silk"/></g><path d="M58 24 l6 9 l6 -9 z" class="silk" stroke="var(--fg)" stroke-width=".7"/><text x="100" y="69" text-anchor="middle" font-size="11" fill="#ddd">U3</text><text x="146" y="30" font-size="10" class="mut">silk ▼ = pin 1</text><text x="100" y="112" text-anchor="middle" font-size="11" class="mut">3 pins on the right: turned</text><text x="10" y="20" font-size="13" font-weight="700" class="not">✗ WRONG</text></svg><figcaption>Dot at the other corner: chip turned 180°</figcaption></figure>
+    <figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="✓ GOOD: U1 ESP32: the dot sits at the lower left of the can (antenna on the left edge)"><rect x="2" y="2" width="196" height="116" rx="8" class="ok" stroke-width="2"/><rect x="20" y="28" width="38" height="70" class="gold" opacity=".55"/><rect x="56" y="28" width="128" height="70" rx="3" class="tin"/><circle cx="66" cy="92" r="5" fill="#111"/><text x="120" y="66" text-anchor="middle" font-size="11" fill="#333">U1 can</text><text x="24" y="112" font-size="10" class="mut">antenna on the LEFT board edge</text><text x="10" y="20" font-size="13" font-weight="700" class="okt">✓ GOOD</text></svg><figcaption>U1 ESP32: the dot sits at the lower left of the can (antenna on the left edge)</figcaption></figure><figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="✗ WRONG: Dot elsewhere: the module is rotated"><rect x="2" y="2" width="196" height="116" rx="8" class="no" stroke-width="2"/><rect x="20" y="28" width="38" height="70" class="gold" opacity=".55"/><rect x="56" y="28" width="128" height="70" rx="3" class="tin"/><circle cx="178" cy="34" r="5" fill="#111"/><text x="120" y="66" text-anchor="middle" font-size="11" fill="#333">U1 can</text><text x="24" y="112" font-size="10" class="mut">antenna on the LEFT board edge</text><text x="10" y="20" font-size="13" font-weight="700" class="not">✗ WRONG</text></svg><figcaption>Dot elsewhere: the module is rotated</figcaption></figure>
+    <figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="✓ GOOD: J1 camera: opening faces up, contacts along the bottom"><rect x="2" y="2" width="196" height="116" rx="8" class="ok" stroke-width="2"/><rect x="40" y="40" width="120" height="30" class="silk" stroke="#999"/><rect x="40" y="70" width="120" height="12" fill="#555"/><rect x="44" y="84" width="3" height="10" class="tin"/><rect x="51" y="84" width="3" height="10" class="tin"/><rect x="58" y="84" width="3" height="10" class="tin"/><rect x="65" y="84" width="3" height="10" class="tin"/><rect x="72" y="84" width="3" height="10" class="tin"/><rect x="79" y="84" width="3" height="10" class="tin"/><rect x="86" y="84" width="3" height="10" class="tin"/><rect x="93" y="84" width="3" height="10" class="tin"/><rect x="100" y="84" width="3" height="10" class="tin"/><rect x="107" y="84" width="3" height="10" class="tin"/><rect x="114" y="84" width="3" height="10" class="tin"/><rect x="121" y="84" width="3" height="10" class="tin"/><rect x="128" y="84" width="3" height="10" class="tin"/><rect x="135" y="84" width="3" height="10" class="tin"/><rect x="142" y="84" width="3" height="10" class="tin"/><rect x="149" y="84" width="3" height="10" class="tin"/><rect x="156" y="84" width="3" height="10" class="tin"/><path d="M100 22 v14 m-6 -6 l6 6 l6 -6" class="ln" stroke-width="2"/><text x="112" y="30" font-size="10">ribbon in</text><text x="100" y="112" text-anchor="middle" font-size="11" class="mut">J1 as on the render</text><text x="10" y="20" font-size="13" font-weight="700" class="okt">✓ GOOD</text></svg><figcaption>J1 camera: opening faces up, contacts along the bottom</figcaption></figure><figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="✗ WRONG: J1 turned round: contacts on top"><rect x="2" y="2" width="196" height="116" rx="8" class="no" stroke-width="2"/><g transform="rotate(180 100 62)"><rect x="40" y="40" width="120" height="30" class="silk" stroke="#999"/><rect x="40" y="70" width="120" height="12" fill="#555"/><rect x="44" y="84" width="3" height="10" class="tin"/><rect x="51" y="84" width="3" height="10" class="tin"/><rect x="58" y="84" width="3" height="10" class="tin"/><rect x="65" y="84" width="3" height="10" class="tin"/><rect x="72" y="84" width="3" height="10" class="tin"/><rect x="79" y="84" width="3" height="10" class="tin"/><rect x="86" y="84" width="3" height="10" class="tin"/><rect x="93" y="84" width="3" height="10" class="tin"/><rect x="100" y="84" width="3" height="10" class="tin"/><rect x="107" y="84" width="3" height="10" class="tin"/><rect x="114" y="84" width="3" height="10" class="tin"/><rect x="121" y="84" width="3" height="10" class="tin"/><rect x="128" y="84" width="3" height="10" class="tin"/><rect x="135" y="84" width="3" height="10" class="tin"/><rect x="142" y="84" width="3" height="10" class="tin"/><rect x="149" y="84" width="3" height="10" class="tin"/><rect x="156" y="84" width="3" height="10" class="tin"/></g><path d="M100 104 v-12 m-6 6 l6 -6 l6 6" class="ln" stroke-width="2"/><text x="112" y="102" font-size="10">ribbon in</text><text x="100" y="112" text-anchor="middle" font-size="11" class="mut">turned 180°</text><text x="10" y="20" font-size="13" font-weight="700" class="not">✗ WRONG</text></svg><figcaption>J1 turned round: contacts on top</figcaption></figure>
+    <figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="✓ GOOD: J5 as on the render"><rect x="2" y="2" width="196" height="116" rx="8" class="ok" stroke-width="2"/><g transform="rotate(180 100 64)"><rect x="78" y="22" width="30" height="84" class="silk" stroke="#999"/><rect x="108" y="22" width="14" height="84" fill="#555"/><rect x="124" y="25" width="10" height="3" class="tin"/><rect x="124" y="31" width="10" height="3" class="tin"/><rect x="124" y="37" width="10" height="3" class="tin"/><rect x="124" y="43" width="10" height="3" class="tin"/><rect x="124" y="49" width="10" height="3" class="tin"/><rect x="124" y="55" width="10" height="3" class="tin"/><rect x="124" y="61" width="10" height="3" class="tin"/><rect x="124" y="67" width="10" height="3" class="tin"/><rect x="124" y="73" width="10" height="3" class="tin"/><rect x="124" y="79" width="10" height="3" class="tin"/><rect x="124" y="85" width="10" height="3" class="tin"/><rect x="124" y="91" width="10" height="3" class="tin"/><rect x="124" y="97" width="10" height="3" class="tin"/><rect x="124" y="103" width="10" height="3" class="tin"/></g><path d="M156 64 h-20 m6 -6 l-6 6 l6 6" class="ln" stroke-width="2"/><text x="146" y="54" font-size="10">ribbon</text><text x="100" y="112" text-anchor="middle" font-size="11" class="mut">J5: lid left, opening faces the slot</text><text x="10" y="20" font-size="13" font-weight="700" class="okt">✓ GOOD</text></svg><figcaption>J5 as on the render</figcaption></figure><figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="✗ WRONG: Socket turned round"><rect x="2" y="2" width="196" height="116" rx="8" class="no" stroke-width="2"/><rect x="78" y="22" width="30" height="84" class="silk" stroke="#999"/><rect x="108" y="22" width="14" height="84" fill="#555"/><rect x="124" y="25" width="10" height="3" class="tin"/><rect x="124" y="31" width="10" height="3" class="tin"/><rect x="124" y="37" width="10" height="3" class="tin"/><rect x="124" y="43" width="10" height="3" class="tin"/><rect x="124" y="49" width="10" height="3" class="tin"/><rect x="124" y="55" width="10" height="3" class="tin"/><rect x="124" y="61" width="10" height="3" class="tin"/><rect x="124" y="67" width="10" height="3" class="tin"/><rect x="124" y="73" width="10" height="3" class="tin"/><rect x="124" y="79" width="10" height="3" class="tin"/><rect x="124" y="85" width="10" height="3" class="tin"/><rect x="124" y="91" width="10" height="3" class="tin"/><rect x="124" y="97" width="10" height="3" class="tin"/><rect x="124" y="103" width="10" height="3" class="tin"/><path d="M50 64 h20 m-6 -6 l6 6 l-6 6" class="ln" stroke-width="2"/><text x="20" y="54" font-size="10">ribbon</text><text x="100" y="112" text-anchor="middle" font-size="11" class="mut">turned round: opening away from the slot</text><text x="10" y="20" font-size="13" font-weight="700" class="not">✗ WRONG</text></svg><figcaption>Socket turned round</figcaption></figure>
+  </div>
+  <div class="gal"><figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="Good: smooth, shiny, concave fillet climbing the pin"><rect x="2" y="2" width="196" height="116" rx="8" class="ok" stroke-width="2"/><rect x="0" y="86" width="200" height="34" class="pcb"/><rect x="30" y="80" width="56" height="8" class="cu"/><rect x="114" y="80" width="56" height="8" class="cu"/><path d="M30 80 Q46 52 62 50 L62 80 Z" class="tin"/><path d="M114 80 Q130 52 146 50 L146 80 Z" class="tin"/><rect x="60" y="44" width="84" height="22" class="chip"/><text x="10" y="22" font-size="15" font-weight="700" class="okt">✓</text></svg><figcaption>Good: smooth, shiny, concave fillet climbing the pin</figcaption></figure><figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="Bridge: solder joins two pins. Don't power; photo, ask"><rect x="2" y="2" width="196" height="116" rx="8" class="no" stroke-width="2"/><rect x="0" y="86" width="200" height="34" class="pcb"/><rect x="30" y="80" width="56" height="8" class="cu"/><rect x="114" y="80" width="56" height="8" class="cu"/><path d="M30 80 Q46 52 62 50 L62 80 Z" class="tin"/><path d="M114 80 Q130 52 146 50 L146 80 Z" class="tin"/><rect x="60" y="44" width="84" height="22" class="chip"/><path d="M56 80 Q100 56 150 80 Z" class="tin"/><circle cx="100" cy="72" r="14" fill="none" stroke="var(--stop)" stroke-width="2"/><text x="10" y="22" font-size="15" font-weight="700" class="not">✗</text></svg><figcaption>Bridge: solder joins two pins. Don't power; photo, ask</figcaption></figure><figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="Tombstone: part stood up on one end (missing joint)"><rect x="2" y="2" width="196" height="116" rx="8" class="no" stroke-width="2"/><rect x="0" y="86" width="200" height="34" class="pcb"/><rect x="30" y="80" width="56" height="8" class="cu"/><rect x="114" y="80" width="56" height="8" class="cu"/><path d="M30 80 Q46 52 62 50 L62 80 Z" class="tin"/><g transform="rotate(-38 62 80)"><rect x="60" y="58" width="84" height="22" class="chip"/></g><text x="10" y="22" font-size="15" font-weight="700" class="not">✗</text></svg><figcaption>Tombstone: part stood up on one end (missing joint)</figcaption></figure><figure><svg class="dia" viewBox="0 0 200 120" role="img" aria-label="Dull ball / loose solder ball: a joint that may not connect"><rect x="2" y="2" width="196" height="116" rx="8" class="no" stroke-width="2"/><rect x="0" y="86" width="200" height="34" class="pcb"/><rect x="30" y="80" width="56" height="8" class="cu"/><rect x="114" y="80" width="56" height="8" class="cu"/><rect x="60" y="44" width="84" height="22" class="chip"/><circle cx="46" cy="70" r="13" class="tin" style="filter:brightness(.8)"/><path d="M114 80 Q130 52 146 50 L146 80 Z" class="tin"/><circle cx="176" cy="104" r="6" class="tin"/><text x="10" y="22" font-size="15" font-weight="700" class="not">✗</text></svg><figcaption>Dull ball / loose solder ball: a joint that may not connect</figcaption></figure></div>
+  <p class="note">Real renders of these parts are in the board map zooms A–D. A wrongly turned part on a JLCPCB-assembled board is rare, but D7, the ICs and the two sockets are the ones where it would matter.</p>
+
+<ul class="check" data-step="inspect">
+    <li><input type="checkbox" id="i1"><label for="i1"><strong>U2</strong> (charger), <strong>U3</strong> (3.3 V regulator), <strong>U4, U5</strong>: pin-1 dot <strong>top-left</strong>, the 3-pin side on the left. <strong>U7</strong> (USB protection, 6 pins): dot <strong>top-left</strong>. (Same as v14.)</label></li>
+    <li><input type="checkbox" id="i2"><label for="i2"><strong>Q1</strong>: two pins on the left, the single pin on the right. <strong>Q2</strong>: single pin at the top, two at the bottom. New on v15, either side of J5: <strong>Q5</strong> (above J5, backlight switch) has two pins at the top and the single pin at the bottom; <strong>Q4</strong> (below J5, LCD power switch) has the single pin at the top and two at the bottom. <span class="unsure">read from the render</span></label></li>
+    <li><input type="checkbox" id="i3"><label for="i3"><strong>D7</strong> (near the magnet header): band on the <strong>right</strong> pad, towards J3. This one matters most. <strong>D1, D2, D6</strong>: band on the <strong>left</strong> pad. (D3–D5 no longer exist on v15.)</label></li>
+    <li><input type="checkbox" id="i4"><label for="i4">No solder bridges between neighbouring pins, especially on U1 (ESP32), U6 (keypad chip), U7 and the two ribbon sockets J1 and J5. J5's 30 pins are 0.5 mm apart: look along the row with the phone zoomed in. No loose balls of solder.</label></li>
+    <li><input type="checkbox" id="i5"><label for="i5"><strong>J1</strong> (camera) opening faces up towards the camera area. <strong>J5</strong> (LCD) opening faces <strong>right</strong>, towards the long slot; its dark lid is on the left, away from the slot. A small silk tick marks the <strong>bottom</strong> end of J5: that is pad 1. Both lids open and close freely. Leave them closed for now.</label></li>
+    <li><input type="checkbox" id="i6"><label for="i6"><strong>J4</strong> battery socket opening faces down. <strong>J3</strong> openings face the top edge.</label></li>
+    <li><input type="checkbox" id="i8"><label for="i8">The strip between J5 and the slot is empty (no parts). That is where the LCD tail makes its bow.</label></li>
+    <li><input type="checkbox" id="i7"><label for="i7">Meter on continuity: <span class="m">TP5 3V3 ↔ TP4 GND</span> must <strong>not</strong> beep steadily. A short "chirp" as capacitors charge is fine. <span class="unsure">general practice</span></label></li>
+  </ul>
+  <p class="stop">If a part is turned the wrong way or bridged: don't power it. Photograph it and ask.</p>
+<h3>The short check, with pictures (board unpowered)</h3>
+  <p>These four readings catch the faults that could hurt the board or the PC on first power (QA plan A3 #16, 17, 19, 20). Nothing is plugged in, no battery.</p>
+  <div class="cards">
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_short_3v3.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_short_3v3.jpg" alt="Red probe on TP5, black probe on TP4, meter on ohms" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>TP5 3V3 to TP4 GND: not shorted</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>Ω (resistance), or beep</dd>
+    <dt>Red</dt><dd>TP5 3V3</dd>
+    <dt>Black</dt><dd>TP4 GND</dd>
+    <dt>Expect</dt><dd class="exp">&gt; 1 kΩ after 5 s (climbing at first is normal). No steady beep.</dd>
+    <dt>Wrong</dt><dd class="bad">&lt; 100 Ω or a steady beep = short: bridged U3 or a cracked 22 µF capacitor.</dd>
+    <dt>Do</dt><dd>Don't power it. Photograph U3 and the caps near TP5; claim with JLCPCB.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to Ω (resistance), or beep" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">1.2k</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><text x="166" y="126" text-anchor="middle" font-size="13" class="mut">V⎓</text><rect x="175" y="167" width="21" height="24" rx="6" class="sel"/><text x="186" y="185" text-anchor="middle" font-size="14" class="selt">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="150" y2="176" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_short_bat.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_short_bat.jpg" alt="Red probe on TP6, black on TP4, ohms" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>TP6 BAT to TP4 GND</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>Ω (resistance)</dd>
+    <dt>Red</dt><dd>TP6 BAT</dd>
+    <dt>Black</dt><dd>TP4 GND</dd>
+    <dt>Expect</dt><dd class="exp">&gt; 10 kΩ (often around 1–2 MΩ: the battery-sense divider)</dd>
+    <dt>Wrong</dt><dd class="bad">Near 0 Ω = short on the battery side.</dd>
+    <dt>Do</dt><dd>Don't power or fit a battery. Photo of Q1, J4, U2; ask.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to Ω (resistance)" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">1.9M</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><text x="166" y="126" text-anchor="middle" font-size="13" class="mut">V⎓</text><rect x="175" y="167" width="21" height="24" rx="6" class="sel"/><text x="186" y="185" text-anchor="middle" font-size="14" class="selt">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="150" y2="176" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_beep_j3gnd.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_beep_j3gnd.jpg" alt="Red probe on J3 pin 4, black on TP4, beep mode" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>J3 pin 4 is GND</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>beep (continuity)</dd>
+    <dt>Red</dt><dd>J3 pin 4 (the − end)</dd>
+    <dt>Black</dt><dd>TP4 GND</dd>
+    <dt>Expect</dt><dd class="exp">BEEPS</dd>
+    <dt>Wrong</dt><dd class="bad">No beep = pin 4 not soldered, or you are on pin 1.</dd>
+    <dt>Do</dt><dd>Recount the pins from the N end; look at the J3 joints.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to beep (continuity)" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">0.00</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><text x="166" y="126" text-anchor="middle" font-size="13" class="mut">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><rect x="115" y="219" width="84" height="24" rx="6" class="sel"/><text x="157" y="237" text-anchor="middle" font-size="14" class="selt">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="135" y2="204" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_beep_j3vbus.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_beep_j3vbus.jpg" alt="Red probe on J3 pin 1, black on TP4, beep mode" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>J3 pin 1 is NOT GND</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>beep (continuity)</dd>
+    <dt>Red</dt><dd>J3 pin 1 (the N / + end)</dd>
+    <dt>Black</dt><dd>TP4 GND</dd>
+    <dt>Expect</dt><dd class="exp">NO beep (a short chirp is fine)</dd>
+    <dt>Wrong</dt><dd class="bad">Steady beep = VBUS shorted to GND (D7 or U7 bridged / reversed).</dd>
+    <dt>Do</dt><dd>Don't power. Photo of D7 and U7; ask.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to beep (continuity)" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">OL</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><text x="166" y="126" text-anchor="middle" font-size="13" class="mut">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><rect x="115" y="219" width="84" height="24" rx="6" class="sel"/><text x="157" y="237" text-anchor="middle" font-size="14" class="selt">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="135" y2="204" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  </div>
+  <ul class="check" data-step="inspect">
+    <li><input type="checkbox" id="i9"><label for="i9">TP6 ↔ TP4 above 10 kΩ, J3 pin 4 beeps to TP4, J3 pin 1 does not.</label></li>
+  </ul>
+
+</section>
+
+<section id="magnet">
+  <h2><span class="n">03</span>Magnet piece check, before gluing</h2>
+  <p>Unchanged from v14. J3 is wired, from pin 1 (silk <span class="m">N</span> and <span class="m">+</span>, leftmost pin seen from the component side, top edge away from you): <strong>VBUS, D−, D+, GND</strong>. The last pin has the silk <span class="m">−</span>.</p>
+  <figure><svg class="dia" viewBox="0 0 600 260" role="img" aria-label="Magnet piece check: the cable snapped onto the piece, the charger on, black probe on one outer leg, red probe on the other outer leg reads plus 5 volts; that leg is VBUS. Inner legs read 0 to 0.6 volts.">
+<rect x="150" y="30" width="200" height="70" rx="10" class="bxs" stroke-width="2"/><text x="250" y="60" text-anchor="middle" font-size="14">#5358 magnet piece</text><text x="250" y="80" text-anchor="middle" font-size="12" class="mut">(cable snapped on the other face)</text>
+<g stroke-width="7" stroke-linecap="round"><path d="M180 100 v80" stroke="#e53935"/><path d="M226 100 v80" class="lnm"/><path d="M272 100 v80" class="lnm"/><path d="M318 100 v80" stroke="#444"/></g>
+<text x="180" y="206" text-anchor="middle" font-size="13" font-weight="700">VBUS</text><text x="226" y="206" text-anchor="middle" font-size="13">D−</text><text x="272" y="206" text-anchor="middle" font-size="13">D+</text><text x="318" y="206" text-anchor="middle" font-size="13" font-weight="700">GND</text>
+<text x="180" y="224" text-anchor="middle" font-size="11" class="mut">→ J3 pin 1 (N, +)</text><text x="318" y="224" text-anchor="middle" font-size="11" class="mut">→ J3 pin 4 (−)</text>
+<path d="M180 182 L110 240" stroke="#e53935" stroke-width="9" stroke-linecap="round"/><path d="M318 182 L390 240" stroke="#222" stroke-width="9" stroke-linecap="round"/>
+<text x="60" y="254" font-size="12" class="not">red +</text><text x="400" y="254" font-size="12">black COM</text>
+<rect x="420" y="40" width="166" height="140" rx="10" class="ok"/>
+<text x="432" y="64" font-size="13" font-weight="700">Meter: DC volts</text>
+<text x="432" y="88" font-size="13">outer ↔ outer:</text><text x="432" y="110" font-size="20" font-weight="700" class="okt">+5 V ± 0.25</text>
+<text x="432" y="134" font-size="13">inner ↔ GND leg:</text><text x="432" y="156" font-size="18" font-weight="700" class="okt">0 – 0.6 V</text>
+<text x="432" y="174" font-size="11" class="mut">−5 V? swap probes, not legs</text>
+<text x="20" y="40" font-size="12" class="mut">1 charger on</text><text x="20" y="58" font-size="12" class="mut">2 piece snapped</text><text x="20" y="76" font-size="12" class="mut">3 legs NOT in J3</text>
+</svg><figcaption>Step g2–g3: the piece snapped onto the cable, charger on, legs in the air. Mark the VBUS leg with a pen.</figcaption></figure>
+  <figure><svg class="dia" viewBox="0 0 600 170" role="img" aria-label="USB-A plug face: four contacts, pin 1 VBUS and pin 4 GND are the long outer ones, pins 2 D minus and 3 D plus are the inner ones">
+<rect x="150" y="30" width="300" height="90" rx="6" class="tin" stroke="var(--muted)"/><rect x="170" y="70" width="260" height="34" fill="#f2f2f2" stroke="#999"/>
+<g><rect x="190" y="74" width="40" height="12" class="gold"/><rect x="250" y="76" width="34" height="10" class="gold"/><rect x="316" y="76" width="34" height="10" class="gold"/><rect x="370" y="74" width="40" height="12" class="gold"/></g>
+<text x="210" y="58" text-anchor="middle" font-size="13" font-weight="700">1 VBUS</text><text x="267" y="58" text-anchor="middle" font-size="13">2 D−</text><text x="333" y="58" text-anchor="middle" font-size="13">3 D+</text><text x="390" y="58" text-anchor="middle" font-size="13" font-weight="700">4 GND</text>
+<text x="300" y="146" text-anchor="middle" font-size="13">Plug face, contacts up. Continuity (beep), charger UNPLUGGED:</text>
+<text x="300" y="164" text-anchor="middle" font-size="12" class="mut">VBUS leg → 1 · inner leg next to VBUS → 2 · inner leg next to GND → 3 · GND leg → 4 and the shell</text></svg><figcaption>Step g4: which USB-A contact each leg must beep to.</figcaption></figure>
+<ul class="check" data-step="magnet">
+    <li><input type="checkbox" id="g1"><label for="g1">Straighten the 4 legs of the #5358 piece. Don't fit it yet. Snap the cable's magnet end onto it (it latches only one way).</label></li>
+    <li><input type="checkbox" id="g2"><label for="g2">Plug the cable's USB-A end into the <strong>phone charger</strong>. Meter on DC volts. Black probe on one <strong>outer</strong> leg, red on the other outer leg: about <span class="m">+5 V</span>. The red-probe leg is <strong>VBUS</strong>: mark it with a pen. (−5 V? swap the probes.)</label></li>
+    <li><input type="checkbox" id="g3"><label for="g3">Each <strong>inner</strong> leg to the black (GND) leg reads <span class="m">0–0.6 V</span>. If 5 V shows on an inner leg, <strong>stop</strong>: the cable differs from Adafruit's drawing. Don't fit it; ask.</label></li>
+    <li><input type="checkbox" id="g4"><label for="g4">Unplug the charger. Meter on continuity:
+      <ul>
+        <li>VBUS leg beeps to one outer contact of the USB-A plug (USB pin 1). GND leg beeps to the other outer contact (pin 4), usually to the metal shell too.</li>
+        <li>Inner leg <strong>next to VBUS</strong> beeps to the contact next to pin 1 (pin 2 = <strong>D−</strong>).</li>
+        <li>Inner leg <strong>next to GND</strong> beeps to the contact next to pin 4 (pin 3 = <strong>D+</strong>).</li>
+        <li>Inner legs the other way round: stop and ask. Not harmful, but USB data won't work.</li>
+      </ul></label></li>
+    <li><input type="checkbox" id="g5"><label for="g5">Push the piece in (no glue) with the <strong>VBUS leg in pin 1</strong> (silk N / +) and the <strong>GND leg in pin 4</strong> (silk −).</label></li>
+    <li><input type="checkbox" id="g6"><label for="g6">On the board: J3 pin 4's leg <strong>beeps</strong> to TP4. J3 pin 1's leg does <strong>not</strong> beep to TP4.</label></li>
+    <li><input type="checkbox" id="g7"><label for="g7">Only now glue the body into the top-wall slot (or leave it pushed in for the bench steps and glue at assembly).</label></li>
+  </ul>
+  <p class="stop"><strong>Why:</strong> fitted backwards, the cable's 5 V lands on the board's GND. A computer port cuts the current quickly, but a phone charger can push 2 A or more through D7 and the charger chip and damage them. Never test that on purpose.</p>
+</section>
+
+<section id="battery">
+  <h2><span class="n">04</span>Battery polarity</h2>
+  <figure><svg class="dia" viewBox="0 0 600 220" role="img" aria-label="Battery plug polarity: hold the plug as it will go into J4, opening towards you; red probe into the contact that meets J4 plus (right), black into the left; read plus 3.0 to 4.2 volts">
+<rect x="40" y="70" width="140" height="70" rx="10" class="cu"/><text x="110" y="102" text-anchor="middle" font-size="14">LiPo</text><text x="110" y="122" text-anchor="middle" font-size="12" class="mut">150 mAh</text>
+<path d="M180 92 C230 92 240 100 290 100" stroke="#e53935" stroke-width="5" fill="none"/><path d="M180 118 C230 118 240 110 290 110" stroke="#222" stroke-width="5" fill="none"/>
+<rect x="290" y="80" width="90" height="50" rx="4" class="silk" stroke="#999"/><text x="335" y="150" text-anchor="middle" font-size="12" class="mut">JST-PH plug</text>
+<rect x="380" y="88" width="30" height="34" fill="#555"/><circle cx="395" cy="96" r="5" class="gold"/><circle cx="395" cy="114" r="5" class="gold"/>
+<text x="420" y="100" font-size="13" font-weight="700" class="not">+ (red wire)</text><text x="420" y="122" font-size="13">−</text>
+<rect x="440" y="140" width="146" height="66" rx="10" class="ok"/><text x="452" y="162" font-size="13" font-weight="700">DC volts, red on +</text><text x="452" y="190" font-size="20" font-weight="700" class="okt">+3.0 – 4.2 V</text>
+<text x="20" y="30" font-size="13">Looking at J4 from the component side, opening towards you: <tspan font-weight="700">− left, + right</tspan>.</text>
+<text x="20" y="50" font-size="13">Turn the plug the way it will go in, then meter it. A minus sign = reversed: swap the crimps.</text>
+<text x="20" y="190" font-size="12" class="not">Probe tips must not touch each other: a LiPo shorted even briefly gets hot.</text></svg><figcaption>Polarity before anything else. On the board, J4 + is pin 2, the right-hand one (zoom A).</figcaption></figure>
+<ul class="check" data-step="battery">
+    <li><input type="checkbox" id="b1"><label for="b1">Look at J4 from the component side with its opening towards you: <strong>− on the left, + on the right</strong> (silk "+" / "−" beside it).</label></li>
+    <li><input type="checkbox" id="b2"><label for="b2">Hold the battery plug the same way it would go in. Meter on DC volts, red probe into the contact that will meet J4 "+": you should read the cell voltage as a <strong>positive</strong> number (about 3.0–4.2 V), and that contact should be on the red wire. Don't let the probes touch each other.</label></li>
+    <li><input type="checkbox" id="b3"><label for="b3">If reversed: swap the two crimp pins in the plug. Lift each little plastic tab with a needle, slide the pin out, swap, push back until it clicks. No soldering. Meter again.</label></li>
+  </ul>
+  <p class="note">Q1 protects the board from a reversed cell, but with USB also plugged in a few mA would flow into the reversed cell. So: polarity first, always.</p>
+</section>
+
+<section id="ribbon">
+  <h2><span class="n">05</span>Ribbon checks: camera and LCD tail</h2>
+  <h3>Camera ribbon beep test (as v14)</h3>
+  <figure><svg class="dia" viewBox="0 0 600 220" role="img" aria-label="Camera ribbon, 24 gold fingers; fingers 2 and 15 (both GND) must beep together"><rect x="28" y="50" width="520" height="80" rx="6" class="cu"/><rect x="40" y="60" width="13" height="60" rx="2" class="gold"/><text x="46" y="142" text-anchor="middle" font-size="12" class="mono">1</text><rect x="61" y="60" width="13" height="60" rx="2" class="sel"/><text x="67" y="142" text-anchor="middle" font-size="12" class="mono">2</text><rect x="82" y="60" width="13" height="60" rx="2" class="gold"/><rect x="103" y="60" width="13" height="60" rx="2" class="gold"/><rect x="124" y="60" width="13" height="60" rx="2" class="gold"/><rect x="145" y="60" width="13" height="60" rx="2" class="gold"/><rect x="166" y="60" width="13" height="60" rx="2" class="gold"/><rect x="187" y="60" width="13" height="60" rx="2" class="gold"/><rect x="208" y="60" width="13" height="60" rx="2" class="gold"/><rect x="229" y="60" width="13" height="60" rx="2" class="gold"/><text x="235" y="142" text-anchor="middle" font-size="12" class="mono">10</text><rect x="250" y="60" width="13" height="60" rx="2" class="gold"/><rect x="271" y="60" width="13" height="60" rx="2" class="gold"/><rect x="292" y="60" width="13" height="60" rx="2" class="gold"/><rect x="313" y="60" width="13" height="60" rx="2" class="gold"/><rect x="334" y="60" width="13" height="60" rx="2" class="sel"/><text x="340" y="142" text-anchor="middle" font-size="12" class="mono">15</text><rect x="355" y="60" width="13" height="60" rx="2" class="gold"/><rect x="376" y="60" width="13" height="60" rx="2" class="gold"/><rect x="397" y="60" width="13" height="60" rx="2" class="gold"/><rect x="418" y="60" width="13" height="60" rx="2" class="gold"/><rect x="439" y="60" width="13" height="60" rx="2" class="gold"/><rect x="460" y="60" width="13" height="60" rx="2" class="gold"/><rect x="481" y="60" width="13" height="60" rx="2" class="gold"/><rect x="502" y="60" width="13" height="60" rx="2" class="gold"/><text x="508" y="142" text-anchor="middle" font-size="12" class="mono">23</text><rect x="523" y="60" width="13" height="60" rx="2" class="gold"/><text x="529" y="142" text-anchor="middle" font-size="12" class="mono">24</text><path d="M76 56 C140 10 330 10 361 56" class="ln" stroke-width="2" stroke-dasharray="5 4"/><text x="220" y="26" text-anchor="middle" font-size="13" font-weight="700">2 ↔ 15 must BEEP (both GND)</text><text x="28" y="172" font-size="13">Meter on beep. Count from the end you think is pin 1. One probe on 2, the other on 15.</text><text x="28" y="192" font-size="13">No beep? Try 2 ↔ 10: if that beeps you counted from the far end. Neither beeps: stop, ask.</text><text x="28" y="210" font-size="12" class="mut">Sewing pins on the probes help: the fingers are 0.5 mm apart.</text></svg><figcaption>Camera ribbon, gold side up. Orange = the two GND fingers.</figcaption></figure>
+<ul class="check" data-step="ribbon">
+    <li><input type="checkbox" id="r1"><label for="r1">Camera unplugged from everything. Count the ribbon's gold fingers from the end you think is pin 1. Fingers <strong>2 and 15</strong> must beep to each other (both GND).</label></li>
+    <li><input type="checkbox" id="r2"><label for="r2">If they don't, try 2 against 10. If that pair beeps, you counted from the other end; recount and try again. If neither beeps, stop and ask. (Mirrored, 23 ↔ 10 should <em>not</em> beep.)</label></li>
+  </ul>
+  <p class="note">While the camera is out: measure its ribbon from the module's far edge to the tip and note it. Under about 70.3 mm means tape the module up to 1.7 mm towards J1 and drill the 7 mm window where the lens actually sits.</p>
+
+  <h3>LCD tail: find finger 1 with the diode test</h3>
+  <p>The panel's 30 gold fingers are not numbered on the tail. Plugged in the wrong way round, the screen just stays dark (nothing is damaged, but you lose time). The backlight is four small LEDs between <strong>finger 20</strong> (+, the anode) and <strong>fingers 21–24</strong> (−, the cathodes). A meter in diode mode lights them a little, and that tells you which end is which. The panel must be <strong>off the breakout and unplugged from everything</strong>.</p>
+  <figure>
+    <svg class="fing" viewBox="0 0 640 165" role="img" aria-label="The LCD tail's 30 fingers drawn left to right as 30 down to 1. Finger 20 is LED plus, fingers 21 to 24 are LED minus; they sit 7 to 11 fingers in from the pin-30 end. Finger 1 is at the right-hand end.">
+      <rect class="tail" x="10" y="24" width="620" height="78" rx="6"/>
+      <g id="fingers"></g>
+      <text x="16" y="16" font-size="13">30 end</text>
+      <text x="560" y="16" font-size="13">finger 1</text>
+      <text x="16" y="150" font-size="13">orange: 20 = LED + (red probe), 21–24 = LED − (black probe)</text>
+    </svg>
+    <figcaption>The tail seen from the gold side, numbered as on the panel drawing. Orange: the LED fingers, 7–11 fingers in from the <strong>30</strong> end (on the ER-TFT019-1 the cathode is finger 22 only; 21, 23, 24 are unused). Green: finger 1, at the other end.</figcaption>
+  </figure>
+  <ul class="check" data-step="ribbon">
+    <li><input type="checkbox" id="l1"><label for="l1">Touch a grounded metal object (a radiator, the PC case) first. Hold the panel by its edges, glass down on a soft cloth, gold fingers up.</label></li>
+    <li><input type="checkbox" id="l2"><label for="l2">Meter on <strong>diode mode</strong> (the diode symbol). Push a sewing pin onto each probe tip: the fingers are only 0.5 mm apart.</label></li>
+    <li><input type="checkbox" id="l3"><label for="l3">Pick one end of the tail and call it "end A". Count in from end A: <strong>red</strong> probe on the <strong>11th</strong> finger, <strong>black</strong> probe on the <strong>9th</strong>. Light pressure, no scratching.</label></li>
+    <li><input type="checkbox" id="l4"><label for="l4">A reading of roughly <span class="m">2.4–2.9 V</span> (and maybe a faint glow in the panel) means <strong>end A is the 30 end</strong>, so <strong>finger 1 is at the other end</strong>. "OL" or nothing: do the same from the other end. If neither end gives a reading, swap the probes once; still nothing: stop and ask (wrong panel type?). <span class="unsure">voltage range: typical white LED, not on the spec sheet</span></label></li>
+    <li><input type="checkbox" id="l5"><label for="l5">With a fine permanent marker put a small dot on the <strong>stiffener</strong> (the stiff back of the tail tip) at the <strong>finger-1 corner</strong>. Don't mark the gold.</label></li>
+    <li><input type="checkbox" id="l6"><label for="l6">Note the diode reading: <span class="m">____ V</span>. It is the LEDs' voltage at a tiny current; step 10 measures it at real current.</label></li>
+  </ul>
+  <figure><svg class="dia" viewBox="0 0 600 260" role="img" aria-label="LCD tail diode test: meter on diode mode, red probe on the 11th finger from the 30 end (finger 20, LED plus), black on the 9th (finger 22, LED minus); expect about 2.4 to 2.9 volts"><rect x="12" y="60" width="576" height="76" rx="6" class="cu"/><rect x="22" y="70" width="11" height="56" rx="2" class="gold"/><text x="27" y="146" text-anchor="middle" font-size="12" class="mono">30</text><rect x="41" y="70" width="11" height="56" rx="2" class="gold"/><rect x="60" y="70" width="11" height="56" rx="2" class="gold"/><rect x="79" y="70" width="11" height="56" rx="2" class="gold"/><rect x="98" y="70" width="11" height="56" rx="2" class="gold"/><rect x="117" y="70" width="11" height="56" rx="2" class="gold"/><rect x="136" y="70" width="11" height="56" rx="2" class="cu"/><rect x="155" y="70" width="11" height="56" rx="2" class="cu"/><rect x="174" y="70" width="11" height="56" rx="2" class="blk"/><text x="179" y="146" text-anchor="middle" font-size="12" class="mono">22</text><rect x="193" y="70" width="11" height="56" rx="2" class="cu"/><rect x="212" y="70" width="11" height="56" rx="2" class="red"/><text x="217" y="146" text-anchor="middle" font-size="12" class="mono">20</text><rect x="231" y="70" width="11" height="56" rx="2" class="gold"/><rect x="250" y="70" width="11" height="56" rx="2" class="gold"/><rect x="269" y="70" width="11" height="56" rx="2" class="gold"/><rect x="288" y="70" width="11" height="56" rx="2" class="gold"/><rect x="307" y="70" width="11" height="56" rx="2" class="gold"/><rect x="326" y="70" width="11" height="56" rx="2" class="gold"/><rect x="345" y="70" width="11" height="56" rx="2" class="gold"/><rect x="364" y="70" width="11" height="56" rx="2" class="gold"/><rect x="383" y="70" width="11" height="56" rx="2" class="gold"/><rect x="402" y="70" width="11" height="56" rx="2" class="gold"/><rect x="421" y="70" width="11" height="56" rx="2" class="gold"/><rect x="440" y="70" width="11" height="56" rx="2" class="gold"/><rect x="459" y="70" width="11" height="56" rx="2" class="gold"/><rect x="478" y="70" width="11" height="56" rx="2" class="gold"/><rect x="497" y="70" width="11" height="56" rx="2" class="gold"/><rect x="516" y="70" width="11" height="56" rx="2" class="gold"/><rect x="535" y="70" width="11" height="56" rx="2" class="gold"/><rect x="554" y="70" width="11" height="56" rx="2" class="gold"/><rect x="573" y="70" width="11" height="56" rx="2" class="okt"/><text x="578" y="146" text-anchor="middle" font-size="12" class="mono">1</text><path d="M217 70 L257 18" stroke="#e53935" stroke-width="8" stroke-linecap="round"/><path d="M179 70 L139 18" stroke="#222" stroke-width="8" stroke-linecap="round"/><text x="263" y="24" font-size="13" font-weight="700" class="not">red: 11th from the 30 end = finger 20 (LED +)</text><text x="133" y="24" text-anchor="end" font-size="13" font-weight="700">black: 9th = finger 22 (LED −)</text><text x="16" y="52" font-size="12" class="mut">30 end</text><text x="584" y="52" text-anchor="end" font-size="12" class="okt">finger 1 end (mark it)</text><rect x="12" y="166" width="300" height="84" rx="10" class="ok"/><text x="24" y="190" font-size="13" font-weight="700">Diode mode → reads</text><text x="24" y="222" font-size="24" font-weight="700" class="okt">≈ 2.4 – 2.9 V</text><text x="24" y="242" font-size="12" class="mut">maybe a faint glow: then end A is the 30 end</text><rect x="324" y="166" width="264" height="84" rx="10" class="no"/><text x="336" y="190" font-size="13" font-weight="700">"OL" / 1 / nothing</text><text x="336" y="212" font-size="12">wrong end: count from the other end.</text><text x="336" y="230" font-size="12">Both ends nothing: swap probes once,</text><text x="336" y="246" font-size="12">then stop and ask.</text></svg><figcaption>Step l3–l4 on one picture. The meter in diode mode pushes about 1 mA: enough for a faint glow, never enough to harm the LEDs. <span class="unsure">2.4–2.9 V: typical white LED at low current, not from the datasheet</span></figcaption></figure>
+  <div class="gal"><figure><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter on diode mode" style="max-width:220px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">2.62</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><text x="166" y="126" text-anchor="middle" font-size="13" class="mut">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><rect x="115" y="219" width="84" height="24" rx="6" class="sel"/><text x="157" y="237" text-anchor="middle" font-size="14" class="selt">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="135" y2="204" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg><figcaption>Diode mode: red in VΩ, black in COM.</figcaption></figure></div>
+<p class="note"><strong>Where the dot must end up:</strong> J5 is mirrored on purpose (like the camera's J1), so that a tail running naturally through the slot with <strong>no twist</strong> arrives with finger 1 at the <strong>bottom</strong> of J5, next to the silk tick (towards Q4), and the LED fingers in the <strong>top half</strong> (towards Q5). That comes from the panel drawing and has not been seen on a real panel yet <span class="unsure">confirm on the first panel</span>. If your dot arrives at the top instead, don't plug it in: write it down and ask. The fix is a half twist of the tail (there is about 7 mm to spare) or a footprint swap before the next board order.</p>
+</section>
+
+<section id="power">
+  <h2><span class="n">06</span>First power: USB only</h2>
+  <p><strong>Nothing else connected:</strong> no battery, no LCD, no camera. Magnet piece pushed into J3, cable into a <strong>computer</strong> USB port. Keep one hand on the plug.</p>
+  <h3>Current limit: watch the current while you plug in</h3>
+  <figure><svg class="dia" viewBox="0 0 560 170" role="img" aria-label="First power with a current check: computer USB port, then an inline USB power meter, then the magnetic cable, then the board">
+<rect x="14" y="40" width="110" height="80" rx="8" class="bx"/><text x="69" y="76" text-anchor="middle" font-size="14">Computer</text><text x="69" y="96" text-anchor="middle" font-size="12" class="mut">USB port</text>
+<path d="M124 80 L170 80" class="ln" stroke-width="4"/>
+<rect x="170" y="48" width="130" height="64" rx="8" class="bxs" stroke-width="2"/><rect x="180" y="56" width="110" height="34" rx="4" class="lcd"/>
+<text x="284" y="72" text-anchor="end" font-size="13" class="lcdt">5.08V</text><text x="284" y="87" text-anchor="end" font-size="13" class="lcdt">0.032A</text>
+<text x="235" y="104" text-anchor="middle" font-size="11" class="mut">inline USB meter</text>
+<path d="M300 80 L400 80" class="ln" stroke-width="4"/><rect x="392" y="66" width="24" height="28" rx="12" class="bxs"/>
+<rect x="420" y="40" width="126" height="80" rx="8" class="pcb"/><text x="483" y="84" text-anchor="middle" font-size="13" fill="#fff">board</text>
+<text x="20" y="146" font-size="13"><tspan font-weight="700" class="okt">5–60 mA</tspan> idle with nothing attached = fine.  <tspan font-weight="700" class="not">Over 150 mA = unplug now</tspan> (a short).</text>
+<text x="20" y="164" font-size="12" class="mut">No USB meter? Then the fingertip heat check is your current limit: a computer port shuts off on a hard short.</text></svg><figcaption>An inline USB power meter (about $10) between the PC and the cable shows the board's current at once (QA plan A4 #26). <span class="unsure">limit set in the QA plan, not a measured value</span></figcaption></figure>
+
+<ul class="check" data-step="power">
+    <li><input type="checkbox" id="p1"><label for="p1">Plug in. For the first 10 seconds touch the top of U2, U3, U7, D1, D7, U1 and the new Q4 / Q5 lightly with a fingertip. Anything hot: unplug at once.</label></li>
+    <li><input type="checkbox" id="p2"><label for="p2">Measure each row below (black probe on TP4) and write the values down.</label></li>
+  </ul>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Rail</th><th>Where (red probe)</th><th>Expect</th><th>If wrong</th></tr></thead>
+      <tbody>
+        <tr><td>VBUS</td><td>J3 pin 1 leg (no TP on this rail)</td><td class="v">≈ 5.0 V<br>(4.75–5.25)</td><td>Near 0 or negative: magnet piece backwards. Unplug.</td></tr>
+        <tr><td>SYS</td><td>D1, the banded (left) end <span class="unsure">derived from schematic</span></td><td class="v">4.55–4.7 V</td><td>0 V with good VBUS: check D1. Unplug if anything is warm.</td></tr>
+        <tr><td>+3V3</td><td><span class="m">TP5 3V3</span></td><td class="v">3.25–3.35 V</td><td>0 V: U3 or SYS. Above 3.6 V: unplug now, ask.</td></tr>
+        <tr><td>EN</td><td><span class="m">TP7 EN</span></td><td class="v">≈ 3.3 V (high)</td><td>Low: chip held in reset; check for a bridge near TP7.</td></tr>
+        <tr><td>BAT+</td><td><span class="m">TP6 BAT</span></td><td class="v">≈ 0 V, or 4.1–4.25 V</td><td>Both are normal with no cell. Anything else (say 1–4 V, or above 4.3 V): note it, ask before going on.</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">The LCD is switched off until the firmware turns it on (Q4 is held off by a pull-up), so J5 has no power yet. That's expected.</p>
+  <h3>Each reading, with a picture</h3>
+  <p>Black probe stays on <span class="m">TP4 GND</span> for all five (put a sewing pin on it and tape the lead down so it can't slide). Meter on DC volts.</p>
+  <div class="cards">
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_vbus.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_vbus.jpg" alt="Red probe on J3 pin 1, black on TP4, DC volts" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>VBUS: power from the cable</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>DC volts, 20 V</dd>
+    <dt>Red</dt><dd>the J3 pin 1 leg (N / + end)</dd>
+    <dt>Black</dt><dd>TP4 GND</dd>
+    <dt>Expect</dt><dd class="exp">≈ 5.0 V (4.75–5.25)</dd>
+    <dt>Wrong</dt><dd class="bad">Near 0 or negative: magnet piece backwards. Below 4.75: weak port or cable.</dd>
+    <dt>Do</dt><dd>Negative or 0: unplug at once, redo step 3. Low: try another PC port.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to DC volts, 20 V" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">5.06</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><rect x="151" y="108" width="30" height="24" rx="6" class="sel"/><text x="166" y="126" text-anchor="middle" font-size="14" class="selt">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="140" y2="145" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_sys.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_sys.jpg" alt="Red probe on the left pad of D1, black on TP4" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>SYS: after diode D1</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>DC volts, 20 V</dd>
+    <dt>Red</dt><dd>D1's band end (left pad)</dd>
+    <dt>Black</dt><dd>TP4 GND</dd>
+    <dt>Expect</dt><dd class="exp">4.55–4.7 V (VBUS minus about 0.35 V)</dd>
+    <dt>Wrong</dt><dd class="bad">0 V with good VBUS: D1 open or not soldered. Equal to VBUS: you are on the wrong pad.</dd>
+    <dt>Do</dt><dd>Unplug if anything is warm; photo D1; ask.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to DC volts, 20 V" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">4.63</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><rect x="151" y="108" width="30" height="24" rx="6" class="sel"/><text x="166" y="126" text-anchor="middle" font-size="14" class="selt">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="140" y2="145" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_3v3.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_3v3.jpg" alt="Red probe on TP5, black on TP4" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>+3V3: the main rail</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>DC volts, 20 V</dd>
+    <dt>Red</dt><dd>TP5 3V3</dd>
+    <dt>Black</dt><dd>TP4 GND</dd>
+    <dt>Expect</dt><dd class="exp">3.25–3.35 V</dd>
+    <dt>Wrong</dt><dd class="bad">0 V: U3 not running (or no SYS). Under 3.2 V: overloaded. <strong>Above 3.6 V: unplug now.</strong></dd>
+    <dt>Do</dt><dd>0 V: measure SYS. Above 3.6 V: unplug, redo the step 3 inner-leg checks, ask.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to DC volts, 20 V" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">3.30</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><rect x="151" y="108" width="30" height="24" rx="6" class="sel"/><text x="166" y="126" text-anchor="middle" font-size="14" class="selt">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="140" y2="145" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_en.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_en.jpg" alt="Red probe on TP7, black on TP4" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>EN: the chip is allowed to run</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>DC volts, 20 V</dd>
+    <dt>Red</dt><dd>TP7 EN</dd>
+    <dt>Black</dt><dd>TP4 GND</dd>
+    <dt>Expect</dt><dd class="exp">≈ 3.3 V (above 2.5 V)</dd>
+    <dt>Wrong</dt><dd class="bad">Low (under 1 V): chip held in reset.</dd>
+    <dt>Do</dt><dd>Look for a bridge or solder ball near TP7 and the EN capacitor; ask.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to DC volts, 20 V" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">3.29</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><rect x="151" y="108" width="30" height="24" rx="6" class="sel"/><text x="166" y="126" text-anchor="middle" font-size="14" class="selt">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="140" y2="145" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_bat.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_bat.jpg" alt="Red probe on TP6, black on TP4" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>BAT: battery pin, no cell yet</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>DC volts, 20 V</dd>
+    <dt>Red</dt><dd>TP6 BAT</dd>
+    <dt>Black</dt><dd>TP4 GND</dd>
+    <dt>Expect</dt><dd class="exp">≈ 0 V, or 4.1–4.25 V (both normal with no cell)</dd>
+    <dt>Wrong</dt><dd class="bad">1–4 V, or above 4.3 V.</dd>
+    <dt>Do</dt><dd>Note the value and ask before fitting a battery.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to DC volts, 20 V" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">0.02</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><rect x="151" y="108" width="30" height="24" rx="6" class="sel"/><text x="166" y="126" text-anchor="middle" font-size="14" class="selt">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="140" y2="145" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  </div>
+
+<p class="stop"><strong>Wrong reading or hot part:</strong> unplug, let it cool, don't plug in again "to check". Note which part was warm and which reading was off, then ask.</p>
+</section>
+
+<section id="flash">
+  <h2><span class="n">07</span>Flash the v15 firmware</h2>
+  <ul class="check" data-step="flash">
+    <li><input type="checkbox" id="f1"><label for="f1">Cable still in the PC. In VS Code: <strong>File &gt; Open Folder</strong> &gt; <code>firmware-v15-lcd</code> (the bottom bar shows <code>env:v15lcd</code>). Click <strong>Upload</strong> (→ in the blue bar). Command line, from that folder: <code>%USERPROFILE%\.platformio\penv\Scripts\pio run -t upload</code></label></li>
+    <li><input type="checkbox" id="f2"><label for="f2">Open the Serial Monitor at <span class="m">115200</span>, type <code>help</code>, then <code>status</code>. The first line reads <code>Firmware: v15lcd-2026.10.08 (slot app0)  id …</code>. Further down: <code>Wi-Fi: not set</code>, <code>AI proxy: not set</code>, and a <code>Screen: 320x170 LCD …</code> line with the brightness and time-outs. That's expected until step 11.</label></li>
+  </ul>
+  <p class="note"><strong>The first flash is always over USB</strong>, on every board: a new board is blank, and the firmware uses a two-slot partition table (<code>min_spiffs.csv</code>) so that later versions can arrive over the air. An over-the-air update can never write the partition table. <strong>Never send a v14 image over the air to a v15 board</strong> (or the other way round): the screens are different hardware.</p>
+  <h3>What it looks like</h3>
+  <figure><svg class="dia" viewBox="0 0 640 230" role="img" aria-label="VS Code with PlatformIO: the blue status bar at the bottom; the tick builds, the right arrow uploads, the plug opens the serial monitor, and the env name shows which project is open">
+<rect x="10" y="10" width="620" height="150" rx="8" class="bx"/>
+<rect x="10" y="10" width="620" height="26" rx="8" class="bxs"/><text x="22" y="28" font-size="12" class="mono">EXPLORER: firmware-v15-lcd</text>
+<text x="40" y="70" font-size="12" class="mono mut">platformio.ini</text><text x="40" y="90" font-size="12" class="mono mut">src/</text><text x="40" y="110" font-size="12" class="mono mut">README.md</text>
+<rect x="10" y="134" width="620" height="28" fill="#1f6fd1"/>
+<g fill="#fff" font-size="14"><text x="22" y="153">⌂</text><text x="50" y="153">✓</text><text x="80" y="153">→</text><rect x="110" y="141" width="10" height="13" rx="1" fill="none" stroke="#fff" stroke-width="1.5"/><path d="M107 141 h16" stroke="#fff" stroke-width="1.5"/><path d="M141 140 v5 M147 140 v5 M138 145 h12 v4 a6 6 0 0 1 -12 0 z M144 155 v4" stroke="#fff" stroke-width="1.5" fill="none"/><text x="170" y="153">&gt;_</text><text x="226" y="153" class="mono" font-size="12">env:v15lcd (firmware-v15-lcd)</text></g>
+<g class="ln" stroke-width="1.5"><path d="M54 162 v22"/><path d="M84 162 v40"/><path d="M144 162 v58"/><path d="M290 162 v22"/></g>
+<text x="58" y="190" font-size="12">Build (check it compiles)</text>
+<text x="88" y="208" font-size="13" font-weight="700" class="cut">Upload = flash the board</text>
+<text x="148" y="226" font-size="12">Serial Monitor (115200)</text>
+<text x="300" y="190" font-size="12">must say env:v15lcd</text></svg><figcaption>The PlatformIO buttons live in the blue bar at the bottom of VS Code. If the bar doesn't show <code>env:v15lcd</code>, the wrong folder is open.</figcaption></figure>
+  <div class="cmd">
+    <p><strong>Or type it</strong> (VS Code: <em>Terminal &gt; New Terminal</em>, from the repo folder):</p>
+    <code>cd firmware-v15-lcd</code>
+    <code>%USERPROFILE%\.platformio\penv\Scripts\pio run -t upload</code>
+    <code>%USERPROFILE%\.platformio\penv\Scripts\pio device monitor -b 115200</code>
+  </div>
+  <p>A good upload ends with <code>Hard resetting via RTS pin...</code> and <code>[SUCCESS]</code>. Then the Serial Monitor; type in the box at the bottom and press Enter:</p>
+  <pre class="term"><span class="c">&gt; status</span>
+<span class="g">Firmware: v15lcd-2026.10.08 (slot app0)  id calc-3f9a21</span>      <span class="m">&lt;- right build, first USB flash</span>
+Camera: none
+Wi-Fi: not set (type wifi, or = on SETUP 6)          <span class="m">&lt;- normal until step 11</span>
+AI proxy: not set (type proxy)
+Device token: not set (type token)
+Battery: 0% (0 mV)                                     <span class="m">&lt;- no cell yet</span>
+<span class="m">Screen: 320x170 LCD ok, brightness 60 % (now 60 %), dim after 20 s, ...</span></pre>
+  <p class="eyebrow">Example; the id and some numbers differ on your board.</p>
+
+<h3>If no COM port appears, or "no serial data"</h3>
+  <ul class="check" data-step="flash">
+    <li><input type="checkbox" id="f3"><label for="f3">Hold a wire from <span class="m">TP1 BOOT</span> to <span class="m">TP4 GND</span>.</label></li>
+    <li><input type="checkbox" id="f4"><label for="f4">With a second wire, tap <span class="m">TP7 EN</span> to <span class="m">TP4 GND</span> for about 0.2 s. The chip restarts in download mode. Release TP1, click Upload.</label></li>
+    <li><input type="checkbox" id="f5"><label for="f5">When it finishes, tap TP7 to GND once more to start the new firmware.</label></li>
+  </ul>
+  <div class="figs">
+    <figure><img src="renders_bringup/v15/recovery_1.jpg" alt="Panel 1: a wire held from TP1 BOOT to TP4 GND" loading="lazy" width="460" height="762"><figcaption>1 · Hold TP1 to TP4 (a wire, or the tweezers' tip across both pads).</figcaption></figure>
+    <figure><img src="renders_bringup/v15/recovery_2.jpg" alt="Panel 2: keep TP1 held, briefly tap a second wire from TP7 EN to TP4 GND" loading="lazy" width="460" height="762"><figcaption>2 · Keep holding; tap TP7 to TP4 for about 0.2 s. The chip restarts in download mode.</figcaption></figure>
+    <figure><img src="renders_bringup/v15/recovery_3.jpg" alt="Panel 3: both wires off, click Upload; afterwards tap TP7 to TP4 once" loading="lazy" width="460" height="762"><figcaption>3 · Let go of TP1, click Upload. When it finishes, tap TP7 once more to start the new firmware.</figcaption></figure>
+  </div>
+  <p class="note">In download mode the Serial Monitor shows <code>waiting for download</code> and the COM port number may change. Nothing you do on these pads can damage the board: they are pulled up through resistors. <strong>Never touch TP5 (3V3) to TP4.</strong></p>
+
+<p class="note">With a battery connected later, plugging the cable in does <strong>not</strong> reset the chip, so use the TP7 tap (or unplug the battery first). Last resort: a 3.3 V USB-serial adapter on TP2 (TX) / TP3 (RX) / TP4 (GND), then the same TP1 + TP7 sequence. In deep sleep the USB port disappears: press ON to bring it back.</p>
+</section>
+
+<section id="selftest">
+  <h2><span class="n">08</span>Factory self-test (nothing attached)</h2>
+  <ul class="check" data-step="selftest">
+    <li><input type="checkbox" id="s1"><label for="s1">Type <code>selftest</code> in the Serial Monitor. Type <code>q</code> to skip the 50-key test for now.</label></li>
+    <li><input type="checkbox" id="s2"><label for="s2">Copy the <code>SELFTEST_JSON</code> line into a text file. With nothing attached, <code>camera_ok</code>, <code>keys_all_ok</code> and so <code>pass</code> are false; that's fine here. The LCD fields can read true even with no panel, because the panel can't answer back (see the table). The real screen check is your eyes, in step 9.</label></li>
+  </ul>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Field</th><th>Good value</th><th>What it proves</th></tr></thead>
+      <tbody>
+        <tr><td><code>firmware</code>, <code>firmware_slot</code></td><td class="v">v15lcd-…, app0</td><td>The v15 build is running, from app slot 0 after a USB flash</td></tr>
+        <tr><td><code>memory_ok</code></td><td class="v">true</td><td>4 MB flash, 2 MB PSRAM found</td></tr>
+        <tr><td><code>keypad_scanner_ok</code></td><td class="v">true</td><td>U6 (TCA8418) answers on I²C (its interrupt is on IO3 on v15)</td></tr>
+        <tr><td><code>vbus</code></td><td class="v">true</td><td>Cable detected</td></tr>
+        <tr><td><code>battery_mv</code>, <code>battery_ok</code>, <code>charge</code></td><td class="v">3000–4300, true</td><td>Meaningful once a cell is in</td></tr>
+        <tr><td><code>lcd_ok</code>, <code>lcd_push_ms</code></td><td class="v">true, about 20–40 (under 200)</td><td>The LCD driver started and one full 320 × 170 frame went out over SPI in time. It does <strong>not</strong> prove the panel shows it: the panel is write-only</td></tr>
+        <tr><td><code>backlight_ok</code>, <code>backlight_pct</code></td><td class="v">true, 60</td><td>The backlight PWM swept 0 → 100 % and went back to your setting (60 % by default). Whether the LEDs really lit is again your eyes</td></tr>
+        <tr><td><code>display_ok</code>, <code>display_refresh_ms</code></td><td class="v">= lcd_ok, lcd_push_ms</td><td>Old v14 names, kept so old notes still read</td></tr>
+        <tr><td><code>camera_ok</code>, <code>camera_jpeg_bytes</code>, <code>camera_autofocus</code></td><td class="v">true, &gt; 1000, true</td><td>OV5640 ID read, a JPEG taken, the autofocus firmware loaded</td></tr>
+        <tr><td><code>wifi_ok</code></td><td class="v">true</td><td>≥ 1 network better than −80 dBm</td></tr>
+        <tr><td><code>keys_ok</code>, <code>keys_missing</code>, <code>keys_all_ok</code></td><td class="v">50, [], true</td><td>Every key (needs the rubber keypad: Assembly Guide steps 8 and 11)</td></tr>
+        <tr><td><code>pass</code></td><td class="v">true</td><td>Everything above</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <pre>SELFTEST_JSON {"firmware":"v15lcd-2026.10.08","firmware_slot":"app0","device_id":"calc-…","trigger":"serial","reset_reason":"…","memory_ok":true,"keypad_scanner_ok":true,"battery_mv":3987,"battery_pct":75,"vbus":true,"chg_stat_high":false,"charge":"charging","battery_ok":true,"lcd_ok":true,"lcd_push_ms":24,"display_refresh_ms":24,"display_ok":true,"backlight_ok":true,"backlight_pct":60,"camera":"…OV5640","camera_jpeg_bytes":31877,"camera_autofocus":true,"camera_ok":true,"wifi_networks":7,"wifi_best_rssi":-48,"wifi_ok":true,"keys_ok":50,"keys_total":50,"keys_missing":[],"keys_all_ok":true,"pass":true}</pre>
+  <p class="eyebrow">Example of a full pass, made up from the firmware's field list (no v15 board has run yet). The real line also has chip_rev, flash_mb, psram_kb, camera_ms and a few more.</p>
+  <h3>The JSON line, field by field</h3>
+  <p>The line is long; this is the same example split up. Left: the field and a good value. Right: what it tells you. Paste your real line into a text file and go down this list.</p>
+  <div class="json"><div class="k"><b>firmware</b>: "v15lcd-2026.10.08"</div><div>The build that is running. Must start with v15lcd.</div><div class="k"><b>firmware_slot</b>: "app0"</div><div>app0 after a USB flash; app1 after the first over-the-air update.</div><div class="k"><b>device_id</b>: "calc-…"</div><div>This board's id. Write it on the bag.</div><div class="k"><b>reset_reason</b>: "…"</div><div>Why it last restarted. 'brownout' = power dipped.</div><div class="k"><b>memory_ok</b>: true</div><div>4 MB flash + 2 MB PSRAM found. False = wrong module or bad U1 joint.</div><div class="k"><b>keypad_scanner_ok</b>: true</div><div>U6 answers on I²C. False = U6 bridge or pull-ups.</div><div class="k"><b>battery_mv</b>: 3987</div><div>Cell voltage. 3000–4300 = ok. 0 with a cable = Q1/J4.</div><div class="k"><b>vbus / charge</b>: true / "charging"</div><div>Cable seen; charger running. No cell: may say full.</div><div class="k"><b>lcd_ok / lcd_push_ms</b>: true / 24</div><div>A full frame went out in under 200 ms. Does NOT prove the panel shows it: look at the bars.</div><div class="k"><b>backlight_ok / backlight_pct</b>: true / 60</div><div>The PWM sweep ran and returned to 60 %. Your eyes check the light.</div><div class="k"><b>camera_ok / camera_jpeg_bytes</b>: true / 31877</div><div>OV5640 found and a JPEG over 1000 bytes taken. False with no camera: expected.</div><div class="k"><b>camera_autofocus</b>: true</div><div>Autofocus firmware loaded: the right (AF) camera.</div><div class="k"><b>wifi_networks / wifi_best_rssi</b>: 7 / -48</div><div>At least one network better than −80 dBm.</div><div class="k"><b>keys_ok / keys_missing</b>: 50 / []</div><div>Every key pressed. 'q' skips: then false, fine on the bench.</div><div class="k"><b>pass</b>: true</div><div>Everything above. On the bare board it is false: that's fine here.</div></div>
+
+</section>
+
+<section id="attach">
+  <h2><span class="n">09</span>LCD, camera, then battery</h2>
+  <p><strong>Unplug the cable before each ribbon.</strong> Both sockets are flip-lid and dual-contact: they touch both faces of the ribbon, so it doesn't matter which face of the tail is up. Only which <em>end</em> is finger 1 matters.</p>
+  <h3>Ribbon technique <span class="unsure">general practice</span></h3>
+  <ul class="check" data-step="attach">
+    <li><input type="checkbox" id="a1"><label for="a1">Lift the lid gently with a fingernail or the tweezers' tip, by its centre, to about 90°. Don't force it past its stop.</label></li>
+    <li><input type="checkbox" id="a2"><label for="a2">Slide the ribbon in straight and fully (no angle), then press the lid down until it sits flat. Tug lightly: the ribbon must not move.</label></li>
+  </ul>
+  <h3>LCD into J5 (bench test, panel loose)</h3>
+  <p>On the bench the panel doesn't need to be taped down yet: lay it glass-up on the key side, feed the tail through the slot and into J5 the way the v15 Assembly Guide (step 5) shows. Taping comes later. If you already taped it, that's fine too.</p>
+  <ul class="check" data-step="attach">
+    <li><input type="checkbox" id="a3"><label for="a3">The dot from step 5 lands at the <strong>bottom</strong> of J5, next to the silk tick, with <strong>no twist</strong> in the tail. Tail fully in, lid closed. The tail makes one soft bow between the slot and J5, never a crease.</label></li>
+    <li><input type="checkbox" id="a4"><label for="a4">Plug the cable in. The screen lights up with the calculator. Run <code>selftest</code> and <strong>look at the screen</strong>: eight colour bars, a grey ramp under them, a white border and the device id. Then the backlight sweeps from dark to full and back to 60 %.</label></li>
+  </ul>
+  <h3>The colour bars: pictures of each symptom</h3>
+  <p>Simulated pictures of the self-test screen. Find the one that looks like yours. The flags are in <code>firmware-v15-lcd/platformio.ini</code> under <code>build_flags</code>; change one value, Upload, look again. <span class="unsure">simulated, not photos of a real panel</span></p>
+  <div class="gal"><figure><img src="renders_bringup/v15/lcd_good.png" alt="All good: white, yellow, cyan, green, magenta, red, blue, black; smooth grey ramp; full border." loading="lazy" width="360" height="244"><figcaption>All good: white, yellow, cyan, green, magenta, red, blue, black; smooth grey ramp; full border.<br>Fix: <code>nothing</code></figcaption></figure><figure><img src="renders_bringup/v15/lcd_rb_swap.png" alt="Red and blue swapped (and yellow/cyan): the bar second from the right is red." loading="lazy" width="360" height="244"><figcaption>Red and blue swapped (and yellow/cyan): the bar second from the right is red.<br>Fix: <code>-DLCD_RGB_ORDER=1</code></figcaption></figure><figure><img src="renders_bringup/v15/lcd_inverted.png" alt="Negative colours: the white bar is black, the ramp runs backwards." loading="lazy" width="360" height="244"><figcaption>Negative colours: the white bar is black, the ramp runs backwards.<br>Fix: <code>-DLCD_INVERT=0</code></figcaption></figure><figure><img src="renders_bringup/v15/lcd_rotated.png" alt="Upside down: black bar on the left, text at the bottom." loading="lazy" width="360" height="244"><figcaption>Upside down: black bar on the left, text at the bottom.<br>Fix: <code>-DLCD_ROTATION=3</code></figcaption></figure><figure><img src="renders_bringup/v15/lcd_offset.png" alt="Noise strip on one edge, border cut off: memory offset." loading="lazy" width="360" height="244"><figcaption>Noise strip on one edge, border cut off: memory offset.<br>Fix: <code>none yet: note the edge and width, ask (PORT_NOTES 1)</code></figcaption></figure><figure><img src="renders_bringup/v15/lcd_sparkle.png" alt="Sparkles, torn rows: SPI too fast." loading="lazy" width="360" height="244"><figcaption>Sparkles, torn rows: SPI too fast.<br>Fix: <code>LCD_SPI_HZ 26 or 20 MHz in pins_v15_lcd.h</code></figcaption></figure><figure><img src="renders_bringup/v15/lcd_glow_only.png" alt="Backlight on, no picture: tail reversed, not fully in, or lid open." loading="lazy" width="360" height="244"><figcaption>Backlight on, no picture: tail reversed, not fully in, or lid open.<br>Fix: <code>no flag: cable off, redo the diode test, reseat</code></figcaption></figure><figure><img src="renders_bringup/v15/lcd_dark.png" alt="Totally dark, even during the backlight sweep." loading="lazy" width="360" height="244"><figcaption>Totally dark, even during the backlight sweep.<br>Fix: <code>no flag: reseat; then the R23 reading (step 10)</code></figcaption></figure></div>
+  <pre>build_flags =
+  ...
+  -DLCD_ROTATION=1        ; 3 = upside down
+  -DLCD_INVERT=1          ; 0 if the colours look negative
+  -DLCD_RGB_ORDER=0       ; 1 if red and blue are swapped
+  -DPREVIEW_SWAP_BYTES=0  ; 1 if only the live preview has wrong colours</pre>
+
+<div class="tablewrap">
+    <table>
+      <thead><tr><th>What you see</th><th>Means</th><th>Fix (in <code>firmware-v15-lcd/platformio.ini</code>, then Upload again)</th></tr></thead>
+      <tbody>
+        <tr><td>Bars left to right: <strong>white, yellow, cyan, green, magenta, red, blue, black</strong>; smooth grey ramp; full white border</td><td>All good</td><td>Nothing. Tick it off</td></tr>
+        <tr><td>Red and blue swapped (the bar second from the right is red, not blue)</td><td>Colour order</td><td><code>-DLCD_RGB_ORDER=1</code></td></tr>
+        <tr><td>Washed-out, "negative" colours (the white bar is black)</td><td>Inversion</td><td><code>-DLCD_INVERT=0</code></td></tr>
+        <tr><td>Everything upside down</td><td>Rotation</td><td><code>-DLCD_ROTATION=3</code></td></tr>
+        <tr><td>A strip of noise along one edge, border cut off</td><td>Memory offset (35 px on this panel type)</td><td>Note which edge and how wide; ask (PORT_NOTES item 1)</td></tr>
+        <tr><td>Tearing, sparkles, random pixels</td><td>SPI too fast</td><td><code>LCD_SPI_HZ</code> to 26 or 20 MHz in <code>hardware/kicad_v15_lcd/pins_v15_lcd.h</code></td></tr>
+        <tr><td>Backlight on but no picture</td><td>Tail reversed (wrong end), not fully in, or lid open</td><td>Cable off. Redo the diode test in step 5, reseat. Don't add a twist without asking</td></tr>
+        <tr><td>Completely dark, no light during the sweep</td><td>Tail not in, or the backlight path (Q5, R23, LED fingers 20–24)</td><td>Cable off, reseat; then the R23 reading in step 10; ask</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <ul class="check" data-step="attach">
+    <li><input type="checkbox" id="a5"><label for="a5">Write the four flags you ended with on the board's bag. They will be the same for every panel from the same seller.</label></li>
+  </ul>
+  <h3>Camera, then battery</h3>
+  <ul class="check" data-step="attach">
+    <li><input type="checkbox" id="a6"><label for="a6">Unplug. <strong>Camera into J1</strong> (only after step 5's beep test passed). Lay the camera lens-up where it will sit and run its ribbon <strong>straight</strong> into J1, with no twist or flip. Plug in, <code>selftest</code>: <code>camera_ok</code> true. If it fails, reseat once; then try the ribbon with a 180° twist. (J1 is unchanged from v14.)</label></li>
+    <li><input type="checkbox" id="a7"><label for="a7">Unplug. <strong>Battery into J4</strong> (polarity already checked). From now on the board is always on.</label></li>
+    <li><input type="checkbox" id="a8"><label for="a8">Plug the cable in. <code>status</code> should say <strong>"(charging)"</strong>; later <strong>"(USB, full)"</strong>. No charge LED on this board.</label></li>
+    <li><input type="checkbox" id="a9"><label for="a9">Compare <code>status</code> mV with the meter on <span class="m">TP6 BAT</span> once and note both (for the battery calibration).</label></li>
+    <li><input type="checkbox" id="a10"><label for="a10">Optional: no cable, switch off (SHIFT AC), wait 10 s, battery current in series: target <span class="m">≤ 40 µA</span>. The LCD is completely unpowered in sleep, so it should add almost nothing. Higher? Note the number and ask (PORT_NOTES item 5).</label></li>
+  </ul>
+<h3>Optional current readings (meter in mA / µA)</h3>
+  <figure><svg class="dia" viewBox="0 0 560 210" role="img" aria-label="Measuring current: the meter goes IN the battery wire, in series, red lead in the mA socket">
+<rect x="20" y="60" width="120" height="80" rx="10" class="cu"/><text x="80" y="96" text-anchor="middle" font-size="14">LiPo cell</text><text x="80" y="116" text-anchor="middle" font-size="12" class="mut">150 mAh</text>
+<path d="M140 80 L230 80" stroke="#e53935" stroke-width="5"/><path d="M140 120 L420 120" stroke="#222" stroke-width="5"/>
+<rect x="230" y="40" width="110" height="80" rx="10" class="bxs" stroke-width="2"/><rect x="242" y="50" width="86" height="30" rx="4" class="lcd"/>
+<text x="320" y="72" text-anchor="end" font-size="18" class="lcdt">0.035 mA</text>
+<circle cx="258" cy="104" r="8" class="red"/><text x="258" y="136" text-anchor="middle" font-size="11" class="mono mut">mA</text>
+<circle cx="312" cy="104" r="8" class="blk"/><text x="312" y="136" text-anchor="middle" font-size="11" class="mono mut">COM</text>
+<path d="M230 80 C240 80 250 90 258 100" stroke="#e53935" stroke-width="4" fill="none"/>
+<path d="M312 104 C340 100 360 80 420 80" stroke="#e53935" stroke-width="4" fill="none" stroke-dasharray="7 4"/>
+<rect x="420" y="50" width="120" height="100" rx="10" class="pcb"/><rect x="430" y="70" width="40" height="60" rx="3" class="silk"/>
+<text x="480" y="170" text-anchor="middle" font-size="13">board J4</text>
+<text x="450" y="88" text-anchor="middle" font-size="11" class="mono">+</text><text x="450" y="124" text-anchor="middle" font-size="11" class="mono">GND</text>
+<text x="20" y="28" font-size="14" font-weight="700">The meter becomes part of the + wire. Nothing else changes.</text>
+<text x="20" y="196" font-size="12" class="mut">Needs a JST-PH extension lead with the red wire cut and both ends stripped, or a breakout. Red lead back to VΩ afterwards!</text></svg><figcaption>Charge current: about <span class="m">50 mA</span> mid-charge, about 5 mA below ~3 V, tapering near full (R2 = 20 k on both boards). Sleep current (no cable, switched off, after 10 s): <span class="m">≤ 40 µA</span>; use the µA range if your meter has one. <span class="unsure">lead method: general practice</span></figcaption></figure>
+
+</section>
+
+<section id="backlight">
+  <h2><span class="n">10</span>Backlight current: one reading for the next board</h2>
+  <p>The backlight is fed from 3.3 V through one small resistor, <strong>R23 (15 Ω, review 14; was 22 Ω)</strong>, just above Q5 at the top of J5. How bright it gets depends on the LEDs' own voltage: the ER-TFT019-1 datasheet gives 2.8–3.2 V at 60 mA, which with 15 Ω means about <strong>16–37 mA, 26 mA typical</strong> (review 14, item M1). It cannot go above 60 mA, the panel's rating, so nothing can overheat. One reading confirms it; only if it is under about 18 mA and too dim would a later board change R23 (12 Ω if the LED voltage is at least 2.75 V) or add a constant-current driver.</p>
+  <ul class="check" data-step="backlight">
+    <li><input type="checkbox" id="h1"><label for="h1">Cable in, screen on. Serial Monitor: <code>bright 100</code>, then <code>screen dim 0</code> (the light stays at full while you measure).</label></li>
+    <li><input type="checkbox" id="h2"><label for="h2">Meter on DC volts (2 V range). Probes on the two ends of <strong>R23</strong>: <span class="m">____ mV</span>. Current = that reading ÷ 15 (R23 is 15 Ω since review 14; ÷ 22 on a board built with the old 22 Ω). For example 440 mV = 20 mA.</label></li>
+    <li><input type="checkbox" id="h3"><label for="h3">At the same time note TP5 (3V3): <span class="m">____ V</span>. LED voltage ≈ TP5 minus the R23 reading.</label></li>
+    <li><input type="checkbox" id="h4"><label for="h4">Look at the screen in a bright room: fine, or too dim? Then <code>screen dim 20</code> and <code>bright 60</code> to put the defaults back.</label></li>
+  </ul>
+  <div class="cards">
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_r23.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_r23.jpg" alt="Red probe on the right pad of R23, black on its left pad" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>Backlight current: volts across R23</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>DC volts, 2 V (or mV) range</dd>
+    <dt>Red</dt><dd>R23's right end (the +3V3 side)</dd>
+    <dt>Black</dt><dd>R23's left end (the backlight side) — not TP4 this time</dd>
+    <dt>Expect</dt><dd class="exp">240–560 mV = 16–37 mA (÷ 15 Ω). 26 mA typical = 390 mV</dd>
+    <dt>Wrong</dt><dd class="bad">Under 150 mV (10 mA): dim. Negative: probes swapped. 0: backlight off (check bright 100, screen dim 0).</dd>
+    <dt>Do</dt><dd>Write it down with TP5. Example: 440 mV ÷ 15 = 29 mA.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to DC volts, 2 V (or mV) range" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">392m</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><rect x="151" y="108" width="30" height="24" rx="6" class="sel"/><text x="166" y="126" text-anchor="middle" font-size="14" class="selt">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="140" y2="145" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  <div class="meas">
+  <div class="side"><a href="renders_bringup/v15/m_c19.jpg" target="_blank" rel="noopener"><img src="renders_bringup/v15/m_c19.jpg" alt="Red probe on C19's top pad" loading="lazy" width="620"></a><span class="eyebrow">tap to enlarge</span></div>
+  <div><h4>LCD supply: C19 (only if the screen is dark)</h4>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) 120px;gap:10px;align-items:start">
+  <dl>
+    <dt>Mode</dt><dd>DC volts, 20 V</dd>
+    <dt>Red</dt><dd>C19's top end (LCD_VDD), beside Q4</dd>
+    <dt>Black</dt><dd>TP4 GND</dd>
+    <dt>Expect</dt><dd class="exp">≈ 3.3 V while the screen is on</dd>
+    <dt>Wrong</dt><dd class="bad">0 V: Q4 not switching on (LCD_PWR_N, R21) or the screen is in sleep.</dd>
+    <dt>Do</dt><dd>Press a key to wake the screen, measure again; still 0: ask.</dd>
+  </dl><svg class="dia mtr" viewBox="0 0 220 320" role="img" aria-label="meter set to DC volts, 20 V" style="max-width:150px"><rect x="6" y="6" width="208" height="308" rx="22" class="bxs" stroke-width="2"/><rect x="24" y="22" width="172" height="64" rx="6" class="lcd"/><text x="186" y="68" text-anchor="end" font-size="30" class="lcdt">3.29</text><circle cx="110" cy="172" r="46" class="bx" stroke-width="2"/><text x="110" y="101" text-anchor="middle" font-size="13" class="mut">OFF</text><rect x="151" y="108" width="30" height="24" rx="6" class="sel"/><text x="166" y="126" text-anchor="middle" font-size="14" class="selt">V⎓</text><text x="186" y="185" text-anchor="middle" font-size="13" class="mut">Ω</text><text x="157" y="237" text-anchor="middle" font-size="13" class="mut">→|  •)))</text><text x="63" y="237" text-anchor="middle" font-size="13" class="mut">mA</text><text x="35" y="188" text-anchor="middle" font-size="13" class="mut">10A</text><text x="54" y="126" text-anchor="middle" font-size="13" class="mut">V~</text><line x1="110" y1="172" x2="140" y2="145" stroke="var(--copper)" stroke-width="7" stroke-linecap="round"/><circle cx="110" cy="172" r="9" class="bxs"/><circle cx="34" cy="282" r="11" class="bx" stroke-width="2"/><text x="34" y="306" text-anchor="middle" font-size="11" class="mono mut">10A</text><circle cx="82" cy="282" r="11" class="bx" stroke-width="2"/><text x="82" y="306" text-anchor="middle" font-size="11" class="mono mut">mA</text><circle cx="132" cy="282" r="11" class="blk" stroke-width="2"/><text x="132" y="306" text-anchor="middle" font-size="11" class="mono mut">COM</text><circle cx="182" cy="282" r="11" class="red" stroke-width="2"/><text x="182" y="306" text-anchor="middle" font-size="11" class="mono mut">VΩ→|</text></svg></div></div>
+</div>
+  </div>
+
+<p class="note">Rough guide: under 10 mA (under 150 mV across R23) is probably too dim outdoors; 16–37 mA (26 mA typical, 240–560 mV) is the expected range with 15 Ω, and the panel allows 60 mA. The battery pays about the same current while the light is on. Send the two numbers and your opinion.</p>
+</section>
+
+<section id="ai">
+  <h2><span class="n">11</span>AI server, and the live preview</h2>
+  <p>The maths works without any of this. For AI SOLVE the calculator needs a <strong>phone hotspot</strong> (2.4 GHz), the address of <strong>your AI server</strong> (<code>server/proxy</code>) and <strong>its own device token</strong>. Putting the server online is exactly as in the v14 guide (its step 10). The calculator never holds the Claude API key.</p>
+  <figure><svg class="dia" viewBox="0 0 640 600" role="img" aria-label="AI setup flow: server online with the API key, make a device token, then either type wifi, proxy and token in the serial monitor or use the phone setup page from SETUP 6; then pair and link."><defs><marker id="ah" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--fg)"/></marker></defs><rect x="20" y="16" width="290" height="74" rx="8" class="cu" stroke-width="1.5"/><text x="30" y="36" font-size="13" font-weight="700">1 Server online (once)</text><text x="30" y="53" font-size="12" class="mut">Render/Railway/Fly: server/proxy</text><text x="30" y="70" font-size="12" class="mut">ANTHROPIC_API_KEY lives ONLY here</text><rect x="330" y="16" width="290" height="74" rx="8" class="cu" stroke-width="1.5"/><text x="340" y="36" font-size="13" font-weight="700">2 Token for this calculator</text><text x="340" y="53" font-size="12" class="mut">python admin.py new-device "calc 1"</text><text x="340" y="70" font-size="12" class="mut">prints dt_… once; copy it</text><path d="M310 53 L328 53" class="ln" stroke-width="2" marker-end="url(#ah)"/><path d="M475 90 L475 120" class="ln" stroke-width="2" marker-end="url(#ah)"/><path d="M165 90 L165 120" class="ln" stroke-width="2" marker-end="url(#ah)"/><rect x="20" y="122" width="290" height="92" rx="8" class="bx" stroke-width="1.5"/><text x="30" y="142" font-size="13" font-weight="700">3a PC way: Serial Monitor</text><text x="30" y="159" font-size="12" class="mut">wifi  → hotspot name + password</text><text x="30" y="176" font-size="12" class="mut">proxy → https://&lt;your address&gt;</text><text x="30" y="193" font-size="12" class="mut">token → paste dt_…</text><rect x="330" y="122" width="290" height="92" rx="8" class="bx" stroke-width="1.5"/><text x="340" y="142" font-size="13" font-weight="700">3b Phone way: SETUP 6</text><text x="340" y="159" font-size="12" class="mut">keys: SHIFT MODE, 6, =  (serial: setup)</text><text x="340" y="176" font-size="12" class="mut">LCD shows SETUP BY PHONE</text><text x="340" y="193" font-size="12" class="mut">network AI-Calc-xxxx + 8-char password</text><path d="M475 214 L475 236" class="ln" stroke-width="2" marker-end="url(#ah)"/><rect x="330" y="238" width="290" height="60" rx="8" class="bx" stroke-width="1.5"/><text x="340" y="258" font-size="13" font-weight="700">Phone: join AI-Calc-xxxx</text><text x="340" y="275" font-size="12" class="mut">the form pops up (or open 192.168.4.1)</text><path d="M475 298 L475 318" class="ln" stroke-width="2" marker-end="url(#ah)"/><rect x="360" y="320" width="230" height="200" rx="18" class="bxs" stroke-width="2"/><text x="375" y="344" font-size="13" font-weight="700">AI Calculator setup</text><rect x="375" y="354" width="200" height="26" rx="5" class="bx"/><text x="383" y="372" font-size="11" class="mut">Phone hotspot (2.4 GHz) ▾</text><rect x="375" y="388" width="200" height="26" rx="5" class="bx"/><text x="383" y="406" font-size="11" class="mut">Hotspot password</text><rect x="375" y="422" width="200" height="26" rx="5" class="bx"/><text x="383" y="440" font-size="11" class="mut">AI server address https://</text><rect x="375" y="456" width="200" height="26" rx="5" class="bx"/><text x="383" y="474" font-size="11" class="mut">Device token dt_…</text><rect x="375" y="492" width="200" height="22" rx="6" fill="var(--mask)"/><text x="475" y="507" text-anchor="middle" font-size="12" fill="#fff" font-weight="700">Save to the calculator</text><text x="360" y="540" font-size="11" class="mut">Empty field = keep the old value. AC cancels;</text><text x="360" y="555" font-size="11" class="mut">it closes by itself after 10 minutes.</text><path d="M165 214 L165 330" class="ln" stroke-width="2" marker-end="url(#ah)"/><path d="M360 420 L312 380" class="ln" stroke-width="2" marker-end="url(#ah)"/><rect x="20" y="332" width="290" height="76" rx="8" class="ok" stroke-width="1.5"/><text x="30" y="352" font-size="13" font-weight="700">4 status shows it all</text><text x="30" y="369" font-size="12" class="mut">Wi-Fi: "your hotspot" …</text><text x="30" y="386" font-size="12" class="mut">AI proxy: https://…  Device token: dt_ab…9f</text><path d="M165 408 L165 430" class="ln" stroke-width="2" marker-end="url(#ah)"/><rect x="20" y="432" width="290" height="76" rx="8" class="ok" stroke-width="1.5"/><text x="30" y="452" font-size="13" font-weight="700">5 pair → 6-letter code</text><text x="30" y="469" font-size="12" class="mut">phone: https://&lt;address&gt;/link</text><text x="30" y="486" font-size="12" class="mut">code + e-mail: free month starts</text><path d="M165 508 L165 530" class="ln" stroke-width="2" marker-end="url(#ah)"/><rect x="20" y="532" width="290" height="56" rx="8" class="ok" stroke-width="1.5"/><text x="30" y="552" font-size="13" font-weight="700">6 account shows the plan</text><text x="30" y="569" font-size="12" class="mut">then MODE 4 (AI SOLVE), point, =</text></svg><figcaption>The whole AI setup on one page. The phone form's four fields are exactly the ones in the firmware's setup page; the token starts with <code>dt_</code>, the device id (for <code>revoke</code>) with <code>dev_</code>.</figcaption></figure>
+<ul class="check" data-step="ai">
+    <li><input type="checkbox" id="v1"><label for="v1">Server online (Render / Railway / Fly.io from <code>server/proxy</code>) and <code>https://&lt;your address&gt;/healthz</code> answers. Done once for all boards.</label></li>
+    <li><input type="checkbox" id="v4"><label for="v4">A token for this board: <code>python admin.py new-device "calc v15 1"</code> in the host's shell. It is shown once.</label></li>
+    <li><input type="checkbox" id="v5"><label for="v5"><strong>Serial Monitor:</strong> <code>wifi</code> → hotspot name and password. <code>proxy</code> → <code>https://&lt;your address&gt;</code>. <code>token</code> → paste it. Or from a phone: <code>setup</code> (on a finished calculator <strong>SHIFT MODE, 6, =</strong>); the LCD shows <code>SETUP BY PHONE</code> with the network <code>AI-Calc-xxxx</code> and its password.</label></li>
+    <li><input type="checkbox" id="v8"><label for="v8"><code>pair</code> prints a 6-letter code. Open <code>https://&lt;your address&gt;/link</code> on the phone, type the code and your e-mail. <code>account</code> shows the free month.</label></li>
+  </ul>
+  <h3>Live colour preview (new on v15)</h3>
+  <ul class="check" data-step="ai">
+    <li><input type="checkbox" id="w1"><label for="w1">Camera connected. Press <strong>MODE 4</strong> (AI SOLVE) on the keys (or type <code>keys m4</code>). After about 1 s the screen shows what the camera sees, <strong>in colour, live</strong>: corner brackets, dashed marks above and below (the photo continues past them) and a cross in the middle.</label></li>
+    <li><input type="checkbox" id="w2"><label for="w2">Point it at a printed problem 15–30 cm away. Moving the board moves the picture the <strong>same way</strong>. The top band goes <strong>FOCUSING</strong> (amber) → <strong>FOCUSED</strong> (green), or <strong>HOLD STILL</strong> while you move. <strong>▶</strong> refocuses. An amber box appears round the writing.</label></li>
+    <li><input type="checkbox" id="w3"><label for="w3">The frame rate shows in the bottom band. Expect roughly <span class="m">12–18 fps</span> <span class="unsure">estimate, not measured</span>. Write down what you see: <span class="m">____ fps</span>.</label></li>
+    <li><input type="checkbox" id="w4"><label for="w4">Colours look natural. If the bars in step 9 were right but the preview is garish (skin blue, paper pink): <code>-DPREVIEW_SWAP_BYTES=1</code>. Mirrored or upside-down preview: note it and ask.</label></li>
+    <li><input type="checkbox" id="w5"><label for="w5">Press <strong>=</strong>: the camera switches to photo mode (about 1 s extra), takes the scan and sends it. An answer comes back. The log shows <code>[solve] … answer after … ms</code> and <code>[cam] scan (JPEG) mode in N ms</code>: note N.</label></li>
+    <li><input type="checkbox" id="w6"><label for="w6"><code>status</code> does not say "Last restart: brownout". (The preview at full brightness while Wi-Fi joins is the heaviest load this board sees.)</label></li>
+  </ul>
+  <figure><img src="renders_bringup/v15/preview_mock.png" alt="Mock-up of the live preview: FOCUSED in the top band, corner brackets, an amber box around the printed equation, a centre cross and the frame rate in the bottom band" loading="lazy" width="700" height="486"><figcaption>What step w1–w3 should look like (a drawing, not a screenshot). <span class="unsure">layout from vf_lcd.cpp / README, fps an estimate</span></figcaption></figure>
+<p class="note">Screen messages: <code>Not set up yet: SETUP 6</code> = address or token missing. <code>NO CONNECTION</code> = the hotspot is off or not 2.4 GHz. <code>AI ACCOUNT</code> = not linked yet, trial over, or the monthly cap. <code>Battery low: plug in the cable to use AI solve</code> = the cell is under 3.6 V: no preview, camera or Wi-Fi until it is back above 3.7 V or a cable is in; maths keeps working.</p>
+</section>
+
+<section id="pins">
+  <h2><span class="n">12</span>Pins (from <code>pins_v15_lcd.h</code>)</h2>
+  <p>For reference while debugging. Everything not listed is the same as v14 (camera, I²C, ON key, battery sense, USB, test pads).</p>
+  <div class="tablewrap">
+    <table class="pins">
+      <thead><tr><th>Signal</th><th>GPIO</th><th>Note</th></tr></thead>
+      <tbody>
+        <tr><td>LCD_MOSI</td><td class="v">IO5</td><td>Panel pin 10 (SDA). Was EPD_CLK on v14</td></tr>
+        <tr><td>LCD_DC</td><td class="v">IO6</td><td>Panel pin 8 (RS, data/command). Was EPD_DIN</td></tr>
+        <tr><td>LCD_SCK</td><td class="v">IO8</td><td>Panel pin 7 (SCL). SPI2 through the GPIO matrix, 40 MHz. Was EPD_CS</td></tr>
+        <tr><td>LCD_CS</td><td class="v">IO41</td><td>Panel pin 6. Was EPD_DC</td></tr>
+        <tr><td>LCD_RST</td><td class="v">IO42</td><td>Panel pin 5, active low. Was EPD_RST</td></tr>
+        <tr><td>LCD_PWR_N</td><td class="v">IO33</td><td>Low = Q4 on = panel powered. R21 pull-up keeps it off in sleep. Was EPD_BUSY</td></tr>
+        <tr><td>LCD_BL_EN</td><td class="v">IO4</td><td>Backlight PWM into Q5. R22 pull-down = off in sleep. Was KEYPAD_INT</td></tr>
+        <tr><td>KEYPAD_INT</td><td class="v">IO3</td><td>Moved from IO4. Still wakes the chip from deep sleep</td></tr>
+        <tr><td>(no MISO, no TE)</td><td class="v">—</td><td>The panel is write-only; pin 19 and the touch pins 26–29 are left open</td></tr>
+      </tbody>
+    </table>
+  </div>
+  <p class="note">These roles changed in review 13 (2026-10-08) when J5's numbering was mirrored. Older notes (the first version of <code>stage15_lcd.md</code>, the pin table in <code>firmware-v15-lcd/README.md</code>) show RST 5 / CS 6 / DC 41 / MOSI 42. The header is right, and the firmware takes its pins from the header.</p>
+</section>
+
+<section id="assemble">
+  <h2><span class="n">13</span>Hand over to the Assembly Guide</h2>
+  <p>The bare board has passed. Everything from here on (shell teardown, grinding, LCD, camera, magnet, board into the shell, battery, closing, final test) is in the <a href="https://claude.ai/artifact/FU8YVqaksDPk2cfiD2cz3f">v15 Assembly Guide</a>, which starts at its step 3 by asking for this guide's results.</p>
+  <ul class="check" data-step="assemble">
+    <li><input type="checkbox" id="c1"><label for="c1">Grinding is done before the board goes near the shell: <a href="https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL" target="_blank" rel="noopener">Shell Grinding Guide</a> (the same grinds as v14). Blow out all plastic dust.</label></li>
+    <li><input type="checkbox" id="c2"><label for="c2">Unplug the battery and cable before fitting the board, and before the LCD tail comes out of J5 for taping.</label></li>
+    <li><input type="checkbox" id="c3"><label for="c3">Glue the magnet piece in the top-wall slot only after step 3 passed.</label></li>
+    <li><input type="checkbox" id="c4"><label for="c4">Battery on the back-cover floor, 0.1 mm tape, no foam, <strong>off TP1, TP4 and TP7</strong>.</label></li>
+    <li><input type="checkbox" id="c5"><label for="c5">Write down: which end of the tail was finger 1 and its diode reading (step 5), the four panel flags (step 9), the R23 reading (step 10), the preview fps (step 11), the camera ribbon length and the SELFTEST_JSON line.</label></li>
+  </ul>
+</section>
+
+<section id="trouble">
+  <h2><span class="n">14</span>Troubleshooting</h2>
+  <p>Start at the top and stop at the first "wrong" answer. The table below has the details.</p>
+  <div class="scroll"><svg class="dia" viewBox="0 0 680 934" role="img" aria-label="Troubleshooting flowchart: answer each question top to bottom; a no (or a yes on the first) sends you to the box on the right."><defs><marker id="ah2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="var(--fg)"/></marker></defs><path d="M24 54 L170 20 L316 54 L170 88 Z" class="cu" stroke-width="1.5"/><text x="170" y="50" text-anchor="middle" font-size="12.5" font-weight="700">Plugged in (PC port).</text><text x="170" y="66" text-anchor="middle" font-size="12.5" font-weight="700">Anything hot or smelly?</text><path d="M316 54 L352 54" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="322" y="48" font-size="11" font-weight="700" class="not">YES</text><rect x="354" y="22" width="314" height="64" rx="8" class="no"/><text x="364" y="40" font-size="12">UNPLUG. Let it cool. Re-inspect that part's</text><text x="364" y="56" font-size="12">turn and bridges (step 2). Don't re-power</text><text x="364" y="72" font-size="12">until found.</text><path d="M170 88 L170 114" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="178" y="106" font-size="11" font-weight="700" class="okt">NO</text><path d="M24 150 L170 116 L316 150 L170 184 Z" class="cu" stroke-width="1.5"/><text x="170" y="154" text-anchor="middle" font-size="12.5" font-weight="700">VBUS at J3 pin 1 ≈ 5 V?</text><path d="M316 150 L352 150" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="322" y="144" font-size="11" font-weight="700" class="not">NO</text><rect x="354" y="118" width="314" height="64" rx="8" class="no"/><text x="364" y="136" font-size="12">≈ 0 V or negative: magnet piece backwards /</text><text x="364" y="152" font-size="12">bad cable. Unplug, redo step 3 (pin 4 leg</text><text x="364" y="168" font-size="12">beeps to TP4).</text><path d="M170 184 L170 210" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="178" y="202" font-size="11" font-weight="700" class="okt">YES</text><path d="M24 246 L170 212 L316 246 L170 280 Z" class="cu" stroke-width="1.5"/><text x="170" y="250" text-anchor="middle" font-size="12.5" font-weight="700">TP5 = 3.25–3.35 V?</text><path d="M316 246 L352 246" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="322" y="240" font-size="11" font-weight="700" class="not">NO</text><rect x="354" y="214" width="314" height="64" rx="8" class="no"/><text x="364" y="232" font-size="12">0 V: measure SYS at D1 (4.55–4.7): missing =</text><text x="364" y="248" font-size="12">D1; present = U3. Over 3.6 V: unplug, redo</text><text x="364" y="264" font-size="12">the inner-leg checks.</text><path d="M170 280 L170 306" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="178" y="298" font-size="11" font-weight="700" class="okt">YES</text><path d="M24 342 L170 308 L316 342 L170 376 Z" class="cu" stroke-width="1.5"/><text x="170" y="338" text-anchor="middle" font-size="12.5" font-weight="700">COM port appears on the</text><text x="170" y="354" text-anchor="middle" font-size="12.5" font-weight="700">PC?</text><path d="M316 342 L352 342" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="322" y="336" font-size="11" font-weight="700" class="not">NO</text><rect x="354" y="310" width="314" height="64" rx="8" class="no"/><text x="364" y="328" font-size="12">Press ON (deep sleep hides it). Then</text><text x="364" y="344" font-size="12">recovery: TP1↔TP4 held, tap TP7. Still none:</text><text x="364" y="360" font-size="12">D−/D+ legs swapped? (step 3).</text><path d="M170 376 L170 402" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="178" y="394" font-size="11" font-weight="700" class="okt">YES</text><path d="M24 438 L170 404 L316 438 L170 472 Z" class="cu" stroke-width="1.5"/><text x="170" y="434" text-anchor="middle" font-size="12.5" font-weight="700">Stays up? (no restart loop</text><text x="170" y="450" text-anchor="middle" font-size="12.5" font-weight="700">in the monitor)</text><path d="M316 438 L352 438" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="322" y="432" font-size="11" font-weight="700" class="not">NO</text><rect x="354" y="406" width="314" height="78" rx="8" class="no"/><text x="364" y="424" font-size="12">Boot loop: read the 'Last restart' / reset</text><text x="364" y="440" font-size="12">reason. Wrong project flashed? Re-flash the</text><text x="364" y="456" font-size="12">right folder. TP5 dips when it restarts =</text><text x="364" y="472" font-size="12">supply.</text><path d="M170 472 L170 498" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="178" y="490" font-size="11" font-weight="700" class="okt">YES</text><path d="M24 534 L170 500 L316 534 L170 568 Z" class="cu" stroke-width="1.5"/><text x="170" y="530" text-anchor="middle" font-size="12.5" font-weight="700">Stays up on battery during</text><text x="170" y="546" text-anchor="middle" font-size="12.5" font-weight="700">Wi-Fi / AI?</text><path d="M316 534 L352 534" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="322" y="528" font-size="11" font-weight="700" class="not">NO</text><rect x="354" y="502" width="314" height="64" rx="8" class="no"/><text x="364" y="520" font-size="12">Brownout: status says 'Last restart:</text><text x="364" y="536" font-size="12">brownout'. Charge the cell; test cell sag</text><text x="364" y="552" font-size="12">(QA B2); lower Wi-Fi power; send the number.</text><path d="M170 568 L170 594" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="178" y="586" font-size="11" font-weight="700" class="okt">YES</text><path d="M24 630 L170 596 L316 630 L170 664 Z" class="cu" stroke-width="1.5"/><text x="170" y="634" text-anchor="middle" font-size="12.5" font-weight="700">Colour bars right?</text><path d="M316 630 L352 630" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="322" y="624" font-size="11" font-weight="700" class="not">NO</text><rect x="354" y="598" width="314" height="78" rx="8" class="no"/><text x="364" y="616" font-size="12">Cable off, reseat the tail in J5 (finger-1</text><text x="364" y="632" font-size="12">dot at the tick); redo the diode test;</text><text x="364" y="648" font-size="12">colour faults = platformio.ini flags (step</text><text x="364" y="664" font-size="12">9).</text><path d="M170 664 L170 690" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="178" y="682" font-size="11" font-weight="700" class="okt">YES</text><path d="M24 726 L170 692 L316 726 L170 760 Z" class="cu" stroke-width="1.5"/><text x="170" y="730" text-anchor="middle" font-size="12.5" font-weight="700">camera_ok true?</text><path d="M316 726 L352 726" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="322" y="720" font-size="11" font-weight="700" class="not">NO</text><rect x="354" y="694" width="314" height="64" rx="8" class="no"/><text x="364" y="712" font-size="12">Cable off. Redo the 2↔15 beep, reseat J1</text><text x="364" y="728" font-size="12">straight; then one try with a 180° twist.</text><text x="364" y="744" font-size="12">'OV5640' missing = ribbon backwards.</text><path d="M170 760 L170 786" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="178" y="778" font-size="11" font-weight="700" class="okt">YES</text><path d="M24 822 L170 788 L316 822 L170 856 Z" class="cu" stroke-width="1.5"/><text x="170" y="818" text-anchor="middle" font-size="12.5" font-weight="700">keypad_scanner_ok true,</text><text x="170" y="834" text-anchor="middle" font-size="12.5" font-weight="700">50/50 keys?</text><path d="M316 822 L352 822" class="ln" stroke-width="2" marker-end="url(#ah2)"/><text x="322" y="816" font-size="11" font-weight="700" class="not">NO</text><rect x="354" y="790" width="314" height="64" rx="8" class="no"/><text x="364" y="808" font-size="12">Scanner false: U6 bridge / lifted pin, I²C</text><text x="364" y="824" font-size="12">pull-ups (QA A3 #25). One key missing: mat</text><text x="364" y="840" font-size="12">or pad dirty. A whole row/column: a U6 pin.</text><rect x="60" y="880" width="220" height="34" rx="17" class="ok"/><text x="170" y="902" text-anchor="middle" font-size="13" font-weight="700" class="okt">All yes: bring-up passed</text></svg></div>
+  <div class="tablewrap">
+    <table>
+      <thead><tr><th>Symptom</th><th>Likely cause</th><th>Check</th></tr></thead>
+      <tbody>
+        <tr><td>A part gets hot</td><td>Short, reversed part, or reversed supply</td><td>Unplug. Re-inspect that part's orientation (step 2). Don't re-power until found.</td></tr>
+        <tr><td>VBUS near 0 V or negative</td><td>Magnet piece backwards</td><td>Unplug. Redo step 3; pin 4 leg must beep to TP4.</td></tr>
+        <tr><td>+3V3 = 0 V, VBUS fine</td><td>No SYS (D1), or U3 problem</td><td>Measure SYS at D1. Inspect U3 dot and pins for bridges.</td></tr>
+        <tr><td>+3V3 above 3.6 V</td><td>5 V reaching a data line</td><td>Unplug. Redo the step 3 inner-leg checks.</td></tr>
+        <tr><td>No COM port</td><td>Deep sleep, wrong data legs, or bad flash</td><td>Press ON. Then the TP1 + TP7 recovery. Then step 3 continuity.</td></tr>
+        <tr><td><code>status</code> says <code>stage14-…</code></td><td>The v14 project was flashed</td><td>Open <code>firmware-v15-lcd</code> and Upload again.</td></tr>
+        <tr><td><code>keypad_scanner_ok</code> false</td><td>U6 solder or I²C</td><td>Look at U6 for bridges or lifted pins; photo, ask.</td></tr>
+        <tr><td>Light on, no picture</td><td>Tail reversed or not fully in</td><td>Unplug, redo the diode test (step 5), reseat J5.</td></tr>
+        <tr><td>No light, no picture, <code>lcd_ok</code> true</td><td>Tail not in, or the Q4 / Q5 side</td><td>Unplug, reseat. Then, on, measure C19 (next to Q4) to TP4: about 3.3 V. Ask.</td></tr>
+        <tr><td><code>lcd_ok</code> false, <code>lcd_push_ms</code> 0</td><td>The driver didn't start (PSRAM canvas)</td><td>Check <code>memory_ok</code>; send the boot log.</td></tr>
+        <tr><td>Wrong colours, upside down, noise strip</td><td>Panel flags</td><td>Step 9 table.</td></tr>
+        <tr><td><code>camera_ok</code> false</td><td>Ribbon reversed or not seated</td><td>Unplug, redo the 2 ↔ 15 beep, reseat; then try a 180° twist.</td></tr>
+        <tr><td><code>wifi_ok</code> false</td><td>No 2.4 GHz network nearby</td><td>Phone hotspot on 2.4 GHz (iPhone: Maximize Compatibility).</td></tr>
+        <tr><td>Not charging</td><td>No cell, reversed cell, flat cell</td><td>Meter TP6. Recheck polarity (step 4).</td></tr>
+        <tr><td>Sleep current well over 40 µA</td><td>LCD lines not held low, or IO33 not floating</td><td>Send the number (PORT_NOTES item 5).</td></tr>
+        <tr><td>Restarts during the preview or AI SOLVE</td><td>Brown-out (<code>status</code>: "Last restart: brownout")</td><td>Note it. The firmware fix is to dim the light while Wi-Fi joins (PORT_NOTES item 9).</td></tr>
+        <tr><td>Backlight flickers at low brightness</td><td>PWM too low for these LEDs</td><td>Note the <code>bright</code> value where it starts; ask.</td></tr>
+      </tbody>
+    </table>
+  </div>
+</section>
+
+<footer>Sources: hardware/verification/13_v15_lcd_review.md, hardware/stage15_lcd.md, hardware/kicad_v15_lcd/pins_v15_lcd.h, firmware-v15-lcd/README.md, PORT_NOTES.md, src/selftest.cpp and platformio.ini (firmware v15lcd-2026.10.08), hardware/LCD_PANEL_OPTIONS.md, and the v14 First Power-Up Guide this page is based on. Orange tags mark steps that are general practice, estimates or my inference rather than a checked board fact. No v15 board has been powered yet.<br>Pictures: <code>hardware/renders_bringup/v15/</code>, made from the KiCad files with <code>kicad-cli pcb render</code> and labelled from the footprint positions; diagrams are drawings, the LCD symptom pictures are simulations.<br>Linked: <a href="https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL">Shell Grinding Guide</a> · <a href="https://claude.ai/artifact/FU8YVqaksDPk2cfiD2cz3f">v15 Assembly Guide</a> · v14 version: <a href="https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9">bringup_guide.html</a>.</footer>
+</div>
+
+<script>
+(function(){
+  var g=document.getElementById('fingers'), ns='http://www.w3.org/2000/svg';
+  for(var i=0;i<30;i++){ var n=30-i, r=document.createElementNS(ns,'rect');
+    r.setAttribute('x',22+i*20); r.setAttribute('y',40); r.setAttribute('width',12); r.setAttribute('height',56); r.setAttribute('rx',2);
+    r.setAttribute('class', n===1?'p1':(n>=20&&n<=24?'led':'gold')); g.appendChild(r);
+    if(n===30||n===24||n===20||n===1){ var t=document.createElementNS(ns,'text'); t.setAttribute('x',22+i*20+(n<10?2:-2)); t.setAttribute('y',124); t.setAttribute('font-size','12'); t.textContent=n; g.appendChild(t);} }
+  var KEY='bringup-v15lcd-checks';
+  var boxes=[].slice.call(document.querySelectorAll('ul.check input[type=checkbox]'));
+  var saved={};
+  try{saved=JSON.parse(localStorage.getItem(KEY)||'{}')||{};}catch(e){saved={};}
+  boxes.forEach(function(b){ if(saved[b.id]) b.checked=true; });
+  function update(){
+    var done=boxes.filter(function(b){return b.checked;}).length;
+    document.getElementById('count').textContent=done+' / '+boxes.length+' done';
+    document.getElementById('barfill').style.width=(boxes.length?done/boxes.length*100:0)+'%';
+  }
+  function save(){
+    var s={}; boxes.forEach(function(b){ if(b.checked) s[b.id]=1; });
+    try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){}
+  }
+  boxes.forEach(function(b){ b.addEventListener('change',function(){save();update();}); });
+  var reset=document.getElementById('reset'), armed=false, t;
+  reset.addEventListener('click',function(){
+    if(!armed){armed=true;reset.classList.add('armed');reset.textContent='Click again to clear';
+      t=setTimeout(function(){armed=false;reset.classList.remove('armed');reset.textContent='Clear ticks';},3000);return;}
+    clearTimeout(t);armed=false;reset.classList.remove('armed');reset.textContent='Clear ticks';
+    boxes.forEach(function(b){b.checked=false;}); save(); update();
+  });
+  update();
+})();
+</script>

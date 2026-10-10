@@ -1,0 +1,470 @@
+{
+ "A1317_revD": {
+  "L": 26.02,
+  "W": 19.75,
+  "T": 3.8,
+  "centre": [
+   -15.6,
+   68.7
+  ],
+  "kicad": [
+   165.6,
+   70.24
+  ],
+  "Z": [
+   1.0,
+   4.8
+  ],
+  "hits": [],
+  "nearest": [
+   {
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.0,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 0.3,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Battery lid",
+     "Battery lid"
+    ],
+    "gap": 0.42,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 2.2,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 3.15,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Rubber feet",
+     "Foot 2"
+    ],
+    "gap": 3.38,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Screws",
+     "Screw corner L"
+    ],
+    "gap": 3.54,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 3.85,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper active area (marker)"
+    ],
+    "gap": 4.32,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Solar cell (dummy)",
+     "Solar cell (dummy)"
+    ],
+    "gap": 5.2,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Window mask",
+     "Window mask (black vinyl, inside the lens)"
+    ],
+    "gap": 6.01,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Window lens",
+     "Window lens (clear)"
+    ],
+    "gap": 6.12,
+    "overlap_mm3": 0
+   }
+  ],
+  "time": "2026-10-06 00:13"
+ },
+ "502030_worst_trim": {
+  "L": 33.0,
+  "W": 20.5,
+  "T": 5.3,
+  "centre": [
+   -14.15,
+   68.55
+  ],
+  "kicad": [
+   164.15,
+   70.39
+  ],
+  "Z": [
+   1.0,
+   6.3
+  ],
+  "hits": [],
+  "nearest": [
+   {
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.0,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Battery lid",
+     "Battery lid"
+    ],
+    "gap": 0.42,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 0.48,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 0.7,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Screws",
+     "Screw corner L"
+    ],
+    "gap": 1.5,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 1.65,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.1,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 2.35,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper active area (marker)"
+    ],
+    "gap": 2.75,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.85,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Rubber feet",
+     "Foot 2"
+    ],
+    "gap": 2.87,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "LiPo battery",
+     "JST-PH plug (in J4)"
+    ],
+    "gap": 3.05,
+    "overlap_mm3": 0
+   }
+  ],
+  "time": "2026-10-06 00:13"
+ },
+ "552033_trim": {
+  "L": 33.0,
+  "W": 20.3,
+  "T": 5.5,
+  "centre": [
+   -14.15,
+   68.55
+  ],
+  "kicad": [
+   164.15,
+   70.39
+  ],
+  "Z": [
+   1.0,
+   6.5
+  ],
+  "hits": [],
+  "nearest": [
+   {
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.0,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Battery lid",
+     "Battery lid"
+    ],
+    "gap": 0.42,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 0.5,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 0.5,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 1.45,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Screws",
+     "Screw corner L"
+    ],
+    "gap": 1.5,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.1,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 2.15,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper active area (marker)"
+    ],
+    "gap": 2.57,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.85,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Rubber feet",
+     "Foot 2"
+    ],
+    "gap": 2.97,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "LiPo battery",
+     "JST-PH plug (in J4)"
+    ],
+    "gap": 3.05,
+    "overlap_mm3": 0
+   }
+  ],
+  "time": "2026-10-06 00:13"
+ },
+ "EEMB502030_trim": {
+  "L": 32.0,
+  "W": 20.5,
+  "T": 5.3,
+  "centre": [
+   -14.15,
+   68.55
+  ],
+  "kicad": [
+   164.15,
+   70.39
+  ],
+  "Z": [
+   1.0,
+   6.3
+  ],
+  "hits": [],
+  "nearest": [
+   {
+    "part": [
+     "Back cover",
+     "Back cover"
+    ],
+    "gap": 0.0,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Battery lid",
+     "Battery lid"
+    ],
+    "gap": 0.42,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Front shell",
+     "Front shell"
+    ],
+    "gap": 0.48,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "PCB",
+     "board"
+    ],
+    "gap": 0.7,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper bottom glass"
+    ],
+    "gap": 1.65,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Screws",
+     "Screw corner L"
+    ],
+    "gap": 2.0,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper film + cover"
+    ],
+    "gap": 2.35,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 2.6,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "E-paper panel",
+     "E-paper active area (marker)"
+    ],
+    "gap": 2.75,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "Rubber feet",
+     "Foot 2"
+    ],
+    "gap": 2.87,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "PCB",
+     "J4"
+    ],
+    "gap": 3.35,
+    "overlap_mm3": 0
+   },
+   {
+    "part": [
+     "LiPo battery",
+     "JST-PH plug (in J4)"
+    ],
+    "gap": 3.55,
+    "overlap_mm3": 0
+   }
+  ],
+  "time": "2026-10-06 00:14"
+ }
+}

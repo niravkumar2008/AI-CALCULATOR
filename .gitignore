@@ -15,3 +15,8 @@ sim/web/dist/
 graphify-out/cache/
 graphify-out/.graphify_*
 graphify-out/20*/
+
+__pycache__/
+firmware-v15-lcd/.pio/
+tests/msvc/*.exe
+tests/msvc/*.obj

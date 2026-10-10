@@ -1,0 +1,102 @@
+17:44:58 run grind z1_solar_box_before
+17:45:10 grind z1_solar_box_before 11 s
+17:45:16 run grind z1_solar_box_before done
+17:45:33 run grind z1_solar_box_before
+17:45:40 grind z1_solar_box_before 7 s
+17:45:45 run grind z1_solar_box_before done
+17:46:20 run grind z1_solar_box
+17:46:27 grind z1_solar_box_before 7 s
+17:46:32 grind z1_solar_box_after 6 s
+17:46:35 run grind z1_solar_box done
+17:46:58 run grind z1_solar_box
+17:47:05 grind z1_solar_box_before 7 s
+17:47:11 grind z1_solar_box_after 6 s
+17:47:15 run grind z1_solar_box done
+17:48:05 run grind z1_solar_box
+17:48:12 grind z1_solar_box_before 7 s
+17:48:18 grind z1_solar_box_after 6 s
+17:48:21 run grind z1_solar_box done
+17:48:31 run grind 
+17:48:38 grind z1_solar_box_before 7 s
+17:48:44 grind z1_solar_box_after 6 s
+17:48:50 grind z2_rib_b_before 6 s
+17:48:57 grind z2_rib_b_after 7 s
+17:49:01 grind z3_camera_window_inside_before 5 s
+17:49:06 grind z3_camera_window_inside_after 4 s
+17:49:10 grind z3_camera_window_outside_before 4 s
+17:49:14 grind z3_camera_window_outside_after 4 s
+17:49:21 grind z5_magnet_notch_before 7 s
+17:49:27 grind z5_magnet_notch_after 6 s
+17:49:33 grind z5b_lip_before 6 s
+17:49:39 grind z5b_lip_after 6 s
+17:49:45 grind z6_antenna_relief_before 6 s
+17:49:51 grind z6_antenna_relief_after 6 s
+17:49:57 grind z6b_pins_hooks_before 5 s
+17:50:03 grind z6b_pins_hooks_after 6 s
+17:50:08 grind z6b_pins_hooks_both_walls_before 5 s
+17:50:14 grind z6b_pins_hooks_both_walls_after 6 s
+17:50:18 grind z6c_rib_ends_before 4 s
+17:50:24 grind z6c_rib_ends_after 7 s
+17:50:44 grind overview_back_cover_before 20 s
+17:50:48 grind overview_faceplate_before 3 s
+17:51:06 grind overview_back_cover_after 18 s
+17:51:18 grind overview_faceplate_after 12 s
+17:51:26 grind camera_hole_position 8 s
+17:51:32 grind magnet_notch_dims 6 s
+17:51:36 run grind  done
+17:56:26 run detail 
+17:56:29 detail d01_epaper_tape 1 s
+17:56:29 detail d02_epaper_on_board 0 s
+17:56:30 detail d03_j2_latch_open 1 s
+17:56:31 detail d04_j2_latch_closed 1 s
+17:56:31 detail d05_camera_tape 0 s
+17:56:32 detail d06_camera_ribbon_path 0 s
+17:56:32 detail d07_j1_latch_open 0 s
+17:56:33 detail d08_j1_latch_closed 1 s
+17:56:33 detail d09_magnet_j3 1 s
+17:56:34 detail d10_battery_tape 1 s
+17:56:35 detail d11_battery_placed 0 s
+17:56:36 detail d12_j4_plug 1 s
+17:56:36 detail d13_keymat_lowering 1 s
+17:56:37 detail d14_keymat_seated 1 s
+17:56:37 detail d15_board_drop 0 s
+17:56:38 detail d16_cover_close_1 1 s
+17:56:38 detail d17_cover_close_2 0 s
+17:56:38 detail d18_cover_close_3 0 s
+17:56:39 detail d19_cover_close_4 0 s
+17:56:40 detail d20_window_mask_off 1 s
+17:56:40 detail d21_window_mask_on 0 s
+17:56:40 run detail  done
+17:57:41 run grind z5_magnet,overview
+17:57:53 grind z5_magnet_notch_before 11 s
+17:58:02 grind z5_magnet_notch_after 8 s
+17:58:21 grind overview_back_cover_before 20 s
+17:58:25 grind overview_faceplate_before 4 s
+17:58:41 grind overview_back_cover_after 16 s
+17:58:49 grind overview_faceplate_after 8 s
+17:58:54 run grind z5_magnet,overview done
+17:59:15 run detail15 
+17:59:21 detail15 e01_lcd_jig 5 s
+17:59:24 detail15 e02_lcd_on_board 4 s
+17:59:29 detail15 e03_tail_section_side 4 s
+17:59:32 detail15 e04_tail_3d 3 s
+17:59:35 detail15 e05_j5_finger1 3 s
+17:59:39 detail15 e06_j5_latch_open 4 s
+17:59:42 detail15 e07_j5_latch_closed 3 s
+17:59:46 detail15 e08_bow_vs_rib_b 4 s
+17:59:51 detail15 e09_keys_vs_pills 4 s
+17:59:55 detail15 e10_window_mask_off 4 s
+17:59:59 detail15 e11_window_mask_on 3 s
+18:00:04 detail15 e12_seeed_route_section 5 s
+18:00:08 detail15 e13_seeed_route_back 4 s
+18:00:10 run detail15  done
+18:00:38 run detail15 e03,e12
+18:00:44 detail15 e03_tail_section_side 5 s
+18:00:49 detail15 e12_seeed_route_section 5 s
+18:00:51 run detail15 e03,e12 done
+18:02:19 run detail15 e09
+18:02:24 detail15 e09_keys_vs_pills 5 s
+18:02:28 run detail15 e09 done
+18:05:30 run detail15 e09
+18:05:35 detail15 e09_keys_vs_pills 5 s
+18:05:38 run detail15 e09 done

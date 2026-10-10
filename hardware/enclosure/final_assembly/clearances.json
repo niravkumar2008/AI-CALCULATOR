@@ -1,0 +1,742 @@
+[
+ {
+  "a": [
+   "Camera module",
+   "*"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 0.71,
+  "at": [
+   3.0,
+   43.84,
+   1.5
+  ],
+  "bodies": [
+   "Camera lens barrel",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "J4"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 0.41,
+  "at": [
+   8.7,
+   63.52,
+   1.41
+  ],
+  "bodies": [
+   "Body3",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "J3"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 3.42,
+  "at": [
+   27.83,
+   68.54,
+   4.42
+  ],
+  "bodies": [
+   "Body1",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "U1"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 2.5,
+  "at": [
+   16.73,
+   44.17,
+   4.5
+  ],
+  "bodies": [
+   "Body1",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "Magnet connector",
+   "*"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 0.71,
+  "at": [
+   15.5,
+   80.67,
+   2.2
+  ],
+  "bodies": [
+   "Magnet face flange",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "Magnet connector",
+   "*"
+  ],
+  "b": [
+   "Front shell",
+   "*"
+  ],
+  "gap": 0.25,
+  "at": [
+   29.5,
+   80.67,
+   9.2
+  ],
+  "bodies": [
+   "Magnet face flange",
+   "Front shell"
+  ]
+ },
+ {
+  "a": [
+   "Magnet connector",
+   "*"
+  ],
+  "b": [
+   "PCB",
+   "board"
+  ],
+  "gap": 0.71,
+  "at": [
+   14.02,
+   77.67,
+   7.71
+  ],
+  "bodies": [
+   "Magnet rear block",
+   "Body1"
+  ]
+ },
+ {
+  "a": [
+   "LiPo battery",
+   "LiPo pouch (Adafruit #1317)"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 0.0,
+  "at": [
+   -17.2,
+   77.14,
+   1.0
+  ],
+  "bodies": [
+   "LiPo pouch (Adafruit #1317)",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "LiPo battery",
+   "LiPo pouch (Adafruit #1317)"
+  ],
+  "b": [
+   "PCB",
+   "board"
+  ],
+  "gap": 2.2,
+  "at": [
+   -3.59,
+   58.83,
+   4.8
+  ],
+  "bodies": [
+   "LiPo pouch (Adafruit #1317)",
+   "Body1"
+  ]
+ },
+ {
+  "a": [
+   "LiPo battery",
+   "JST-PH plug (in J4)"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 0.8,
+  "at": [
+   11.4,
+   58.67,
+   2.0
+  ],
+  "bodies": [
+   "JST-PH plug (in J4)",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "E-paper panel",
+   "*"
+  ],
+  "b": [
+   "Front shell",
+   "*"
+  ],
+  "gap": 0.29,
+  "at": [
+   27.25,
+   60.55,
+   8.1
+  ],
+  "bodies": [
+   "E-paper bottom glass",
+   "Front shell"
+  ]
+ },
+ {
+  "a": [
+   "E-paper panel",
+   "*"
+  ],
+  "b": [
+   "Keymat",
+   "*"
+  ],
+  "gap": 9.43,
+  "at": [
+   29.53,
+   31.35,
+   8.62
+  ],
+  "bodies": [
+   "E-paper bottom glass",
+   "Keymat (rubber)"
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 0.48,
+  "at": [
+   0.4,
+   20.23,
+   5.48
+  ],
+  "bodies": [
+   "Camera FPC",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "E-paper FPC"
+  ],
+  "b": [
+   "Front shell",
+   "*"
+  ],
+  "gap": 1.89,
+  "at": [
+   -29.88,
+   39.7,
+   8.76
+  ],
+  "bodies": [
+   "E-paper FPC",
+   "Front shell"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "board"
+  ],
+  "b": [
+   "Front shell",
+   "*"
+  ],
+  "gap": 0.1,
+  "at": [
+   19.4,
+   -45.95,
+   7.71
+  ],
+  "bodies": [
+   "Body1",
+   "Front shell"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "board"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 1.6,
+  "at": [
+   -24.89,
+   15.7,
+   7.0
+  ],
+  "bodies": [
+   "Body1",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "*"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 0.41,
+  "at": [
+   8.7,
+   63.52,
+   1.41
+  ],
+  "bodies": [
+   "Body3",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "Keymat",
+   "*"
+  ],
+  "b": [
+   "PCB",
+   "board"
+  ],
+  "gap": 0.11,
+  "at": [
+   17.93,
+   -46.55,
+   7.82
+  ],
+  "bodies": [
+   "Keymat (rubber)",
+   "Body1"
+  ]
+ },
+ {
+  "a": [
+   "LiPo battery",
+   "LiPo pouch (Adafruit #1317)"
+  ],
+  "b": [
+   "Front shell",
+   "*"
+  ],
+  "gap": 0.3,
+  "at": [
+   -12.43,
+   67.94,
+   4.8
+  ],
+  "bodies": [
+   "LiPo pouch (Adafruit #1317)",
+   "Front shell"
+  ]
+ },
+ {
+  "a": [
+   "LiPo battery",
+   "*"
+  ],
+  "b": [
+   "Front shell",
+   "*"
+  ],
+  "gap": 0.3,
+  "at": [
+   -12.43,
+   67.94,
+   4.8
+  ],
+  "bodies": [
+   "LiPo pouch (Adafruit #1317)",
+   "Front shell"
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "*"
+  ],
+  "b": [
+   "Front shell",
+   "*"
+  ],
+  "gap": 1.89,
+  "at": [
+   -29.88,
+   39.7,
+   8.76
+  ],
+  "bodies": [
+   "E-paper FPC",
+   "Front shell"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "*"
+  ],
+  "b": [
+   "Front shell",
+   "*"
+  ],
+  "gap": 0.1,
+  "at": [
+   19.4,
+   -45.95,
+   7.71
+  ],
+  "bodies": [
+   "Body1",
+   "Front shell"
+  ]
+ },
+ {
+  "a": [
+   "LiPo battery",
+   "LiPo pouch (Adafruit #1317)"
+  ],
+  "b": [
+   "Screws",
+   "*"
+  ],
+  "gap": 3.54,
+  "at": [
+   -28.61,
+   74.05,
+   1.2
+  ],
+  "bodies": [
+   "LiPo pouch (Adafruit #1317)",
+   "Screw corner L"
+  ]
+ },
+ {
+  "a": [
+   "LiPo battery",
+   "LiPo pouch (Adafruit #1317)"
+  ],
+  "b": [
+   "PCB",
+   "J4"
+  ],
+  "gap": 7.04,
+  "at": [
+   -2.59,
+   68.69,
+   1.51
+  ],
+  "bodies": [
+   "LiPo pouch (Adafruit #1317)",
+   "Body3"
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "LiPo lead red"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 1.72,
+  "at": [
+   9.4,
+   58.15,
+   3.69
+  ],
+  "bodies": [
+   "LiPo lead red",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "LiPo lead red"
+  ],
+  "b": [
+   "PCB",
+   "board"
+  ],
+  "gap": 1.59,
+  "at": [
+   -1.99,
+   54.67,
+   5.41
+  ],
+  "bodies": [
+   "LiPo lead red",
+   "Body1"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "U1"
+  ],
+  "b": [
+   "Front shell",
+   "*"
+  ],
+  "gap": 1.09,
+  "at": [
+   35.25,
+   49.64,
+   6.92
+  ],
+  "bodies": [
+   "Body1",
+   "Front shell"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "U1"
+  ],
+  "b": [
+   "Keymat",
+   "*"
+  ],
+  "gap": 12.35,
+  "at": [
+   14.75,
+   34.24,
+   6.92
+  ],
+  "bodies": [
+   "Body1",
+   "Keymat (rubber)"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "U1"
+  ],
+  "b": [
+   "E-paper panel",
+   "*"
+  ],
+  "gap": 1.02,
+  "at": [
+   29.53,
+   34.54,
+   6.94
+  ],
+  "bodies": [
+   "Body1",
+   "E-paper bottom glass"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "U1"
+  ],
+  "b": [
+   "Screws",
+   "*"
+  ],
+  "gap": 19.95,
+  "at": [
+   22.45,
+   34.24,
+   6.11
+  ],
+  "bodies": [
+   "Body1",
+   "Screw mid R"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "J2"
+  ],
+  "b": [
+   "Front shell",
+   "*"
+  ],
+  "gap": 4.32,
+  "at": [
+   -28.07,
+   51.94,
+   6.92
+  ],
+  "bodies": [
+   "Body1",
+   "Front shell"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "J1"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 0.95,
+  "at": [
+   -0.5,
+   -17.11,
+   4.92
+  ],
+  "bodies": [
+   "Body30",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "J2"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 2.92,
+  "at": [
+   -27.35,
+   44.25,
+   4.92
+  ],
+  "bodies": [
+   "Body29",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "L1"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 2.91,
+  "at": [
+   -11.4,
+   38.71,
+   4.91
+  ],
+  "bodies": [
+   "Body1",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "PCB",
+   "D2"
+  ],
+  "b": [
+   "Back cover",
+   "*"
+  ],
+  "gap": 0.66,
+  "at": [
+   -6.82,
+   -14.45,
+   5.66
+  ],
+  "bodies": [
+   "Body1",
+   "Back cover"
+  ]
+ },
+ {
+  "a": [
+   "Window mask",
+   "*"
+  ],
+  "b": [
+   "E-paper panel",
+   "*"
+  ],
+  "gap": 1.79,
+  "at": [
+   26.13,
+   57.4,
+   10.81
+  ],
+  "bodies": [
+   "Window mask (black vinyl, inside the lens)",
+   "E-paper active area (marker)"
+  ]
+ },
+ {
+  "a": [
+   "Magnet connector",
+   "*"
+  ],
+  "b": [
+   "Keymat",
+   "*"
+  ],
+  "gap": 50.48,
+  "at": [
+   23.75,
+   72.37,
+   6.0
+  ],
+  "bodies": [
+   "Magnet pins (straightened)",
+   "Keymat (rubber)"
+  ]
+ }
+]
