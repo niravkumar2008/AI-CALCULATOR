@@ -27,3 +27,22 @@ Running log for the autonomous task list of 2026-10-10 (tasks: Goldenmorning fit
 - **Unchanged:** J3 = 1 VBUS, 2 D−, 3 D+, 4 GND, with the piece's N end at pin 1. The meter check before gluing is kept.
 - **Search:** no live "turn the magnet piece over" advice anywhere; only warnings against it.
 - **Open:** prices not checked; no supplier contacted.
+
+### Task 3: open items: DONE (what can be done without hands or money)
+- **v15 re-check (report only, following review 14):** KiCad 10.0.6 on a scratch copy gives ERC 0, DRC 0/0/0 with schematic parity, and copper-to-hole 0 violations. The board and fab files are unchanged since review 14.
+- **Closed with evidence:**
+  - E7 / stiffener (v14 ordered; v15 has no e-paper).
+  - U1 stock for v14 (ordered; the v15 stock check is in its walkthrough).
+  - The firmware to-dos from the reviews (all in the source; file and line listed).
+  - The stale "blocks order" housekeeping item.
+- **Marked "needs Nirav":**
+  - V1–V6 bench checks.
+  - The paper dry fit (v15 shares the holes).
+  - Camera ribbon length.
+  - Magnet meter check.
+  - J4 polarity and E6.
+  - Decisions: battery plan, R5 → 15 k (needs new Gerbers), touch panel.
+  - Pricing.
+  - Proxy deploy.
+  - Donor edition and photos.
+- **Noticed, not changed (protected file):** FINAL_STATUS "Status" (line 38) and §6, and HANDOFF.md line 10, still say v14 is "not ordered yet", while "Current plan" says it was ordered 10/8.
