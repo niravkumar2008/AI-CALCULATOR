@@ -12,7 +12,7 @@ corner post), TOP edge at Y 78.58 (0.8 from the top lip); long side left-right, 
 modelled ON the 0.1 mm tape (Z 1.1 to 1.1 + T). Leads: same route as the #1317 model (out of the lead end, down beside
 it at bay X, over rib A, along under the plug, into the plug from below).
 Tape L, same rules: strip 1 (6 x 18) under the lead end, outer edge 1 mm in from the lead edge, 1 mm above the bottom
-edge; strip 2 (4 x 16) along the bottom edge, 1 mm in from the left edge, 1 mm above the bottom edge.
+edge; strip 2 (4 x 16) along the bottom edge, 1 mm in from the left edge, 0.5 mm above the bottom edge (2026-10-10).
 Frame: front view mm, X right, Y up, Z = 0 at the outside of the back cover. KiCad x = 150 - X, y = 138.94 - Y.
 """
 import json, math, os, sys, time, importlib.util
@@ -46,7 +46,7 @@ def strips(L, W):
     """Tape L for a cell with its left edge at LEFT, top edge at TOP (front X, Y): (x0, x1, y0, y1)."""
     x0, x1, y0, y1 = LEFT, LEFT + L, TOP - W, TOP
     return {"strip 1 (6 x 18, under the lead end)": (x1 - 7.0, x1 - 1.0, y0 + 1.0, y0 + 19.0),
-            "strip 2 (4 x 16, along the bottom edge)": (x0 + 1.0, x0 + 17.0, y0 + 1.0, y0 + 5.0)}
+            "strip 2 (4 x 16, along the bottom edge)": (x0 + 1.0, x0 + 17.0, y0 + 0.5, y0 + 4.5)}
 
 # â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•â•
 def load_build(ver):

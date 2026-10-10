@@ -406,7 +406,7 @@ D14 = {
                                     "tape1": (BLUE_T, 0.7, (0, 60, 180), False), "tape2": (BLUE_T, 0.7, (0, 60, 180), False)},
         labels=[("Battery outline 26 x 19.75 mm", ("poly", "outline", 1), (250, 170), "k"),
                 ("Strip 1: 6 x 18 mm, under the lead end\n(1 mm in from the right edge)", ("poly", "tape1", 1), (330, -250), "b"),
-                ("Strip 2: 4 x 16 mm, along the bottom edge\n(1 mm in from the left edge)", ("poly", "tape2", 3), (-60, 300), "b"),
+                ("Strip 2: 4 x 16 mm, along the bottom edge\n(1 mm in from the left,\n0.5 mm above the bottom)", ("poly", "tape2", 3), (-110, 360), "b"),
                 ("Battery-lid opening:\nNO tape here", ("poly", "lid", 9), (-60, -330), "r"),
                 ("Lead end toward J4", "j4end", (330, 140), "o"), ("Corner post", "post", (-200, 220), "k")],
         panel=("Battery #1317 (rev E): back-cover floor", ["Top-left corner (inside view, top end away)", "Tape L: 2 strips of 0.1 mm tape, solid floor only",

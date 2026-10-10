@@ -200,11 +200,13 @@ def battery_tape():
         d.line([c1[0], c0[1] + k, c1[0], min(c0[1] + k + 13, c1[1])], fill=INK, width=4)
     # strips
     s1 = [mm(26.02 - 1 - 6, 19.75 - 1 - 18), mm(26.02 - 1, 19.75 - 1)]
-    s2 = [mm(1, 19.75 - 1 - 4), mm(17, 19.75 - 1)]
+    s2 = [mm(1, 19.75 - 0.5 - 4), mm(17, 19.75 - 0.5)]       # 0.5 mm above the bottom edge (battery_upgrade.md 8, 2026-10-10)
     for a, b in (s1, s2):
         d.rectangle([a[0], a[1], b[0], b[1]], fill=(70, 120, 220), outline=COL["b"], width=4)
     text(d, (s1[0][0] + 14, s1[0][1] + 200), "strip 1\n6 × 18", 28, "white", True)
     text(d, (s2[0][0] + 150, s2[0][1] + 2), "strip 2   4 × 16", 28, "white", True)
+    # strip 2 offsets: 1 mm in from the left edge, 0.5 mm above the bottom edge, ~0.7 mm below the lid opening
+    text(d, (c0[0] + 0.2 * S, c1[1] + 0.25 * S), "strip 2: 1 mm in from the left, 0.5 mm above the bottom edge", 22, COL["b"], True)
     # protection board end + leads
     d.rectangle([c1[0] - 0.9 * S, c0[1] + 2 * S, c1[0], c1[1] - 2 * S], fill=(240, 210, 80))
     lx = c1[0] + 0.6 * S

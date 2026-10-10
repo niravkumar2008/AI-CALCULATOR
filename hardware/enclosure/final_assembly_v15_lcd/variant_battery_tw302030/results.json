@@ -9,7 +9,7 @@
    "Width: a 20.5 mm worst-case cell leaves only 0.28 mm to rib A when its top edge is 0.8 mm from the lip; push the top edge up against the lip if a cell measures over 20.3 mm.",
    "Leads must leave the lead end face (short edge) and be at least 50 mm (about 32-35 mm used; order 50-80 mm)."
   ],
-  "tape_L": "Still works unchanged (same strip sizes, same rules measured from the new cell's edges): both strips 100 % on solid, flat floor; strip 1 is 5.8-8.8 mm from the lid opening, strip 2 0.4 mm (nominal) / 0.9 mm (W 20.5). Note for the #1317 (rev E): strip 2 is only ~0.2 mm below the lid opening's lowest point (battery_upgrade.md says 0.5) - see revE entry.",
+  "tape_L": "Still works unchanged (same strip sizes, same rules measured from the new cell's edges): both strips 100 % on solid, flat floor. With strip 2 starting 0.5 mm above the bottom edge (battery_upgrade.md section 8, corrected 2026-10-10; all cases re-run): strip 1 is 5.8-8.8 mm from the lid opening, strip 2 0.9 mm (nominal) / 1.4 mm (W 20.5). #1317 (rev E): strip 1 2.8 mm, strip 2 0.67 mm below the lid opening's lowest point (at the old 1 mm start it was ~0.2 mm).",
   "clearances_mm": {
    "nominal 30x20x3.0 (1 mm left)": {
     "corner post": 1.69,
@@ -81,7 +81,7 @@
    60.36,
    80.11
   ],
-  "time": "2026-10-10 18:48",
+  "time": "2026-10-10 19:21",
   "tape": {
    "strip 1 (6 x 18, under the lead end)": {
     "rect_X": [
@@ -103,13 +103,13 @@
      -11.61
     ],
     "rect_Y": [
-     59.83,
-     63.83
+     59.33,
+     63.33
     ],
     "points": 1105,
     "points_not_on_solid_floor": 0,
     "points_with_something_on_the_floor": 0,
-    "gap_to_lid_opening": 0.17
+    "gap_to_lid_opening": 0.67
    }
   },
   "lid_opening_bbox_at_floor": [
@@ -147,7 +147,7 @@
    60.36,
    80.36
   ],
-  "time": "2026-10-10 18:49",
+  "time": "2026-10-10 19:22",
   "tape": {
    "strip 1 (6 x 18, under the lead end)": {
     "rect_X": [
@@ -169,13 +169,13 @@
      -11.61
     ],
     "rect_Y": [
-     59.58,
-     63.58
+     59.08,
+     63.08
     ],
     "points": 1105,
     "points_not_on_solid_floor": 0,
     "points_with_something_on_the_floor": 0,
-    "gap_to_lid_opening": 0.42
+    "gap_to_lid_opening": 0.92
    }
   },
   "lid_opening_bbox_at_floor": [
@@ -524,7 +524,7 @@
    60.36,
    80.86
   ],
-  "time": "2026-10-10 18:50",
+  "time": "2026-10-10 19:22",
   "tape": {
    "strip 1 (6 x 18, under the lead end)": {
     "rect_X": [
@@ -546,13 +546,13 @@
      -11.61
     ],
     "rect_Y": [
-     59.08,
-     63.08
+     58.58,
+     62.58
     ],
     "points": 1105,
     "points_not_on_solid_floor": 0,
     "points_with_something_on_the_floor": 0,
-    "gap_to_lid_opening": 0.92
+    "gap_to_lid_opening": 1.42
    }
   },
   "lid_opening_bbox_at_floor": [
@@ -920,7 +920,7 @@
    60.36,
    80.36
   ],
-  "time": "2026-10-10 18:53",
+  "time": "2026-10-10 19:16",
   "tape": {
    "strip 1 (6 x 18, under the lead end)": {
     "rect_X": [
@@ -942,13 +942,13 @@
      -12.61
     ],
     "rect_Y": [
-     59.58,
-     63.58
+     59.08,
+     63.08
     ],
     "points": 1105,
     "points_not_on_solid_floor": 0,
     "points_with_something_on_the_floor": 0,
-    "gap_to_lid_opening": 0.42
+    "gap_to_lid_opening": 0.92
    }
   },
   "lid_opening_bbox_at_floor": [
@@ -1297,7 +1297,7 @@
    60.36,
    80.86
   ],
-  "time": "2026-10-10 18:52",
+  "time": "2026-10-10 19:23",
   "tape": {
    "strip 1 (6 x 18, under the lead end)": {
     "rect_X": [
@@ -1319,13 +1319,13 @@
      -12.61
     ],
     "rect_Y": [
-     59.08,
-     63.08
+     58.58,
+     62.58
     ],
     "points": 1105,
     "points_not_on_solid_floor": 0,
     "points_with_something_on_the_floor": 0,
-    "gap_to_lid_opening": 0.92
+    "gap_to_lid_opening": 1.42
    }
   },
   "lid_opening_bbox_at_floor": [

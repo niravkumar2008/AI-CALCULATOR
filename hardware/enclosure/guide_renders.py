@@ -137,7 +137,7 @@ def d22_shot(extra_hide):
                 hide_b=["LiPo pouch", "LiPo lead", "Camera FPC"] + extra_hide, target=(-12, 66, 2.0), d=(0.3, -0.6, 1.0), up=UPY, ext=62,
                 polys=dict(worst=box_pts(TW_WORST[0], TW_WORST[1], TW_WORST[2], TW_WORST[3], 4.42),
                            tape1=box_pts(TW[1] - 7.0, TW[1] - 1.0, TW[2] + 1.0, TW[2] + 19.0, zt),
-                           tape2=box_pts(TW[0] + 1.0, TW[0] + 17.0, TW[2] + 1.0, TW[2] + 5.0, zt),
+                           tape2=box_pts(TW[0] + 1.0, TW[0] + 17.0, TW[2] + 0.5, TW[2] + 4.5, zt),
                            lid=lid_ring(zt), j4=box_pts(*J4_BOX, 1.6)),
                 anchors=dict(cell=(-14.6, 70.5, 4.1), post=(-34.05, 74.05, 4.0), rib=(-14.0, 57.3, 2.0), lip=(-14.0, 79.8, 2.0),
                              leads=(0.99, 57.5, 3.5), plug=(8.4, 60.6, 4.2), leadend=(0.39, 66.0, 2.6)))
@@ -167,11 +167,11 @@ DETAIL14 = [
          target=(22.5, 74, 5.5), d=D_BACK, ext=32,
          anchors=dict(pin1=J3_PIN1, pin4=J3_PIN4, nleg=(26.25, 80.5, 5.7), face=(22.5, 88.5, 5.7), nface=(26.5, 89.2, 5.7))),
     # tape L (battery_upgrade.md section 8): strip 1 6 x 18 under the lead end (outer edge 1 mm in from the lead edge,
-    # from 1 mm above the bottom edge), strip 2 4 x 16 along the bottom edge (1 mm in from the left edge); both on solid
+    # from 1 mm above the bottom edge), strip 2 4 x 16 along the bottom edge (1 mm in from the left edge, 0.5 mm above the bottom edge); both on solid
     # floor only. LID_OPEN = the battery-lid opening in the floor, measured in the model at Z 0.95 (fit_tw302030.py).
     dict(name="d10_battery_tape", show=BACK, target=(-14, 66, 1.0), d=(0.3, -0.6, 1.0), up=UPY, ext=52,
          polys=dict(outline=box_pts(*LIPO_BOX, 1.02), tape1=box_pts(LIPO_BOX[1] - 7.0, LIPO_BOX[1] - 1.0, LIPO_BOX[2] + 1.0, LIPO_BOX[2] + 19.0, 1.03),
-                    tape2=box_pts(LIPO_BOX[0] + 1.0, LIPO_BOX[0] + 17.0, LIPO_BOX[2] + 1.0, LIPO_BOX[2] + 5.0, 1.03),
+                    tape2=box_pts(LIPO_BOX[0] + 1.0, LIPO_BOX[0] + 17.0, LIPO_BOX[2] + 0.5, LIPO_BOX[2] + 4.5, 1.03),
                     lid=lid_ring(1.02)),
          anchors=dict(c=(-15.6, 68.7, 1.0), j4end=(-2.6, 68.7, 1.0), post=(-34.05, 74.05, 3.0), rib=(-14.0, 57.3, 2.0))),
     dict(name="d11_battery_placed", show=BACK + ["LiPo battery", "Ribbons and wires"], hide_b=["E-paper FPC", "Camera FPC"],

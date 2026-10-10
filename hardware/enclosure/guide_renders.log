@@ -114,3 +114,10 @@
 18:55:27 run detail15 d22
 18:55:33 detail15 d22_battery_tw302030 6 s
 18:55:36 run detail15 d22 done
+19:17:18 run detail15 d22
+19:17:23 detail15 d22_battery_tw302030 5 s
+19:17:27 run detail15 d22 done
+19:18:18 run detail d10,d22
+19:18:19 detail d10_battery_tape 1 s
+19:18:20 detail d22_battery_tw302030 1 s
+19:18:20 run detail d10,d22 done

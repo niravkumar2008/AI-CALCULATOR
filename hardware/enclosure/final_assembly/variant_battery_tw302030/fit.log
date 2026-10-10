@@ -40,3 +40,45 @@
 18:56:35 run v15 off 
 18:56:36 candidate removed, #1317 shown again
 18:56:36 run v15 off  done
+19:16:20 run v15 nominal 1
+19:17:09 v15 nominal: 0 overlaps
+19:17:09 run v15 nominal 1 done
+19:17:27 run v15 off 
+19:17:27 candidate removed, #1317 shown again
+19:17:27 run v15 off  done
+19:17:36 run v14 nominal 1
+19:18:14 v14 nominal: 0 overlaps
+19:18:14 run v14 nominal 1 done
+19:18:20 run v14 off 
+19:18:21 candidate removed, #1317 shown again
+19:18:21 run v14 off  done
+19:18:38 run v14 revE 
+19:19:10 v14 revE: 0 overlaps
+19:19:10 run v14 revE  done
+19:19:13 run v14 nominal 
+19:19:51 v14 nominal: 0 overlaps
+19:19:51 run v14 nominal  done
+19:19:55 run v14 worst 
+19:20:33 v14 worst: 2 overlaps
+19:20:33 run v14 worst  done
+19:20:37 run v14 worst 1
+19:21:14 v14 worst: 0 overlaps
+19:21:14 run v14 worst 1 done
+19:21:15 run v14 off 
+19:21:16 candidate removed, #1317 shown again
+19:21:16 run v14 off  done
+19:21:26 run v15 revE 
+19:22:06 v15 revE: 0 overlaps
+19:22:06 run v15 revE  done
+19:22:08 run v15 nominal 
+19:22:54 v15 nominal: 0 overlaps
+19:22:54 run v15 nominal  done
+19:22:55 run v15 worst 
+19:23:39 v15 worst: 2 overlaps
+19:23:39 run v15 worst  done
+19:23:41 run v15 worst 1
+19:24:25 v15 worst: 0 overlaps
+19:24:25 run v15 worst 1 done
+19:24:27 run v15 off 
+19:24:28 candidate removed, #1317 shown again
+19:24:28 run v15 off  done

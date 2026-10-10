@@ -161,7 +161,7 @@ def front_shell():
     a.circle(578, 330, 18, ORANGE, 4)
     a.tag(604, 352, "6c", ORANGE, 15)
     a.label(15, 395, "5  Magnet U-notch in the top wall\n    21.5 wide x 7.95 deep from the rim\n    6.4-27.9 mm from THIS (left) outer edge\n"
-                      "6  Solar side: file the inner rib down\n    to 7.0 mm below the rim, 15-50 mm\n"
+                      "6  Solar side: file the inner rib down\n    to 7.0 mm below the rim, 14-49 mm\n    from the rim's top edge above the rib\n"
                       "6b Snip pins + hooks, BOTH walls\n6c Rib lower ends: only if needed", RED, 13)
     a.label(735, 940, "Front shell, keys down, top end away.\nThe solar window is on your LEFT now.\nPositions are rough: the printed map decides.", INK, 13, "rd")
     a.save("grind_frontshell_zones_ann.jpg")
@@ -179,7 +179,7 @@ def solar_wall():
     a.arrow(355, 500, 290, 552)
     a.arrow(355, 470, 284, 440)
     a.dline(303, 281, 303, 785, ORANGE, 6)
-    a.label(330, 800, "6  The thin inner rib these grow from:\n    file its top edge down to 7.0 mm\n    below the rim, 15-50 mm from the top", ORANGE, 15)
+    a.label(330, 800, "6  The thin inner rib these grow from:\n    file its top edge down to 7.0 mm\n    below the rim, 14-49 mm from the\n    rim's top edge right above this rib", ORANGE, 15)
     a.arrow(330, 812, 306, 760, ORANGE)
     a.label(16, 30, "Solar-window side wall (old wires still in)", INK, 15)
     a.label(16, 960, "Outer skin + channel floor: don't touch", GREEN, 14, "ld")

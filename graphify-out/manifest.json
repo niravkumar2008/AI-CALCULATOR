@@ -1272,9 +1272,9 @@
     "semantic_hash": ""
   },
   "hardware/fitcheck/grind_map_front_shell.svg": {
-    "mtime": 1791322579.1966314,
-    "seen": 1791478551.0698748,
-    "ast_hash": "b757c0c5472881c292d6277423fb2fd7",
+    "mtime": 1791674760.408487,
+    "seen": 1791674822.2589307,
+    "ast_hash": "8bb875442b89b8b55c99a8bc48652de8",
     "semantic_hash": ""
   },
   "hardware/fitcheck/backcover_fx115es.json": {
@@ -1428,9 +1428,9 @@
     "semantic_hash": ""
   },
   "hardware/QUESTIONS_AND_ISSUES.md": {
-    "mtime": 1791666097.8037198,
-    "seen": 1791666116.0670893,
-    "ast_hash": "dcb435a44568788a0f492eb44be1a5cc",
+    "mtime": 1791673800.0923367,
+    "seen": 1791673991.4621112,
+    "ast_hash": "8b9f9792257f747855aaaa64d82b95a9",
     "semantic_hash": ""
   },
   "hardware/tools/gnd_islands.py": {
@@ -1974,9 +1974,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/assembly_report.md": {
-    "mtime": 1791297494.8516774,
-    "seen": 1791297533.2755005,
-    "ast_hash": "0aff557ba2fb3cb1ff78224ffed90878",
+    "mtime": 1791673800.0973377,
+    "seen": 1791673991.4621112,
+    "ast_hash": "fdc1abf0f1af84b64e5b933f907a1aee",
     "semantic_hash": ""
   },
   "core/viewfinder.cpp": {
@@ -2178,9 +2178,9 @@
     "semantic_hash": ""
   },
   "hardware/ORDER_WALKTHROUGH.md": {
-    "mtime": 1791665818.8061066,
-    "seen": 1791665988.0250406,
-    "ast_hash": "396e4ae358d8c47eae8e0c64c8e7d2f2",
+    "mtime": 1791673800.0911932,
+    "seen": 1791673991.4621112,
+    "ast_hash": "0722661be913891393125b37335ee6bd",
     "semantic_hash": ""
   },
   "hardware/stage14_verification_fixes.md": {
@@ -2202,9 +2202,9 @@
     "semantic_hash": ""
   },
   "hardware/FINAL_STATUS.md": {
-    "mtime": 1791665818.804107,
-    "seen": 1791665988.0250406,
-    "ast_hash": "645a040dbc1178d49f821975be53663b",
+    "mtime": 1791674797.5374978,
+    "seen": 1791674822.2578113,
+    "ast_hash": "4e7763c531f2432fa2125039ae50011b",
     "semantic_hash": ""
   },
   "hardware/bringup_guide.html": {
@@ -2238,9 +2238,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/assembly_guide.html": {
-    "mtime": 1791673372.7180133,
-    "seen": 1791673394.646471,
-    "ast_hash": "741681fa6ac6b16788654e8602e5c5e9",
+    "mtime": 1791674092.5207367,
+    "seen": 1791674096.0392845,
+    "ast_hash": "6974caeccb0b1e91c8fd6c6071dd7a2f",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/photos/epaper_hat.jpg": {
@@ -2496,9 +2496,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/slide_case_mods.md": {
-    "mtime": 1791227450.9785004,
-    "seen": 1791227576.2762995,
-    "ast_hash": "563f685f4bfb509a6a2d6daaa2512ffb",
+    "mtime": 1791673800.0983362,
+    "seen": 1791673991.4621112,
+    "ast_hash": "33b0b61fbbe882216bbea07306ebd27e",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/window_mask.md": {
@@ -2754,15 +2754,15 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/battery_upgrade.md": {
-    "mtime": 1791673041.2351358,
-    "seen": 1791673394.646471,
-    "ast_hash": "c0148cbc58645de0e42cdff439db93f5",
+    "mtime": 1791673887.3911715,
+    "seen": 1791673991.4621112,
+    "ast_hash": "7665f6f0374e86d9a06c94168cba842e",
     "semantic_hash": ""
   },
   "hardware/enclosure/jigs/README.md": {
-    "mtime": 1791296709.7206564,
-    "seen": 1791297036.7161467,
-    "ast_hash": "aefa3562405d60cc2581fcf9910b7f01",
+    "mtime": 1791673800.0963385,
+    "seen": 1791673991.4621112,
+    "ast_hash": "bdc51ba6f91be26cb2757cd33f69b2f1",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/battery_upgrade/cell_after_iso.png": {
@@ -2976,15 +2976,15 @@
     "semantic_hash": ""
   },
   "hardware/production/KNOCKOFF_SHELL_PLAN.md": {
-    "mtime": 1791511435.4630232,
-    "seen": 1791511489.2641563,
-    "ast_hash": "db001cf992b6cba77ed5fe045b178354",
+    "mtime": 1791673887.3921654,
+    "seen": 1791673991.4621112,
+    "ast_hash": "1bd58415da0690cf11c3c6b402b47b4d",
     "semantic_hash": ""
   },
   "hardware/production/UNIT_ECONOMICS.md": {
-    "mtime": 1791665818.8213725,
-    "seen": 1791665988.0260403,
-    "ast_hash": "2c1cc370af555d7a9a683c867e694891",
+    "mtime": 1791673887.3931658,
+    "seen": 1791673991.4621112,
+    "ast_hash": "1eecef81495fb892c5ed2f6614f0cf06",
     "semantic_hash": ""
   },
   "hardware/verification/06_final_review_pcb.md": {
@@ -3018,9 +3018,9 @@
     "semantic_hash": ""
   },
   "hardware/verification/07_final_review_fitment.md": {
-    "mtime": 1791322580.4639575,
-    "seen": 1791478551.068884,
-    "ast_hash": "3ca67dd5ed3fa9ceddba49bf38d111e9",
+    "mtime": 1791673800.0881884,
+    "seen": 1791673991.4621112,
+    "ast_hash": "f55170b00cd98ca6f5f8d0bb38a8749c",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/antenna_corner.png": {
@@ -3060,9 +3060,9 @@
     "semantic_hash": ""
   },
   "hardware/ARRIVAL_CHECKLIST.md": {
-    "mtime": 1791665818.8173716,
-    "seen": 1791665988.0250406,
-    "ast_hash": "be4fe1430d0b6f3a6f048ddec9c599e3",
+    "mtime": 1791673800.095337,
+    "seen": 1791673991.4621112,
+    "ast_hash": "5eb60f2d9669d5c1a719be54af520147",
     "semantic_hash": ""
   },
   "Claude outputs/paper_cutout_preview.png": {
@@ -3072,9 +3072,9 @@
     "semantic_hash": ""
   },
   "hardware/verification/12_rib_pin_recheck.md": {
-    "mtime": 1791322840.980127,
-    "seen": 1791478551.068884,
-    "ast_hash": "084b678044ae42d83a93a4ebc7b3a5b4",
+    "mtime": 1791673800.0891888,
+    "seen": 1791673991.4621112,
+    "ast_hash": "855344b9bb3a7c44bef0b88faacc28bc",
     "semantic_hash": ""
   },
   "hardware/archive/kicad_v14_FROZEN/kicad_summary.py": {
@@ -3456,21 +3456,21 @@
     "semantic_hash": ""
   },
   "firmware-v15-lcd/src/fbtext.cpp": {
-    "mtime": 1791493321.578281,
-    "seen": 1791493513.437723,
-    "ast_hash": "5d5ae7fcf2d6ca43c856d718c037577d",
+    "mtime": 1791674686.1988888,
+    "seen": 1791674822.2578113,
+    "ast_hash": "0f93d6af2167a6eea2191102514d3c02",
     "semantic_hash": ""
   },
   "firmware-v15-lcd/src/fbtext.h": {
-    "mtime": 1791489095.4487488,
-    "seen": 1791492732.434706,
-    "ast_hash": "e0aad8bde3aba4f76c1324a13d9b8353",
+    "mtime": 1791674686.49479,
+    "seen": 1791674822.2578113,
+    "ast_hash": "8c072b5954fbabd5833bc52607ab7c2a",
     "semantic_hash": ""
   },
   "firmware-v15-lcd/src/glyphdraw.h": {
-    "mtime": 1791489208.4425292,
-    "seen": 1791492732.434706,
-    "ast_hash": "802658a4bbab76e7d6b0dbd2107783ce",
+    "mtime": 1791674711.3036592,
+    "seen": 1791674822.2578113,
+    "ast_hash": "01a1c7541e302c550a4781d31900ff01",
     "semantic_hash": ""
   },
   "firmware-v15-lcd/src/keys.cpp": {
@@ -3600,9 +3600,9 @@
     "semantic_hash": ""
   },
   "firmware-v15-lcd/src/ui.cpp": {
-    "mtime": 1791493321.5820613,
-    "seen": 1791493513.437723,
-    "ast_hash": "5079421653944d9bf11949ce496452ed",
+    "mtime": 1791674795.0734715,
+    "seen": 1791674822.2578113,
+    "ast_hash": "d66a4fcefa606803ea613c41f054aba6",
     "semantic_hash": ""
   },
   "firmware-v15-lcd/src/ui.h": {
@@ -3612,9 +3612,9 @@
     "semantic_hash": ""
   },
   "firmware-v15-lcd/src/vf_lcd.cpp": {
-    "mtime": 1791493321.5824606,
-    "seen": 1791493513.437723,
-    "ast_hash": "c0e651f34e66b17105829fca438034c6",
+    "mtime": 1791674819.4961698,
+    "seen": 1791674822.2578113,
+    "ast_hash": "7bf932e84555028db573d89e607f21d5",
     "semantic_hash": ""
   },
   "firmware-v15-lcd/src/vf_lcd.h": {
@@ -3726,9 +3726,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly_v15_lcd/assembly_guide_v15_lcd.html": {
-    "mtime": 1791673372.7194724,
-    "seen": 1791673394.646471,
-    "ast_hash": "680a2825c70ca0662fad9137ecd3b732",
+    "mtime": 1791674098.5439906,
+    "seen": 1791674429.098544,
+    "ast_hash": "d2e5b6b51a1cf3b970295698a0d1410d",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly_v15_lcd/renders/steps/s01_open_shell.png": {
@@ -4176,9 +4176,9 @@
     "semantic_hash": ""
   },
   "hardware/AUTONOMOUS_LOG.md": {
-    "mtime": 1791667733.128496,
-    "seen": 1791667745.7433577,
-    "ast_hash": "b7c7c7189ecc7c59447b05a1b492aa23",
+    "mtime": 1791674057.7385454,
+    "seen": 1791674072.8939357,
+    "ast_hash": "15b6c82380af60e40568123f25b48b3f",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly_v15_lcd/REPORT_goldenmorning.md": {
@@ -4506,9 +4506,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/annotate_grind_photos.py": {
-    "mtime": 1791668559.2825203,
-    "seen": 1791669546.3944068,
-    "ast_hash": "dc1600bfcf18dad446d65d2a2d11750c",
+    "mtime": 1791674772.6378653,
+    "seen": 1791674822.2578113,
+    "ast_hash": "30305e8057201c6d2dc1693fbb95182d",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/grind_diagrams.py": {
@@ -4518,9 +4518,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/detail/anchors.json": {
-    "mtime": 1791672926.6916525,
-    "seen": 1791673394.646471,
-    "ast_hash": "47e6d87c29da3751e68977468e525fa3",
+    "mtime": 1791674300.0504172,
+    "seen": 1791674429.098544,
+    "ast_hash": "baa577d61d3d64d3d1b013b5d744d337",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/grind/anchors.json": {
@@ -4530,9 +4530,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/guide_renders.py": {
-    "mtime": 1791672919.6366463,
-    "seen": 1791673394.646471,
-    "ast_hash": "e41c01b2b9273f6cfe2ad0883f9da8e9",
+    "mtime": 1791674145.4296825,
+    "seen": 1791674429.098544,
+    "ast_hash": "b48d1baaceb54ecf7dfcd4b5af4e273c",
     "semantic_hash": ""
   },
   "hardware/renders_bringup/make_bringup.py": {
@@ -4596,9 +4596,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/detail/d10_battery_tape.png": {
-    "mtime": 1791672926.1097102,
-    "seen": 1791673394.646471,
-    "ast_hash": "6e79f5b9ec6cbc1167b2de9fb1046fcd",
+    "mtime": 1791674299.3622162,
+    "seen": 1791674429.0995429,
+    "ast_hash": "25a1b4194eb6ec00ab3712a2e5112296",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/detail/d11_battery_placed.png": {
@@ -4836,39 +4836,39 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/photos/grind_backcover_zones_ann.jpg": {
-    "mtime": 1791668562.464939,
-    "seen": 1791669546.3959315,
+    "mtime": 1791674779.042204,
+    "seen": 1791674822.2578113,
     "ast_hash": "a7fa6c7a4e68e8d3550082444a6c098d",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/photos/grind_frontshell_zones_ann.jpg": {
-    "mtime": 1791668562.8334384,
-    "seen": 1791669546.3959315,
-    "ast_hash": "4314b7a4df98e64d96fd7c035e9694e3",
+    "mtime": 1791674779.197021,
+    "seen": 1791674822.2578113,
+    "ast_hash": "3d51a7f5bf9851da5775862ba11c6309",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/photos/grind_j2_wall_6b_ann.jpg": {
-    "mtime": 1791668563.4957,
-    "seen": 1791669546.3959315,
+    "mtime": 1791674779.5082426,
+    "seen": 1791674822.2578113,
     "ast_hash": "d8c7d9ebfe9226ca052dd198738916ce",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/photos/grind_paper_not_flat_ann.jpg": {
-    "mtime": 1791668564.0966978,
-    "seen": 1791669546.3959315,
+    "mtime": 1791674779.792736,
+    "seen": 1791674822.2578113,
     "ast_hash": "99767547baebd0e606e57d09c2235609",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/photos/grind_paper_tab_ann.jpg": {
-    "mtime": 1791668563.7937114,
-    "seen": 1791669546.3959315,
+    "mtime": 1791674779.6586907,
+    "seen": 1791674822.2578113,
     "ast_hash": "601b29c1e67b56b2701e2497ef4406e9",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/photos/grind_solar_wall_6_6b_ann.jpg": {
-    "mtime": 1791668563.1621306,
-    "seen": 1791669546.3959315,
-    "ast_hash": "4cdadcd421de4c2eb0360f565b200153",
+    "mtime": 1791674779.3525412,
+    "seen": 1791674822.2578113,
+    "ast_hash": "28a871555e0e482f3e9b697521a0ffda",
     "semantic_hash": ""
   },
   "hardware/renders_bringup/raw/v14_bottom.png": {
@@ -5322,9 +5322,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly_v15_lcd/renders/detail/anchors.json": {
-    "mtime": 1791672933.1642156,
-    "seen": 1791673394.646471,
-    "ast_hash": "1ac5681764de87e74ba877cdeb98e305",
+    "mtime": 1791674243.3163636,
+    "seen": 1791674429.098544,
+    "ast_hash": "77768b4a2992b13247bb2e84dd41ea98",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly_v15_lcd/renders/detail/e01_lcd_jig.png": {
@@ -5442,9 +5442,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/annotate_guides.py": {
-    "mtime": 1791673301.3571837,
-    "seen": 1791673394.646471,
-    "ast_hash": "06cca8eb979f4d477f6b46eda88234fc",
+    "mtime": 1791674722.7480285,
+    "seen": 1791674822.2578113,
+    "ast_hash": "a712954381aeaff41ffe4564097ecfd0",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/detail/d01_epaper_tape_ann.png": {
@@ -5502,9 +5502,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/detail/d10_battery_tape_ann.png": {
-    "mtime": 1791672981.0502264,
-    "seen": 1791673394.646471,
-    "ast_hash": "e04403c99770443d217b0c62d9424872",
+    "mtime": 1791674724.2868862,
+    "seen": 1791674822.2578113,
+    "ast_hash": "6719e23fbff720c55be132adc9308a53",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/detail/d11_battery_placed_ann.png": {
@@ -5844,9 +5844,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/assembly_howto_pictures.py": {
-    "mtime": 1791671541.951641,
-    "seen": 1791671553.1520782,
-    "ast_hash": "e2a5a272289415b2d08a4075b0272635",
+    "mtime": 1791674123.8109133,
+    "seen": 1791674429.098544,
+    "ast_hash": "c0ad416c15132d2b1a8ca309a7ae2020",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/detail/d21_window_mask_on_ann.jpg": {
@@ -5934,9 +5934,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/howto/battery_tape_layout.png": {
-    "mtime": 1791671543.7098477,
-    "seen": 1791671553.1530776,
-    "ast_hash": "01a4e90a46d25bc5fca5a4882e1028c8",
+    "mtime": 1791674124.1186423,
+    "seen": 1791674429.0995429,
+    "ast_hash": "b52154e71877228138e8312116c0b4ad",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/howto/cover_not_flat_checks.png": {
@@ -6192,9 +6192,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly_v15_lcd/renders/shared_v14/d10_battery_tape_ann.png": {
-    "mtime": 1791672992.6052682,
-    "seen": 1791673394.646471,
-    "ast_hash": "e04403c99770443d217b0c62d9424872",
+    "mtime": 1791674724.3398764,
+    "seen": 1791674822.2589307,
+    "ast_hash": "6719e23fbff720c55be132adc9308a53",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly_v15_lcd/renders/shared_v14/d11_battery_placed_ann.png": {
@@ -6263,52 +6263,1252 @@
     "ast_hash": "b6cbe51a5a88a8a268757922f951f7ed",
     "semantic_hash": ""
   },
-  "guide_renders.py": {
-    "mtime": 1791672913.1559005,
-    "seen": 1791673394.646471,
-    "ast_hash": "d41d8cd98f00b204e9800998ecf8427e",
-    "semantic_hash": ""
-  },
   "hardware/enclosure/final_assembly/variant_battery_tw302030/fit_tw302030.py": {
-    "mtime": 1791672381.1169953,
-    "seen": 1791673394.646471,
-    "ast_hash": "c12d940a816992aafa9654cbcbbf9a55",
+    "mtime": 1791674157.9265072,
+    "seen": 1791674429.098544,
+    "ast_hash": "e53dc9042b44d604eb70ef806030712e",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/variant_battery_tw302030/results.json": {
-    "mtime": 1791673031.7429776,
-    "seen": 1791673394.646471,
-    "ast_hash": "535b3ff49612c5d7faa8e7e1af39a4c4",
+    "mtime": 1791674675.2376428,
+    "seen": 1791674822.2578113,
+    "ast_hash": "a7fb43048c551a057be60b5af0025f18",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly_v15_lcd/variant_battery_tw302030/results.json": {
-    "mtime": 1791673031.7470796,
-    "seen": 1791673394.646471,
-    "ast_hash": "fa10c81b94aae02efd72cfbd69f68263",
+    "mtime": 1791674675.2408488,
+    "seen": 1791674822.2578113,
+    "ast_hash": "0793ed4dfdc5f970231dc335035770c7",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/detail/d22_battery_tw302030.png": {
-    "mtime": 1791672926.6869638,
-    "seen": 1791673394.646471,
+    "mtime": 1791674300.0432892,
+    "seen": 1791674429.0995429,
     "ast_hash": "91d8be0fecd9a3d193a895b5fbe94948",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly/renders/detail/d22_battery_tw302030_ann.png": {
-    "mtime": 1791672981.2689893,
-    "seen": 1791673394.646471,
-    "ast_hash": "7aa8009ad4796a4a25566a088284f1e1",
+    "mtime": 1791674684.6682615,
+    "seen": 1791674822.2578113,
+    "ast_hash": "2d5292f40c40cb9b5cdeb79e73c83ffc",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly_v15_lcd/renders/detail/d22_battery_tw302030.png": {
-    "mtime": 1791672933.157459,
-    "seen": 1791673394.646471,
-    "ast_hash": "91d8be0fecd9a3d193a895b5fbe94948",
+    "mtime": 1791674243.3056977,
+    "seen": 1791674429.0995429,
+    "ast_hash": "6bcfae9cb62ae7219dc88958dbb9816e",
     "semantic_hash": ""
   },
   "hardware/enclosure/final_assembly_v15_lcd/renders/detail/d22_battery_tw302030_ann.png": {
-    "mtime": 1791672981.648874,
-    "seen": 1791673394.646471,
-    "ast_hash": "7aa8009ad4796a4a25566a088284f1e1",
+    "mtime": 1791674685.1214314,
+    "seen": 1791674822.2578113,
+    "ast_hash": "2c42d71542bbca93234db4dc5668d5d9",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/host_capture.h": {
+    "mtime": 1791673928.8786077,
+    "seen": 1791673991.4621112,
+    "ast_hash": "86b948e218a9ad9e0481b0f27ce0a9f5",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/host_hw.cpp": {
+    "mtime": 1791673928.9101543,
+    "seen": 1791673991.4621112,
+    "ast_hash": "a9873c2103888dad839fecfe78934a32",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/lgfx_host_font_stubs.c": {
+    "mtime": 1791673819.833575,
+    "seen": 1791673991.4621112,
+    "ast_hash": "d5dab271faf054d502cc4a0981f7cee9",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/lgfx_host_panel.cpp": {
+    "mtime": 1791673767.3100333,
+    "seen": 1791673991.4621112,
+    "ast_hash": "2d03493d98cb154309136598808c4d7f",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/lgfx_host_platform.cpp": {
+    "mtime": 1791673706.257594,
+    "seen": 1791673991.4621112,
+    "ast_hash": "4ea95ecded65fc4c3ae706482a9f1a2c",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/selftest_tu.cpp": {
+    "mtime": 1791673943.8009539,
+    "seen": 1791673991.4621112,
+    "ast_hash": "f9955627842ebb74ff22dfc3c607f320",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/shim/fw/Arduino.h": {
+    "mtime": 1791673896.7325146,
+    "seen": 1791673991.4621112,
+    "ast_hash": "b99cc8386bcecc3ab7988f6da8db0bd8",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/shim/fw/WiFi.h": {
+    "mtime": 1791673896.758523,
+    "seen": 1791673991.4621112,
+    "ast_hash": "ea85a39094d5bd9f76acebab199f7cfe",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/shim/fw/esp_camera.h": {
+    "mtime": 1791673896.8101647,
+    "seen": 1791673991.4621112,
+    "ast_hash": "1de62b9061c38785b01bd06454c7e7f9",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/shim/fw/esp_chip_info.h": {
+    "mtime": 1791673896.783983,
+    "seen": 1791673991.4621112,
+    "ast_hash": "df8c6f842f44b396deb383b2fed9ca7f",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/shim/lgfx_host/SDL.h": {
+    "mtime": 1791673685.4376106,
+    "seen": 1791673991.4621112,
+    "ast_hash": "d72fd93b38fec4e01f5b819e58826c26",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/shim/lgfx_host/SDL_main.h": {
+    "mtime": 1791673685.4406116,
+    "seen": 1791673991.4621112,
+    "ast_hash": "b5ad224e236fc4a36c19d3cfb71bb8da",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/shim/msvc_compat.h": {
+    "mtime": 1791673725.4560466,
+    "seen": 1791673991.4621112,
+    "ast_hash": "75a2d22c9eb17d7ba010d5f1d9e9daad",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/index.html": {
+    "mtime": 1791673908.6208012,
+    "seen": 1791673991.4621112,
+    "ast_hash": "96c4b4a271ccd553d94dfb23e9b1d98d",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/back_camera_window.jpg": {
+    "mtime": 1791673633.6745725,
+    "seen": 1791673991.463112,
+    "ast_hash": "42d23f001d36e5bb181c2aa377777965",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/exploded_v15.jpg": {
+    "mtime": 1791673633.631418,
+    "seen": 1791673991.463112,
+    "ast_hash": "9835413c9e61533b6a7476aaa9f2cd0f",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/front_v14.jpg": {
+    "mtime": 1791673633.711984,
+    "seen": 1791673991.463112,
+    "ast_hash": "83fd4fcc853d1e5f939c6f31718337aa",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/front_v15.jpg": {
+    "mtime": 1791673633.7494547,
+    "seen": 1791673991.463112,
+    "ast_hash": "c438f0e6135aa6ffd95c61b431ef4450",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/hero_v14_epaper.jpg": {
+    "mtime": 1791673633.5521958,
+    "seen": 1791673991.463112,
+    "ast_hash": "0e1225508f101d456cba9306541d99c8",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/hero_v15_lcd.jpg": {
+    "mtime": 1791673633.5888257,
+    "seen": 1791673991.463112,
+    "ast_hash": "1438cdd4070fa3a9d9754430c19c0df3",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/mock_ui.png": {
+    "mtime": 1791673634.2863455,
+    "seen": 1791673991.463112,
+    "ast_hash": "84a1a294b13576a580959623ec1429e2",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/part_dcxyx_sfold.jpg": {
+    "mtime": 1791673634.0815344,
+    "seen": 1791673991.463112,
+    "ast_hash": "44785b0f2978d10810f18aac46885209",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/part_lcd_tail.jpg": {
+    "mtime": 1791673634.2572525,
+    "seen": 1791673991.463112,
+    "ast_hash": "ea759112217dd3cb33c58ecb551eb0bc",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/part_magnet.jpg": {
+    "mtime": 1791673634.199675,
+    "seen": 1791673991.463112,
+    "ast_hash": "72c3b1ffe9690d04029685ce6ad9e156",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/part_tw302030.jpg": {
+    "mtime": 1791673634.1410973,
+    "seen": 1791673991.463112,
+    "ast_hash": "38fd91f82a5ec817dbd56a75f9c9028c",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/thumb_assembly_v14.jpg": {
+    "mtime": 1791673633.804458,
+    "seen": 1791673991.463112,
+    "ast_hash": "ba8d6f8e0acd50c51bd3acb0cbb72c19",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/thumb_assembly_v15.jpg": {
+    "mtime": 1791673633.8543427,
+    "seen": 1791673991.463112,
+    "ast_hash": "80fc53d8b0ac758ac70cbc80233a3316",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/thumb_grinding.jpg": {
+    "mtime": 1791673633.9131212,
+    "seen": 1791673991.463112,
+    "ast_hash": "b9e71cd9d7c15d5d26dd2e20de226b6f",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/thumb_powerup_v14.jpg": {
+    "mtime": 1791673633.950024,
+    "seen": 1791673991.463112,
+    "ast_hash": "a428c7bfcc318911e3c05221758a45cd",
+    "semantic_hash": ""
+  },
+  "hardware/project_hub/img/thumb_powerup_v15.jpg": {
+    "mtime": 1791673633.9892082,
+    "seen": 1791673991.463112,
+    "ast_hash": "357a6dee66d39da8afde769720b1de1a",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/harness.cpp": {
+    "mtime": 1791674310.3239288,
+    "seen": 1791674429.098544,
+    "ast_hash": "f0a4fea7aa2fa1923040704dbd1cdbfb",
+    "semantic_hash": ""
+  },
+  "tools/ui_sim_v15/make_screens.py": {
+    "mtime": 1791674260.7429042,
+    "seen": 1791674429.098544,
+    "ast_hash": "160c545d5dd5e6d7610b3728d2b4a3c2",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/README.md": {
+    "mtime": 1791674410.8244193,
+    "seen": 1791674429.098544,
+    "ast_hash": "7f2f33ee4f30e5a699bb5ddc0ad24abe",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/01_calc_home.png": {
+    "mtime": 1791674323.533431,
+    "seen": 1791674429.0995429,
+    "ast_hash": "4bc5f6a8fa638b3b8ad36302823b8af6",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/02_calc_typing.png": {
+    "mtime": 1791674323.5400763,
+    "seen": 1791674429.0995429,
+    "ast_hash": "3ee1040d3a3418d2bf96c76231f1adf4",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/03_calc_result.png": {
+    "mtime": 1791674323.5457969,
+    "seen": 1791674429.0995429,
+    "ast_hash": "00a4b781aa67bab313970be313a3053d",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/04_calc_typing_functions.png": {
+    "mtime": 1791674323.550911,
+    "seen": 1791674429.0995429,
+    "ast_hash": "0208f91cf4d77cc68c7359669ce34c4c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/05_calc_result_functions.png": {
+    "mtime": 1791674323.5559213,
+    "seen": 1791674429.0995429,
+    "ast_hash": "7939c7e8feb4258d5c67621779a1c220",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/06_calc_shift.png": {
+    "mtime": 1791674323.5620456,
+    "seen": 1791674429.0995429,
+    "ast_hash": "33346cad52f7c3808c6a200ceb6d42b3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/07_calc_result_fraction.png": {
+    "mtime": 1791674323.5677252,
+    "seen": 1791674429.0995429,
+    "ast_hash": "eacfc66df6e9cf348e8e7dd43b5d3d6e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/08_calc_syntax_error.png": {
+    "mtime": 1791674323.5722506,
+    "seen": 1791674429.0995429,
+    "ast_hash": "7574633e863e522eae9c6a4c33eb3c0a",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/10_menu_mode.png": {
+    "mtime": 1791674323.5782602,
+    "seen": 1791674429.0995429,
+    "ast_hash": "aee253fac891df47007678569e35101e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/11_setup.png": {
+    "mtime": 1791674323.583371,
+    "seen": 1791674429.0995429,
+    "ast_hash": "31c9378fe0607b456fa50bf709fd878c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/20_ai_ready.png": {
+    "mtime": 1791674323.5895069,
+    "seen": 1791674429.0995429,
+    "ast_hash": "ab8087e32385db0b23c51352a45bd7f5",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/21_ai_hold_still.png": {
+    "mtime": 1791674323.5946348,
+    "seen": 1791674429.0995429,
+    "ast_hash": "03ceb0ff0dcc80e8e76b9faa05a4fd2c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/22_ai_reading.png": {
+    "mtime": 1791674323.6007783,
+    "seen": 1791674429.0995429,
+    "ast_hash": "bec5c87f0345622e4a1ca81c5f52d90e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/23_ai_solving.png": {
+    "mtime": 1791674323.6062858,
+    "seen": 1791674429.0995429,
+    "ast_hash": "5afd32db141576ffd04e6674ded50a6c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/24_ai_answer_page1.png": {
+    "mtime": 1791674323.6121533,
+    "seen": 1791674429.0995429,
+    "ast_hash": "09c5c7957c8299216f67801529059551",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/25_ai_answer_page2.png": {
+    "mtime": 1791674323.6178403,
+    "seen": 1791674429.0995429,
+    "ast_hash": "8baea67e77c627b6a6e4898b4f73cb18",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/26_ai_answer_page3.png": {
+    "mtime": 1791674323.6269834,
+    "seen": 1791674429.0995429,
+    "ast_hash": "eab86ca6033740d44b6fa57a89de80e3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/30_status_full_no_wifi.png": {
+    "mtime": 1791674323.6331823,
+    "seen": 1791674429.0995429,
+    "ast_hash": "620c83a1a4c924dc5580721c0a8259fe",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/31_status_wifi_joining.png": {
+    "mtime": 1791674323.6389463,
+    "seen": 1791674429.0995429,
+    "ast_hash": "9a95a07e8e47d96e5ef92280e24cda31",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/32_status_wifi_connected.png": {
+    "mtime": 1791674323.6442962,
+    "seen": 1791674429.0995429,
+    "ast_hash": "be1a527789ce9e68f797aa029a1ac681",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/33_status_charging.png": {
+    "mtime": 1791674323.6490076,
+    "seen": 1791674429.0995429,
+    "ast_hash": "42e25c0b2df1d72aa390c396191959ee",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/34_status_low_battery.png": {
+    "mtime": 1791674323.6540034,
+    "seen": 1791674429.0995429,
+    "ast_hash": "8510f313e12d4869340972d0754160bd",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/35_status_battery_unknown.png": {
+    "mtime": 1791674323.6592276,
+    "seen": 1791674429.0995429,
+    "ast_hash": "0a99d014b76218f51c3e85a9610c3c7b",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/36_low_battery_ai_screen.png": {
+    "mtime": 1791674323.6646032,
+    "seen": 1791674429.0995429,
+    "ast_hash": "1e00c3d311d133b6c16bb89e4561f57e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/37_low_battery_notice.png": {
+    "mtime": 1791674323.6718993,
+    "seen": 1791674429.0995429,
+    "ast_hash": "493c1cfc83301fd35d51d5e39b7cf6f3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/40_off_charging.png": {
+    "mtime": 1791674323.6770263,
+    "seen": 1791674429.0995429,
+    "ast_hash": "8dddf09f0dce3b0e69465c29d32b3dcd",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/41_off_blank.png": {
+    "mtime": 1791674323.6810274,
+    "seen": 1791674429.0995429,
+    "ast_hash": "42d2537db3ccaf63d7a1d87773770142",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/42_exam_mode_on.png": {
+    "mtime": 1791674323.6851883,
+    "seen": 1791674429.0995429,
+    "ast_hash": "3fff0c54b1d32394c562cb20a1086b7a",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/43_exam_mode_calc.png": {
+    "mtime": 1791674323.6910787,
+    "seen": 1791674429.0995429,
+    "ast_hash": "242c0d3a3267f1985f419fe008de0793",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/50_setup_by_phone.png": {
+    "mtime": 1791674323.6962059,
+    "seen": 1791674429.0995429,
+    "ast_hash": "bea929feeedc6fbbab24b685e77a539e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/51_setup_by_phone_saved.png": {
+    "mtime": 1791674323.7020307,
+    "seen": 1791674429.0995429,
+    "ast_hash": "1db9c278f31ef1da8305e1ed01cead64",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/52_ota_progress_0.png": {
+    "mtime": 1791674323.7080338,
+    "seen": 1791674429.0995429,
+    "ast_hash": "ff92d41cee330aa49d8e2428b51205a8",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/53_ota_progress_42.png": {
+    "mtime": 1791674323.7135208,
+    "seen": 1791674429.0995429,
+    "ast_hash": "64bdc11a9b18af8bf3cbca01922ca60c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/54_ota_progress_100.png": {
+    "mtime": 1791674323.7200098,
+    "seen": 1791674429.0995429,
+    "ast_hash": "53421397144ef880366f1aa159b3a15f",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/55_ota_done.png": {
+    "mtime": 1791674323.7251472,
+    "seen": 1791674429.0995429,
+    "ast_hash": "17869ff5629a1ee2f99531bbda37830e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/56_ota_failed.png": {
+    "mtime": 1791674323.730651,
+    "seen": 1791674429.0995429,
+    "ast_hash": "66bb749dd4822988754e063ca22e3603",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/60_selftest_start.png": {
+    "mtime": 1791674323.7368176,
+    "seen": 1791674429.0995429,
+    "ast_hash": "10ebd46b8070318890b04e1ed784175d",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/61_selftest_colour_bars.png": {
+    "mtime": 1791674323.7409666,
+    "seen": 1791674429.0995429,
+    "ast_hash": "4ac0497c449376cb724dc7103ccbb053",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/62_selftest_camera.png": {
+    "mtime": 1791674323.7467835,
+    "seen": 1791674429.0995429,
+    "ast_hash": "9122d6943b6aeea127c57f8dd98f439f",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/63_selftest_wifi.png": {
+    "mtime": 1791674323.751927,
+    "seen": 1791674429.0995429,
+    "ast_hash": "ab3de5ec1d2a5b510f78e8471a7e17bf",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/64_selftest_keys.png": {
+    "mtime": 1791674323.757044,
+    "seen": 1791674429.0995429,
+    "ast_hash": "891c115cac00afca9e8fd872f63c3354",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/65_selftest_pass.png": {
+    "mtime": 1791674323.7641814,
+    "seen": 1791674429.0995429,
+    "ast_hash": "61e3a9005e56901bad9c532aa7e060fc",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/70_camera_starting.png": {
+    "mtime": 1791674323.7701802,
+    "seen": 1791674429.0995429,
+    "ast_hash": "90603f9af6a81d69797626d2bdb35aa0",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/71_camera_focusing.png": {
+    "mtime": 1791674323.7789743,
+    "seen": 1791674429.0995429,
+    "ast_hash": "adb9d1c7d5cfe566b25fdbcb32a01c12",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/72_camera_focused.png": {
+    "mtime": 1791674323.7972357,
+    "seen": 1791674429.0995429,
+    "ast_hash": "fc9620ea4a046470c02b9f14ade9853b",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/73_camera_hold_still.png": {
+    "mtime": 1791674323.8160594,
+    "seen": 1791674429.0995429,
+    "ast_hash": "690e2f6085139d4ffda99262a0c29223",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/74_camera_careful_tutor.png": {
+    "mtime": 1791674323.8332727,
+    "seen": 1791674429.0995429,
+    "ast_hash": "c47a2a8457905b36b4169a58762580cd",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/75_camera_fixed_focus_timeout.png": {
+    "mtime": 1791674323.851138,
+    "seen": 1791674429.0995429,
+    "ast_hash": "ad39c8ae13438700436c7a5cd2a1eec7",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/display_03_calc_result.png": {
+    "mtime": 1791674327.5135272,
+    "seen": 1791674429.0995429,
+    "ast_hash": "a1e263e8ba8852a41b9cbe3fe04d9ac4",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/display_05_calc_result_functions.png": {
+    "mtime": 1791674328.308485,
+    "seen": 1791674429.0995429,
+    "ast_hash": "ffc54a3d54b10cc9a00a905ce3106458",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/display_10_menu_mode.png": {
+    "mtime": 1791674329.1158485,
+    "seen": 1791674429.0995429,
+    "ast_hash": "6eb2612ab4eb1ed6c9d0f8eaf4732c85",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/display_20_ai_ready.png": {
+    "mtime": 1791674329.9032376,
+    "seen": 1791674429.0995429,
+    "ast_hash": "bfc226c9611f36654779483e9388d202",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/display_24_ai_answer_page1.png": {
+    "mtime": 1791674330.6680355,
+    "seen": 1791674429.0995429,
+    "ast_hash": "0adfcd3950542a19816119fe7cb3fdc8",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/display_40_off_charging.png": {
+    "mtime": 1791674334.4905388,
+    "seen": 1791674429.0995429,
+    "ast_hash": "4f815a47afb78bf075ca4aac9cb4b18c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/display_50_setup_by_phone.png": {
+    "mtime": 1791674331.4603243,
+    "seen": 1791674429.0995429,
+    "ast_hash": "c67ca3e76c636251ecfd0bf54a0ba518",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/display_53_ota_progress_42.png": {
+    "mtime": 1791674332.2219005,
+    "seen": 1791674429.0995429,
+    "ast_hash": "c2584d489b2811c356d4f8aa1f0a31d3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/display_61_selftest_colour_bars.png": {
+    "mtime": 1791674333.0096467,
+    "seen": 1791674429.0995429,
+    "ast_hash": "06424458f50bc351984ad666a7091682",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/display_72_camera_focused.png": {
+    "mtime": 1791674333.7581232,
+    "seen": 1791674429.0995429,
+    "ast_hash": "33ff508cb44e191e2a0fe1a3b249a53e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/front_03_calc_result.png": {
+    "mtime": 1791674324.3231988,
+    "seen": 1791674429.0995429,
+    "ast_hash": "16cc416ef3dba3fb7bef227bcb499819",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/front_05_calc_result_functions.png": {
+    "mtime": 1791674324.5684018,
+    "seen": 1791674429.0995429,
+    "ast_hash": "6c36dcc9e9413bc43b58cf17d9948842",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/front_10_menu_mode.png": {
+    "mtime": 1791674324.8176138,
+    "seen": 1791674429.0995429,
+    "ast_hash": "d9722965f758e17c6617b3a2ef8bc1f0",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/front_20_ai_ready.png": {
+    "mtime": 1791674325.0861695,
+    "seen": 1791674429.0995429,
+    "ast_hash": "32f43c01aef29b096ae1afca510b9eaa",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/front_24_ai_answer_page1.png": {
+    "mtime": 1791674325.3495734,
+    "seen": 1791674429.0995429,
+    "ast_hash": "4079b083eec35aeec95eac8031494e60",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/front_40_off_charging.png": {
+    "mtime": 1791674326.7147472,
+    "seen": 1791674429.0995429,
+    "ast_hash": "eb48d250d6c1c2236065f24c5c35c619",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/front_50_setup_by_phone.png": {
+    "mtime": 1791674325.6108842,
+    "seen": 1791674429.0995429,
+    "ast_hash": "1b17f5d6c0074293c2c9447e970e945f",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/front_53_ota_progress_42.png": {
+    "mtime": 1791674325.873532,
+    "seen": 1791674429.0995429,
+    "ast_hash": "e4f89db373ec70d8d7ff182f969402a3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/front_61_selftest_colour_bars.png": {
+    "mtime": 1791674326.1582286,
+    "seen": 1791674429.0995429,
+    "ast_hash": "ed373f94eb25fe8fb5ce967b04670c71",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/framed/front_72_camera_focused.png": {
+    "mtime": 1791674326.428502,
+    "seen": 1791674429.0995429,
+    "ast_hash": "f274631b94ac76a5a311ea928fa2bf10",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/sample_photo_320x240.png": {
+    "mtime": 1791674310.8916707,
+    "seen": 1791674429.0995429,
+    "ast_hash": "19ec49c73b8713a84c5c97974f80abf6",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/sheet_all_screens.png": {
+    "mtime": 1791674324.0631826,
+    "seen": 1791674429.0995429,
+    "ast_hash": "af2719ec82e567d56f2bb0f8f2dbf7cf",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/sheet_status_bar_variants.png": {
+    "mtime": 1791674323.887459,
+    "seen": 1791674429.0995429,
+    "ast_hash": "fdd512fa592b3c6ae1e962ba3b10cbd4",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/01_calc_home_x3.png": {
+    "mtime": 1791674323.5380714,
+    "seen": 1791674429.0995429,
+    "ast_hash": "d093ec0d4360b0810712ee95cb90d82b",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/02_calc_typing_x3.png": {
+    "mtime": 1791674323.5437717,
+    "seen": 1791674429.0995429,
+    "ast_hash": "11662477d1c4dcd5b9c172b00e1412fc",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/03_calc_result_x3.png": {
+    "mtime": 1791674323.549903,
+    "seen": 1791674429.0995429,
+    "ast_hash": "bffdd8cb926a4a3ac213079c537389d0",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/04_calc_typing_functions_x3.png": {
+    "mtime": 1791674323.554927,
+    "seen": 1791674429.0995429,
+    "ast_hash": "c552758243cfad5ea67f3bcfed296788",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/05_calc_result_functions_x3.png": {
+    "mtime": 1791674323.5610464,
+    "seen": 1791674429.0995429,
+    "ast_hash": "bf457c509aa887b30ed1539e8d6da150",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/06_calc_shift_x3.png": {
+    "mtime": 1791674323.5662172,
+    "seen": 1791674429.0995429,
+    "ast_hash": "2ea5942d16816f4afd5bd137aaaa5fd8",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/07_calc_result_fraction_x3.png": {
+    "mtime": 1791674323.5717425,
+    "seen": 1791674429.0995429,
+    "ast_hash": "fd70f0cddd7d3c3a36f22b0112089703",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/08_calc_syntax_error_x3.png": {
+    "mtime": 1791674323.5772676,
+    "seen": 1791674429.0995429,
+    "ast_hash": "0867a4d189c1af82ca0f78a260634392",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/10_menu_mode_x3.png": {
+    "mtime": 1791674323.5823774,
+    "seen": 1791674429.0995429,
+    "ast_hash": "70583ce04fa003cdb70383a489cdd7a8",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/11_setup_x3.png": {
+    "mtime": 1791674323.5885098,
+    "seen": 1791674429.0995429,
+    "ast_hash": "7e842a01d362da896e3ac589dd1237cd",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/20_ai_ready_x3.png": {
+    "mtime": 1791674323.5936456,
+    "seen": 1791674429.0995429,
+    "ast_hash": "9416a287fec54f701ed55078f46ed76e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/21_ai_hold_still_x3.png": {
+    "mtime": 1791674323.5996478,
+    "seen": 1791674429.0995429,
+    "ast_hash": "28becd7f736d90875bc52cbcbaa5b5c2",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/22_ai_reading_x3.png": {
+    "mtime": 1791674323.6052806,
+    "seen": 1791674429.0995429,
+    "ast_hash": "880f3897b36e3697414359df23338f6c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/23_ai_solving_x3.png": {
+    "mtime": 1791674323.610631,
+    "seen": 1791674429.0995429,
+    "ast_hash": "e058fc0a8ff687c8ca41772863382b73",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/24_ai_answer_page1_x3.png": {
+    "mtime": 1791674323.6168473,
+    "seen": 1791674429.0995429,
+    "ast_hash": "8952fc32a0d1a26d141d3ac2590d5ece",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/25_ai_answer_page2_x3.png": {
+    "mtime": 1791674323.6242177,
+    "seen": 1791674429.0995429,
+    "ast_hash": "abe259cb0980cd14a922c5bcf04422c8",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/26_ai_answer_page3_x3.png": {
+    "mtime": 1791674323.6321833,
+    "seen": 1791674429.0995429,
+    "ast_hash": "a6048c0f1da9600b33af9303c073ff2d",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/30_status_full_no_wifi_x3.png": {
+    "mtime": 1791674323.6374345,
+    "seen": 1791674429.0995429,
+    "ast_hash": "bbe0399f21a57ebf17679008e202c28c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/31_status_wifi_joining_x3.png": {
+    "mtime": 1791674323.6427805,
+    "seen": 1791674429.0995429,
+    "ast_hash": "ea236d7893413f8c5d05d9e1d296dfe6",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/32_status_wifi_connected_x3.png": {
+    "mtime": 1791674323.6480048,
+    "seen": 1791674429.0995429,
+    "ast_hash": "46d23f2d25e9a73db5baa7ff22f8e65c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/33_status_charging_x3.png": {
+    "mtime": 1791674323.6530044,
+    "seen": 1791674429.0995429,
+    "ast_hash": "3a0381242a8976a13e39ca47e6dba3a9",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/34_status_low_battery_x3.png": {
+    "mtime": 1791674323.6576586,
+    "seen": 1791674429.0995429,
+    "ast_hash": "177df73b5394381e33ff972c04b84b52",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/35_status_battery_unknown_x3.png": {
+    "mtime": 1791674323.6628652,
+    "seen": 1791674429.0995429,
+    "ast_hash": "7d15be7499042bb6d9ce3785de696571",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/36_low_battery_ai_screen_x3.png": {
+    "mtime": 1791674323.6699085,
+    "seen": 1791674429.0995429,
+    "ast_hash": "9d22e369b13b5edb23713239279779d3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/37_low_battery_notice_x3.png": {
+    "mtime": 1791674323.6759014,
+    "seen": 1791674429.0995429,
+    "ast_hash": "4e6decd9478e50a4150a4a974d587f1a",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/40_off_charging_x3.png": {
+    "mtime": 1791674323.6800394,
+    "seen": 1791674429.0995429,
+    "ast_hash": "38282c370e1335446a47a020527cc321",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/41_off_blank_x3.png": {
+    "mtime": 1791674323.6830368,
+    "seen": 1791674429.0995429,
+    "ast_hash": "b8d5ba34ac2d00b18754b6fc4a292ced",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/42_exam_mode_on_x3.png": {
+    "mtime": 1791674323.689085,
+    "seen": 1791674429.0995429,
+    "ast_hash": "72437231abb7308cc278df1864e4fa0b",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/43_exam_mode_calc_x3.png": {
+    "mtime": 1791674323.6942108,
+    "seen": 1791674429.0995429,
+    "ast_hash": "d63d966eda08c3a381392a55b62cecf0",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/50_setup_by_phone_x3.png": {
+    "mtime": 1791674323.7010355,
+    "seen": 1791674429.0995429,
+    "ast_hash": "c4f22f6747f6b413aa1e312ba5e42571",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/51_setup_by_phone_saved_x3.png": {
+    "mtime": 1791674323.707043,
+    "seen": 1791674429.0995429,
+    "ast_hash": "25afb876ef1db605e7575be70a66b164",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/52_ota_progress_0_x3.png": {
+    "mtime": 1791674323.712665,
+    "seen": 1791674429.0995429,
+    "ast_hash": "17f3d2090b139cd90de06a5afcbebac9",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/53_ota_progress_42_x3.png": {
+    "mtime": 1791674323.7180066,
+    "seen": 1791674429.0995429,
+    "ast_hash": "c063118b6c77cfe57c230a3b874f906a",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/54_ota_progress_100_x3.png": {
+    "mtime": 1791674323.7240064,
+    "seen": 1791674429.0995429,
+    "ast_hash": "ec4f466693e323e9a5e0955c4296e87f",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/55_ota_done_x3.png": {
+    "mtime": 1791674323.7296484,
+    "seen": 1791674429.0995429,
+    "ast_hash": "cc7d5de10672964de9326eb7c998216f",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/56_ota_failed_x3.png": {
+    "mtime": 1791674323.73481,
+    "seen": 1791674429.0995429,
+    "ast_hash": "d683d312e2834f49213ffa550b0882f3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/60_selftest_start_x3.png": {
+    "mtime": 1791674323.7399788,
+    "seen": 1791674429.0995429,
+    "ast_hash": "62fd86696a04f6073ba4d0c768f9a38f",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/61_selftest_colour_bars_x3.png": {
+    "mtime": 1791674323.7457738,
+    "seen": 1791674429.0995429,
+    "ast_hash": "0d80254af10c942bf7708b0ba01f988b",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/62_selftest_camera_x3.png": {
+    "mtime": 1791674323.7509353,
+    "seen": 1791674429.0995429,
+    "ast_hash": "ff9fe5766568e9ab7f37437c71669c85",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/63_selftest_wifi_x3.png": {
+    "mtime": 1791674323.7560544,
+    "seen": 1791674429.0995429,
+    "ast_hash": "6f222c562223b67e80a79f080214835e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/64_selftest_keys_x3.png": {
+    "mtime": 1791674323.7620525,
+    "seen": 1791674429.0995429,
+    "ast_hash": "14a60549c970e0b33a1c56d944299118",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/65_selftest_pass_x3.png": {
+    "mtime": 1791674323.7691822,
+    "seen": 1791674429.0995429,
+    "ast_hash": "e91a462ea407c958c8e68a5d45fbc18b",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/70_camera_starting_x3.png": {
+    "mtime": 1791674323.7733352,
+    "seen": 1791674429.0995429,
+    "ast_hash": "bc3b031a673edf23393326ac3bfc2cf3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/71_camera_focusing_x3.png": {
+    "mtime": 1791674323.7921107,
+    "seen": 1791674429.0995429,
+    "ast_hash": "c71ad32d576f74c5de1e47ba870a178b",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/72_camera_focused_x3.png": {
+    "mtime": 1791674323.809369,
+    "seen": 1791674429.0995429,
+    "ast_hash": "a59652e669035a232ced22761ada9ca8",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/73_camera_hold_still_x3.png": {
+    "mtime": 1791674323.8276112,
+    "seen": 1791674429.0995429,
+    "ast_hash": "8f0719daf5777881722efdb2e903d063",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/74_camera_careful_tutor_x3.png": {
+    "mtime": 1791674323.8459196,
+    "seen": 1791674429.0995429,
+    "ast_hash": "d75d50420f266bcf0a52b8e9eb5f826d",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/75_camera_fixed_focus_timeout_x3.png": {
+    "mtime": 1791674323.8637917,
+    "seen": 1791674429.0995429,
+    "ast_hash": "0f9660d59c4dff3966db8be50069a11a",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/x3/sample_photo_320x240_x3.png": {
+    "mtime": 1791674310.907501,
+    "seen": 1791674429.0995429,
+    "ast_hash": "e8b43467298045eee5784a6f1e0cb723",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/01_calc_home.png": {
+    "mtime": 1791674323.533431,
+    "seen": 1791674822.2589307,
+    "ast_hash": "4bc5f6a8fa638b3b8ad36302823b8af6",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/02_calc_typing.png": {
+    "mtime": 1791674323.5400763,
+    "seen": 1791674822.2589307,
+    "ast_hash": "3ee1040d3a3418d2bf96c76231f1adf4",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/03_calc_result.png": {
+    "mtime": 1791674323.5457969,
+    "seen": 1791674822.2589307,
+    "ast_hash": "00a4b781aa67bab313970be313a3053d",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/04_calc_typing_functions.png": {
+    "mtime": 1791674323.550911,
+    "seen": 1791674822.2589307,
+    "ast_hash": "0208f91cf4d77cc68c7359669ce34c4c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/05_calc_result_functions.png": {
+    "mtime": 1791674323.5559213,
+    "seen": 1791674822.2589307,
+    "ast_hash": "7939c7e8feb4258d5c67621779a1c220",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/06_calc_shift.png": {
+    "mtime": 1791674323.5620456,
+    "seen": 1791674822.2589307,
+    "ast_hash": "33346cad52f7c3808c6a200ceb6d42b3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/07_calc_result_fraction.png": {
+    "mtime": 1791674323.5677252,
+    "seen": 1791674822.2589307,
+    "ast_hash": "eacfc66df6e9cf348e8e7dd43b5d3d6e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/08_calc_syntax_error.png": {
+    "mtime": 1791674323.5722506,
+    "seen": 1791674822.2589307,
+    "ast_hash": "7574633e863e522eae9c6a4c33eb3c0a",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/10_menu_mode.png": {
+    "mtime": 1791674323.5782602,
+    "seen": 1791674822.2589307,
+    "ast_hash": "aee253fac891df47007678569e35101e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/11_setup.png": {
+    "mtime": 1791674323.583371,
+    "seen": 1791674822.2589307,
+    "ast_hash": "31c9378fe0607b456fa50bf709fd878c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/20_ai_ready.png": {
+    "mtime": 1791674323.5895069,
+    "seen": 1791674822.2589307,
+    "ast_hash": "ab8087e32385db0b23c51352a45bd7f5",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/21_ai_hold_still.png": {
+    "mtime": 1791674323.5946348,
+    "seen": 1791674822.2589307,
+    "ast_hash": "03ceb0ff0dcc80e8e76b9faa05a4fd2c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/22_ai_reading.png": {
+    "mtime": 1791674323.6007783,
+    "seen": 1791674822.2589307,
+    "ast_hash": "bec5c87f0345622e4a1ca81c5f52d90e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/23_ai_solving.png": {
+    "mtime": 1791674323.6062858,
+    "seen": 1791674822.2589307,
+    "ast_hash": "5afd32db141576ffd04e6674ded50a6c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/24_ai_answer_page1.png": {
+    "mtime": 1791674323.6121533,
+    "seen": 1791674822.2589307,
+    "ast_hash": "09c5c7957c8299216f67801529059551",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/25_ai_answer_page2.png": {
+    "mtime": 1791674323.6178403,
+    "seen": 1791674822.2589307,
+    "ast_hash": "8baea67e77c627b6a6e4898b4f73cb18",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/26_ai_answer_page3.png": {
+    "mtime": 1791674323.6269834,
+    "seen": 1791674822.2589307,
+    "ast_hash": "eab86ca6033740d44b6fa57a89de80e3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/30_status_full_no_wifi.png": {
+    "mtime": 1791674323.6331823,
+    "seen": 1791674822.2589307,
+    "ast_hash": "620c83a1a4c924dc5580721c0a8259fe",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/31_status_wifi_joining.png": {
+    "mtime": 1791674323.6389463,
+    "seen": 1791674822.2589307,
+    "ast_hash": "9a95a07e8e47d96e5ef92280e24cda31",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/32_status_wifi_connected.png": {
+    "mtime": 1791674323.6442962,
+    "seen": 1791674822.2589307,
+    "ast_hash": "be1a527789ce9e68f797aa029a1ac681",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/33_status_charging.png": {
+    "mtime": 1791674323.6490076,
+    "seen": 1791674822.2589307,
+    "ast_hash": "42e25c0b2df1d72aa390c396191959ee",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/34_status_low_battery.png": {
+    "mtime": 1791674323.6540034,
+    "seen": 1791674822.2589307,
+    "ast_hash": "8510f313e12d4869340972d0754160bd",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/35_status_battery_unknown.png": {
+    "mtime": 1791674323.6592276,
+    "seen": 1791674822.2589307,
+    "ast_hash": "0a99d014b76218f51c3e85a9610c3c7b",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/36_low_battery_ai_screen.png": {
+    "mtime": 1791674323.6646032,
+    "seen": 1791674822.2589307,
+    "ast_hash": "1e00c3d311d133b6c16bb89e4561f57e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/37_low_battery_notice.png": {
+    "mtime": 1791674323.6718993,
+    "seen": 1791674822.2589307,
+    "ast_hash": "493c1cfc83301fd35d51d5e39b7cf6f3",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/40_off_charging.png": {
+    "mtime": 1791674323.6770263,
+    "seen": 1791674822.2589307,
+    "ast_hash": "8dddf09f0dce3b0e69465c29d32b3dcd",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/41_off_blank.png": {
+    "mtime": 1791674323.6810274,
+    "seen": 1791674822.2589307,
+    "ast_hash": "42d2537db3ccaf63d7a1d87773770142",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/42_exam_mode_on.png": {
+    "mtime": 1791674323.6851883,
+    "seen": 1791674822.2589307,
+    "ast_hash": "3fff0c54b1d32394c562cb20a1086b7a",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/43_exam_mode_calc.png": {
+    "mtime": 1791674323.6910787,
+    "seen": 1791674822.2589307,
+    "ast_hash": "242c0d3a3267f1985f419fe008de0793",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/50_setup_by_phone.png": {
+    "mtime": 1791674323.6962059,
+    "seen": 1791674822.2589307,
+    "ast_hash": "bea929feeedc6fbbab24b685e77a539e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/51_setup_by_phone_saved.png": {
+    "mtime": 1791674323.7020307,
+    "seen": 1791674822.2589307,
+    "ast_hash": "1db9c278f31ef1da8305e1ed01cead64",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/52_ota_progress_0.png": {
+    "mtime": 1791674323.7080338,
+    "seen": 1791674822.2589307,
+    "ast_hash": "ff92d41cee330aa49d8e2428b51205a8",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/53_ota_progress_42.png": {
+    "mtime": 1791674323.7135208,
+    "seen": 1791674822.2589307,
+    "ast_hash": "64bdc11a9b18af8bf3cbca01922ca60c",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/54_ota_progress_100.png": {
+    "mtime": 1791674323.7200098,
+    "seen": 1791674822.2589307,
+    "ast_hash": "53421397144ef880366f1aa159b3a15f",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/55_ota_done.png": {
+    "mtime": 1791674323.7251472,
+    "seen": 1791674822.2589307,
+    "ast_hash": "17869ff5629a1ee2f99531bbda37830e",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/56_ota_failed.png": {
+    "mtime": 1791674323.730651,
+    "seen": 1791674822.2589307,
+    "ast_hash": "66bb749dd4822988754e063ca22e3603",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/60_selftest_start.png": {
+    "mtime": 1791674323.7368176,
+    "seen": 1791674822.2589307,
+    "ast_hash": "10ebd46b8070318890b04e1ed784175d",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/61_selftest_colour_bars.png": {
+    "mtime": 1791674323.7409666,
+    "seen": 1791674822.2589307,
+    "ast_hash": "4ac0497c449376cb724dc7103ccbb053",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/62_selftest_camera.png": {
+    "mtime": 1791674323.7467835,
+    "seen": 1791674822.2589307,
+    "ast_hash": "9122d6943b6aeea127c57f8dd98f439f",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/63_selftest_wifi.png": {
+    "mtime": 1791674323.751927,
+    "seen": 1791674822.2589307,
+    "ast_hash": "ab3de5ec1d2a5b510f78e8471a7e17bf",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/64_selftest_keys.png": {
+    "mtime": 1791674323.757044,
+    "seen": 1791674822.2589307,
+    "ast_hash": "891c115cac00afca9e8fd872f63c3354",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/65_selftest_pass.png": {
+    "mtime": 1791674323.7641814,
+    "seen": 1791674822.2589307,
+    "ast_hash": "61e3a9005e56901bad9c532aa7e060fc",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/70_camera_starting.png": {
+    "mtime": 1791674323.7701802,
+    "seen": 1791674822.2589307,
+    "ast_hash": "90603f9af6a81d69797626d2bdb35aa0",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/71_camera_focusing.png": {
+    "mtime": 1791674323.7789743,
+    "seen": 1791674822.2589307,
+    "ast_hash": "adb9d1c7d5cfe566b25fdbcb32a01c12",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/72_camera_focused.png": {
+    "mtime": 1791674323.7972357,
+    "seen": 1791674822.2589307,
+    "ast_hash": "fc9620ea4a046470c02b9f14ade9853b",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/73_camera_hold_still.png": {
+    "mtime": 1791674323.8160594,
+    "seen": 1791674822.2589307,
+    "ast_hash": "690e2f6085139d4ffda99262a0c29223",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/74_camera_careful_tutor.png": {
+    "mtime": 1791674323.8332727,
+    "seen": 1791674822.2589307,
+    "ast_hash": "c47a2a8457905b36b4169a58762580cd",
+    "semantic_hash": ""
+  },
+  "hardware/renders_ui_v15/before_fixes/75_camera_fixed_focus_timeout.png": {
+    "mtime": 1791674323.851138,
+    "seen": 1791674822.2589307,
+    "ast_hash": "ad39c8ae13438700436c7a5cd2a1eec7",
     "semantic_hash": ""
   }
 }
