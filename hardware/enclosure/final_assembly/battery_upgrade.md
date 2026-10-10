@@ -248,7 +248,10 @@ shank's width from the corner boss. Rib A should then show as a 1 mm sliver belo
   - **Strip 1: 6 × 18 mm**, under the **lead end**, running top-bottom. Its outer edge is 1 mm in from the cell's
     right (lead) edge, and it starts 1 mm above the bottom edge. It stays 2 mm clear of the lid opening.
   - **Strip 2: 4 × 16 mm**, along the **bottom edge**, running left-right. It starts 1 mm in from the left edge and
-    1 mm above the bottom edge, and ends about 2 mm short of strip 1. It stays 0.5 mm below the lid opening.
+    **0.5 mm above the bottom edge**, and ends about 2 mm short of strip 1. Its top edge is then 4.5 mm above the
+    cell's bottom edge, **≈ 0.7 mm below the lid opening's lowest point** (5.2 mm up).
+    *Corrected 2026-10-10:* this said "1 mm above the bottom edge ... stays 0.5 mm below the lid opening", but in the
+    model that start leaves only **≈ 0.2 mm** to the opening (`variant_battery_tw302030/results.json`, revE note).
 - Put both strips on the **underside of the cell** first (the cell is easier to line up than the floor), peel the
   liners, then lower the cell into place (quick way above) and press for 10 s on the strips only, never in the
   middle over the lid (there's a 0.42 mm air gap under it there).
@@ -288,6 +291,8 @@ shank's width from the corner boss. Rib A should then show as a 1 mm sliver belo
   (nominal: rib A 0.8, holder 1.0, leads 2.9 mm from J4).
 - A cell wider than ~20.3 mm: push its top edge against the lip so it clears rib A.
 - The tape L is unchanged (same strips, measured from the new cell's edges; all on solid floor, clear of the lid opening).
+  With strip 2 starting 0.5 mm above the bottom edge (§8, 2026-10-10) it is ≈ 0.9 mm (nominal) / 1.4 mm (W 20.5) below
+  the lid opening; at the old 1 mm start the model gave 0.4 / 0.9 mm.
 - Lead length used ≈ 32–35 mm, so 50–80 mm leads are right. The v15 camera S-fold bay is 27 mm away.
 - Picture: `renders/detail/d22_battery_tw302030_ann.png` (both guide folders).
 

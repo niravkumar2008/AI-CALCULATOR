@@ -28,7 +28,7 @@ The v14 board was ordered at JLCPCB on 2026-10-08 (5 PCBs, git tag `v14-order`; 
 | Supplies and tools (tape, glue, drill bits, vinyl, IPA, glasses) | $61 | $61 | $61 |
 | **Total cash** | **$662.33** | **$571.75** | **$663.97** |
 
-"Current" parts are the Seeed OV5640 AF camera (114993115, $12.99), the Waveshare 2.13" V4 screen ($6.99) and the Adafruit #1317 battery ($5.95). "Generic" parts are an AliExpress OV5640 AF 24-pin camera (~$7), the GDEY0213B74 screen (~$4.50) and a 302030 150 mAh JST-PH cell (~$3).
+"Current" parts are the Seeed OV5640 AF camera (114993115, $12.99), the Waveshare 2.13" V4 screen ($6.99) and the Adafruit #1317 battery ($5.95). "Generic" parts are an AliExpress OV5640 AF 24-pin camera (~$7), the GDEY0213B74 screen (~$4.50) and a 302030 150 mAh JST-PH cell (~$3). The named bulk candidate is the **Taiwoo TW302030** (140 mAh, 30 × 20 × 3.0 mm, Alibaba, price not yet quoted, so the ~$3 estimate stands): CAD fit-checked 2026-10-10 on v14 and v15, it fits when placed **1 mm left of the #1317 position** (`../enclosure/final_assembly/battery_upgrade.md`, `variant_battery_tw302030/results.json`). Order spec: PCM, JST-PH 2.0 with red (+) on pin 2, 50–80 mm leads, UN38.3 + MSDS; meter every sample.
 
 **Why C costs as much as A:** it pays shipping to both kinds of seller and buys a spare of each kind. It's still the better choice. The first 3 units use parts that are known to work, so any problem they show is a board problem. Units 4 and 5 then test the cheap parts that bulk production will need. Before using a generic camera, do the beep test on it; before plugging in a generic battery, meter its lead (reversed JST leads are common).
 

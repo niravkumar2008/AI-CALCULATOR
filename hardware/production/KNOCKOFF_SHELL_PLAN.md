@@ -62,7 +62,7 @@ Front view = looking at the keys, top (screen) end up. "Inside" readings are tak
 | K-M1 | Number block: column pitch × row pitch (centre of the 7 key to the centre of the 8 key, etc.) | | 12.85 × 11.13 | Measure across 4 columns and divide by 4 for accuracy. |
 | K-M2 | Function block: column pitch × row pitch | | 10.66 × 9.5 | Across 5 columns / 2 rows and divide. |
 | K-M3 | Row spacing R1→R2 and R2→R3 (SHIFT row to the next rows) | | 11.7 / 8.9 | |
-| K-M4 | Contact pill size: number keys / function keys / SHIFT row / arrow pad | | pads 9.0 × 7.0 / 7.0 × 5.5 / 6.0 × 4.5 / 5.0 × 4.0 | Pill = the black carbon dot on the mat's underside. v15 pads must be bigger than the pill by ≥ 0.5 mm all round. |
+| K-M4 | Contact pill size: number keys / function keys / SHIFT row / arrow pad | | pads 9.0 × 7.0 / 7.0 × 5.5 / 6.0 × 4.5 / 5.0 × 4.0 | Pill = the black carbon dot on the mat's board side (with the shell face down the dots face up, towards the board; the domes go down into the key caps: photos 2a97120d, 478afcb6, 28bb9c4b). v15 pads must be bigger than the pill by ≥ 0.5 mm all round. |
 | K-M5 | Count of contacts | | 50 (46 keys + 4 arrow directions) | If the clone has a different key count (e.g. no CALC / ∫dx), the key map in firmware changes. |
 | K-M6 | Arrow pad: UP/DOWN and LEFT/RIGHT contact spacing | | ±5.3 / ±6.6 from centre | Casio's UP/DOWN were 1.2 / 1.0 mm further out than the fx-300ES; expect the same kind of surprise. |
 | K-M7 | Key mat overall outline and its locating holes (which posts pass through it) | | | Photograph contact side up with a ruler: this photo plus `tools/blobs.py` gives every pad position for v15 (same method as stage 10). |
@@ -89,7 +89,7 @@ Front view = looking at the keys, top (screen) end up. "Inside" readings are tak
 | K-S2 | What is on the outside of the back cover at K-S1 (label recess, texture, moulded text) | | smooth | A moulded "991ES" or logo there is a trade-dress problem **and** a drilling problem. |
 | K-S3 | Magnet notch spot: top wall, from the right outer edge to the centre of a 21.5-wide, 7.95-deep U-notch that clears the corner screw post and any snap teeth | | centre 22.5 from the right outer edge (front X 22.5) | The magnet face is 21 × 7 oval, 5.5 deep with the legs. Check nothing inside the top wall (LR44 holder, solar frame) is within 1 mm of the notch. |
 | K-S4 | Back-cover lip behind K-S3: height and whether it exists | | lip exists on some fx-115ES | Jig B's "5b" snip. |
-| K-S5 | Battery area: the largest flat rectangle on the back-cover floor in the top-left corner (under where the LR44/solar used to be), L × W, and the free height to the faceplate features above it | | 33.5 × 20.7 × 3.8 (holder kept) | The #1317 is 26.0 × 19.75 × 3.8. If the clone has ≥ 5.7 free, a 502030 (250 mAh) fits with no trim. |
+| K-S5 | Battery area: the largest flat rectangle on the back-cover floor in the top-left corner (under where the LR44/solar used to be), L × W, and the free height to the faceplate features above it | | 33.5 × 20.7 × 3.8 (holder kept) | The #1317 is 26.0 × 19.75 × 3.8. The bulk candidate **Taiwoo TW302030** (140 mAh, 30 × 20 × 3.0, worst case 32 × 20.5 × 3.3) fits the fx-115ES envelope in CAD when placed 1 mm left of the #1317 position (`../enclosure/final_assembly/variant_battery_tw302030/results.json`, 2026-10-10). If the clone has ≥ 5.7 free, a 502030 (250 mAh) fits with no trim. |
 | K-S6 | Solar area: the solar window in the faceplate (size, and whether it is a real cell or a printed fake) | | real cell, 34.6 × 13.6 box | A printed fake means no cutout: the magnet connector can go anywhere along the top wall. |
 | K-S7 | Lead channel: a ≥ 1.5 mm gap from K-S5 to where J4 will be | | reserved | |
 
@@ -134,7 +134,7 @@ Run after the four samples are measured. **All of these must be true** for the c
 4. **Window ≥ 50 × 24 mm** (K-C12) so the e-paper's 48.55 × 23.7 active area shows with margin, and the window-to-top distance (K-C13) keeps J2 inside the 14.3 mm ribbon budget, or the window is in the same place as the Casio's within 2 mm.
 5. **A flat, rib-free Ø7 patch exists on the back for the camera** (K-S1, ≥ 14 mm along the rib) that is **not** under moulded text or a logo recess (K-S2).
 6. **The magnet notch fits in the top wall** without hitting a post, the LR44/solar structure or a snap tooth (K-S3), and the back-cover lip can be snipped (K-S4).
-7. **Battery floor ≥ 27 × 21 × 3.9 mm** free (K-S5) for the #1317, or any larger box.
+7. **Battery floor ≥ 27 × 21 × 3.9 mm** free (K-S5) for the #1317, or any larger box (the TW302030 bulk cell needs the full fx-115ES envelope, 33.5 × 20.7 × 3.8, and sits 1 mm left of the #1317 position there).
 8. **No Casio marks** anywhere on the plain version: no "CASIO", no "fx-", no "ES PLUS", no "NATURAL-V.P.A.M.", no Casio-style wordmark on the faceplate, back, slide cover or box. Printed key legends are fine (they are functional). If the seller cannot supply a plain version: **no-go for sales**, prototypes only.
 9. **Price and MOQ** at 100 ≤ **$4.50** delivered per shell-with-mat (COST_MODEL assumption), MOQ ≤ 100, lead time ≤ 30 days.
 

@@ -274,7 +274,7 @@ parting line down to the plate (`INNER_RIB_FULL`), because C4 (4.7 / 5.5) was re
 level with the Casio board's back face. Until the depth rod says otherwise this is the conservative case. With that rib at board depth two
 things on the KiCad-low-x side (the calculator's right-hand, solar-window side) run into it: the ESP32's bare 0.8 mm antenna tab
 (x 114.75–118.9: 0.4 mm) and the board's own un-narrowed top corner (x 114.3–114.8, y 72–83: up to 0.85 mm). New conditional grind
-**zone 6 "side-wall relief"**: the 1 mm rib removed between KiCad y 71.5 and 106.5 (15–50 mm from the top outer edge) from the rim down
+**zone 6 "side-wall relief"**: the 1 mm rib removed between KiCad y 71.5 and 106.5 (15–50 mm from the top outer edge; *2026-10-10 datum: 14–49 mm from the rim's top edge right above the side rib, as in the grinding manual*) from the rim down
 to the stub level (6.5 mm below the rim), pins and hooks kept. Full story, pre-grind checklist and the file list: `../../verification/07_final_review_fitment.md`.
 
 **Check (2026-10-06 10:33, board STEP v14, 243 bodies, 532 pairs, 3D boolean each):** 18 overlaps, **0 unintended**: the 8 intended

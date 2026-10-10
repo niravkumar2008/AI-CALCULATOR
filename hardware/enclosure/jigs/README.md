@@ -30,7 +30,10 @@ All sizes are parameters at the top of `build_jigs.py`; printed fit clearance ag
 down to 12 mm above the centre line). It **rests on the 4 upper screw bosses** (tops at Z 5.4) and registers with
 **four Ø2.0 × 3 mm pins in the bosses' Ø2.2 screw holes** (corner L/R, mid L/R). It has two openings:
 - **solar-box window** = the zone 1 outline exactly (front X −4.8…29.8, Y 62.1…75.7, i.e. the frame + grid + 0.8);
-- **Ø16 hole** on the camera centre (front X 0, Y 43.84). It also covers the rib B zone (rib B runs through the camera centre).
+  on the part that is the outer frame (6.3–19.3 mm down from the back cover's own top outer edge, straight down at
+  the middle of the box) plus about 0.3 mm all round;
+- **Ø16 hole** on the camera centre (front X 0, Y 43.84 = 38.0 mm down from the back cover's own top outer edge, on
+  the centre line; datums as in the grinding manual, 2026-10-10). It also covers the rib B zone (rib B runs through the camera centre).
 
 **Router depth:** the plate's top is Z 8.4, the floor's top Z 1.0. Stand the Dremel router base (Dremel 335 plunge
 attachment or similar) on **A3**, plunge until a **3.2 mm flat-end straight bit** touches the bench, and lock it.

@@ -55,3 +55,30 @@ Running log for the autonomous task list of 2026-10-10 (tasks: Goldenmorning fit
 - **No change** to the board or the baseline outputs.
 - **Data:** `hardware/enclosure/final_assembly_v15_lcd/variant_camera_dcxyx/`.
 - **Still to confirm on the real part:** the height (the drawing is unreadable; checked at 5.4 and 5.6) and the pin-1 beep test.
+
+### Docs consistency 2026-10-10
+- **Datums:** the front-shell zone 6/6b/6c figures are now measured from the rim's top edge, right above the side rib. That shifts them −1 mm:
+
+  | Item | Now |
+  | --- | --- |
+  | Relief | 14–49 |
+  | Board corner strip | 14–25/26 |
+  | Antenna tab | 30–49 / 31–47 |
+  | Pins | 25/34/44 |
+  | Hooks | 16/21/55–58 |
+  | Zone 6c (rib lower ends) | 55–62 |
+  | Board widens | 58.5–62 |
+  | Rib end | 57.4 |
+  | Diagonals cross the rib | 60.4/61.1 |
+
+  - Zone 1 frame (6.3–19.3) and the camera hole (38.0) are measured from the back cover's own top outer edge.
+  - Updated: FINAL_STATUS (numbers only), ARRIVAL_CHECKLIST, ORDER_WALKTHROUGH, QUESTIONS_AND_ISSUES, the jigs README and assembly_report. Verification 07 and 12 got dated correction notes.
+  - `slide_case_mods.md` keeps 38.3, because the case datum is the whole outline top; a note explains this.
+- **Battery tape:** strip 2 now starts 0.5 mm above the cell's bottom edge, which leaves about 0.7 mm below the lid opening (`battery_upgrade.md` §8).
+- **Key mat:** KNOCKOFF_SHELL_PLAN now says the contact dots are on the board side.
+- **TW302030:** added to the shopping list, the Alibaba bulk sheet, KNOCKOFF_SHELL_PLAN and UNIT_ECONOMICS. The formula check found 549 formula cells, 0 changed.
+- **Open:**
+  - FINAL_STATUS §1a step 6 and §3 step 1 still call zone 6 conditional; the grinding manual and verification 12 say it is settled.
+  - The v15 guide says the TW302030 is "150 mAh"; it is 140.
+  - The grind-map SVG and the photo labels still say 15–50.
+  - The guide pictures and text still draw strip 2 at 1 mm. Fix in progress.
