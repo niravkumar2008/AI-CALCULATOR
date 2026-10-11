@@ -6,10 +6,13 @@ geometry is changed or saved, nothing is exported from Fusion).
     python animate_assembly.py compose ver=v15 [anim=..]    only rebuild the GIFs from frames already rendered (no Fusion)
 
 Animations (hardware/animations/<ver>/):
-  assembly   empty faceplate -> key mat, screen + ribbon, board onto the posts, camera + ribbon, magnet, battery, back cover
-             closing (4 move frames per part, caption bar per stage), then the camera swings round to the front.
-             v15: the colour screen comes ON in the last frames (real firmware screenshot, hardware/renders_ui_v15/).
-  turntable  the closed calculator turning 360 deg about its long axis (front and back), 36 frames.
+  assembly   in the order of the build guides (step numbers in the caption bar): the bare board, screen + ribbon onto
+             its key side (05), board turned over, camera + ribbon into J1 (06), magnet into J3 (07); then the empty
+             faceplate, key mat in and the board onto the posts (08), battery + plug into J4 (09), back cover + screws
+             (10); 4 move frames per part, then the camera swings round to the front and the screen comes ON (11).
+             v15: real firmware screenshot (hardware/renders_ui_v15/). v14: a 250 x 122 1-bit e-paper image drawn with
+             the firmware's 5x7 font (core/font_data.cpp). Both are warped onto a chroma-key active area.
+  turntable  the closed calculator turning 360 deg about its long axis (front and back), 36 frames, screen on.
   xray       exploded <-> assembled loop with the shells see-through, 24 frames.
 
 Fusion side: like guide_renders.py. Fusion must be open with the FusionMCPBridge add-in and the matching final-assembly
@@ -31,6 +34,8 @@ SRC = {"v14": os.path.join(ENC, "build_final_assembly.py"),
        "v15": os.path.join(ENC, "final_assembly_v15_lcd", "build_final_assembly_v15.py")}
 LOG = os.path.join(ENC, "animate_assembly.log")
 UI_PNG = os.path.join(REPO, "hardware", "renders_ui_v15", "05_calc_result_functions.png")
+FONT_CPP = os.path.join(REPO, "core", "font_data.cpp")     # the firmware's 5x7 font (v14 e-paper image)
+CHROMA = "V15 chroma key"                                  # same custom look as build_final_assembly_v15.py
 RW, RH = 1280, 960            # Fusion render size (downscaled to OUT_W x OUT_H with Lanczos: smoother edges)
 OUT_W, OUT_H = 960, 720
 ANIMS = ["assembly", "turntable", "xray"]
@@ -61,23 +66,33 @@ def lerp(a, b, t):
 # above (-Z) the way they go in.
 A_CAM = dict(target=(0, 0, -16), d=(1.0, -0.55, -0.8), up=(0, 0, -1), ext=150)
 HERO = dict(target=(0, 2, 6), d=(0.38, -0.42, 1.0), up=(0, 1, 0), ext=188)
+# Board on its own (steps 05-07 of the guides). Key side up first: the A_CAM view turned 180 deg about the model's X axis,
+# so the board seems to lie key side up on the table; then it is "turned over" (the camera rotates back) for J1 and J3.
+B_T, B_EXT = (0, 3, 2), 165
+
+def rot_x(v, a):
+    c, s = math.cos(a), math.sin(a)
+    return (v[0], v[1] * c - v[2] * s, v[1] * s + v[2] * c)
+
+B_UP = dict(target=B_T, d=rot_x(A_CAM["d"], math.pi), up=(0, 0, 1), ext=B_EXT)     # key side up
+B_DN = dict(target=B_T, d=A_CAM["d"], up=A_CAM["up"], ext=B_EXT)                  # back side up
+
+# Captions use the step numbers of the build guides (final_assembly/assembly_guide.html, ..._v15_lcd.html)
+STEP_TXT = {"v14": {5: "Step 5: e-paper screen onto the board (key side)",
+                    11: "Step 11: final test: the e-paper shows the sum"},
+            "v15": {5: "Step 5: LCD onto the board, tail through the slot into J5",
+                    11: "Step 11: final test: screen on"}}
 
 def assembly_frames(ver):
     scr, fpc = SCREEN[ver], SCREEN_FPC[ver]
     leads = ["LiPo lead red", "LiPo lead black"]
-    # (caption, components, ribbon bodies that arrive with it, offset it flies in from, does the ribbon comp move with it)
-    stages = [("1. Key mat into the faceplate", ["Keymat", "Keycaps"], [], (0, 0, -45), False),
-              ("2. Screen + ribbon behind the window", [scr], [fpc], (0, 0, -55), True),
-              ("3. Board onto the posts", [PCB], [], (0, 0, -60), False),
-              ("4. Camera + ribbon onto the board", ["Camera module"], ["Camera FPC"], (0, 0, -50), False),
-              ("5. Magnet piece into J3", ["Magnet connector"], [], (0, 22, -40), False),
-              ("6. Battery in, plug into J4", ["LiPo battery"], leads, (0, 0, -50), False),
-              ("7. Back cover closes, screws in", COVER, [], (0, 0, -70), False)]
-    fr = []
-    show, rib = list(FACEPLATE), []
-    fr.append(dict(show=list(show), ribbons=[], move={}, cam=A_CAM, caption="0. Start: the empty faceplate", ms=1200, screen="off"))
+    BOARD = [PCB, scr, "Camera module", "Magnet connector"]
     N = 4
-    for cap, comps, rbodies, off, rib_moves in stages:
+    fr = []
+    state = dict(show=[], rib=[])
+
+    def stage(cap, comps, rbodies, off, rib_moves, cam):
+        """Parts in comps fly in from offset off and seat (N+1 frames)."""
         for k in range(N + 1):                 # k = 0: appears at the full offset; k = N: seated
             t = 1 - ease(k / N)
             mv = {}
@@ -89,13 +104,38 @@ def assembly_frames(ver):
             if rib_moves:
                 mv["Ribbons and wires"] = tuple(x * t for x in off)
             landed = k == N
-            rb = rib + (rbodies if (landed or rib_moves) else [])
-            fr.append(dict(show=show + comps + (["Ribbons and wires"] if rb else []), ribbons=list(rb), move=mv, cam=A_CAM,
-                           caption=cap, ms=900 if landed else (260 if k == 0 else 110), screen="off"))
-        show = show + comps
-        rib = rib + rbodies
-    # swing round to the front (hero view); the screen comes on near the end (v15)
-    full = show + ["Ribbons and wires"]
+            rb = state["rib"] + (rbodies if (landed or rib_moves) else [])
+            fr.append(dict(show=state["show"] + comps + (["Ribbons and wires"] if rb else []),
+                           ribbons=list(rb), move=mv, cam=cam, caption=cap,
+                           ms=900 if landed else (260 if k == 0 else 110), screen="off"))
+        state["show"] = state["show"] + comps
+        state["rib"] = state["rib"] + rbodies
+
+    # Steps 05-07: parts onto the bare board
+    state["show"] = [PCB]
+    fr.append(dict(show=[PCB], ribbons=[], move={}, cam=B_UP, caption="Start: the bare board, key side up", ms=1200,
+                   screen="off"))
+    stage(STEP_TXT[ver][5], [scr], [fpc], (0, 0, 45), True, B_UP)
+    M_ = 5                                     # turn the board over (the camera turns, the model stays put)
+    for k in range(1, M_ + 1):
+        a = math.pi * ease(k / M_)
+        cam = dict(target=B_T, d=rot_x(B_UP["d"], a), up=rot_x(B_UP["up"], a), ext=B_EXT)
+        fr.append(dict(show=state["show"] + ["Ribbons and wires"], ribbons=list(state["rib"]), move={}, cam=cam,
+                       caption="Turn the board over", ms=120, screen="off"))
+    stage("Step 6: camera + ribbon into J1", ["Camera module"], ["Camera FPC"], (0, 0, -50), False, B_DN)
+    stage("Step 7: magnet piece into J3", ["Magnet connector"], [], (0, 22, -40), False, B_DN)
+    # Step 08: key mat into the faceplate, then the finished board drops onto the posts
+    board_rib = list(state["rib"])
+    state["show"], state["rib"] = list(FACEPLATE), []
+    fr.append(dict(show=list(FACEPLATE), ribbons=[], move={}, cam=A_CAM, caption="Step 8: the front shell, face down",
+                   ms=1000, screen="off"))
+    stage("Step 8: key mat into the front shell", ["Keymat", "Keycaps"], [], (0, 0, -45), False, A_CAM)
+    stage("Step 8: board onto the posts", BOARD, board_rib, (0, 0, -60), True, A_CAM)
+    stage("Step 9: battery in, plug into J4", ["LiPo battery"], leads, (0, 0, -50), False, A_CAM)
+    stage("Step 10: close up: back cover + screws", COVER, [], (0, 0, -70), False, A_CAM)
+    # swing round to the front (hero view); the screen comes on near the end
+    full = state["show"] + ["Ribbons and wires"]
+    rib = state["rib"]
     M_ = 8
     for k in range(1, M_ + 1):
         t = ease(k / M_)
@@ -103,7 +143,7 @@ def assembly_frames(ver):
         up = norm(lerp(A_CAM["up"], HERO["up"], t))
         cam = dict(target=lerp(A_CAM["target"], HERO["target"], t), d=d, up=up, ext=A_CAM["ext"] + (HERO["ext"] - A_CAM["ext"]) * t)
         on = k >= M_ - 1
-        fr.append(dict(show=full, ribbons=rib, move={}, cam=cam, caption="8. Finished" + (": screen on" if on and ver == "v15" else ""),
+        fr.append(dict(show=full, ribbons=rib, move={}, cam=cam, caption=STEP_TXT[ver][11] if on else "Finished",
                        ms=3000 if k == M_ else 120, screen="on" if on else "off"))
     return fr
 
@@ -160,21 +200,23 @@ def screen_quad():
 def render(ver, anim, frames):
     import adsk.core
     outdir = os.path.join(RAW, ver, anim)
-    if os.path.isdir(outdir):
-        shutil.rmtree(outdir)
-    os.makedirs(outdir)
+    if os.path.isdir(outdir):                   # empty it (OneDrive can lock the folder itself, so keep the folder)
+        shutil.rmtree(outdir, ignore_errors=True)
+    os.makedirs(outdir, exist_ok=True)
     vp = app.activeViewport
     root = M.design.rootComponent
     grid_was = M.set_grid(False)
     cam0 = vp.camera
     ab, quad = screen_quad()
-    look0 = ab.appearance.name if ab.appearance else None
+    look0 = ab.appearance
     op0 = {}
     for occ in root.occurrences:
         for b in occ.component.bRepBodies:
             op0[b.entityToken] = (b, b.opacity)
-    if ver == "v15":
-        M.appearance(ab, M.CHROMA)              # green key, replaced by the screenshot (on) or dark glass (off) offline
+    # green key on the active area, replaced offline: v15 by the firmware screenshot (on) or dark glass (off),
+    # v14 by the e-paper image (on) or a blank e-paper (off)
+    M.R.CUSTOM_LOOKS.setdefault(CHROMA, ("Plastic - Matte (Green)", (0, 255, 0), ("opaque_albedo",)))
+    M.appearance(ab, CHROMA)
     meta = []
     try:
         cam = vp.camera
@@ -230,8 +272,8 @@ def render(ver, anim, frames):
         for b, a in op0.values():
             if abs(b.opacity - a) > 1e-3:
                 b.opacity = a
-        if ver == "v15" and look0:
-            M.appearance(ab, M.SCREEN_LOOK)
+        if look0:
+            ab.appearance = look0
         M.hide_cutters()
         cam0.isSmoothTransition = False
         vp.camera = cam0
@@ -244,6 +286,48 @@ def render(ver, anim, frames):
 # ═════════════════════════════════════════════════════════════════════════════
 LIMIT_MB = {"assembly": 6.0, "turntable": 4.0, "xray": 6.0}
 
+def epd_image():
+    """v14 e-paper content: a 250 x 122, 1-bit black-on-white calculator screen drawn with the firmware's own 5x7 font
+    (core/font_data.cpp, cell 5 x 7 incl. the 1 px gap). Status line, the expression, the result right-aligned."""
+    import re
+    from PIL import Image, ImageDraw
+    G = {}
+    for cp, rows in re.findall(r"\{0x([0-9A-Fa-f]+),\s*\{([^}]*)\}\}", open(FONT_CPP, encoding="utf8").read()):
+        G[int(cp, 16)] = [int(r, 16) for r in rows.split(",")]
+    im = Image.new("1", (250, 122), 1)
+    d = ImageDraw.Draw(im)
+
+    def text(x, y, s, k=1):
+        for ch in s:
+            rows = G.get(ord(ch), G[ord("?")])
+            for r, bits in enumerate(rows):
+                for c in range(5):
+                    if bits & (0x10 >> c):
+                        d.rectangle([x + c * k, y + r * k, x + c * k + k - 1, y + r * k + k - 1], fill=0)
+            x += 5 * k
+        return x
+
+    text(4, 3, "DEG  NORM")
+    d.rectangle([206, 2, 227, 10], outline=0); d.rectangle([228, 4, 229, 8], fill=0)   # battery, 3 of 4 bars
+    for i in range(3):
+        d.rectangle([208 + i * 5, 4, 211 + i * 5, 8], fill=0)
+    d.rectangle([186, 1, 200, 11], fill=0)
+    x = 188
+    for ch in "AI":                                                         # inverted "AI" badge
+        for r, bits in enumerate(G[ord(ch)]):
+            for c in range(5):
+                if bits & (0x10 >> c):
+                    d.point((x + c, 3 + r), fill=1)
+        x += 6
+    d.line([0, 14, 249, 14], fill=0)
+    text(4, 24, "√(144)+2^3×1.5", 2)
+    text(4, 84, "=", 3)
+    res = "24"
+    text(246 - len(res) * 5 * 6 + 6, 70, res, 6)
+    d.line([0, 116, 249, 116], fill=0)
+    return im
+
+
 def compose(ver, anim):
     import numpy as np
     from PIL import Image, ImageDraw, ImageFont, ImageFilter
@@ -252,16 +336,26 @@ def compose(ver, anim):
     src = os.path.join(RAW, ver, anim)
     J = json.load(open(os.path.join(src, "frames.json")))
     sx = OUT_W / J["size"][0]
-    ui = Image.open(UI_PNG).convert("RGB")
-    UW, UH = ui.size
-    big = ui.resize((UW * 4, UH * 4), Image.LANCZOS)
+    if ver == "v15":
+        ui = Image.open(UI_PNG).convert("RGB")
+        UW, UH = ui.size
+        big = ui.resize((UW * 4, UH * 4), Image.LANCZOS)
+        off_rgb, dim = (34, 36, 40), 0.12          # screen off: dark glass
+    else:
+        ep = epd_image()
+        ep.save(os.path.join(src, "epd_screen.png"))
+        UW, UH = ep.size
+        ink, paper = (30, 30, 34), (222, 222, 212)   # e-paper: dark grey ink on a warm light-grey film
+        big = Image.fromarray(np.where(np.asarray(ep.resize((UW * 4, UH * 4), Image.NEAREST))[..., None],
+                                       np.array(paper, np.uint8), np.array(ink, np.uint8)))
+        off_rgb, dim = paper, 0.06                   # e-paper off: blank film
     font = ImageFont.truetype(r"C:\Windows\Fonts\segoeuib.ttf", 26)
     small = ImageFont.truetype(r"C:\Windows\Fonts\segoeui.ttf", 17)
     title = {"v14": "AI Calculator v14 (e-paper)", "v15": "AI Calculator v15 (colour LCD)"}[ver]
     frames, durs = [], []
     for f in J["frames"]:
         im = Image.open(os.path.join(src, f["file"])).convert("RGB")
-        if ver == "v15" and f["quad"]:
+        if f["quad"]:
             a = np.asarray(im).astype(int)
             # inside the screen's own outline a weaker test is safe (the lens greys the key at grazing angles)
             g = (a[..., 1] > a[..., 0] + 12) & (a[..., 1] > a[..., 2] + 12)
@@ -274,9 +368,9 @@ def compose(ver, anim):
                 if f["screen"] == "on":
                     co = persp_coeffs(f["quad"], [(0, 0), (UW * 4, 0), (UW * 4, UH * 4), (0, UH * 4)])
                     layer = big.transform(im.size, Image.PERSPECTIVE, co, Image.BICUBIC)
-                    layer = Image.blend(layer, Image.new("RGB", im.size, (20, 20, 24)), 0.12)
+                    layer = Image.blend(layer, Image.new("RGB", im.size, (20, 20, 24)), dim)
                 else:
-                    layer = Image.new("RGB", im.size, (34, 36, 40))       # screen off: dark glass
+                    layer = Image.new("RGB", im.size, off_rgb)
                 im.paste(layer, (0, 0), m)
         im = im.resize((OUT_W, OUT_H), Image.LANCZOS)
         d = ImageDraw.Draw(im)

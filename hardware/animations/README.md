@@ -7,19 +7,21 @@ All files are 960 × 720 and loop forever. The `*_poster.jpg` files are the last
 
 | File | What it shows | Frames | Size |
 |---|---|---|---|
-| `v15/assembly_v15.gif` | Empty faceplate, then each part drops in with a caption per stage: 1 key mat, 2 screen + ribbon, 3 board onto the posts, 4 camera + ribbon, 5 magnet into J3, 6 battery, 7 back cover + screws. Then the view swings to the front and the colour screen comes on. | 44 | 1.72 MB |
+| `v15/assembly_v15.gif` | Same order and step numbers as the build guide. The bare board, key side up. Step 5: LCD onto the board, tail through the slot into J5. The board turns over. Step 6: camera + ribbon into J1. Step 7: magnet piece into J3. Step 8: the empty front shell, key mat in, then the finished board onto the posts. Step 9: battery in, plug into J4. Step 10: back cover + screws. Step 11: the view swings to the front and the colour screen comes on. | 50 | 1.67 MB |
 | `v15/turntable_v15.gif` | Closed calculator turning 360° (front and back), screen on | 36 | 1.43 MB |
 | `v15/xray_v15.gif` | See-through shells, assembled ↔ exploded and back | 24 | 2.93 MB |
-| `v14/assembly_v14.gif` | Same steps for the e-paper build | 44 | 1.75 MB |
-| `v14/turntable_v14.gif` | Closed v14, 360° | 36 | 1.38 MB |
-| `v14/xray_v14.gif` | v14 x-ray, exploded ↔ assembled | 24 | 2.91 MB |
-| `v15/*_poster.jpg`, `v14/*_poster.jpg` | Still of the last frame | 1 | 51–65 kB each |
+| `v14/assembly_v14.gif` | Same steps for the e-paper build (step 5: e-paper screen onto the board). At the end the e-paper shows a sum. | 50 | 1.73 MB |
+| `v14/turntable_v14.gif` | Closed v14, 360°, e-paper showing the sum | 36 | 1.42 MB |
+| `v14/xray_v14.gif` | v14 x-ray, exploded ↔ assembled | 24 | 2.92 MB |
+| `v15/*_poster.jpg`, `v14/*_poster.jpg` | Still of the last frame | 1 | 52–69 kB each |
 
 No MP4 files: ffmpeg is not installed on this PC. If `ffmpeg` is on PATH, the script also writes `<anim>_<ver>.mp4` next to each GIF.
 
 The v15 screen image is the real firmware screenshot `hardware/renders_ui_v15/05_calc_result_functions.png` (`sin(30)+π×2²−log(100)` = 11.06637061). Fusion renders the LCD's active area in chroma-key green. Pillow then fits the screenshot into it with a perspective warp, using the screen's four corners projected from the model (the same method as `compose_v15.py`). While the calculator is still being built, the screen is shown as dark glass (off).
 
-The order follows the steps as you asked for them. The guides do it slightly differently: screen, camera and magnet go onto the board first (steps 05–07), then the key mat and board go into the shell (step 08).
+The v14 e-paper works the same way. Its image is drawn by the script (`epd_image()`): a 250 × 122, 1-bit black-on-white screen made with the firmware's own 5 × 7 font from `core/font_data.cpp`. It shows a status line, `√(144)+2^3×1.5` and the result `24`. It is drawn as dark ink on light-grey film. A copy is saved as `_frames/v14/<anim>/epd_screen.png`. Before the screen comes on, the e-paper is shown as blank film. The turntable and x-ray show the e-paper image as well.
+
+The assembly follows the build guides (`final_assembly/assembly_guide.html`, `final_assembly_v15_lcd/assembly_guide_v15_lcd.html`), and its caption bars use the guides' step numbers. Steps 5–7 are shown on the bare board. The camera turns over with the board for steps 6–7. Only the camera moves; the model stays put.
 
 ## Regenerate
 

@@ -6384,9 +6384,9 @@
     "semantic_hash": ""
   },
   "hardware/project_hub/index.html": {
-    "mtime": 1791675291.8919642,
-    "seen": 1791675824.5588398,
-    "ast_hash": "cee0b2f90b7c411b5d1d153fcb8e4ce8",
+    "mtime": 1791677107.7624657,
+    "seen": 1791677150.9034286,
+    "ast_hash": "964cd87e45743bd90c9ccc9a53ba732e",
     "semantic_hash": ""
   },
   "hardware/project_hub/img/back_camera_window.jpg": {
@@ -7524,9 +7524,9 @@
     "semantic_hash": ""
   },
   "hardware/enclosure/animate_assembly.py": {
-    "mtime": 1791676700.7984202,
-    "seen": 1791676704.0466921,
-    "ast_hash": "7fc1d1f61d827c68abc6107138a2ecd2",
+    "mtime": 1791676871.6873238,
+    "seen": 1791677150.9034286,
+    "ast_hash": "70e85333ae72b91921823abc60017a7f",
     "semantic_hash": ""
   },
   "server/proxy/billing.py": {
@@ -7590,51 +7590,51 @@
     "semantic_hash": ""
   },
   "hardware/animations/v14/assembly_v14.gif": {
-    "mtime": 1791675780.7415595,
-    "seen": 1791675824.5588398,
-    "ast_hash": "d3734d78f83cec3448ac99d73ac271d0",
+    "mtime": 1791676845.0762067,
+    "seen": 1791677150.9034286,
+    "ast_hash": "622cfffb018a7c2a80887c2265c1438f",
     "semantic_hash": ""
   },
   "hardware/animations/v14/assembly_v14_poster.jpg": {
-    "mtime": 1791675780.7499528,
-    "seen": 1791675824.5588398,
-    "ast_hash": "a48307d2d3860a5df8e27018b6278a42",
+    "mtime": 1791676845.084334,
+    "seen": 1791677150.9034286,
+    "ast_hash": "651f7df6b4e77dc799ecabde843c5138",
     "semantic_hash": ""
   },
   "hardware/animations/v14/turntable_v14.gif": {
-    "mtime": 1791675783.4796216,
-    "seen": 1791675824.5588398,
-    "ast_hash": "9d8ec76c982ec9ebde2b4f172aa0eef0",
+    "mtime": 1791676854.903774,
+    "seen": 1791677150.9034286,
+    "ast_hash": "fb64908cde1d0bd6202e817696944c7c",
     "semantic_hash": ""
   },
   "hardware/animations/v14/turntable_v14_poster.jpg": {
-    "mtime": 1791675783.4821262,
-    "seen": 1791675824.5588398,
-    "ast_hash": "3d56a1c63de599c0808cd999ea80b405",
+    "mtime": 1791676854.905782,
+    "seen": 1791677150.9034286,
+    "ast_hash": "e2bd756d1f6352aea74d898ddd6408ba",
     "semantic_hash": ""
   },
   "hardware/animations/v14/xray_v14.gif": {
-    "mtime": 1791675785.5098846,
-    "seen": 1791675824.5588398,
-    "ast_hash": "d472ea2f8e0e09ee7868012a42f5e79c",
+    "mtime": 1791676862.146392,
+    "seen": 1791677150.9034286,
+    "ast_hash": "06ecfe3ba26fa23546a8f9fc0cfcdb0e",
     "semantic_hash": ""
   },
   "hardware/animations/v14/xray_v14_poster.jpg": {
-    "mtime": 1791675785.5120354,
-    "seen": 1791675824.5588398,
-    "ast_hash": "87c1b40898a7574645b2147b90ed876d",
+    "mtime": 1791676862.149361,
+    "seen": 1791677150.9034286,
+    "ast_hash": "908aa19623ede0af414a44c8d2afc2cb",
     "semantic_hash": ""
   },
   "hardware/animations/v15/assembly_v15.gif": {
-    "mtime": 1791675689.2562506,
-    "seen": 1791675824.5588398,
-    "ast_hash": "5d6d8ad5777a931f03f010590dfb346d",
+    "mtime": 1791677073.7299044,
+    "seen": 1791677150.9034286,
+    "ast_hash": "7ed9ca02589c71dd8e6ed36e900793d7",
     "semantic_hash": ""
   },
   "hardware/animations/v15/assembly_v15_poster.jpg": {
-    "mtime": 1791675689.2643423,
-    "seen": 1791675824.5588398,
-    "ast_hash": "16173273e88e22879a272c2e80e697da",
+    "mtime": 1791677073.7407002,
+    "seen": 1791677150.9034286,
+    "ast_hash": "1aea643d546e87df11b1aea1a14ff706",
     "semantic_hash": ""
   },
   "hardware/animations/v15/turntable_v15.gif": {
@@ -7662,39 +7662,39 @@
     "semantic_hash": ""
   },
   "hardware/project_hub/img/anim_assembly_v14.gif": {
-    "mtime": 1791675799.2196214,
-    "seen": 1791675824.5588398,
-    "ast_hash": "d3734d78f83cec3448ac99d73ac271d0",
+    "mtime": 1791677097.1646736,
+    "seen": 1791677150.9044352,
+    "ast_hash": "622cfffb018a7c2a80887c2265c1438f",
     "semantic_hash": ""
   },
   "hardware/project_hub/img/anim_assembly_v14_poster.jpg": {
-    "mtime": 1791675799.250226,
-    "seen": 1791675824.5588398,
-    "ast_hash": "a48307d2d3860a5df8e27018b6278a42",
+    "mtime": 1791677097.191343,
+    "seen": 1791677150.9044352,
+    "ast_hash": "651f7df6b4e77dc799ecabde843c5138",
     "semantic_hash": ""
   },
   "hardware/project_hub/img/anim_assembly_v15.gif": {
-    "mtime": 1791675799.40533,
-    "seen": 1791675824.5588398,
-    "ast_hash": "5d6d8ad5777a931f03f010590dfb346d",
+    "mtime": 1791677097.3557484,
+    "seen": 1791677150.9044352,
+    "ast_hash": "7ed9ca02589c71dd8e6ed36e900793d7",
     "semantic_hash": ""
   },
   "hardware/project_hub/img/anim_assembly_v15_poster.jpg": {
-    "mtime": 1791675799.4326794,
-    "seen": 1791675824.5588398,
-    "ast_hash": "16173273e88e22879a272c2e80e697da",
+    "mtime": 1791677097.3844812,
+    "seen": 1791677150.9044352,
+    "ast_hash": "1aea643d546e87df11b1aea1a14ff706",
     "semantic_hash": ""
   },
   "hardware/project_hub/img/anim_turntable_v14.gif": {
-    "mtime": 1791675799.2821321,
-    "seen": 1791675824.5588398,
-    "ast_hash": "9d8ec76c982ec9ebde2b4f172aa0eef0",
+    "mtime": 1791677097.2221408,
+    "seen": 1791677150.9044352,
+    "ast_hash": "fb64908cde1d0bd6202e817696944c7c",
     "semantic_hash": ""
   },
   "hardware/project_hub/img/anim_turntable_v14_poster.jpg": {
-    "mtime": 1791675799.312316,
-    "seen": 1791675824.5588398,
-    "ast_hash": "3d56a1c63de599c0808cd999ea80b405",
+    "mtime": 1791677097.256371,
+    "seen": 1791677150.9044352,
+    "ast_hash": "e2bd756d1f6352aea74d898ddd6408ba",
     "semantic_hash": ""
   },
   "hardware/project_hub/img/anim_turntable_v15.gif": {
@@ -7710,15 +7710,15 @@
     "semantic_hash": ""
   },
   "hardware/project_hub/img/anim_xray_v14.gif": {
-    "mtime": 1791675799.348088,
-    "seen": 1791675824.5588398,
-    "ast_hash": "d472ea2f8e0e09ee7868012a42f5e79c",
+    "mtime": 1791677097.2987928,
+    "seen": 1791677150.9044352,
+    "ast_hash": "06ecfe3ba26fa23546a8f9fc0cfcdb0e",
     "semantic_hash": ""
   },
   "hardware/project_hub/img/anim_xray_v14_poster.jpg": {
-    "mtime": 1791675799.3769689,
-    "seen": 1791675824.5588398,
-    "ast_hash": "87c1b40898a7574645b2147b90ed876d",
+    "mtime": 1791677097.3271124,
+    "seen": 1791677150.9044352,
+    "ast_hash": "908aa19623ede0af414a44c8d2afc2cb",
     "semantic_hash": ""
   },
   "hardware/project_hub/img/anim_xray_v15.gif": {
@@ -7740,9 +7740,9 @@
     "semantic_hash": ""
   },
   "hardware/animations/README.md": {
-    "mtime": 1791675815.6950967,
-    "seen": 1791675854.4138012,
-    "ast_hash": "210ab477cc6fa8c0ce92fabc27004abd",
+    "mtime": 1791677119.87959,
+    "seen": 1791677150.9034286,
+    "ast_hash": "1b6c6ea72d1c7752a9f900152abb3029",
     "semantic_hash": ""
   }
 }
