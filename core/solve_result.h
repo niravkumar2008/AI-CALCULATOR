@@ -13,6 +13,8 @@ struct SolveResult {
   std::string expression;           // the calculation in calculator notation ("" if none)
   std::string choice;               // multiple choice: the correct option's label ("C"), else ""
   std::string answer;               // final answer, with units
+  std::string check;                // calculator expression whose value is the answer's number ("" if none);
+                                    // the device re-computes it to mark the answer verified
   std::vector<std::string> steps;   // solution steps, in order
 };
 

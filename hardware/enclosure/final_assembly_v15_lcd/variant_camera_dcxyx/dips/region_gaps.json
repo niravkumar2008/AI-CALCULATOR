@@ -1,0 +1,249 @@
+[
+ {
+  "body": "Camera AF motor (VCM)",
+  "region": "rib B (ground) / module exit",
+  "gap": 1.5,
+  "on_body": [
+   -3.5,
+   43.84,
+   2.5
+  ],
+  "on_cover": [
+   -3.5,
+   43.84,
+   1.0
+  ],
+  "kicad": [
+   153.5,
+   95.1
+  ]
+ },
+ {
+  "body": "Camera FPC",
+  "region": "rib B (ground) / module exit",
+  "gap": 5.395,
+  "on_body": [
+   0.0,
+   39.57,
+   6.34
+  ],
+  "on_cover": [
+   0.0,
+   40.34,
+   1.0
+  ],
+  "kicad": [
+   150.0,
+   98.6
+  ]
+ },
+ {
+  "body": "Camera FPC",
+  "region": "rib C",
+  "gap": 1.141,
+  "on_body": [
+   -3.0,
+   30.35,
+   2.58
+  ],
+  "on_cover": [
+   -3.0,
+   31.33,
+   2.0
+  ],
+  "kicad": [
+   153.0,
+   107.61
+  ]
+ },
+ {
+  "body": "Camera FPC",
+  "region": "tuck bay (floor between rib C and the small ring)",
+  "gap": 0.803,
+  "on_body": [
+   3.0,
+   25.0,
+   1.8
+  ],
+  "on_cover": [
+   3.0,
+   25.0,
+   1.0
+  ],
+  "kicad": [
+   147.0,
+   113.94
+  ]
+ },
+ {
+  "body": "Camera FPC",
+  "region": "small ring, top wall",
+  "gap": 0.572,
+  "on_body": [
+   -0.2,
+   23.06,
+   5.39
+  ],
+  "on_cover": [
+   -0.2,
+   22.64,
+   5.0
+  ],
+  "kicad": [
+   150.2,
+   116.3
+  ]
+ },
+ {
+  "body": "Camera FPC",
+  "region": "small ring + mid rib (old 0.48 spot)",
+  "gap": 0.855,
+  "on_body": [
+   0.1,
+   9.53,
+   5.86
+  ],
+  "on_cover": [
+   0.1,
+   9.53,
+   5.0
+  ],
+  "kicad": [
+   149.9,
+   129.41
+  ]
+ },
+ {
+  "body": "Camera FPC",
+  "region": "ring junction wall",
+  "gap": 0.558,
+  "on_body": [
+   -0.2,
+   5.43,
+   5.38
+  ],
+  "on_cover": [
+   -0.2,
+   5.84,
+   5.0
+  ],
+  "kicad": [
+   150.2,
+   133.1
+  ]
+ },
+ {
+  "body": "Camera FPC",
+  "region": "inside the big ring",
+  "gap": 0.518,
+  "on_body": [
+   3.0,
+   -14.18,
+   5.32
+  ],
+  "on_cover": [
+   3.13,
+   -14.57,
+   5.0
+  ],
+  "kicad": [
+   146.87,
+   153.51
+  ]
+ },
+ {
+  "body": "Camera FPC",
+  "region": "big ring, J1-side wall",
+  "gap": 0.765,
+  "on_body": [
+   4.97,
+   -14.89,
+   5.77
+  ],
+  "on_cover": [
+   4.97,
+   -14.89,
+   5.0
+  ],
+  "kicad": [
+   145.03,
+   153.83
+  ]
+ },
+ {
+  "body": "Camera FPC",
+  "region": "under J1 / low rib 1",
+  "gap": 4.574,
+  "on_body": [
+   -6.25,
+   -18.89,
+   5.77
+  ],
+  "on_cover": [
+   -6.26,
+   -21.49,
+   2.0
+  ],
+  "kicad": [
+   156.26,
+   160.43
+  ]
+ },
+ {
+  "body": "Camera lens barrel",
+  "region": "rib B (ground) / module exit",
+  "gap": 0.707,
+  "on_body": [
+   3.0,
+   43.84,
+   1.5
+  ],
+  "on_cover": [
+   3.5,
+   43.84,
+   1.0
+  ],
+  "kicad": [
+   146.5,
+   95.1
+  ]
+ },
+ {
+  "body": "Camera lens glass",
+  "region": "rib B (ground) / module exit",
+  "gap": 2.156,
+  "on_body": [
+   1.4,
+   43.84,
+   1.49
+  ],
+  "on_cover": [
+   3.5,
+   43.84,
+   1.0
+  ],
+  "kicad": [
+   146.5,
+   95.1
+  ]
+ },
+ {
+  "body": "Camera sensor board",
+  "region": "rib B (ground) / module exit",
+  "gap": 4.772,
+  "on_body": [
+   4.25,
+   44.42,
+   5.9
+  ],
+  "on_cover": [
+   7.0,
+   44.42,
+   2.0
+  ],
+  "kicad": [
+   143.0,
+   94.52
+  ]
+ }
+]

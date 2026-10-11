@@ -1,0 +1,1542 @@
+[
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "J1"
+  ],
+  "gap": 0.0,
+  "at": [
+   0.0,
+   0.0,
+   0.0
+  ],
+  "kicad": [
+   150.0,
+   138.94
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "gap": 0.02,
+  "at": [
+   3.0,
+   47.57,
+   6.34
+  ],
+  "kicad": [
+   147.0,
+   91.37
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "gap": 0.02,
+  "at": [
+   3.0,
+   47.59,
+   6.34
+  ],
+  "kicad": [
+   147.0,
+   91.35
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "PCB",
+   "board"
+  ],
+  "gap": 0.1,
+  "at": [
+   4.25,
+   56.09,
+   6.9
+  ],
+  "kicad": [
+   145.75,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "D2"
+  ],
+  "gap": 0.22,
+  "at": [
+   -6.25,
+   -15.39,
+   6.07
+  ],
+  "kicad": [
+   156.25,
+   154.32
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "gap": 0.47,
+  "at": [
+   -3.0,
+   47.57,
+   6.34
+  ],
+  "kicad": [
+   153.0,
+   91.37
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "gap": 0.47,
+  "at": [
+   -3.0,
+   47.74,
+   5.9
+  ],
+  "kicad": [
+   153.0,
+   91.2
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "board"
+  ],
+  "gap": 0.54,
+  "at": [
+   3.0,
+   47.57,
+   6.46
+  ],
+  "kicad": [
+   147.0,
+   91.37
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens barrel"
+  ],
+  "b": [
+   "Back cover",
+   "Back cover"
+  ],
+  "gap": 0.58,
+  "at": [
+   3.0,
+   51.84,
+   1.3
+  ],
+  "kicad": [
+   147.0,
+   87.1
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Back cover",
+   "Back cover"
+  ],
+  "gap": 0.77,
+  "at": [
+   1.97,
+   -14.89,
+   5.77
+  ],
+  "kicad": [
+   148.03,
+   153.83
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "Back cover",
+   "Back cover"
+  ],
+  "gap": 0.86,
+  "at": [
+   -4.1,
+   55.94,
+   2.3
+  ],
+  "kicad": [
+   154.1,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD backlight (frame + LED light guide)"
+  ],
+  "gap": 1.0,
+  "at": [
+   4.25,
+   56.09,
+   6.9
+  ],
+  "kicad": [
+   145.75,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "PCB",
+   "board"
+  ],
+  "gap": 1.1,
+  "at": [
+   4.1,
+   55.94,
+   5.9
+  ],
+  "kicad": [
+   145.9,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "C17"
+  ],
+  "gap": 1.3,
+  "at": [
+   -6.25,
+   -17.49,
+   6.07
+  ],
+  "kicad": [
+   156.25,
+   156.43
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD backlight (frame + LED light guide)"
+  ],
+  "gap": 1.44,
+  "at": [
+   3.0,
+   47.57,
+   6.46
+  ],
+  "kicad": [
+   147.0,
+   91.37
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "PCB",
+   "Q5"
+  ],
+  "gap": 1.55,
+  "at": [
+   -4.25,
+   56.09,
+   6.34
+  ],
+  "kicad": [
+   154.25,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD TFT glass (with driver ledge)"
+  ],
+  "gap": 1.65,
+  "at": [
+   4.25,
+   56.09,
+   6.9
+  ],
+  "kicad": [
+   145.75,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "Ribbons and wires",
+   "LiPo lead red"
+  ],
+  "gap": 1.68,
+  "at": [
+   -1.99,
+   55.94,
+   4.86
+  ],
+  "kicad": [
+   151.99,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "Ribbons and wires",
+   "LiPo lead black"
+  ],
+  "gap": 1.68,
+  "at": [
+   -1.99,
+   55.94,
+   3.46
+  ],
+  "kicad": [
+   151.99,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "PCB",
+   "Q5"
+  ],
+  "gap": 1.73,
+  "at": [
+   -4.1,
+   55.94,
+   5.9
+  ],
+  "kicad": [
+   154.1,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Keymat",
+   "Keymat (rubber)"
+  ],
+  "gap": 1.75,
+  "at": [
+   -6.25,
+   -14.89,
+   6.07
+  ],
+  "kicad": [
+   156.25,
+   153.83
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "Ribbons and wires",
+   "LiPo lead red"
+  ],
+  "gap": 1.77,
+  "at": [
+   -1.99,
+   56.09,
+   5.9
+  ],
+  "kicad": [
+   151.99,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD CF glass"
+  ],
+  "gap": 2.0,
+  "at": [
+   4.25,
+   56.09,
+   6.9
+  ],
+  "kicad": [
+   145.75,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD backlight (frame + LED light guide)"
+  ],
+  "gap": 2.0,
+  "at": [
+   4.1,
+   55.94,
+   5.9
+  ],
+  "kicad": [
+   145.9,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD TFT glass (with driver ledge)"
+  ],
+  "gap": 2.09,
+  "at": [
+   3.0,
+   47.57,
+   6.46
+  ],
+  "kicad": [
+   147.0,
+   91.37
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens glass"
+  ],
+  "b": [
+   "Back cover",
+   "Back cover"
+  ],
+  "gap": 2.12,
+  "at": [
+   1.4,
+   51.84,
+   1.29
+  ],
+  "kicad": [
+   148.6,
+   87.1
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "C16"
+  ],
+  "gap": 2.21,
+  "at": [
+   -6.25,
+   -14.89,
+   6.07
+  ],
+  "kicad": [
+   156.25,
+   153.83
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "C19"
+  ],
+  "gap": 2.21,
+  "at": [
+   -3.0,
+   36.14,
+   5.97
+  ],
+  "kicad": [
+   153.0,
+   102.8
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD top polarizer"
+  ],
+  "gap": 2.3,
+  "at": [
+   4.25,
+   56.09,
+   6.9
+  ],
+  "kicad": [
+   145.75,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "C12"
+  ],
+  "gap": 2.33,
+  "at": [
+   6.25,
+   -18.56,
+   6.07
+  ],
+  "kicad": [
+   143.75,
+   157.5
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD active area (marker)"
+  ],
+  "gap": 2.43,
+  "at": [
+   4.25,
+   56.09,
+   6.9
+  ],
+  "kicad": [
+   145.75,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD CF glass"
+  ],
+  "gap": 2.44,
+  "at": [
+   3.0,
+   47.57,
+   6.46
+  ],
+  "kicad": [
+   147.0,
+   91.37
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "PCB",
+   "J5"
+  ],
+  "gap": 2.45,
+  "at": [
+   -4.25,
+   47.59,
+   6.24
+  ],
+  "kicad": [
+   154.25,
+   91.35
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "PCB",
+   "J5"
+  ],
+  "gap": 2.6,
+  "at": [
+   -4.1,
+   47.74,
+   5.9
+  ],
+  "kicad": [
+   154.1,
+   91.2
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "Ribbons and wires",
+   "LiPo lead black"
+  ],
+  "gap": 2.65,
+  "at": [
+   -1.99,
+   56.09,
+   5.9
+  ],
+  "kicad": [
+   151.99,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD TFT glass (with driver ledge)"
+  ],
+  "gap": 2.65,
+  "at": [
+   4.1,
+   55.94,
+   5.9
+  ],
+  "kicad": [
+   145.9,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD top polarizer"
+  ],
+  "gap": 2.74,
+  "at": [
+   3.0,
+   47.57,
+   6.46
+  ],
+  "kicad": [
+   147.0,
+   91.37
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "LiPo battery",
+   "JST-PH plug (in J4)"
+  ],
+  "gap": 2.82,
+  "at": [
+   4.25,
+   56.09,
+   5.9
+  ],
+  "kicad": [
+   145.75,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD active area (marker)"
+  ],
+  "gap": 2.87,
+  "at": [
+   3.0,
+   47.57,
+   6.46
+  ],
+  "kicad": [
+   147.0,
+   91.37
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "LiPo battery",
+   "LiPo pouch (Adafruit #1317)"
+  ],
+  "gap": 2.88,
+  "at": [
+   -3.59,
+   55.94,
+   4.8
+  ],
+  "kicad": [
+   153.59,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "LiPo battery",
+   "LiPo pouch (Adafruit #1317)"
+  ],
+  "gap": 2.95,
+  "at": [
+   -4.25,
+   56.09,
+   5.9
+  ],
+  "kicad": [
+   154.25,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens barrel"
+  ],
+  "b": [
+   "Ribbons and wires",
+   "LiPo lead black"
+  ],
+  "gap": 2.98,
+  "at": [
+   0.0,
+   54.84,
+   2.3
+  ],
+  "kicad": [
+   150.0,
+   84.1
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD CF glass"
+  ],
+  "gap": 3.0,
+  "at": [
+   4.1,
+   55.94,
+   5.9
+  ],
+  "kicad": [
+   145.9,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "LiPo battery",
+   "JST-PH plug (in J4)"
+  ],
+  "gap": 3.02,
+  "at": [
+   4.1,
+   55.94,
+   2.3
+  ],
+  "kicad": [
+   145.9,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Front shell",
+   "Front shell"
+  ],
+  "gap": 3.24,
+  "at": [
+   -6.25,
+   -18.12,
+   6.07
+  ],
+  "kicad": [
+   156.25,
+   157.06
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD top polarizer"
+  ],
+  "gap": 3.3,
+  "at": [
+   4.1,
+   55.94,
+   5.9
+  ],
+  "kicad": [
+   145.9,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "LCD panel",
+   "LCD active area (marker)"
+  ],
+  "gap": 3.43,
+  "at": [
+   4.1,
+   55.94,
+   5.9
+  ],
+  "kicad": [
+   145.9,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "C13"
+  ],
+  "gap": 3.52,
+  "at": [
+   6.25,
+   -15.96,
+   6.07
+  ],
+  "kicad": [
+   143.75,
+   154.9
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "C11"
+  ],
+  "gap": 3.52,
+  "at": [
+   6.25,
+   -18.56,
+   6.07
+  ],
+  "kicad": [
+   143.75,
+   157.5
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Keycaps",
+   "Key ("
+  ],
+  "gap": 3.55,
+  "at": [
+   -6.25,
+   -18.22,
+   6.07
+  ],
+  "kicad": [
+   156.25,
+   157.16
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Keycaps",
+   "Key )"
+  ],
+  "gap": 3.55,
+  "at": [
+   1.65,
+   -18.22,
+   6.07
+  ],
+  "kicad": [
+   148.35,
+   157.16
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Keycaps",
+   "Key sin"
+  ],
+  "gap": 3.56,
+  "at": [
+   6.25,
+   -14.89,
+   6.07
+  ],
+  "kicad": [
+   143.75,
+   153.83
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Keycaps",
+   "Key hyp"
+  ],
+  "gap": 3.56,
+  "at": [
+   -6.25,
+   -14.89,
+   6.07
+  ],
+  "kicad": [
+   156.25,
+   153.83
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Keycaps",
+   "Key x^2"
+  ],
+  "gap": 3.65,
+  "at": [
+   -3.0,
+   -5.49,
+   5.97
+  ],
+  "kicad": [
+   153.0,
+   144.43
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Keycaps",
+   "Key x^n"
+  ],
+  "gap": 3.65,
+  "at": [
+   3.0,
+   -5.49,
+   5.97
+  ],
+  "kicad": [
+   147.0,
+   144.43
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Keycaps",
+   "Key REPLAY"
+  ],
+  "gap": 3.65,
+  "at": [
+   3.0,
+   6.12,
+   5.97
+  ],
+  "kicad": [
+   147.0,
+   132.82
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens barrel"
+  ],
+  "b": [
+   "Ribbons and wires",
+   "LiPo lead red"
+  ],
+  "gap": 3.65,
+  "at": [
+   0.0,
+   54.84,
+   2.3
+  ],
+  "kicad": [
+   150.0,
+   84.1
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "PCB",
+   "R22"
+  ],
+  "gap": 3.69,
+  "at": [
+   -4.25,
+   56.09,
+   6.88
+  ],
+  "kicad": [
+   154.25,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "J5"
+  ],
+  "gap": 3.7,
+  "at": [
+   -3.0,
+   37.89,
+   5.92
+  ],
+  "kicad": [
+   153.0,
+   101.05
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "Back cover",
+   "Back cover"
+  ],
+  "gap": 3.96,
+  "at": [
+   -4.25,
+   56.09,
+   5.9
+  ],
+  "kicad": [
+   154.25,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "PCB",
+   "R22"
+  ],
+  "gap": 3.96,
+  "at": [
+   -4.1,
+   55.94,
+   5.9
+  ],
+  "kicad": [
+   154.1,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "C36"
+  ],
+  "gap": 4.08,
+  "at": [
+   -3.0,
+   36.64,
+   5.97
+  ],
+  "kicad": [
+   153.0,
+   102.3
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "C15"
+  ],
+  "gap": 4.19,
+  "at": [
+   6.25,
+   -18.89,
+   6.07
+  ],
+  "kicad": [
+   143.75,
+   157.83
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "Front shell",
+   "Front shell"
+  ],
+  "gap": 4.21,
+  "at": [
+   4.25,
+   56.09,
+   6.9
+  ],
+  "kicad": [
+   145.75,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera sensor board"
+  ],
+  "b": [
+   "Window mask",
+   "Window mask (black vinyl, inside the lens)"
+  ],
+  "gap": 4.22,
+  "at": [
+   4.25,
+   56.09,
+   6.9
+  ],
+  "kicad": [
+   145.75,
+   82.85
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Camera module",
+   "Camera lens barrel"
+  ],
+  "gap": 4.23,
+  "at": [
+   0.0,
+   47.57,
+   6.34
+  ],
+  "kicad": [
+   150.0,
+   91.37
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens barrel"
+  ],
+  "b": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "gap": 4.23,
+  "at": [
+   0.0,
+   48.84,
+   2.3
+  ],
+  "kicad": [
+   150.0,
+   90.1
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens barrel"
+  ],
+  "b": [
+   "LiPo battery",
+   "LiPo pouch (Adafruit #1317)"
+  ],
+  "gap": 4.75,
+  "at": [
+   -1.23,
+   54.58,
+   2.3
+  ],
+  "kicad": [
+   151.23,
+   84.36
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "Q4"
+  ],
+  "gap": 5.0,
+  "at": [
+   -3.0,
+   34.43,
+   5.97
+  ],
+  "kicad": [
+   153.0,
+   104.51
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera AF motor (VCM)"
+  ],
+  "b": [
+   "Front shell",
+   "Front shell"
+  ],
+  "gap": 5.17,
+  "at": [
+   4.1,
+   55.94,
+   5.9
+  ],
+  "kicad": [
+   145.9,
+   83.0
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens barrel"
+  ],
+  "b": [
+   "PCB",
+   "J5"
+  ],
+  "gap": 5.17,
+  "at": [
+   -3.0,
+   51.84,
+   2.3
+  ],
+  "kicad": [
+   153.0,
+   87.1
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens barrel"
+  ],
+  "b": [
+   "PCB",
+   "Q5"
+  ],
+  "gap": 5.46,
+  "at": [
+   -2.43,
+   53.59,
+   2.3
+  ],
+  "kicad": [
+   152.43,
+   85.35
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "Ribbons and wires",
+   "LCD FPC"
+  ],
+  "gap": 5.53,
+  "at": [
+   -3.0,
+   45.3,
+   6.27
+  ],
+  "kicad": [
+   153.0,
+   93.64
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens barrel"
+  ],
+  "b": [
+   "LiPo battery",
+   "JST-PH plug (in J4)"
+  ],
+  "gap": 5.71,
+  "at": [
+   1.86,
+   54.19,
+   1.91
+  ],
+  "kicad": [
+   148.14,
+   84.75
+  ]
+ },
+ {
+  "a": [
+   "Ribbons and wires",
+   "Camera FPC"
+  ],
+  "b": [
+   "PCB",
+   "R21"
+  ],
+  "gap": 6.03,
+  "at": [
+   -3.0,
+   32.89,
+   5.97
+  ],
+  "kicad": [
+   153.0,
+   106.05
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens barrel"
+  ],
+  "b": [
+   "Front shell",
+   "Front shell"
+  ],
+  "gap": 8.35,
+  "at": [
+   0.0,
+   54.84,
+   2.3
+  ],
+  "kicad": [
+   150.0,
+   84.1
+  ]
+ },
+ {
+  "a": [
+   "Camera module",
+   "Camera lens glass"
+  ],
+  "b": [
+   "Front shell",
+   "Front shell"
+  ],
+  "gap": 10.0,
+  "at": [
+   0.0,
+   53.24,
+   1.6
+  ],
+  "kicad": [
+   150.0,
+   85.7
+  ]
+ }
+]

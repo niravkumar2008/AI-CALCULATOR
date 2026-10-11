@@ -1,0 +1,241 @@
+(footprint "PinSocket_1x04_P2.54mm_SMD_H5.0_C42379197"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "REF**"
+		(at 0 -5.8 0)
+		(layer "F.SilkS")
+		(uuid "3deac153-d0c3-4a58-b129-92a950a5e0d9")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Value" "HDR-SMD_HX-PM2.54-1X4P-TP-YQ"
+		(at 0 5.8 0)
+		(layer "F.Fab")
+		(uuid "2f538db9-edad-4317-bad3-66bd218cd93e")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1f7ad984-6c96-46ff-967e-fe8bb07bcf7a")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "18dd3a9f-13e7-4b5f-99cd-b5691ae4151c")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "LCSC Part" "C42379197"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "6395dad2-e220-4935-bd95-2740ca3cf879")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr through_hole)
+	(duplicate_pad_numbers_are_jumpers no)
+	(fp_line
+		(start -5.08 -1.27)
+		(end -5.08 1.27)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "7e63a347-f3d3-4783-991d-4d9ece7fc391")
+	)
+	(fp_line
+		(start -5.08 1.27)
+		(end -2.14 1.27)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "b5f22308-fd08-4d8d-ae5b-1f2960b87f32")
+	)
+	(fp_line
+		(start -4.68 -1.27)
+		(end -5.08 -1.27)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "d9acdd76-8c96-4fdb-b5e5-bab1ca077734")
+	)
+	(fp_line
+		(start -0.4 1.27)
+		(end 2.94 1.27)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "e4eb4250-b1ee-4831-82ad-8d9aa2404720")
+	)
+	(fp_line
+		(start 0.4 -1.27)
+		(end -2.94 -1.27)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "b139cf63-0e77-40db-9bd5-e5e56ea6b446")
+	)
+	(fp_line
+		(start 2.14 -1.27)
+		(end 5.08 -1.27)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "f59919e6-53b3-47e7-8264-c611f2634c76")
+	)
+	(fp_line
+		(start 4.68 1.27)
+		(end 5.08 1.27)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "f108cea3-b7e6-4573-b853-661c209804eb")
+	)
+	(fp_line
+		(start 5.08 1.27)
+		(end 5.08 -1.27)
+		(stroke
+			(width 0.25)
+			(type solid)
+		)
+		(layer "F.SilkS")
+		(uuid "ba994f5f-fe20-4643-8aff-eb3f727b29c2")
+	)
+	(fp_circle
+		(center -6.35 -1.27)
+		(end -6.2 -1.27)
+		(stroke
+			(width 0.3)
+			(type solid)
+		)
+		(fill no)
+		(layer "F.SilkS")
+		(uuid "b6be5d93-86db-4081-9e5f-701923a35374")
+	)
+	(fp_line
+		(start -5.35 -3.15)
+		(end 5.35 -3.15)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "1956bf36-13a0-4a99-a5f5-d598c0b66477")
+	)
+	(fp_line
+		(start -5.35 3.15)
+		(end -5.35 -3.15)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "017865c9-4e5c-44e2-b0e1-ad843b9c08b1")
+	)
+	(fp_line
+		(start 5.35 -3.15)
+		(end 5.35 3.15)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "aab6170b-556d-482e-838e-98001f7291b2")
+	)
+	(fp_line
+		(start 5.35 3.15)
+		(end -5.35 3.15)
+		(stroke
+			(width 0.05)
+			(type solid)
+		)
+		(layer "F.CrtYd")
+		(uuid "d079df47-fcf7-4bc5-a406-ff7560fb3f43")
+	)
+	(fp_text user "${REFERENCE}"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "a71bf743-eb4e-4fbe-b252-784b0810f725")
+		(effects
+			(font
+				(size 1 1)
+				(thickness 0.15)
+			)
+		)
+	)
+	(pad "1" smd rect
+		(at -3.81 -1.8)
+		(size 1.27 2.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "991d7410-f980-4d94-b999-b8afd2976ae6")
+	)
+	(pad "2" smd rect
+		(at -1.27 1.8)
+		(size 1.27 2.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "faa85f85-79e0-48cb-9cb6-7223dd116bcf")
+	)
+	(pad "3" smd rect
+		(at 1.27 -1.8)
+		(size 1.27 2.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "06fcbbf2-12db-48c0-af39-ee3d09437f2c")
+	)
+	(pad "4" smd rect
+		(at 3.81 1.8)
+		(size 1.27 2.2)
+		(layers "F.Cu" "F.Mask" "F.Paste")
+		(uuid "e0e62543-f2e7-446f-bd87-c3a691607ae2")
+	)
+	(embedded_fonts no)
+	(model "${KIPRJMOD}/ai_calc.3dshapes/HDR-SMD_HX-PM2.54-1X4P-TP-YQ.step"
+		(offset
+			(xyz 0 0 0)
+		)
+		(scale
+			(xyz 1 1 1)
+		)
+		(rotate
+			(xyz 0 0 0)
+		)
+	)
+)

@@ -9,6 +9,7 @@
 
 #include "camera.h"
 #include "json.h"
+#include "log.h"
 
 namespace {
 httpd_handle_t g_server = nullptr;  // page, settings, single photos (port 80)
@@ -287,7 +288,7 @@ esp_err_t focusHandler(httpd_req_t* req) {
 esp_err_t autotuneHandler(httpd_req_t* req) {
   if (!authorised(req)) return ESP_OK;
   const std::string report = cameraAutoTune();
-  Serial.println(report.c_str());
+  LOGF("preview", "%s", report.c_str());
   noCache(req);
   httpd_resp_set_type(req, "text/plain; charset=utf-8");
   return httpd_resp_sendstr(req, report.c_str());
@@ -317,14 +318,14 @@ esp_err_t tuningHandler(httpd_req_t* req) {
 esp_err_t saveHandler(httpd_req_t* req) {
   if (!authorised(req)) return ESP_OK;
   cameraSaveTuning();
-  Serial.println("Camera settings saved.");
+  LOGF("preview", "camera settings saved");
   return httpd_resp_sendstr(req, "ok");
 }
 
 esp_err_t resetHandler(httpd_req_t* req) {
   if (!authorised(req)) return ESP_OK;
   cameraResetTuning();
-  Serial.println("Camera settings reset to defaults.");
+  LOGF("preview", "camera settings reset to defaults");
   return httpd_resp_sendstr(req, "ok");
 }
 // ---- Send: scan with Claude from the page ----
@@ -381,6 +382,15 @@ void stopServers() {
   if (s) httpd_stop(s);
 }
 
+// A GET route with every other field zeroed (the struct grows with IDF options).
+httpd_uri_t getUri(const char* path, esp_err_t (*handler)(httpd_req_t*)) {
+  httpd_uri_t u = {};
+  u.uri = path;
+  u.method = HTTP_GET;
+  u.handler = handler;
+  return u;
+}
+
 bool startServers(std::string& error) {
   httpd_config_t c = HTTPD_DEFAULT_CONFIG();
   c.stack_size = 8192;
@@ -393,13 +403,18 @@ bool startServers(std::string& error) {
     return false;
   }
   const httpd_uri_t uris[] = {
-      {"/", HTTP_GET, pageHandler, nullptr},
-      {"/frame", HTTP_GET, frameHandler, nullptr},    {"/last.jpg", HTTP_GET, lastHandler, nullptr},
-      {"/set", HTTP_GET, setHandler, nullptr},        {"/tuning", HTTP_GET, tuningHandler, nullptr},
-      {"/save", HTTP_GET, saveHandler, nullptr},      {"/reset", HTTP_GET, resetHandler, nullptr},
-      {"/detail.jpg", HTTP_GET, detailHandler, nullptr}, {"/focus", HTTP_GET, focusHandler, nullptr},
-      {"/send", HTTP_GET, sendHandler, nullptr},      {"/result", HTTP_GET, resultHandler, nullptr},
-      {"/autotune", HTTP_GET, autotuneHandler, nullptr},
+      getUri("/", pageHandler),
+      getUri("/frame", frameHandler),
+      getUri("/last.jpg", lastHandler),
+      getUri("/set", setHandler),
+      getUri("/tuning", tuningHandler),
+      getUri("/save", saveHandler),
+      getUri("/reset", resetHandler),
+      getUri("/detail.jpg", detailHandler),
+      getUri("/focus", focusHandler),
+      getUri("/send", sendHandler),
+      getUri("/result", resultHandler),
+      getUri("/autotune", autotuneHandler),
   };
   for (const auto& u : uris) httpd_register_uri_handler(g_server, &u);
   // The live view gets its own server: esp_http_server answers one request
@@ -418,7 +433,7 @@ bool startServers(std::string& error) {
     error = "Couldn't start the live view.";
     return false;
   }
-  const httpd_uri_t stream = {"/stream", HTTP_GET, streamHandler, nullptr};
+  const httpd_uri_t stream = getUri("/stream", streamHandler);
   httpd_register_uri_handler(g_stream, &stream);
   return true;
 }
@@ -475,7 +490,7 @@ void previewStop() {
   if (!g_server && !g_suspended) return;
   stopServers();
   endPreview();
-  Serial.println("Preview stopped.");
+  LOGF("preview", "stopped");
 }
 
 bool previewRunning() { return g_server != nullptr; }
@@ -504,7 +519,7 @@ bool previewResume() {
   if (!g_suspended) return false;
   std::string err;
   if (!startNetwork() || !startServers(err)) {
-    Serial.println("Couldn't bring the preview back; type preview to start it again.");
+    LOGF("preview", "couldn't bring the preview back; type preview to start it again");
     stopServers();
     endPreview();
     return false;

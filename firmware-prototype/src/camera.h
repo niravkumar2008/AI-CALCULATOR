@@ -4,6 +4,7 @@
 #pragma once
 #include <functional>
 #include <string>
+#include <vector>
 
 bool cameraBegin();                         // finds the pin layout; false = no camera found
 const char* cameraName();                   // which layout/sensor answered
@@ -21,6 +22,14 @@ uint32_t cameraHoldUntil();
 // Powers the camera down (calculator off). The next capture or preview frame
 // starts it again, about 1 s with autofocus.
 void cameraSleep();
+bool cameraIsOn();
+// Viewfinder: one small grayscale frame (160x120) of the whole 4:3 picture the scan
+// will send, plus whether the autofocus reports "focused". Powers the camera up if it
+// is off. False if there is no camera or no frame.
+bool cameraPreviewFrame(std::vector<uint8_t>& gray, int& w, int& h, bool& focused);
+// Factory self-test: powers the camera up if needed and grabs one VGA JPEG.
+// sensor = "Final board (OV5640 AF), OV5640" or "not found".
+bool cameraSelfTest(std::string& sensor, size_t& bytes, uint32_t& ms, bool& autofocus);
 // How long the next capture will ask the user to hold still, in ms.
 uint32_t cameraHoldEstimateMs();
 // Sharpness of the writing in one JPEG (0 when it can't be decoded).

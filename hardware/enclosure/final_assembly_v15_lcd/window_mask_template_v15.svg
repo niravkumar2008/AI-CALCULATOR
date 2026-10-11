@@ -1,0 +1,47 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="210mm" height="297mm" viewBox="0 0 210 297" font-family="Arial, Helvetica, sans-serif">
+<rect x="0" y="0" width="210" height="297" fill="white"/>
+<text x="15" y="16" font-size="6" font-weight="bold">AI calculator v15-LCD: window mask cut template (1:1)</text>
+<text x="15" y="23" font-size="3.6">PRINT AT 100 % (“Actual size”, no “fit to page”). Check the 50 mm bar with a ruler before cutting.</text>
+<text x="15" y="28" font-size="3.6">Drawn as seen from the FRONT of the calculator, through the lens. Black = keep. White = cut out.</text>
+<path d="M 75.675 80.500 H 134.325 A 3.350 3.350 0 0 1 137.675 83.850 V 106.150 A 3.350 3.350 0 0 1 134.325 109.500 H 75.675 A 3.350 3.350 0 0 1 72.325 106.150 V 83.850 A 3.350 3.350 0 0 1 75.675 80.500 Z M 83.440 83.260 H 126.560 A 0.300 0.300 0 0 1 126.860 83.560 V 106.660 A 0.300 0.300 0 0 1 126.560 106.960 H 83.440 A 0.300 0.300 0 0 1 83.140 106.660 V 83.560 A 0.300 0.300 0 0 1 83.440 83.260 Z" fill="black" fill-rule="evenodd" stroke="none"/>
+<path d="M 75.675 80.500 H 134.325 A 3.350 3.350 0 0 1 137.675 83.850 V 106.150 A 3.350 3.350 0 0 1 134.325 109.500 H 75.675 A 3.350 3.350 0 0 1 72.325 106.150 V 83.850 A 3.350 3.350 0 0 1 75.675 80.500 Z" fill="none" stroke="#d00" stroke-width="0.15"/>
+<path d="M 83.440 83.260 H 126.560 A 0.300 0.300 0 0 1 126.860 83.560 V 106.660 A 0.300 0.300 0 0 1 126.560 106.960 H 83.440 A 0.300 0.300 0 0 1 83.140 106.660 V 83.560 A 0.300 0.300 0 0 1 83.440 83.260 Z" fill="none" stroke="#d00" stroke-width="0.15"/>
+<path d="M 75.825 83.000 H 134.175 A 1.000 1.000 0 0 1 135.175 84.000 V 106.000 A 1.000 1.000 0 0 1 134.175 107.000 H 75.825 A 1.000 1.000 0 0 1 74.825 106.000 V 84.000 A 1.000 1.000 0 0 1 75.825 83.000 Z" fill="none" stroke="#08f" stroke-width="0.2" stroke-dasharray="1.2 0.8"/>
+<line x1="105.000" y1="73.500" x2="105.000" y2="79.500" stroke="black" stroke-width="0.25"/>
+<line x1="105.000" y1="110.500" x2="105.000" y2="116.500" stroke="black" stroke-width="0.25"/>
+<line x1="65.325" y1="95.000" x2="71.325" y2="95.000" stroke="black" stroke-width="0.25"/>
+<line x1="138.675" y1="95.000" x2="144.675" y2="95.000" stroke="black" stroke-width="0.25"/>
+<line x1="105.000" y1="67.000" x2="105.000" y2="68.500" stroke="#d00" stroke-width="0.2"/>
+<text x="105.00" y="71.50" font-size="3" text-anchor="middle">TOP (solar-cell / display-top edge)</text>
+<text x="105.00" y="120.50" font-size="3" text-anchor="middle">BOTTOM (towards the keys)</text>
+<text x="64.32" y="93.00" font-size="3" text-anchor="end">LEFT = LCD ribbon end</text>
+<text x="64.32" y="97.50" font-size="3" text-anchor="end">wide band 10.8</text>
+<text x="145.68" y="93.00" font-size="3">RIGHT</text>
+<text x="145.68" y="97.50" font-size="3">band 10.8</text>
+<text x="105.00" y="66.00" font-size="2.6" fill="#d00" text-anchor="middle">opening centre (0.00 right of the lens centre)</text>
+<text x="15" y="131.50" font-size="3.3" font-weight="bold">Outer edge (= clear lens)</text>
+<text x="95" y="131.50" font-size="3.3">65.35 x 29.00 mm, corner R 3.35</text>
+<text x="15" y="137.00" font-size="3.3" font-weight="bold">Opening (LCD active area + 0.5 each side)</text>
+<text x="95" y="137.00" font-size="3.3">43.72 x 23.70 mm, corner R 0.3</text>
+<text x="15" y="142.50" font-size="3.3" font-weight="bold">Opening position</text>
+<text x="95" y="142.50" font-size="3.3">0.00 mm right of the lens centre, -0.11 up (front view)</text>
+<text x="15" y="148.00" font-size="3.3" font-weight="bold">Bands: left / right / top / bottom</text>
+<text x="95" y="148.00" font-size="3.3">10.82 / 10.82 / 2.76 / 2.54 mm</text>
+<text x="15" y="153.50" font-size="3.3" font-weight="bold">Blue dashed (option)</text>
+<text x="95" y="153.50" font-size="3.3">60.35 x 24.00: fits through the window from inside, lens stays in</text>
+<text x="15" y="159.00" font-size="3.3" font-weight="bold">Material</text>
+<text x="95" y="159.00" font-size="3.3">matte black vinyl or sticker paper, 0.08-0.15 mm</text>
+<line x1="15" y1="170.50" x2="65" y2="170.50" stroke="black" stroke-width="0.4"/>
+<line x1="15" y1="167.50" x2="15" y2="170.50" stroke="black" stroke-width="0.3"/>
+<line x1="25" y1="168.70" x2="25" y2="170.50" stroke="black" stroke-width="0.3"/>
+<line x1="35" y1="168.70" x2="35" y2="170.50" stroke="black" stroke-width="0.3"/>
+<line x1="45" y1="168.70" x2="45" y2="170.50" stroke="black" stroke-width="0.3"/>
+<line x1="55" y1="168.70" x2="55" y2="170.50" stroke="black" stroke-width="0.3"/>
+<line x1="65" y1="167.50" x2="65" y2="170.50" stroke="black" stroke-width="0.3"/>
+<text x="70" y="171.50" font-size="3.6">50 mm: measure this bar. If it is not exactly 50 mm, reprint at 100 %.</text>
+<rect x="15" y="179.50" width="30" height="30" fill="none" stroke="black" stroke-width="0.3"/>
+<text x="50" y="195.50" font-size="3.3">30 x 30 mm check square</text>
+<text x="15" y="219.50" font-size="3">Steps: as ../final_assembly/window_mask.md (same lens, same method). Cut the opening first (straight edge + new craft-knife blade), then the outer edge.</text>
+<text x="15" y="224.50" font-size="3">The sticky side goes on the INSIDE face of the lens. The opening is centred left-right (sticker bands 10.8 / 10.8 mm; 8.5 mm of black shows each side in the window).</text>
+<text x="15" y="229.50" font-size="3">Generated by window_mask_template_v15.py from placement.json (v15-LCD final assembly, 2026-10-08).</text>
+</svg>

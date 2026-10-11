@@ -1,0 +1,4162 @@
+[
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Front shell",
+   "Front shell"
+  ],
+  "gap": 0.05,
+  "at": [
+   -31.5,
+   53.59,
+   10.6
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Window mask",
+   "Window mask (black vinyl, inside the lens)"
+  ],
+  "gap": 0.26,
+  "at": [
+   -25.56,
+   53.59,
+   10.81
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Window lens",
+   "Window lens (clear)"
+  ],
+  "gap": 0.365,
+  "at": [
+   -25.56,
+   53.59,
+   10.92
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Back cover",
+   "Back cover"
+  ],
+  "gap": 5.8,
+  "at": [
+   -25.56,
+   44.26,
+   2.0
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Rubber feet",
+   "Foot 2"
+  ],
+  "gap": 7.42,
+  "at": [
+   -30.12,
+   53.59,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Battery lid",
+   "Battery lid"
+  ],
+  "gap": 11.595,
+  "at": [
+   -24.51,
+   62.6,
+   0.58
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keymat",
+   "Keymat (rubber)"
+  ],
+  "gap": 16.17,
+  "at": [
+   -25.56,
+   21.92,
+   8.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key SHIFT"
+  ],
+  "gap": 16.995,
+  "at": [
+   -26.62,
+   21.09,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key ALPHA"
+  ],
+  "gap": 18.892,
+  "at": [
+   -18.27,
+   20.66,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Screws",
+   "Screw corner L"
+  ],
+  "gap": 19.818,
+  "at": [
+   -33.95,
+   73.26,
+   7.8
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Solar cell (dummy)",
+   "Solar cell (dummy)"
+  ],
+  "gap": 21.212,
+  "at": [
+   -6.18,
+   62.21,
+   10.0
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Screws",
+   "Screw mid L"
+  ],
+  "gap": 24.155,
+  "at": [
+   -24.16,
+   14.9,
+   1.2
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key REPLAY"
+  ],
+  "gap": 27.703,
+  "at": [
+   -5.64,
+   18.83,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key Abs"
+  ],
+  "gap": 28.45,
+  "at": [
+   -25.56,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key x^3"
+  ],
+  "gap": 29.114,
+  "at": [
+   -19.47,
+   9.62,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key a/b"
+  ],
+  "gap": 37.375,
+  "at": [
+   -25.56,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key sqrt"
+  ],
+  "gap": 37.824,
+  "at": [
+   -19.82,
+   0.7,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key x^2"
+  ],
+  "gap": 40.82,
+  "at": [
+   -9.33,
+   0.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key MODE"
+  ],
+  "gap": 42.05,
+  "at": [
+   11.96,
+   19.11,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key x^n"
+  ],
+  "gap": 46.051,
+  "at": [
+   1.1,
+   0.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key (-)"
+  ],
+  "gap": 46.778,
+  "at": [
+   -25.56,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key o''"
+  ],
+  "gap": 47.139,
+  "at": [
+   -19.79,
+   -8.7,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key x^-1"
+  ],
+  "gap": 47.362,
+  "at": [
+   12.02,
+   9.27,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key hyp"
+  ],
+  "gap": 49.586,
+  "at": [
+   -9.26,
+   -8.74,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Rubber feet",
+   "Foot 3"
+  ],
+  "gap": 49.618,
+  "at": [
+   23.5,
+   52.0,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key ON"
+  ],
+  "gap": 51.718,
+  "at": [
+   22.48,
+   18.92,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Screws",
+   "Screw mid R"
+  ],
+  "gap": 52.686,
+  "at": [
+   20.77,
+   13.88,
+   1.2
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key log"
+  ],
+  "gap": 52.975,
+  "at": [
+   11.71,
+   0.44,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key sin"
+  ],
+  "gap": 53.988,
+  "at": [
+   1.18,
+   -8.81,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key log_a"
+  ],
+  "gap": 56.136,
+  "at": [
+   22.56,
+   9.18,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key RCL"
+  ],
+  "gap": 56.315,
+  "at": [
+   -25.56,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key ENG"
+  ],
+  "gap": 56.616,
+  "at": [
+   -19.77,
+   -18.23,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key ("
+  ],
+  "gap": 58.676,
+  "at": [
+   -9.21,
+   -18.26,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key cos"
+  ],
+  "gap": 60.018,
+  "at": [
+   11.78,
+   -8.89,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key ln"
+  ],
+  "gap": 60.891,
+  "at": [
+   22.23,
+   0.35,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Screws",
+   "Screw corner R"
+  ],
+  "gap": 61.479,
+  "at": [
+   32.25,
+   73.43,
+   1.2
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key )"
+  ],
+  "gap": 62.45,
+  "at": [
+   1.24,
+   -18.32,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key 7"
+  ],
+  "gap": 65.628,
+  "at": [
+   -25.56,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key 8"
+  ],
+  "gap": 66.083,
+  "at": [
+   -17.88,
+   -27.55,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key tan"
+  ],
+  "gap": 67.119,
+  "at": [
+   22.3,
+   -8.97,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key S<>D"
+  ],
+  "gap": 67.741,
+  "at": [
+   11.85,
+   -18.38,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key 9"
+  ],
+  "gap": 68.751,
+  "at": [
+   -5.24,
+   -27.59,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key DEL"
+  ],
+  "gap": 73.563,
+  "at": [
+   7.43,
+   -27.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key M+"
+  ],
+  "gap": 74.115,
+  "at": [
+   22.36,
+   -18.45,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key 4"
+  ],
+  "gap": 76.754,
+  "at": [
+   -25.56,
+   -38.66,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key 5"
+  ],
+  "gap": 77.155,
+  "at": [
+   -17.71,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key 6"
+  ],
+  "gap": 79.447,
+  "at": [
+   -5.19,
+   -38.7,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key AC"
+  ],
+  "gap": 80.14,
+  "at": [
+   20.14,
+   -27.74,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key x"
+  ],
+  "gap": 83.655,
+  "at": [
+   7.49,
+   -38.76,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key 1"
+  ],
+  "gap": 87.88,
+  "at": [
+   -25.56,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key 2"
+  ],
+  "gap": 88.222,
+  "at": [
+   -17.85,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key /"
+  ],
+  "gap": 89.593,
+  "at": [
+   20.64,
+   -38.68,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key 3"
+  ],
+  "gap": 90.246,
+  "at": [
+   -5.16,
+   -49.82,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key +"
+  ],
+  "gap": 93.977,
+  "at": [
+   7.54,
+   -49.86,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Rubber feet",
+   "Foot 4"
+  ],
+  "gap": 96.875,
+  "at": [
+   -27.0,
+   -58.5,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key 0"
+  ],
+  "gap": 99.006,
+  "at": [
+   -25.56,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key -"
+  ],
+  "gap": 99.225,
+  "at": [
+   20.26,
+   -49.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key ."
+  ],
+  "gap": 99.31,
+  "at": [
+   -17.84,
+   -60.92,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key x10^x"
+  ],
+  "gap": 101.115,
+  "at": [
+   -5.13,
+   -60.94,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key Ans"
+  ],
+  "gap": 104.463,
+  "at": [
+   7.58,
+   -60.98,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Screws",
+   "Screw bottom L"
+  ],
+  "gap": 108.209,
+  "at": [
+   -19.6,
+   -69.75,
+   1.2
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Keycaps",
+   "Key ="
+  ],
+  "gap": 109.305,
+  "at": [
+   20.76,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Rubber feet",
+   "Foot 1"
+  ],
+  "gap": 109.802,
+  "at": [
+   25.37,
+   -58.9,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD FPC key-side column",
+  "shell": [
+   "Screws",
+   "Screw bottom R"
+  ],
+  "gap": 116.917,
+  "at": [
+   18.78,
+   -69.89,
+   1.2
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Front shell",
+   "Front shell"
+  ],
+  "gap": 0.05,
+  "at": [
+   23.56,
+   58.74,
+   10.6
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Window mask",
+   "Window mask (black vinyl, inside the lens)"
+  ],
+  "gap": 0.26,
+  "at": [
+   23.56,
+   58.74,
+   10.81
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Window lens",
+   "Window lens (clear)"
+  ],
+  "gap": 0.365,
+  "at": [
+   23.56,
+   58.74,
+   10.92
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Solar cell (dummy)",
+   "Solar cell (dummy)"
+  ],
+  "gap": 3.0,
+  "at": [
+   -5.45,
+   61.74,
+   10.0
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Back cover",
+   "Back cover"
+  ],
+  "gap": 5.8,
+  "at": [
+   7.0,
+   44.42,
+   2.0
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Rubber feet",
+   "Foot 2"
+  ],
+  "gap": 7.42,
+  "at": [
+   -26.16,
+   48.6,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Rubber feet",
+   "Foot 3"
+  ],
+  "gap": 7.42,
+  "at": [
+   23.56,
+   52.65,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Battery lid",
+   "Battery lid"
+  ],
+  "gap": 8.182,
+  "at": [
+   -24.3,
+   62.59,
+   0.58
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keymat",
+   "Keymat (rubber)"
+  ],
+  "gap": 11.02,
+  "at": [
+   23.56,
+   21.92,
+   8.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key REPLAY"
+  ],
+  "gap": 11.713,
+  "at": [
+   0.0,
+   21.23,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key ALPHA"
+  ],
+  "gap": 11.845,
+  "at": [
+   -16.03,
+   21.09,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key MODE"
+  ],
+  "gap": 11.845,
+  "at": [
+   16.03,
+   21.09,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key SHIFT"
+  ],
+  "gap": 11.851,
+  "at": [
+   -26.46,
+   21.09,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key ON"
+  ],
+  "gap": 12.103,
+  "at": [
+   25.59,
+   21.01,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Screws",
+   "Screw corner L"
+  ],
+  "gap": 16.423,
+  "at": [
+   -33.68,
+   73.34,
+   7.8
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Screws",
+   "Screw corner R"
+  ],
+  "gap": 17.759,
+  "at": [
+   33.6,
+   73.39,
+   7.8
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Screws",
+   "Screw mid R"
+  ],
+  "gap": 19.14,
+  "at": [
+   22.45,
+   13.8,
+   8.8
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Screws",
+   "Screw mid L"
+  ],
+  "gap": 19.14,
+  "at": [
+   -24.05,
+   13.8,
+   8.8
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key Abs"
+  ],
+  "gap": 23.3,
+  "at": [
+   -23.37,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key log_a"
+  ],
+  "gap": 23.3,
+  "at": [
+   23.56,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key x^-1"
+  ],
+  "gap": 23.3,
+  "at": [
+   12.78,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key x^3"
+  ],
+  "gap": 23.3,
+  "at": [
+   -19.28,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key a/b"
+  ],
+  "gap": 32.225,
+  "at": [
+   -22.97,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key x^2"
+  ],
+  "gap": 32.225,
+  "at": [
+   -8.95,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key x^n"
+  ],
+  "gap": 32.225,
+  "at": [
+   1.65,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key ln"
+  ],
+  "gap": 32.225,
+  "at": [
+   23.56,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key log"
+  ],
+  "gap": 32.225,
+  "at": [
+   19.68,
+   0.72,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key sqrt"
+  ],
+  "gap": 32.225,
+  "at": [
+   -19.68,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key o''"
+  ],
+  "gap": 41.628,
+  "at": [
+   -19.68,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key cos"
+  ],
+  "gap": 41.628,
+  "at": [
+   12.38,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key tan"
+  ],
+  "gap": 41.628,
+  "at": [
+   23.56,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key sin"
+  ],
+  "gap": 41.628,
+  "at": [
+   1.65,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key hyp"
+  ],
+  "gap": 41.628,
+  "at": [
+   -8.95,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key (-)"
+  ],
+  "gap": 41.628,
+  "at": [
+   -22.97,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key RCL"
+  ],
+  "gap": 51.165,
+  "at": [
+   -22.97,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key ("
+  ],
+  "gap": 51.165,
+  "at": [
+   -8.95,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key )"
+  ],
+  "gap": 51.165,
+  "at": [
+   1.65,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key M+"
+  ],
+  "gap": 51.165,
+  "at": [
+   23.56,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key S<>D"
+  ],
+  "gap": 51.165,
+  "at": [
+   12.38,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key ENG"
+  ],
+  "gap": 51.165,
+  "at": [
+   -19.68,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key 7"
+  ],
+  "gap": 60.478,
+  "at": [
+   -20.79,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key AC"
+  ],
+  "gap": 60.478,
+  "at": [
+   23.56,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key DEL"
+  ],
+  "gap": 60.478,
+  "at": [
+   7.95,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key 9"
+  ],
+  "gap": 60.478,
+  "at": [
+   -4.9,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key 8"
+  ],
+  "gap": 60.478,
+  "at": [
+   -17.75,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key 5"
+  ],
+  "gap": 71.604,
+  "at": [
+   -17.71,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key 6"
+  ],
+  "gap": 71.604,
+  "at": [
+   -4.9,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key /"
+  ],
+  "gap": 71.604,
+  "at": [
+   23.56,
+   -38.66,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key x"
+  ],
+  "gap": 71.604,
+  "at": [
+   17.66,
+   -38.66,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key 4"
+  ],
+  "gap": 71.604,
+  "at": [
+   -20.79,
+   -38.66,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key 1"
+  ],
+  "gap": 82.73,
+  "at": [
+   -20.79,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key +"
+  ],
+  "gap": 82.73,
+  "at": [
+   7.95,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key -"
+  ],
+  "gap": 82.73,
+  "at": [
+   23.56,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key 3"
+  ],
+  "gap": 82.73,
+  "at": [
+   -4.9,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key 2"
+  ],
+  "gap": 82.73,
+  "at": [
+   -17.75,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Rubber feet",
+   "Foot 4"
+  ],
+  "gap": 91.744,
+  "at": [
+   -26.97,
+   -58.5,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Rubber feet",
+   "Foot 1"
+  ],
+  "gap": 91.803,
+  "at": [
+   26.87,
+   -58.5,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key ."
+  ],
+  "gap": 93.856,
+  "at": [
+   -7.95,
+   -60.92,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key ="
+  ],
+  "gap": 93.856,
+  "at": [
+   23.56,
+   -60.92,
+   10.02
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key Ans"
+  ],
+  "gap": 93.856,
+  "at": [
+   7.95,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key x10^x"
+  ],
+  "gap": 93.856,
+  "at": [
+   -4.9,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Keycaps",
+   "Key 0"
+  ],
+  "gap": 93.856,
+  "at": [
+   -20.79,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Screws",
+   "Screw bottom R"
+  ],
+  "gap": 102.902,
+  "at": [
+   19.5,
+   -69.75,
+   1.2
+  ]
+ },
+ {
+  "probe": "LCD backlight column",
+  "shell": [
+   "Screws",
+   "Screw bottom L"
+  ],
+  "gap": 102.902,
+  "at": [
+   -19.5,
+   -69.75,
+   1.2
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Front shell",
+   "Front shell"
+  ],
+  "gap": 1.2,
+  "at": [
+   23.56,
+   58.74,
+   10.6
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Window mask",
+   "Window mask (black vinyl, inside the lens)"
+  ],
+  "gap": 1.41,
+  "at": [
+   23.56,
+   58.74,
+   10.81
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Window lens",
+   "Window lens (clear)"
+  ],
+  "gap": 1.515,
+  "at": [
+   23.56,
+   58.74,
+   10.92
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Solar cell (dummy)",
+   "Solar cell (dummy)"
+  ],
+  "gap": 3.059,
+  "at": [
+   23.56,
+   61.74,
+   10.0
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Back cover",
+   "Back cover"
+  ],
+  "gap": 6.0,
+  "at": [
+   7.0,
+   44.42,
+   2.0
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Rubber feet",
+   "Foot 2"
+  ],
+  "gap": 7.62,
+  "at": [
+   -26.16,
+   48.6,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Rubber feet",
+   "Foot 3"
+  ],
+  "gap": 7.62,
+  "at": [
+   23.56,
+   52.65,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Battery lid",
+   "Battery lid"
+  ],
+  "gap": 8.359,
+  "at": [
+   -24.3,
+   62.59,
+   0.58
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keymat",
+   "Keymat (rubber)"
+  ],
+  "gap": 11.02,
+  "at": [
+   23.56,
+   21.92,
+   8.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key REPLAY"
+  ],
+  "gap": 11.715,
+  "at": [
+   0.0,
+   21.23,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key ALPHA"
+  ],
+  "gap": 11.847,
+  "at": [
+   -16.03,
+   21.09,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key MODE"
+  ],
+  "gap": 11.847,
+  "at": [
+   16.03,
+   21.09,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key SHIFT"
+  ],
+  "gap": 11.853,
+  "at": [
+   -26.46,
+   21.09,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key ON"
+  ],
+  "gap": 12.105,
+  "at": [
+   25.59,
+   21.01,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Screws",
+   "Screw corner L"
+  ],
+  "gap": 16.423,
+  "at": [
+   -33.68,
+   73.34,
+   8.0
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Screws",
+   "Screw corner R"
+  ],
+  "gap": 17.759,
+  "at": [
+   33.6,
+   73.39,
+   8.0
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Screws",
+   "Screw mid R"
+  ],
+  "gap": 19.14,
+  "at": [
+   22.45,
+   13.8,
+   8.8
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Screws",
+   "Screw mid L"
+  ],
+  "gap": 19.14,
+  "at": [
+   -24.05,
+   13.8,
+   8.8
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key Abs"
+  ],
+  "gap": 23.301,
+  "at": [
+   -26.16,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key log_a"
+  ],
+  "gap": 23.301,
+  "at": [
+   23.56,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key x^-1"
+  ],
+  "gap": 23.301,
+  "at": [
+   19.28,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key x^3"
+  ],
+  "gap": 23.301,
+  "at": [
+   -12.78,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key a/b"
+  ],
+  "gap": 32.226,
+  "at": [
+   -26.16,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key x^2"
+  ],
+  "gap": 32.226,
+  "at": [
+   -1.65,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key x^n"
+  ],
+  "gap": 32.226,
+  "at": [
+   8.95,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key ln"
+  ],
+  "gap": 32.226,
+  "at": [
+   23.56,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key log"
+  ],
+  "gap": 32.226,
+  "at": [
+   19.68,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key sqrt"
+  ],
+  "gap": 32.226,
+  "at": [
+   -12.38,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key o''"
+  ],
+  "gap": 41.629,
+  "at": [
+   -12.38,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key cos"
+  ],
+  "gap": 41.629,
+  "at": [
+   19.68,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key tan"
+  ],
+  "gap": 41.629,
+  "at": [
+   23.56,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key sin"
+  ],
+  "gap": 41.629,
+  "at": [
+   8.95,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key hyp"
+  ],
+  "gap": 41.629,
+  "at": [
+   -1.65,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key (-)"
+  ],
+  "gap": 41.629,
+  "at": [
+   -26.16,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key RCL"
+  ],
+  "gap": 51.165,
+  "at": [
+   -26.16,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key ("
+  ],
+  "gap": 51.165,
+  "at": [
+   -1.65,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key )"
+  ],
+  "gap": 51.165,
+  "at": [
+   8.95,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key M+"
+  ],
+  "gap": 51.165,
+  "at": [
+   23.56,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key S<>D"
+  ],
+  "gap": 51.165,
+  "at": [
+   19.68,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key ENG"
+  ],
+  "gap": 51.165,
+  "at": [
+   -12.38,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key 7"
+  ],
+  "gap": 60.478,
+  "at": [
+   -26.16,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key AC"
+  ],
+  "gap": 60.478,
+  "at": [
+   23.56,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key DEL"
+  ],
+  "gap": 60.478,
+  "at": [
+   17.75,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key 9"
+  ],
+  "gap": 60.478,
+  "at": [
+   4.9,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key 8"
+  ],
+  "gap": 60.478,
+  "at": [
+   -7.95,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key 5"
+  ],
+  "gap": 71.604,
+  "at": [
+   -7.95,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key 6"
+  ],
+  "gap": 71.604,
+  "at": [
+   4.9,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key /"
+  ],
+  "gap": 71.604,
+  "at": [
+   23.56,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key x"
+  ],
+  "gap": 71.604,
+  "at": [
+   17.66,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key 4"
+  ],
+  "gap": 71.604,
+  "at": [
+   -26.16,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key 1"
+  ],
+  "gap": 82.73,
+  "at": [
+   -26.16,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key +"
+  ],
+  "gap": 82.73,
+  "at": [
+   17.75,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key -"
+  ],
+  "gap": 82.73,
+  "at": [
+   23.56,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key 3"
+  ],
+  "gap": 82.73,
+  "at": [
+   4.9,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key 2"
+  ],
+  "gap": 82.73,
+  "at": [
+   -7.95,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Rubber feet",
+   "Foot 4"
+  ],
+  "gap": 91.761,
+  "at": [
+   -26.97,
+   -58.5,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Rubber feet",
+   "Foot 1"
+  ],
+  "gap": 91.819,
+  "at": [
+   26.87,
+   -58.5,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key ."
+  ],
+  "gap": 93.856,
+  "at": [
+   -7.95,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key ="
+  ],
+  "gap": 93.856,
+  "at": [
+   23.56,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key Ans"
+  ],
+  "gap": 93.856,
+  "at": [
+   17.75,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key x10^x"
+  ],
+  "gap": 93.856,
+  "at": [
+   4.9,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Keycaps",
+   "Key 0"
+  ],
+  "gap": 93.856,
+  "at": [
+   -26.16,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Screws",
+   "Screw bottom R"
+  ],
+  "gap": 102.915,
+  "at": [
+   19.5,
+   -69.75,
+   1.2
+  ]
+ },
+ {
+  "probe": "LCD footprint, Z 8.0-9.4 (side room)",
+  "shell": [
+   "Screws",
+   "Screw bottom L"
+  ],
+  "gap": 102.915,
+  "at": [
+   -19.5,
+   -69.75,
+   1.2
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Front shell",
+   "Front shell"
+  ],
+  "gap": 1.27,
+  "at": [
+   23.56,
+   58.74,
+   10.6
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Window mask",
+   "Window mask (black vinyl, inside the lens)"
+  ],
+  "gap": 1.48,
+  "at": [
+   23.56,
+   58.74,
+   10.81
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Window lens",
+   "Window lens (clear)"
+  ],
+  "gap": 1.585,
+  "at": [
+   23.56,
+   58.74,
+   10.92
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Solar cell (dummy)",
+   "Solar cell (dummy)"
+  ],
+  "gap": 3.074,
+  "at": [
+   23.56,
+   61.74,
+   10.0
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Back cover",
+   "Back cover"
+  ],
+  "gap": 5.9,
+  "at": [
+   7.0,
+   44.42,
+   2.0
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Rubber feet",
+   "Foot 2"
+  ],
+  "gap": 7.52,
+  "at": [
+   -26.16,
+   48.6,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Rubber feet",
+   "Foot 3"
+  ],
+  "gap": 7.52,
+  "at": [
+   23.56,
+   52.65,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Battery lid",
+   "Battery lid"
+  ],
+  "gap": 8.271,
+  "at": [
+   -24.3,
+   62.59,
+   0.58
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keymat",
+   "Keymat (rubber)"
+  ],
+  "gap": 11.02,
+  "at": [
+   23.56,
+   21.92,
+   8.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key REPLAY"
+  ],
+  "gap": 11.717,
+  "at": [
+   0.0,
+   21.23,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key ALPHA"
+  ],
+  "gap": 11.849,
+  "at": [
+   -16.03,
+   21.09,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key MODE"
+  ],
+  "gap": 11.849,
+  "at": [
+   16.03,
+   21.09,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key SHIFT"
+  ],
+  "gap": 11.854,
+  "at": [
+   -26.46,
+   21.09,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key ON"
+  ],
+  "gap": 12.106,
+  "at": [
+   25.59,
+   21.01,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Screws",
+   "Screw corner L"
+  ],
+  "gap": 16.423,
+  "at": [
+   -33.68,
+   73.34,
+   7.9
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Screws",
+   "Screw corner R"
+  ],
+  "gap": 17.759,
+  "at": [
+   33.6,
+   73.39,
+   7.9
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Screws",
+   "Screw mid R"
+  ],
+  "gap": 19.14,
+  "at": [
+   22.45,
+   13.8,
+   8.8
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Screws",
+   "Screw mid L"
+  ],
+  "gap": 19.14,
+  "at": [
+   -24.05,
+   13.8,
+   8.8
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key Abs"
+  ],
+  "gap": 23.302,
+  "at": [
+   -26.16,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key log_a"
+  ],
+  "gap": 23.302,
+  "at": [
+   23.56,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key x^-1"
+  ],
+  "gap": 23.302,
+  "at": [
+   19.28,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key x^3"
+  ],
+  "gap": 23.302,
+  "at": [
+   -12.78,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key a/b"
+  ],
+  "gap": 32.226,
+  "at": [
+   -26.16,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key x^2"
+  ],
+  "gap": 32.226,
+  "at": [
+   -1.65,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key x^n"
+  ],
+  "gap": 32.226,
+  "at": [
+   8.95,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key ln"
+  ],
+  "gap": 32.226,
+  "at": [
+   23.56,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key log"
+  ],
+  "gap": 32.226,
+  "at": [
+   19.68,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key sqrt"
+  ],
+  "gap": 32.226,
+  "at": [
+   -12.38,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key o''"
+  ],
+  "gap": 41.629,
+  "at": [
+   -12.38,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key cos"
+  ],
+  "gap": 41.629,
+  "at": [
+   19.68,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key tan"
+  ],
+  "gap": 41.629,
+  "at": [
+   23.56,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key sin"
+  ],
+  "gap": 41.629,
+  "at": [
+   8.95,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key hyp"
+  ],
+  "gap": 41.629,
+  "at": [
+   -1.65,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key (-)"
+  ],
+  "gap": 41.629,
+  "at": [
+   -26.16,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key RCL"
+  ],
+  "gap": 51.166,
+  "at": [
+   -26.16,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key ("
+  ],
+  "gap": 51.166,
+  "at": [
+   -1.65,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key )"
+  ],
+  "gap": 51.166,
+  "at": [
+   8.95,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key M+"
+  ],
+  "gap": 51.166,
+  "at": [
+   23.56,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key S<>D"
+  ],
+  "gap": 51.166,
+  "at": [
+   19.68,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key ENG"
+  ],
+  "gap": 51.166,
+  "at": [
+   -12.38,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key 7"
+  ],
+  "gap": 60.479,
+  "at": [
+   -26.16,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key AC"
+  ],
+  "gap": 60.479,
+  "at": [
+   23.56,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key DEL"
+  ],
+  "gap": 60.479,
+  "at": [
+   17.75,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key 9"
+  ],
+  "gap": 60.479,
+  "at": [
+   4.9,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key 8"
+  ],
+  "gap": 60.479,
+  "at": [
+   -7.95,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key 5"
+  ],
+  "gap": 71.605,
+  "at": [
+   -7.95,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key 6"
+  ],
+  "gap": 71.605,
+  "at": [
+   4.9,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key /"
+  ],
+  "gap": 71.605,
+  "at": [
+   23.56,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key x"
+  ],
+  "gap": 71.605,
+  "at": [
+   17.66,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key 4"
+  ],
+  "gap": 71.605,
+  "at": [
+   -26.16,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key 1"
+  ],
+  "gap": 82.731,
+  "at": [
+   -26.16,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key +"
+  ],
+  "gap": 82.731,
+  "at": [
+   17.75,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key -"
+  ],
+  "gap": 82.731,
+  "at": [
+   23.56,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key 3"
+  ],
+  "gap": 82.731,
+  "at": [
+   4.9,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key 2"
+  ],
+  "gap": 82.731,
+  "at": [
+   -7.95,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Rubber feet",
+   "Foot 4"
+  ],
+  "gap": 91.752,
+  "at": [
+   -26.97,
+   -58.5,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Rubber feet",
+   "Foot 1"
+  ],
+  "gap": 91.811,
+  "at": [
+   26.87,
+   -58.5,
+   0.38
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key ."
+  ],
+  "gap": 93.856,
+  "at": [
+   -7.95,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key ="
+  ],
+  "gap": 93.856,
+  "at": [
+   23.56,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key Ans"
+  ],
+  "gap": 93.856,
+  "at": [
+   17.75,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key x10^x"
+  ],
+  "gap": 93.856,
+  "at": [
+   4.9,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Keycaps",
+   "Key 0"
+  ],
+  "gap": 93.856,
+  "at": [
+   -26.16,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Screws",
+   "Screw bottom R"
+  ],
+  "gap": 102.908,
+  "at": [
+   19.5,
+   -69.75,
+   1.2
+  ]
+ },
+ {
+  "probe": "LCD stack (real height)",
+  "shell": [
+   "Screws",
+   "Screw bottom L"
+  ],
+  "gap": 102.908,
+  "at": [
+   -19.5,
+   -69.75,
+   1.2
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Front shell",
+   "Front shell"
+  ],
+  "gap": 0.286,
+  "at": [
+   27.25,
+   60.84,
+   8.1
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Solar cell (dummy)",
+   "Solar cell (dummy)"
+  ],
+  "gap": 1.329,
+  "at": [
+   -5.45,
+   61.74,
+   10.0
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Window mask",
+   "Window mask (black vinyl, inside the lens)"
+  ],
+  "gap": 1.41,
+  "at": [
+   29.53,
+   31.46,
+   10.81
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Window lens",
+   "Window lens (clear)"
+  ],
+  "gap": 1.515,
+  "at": [
+   29.53,
+   31.46,
+   10.92
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Back cover",
+   "Back cover"
+  ],
+  "gap": 6.0,
+  "at": [
+   7.0,
+   44.42,
+   2.0
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Rubber feet",
+   "Foot 2"
+  ],
+  "gap": 7.62,
+  "at": [
+   -29.47,
+   49.52,
+   0.38
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Rubber feet",
+   "Foot 3"
+  ],
+  "gap": 7.62,
+  "at": [
+   29.53,
+   54.42,
+   0.38
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Battery lid",
+   "Battery lid"
+  ],
+  "gap": 7.694,
+  "at": [
+   -24.3,
+   62.59,
+   0.58
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keymat",
+   "Keymat (rubber)"
+  ],
+  "gap": 9.434,
+  "at": [
+   29.53,
+   21.92,
+   8.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key REPLAY"
+  ],
+  "gap": 10.129,
+  "at": [
+   0.0,
+   21.23,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key ALPHA"
+  ],
+  "gap": 10.261,
+  "at": [
+   -16.03,
+   21.09,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key MODE"
+  ],
+  "gap": 10.261,
+  "at": [
+   16.03,
+   21.09,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key ON"
+  ],
+  "gap": 10.261,
+  "at": [
+   26.62,
+   21.09,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key SHIFT"
+  ],
+  "gap": 10.261,
+  "at": [
+   -26.62,
+   21.09,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Screws",
+   "Screw corner R"
+  ],
+  "gap": 13.432,
+  "at": [
+   33.8,
+   73.29,
+   8.0
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Screws",
+   "Screw corner L"
+  ],
+  "gap": 13.452,
+  "at": [
+   -33.79,
+   73.29,
+   8.0
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Screws",
+   "Screw mid R"
+  ],
+  "gap": 17.554,
+  "at": [
+   22.45,
+   13.8,
+   8.8
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Screws",
+   "Screw mid L"
+  ],
+  "gap": 17.554,
+  "at": [
+   -24.05,
+   13.8,
+   8.8
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key Abs"
+  ],
+  "gap": 21.715,
+  "at": [
+   -29.47,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key log_a"
+  ],
+  "gap": 21.715,
+  "at": [
+   29.53,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key x^-1"
+  ],
+  "gap": 21.715,
+  "at": [
+   19.28,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key x^3"
+  ],
+  "gap": 21.715,
+  "at": [
+   -12.78,
+   9.64,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key a/b"
+  ],
+  "gap": 30.64,
+  "at": [
+   -29.47,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key x^2"
+  ],
+  "gap": 30.64,
+  "at": [
+   -1.65,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key x^n"
+  ],
+  "gap": 30.64,
+  "at": [
+   8.95,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key ln"
+  ],
+  "gap": 30.64,
+  "at": [
+   29.53,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key log"
+  ],
+  "gap": 30.64,
+  "at": [
+   19.68,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key sqrt"
+  ],
+  "gap": 30.64,
+  "at": [
+   -12.38,
+   0.72,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key o''"
+  ],
+  "gap": 40.043,
+  "at": [
+   -12.38,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key cos"
+  ],
+  "gap": 40.043,
+  "at": [
+   19.68,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key tan"
+  ],
+  "gap": 40.043,
+  "at": [
+   29.53,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key sin"
+  ],
+  "gap": 40.043,
+  "at": [
+   8.95,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key hyp"
+  ],
+  "gap": 40.043,
+  "at": [
+   -1.65,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key (-)"
+  ],
+  "gap": 40.043,
+  "at": [
+   -29.47,
+   -8.69,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key RCL"
+  ],
+  "gap": 49.579,
+  "at": [
+   -29.47,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key ("
+  ],
+  "gap": 49.579,
+  "at": [
+   -1.65,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key )"
+  ],
+  "gap": 49.579,
+  "at": [
+   8.95,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key M+"
+  ],
+  "gap": 49.579,
+  "at": [
+   29.53,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key S<>D"
+  ],
+  "gap": 49.579,
+  "at": [
+   19.68,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key ENG"
+  ],
+  "gap": 49.579,
+  "at": [
+   -12.38,
+   -18.22,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key 7"
+  ],
+  "gap": 58.892,
+  "at": [
+   -29.47,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key AC"
+  ],
+  "gap": 58.892,
+  "at": [
+   29.53,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key DEL"
+  ],
+  "gap": 58.892,
+  "at": [
+   17.75,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key 9"
+  ],
+  "gap": 58.892,
+  "at": [
+   4.9,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key 8"
+  ],
+  "gap": 58.892,
+  "at": [
+   -7.95,
+   -27.54,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key 5"
+  ],
+  "gap": 70.018,
+  "at": [
+   -7.95,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key 6"
+  ],
+  "gap": 70.018,
+  "at": [
+   4.9,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key /"
+  ],
+  "gap": 70.018,
+  "at": [
+   29.53,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key x"
+  ],
+  "gap": 70.018,
+  "at": [
+   17.66,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key 4"
+  ],
+  "gap": 70.018,
+  "at": [
+   -29.47,
+   -38.66,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key 1"
+  ],
+  "gap": 81.144,
+  "at": [
+   -29.47,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key +"
+  ],
+  "gap": 81.144,
+  "at": [
+   17.75,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key -"
+  ],
+  "gap": 81.144,
+  "at": [
+   29.53,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key 3"
+  ],
+  "gap": 81.144,
+  "at": [
+   4.9,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key 2"
+  ],
+  "gap": 81.144,
+  "at": [
+   -7.95,
+   -49.79,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Rubber feet",
+   "Foot 1"
+  ],
+  "gap": 90.177,
+  "at": [
+   27.0,
+   -58.5,
+   0.38
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Rubber feet",
+   "Foot 4"
+  ],
+  "gap": 90.177,
+  "at": [
+   -27.0,
+   -58.5,
+   0.38
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key ."
+  ],
+  "gap": 92.27,
+  "at": [
+   -7.95,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key ="
+  ],
+  "gap": 92.27,
+  "at": [
+   29.53,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key Ans"
+  ],
+  "gap": 92.27,
+  "at": [
+   17.75,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key x10^x"
+  ],
+  "gap": 92.27,
+  "at": [
+   4.9,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Keycaps",
+   "Key 0"
+  ],
+  "gap": 92.27,
+  "at": [
+   -29.47,
+   -60.92,
+   9.62
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Screws",
+   "Screw bottom R"
+  ],
+  "gap": 101.332,
+  "at": [
+   19.5,
+   -69.75,
+   1.2
+  ]
+ },
+ {
+  "probe": "v14 e-paper footprint, Z 8.0-9.4 (calibration)",
+  "shell": [
+   "Screws",
+   "Screw bottom L"
+  ],
+  "gap": 101.332,
+  "at": [
+   -19.5,
+   -69.75,
+   1.2
+  ]
+ }
+]

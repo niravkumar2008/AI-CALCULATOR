@@ -1,0 +1,84 @@
+18:42:57 run v14 revE
+18:43:25 v14 revE: 0 overlaps
+18:43:25 run v14 revE done
+18:43:35 run v14 nominal
+18:44:10 v14 nominal: 0 overlaps
+18:44:10 run v14 nominal done
+18:44:26 run v14 nominal
+18:45:07 v14 nominal: 0 overlaps
+18:45:07 run v14 nominal done
+18:45:08 run v14 worst
+18:45:42 v14 worst: 2 overlaps
+18:45:42 run v14 worst done
+18:46:21 run v14 worst 1
+18:46:55 v14 worst: 0 overlaps
+18:46:55 run v14 worst 1 done
+18:46:59 run v14 nominal 1
+18:47:34 v14 nominal: 0 overlaps
+18:47:34 run v14 nominal 1 done
+18:48:14 run v15 revE 
+18:48:57 v15 revE: 0 overlaps
+18:48:57 run v15 revE  done
+18:49:01 run v15 nominal 
+18:50:03 v15 nominal: 0 overlaps
+18:50:03 run v15 nominal  done
+18:50:07 run v15 worst 
+18:51:11 v15 worst: 2 overlaps
+18:51:11 run v15 worst  done
+18:51:13 run v15 nominal 1
+18:52:13 v15 nominal: 0 overlaps
+18:52:13 run v15 nominal 1 done
+18:52:16 run v15 worst 1
+18:53:06 v15 worst: 0 overlaps
+18:53:06 run v15 worst 1 done
+18:53:57 run v15 nominal 1
+18:54:41 v15 nominal: 0 overlaps
+18:54:41 run v15 nominal 1 done
+18:56:32 run v14 off 
+18:56:35 candidate removed, #1317 shown again
+18:56:35 run v14 off  done
+18:56:35 run v15 off 
+18:56:36 candidate removed, #1317 shown again
+18:56:36 run v15 off  done
+19:16:20 run v15 nominal 1
+19:17:09 v15 nominal: 0 overlaps
+19:17:09 run v15 nominal 1 done
+19:17:27 run v15 off 
+19:17:27 candidate removed, #1317 shown again
+19:17:27 run v15 off  done
+19:17:36 run v14 nominal 1
+19:18:14 v14 nominal: 0 overlaps
+19:18:14 run v14 nominal 1 done
+19:18:20 run v14 off 
+19:18:21 candidate removed, #1317 shown again
+19:18:21 run v14 off  done
+19:18:38 run v14 revE 
+19:19:10 v14 revE: 0 overlaps
+19:19:10 run v14 revE  done
+19:19:13 run v14 nominal 
+19:19:51 v14 nominal: 0 overlaps
+19:19:51 run v14 nominal  done
+19:19:55 run v14 worst 
+19:20:33 v14 worst: 2 overlaps
+19:20:33 run v14 worst  done
+19:20:37 run v14 worst 1
+19:21:14 v14 worst: 0 overlaps
+19:21:14 run v14 worst 1 done
+19:21:15 run v14 off 
+19:21:16 candidate removed, #1317 shown again
+19:21:16 run v14 off  done
+19:21:26 run v15 revE 
+19:22:06 v15 revE: 0 overlaps
+19:22:06 run v15 revE  done
+19:22:08 run v15 nominal 
+19:22:54 v15 nominal: 0 overlaps
+19:22:54 run v15 nominal  done
+19:22:55 run v15 worst 
+19:23:39 v15 worst: 2 overlaps
+19:23:39 run v15 worst  done
+19:23:41 run v15 worst 1
+19:24:25 v15 worst: 0 overlaps
+19:24:25 run v15 worst 1 done
+19:24:27 run v15 off 
+19:24:28 candidate removed, #1317 shown again
+19:24:28 run v15 off  done

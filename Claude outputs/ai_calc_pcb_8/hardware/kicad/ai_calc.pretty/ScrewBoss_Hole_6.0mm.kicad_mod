@@ -1,0 +1,59 @@
+(footprint "ScrewBoss_Hole_6.0mm"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "H**"
+		(at 0 -3.6 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "1f614f55-493f-406f-96fa-ad89316b9085")
+		(effects
+		(font
+			(size 1.27 1.27)
+		)
+		)
+	)
+	(property "Value" "Screw boss hole 6.0 (Casio post)"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "4eb2087a-5ef3-4892-9d05-53c78c1b71ed")
+		(effects
+		(font
+			(size 1.27 1.27)
+		)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "5a898e02-a717-4165-bd67-108701a6ea7e")
+		(effects
+		(font
+			(size 1.27 1.27)
+		)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "cea907e9-4fa9-40e4-926c-0540667e05f1")
+		(effects
+		(font
+			(size 1.27 1.27)
+		)
+		)
+	)
+	(attr exclude_from_pos_files exclude_from_bom)
+	(duplicate_pad_numbers_are_jumpers no)
+	(pad "" np_thru_hole circle
+		(at 0 0)
+		(size 6 6)
+		(drill 6)
+		(layers "*.Mask")
+		(uuid "9e95ea22-6d7a-4dad-a69c-8a53ccb26b7b")
+	)
+	(embedded_fonts no)
+)

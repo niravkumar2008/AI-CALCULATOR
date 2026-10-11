@@ -1,0 +1,31 @@
+{
+ "mag_X": 22.5,
+ "mag_face_Y": 81.6669424566787,
+ "mag_Z": [
+  2.2,
+  9.2
+ ],
+ "cam": [
+  0.0,
+  43.84
+ ],
+ "lipo": [
+  -13.400000000000006,
+  69.69
+ ],
+ "lipo_Z": [
+  1.0,
+  4.8
+ ],
+ "epd": [
+  0.03100000000000591,
+  45.95399999999999
+ ],
+ "top": 82.1,
+ "inner_top": 80.46492940995117,
+ "lip_top": 80.3647616560572
+}
+== steps
+steps: ['s01_open_shell', 's08a_keymat', 's08b_board_in', 's08c_magnet_flush', 's09_battery', 's10a_cover_lowering', 's10b_closed_back']
+
+   11 s

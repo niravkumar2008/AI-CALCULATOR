@@ -31,7 +31,7 @@ void enhanceWriting(std::vector<uint8_t>& img, int& w, int& h, long maxPixels, v
           v = i;
           break;
         }
-      paper[by * bw + bx] = std::max(16, v * 4 + 2);
+      paper[by * bw + bx] = static_cast<float>(std::max(16, v * 4 + 2));
     }
     pause(by * kBlock + kBlock - 1);
   }

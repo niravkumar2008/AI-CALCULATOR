@@ -1,0 +1,8 @@
+(version 1)
+
+# The camera connector J1 has 0.5 mm pitch pads (0.2 mm gaps between pads). Its
+# wires keep 0.15 mm where they fan out of the pads, inside the "J1 fanout" area
+# (a few mm); the rest of the camera bus keeps its 0.2 mm netclass clearance.
+(rule "J1 fanout clearance"
+  (condition "A.intersectsArea('J1 fanout') && B.intersectsArea('J1 fanout')")
+  (constraint clearance (min 0.15mm)))

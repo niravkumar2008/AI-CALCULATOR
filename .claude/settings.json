@@ -21,6 +21,17 @@
           }
         ]
       }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "python .claude/hooks/graph_refresh.py",
+            "timeout": 120
+          }
+        ]
+      }
     ]
   }
 }

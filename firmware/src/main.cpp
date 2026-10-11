@@ -112,6 +112,8 @@ const char* failureText(Failure f) {
     case Failure::ApiError: return "Claude refused the request.";
     case Failure::BadReply: return "Claude's reply couldn't be read.";
     case Failure::Camera: return "Couldn't take the photo.";
+    case Failure::Account: return "The AI account refused the request.";
+    case Failure::LowBattery: return "Battery too low for AI.";
   }
   return "The scan failed.";
 }
@@ -145,8 +147,8 @@ struct Button {
 // the lines due are pressed together and the screen skips to where it should be.
 constexpr uint32_t kRepeatDelayMs = 400;
 constexpr uint32_t kRepeatEveryMs = 120;
-Button g_buttons[] = {{PIN_KEY_EQ, DKey::Eq, false, 0}, {PIN_KEY_AC, DKey::AC, false, 0},
-                      {PIN_KEY_UP, DKey::Up, false, 0}, {PIN_KEY_DOWN, DKey::Down, false, 0}};
+Button g_buttons[] = {{PIN_KEY_EQ, DKey::Eq, false, 0, 0}, {PIN_KEY_AC, DKey::AC, false, 0, 0},
+                      {PIN_KEY_UP, DKey::Up, false, 0, 0}, {PIN_KEY_DOWN, DKey::Down, false, 0, 0}};
 
 void IRAM_ATTR onFall(void* arg) {
   Button* b = static_cast<Button*>(arg);

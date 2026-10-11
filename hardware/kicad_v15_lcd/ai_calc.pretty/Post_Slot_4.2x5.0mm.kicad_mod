@@ -1,0 +1,59 @@
+(footprint "Post_Slot_4.2x5.0mm"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "H**"
+		(at 0 -3.6 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "9790512a-798c-40e7-a88a-4656e01554ff")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "Post slot 4.2 x 5.0 (Casio peg, covers photo + CAD post positions)"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "e6503e16-0deb-4817-b748-93709b610a47")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "b6c5d926-5b41-450e-9fd2-957d733b88c4")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "916b45ad-6c58-483a-955b-2bcb70c3ed43")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr exclude_from_pos_files exclude_from_bom)
+	(duplicate_pad_numbers_are_jumpers no)
+	(pad "" np_thru_hole oval
+		(at 0 0)
+		(size 4.2 5)
+		(drill oval 4.2 5)
+		(layers "*.Mask")
+		(uuid "1cbe6ca6-ba9b-43c3-a8fe-ce7b1aa87b1a")
+	)
+	(embedded_fonts no)
+)

@@ -1,0 +1,11194 @@
+{
+ "time": "2026-10-06 10:35:01",
+ "limit": 0.2,
+ "step": {
+  "path": "C:\\Users\\r_kas\\OneDrive\\Documents\\GitHub\\AI-CALCULATOR\\hardware\\fab\\ai_calc_board.step",
+  "mtime": 1791139839.6046617,
+  "mtime_s": "2026-10-04 14:50:39",
+  "thickness": 0.71,
+  "ox": 0.0,
+  "oy": -7.105427357601002e-15,
+  "size_err": 2.842170943040401e-14,
+  "n_bodies": 155
+ },
+ "rows": [
+  {
+   "part": [
+    "LiPo battery",
+    "LiPo pouch (Adafruit #1317)"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 0.0,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.2,
+    77.14,
+    1.0
+   ],
+   "verdict": "PASS (intended contact: rests on the floor (0.1 mm tape under it, not modelled))"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 0.1,
+   "overlap_mm3": 0.0,
+   "at": [
+    19.4,
+    -45.95,
+    7.71
+   ],
+   "verdict": "FAIL (< 0.2 mm)"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.11,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.87,
+    -46.55,
+    7.71
+   ],
+   "verdict": "PASS (intended contact: mat lies on the key side of the board (0.11 in the model))"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet face flange"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 0.25,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.5,
+    80.67,
+    9.2
+   ],
+   "verdict": "PASS (intended contact: face glued in the U-notch (0.25 per side, glue fills it))"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper bottom glass"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 0.286,
+   "overlap_mm3": 0.0,
+   "at": [
+    27.25,
+    60.55,
+    8.1
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "LiPo battery",
+    "LiPo pouch (Adafruit #1317)"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 0.3,
+   "overlap_mm3": 0.0,
+   "at": [
+    -12.43,
+    67.94,
+    4.8
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J4"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 0.414,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.7,
+    63.52,
+    1.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "LiPo battery",
+    "LiPo pouch (Adafruit #1317)"
+   ],
+   "shell": [
+    "Battery lid",
+    "Battery lid"
+   ],
+   "gap": 0.42,
+   "overlap_mm3": 0.0,
+   "at": [
+    -12.3,
+    62.59,
+    1.0
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "Camera FPC"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 0.475,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.4,
+    20.23,
+    5.48
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet plate"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 0.55,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.3,
+    80.68,
+    8.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper film + cover"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 0.586,
+   "overlap_mm3": 0.0,
+   "at": [
+    27.25,
+    60.25,
+    8.65
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 0.655,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.82,
+    -14.45,
+    5.66
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Camera module",
+    "Camera lens barrel"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 0.707,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.0,
+    43.84,
+    1.5
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet face flange"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 0.71,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.5,
+    80.67,
+    2.2
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "LiPo lead black"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 0.79,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.99,
+    67.1,
+    1.79
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "LiPo battery",
+    "JST-PH plug (in J4)"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 0.803,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.4,
+    58.67,
+    2.0
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R10"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.86,
+    -24.71,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R19"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.95,
+    -26.72,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C18"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    12.57,
+    -26.76,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C13"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.77,
+    -15.96,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C17"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.5,
+    -17.49,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R17"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.46,
+    21.09,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C16"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.5,
+    -13.09,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C31"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.37,
+    -5.76,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.83,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.83,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.83,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.83,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.82,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.83,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.18,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.18,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.67,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.67,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    6.43,
+    -21.31,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R16"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    23.75,
+    -2.53,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "FB1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.4,
+    -15.83,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U5"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.87,
+    -22.86,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C10"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.17,
+    -18.56,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C12"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.57,
+    -18.56,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R15"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.95,
+    -2.53,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C15"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.77,
+    -22.16,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C11"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.77,
+    -18.56,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R14"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.15,
+    -2.53,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C14"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.17,
+    -22.16,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R13"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    27.35,
+    -2.53,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U4"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.87,
+    -19.26,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D2"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.16,
+    -15.39,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R9"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.35,
+    -26.72,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R18"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.15,
+    -26.72,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U6"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.85,
+    -8.61,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R8"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.75,
+    -26.72,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.935,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.48,
+    -18.49,
+    6.88
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 0.935,
+   "overlap_mm3": 0.0,
+   "at": [
+    7.48,
+    -18.49,
+    6.88
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 0.95,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.5,
+    -17.11,
+    4.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet plate"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.01,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.7,
+    79.97,
+    2.5
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 1.055,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.64,
+    -18.08,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 1.055,
+   "overlap_mm3": 0.0,
+   "at": [
+    6.64,
+    -18.08,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.084,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.68,
+    -17.21,
+    5.25
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.084,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.33,
+    -17.21,
+    5.25
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.085,
+   "overlap_mm3": 0.0,
+   "at": [
+    35.25,
+    49.64,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.099,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.18,
+    -17.21,
+    5.25
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.099,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.17,
+    -17.21,
+    5.25
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.132,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.68,
+    -17.21,
+    5.25
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.132,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.67,
+    -17.21,
+    5.25
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.184,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.18,
+    -17.21,
+    5.25
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.184,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.17,
+    -17.21,
+    5.25
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C6"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.185,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.03,
+    73.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.185,
+   "overlap_mm3": 0.0,
+   "at": [
+    27.83,
+    72.79,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.185,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.73,
+    61.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.186,
+   "overlap_mm3": 0.0,
+   "at": [
+    16.5,
+    60.81,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D7"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.186,
+   "overlap_mm3": 0.0,
+   "at": [
+    28.9,
+    65.04,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D6"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.198,
+   "overlap_mm3": 0.0,
+   "at": [
+    21.54,
+    60.67,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.211,
+   "overlap_mm3": 0.0,
+   "at": [
+    14.99,
+    60.59,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.251,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.37,
+    72.64,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.253,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.68,
+    -17.21,
+    5.25
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.253,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.67,
+    -17.21,
+    5.25
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.268,
+   "overlap_mm3": 0.0,
+   "at": [
+    12.95,
+    62.09,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.34,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.18,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.34,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.17,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C16"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.5,
+    -12.76,
+    6.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C8"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.441,
+   "overlap_mm3": 0.0,
+   "at": [
+    25.0,
+    60.03,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.444,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.68,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.444,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.67,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Camera module",
+    "Camera AF motor (VCM)"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.5,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.5,
+    43.84,
+    2.5
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.566,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.18,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.566,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.17,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J4"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.583,
+   "overlap_mm3": 0.0,
+   "at": [
+    6.65,
+    62.69,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.602,
+   "overlap_mm3": 0.0,
+   "at": [
+    -24.89,
+    15.7,
+    7.0
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper active area (marker)"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.607,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.83,
+    57.8,
+    9.02
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "LiPo battery",
+    "JST-PH plug (in J4)"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.686,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.4,
+    61.64,
+    6.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.704,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.68,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.704,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.67,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 1.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.3,
+    -20.71,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "LiPo lead red"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.718,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.4,
+    58.15,
+    3.69
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper active area (marker)"
+   ],
+   "shell": [
+    "Window mask",
+    "Window mask (black vinyl, inside the lens)"
+   ],
+   "gap": 1.79,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.83,
+    57.8,
+    9.02
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper film + cover"
+   ],
+   "shell": [
+    "Solar cell (dummy)",
+    "Solar cell (dummy)"
+   ],
+   "gap": 1.791,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.45,
+    60.25,
+    9.0
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper bottom glass"
+   ],
+   "shell": [
+    "Solar cell (dummy)",
+    "Solar cell (dummy)"
+   ],
+   "gap": 1.797,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.45,
+    60.55,
+    8.65
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper film + cover"
+   ],
+   "shell": [
+    "Window mask",
+    "Window mask (black vinyl, inside the lens)"
+   ],
+   "gap": 1.81,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.23,
+    60.25,
+    9.0
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet rear block"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.822,
+   "overlap_mm3": 0.0,
+   "at": [
+    30.01,
+    78.68,
+    3.2
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J4"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.828,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.7,
+    62.93,
+    6.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J4"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.828,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.45,
+    62.93,
+    6.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "Camera FPC"
+   ],
+   "shell": [
+    "Keymat",
+    "Keymat (rubber)"
+   ],
+   "gap": 1.845,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.0,
+    -18.89,
+    5.97
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.849,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.63,
+    68.54,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.859,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.18,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 1.859,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.17,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper driver IC + sealant"
+   ],
+   "shell": [
+    "Window mask",
+    "Window mask (black vinyl, inside the lens)"
+   ],
+   "gap": 1.86,
+   "overlap_mm3": 0.0,
+   "at": [
+    -25.17,
+    53.45,
+    8.95
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.876,
+   "overlap_mm3": 0.0,
+   "at": [
+    19.55,
+    63.01,
+    6.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "E-paper FPC"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.889,
+   "overlap_mm3": 0.0,
+   "at": [
+    -29.88,
+    39.7,
+    8.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper active area (marker)"
+   ],
+   "shell": [
+    "Window lens",
+    "Window lens (clear)"
+   ],
+   "gap": 1.895,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.83,
+    57.8,
+    9.02
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key Abs"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -24.57,
+    3.34,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key RCL"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -24.17,
+    -24.42,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key a/b"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -24.17,
+    -5.48,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 1"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -22.79,
+    -58.29,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 7"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -22.79,
+    -36.04,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ALPHA"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -20.33,
+    18.14,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key o''"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.58,
+    -14.89,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ."
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -18.9,
+    -62.07,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 5"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -18.9,
+    -39.81,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.85,
+    -24.42,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key x^2"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.85,
+    -5.48,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key AC"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    28.59,
+    -36.04,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 6"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.9,
+    -47.16,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    7.75,
+    -24.42,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key x^n"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    7.75,
+    -5.48,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key +"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.75,
+    -58.29,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key DEL"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.75,
+    -36.04,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key MODE"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.73,
+    18.14,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key cos"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    18.48,
+    -14.89,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key log_a"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    28.67,
+    3.34,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key M+"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.07,
+    -24.42,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ln"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.07,
+    -5.48,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key -"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    28.59,
+    -58.29,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key /"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.8,
+    -46.45,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ="
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    19.64,
+    -62.07,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key tan"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.07,
+    -14.89,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ON"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    22.32,
+    18.14,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key log"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.63,
+    -0.23,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    18.48,
+    -24.42,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key x^-1"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    18.08,
+    3.34,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key x"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    7.95,
+    -38.66,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key Ans"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.75,
+    -69.42,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    7.75,
+    -14.89,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 9"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.9,
+    -36.04,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 3"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.9,
+    -58.29,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key x10^x"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.9,
+    -69.42,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.85,
+    -14.89,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 8"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -9.95,
+    -36.04,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 2"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -9.95,
+    -58.29,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sqrt"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.58,
+    -5.48,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ENG"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.58,
+    -24.42,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key x^3"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.98,
+    3.34,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 4"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -19.64,
+    -39.81,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 0"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -19.64,
+    -66.27,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key (-)"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -24.17,
+    -14.89,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key SHIFT"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -30.92,
+    18.14,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key REPLAY"
+   ],
+   "gap": 1.91,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.85,
+    13.38,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper film + cover"
+   ],
+   "shell": [
+    "Window lens",
+    "Window lens (clear)"
+   ],
+   "gap": 1.915,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.23,
+    60.25,
+    9.0
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper driver IC + sealant"
+   ],
+   "shell": [
+    "Window lens",
+    "Window lens (clear)"
+   ],
+   "gap": 1.965,
+   "overlap_mm3": 0.0,
+   "at": [
+    -25.17,
+    53.45,
+    8.95
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet rear block"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 1.977,
+   "overlap_mm3": 0.0,
+   "at": [
+    30.03,
+    78.68,
+    8.2
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet neck"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.013,
+   "overlap_mm3": 0.0,
+   "at": [
+    30.03,
+    79.98,
+    7.45
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.029,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.68,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.029,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.67,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Screws",
+    "Screw mid R"
+   ],
+   "gap": 2.032,
+   "overlap_mm3": 0.0,
+   "at": [
+    21.61,
+    15.7,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Screws",
+    "Screw mid L"
+   ],
+   "gap": 2.032,
+   "overlap_mm3": 0.0,
+   "at": [
+    -24.89,
+    15.7,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "E-paper FPC"
+   ],
+   "shell": [
+    "Window mask",
+    "Window mask (black vinyl, inside the lens)"
+   ],
+   "gap": 2.04,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.97,
+    52.2,
+    8.77
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet pins (straightened)"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.1,
+   "overlap_mm3": 0.0,
+   "at": [
+    23.75,
+    73.84,
+    6.0
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.108,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.53,
+    -16.91,
+    5.42
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C7"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.125,
+   "overlap_mm3": 0.0,
+   "at": [
+    30.61,
+    62.64,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "E-paper FPC"
+   ],
+   "shell": [
+    "Window lens",
+    "Window lens (clear)"
+   ],
+   "gap": 2.145,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.97,
+    52.2,
+    8.77
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Camera module",
+    "Camera lens glass"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.156,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.4,
+    43.84,
+    1.49
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper bottom glass"
+   ],
+   "shell": [
+    "Window mask",
+    "Window mask (black vinyl, inside the lens)"
+   ],
+   "gap": 2.16,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.53,
+    31.46,
+    8.65
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.215,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.17,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C32"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.224,
+   "overlap_mm3": 0.0,
+   "at": [
+    32.22,
+    58.54,
+    6.89
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper bottom glass"
+   ],
+   "shell": [
+    "Window lens",
+    "Window lens (clear)"
+   ],
+   "gap": 2.265,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.53,
+    31.46,
+    8.65
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Solar cell (dummy)",
+    "Solar cell (dummy)"
+   ],
+   "gap": 2.29,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.49,
+    62.45,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R4"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.338,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.85,
+    63.64,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R10"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.86,
+    -24.52,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R19"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.95,
+    -25.92,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C18"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    12.57,
+    -25.96,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C13"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.23,
+    -15.96,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R17"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.46,
+    21.19,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C31"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.37,
+    -4.96,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.18,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.43,
+    -18.12,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "FB1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.4,
+    -15.48,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U5"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.33,
+    -20.46,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C10"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.17,
+    -17.62,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C12"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.57,
+    -17.62,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C15"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.0,
+    -22.16,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C11"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.8,
+    -18.56,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U4"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.33,
+    -19.17,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.1,
+    -14.99,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R9"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.35,
+    -25.92,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R18"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.65,
+    -26.68,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U6"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    25.05,
+    -6.68,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R8"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.385,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.75,
+    -25.92,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C17"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.386,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.5,
+    -17.03,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.386,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.386,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.46,
+    -18.12,
+    6.88
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.67,
+    -17.21,
+    5.26
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    7.46,
+    -18.12,
+    6.88
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet neck"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.442,
+   "overlap_mm3": 0.0,
+   "at": [
+    14.0,
+    79.98,
+    3.95
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.454,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.18,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.454,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.18,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.505,
+   "overlap_mm3": 0.0,
+   "at": [
+    16.73,
+    44.17,
+    4.5
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.535,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.64,
+    -17.62,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.535,
+   "overlap_mm3": 0.0,
+   "at": [
+    6.64,
+    -17.62,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R20"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.543,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.16,
+    58.59,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.545,
+   "overlap_mm3": 0.0,
+   "at": [
+    6.52,
+    -16.91,
+    5.42
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.67,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.17,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.67,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.17,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.67,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.17,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.67,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.17,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.67,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.83,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.33,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.83,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.33,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.83,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.33,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.83,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.33,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.585,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.83,
+    -18.12,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "LiPo lead red"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.686,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.99,
+    61.64,
+    5.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R10"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.86,
+    -24.42,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R17"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ON"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.33,
+    21.09,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C16"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.5,
+    -13.09,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.83,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.83,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.83,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.83,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.82,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.7,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.7,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.18,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.67,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.67,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.43,
+    -18.22,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    6.42,
+    -18.22,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R16"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ln"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    23.75,
+    -2.53,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U5"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.87,
+    -22.86,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C10"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.17,
+    -18.56,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C12"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.57,
+    -18.56,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R15"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ln"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.95,
+    -2.53,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C15"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.9,
+    -22.16,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R14"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ln"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.15,
+    -2.53,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C14"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.17,
+    -22.16,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R13"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ln"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    27.35,
+    -2.53,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U4"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.87,
+    -19.26,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D2"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.16,
+    -14.74,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U6"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key tan"
+   ],
+   "gap": 2.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.0,
+    -8.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C11"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.706,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.77,
+    -18.56,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U6"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ln"
+   ],
+   "gap": 2.706,
+   "overlap_mm3": 0.0,
+   "at": [
+    25.12,
+    -5.56,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "FB1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key cos"
+   ],
+   "gap": 2.713,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.4,
+    -15.09,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C31"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key log"
+   ],
+   "gap": 2.714,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.37,
+    -4.76,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.722,
+   "overlap_mm3": 0.0,
+   "at": [
+    17.96,
+    64.09,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.33,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.735,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.48,
+    -18.22,
+    6.88
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.735,
+   "overlap_mm3": 0.0,
+   "at": [
+    7.48,
+    -18.22,
+    6.88
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C16"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.775,
+   "overlap_mm3": 0.0,
+   "at": [
+    -8.5,
+    -13.09,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C17"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.802,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.5,
+    -17.5,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C18"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key DEL"
+   ],
+   "gap": 2.815,
+   "overlap_mm3": 0.0,
+   "at": [
+    12.57,
+    -26.76,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R19"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key DEL"
+   ],
+   "gap": 2.823,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.95,
+    -26.73,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R9"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key DEL"
+   ],
+   "gap": 2.823,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.35,
+    -26.73,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R18"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key DEL"
+   ],
+   "gap": 2.823,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.15,
+    -26.73,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R8"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key DEL"
+   ],
+   "gap": 2.823,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.75,
+    -26.73,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C13"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 2.836,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.77,
+    -14.96,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.842,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.842,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.18,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 2.859,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.53,
+    -18.08,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 2.859,
+   "overlap_mm3": 0.0,
+   "at": [
+    6.53,
+    -18.08,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R16"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.893,
+   "overlap_mm3": 0.0,
+   "at": [
+    23.75,
+    -1.56,
+    6.88
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R5"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 2.903,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.4,
+    58.19,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "L1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.905,
+   "overlap_mm3": 0.0,
+   "at": [
+    -11.4,
+    38.71,
+    4.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.915,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.35,
+    44.25,
+    4.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.915,
+   "overlap_mm3": 0.0,
+   "at": [
+    -22.95,
+    44.27,
+    4.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.915,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.35,
+    -21.51,
+    4.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C17"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 2.954,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.5,
+    -17.01,
+    6.42
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C15"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 2.956,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.24,
+    -22.16,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C11"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 2.992,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.24,
+    -18.56,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet contact pads"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.0,
+   "overlap_mm3": 0.0,
+   "at": [
+    23.75,
+    81.62,
+    6.45
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U5"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 3.002,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.2,
+    -20.46,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U4"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 3.002,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.2,
+    -19.26,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R8"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 3.028,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.75,
+    -25.78,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 3.034,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 3.034,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C18"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 3.035,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.03,
+    -25.76,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U6"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key cos"
+   ],
+   "gap": 3.063,
+   "overlap_mm3": 0.0,
+   "at": [
+    22.01,
+    -9.55,
+    6.89
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C31"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ln"
+   ],
+   "gap": 3.083,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.84,
+    -4.76,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Screws",
+    "Screw bottom L"
+   ],
+   "gap": 3.089,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.39,
+    -71.8,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R19"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 3.123,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.95,
+    -25.78,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C13"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.127,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.75,
+    -14.96,
+    6.42
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper driver IC + sealant"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.127,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.67,
+    53.45,
+    8.95
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Screws",
+    "Screw bottom R"
+   ],
+   "gap": 3.131,
+   "overlap_mm3": 0.0,
+   "at": [
+    23.43,
+    -71.75,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    44.29,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    43.94,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    43.44,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C27"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.185,
+   "overlap_mm3": 0.0,
+   "at": [
+    -11.2,
+    29.74,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.185,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.6,
+    -21.51,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D5"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.185,
+   "overlap_mm3": 0.0,
+   "at": [
+    -12.76,
+    29.99,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.191,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.15,
+    42.94,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.216,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    44.79,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R9"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 3.228,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.85,
+    -25.78,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.279,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.15,
+    42.44,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C13"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key cos"
+   ],
+   "gap": 3.284,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.24,
+    -14.96,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 3.29,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.18,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 3.29,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.18,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "Camera FPC"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.325,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.5,
+    -15.47,
+    5.97
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.332,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    45.29,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U4"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key cos"
+   ],
+   "gap": 3.347,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.26,
+    -16.7,
+    6.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C14"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.359,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.17,
+    -22.16,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U7"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.365,
+   "overlap_mm3": 0.0,
+   "at": [
+    17.08,
+    57.04,
+    5.37
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J4"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.365,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.7,
+    62.89,
+    4.37
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J4"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.365,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.2,
+    63.69,
+    4.37
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U5"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.365,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.92,
+    -21.56,
+    5.37
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.377,
+   "overlap_mm3": 0.0,
+   "at": [
+    6.41,
+    -16.91,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.377,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.42,
+    -16.91,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R15"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.38,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.95,
+    -1.57,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R14"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.38,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.15,
+    -1.57,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R13"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.38,
+   "overlap_mm3": 0.0,
+   "at": [
+    27.35,
+    -1.57,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.383,
+   "overlap_mm3": 0.0,
+   "at": [
+    28.11,
+    31.14,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D2"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key o''"
+   ],
+   "gap": 3.384,
+   "overlap_mm3": 0.0,
+   "at": [
+    -9.9,
+    -14.74,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U6"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key log"
+   ],
+   "gap": 3.405,
+   "overlap_mm3": 0.0,
+   "at": [
+    22.01,
+    -5.57,
+    6.89
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    27.83,
+    68.54,
+    4.42
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R18"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 3.426,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.15,
+    -25.78,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.438,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.15,
+    41.94,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C17"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.446,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.5,
+    -17.02,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet contact pads"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.46,
+   "overlap_mm3": 0.0,
+   "at": [
+    23.75,
+    81.62,
+    4.95
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet rear block"
+   ],
+   "shell": [
+    "Screws",
+    "Screw corner R"
+   ],
+   "gap": 3.466,
+   "overlap_mm3": 0.0,
+   "at": [
+    31.0,
+    77.67,
+    3.2
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C9"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.495,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.77,
+    31.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.499,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.65,
+    -16.91,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.499,
+   "overlap_mm3": 0.0,
+   "at": [
+    6.64,
+    -16.91,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R6"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.507,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.15,
+    31.46,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R7"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.507,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.95,
+    31.46,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.516,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    45.79,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.538,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.63,
+    31.54,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C13"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 3.595,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.77,
+    -15.96,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.598,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.53,
+    -18.08,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 3.598,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 3.598,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.68,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "FB1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 3.605,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.4,
+    -15.85,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R18"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 3.629,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.65,
+    -25.78,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C12"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 3.646,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.04,
+    -18.56,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D4"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.655,
+   "overlap_mm3": 0.0,
+   "at": [
+    -8.32,
+    32.1,
+    5.66
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.655,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.42,
+    32.1,
+    5.66
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.66,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.15,
+    41.44,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C32"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.665,
+   "overlap_mm3": 0.0,
+   "at": [
+    31.01,
+    57.34,
+    5.67
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.665,
+   "overlap_mm3": 0.0,
+   "at": [
+    28.11,
+    31.54,
+    5.67
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D5"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.675,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.92,
+    30.92,
+    5.66
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D4"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.685,
+   "overlap_mm3": 0.0,
+   "at": [
+    -7.66,
+    32.38,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.685,
+   "overlap_mm3": 0.0,
+   "at": [
+    -12.76,
+    32.38,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.685,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.47,
+    32.29,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "FB1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.705,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.8,
+    -15.08,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D2"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 3.712,
+   "overlap_mm3": 0.0,
+   "at": [
+    -6.75,
+    -15.79,
+    6.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.718,
+   "overlap_mm3": 0.0,
+   "at": [
+    14.46,
+    58.03,
+    5.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.83,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    -5.33,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.83,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.33,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.83,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    -3.33,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.17,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    3.67,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.17,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.67,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.17,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.731,
+   "overlap_mm3": 0.0,
+   "at": [
+    5.67,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.732,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.83,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.732,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.82,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.751,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.33,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.751,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.32,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.758,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    46.29,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C10"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key cos"
+   ],
+   "gap": 3.802,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.17,
+    -17.56,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.805,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.83,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.805,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.82,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C33"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.825,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.3,
+    54.78,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C20"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.849,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.6,
+    35.35,
+    5.31
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C12"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.851,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.57,
+    -17.56,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "E-paper FPC"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.855,
+   "overlap_mm3": 0.0,
+   "at": [
+    -24.73,
+    44.27,
+    5.86
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U7"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.863,
+   "overlap_mm3": 0.0,
+   "at": [
+    17.67,
+    56.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 3.894,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.33,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 3.894,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.32,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R10"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key DEL"
+   ],
+   "gap": 3.913,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.86,
+    -24.71,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.925,
+   "overlap_mm3": 0.0,
+   "at": [
+    -14.13,
+    42.4,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.932,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.15,
+    40.94,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "L1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.94,
+   "overlap_mm3": 0.0,
+   "at": [
+    -10.73,
+    35.18,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.944,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.25,
+    42.32,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 3.946,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ("
+   ],
+   "gap": 3.946,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.17,
+    -22.23,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R9"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 3.95,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.35,
+    -25.77,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.954,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.23,
+    42.28,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.957,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.19,
+    42.27,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.965,
+   "overlap_mm3": 0.0,
+   "at": [
+    6.53,
+    -18.08,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.965,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.25,
+    42.24,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.967,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.17,
+    42.23,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.972,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.22,
+    42.21,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C13"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 3.975,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.24,
+    -15.96,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.979,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.18,
+    42.19,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.981,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.25,
+    42.18,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C16"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key o''"
+   ],
+   "gap": 3.985,
+   "overlap_mm3": 0.0,
+   "at": [
+    -8.5,
+    -12.63,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.988,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.19,
+    42.16,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.988,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.25,
+    42.15,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C20"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 3.995,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.6,
+    35.33,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.997,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.18,
+    42.13,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 3.997,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.25,
+    42.13,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U4"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.001,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.95,
+    -19.39,
+    5.37
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.014,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.21,
+    42.07,
+    5.81
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 4.018,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.83,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 4.018,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.82,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C31"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key cos"
+   ],
+   "gap": 4.031,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.37,
+    -5.76,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D6"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.037,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.93,
+    59.63,
+    5.67
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.048,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    46.79,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Ribbons and wires",
+    "LiPo lead black"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.086,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.99,
+    61.64,
+    4.01
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C11"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 4.097,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.76,
+    -17.56,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.115,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.63,
+    31.54,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C26"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.122,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    44.54,
+    6.12
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.134,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.09,
+    68.54,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C19"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.164,
+   "overlap_mm3": 0.0,
+   "at": [
+    -8.17,
+    42.71,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Screws",
+    "Screw corner R"
+   ],
+   "gap": 4.173,
+   "overlap_mm3": 0.0,
+   "at": [
+    29.35,
+    75.67,
+    7.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    51.94,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    51.44,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    50.94,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    50.44,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    49.94,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    49.44,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    48.94,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    48.44,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    47.94,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    47.44,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.175,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.15,
+    40.44,
+    5.17
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 4.177,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.33,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 4.177,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.32,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D7"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.192,
+   "overlap_mm3": 0.0,
+   "at": [
+    32.13,
+    64.71,
+    5.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C27"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.197,
+   "overlap_mm3": 0.0,
+   "at": [
+    -11.2,
+    30.49,
+    6.12
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U4"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 4.21,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.2,
+    -16.86,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R19"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key S<>D"
+   ],
+   "gap": 4.24,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.45,
+    -25.77,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C17"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ENG"
+   ],
+   "gap": 4.247,
+   "overlap_mm3": 0.0,
+   "at": [
+    -8.5,
+    -17.5,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.268,
+   "overlap_mm3": 0.0,
+   "at": [
+    21.55,
+    65.74,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.268,
+   "overlap_mm3": 0.0,
+   "at": [
+    19.01,
+    65.74,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C33"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.275,
+   "overlap_mm3": 0.0,
+   "at": [
+    27.3,
+    54.8,
+    5.67
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C28"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.288,
+   "overlap_mm3": 0.0,
+   "at": [
+    -19.4,
+    42.09,
+    6.12
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet pins (straightened)"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.291,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.24,
+    77.68,
+    5.4
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R19"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key 9"
+   ],
+   "gap": 4.303,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.95,
+    -26.74,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C8"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.314,
+   "overlap_mm3": 0.0,
+   "at": [
+    25.0,
+    59.26,
+    6.12
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    51.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    51.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    50.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    50.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    49.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    49.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    48.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    48.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    47.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    47.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    46.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    46.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    45.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    45.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    44.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    44.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    43.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    43.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    42.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    42.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    41.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    41.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    40.94,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.32,
+   "overlap_mm3": 0.0,
+   "at": [
+    -28.07,
+    40.44,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C12"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.345,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.55,
+    -17.56,
+    6.42
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.365,
+   "overlap_mm3": 0.0,
+   "at": [
+    28.68,
+    60.84,
+    5.37
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.365,
+   "overlap_mm3": 0.0,
+   "at": [
+    14.78,
+    70.14,
+    5.37
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C34"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.369,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.86,
+    54.59,
+    5.67
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 4.37,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.18,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 4.37,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.17,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "FB1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 4.373,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.8,
+    -15.85,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C31"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key tan"
+   ],
+   "gap": 4.406,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.84,
+    -5.76,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C9"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.77,
+    31.44,
+    6.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.47,
+    32.29,
+    6.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C15"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.77,
+    -22.16,
+    6.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.425,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.92,
+    53.43,
+    5.42
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.425,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.92,
+    38.8,
+    5.42
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "FB1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.451,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.8,
+    -15.06,
+    6.13
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R12"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.465,
+   "overlap_mm3": 0.0,
+   "at": [
+    -14.76,
+    44.04,
+    6.46
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D2"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key ENG"
+   ],
+   "gap": 4.485,
+   "overlap_mm3": 0.0,
+   "at": [
+    -9.9,
+    -15.39,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C25"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.505,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    46.13,
+    6.12
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Magnet connector",
+    "Magnet neck"
+   ],
+   "shell": [
+    "Screws",
+    "Screw corner R"
+   ],
+   "gap": 4.557,
+   "overlap_mm3": 0.0,
+   "at": [
+    31.0,
+    78.67,
+    3.95
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R6"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.15,
+    31.47,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R5"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.4,
+    57.69,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R7"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.95,
+    31.47,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R20"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.568,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.16,
+    58.09,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.57,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.65,
+    52.19,
+    6.89
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 4.594,
+   "overlap_mm3": 0.0,
+   "at": [
+    -0.68,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 4.594,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.67,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C11"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key cos"
+   ],
+   "gap": 4.596,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.24,
+    -17.56,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C5"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 4.653,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.73,
+    66.14,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "D1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.655,
+   "overlap_mm3": 0.0,
+   "at": [
+    21.98,
+    63.13,
+    5.66
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C18"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key )"
+   ],
+   "gap": 4.658,
+   "overlap_mm3": 0.0,
+   "at": [
+    12.56,
+    -25.76,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C7"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.66,
+   "overlap_mm3": 0.0,
+   "at": [
+    31.39,
+    61.34,
+    6.12
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.715,
+   "overlap_mm3": 0.0,
+   "at": [
+    12.74,
+    62.73,
+    5.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R17"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.76,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.46,
+    21.09,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Camera module",
+    "Camera sensor board"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.772,
+   "overlap_mm3": 0.0,
+   "at": [
+    4.25,
+    44.42,
+    5.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 4.847,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.18,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 4.847,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.17,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "U6"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.89,
+   "overlap_mm3": 0.0,
+   "at": [
+    25.99,
+    -9.55,
+    5.89
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.967,
+   "overlap_mm3": 0.0,
+   "at": [
+    17.0,
+    59.86,
+    6.57
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C29"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.979,
+   "overlap_mm3": 0.0,
+   "at": [
+    -19.4,
+    40.5,
+    6.12
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C11"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 4.999,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.75,
+    -17.56,
+    6.43
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C34"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 5.089,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.04,
+    54.59,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C14"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.106,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.16,
+    -21.96,
+    6.42
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C6"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.115,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.03,
+    72.14,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C23"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.115,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    49.34,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C22"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.115,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    50.94,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C21"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.115,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    52.54,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C5"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.115,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.73,
+    66.14,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C24"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.115,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    47.74,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C30"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.115,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    38.14,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 5.127,
+   "overlap_mm3": 0.0,
+   "at": [
+    -1.68,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 5.127,
+   "overlap_mm3": 0.0,
+   "at": [
+    1.67,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C12"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key cos"
+   ],
+   "gap": 5.225,
+   "overlap_mm3": 0.0,
+   "at": [
+    9.04,
+    -17.56,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C17"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key o''"
+   ],
+   "gap": 5.243,
+   "overlap_mm3": 0.0,
+   "at": [
+    -8.5,
+    -17.02,
+    6.91
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 5.382,
+   "overlap_mm3": 0.0,
+   "at": [
+    -27.35,
+    53.21,
+    6.11
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R10"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.384,
+   "overlap_mm3": 0.0,
+   "at": [
+    14.92,
+    -24.21,
+    6.57
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C18"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    12.57,
+    -26.76,
+    6.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C31"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    20.37,
+    -5.76,
+    6.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C10"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    15.17,
+    -18.56,
+    6.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C4"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.415,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.8,
+    50.81,
+    6.41
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key sin"
+   ],
+   "gap": 5.431,
+   "overlap_mm3": 0.0,
+   "at": [
+    -2.18,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J1"
+   ],
+   "shell": [
+    "Keycaps",
+    "Key hyp"
+   ],
+   "gap": 5.431,
+   "overlap_mm3": 0.0,
+   "at": [
+    2.17,
+    -17.23,
+    6.71
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R19"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    8.95,
+    -26.72,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R11"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    -14.98,
+    38.84,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    17.96,
+    64.09,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R16"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    23.75,
+    -2.53,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R15"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.95,
+    -2.53,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R1"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    22.87,
+    50.79,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R14"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.15,
+    -2.53,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R13"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    27.35,
+    -2.53,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R4"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.85,
+    63.67,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R9"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    11.35,
+    -26.72,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R18"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    10.15,
+    -26.72,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R8"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.565,
+   "overlap_mm3": 0.0,
+   "at": [
+    13.75,
+    -26.72,
+    6.56
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.615,
+   "overlap_mm3": 0.0,
+   "at": [
+    26.63,
+    65.74,
+    6.62
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.615,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.09,
+    65.74,
+    6.62
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.615,
+   "overlap_mm3": 0.0,
+   "at": [
+    21.55,
+    65.74,
+    6.62
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J3"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.615,
+   "overlap_mm3": 0.0,
+   "at": [
+    19.01,
+    65.74,
+    6.62
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.633,
+   "overlap_mm3": 0.0,
+   "at": [
+    -25.42,
+    53.59,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C30"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 5.683,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    38.12,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.765,
+   "overlap_mm3": 0.0,
+   "at": [
+    -24.33,
+    38.64,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 5.847,
+   "overlap_mm3": 0.0,
+   "at": [
+    -24.33,
+    53.59,
+    6.88
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper bottom glass"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 5.95,
+   "overlap_mm3": 0.0,
+   "at": [
+    7.0,
+    44.42,
+    7.95
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C21"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 6.056,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    53.3,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 6.074,
+   "overlap_mm3": 0.0,
+   "at": [
+    -25.52,
+    39.34,
+    6.88
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R11"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 6.243,
+   "overlap_mm3": 0.0,
+   "at": [
+    -14.98,
+    38.84,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 6.578,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.92,
+    52.76,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C4"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 6.641,
+   "overlap_mm3": 0.0,
+   "at": [
+    24.8,
+    50.81,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper film + cover"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 6.65,
+   "overlap_mm3": 0.0,
+   "at": [
+    7.0,
+    44.42,
+    8.65
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper driver IC + sealant"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 6.65,
+   "overlap_mm3": 0.0,
+   "at": [
+    -25.17,
+    44.26,
+    8.65
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "J2"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 6.841,
+   "overlap_mm3": 0.0,
+   "at": [
+    -23.92,
+    39.47,
+    6.76
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Camera module",
+    "Camera sensor board"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 6.871,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.25,
+    39.59,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C29"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 6.976,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    39.71,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "E-paper panel",
+    "E-paper active area (marker)"
+   ],
+   "shell": [
+    "Back cover",
+    "Back cover"
+   ],
+   "gap": 7.0,
+   "overlap_mm3": 0.0,
+   "at": [
+    7.0,
+    44.42,
+    9.0
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C22"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 7.387,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    51.71,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Camera module",
+    "Camera AF motor (VCM)"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 7.575,
+   "overlap_mm3": 0.0,
+   "at": [
+    -4.1,
+    39.74,
+    5.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R1"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 7.743,
+   "overlap_mm3": 0.0,
+   "at": [
+    22.87,
+    51.29,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 7.784,
+   "overlap_mm3": 0.0,
+   "at": [
+    -14.13,
+    40.59,
+    6.79
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C19"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 8.186,
+   "overlap_mm3": 0.0,
+   "at": [
+    -8.17,
+    41.11,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C28"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 8.376,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    41.31,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C23"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 8.809,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    50.11,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.396,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.21,
+    41.89,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.584,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.15,
+    42.1,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.584,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.21,
+    42.1,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.604,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.17,
+    42.13,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.607,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.25,
+    42.13,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.633,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.25,
+    42.16,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.637,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.15,
+    42.17,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.652,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.22,
+    42.18,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.663,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.15,
+    42.19,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.681,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.21,
+    42.22,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.694,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.19,
+    42.23,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.707,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.21,
+    42.25,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "Q3"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 9.738,
+   "overlap_mm3": 0.0,
+   "at": [
+    -13.25,
+    42.28,
+    5.82
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "R12"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 10.134,
+   "overlap_mm3": 0.0,
+   "at": [
+    -14.76,
+    43.24,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C24"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 10.282,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    48.51,
+    6.9
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Camera module",
+    "Camera lens barrel"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 10.732,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.0,
+    40.84,
+    2.5
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C26"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 11.334,
+   "overlap_mm3": 0.0,
+   "at": [
+    -17.8,
+    44.51,
+    6.89
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "C25"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 11.53,
+   "overlap_mm3": 0.0,
+   "at": [
+    -19.4,
+    46.14,
+    6.92
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "Camera module",
+    "Camera lens glass"
+   ],
+   "shell": [
+    "Front shell",
+    "Front shell"
+   ],
+   "gap": 12.332,
+   "overlap_mm3": 0.0,
+   "at": [
+    0.0,
+    42.44,
+    1.8
+   ],
+   "verdict": "PASS"
+  },
+  {
+   "part": [
+    "PCB",
+    "board"
+   ],
+   "shell": [
+    "Screws",
+    "Screw corner L"
+   ],
+   "gap": 12.593,
+   "overlap_mm3": 0.0,
+   "at": [
+    -33.65,
+    60.66,
+    7.71
+   ],
+   "verdict": "PASS"
+  }
+ ]
+}

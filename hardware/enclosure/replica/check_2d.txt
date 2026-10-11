@@ -1,0 +1,45 @@
+front outline 79.30 x 159.90 mm (C2 79.3 / C1 159.9), back 79.30 x 161.00 (C3 79.3 x 161)
+front shell width at Y=45 (screen) 79.30, at Y=-50 (keypad) 77.39
+Z stack: back floor 1.0 | board 7.0-7.8 | plate underside 10.1 (keys) / 10.6 (screen) | face 11.3 / 11.8
+  D1 rim -> board back 5.50 (5.5) | D4 board back -> inside floor 6.00 (6.0) | board front -> face 4.00 top / 3.50 keys | sum 11.80 / 11.30 (D10 11.8 / 11.3)
+  D3 at the top edge: board back -> outside face 4.80 (about 5); board front -> plate underside 2.80; stubs end at 8.00
+  rings top 5.0 (2.0 under the board) | solar grid top 6.0, frame top 6.5 (board back 7.0)
+  keys: dome top 9.60, cap bottom 9.62, face 11.3, cap top 12.8; LCD 6.80-10.55
+screw post corner R  ( 34.05,  74.05)  8.05 from top  side wall gap 2.27  (rev A 32.66, 73.15)
+screw post corner L  (-34.05,  74.05)  8.05 from top  side wall gap 2.27
+screw post mid R     ( 22.45,  13.00)  69.10 from top  side wall gap 13.73  (rev A 22.40, 12.74)
+screw post mid L     (-24.05,  13.00)  69.10 from top  side wall gap 12.07  (rev A -24.00, 12.74)
+screw post bottom R  ( 19.50, -71.65)  153.75 from top  side wall gap 1.23  (rev A 19.50, -71.10)
+screw post bottom L  (-19.50, -71.65)  153.75 from top  side wall gap 1.23
+locating   H2        ( 19.15, -37.75)  119.85 from top  moved 1.19 from the photo/board position
+locating   H4        (-21.06,  -6.90)  89.00 from top  moved 0.12 from the photo/board position
+locating   H6        ( 19.40, -47.50)  129.60 from top  moved 0.76 from the photo/board position
+locating   H8        ( 21.12,   1.89)  80.21 from top  moved 0.27 from the photo/board position
+locating   H9        (-19.20, -37.75)  119.85 from top  moved 0.94 from the photo/board position
+locating   H10       (-21.18,   2.15)  79.95 from top  moved 0.27 from the photo/board position
+locating   H13       ( 19.50, -59.70)  141.80 from top  moved 0.64 from the photo/board position
+locating   H14       (-19.10, -59.70)  141.80 from top  moved 0.54 from the photo/board position
+C9  corner posts c-c 68.10 (68.1)
+C11 corner post 4.20 from inside side wall (4.2), 6.02 from inside top wall (6.1) with the guessed skin
+C8  mid screws c-c 46.50 (46.5), H8-H10 c-c 42.30 (42.3)
+C10 bottom posts c-c 39.00 (39-40), 14.32 from inside side wall
+C14 stub tips 5.45 from the outside (5.45); holder 5.50 (5.5); inside width between stub tips 68.40
+window centre (0.00, 45.95), top edge 24.00 below case top
+posts closer than 0.6 mm to a key opening: 17 (negative = the opening nicks the post, as on the real shell)
+  post H2       vs opening /      gap 0.20
+  post H6       vs opening /      gap -0.41
+  post H13      vs opening -      gap 0.42
+  post H13      vs opening =      gap 0.25
+  post H8       vs opening ln     gap 0.58
+  post H8       vs opening log    gap 0.32
+  post H2       vs opening x      gap 0.05
+  post H6       vs opening x      gap -0.23
+  post H13      vs opening Ans    gap 0.50
+  post H9       vs opening 5      gap 0.08
+  post H14      vs opening 2      gap 0.45
+  post H14      vs opening .      gap 0.28
+  post H4       vs opening sqrt   gap 0.49
+  post H10      vs opening sqrt   gap 0.57
+  post H9       vs opening 4      gap 0.17
+  post H14      vs opening 0      gap 0.47
+  post mid L    vs opening SHIFT  gap 0.57

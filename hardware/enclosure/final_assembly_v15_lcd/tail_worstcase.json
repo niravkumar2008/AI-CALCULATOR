@@ -1,0 +1,451 @@
+{
+ "time": "2026-10-08 21:55:49",
+ "fpc_dy": 0.5,
+ "bow_r": 1.2,
+ "cases": {
+  "36.3": {
+   "bow_Z": 2.55,
+   "bow_Z_outer": 2.4,
+   "r_up": 1.2,
+   "nearest": [
+    {
+     "part": [
+      "PCB",
+      "board"
+     ],
+     "gap": 0.35,
+     "overlap_mm3": 0.0,
+     "at": [
+      -30.85,
+      37.59,
+      7.71
+     ]
+    },
+    {
+     "part": [
+      "Back cover",
+      "Back cover"
+     ],
+     "gap": 0.4,
+     "overlap_mm3": 0.0,
+     "at": [
+      -29.8,
+      44.24,
+      2.4
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "Q4"
+     ],
+     "gap": 1.315,
+     "overlap_mm3": 0.0,
+     "at": [
+      -9.3,
+      37.59,
+      6.57
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "C36"
+     ],
+     "gap": 1.365,
+     "overlap_mm3": 0.0,
+     "at": [
+      -8.53,
+      37.59,
+      6.57
+     ]
+    },
+    {
+     "part": [
+      "Front shell",
+      "Front shell"
+     ],
+     "gap": 1.421,
+     "overlap_mm3": 0.0,
+     "at": [
+      -30.15,
+      37.59,
+      9.19
+     ]
+    },
+    {
+     "part": [
+      "Window mask",
+      "Window mask (black vinyl, inside the lens)"
+     ],
+     "gap": 1.61,
+     "overlap_mm3": 0.0,
+     "at": [
+      -24.26,
+      53.09,
+      9.2
+     ]
+    },
+    {
+     "part": [
+      "Window lens",
+      "Window lens (clear)"
+     ],
+     "gap": 1.715,
+     "overlap_mm3": 0.0,
+     "at": [
+      -24.26,
+      53.09,
+      9.2
+     ]
+    },
+    {
+     "part": [
+      "Rubber feet",
+      "Foot 2"
+     ],
+     "gap": 2.02,
+     "overlap_mm3": 0.0,
+     "at": [
+      -29.8,
+      49.91,
+      2.4
+     ]
+    }
+   ]
+  },
+  "36.6": {
+   "bow_Z": 2.4,
+   "bow_Z_outer": 2.25,
+   "r_up": 1.2,
+   "nearest": [
+    {
+     "part": [
+      "Back cover",
+      "Back cover"
+     ],
+     "gap": 0.25,
+     "overlap_mm3": 0.0,
+     "at": [
+      -29.8,
+      44.24,
+      2.25
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "board"
+     ],
+     "gap": 0.35,
+     "overlap_mm3": 0.0,
+     "at": [
+      -30.85,
+      37.59,
+      7.71
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "Q4"
+     ],
+     "gap": 1.315,
+     "overlap_mm3": 0.0,
+     "at": [
+      -9.3,
+      37.59,
+      6.57
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "C36"
+     ],
+     "gap": 1.365,
+     "overlap_mm3": 0.0,
+     "at": [
+      -8.53,
+      37.59,
+      6.57
+     ]
+    },
+    {
+     "part": [
+      "Front shell",
+      "Front shell"
+     ],
+     "gap": 1.421,
+     "overlap_mm3": 0.0,
+     "at": [
+      -30.15,
+      37.59,
+      9.19
+     ]
+    },
+    {
+     "part": [
+      "Window mask",
+      "Window mask (black vinyl, inside the lens)"
+     ],
+     "gap": 1.61,
+     "overlap_mm3": 0.0,
+     "at": [
+      -24.26,
+      53.09,
+      9.2
+     ]
+    },
+    {
+     "part": [
+      "Window lens",
+      "Window lens (clear)"
+     ],
+     "gap": 1.715,
+     "overlap_mm3": 0.0,
+     "at": [
+      -24.26,
+      53.09,
+      9.2
+     ]
+    },
+    {
+     "part": [
+      "Rubber feet",
+      "Foot 2"
+     ],
+     "gap": 1.87,
+     "overlap_mm3": 0.0,
+     "at": [
+      -29.8,
+      49.91,
+      2.25
+     ]
+    }
+   ]
+  },
+  "36.9": {
+   "bow_Z": 2.25,
+   "bow_Z_outer": 2.1,
+   "r_up": 1.2,
+   "nearest": [
+    {
+     "part": [
+      "Back cover",
+      "Back cover"
+     ],
+     "gap": 0.1,
+     "overlap_mm3": 0.0,
+     "at": [
+      -29.8,
+      44.24,
+      2.1
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "board"
+     ],
+     "gap": 0.35,
+     "overlap_mm3": 0.0,
+     "at": [
+      -30.85,
+      37.59,
+      7.71
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "Q4"
+     ],
+     "gap": 1.315,
+     "overlap_mm3": 0.0,
+     "at": [
+      -9.3,
+      37.59,
+      6.57
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "C36"
+     ],
+     "gap": 1.365,
+     "overlap_mm3": 0.0,
+     "at": [
+      -8.53,
+      37.59,
+      6.57
+     ]
+    },
+    {
+     "part": [
+      "Front shell",
+      "Front shell"
+     ],
+     "gap": 1.421,
+     "overlap_mm3": 0.0,
+     "at": [
+      -30.15,
+      37.59,
+      9.19
+     ]
+    },
+    {
+     "part": [
+      "Window mask",
+      "Window mask (black vinyl, inside the lens)"
+     ],
+     "gap": 1.61,
+     "overlap_mm3": 0.0,
+     "at": [
+      -24.26,
+      53.09,
+      9.2
+     ]
+    },
+    {
+     "part": [
+      "Window lens",
+      "Window lens (clear)"
+     ],
+     "gap": 1.715,
+     "overlap_mm3": 0.0,
+     "at": [
+      -24.26,
+      53.09,
+      9.2
+     ]
+    },
+    {
+     "part": [
+      "Rubber feet",
+      "Foot 2"
+     ],
+     "gap": 1.72,
+     "overlap_mm3": 0.0,
+     "at": [
+      -29.8,
+      49.91,
+      2.1
+     ]
+    }
+   ]
+  },
+  "37.2": {
+   "bow_Z": 2.1,
+   "bow_Z_outer": 1.95,
+   "r_up": 1.2,
+   "nearest": [
+    {
+     "part": [
+      "Back cover",
+      "Back cover"
+     ],
+     "gap": 0.0,
+     "overlap_mm3": 0.737,
+     "at": [
+      0.0,
+      0.0,
+      0.0
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "board"
+     ],
+     "gap": 0.35,
+     "overlap_mm3": 0.0,
+     "at": [
+      -30.85,
+      37.59,
+      7.71
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "Q4"
+     ],
+     "gap": 1.315,
+     "overlap_mm3": 0.0,
+     "at": [
+      -9.3,
+      37.59,
+      6.57
+     ]
+    },
+    {
+     "part": [
+      "PCB",
+      "C36"
+     ],
+     "gap": 1.365,
+     "overlap_mm3": 0.0,
+     "at": [
+      -8.53,
+      37.59,
+      6.57
+     ]
+    },
+    {
+     "part": [
+      "Front shell",
+      "Front shell"
+     ],
+     "gap": 1.421,
+     "overlap_mm3": 0.0,
+     "at": [
+      -30.15,
+      37.59,
+      9.19
+     ]
+    },
+    {
+     "part": [
+      "Rubber feet",
+      "Foot 2"
+     ],
+     "gap": 1.57,
+     "overlap_mm3": 0.0,
+     "at": [
+      -29.8,
+      49.91,
+      1.95
+     ]
+    },
+    {
+     "part": [
+      "Window mask",
+      "Window mask (black vinyl, inside the lens)"
+     ],
+     "gap": 1.61,
+     "overlap_mm3": 0.0,
+     "at": [
+      -24.26,
+      53.09,
+      9.2
+     ]
+    },
+    {
+     "part": [
+      "Window lens",
+      "Window lens (clear)"
+     ],
+     "gap": 1.715,
+     "overlap_mm3": 0.0,
+     "at": [
+      -24.26,
+      53.09,
+      9.2
+     ]
+    }
+   ]
+  }
+ }
+}

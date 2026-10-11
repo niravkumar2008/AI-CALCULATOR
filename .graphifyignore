@@ -3,3 +3,20 @@ sim/web/dist/
 *.zip
 graphify-out/
 .claude/skills/
+# Older copies of the code in Claude outputs/ (the real code lives at the repo root).
+# Keep the PCB handoff, ai_calc_pcb_8/, test PDFs and images.
+Claude outputs/core/
+Claude outputs/sim/
+Claude outputs/firmware/
+Claude outputs/tests/
+Claude outputs/tools/
+Claude outputs/samples/
+Claude outputs/CMakeLists.txt
+Claude outputs/README.md
+Claude outputs/simulator.html
+# Generated builds of sim/web/page.html (large, no new information)
+sim/web/simulator.html
+AI_Calc_Simulator.html
+# KiCad autosave backups and build logs
+hardware/kicad/.mcp-backups/
+hardware/enclosure/build.log

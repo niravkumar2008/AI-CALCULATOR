@@ -16,12 +16,14 @@
 
 namespace calc {
 
-// Every key on the fx-300ES PLUS keypad, top-left to bottom-right. Row 2 is
-// the newer keypad's (the one the prototype board is traced from): Abs, x³,
-// x⁻¹, logₐb. nPr / nCr moved to SHIFT × / SHIFT ÷ (Pol / Rec on SHIFT + / −).
+// Every key on the keypad, top-left to bottom-right, with the fx-115ES legends
+// (the product's shell; stage 14). Row 2 is CALC, ∫dx, x⁻¹, logₐb. On the
+// fx-115ES, Abs is SHIFT hyp, x³ is SHIFT x² and ∛ is SHIFT √. CALC / SOLVE and
+// ∫dx / d/dx are not implemented yet: they show a "not supported yet" notice.
+// nPr / nCr are SHIFT × / SHIFT ÷ (Pol / Rec on SHIFT + / −).
 enum class DKey : uint8_t {
   Shift, Alpha, Up, Down, Left, Right, Mode, On,
-  Abs, Cube, Inv, LogAB,
+  Calc, Integral, Inv, LogAB,
   Frac, Sqrt, Sq, Pow, Log, Ln,
   Neg, Dms, Hyp, Sin, Cos, Tan,
   Rcl, Eng, Open, Close, SD, MPlus,
@@ -35,7 +37,7 @@ const char* dkeyName(DKey k);  // "SHIFT", "sin", "7" ... for logs and tests
 
 // Typing on a computer keyboard or the Serial Monitor: one character = one
 // key (or SHIFT + key). Digits . + - * / ^ ( ) = as printed; s c t sin cos tan,
-// l log, n ln, r sqrt, q x², i x⁻¹, b Abs, g logₐb, f fraction, ~ (−), E ×10ˣ, h hyp, k RCL,
+// l log, n ln, r sqrt, q x², i x⁻¹, b Abs (SHIFT hyp), g logₐb, f fraction, ~ (−), E ×10ˣ, h hyp, k RCL,
 // w S⇔D, M M+, a Ans, # DEL, $ AC, m MODE, o ON, [ SHIFT, ] ALPHA,
 // < > u d arrows, p π, ! x!, % percent, , comma. Returns false if unmapped.
 bool keysForChar(char c, DKey out[2], int& n);
@@ -56,7 +58,7 @@ class Device {
 
   void onKey(DKey k);
   void tick(uint32_t nowMs);
-  void render(Framebuffer& fb) const;  // clears fb first
+  void render(Framebuffer& fb) const;  // clears fb first; off = blank, or "Charging" with a cable in
 
   // ---- AI solver (same protocol as App: see app.h) ----
   int takeRequest() { return app_.takeRequest(); }
@@ -78,6 +80,8 @@ class Device {
   void setOnline(bool online);
   void setHasApiKey(bool has) { app_.setHasApiKey(has); }
   void setNoKeyHelp(const std::string& help) { app_.setNoKeyHelp(help); }
+  // Battery too low for the camera and Wi-Fi (the platform decides, with hysteresis).
+  void setLowBattery(bool low) { app_.setLowBattery(low); }
   // Shown under SETUP > Wi-Fi & key. ssid "" = not set; keyHint e.g. "saved (...a1b2)".
   void setNetInfo(const std::string& ssid, const std::string& keyHint, const std::string& howToChange);
   void setRandomSource(double (*random)()) { random_ = random; }
@@ -95,6 +99,13 @@ class Device {
   bool radiosAllowed() const { return !exam_; }  // platform turns Wi-Fi and camera off when false
   void usbUnlock();                               // a teacher's USB cable ends exam mode
   void restoreExam(uint32_t elapsedMs);           // after a restart: resume exam mode silently
+
+  // ---- state kept while the chip deep-sleeps (RTC memory) ----
+  // Memories A-F X Y M, Ans, replay history (newest first, as much as fits in maxBytes), SETUP
+  // choices, mode, effort, tutor, exam mode and the off-key sequence. Not the screen contents.
+  std::string saveState(size_t maxBytes = 2048) const;
+  // False (and nothing changes) for a missing or damaged state. asleepMs counts towards exam mode's 12 h.
+  bool restoreState(const std::string& state, uint32_t asleepMs = 0);
 
   // ---- state, for the platform and tests ----
   bool isOff() const { return view_ == View::Off; }

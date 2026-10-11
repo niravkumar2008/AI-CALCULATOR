@@ -1,0 +1,5 @@
+# Secrets and data: never commit
+.env
+*.db
+__pycache__/
+firmware/

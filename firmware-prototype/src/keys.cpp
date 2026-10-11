@@ -2,6 +2,7 @@
 
 #include <Arduino.h>
 
+#include "log.h"
 #include "pins.h"
 
 using calc::DKey;
@@ -65,7 +66,7 @@ void pollOn(void (*press)(DKey)) {
 #include <esp_sleep.h>
 
 namespace {
-constexpr uint8_t kTca = 0x34;  // TCA8418 I2C address
+constexpr uint8_t kTca = TCA8418_I2C_ADDR;  // 0x34
 // Registers (TI TCA8418 datasheet)
 constexpr uint8_t kCfg = 0x01, kIntStat = 0x02, kKeyLckEc = 0x03, kKeyEventA = 0x04;
 constexpr uint8_t kKpGpio1 = 0x1D, kKpGpio2 = 0x1E, kKpGpio3 = 0x1F;
@@ -77,7 +78,7 @@ constexpr DKey X = DKey::Count;  // no key at this crossing
 // but ON (its own pin).
 const DKey kMatrix[kRows][kCols] = {
     {DKey::Shift, DKey::Alpha, X, X, DKey::Mode, X, DKey::Up, DKey::Down, DKey::Left, DKey::Right},
-    {DKey::Frac, DKey::Sqrt, DKey::Sq, DKey::Pow, DKey::Log, DKey::Ln, DKey::Abs, DKey::Cube, DKey::Inv, DKey::LogAB},
+    {DKey::Frac, DKey::Sqrt, DKey::Sq, DKey::Pow, DKey::Log, DKey::Ln, DKey::Calc, DKey::Integral, DKey::Inv, DKey::LogAB},
     {DKey::Neg, DKey::Dms, DKey::Hyp, DKey::Sin, DKey::Cos, DKey::Tan, X, X, X, X},
     {DKey::Rcl, DKey::Eng, DKey::Open, DKey::Close, DKey::SD, DKey::MPlus, X, X, X, X},
     {DKey::D7, DKey::D8, DKey::D9, DKey::Del, DKey::AC, X, X, X, X, X},
@@ -88,6 +89,7 @@ const DKey kMatrix[kRows][kCols] = {
 
 bool g_tcaOk = false;
 Repeat g_repeat;
+bool g_down[int(DKey::Count)] = {};  // keys held right now (from press / release events)
 
 bool tcaWrite(uint8_t reg, uint8_t v) {
   Wire.beginTransmission(kTca);
@@ -108,17 +110,51 @@ bool repeats(DKey k) {
 }
 }  // namespace
 
-void keysBegin() {
+void keysBegin(bool keepEvents) {
   beginOn();
-  pinMode(PIN_KEYPAD_INT, INPUT_PULLUP);  // the TCA8418's INT is open-drain
+  pinMode(PIN_KEYPAD_INT, INPUT);  // open drain with R15 10 k on the board: no internal pull needed
   Wire.begin(PIN_I2C_SDA, PIN_I2C_SCL, 400000);
   // Rows 0-7 and columns 0-9 scan the keypad; the scanner debounces and
-  // queues up to 10 events on its own, with INT low while any wait.
+  // queues up to 10 events on its own, with INT low while any wait. Its RESET
+  // pin isn't wired to the ESP32, so every register is written each start.
   g_tcaOk = tcaWrite(kKpGpio1, 0xFF) && tcaWrite(kKpGpio2, 0xFF) && tcaWrite(kKpGpio3, 0x03) &&
             tcaWrite(kCfg, 0x01);  // KE_IEN: key events raise INT
-  for (int i = 0; i < 10 && (tcaRead(kKeyLckEc) & 0x0F); ++i) tcaRead(kKeyEventA);  // drop stale events
-  tcaWrite(kIntStat, 0x1F);
-  if (!g_tcaOk) Serial.println("Keypad scanner (TCA8418) not found: check its I2C wiring.");
+  // After a deep-sleep wake the key that woke the chip is still in the FIFO: keep it.
+  if (!keepEvents) {
+    for (int i = 0; i < 10 && (tcaRead(kKeyLckEc) & 0x0F); ++i) tcaRead(kKeyEventA);  // drop stale events
+    tcaWrite(kIntStat, 0x1F);
+  }
+  if (!g_tcaOk) LOGF("keys", "keypad scanner (TCA8418) not found: check its I2C wiring");
+}
+
+void keysWokeByOn() {
+  // The ON press that woke the chip started before the firmware ran: time it from
+  // now, or count it at once if it was already released during the boot.
+  if (digitalRead(PIN_KEY_ON) == LOW) g_onDownMs = millis() - 50;
+  else g_onPressed = true;
+}
+
+bool keysScannerOk() { return g_tcaOk; }
+
+bool keysHeld(DKey k) {
+  if (k == DKey::On) return digitalRead(PIN_KEY_ON) == LOW;
+  return k < DKey::Count && g_down[int(k)];
+}
+
+bool keysPrepareSleep() {
+  g_repeat.stop();
+  if (!g_tcaOk) return false;
+  // Drain the FIFO and clear every interrupt flag: a waiting event keeps INT low,
+  // which would wake the chip at once and draw 330 uA through R15 (review S6).
+  for (int tries = 0; tries < 3; ++tries) {
+    for (int i = 0; i < 12 && (tcaRead(kKeyLckEc) & 0x0F); ++i) tcaRead(kKeyEventA);
+    tcaWrite(kIntStat, 0x1F);
+    delayMicroseconds(200);
+    if (digitalRead(PIN_KEYPAD_INT) == HIGH) return true;
+    delay(20);  // a key still bouncing: try again
+  }
+  LOGF("keys", "keypad INT stays low: only ON will wake the calculator");
+  return false;
 }
 
 void keysPoll(void (*press)(DKey)) {
@@ -131,6 +167,7 @@ void keysPoll(void (*press)(DKey)) {
       if (code < 0 || row >= kRows || col >= kCols) continue;
       const DKey k = kMatrix[row][col];
       if (k == X) continue;
+      g_down[int(k)] = (ev & 0x80) != 0;
       if (ev & 0x80) {  // pressed
         press(k);
         if (repeats(k)) g_repeat.start(k);
@@ -139,19 +176,8 @@ void keysPoll(void (*press)(DKey)) {
       }
     }
     tcaWrite(kIntStat, 0x01);  // K_INT handled
+    if (g_tcaOk && digitalRead(PIN_KEYPAD_INT) == LOW && !(tcaRead(kKeyLckEc) & 0x0F))
+      tcaWrite(kIntStat, 0x1F);  // other flags (overflow, GPI) also hold INT low
   }
   g_repeat.poll(press);
 }
-
-void keysSleepUntilPress() {
-  gpio_wakeup_enable(gpio_num_t(PIN_KEY_ON), GPIO_INTR_LOW_LEVEL);
-  gpio_wakeup_enable(gpio_num_t(PIN_KEYPAD_INT), GPIO_INTR_LOW_LEVEL);
-  gpio_wakeup_enable(gpio_num_t(PIN_VBUS), GPIO_INTR_HIGH_LEVEL);  // plugging in USB wakes it too
-  esp_sleep_enable_gpio_wakeup();
-  Serial.flush();
-  esp_light_sleep_start();  // RAM, the calculator and the clock carry on afterwards
-  // The press that woke us happened while asleep, so its interrupt was
-  // missed: start timing it now, and its release counts as usual.
-  if (digitalRead(PIN_KEY_ON) == LOW) g_onDownMs = millis() - 50;
-}
-

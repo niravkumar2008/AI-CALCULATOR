@@ -1,7 +1,9 @@
 #include "device.h"
 
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
+#include <cstring>
 
 #include "font.h"
 #include "text.h"
@@ -12,7 +14,7 @@ namespace {
 
 const char* kKeyNames[] = {
     "SHIFT", "ALPHA", "UP", "DOWN", "LEFT", "RIGHT", "MODE", "ON",
-    "Abs", "x^3", "x^-1", "log_a",
+    "CALC", "int_dx", "x^-1", "log_a",
     "frac", "sqrt", "x^2", "x^n", "log", "ln",
     "(-)", "dms", "hyp", "sin", "cos", "tan",
     "RCL", "ENG", "(", ")", "S<>D", "M+",
@@ -82,13 +84,13 @@ bool tokOf(DKey k, bool shift, bool alpha, Tok& t) {
   }
   struct M { DKey k; Tok plain, shifted; };
   static const M kMap[] = {
-      {DKey::Abs, Tok::Abs, Tok::Count},    {DKey::LogAB, Tok::Log, Tok::Count},  // logₐb: log(base,value)
-      {DKey::Inv, Tok::Inv, Tok::Fact},     {DKey::Cube, Tok::Cube, Tok::Cbrt},
+      {DKey::LogAB, Tok::Log, Tok::Count},  // logₐb: log(base,value)
+      {DKey::Inv, Tok::Inv, Tok::Fact},
       {DKey::Frac, Tok::Frac, Tok::Count},
-      {DKey::Sqrt, Tok::Sqrt, Tok::Count},  {DKey::Sq, Tok::Sq, Tok::Count},
+      {DKey::Sqrt, Tok::Sqrt, Tok::Cbrt},   {DKey::Sq, Tok::Sq, Tok::Cube},  // fx-115ES: SHIFT √ = ∛, SHIFT x² = x³
       {DKey::Pow, Tok::Pow, Tok::XRoot},    {DKey::Log, Tok::Log, Tok::Pow10},
       {DKey::Ln, Tok::Ln, Tok::Exp},        {DKey::Neg, Tok::Neg, Tok::Count},
-      {DKey::Hyp, Tok::Count, Tok::Count},  {DKey::Sin, Tok::Sin, Tok::Asin},
+      {DKey::Hyp, Tok::Count, Tok::Abs},    {DKey::Sin, Tok::Sin, Tok::Asin},  // fx-115ES: SHIFT hyp = Abs
       {DKey::Cos, Tok::Cos, Tok::Acos},     {DKey::Tan, Tok::Tan, Tok::Atan},
       {DKey::Open, Tok::Open, Tok::Pct},    {DKey::Close, Tok::Close, Tok::Comma},
       {DKey::Mul, Tok::Mul, Tok::NPr},      {DKey::Div, Tok::Div, Tok::NCr},
@@ -147,7 +149,7 @@ bool keysForChar(char c, DKey out[2], int& n) {
       {'s', DKey::Sin, DKey::Sin, 1}, {'c', DKey::Cos, DKey::Cos, 1}, {'t', DKey::Tan, DKey::Tan, 1},
       {'l', DKey::Log, DKey::Log, 1}, {'n', DKey::Ln, DKey::Ln, 1}, {'r', DKey::Sqrt, DKey::Sqrt, 1},
       {'q', DKey::Sq, DKey::Sq, 1}, {'i', DKey::Inv, DKey::Inv, 1}, {'f', DKey::Frac, DKey::Frac, 1},
-      {'b', DKey::Abs, DKey::Abs, 1}, {'g', DKey::LogAB, DKey::LogAB, 1},
+      {'b', DKey::Shift, DKey::Hyp, 2}, {'g', DKey::LogAB, DKey::LogAB, 1},
       {'h', DKey::Hyp, DKey::Hyp, 1}, {'k', DKey::Rcl, DKey::Rcl, 1}, {'w', DKey::SD, DKey::SD, 1},
       {'M', DKey::MPlus, DKey::MPlus, 1}, {'a', DKey::Ans, DKey::Ans, 1}, {'#', DKey::Del, DKey::Del, 1},
       {'$', DKey::AC, DKey::AC, 1}, {'m', DKey::Mode, DKey::Mode, 1}, {'o', DKey::On, DKey::On, 1},
@@ -432,6 +434,9 @@ void Device::notice(const std::vector<std::string>& lines) {
 void Device::keyAi(DKey k) {
   switch (k) {
     case DKey::Eq: app_.onKey(Key::Eq); break;
+    case DKey::D1:  // 1 on the AI home screen: tutor mode on / off
+      if (app_.screen() == Screen::Ready) app_.onKey(Key::Tutor);
+      break;
     case DKey::Up: app_.onKey(Key::Up); break;
     case DKey::Down: app_.onKey(Key::Down); break;
     case DKey::AC:
@@ -671,6 +676,11 @@ void Device::keyCalc(DKey k, bool shift, bool alpha) {
     }
     case DKey::Hyp:
       return openMenu(View::Hyp);
+    case DKey::Calc:      // fx-115ES CALC / SHIFT SOLVE and
+    case DKey::Integral:  // ∫dx / SHIFT d/dx: not implemented yet, so say so instead of doing something else
+      back_ = View::Calc;
+      return notice({k == DKey::Calc ? (shift ? "SOLVE" : "CALC") : (shift ? "d/dx" : "â«" "dx"), "",
+                     "Not supported yet", "", "Press [AC] key"});
     case DKey::D9:
       if (shift) return openMenu(View::Clr);
       return;
@@ -873,13 +883,155 @@ void Device::drawMenu(Framebuffer& fb) const {
 
 void Device::render(Framebuffer& fb) const {
   fb.clear();
-  if (view_ == View::Off) return;
+  if (view_ == View::Off) {
+    // Off is a blank screen like the Casio's, except with a cable in: say that it is
+    // charging (there is no charge LED on the board). battery_ < 0 = no battery (simulators).
+    if (battery_ >= 0 && charging_) {
+      fb.drawText(5, 3, "Charging " + std::to_string(battery_ > 100 ? 100 : battery_) + "%");
+      fb.drawText(3, 4, "ON: use it meanwhile");
+    }
+    return;
+  }
   drawStatus(fb);
   switch (view_) {
     case View::Calc: drawCalc(fb); break;
     case View::Ai: app_.render(fb); break;
     default: drawMenu(fb); break;
   }
+}
+
+}  // namespace calc
+
+// ---------------------------------------------------------------- state across deep sleep
+
+namespace calc {
+
+namespace {
+constexpr uint8_t kStateVersion = 1;
+
+void putU8(std::string& o, uint8_t v) { o += static_cast<char>(v); }
+void putU32(std::string& o, uint32_t v) {
+  for (int i = 0; i < 4; ++i) o += static_cast<char>((v >> (8 * i)) & 0xFF);
+}
+void putU64(std::string& o, uint64_t v) {
+  for (int i = 0; i < 8; ++i) o += static_cast<char>((v >> (8 * i)) & 0xFF);
+}
+void putNum(std::string& o, const Num& n) {
+  uint64_t bits;
+  std::memcpy(&bits, &n.v, sizeof bits);
+  putU64(o, bits);
+  putU8(o, n.exact ? 1 : 0);
+  putU64(o, static_cast<uint64_t>(n.num));
+  putU64(o, static_cast<uint64_t>(n.den));
+}
+
+struct Reader {
+  const std::string& s;
+  size_t pos = 0;
+  bool ok = true;
+  uint8_t u8() {
+    if (pos + 1 > s.size()) return ok = false, 0;
+    return static_cast<uint8_t>(s[pos++]);
+  }
+  uint32_t u32() {
+    uint32_t v = 0;
+    for (int i = 0; i < 4; ++i) v |= uint32_t(u8()) << (8 * i);
+    return v;
+  }
+  uint64_t u64() {
+    uint64_t v = 0;
+    for (int i = 0; i < 8; ++i) v |= uint64_t(u8()) << (8 * i);
+    return v;
+  }
+  Num num() {
+    Num n;
+    const uint64_t bits = u64();
+    std::memcpy(&n.v, &bits, sizeof bits);
+    n.exact = u8() != 0;
+    n.num = static_cast<long long>(u64());
+    n.den = static_cast<long long>(u64());
+    if (n.den == 0) n.exact = false, n.den = 1;
+    return n;
+  }
+};
+
+Num* varSlots(Vars& v, int i) {
+  Num* slots[] = {&v.a, &v.b, &v.c, &v.d, &v.e, &v.f, &v.x, &v.y, &v.m, &v.ans, &v.preAns};
+  return slots[i];
+}
+constexpr int kVarSlots = 11;
+}  // namespace
+
+std::string Device::saveState(size_t maxBytes) const {
+  std::string o;
+  putU8(o, kStateVersion);
+  putU8(o, static_cast<uint8_t>(mode_));
+  putU8(o, static_cast<uint8_t>(angle_));
+  putU8(o, static_cast<uint8_t>(norm_));
+  putU8(o, static_cast<uint8_t>((dotMatrix_ ? 1 : 0) | (showFraction_ ? 2 : 0) | (exam_ ? 4 : 0) |
+                                (app_.tutor() ? 8 : 0) | (view_ == View::Off ? 16 : 0)));
+  putU8(o, static_cast<uint8_t>(app_.effort()));
+  putU8(o, static_cast<uint8_t>(offSequence_));
+  putU32(o, examMs_);
+  Vars v = vars_;
+  for (int i = 0; i < kVarSlots; ++i) putNum(o, *varSlots(v, i));
+  // Newest history first, as many as fit (the Casio keeps its replay too).
+  std::string hist;
+  int count = 0;
+  for (auto it = history_.rbegin(); it != history_.rend(); ++it) {
+    std::string item;
+    putU8(item, static_cast<uint8_t>(std::min<size_t>(it->expr.size(), kMaxTokens)));
+    for (size_t t = 0; t < it->expr.size() && t < size_t(kMaxTokens); ++t) putU8(item, static_cast<uint8_t>(it->expr[t]));
+    putNum(item, it->value);
+    if (o.size() + 1 + hist.size() + item.size() > maxBytes) break;
+    hist += item;
+    ++count;
+  }
+  putU8(o, static_cast<uint8_t>(count));
+  return o + hist;
+}
+
+bool Device::restoreState(const std::string& state, uint32_t asleepMs) {
+  Reader r{state};
+  if (r.u8() != kStateVersion) return false;
+  const uint8_t mode = r.u8(), angle = r.u8(), norm = r.u8(), flags = r.u8(), effort = r.u8(), offSeq = r.u8();
+  const uint32_t examMs = r.u32();
+  Vars v;
+  for (int i = 0; i < kVarSlots; ++i) *varSlots(v, i) = r.num();
+  const int count = r.u8();
+  std::vector<HistoryItem> hist;
+  for (int i = 0; i < count && r.ok; ++i) {
+    HistoryItem h;
+    const int n = r.u8();
+    for (int t = 0; t < n; ++t) {
+      const uint8_t tok = r.u8();
+      if (tok >= static_cast<uint8_t>(Tok::Count)) return false;
+      h.expr.push_back(static_cast<Tok>(tok));
+    }
+    h.value = r.num();
+    hist.insert(hist.begin(), h);  // stored newest first
+  }
+  if (!r.ok || mode > 1 || angle > 2 || norm > 1 || effort > 2) return false;
+  mode_ = static_cast<Mode>(mode);
+  angle_ = static_cast<AngleUnit>(angle);
+  norm_ = static_cast<NormMode>(norm);
+  dotMatrix_ = (flags & 1) != 0;
+  showFraction_ = (flags & 2) != 0;
+  app_.setTutor((flags & 8) != 0);
+  app_.setEffort(static_cast<Effort>(effort));
+  vars_ = v;
+  history_ = hist;
+  offSequence_ = offSeq <= 2 ? offSeq : 0;
+  exam_ = false;
+  examMs_ = 0;
+  if (flags & 4) restoreExam(examMs + asleepMs);  // ends itself if 12 h passed while asleep
+  if (flags & 16) {
+    if (view_ != View::Off) powerOff();
+    offSequence_ = offSeq <= 2 ? offSeq : 0;  // powerOff() cleared it
+  } else {
+    view_ = back_ = (mode_ == Mode::Ai && !exam_) ? View::Ai : View::Calc;
+  }
+  return true;
 }
 
 }  // namespace calc

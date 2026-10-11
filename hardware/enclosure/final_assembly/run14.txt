@@ -1,0 +1,105 @@
+{
+ "mag_X": 22.5,
+ "mag_face_Y": 81.6669424566787,
+ "mag_Z": [
+  2.2,
+  9.2
+ ],
+ "cam": [
+  0.0,
+  43.84
+ ],
+ "lipo": [
+  -13.400000000000006,
+  69.69
+ ],
+ "lipo_Z": [
+  1.0,
+  4.8
+ ],
+ "epd": [
+  0.03100000000000591,
+  45.95399999999999
+ ],
+ "top": 82.1,
+ "inner_top": 80.46492940995117,
+ "lip_top": 80.3647616560572
+}
+== new
+new document
+
+   12 s
+== shell
+(finished after the bridge timed out)
+0 h=1.60
+17:29:49 extrude Final - Back cover cut z0=-1.00 h=2.01
+17:29:49 extrude Final - Back cover cut z0=-1.00 h=2.01
+17:29:50 extrude Final - Back cover cut z0=-1.00 h=1.40
+17:29:50 extrude Final - Keymat new z0=7.82 h=0.80
+17:29:54 extrude Final - Keymat cut z0=7.70 h=1.10
+17:29:55 extrude Final - Keymat join z0=8.61 h=0.99
+17:29:56 extrude Final - Keymat cut z0=7.80 h=1.90
+17:29:59 extrude Final - Keycaps new z0=9.62 h=0.40
+17:30:03 extrude Final - Keycaps join z0=10.01 h=1.29
+17:30:07 extrude Final - Keycaps join z0=11.30 h=1.50
+17:30:07 extrude Final - Keycaps cut z0=12.50 h=3.00
+17:30:08 extrude Final - Keycaps cut z0=9.52 h=0.60
+17:30:09 extrude Final - Window lens new z0=10.82 h=0.80
+17:30:09 extrude Final - Solar cell (dummy) new z0=10.00 h=0.55
+17:30:09 extrude Final - Battery lid new z0=0.00 h=0.58
+17:30:10 extrude Final - Battery lid cut z0=-0.10 h=0.35
+17:30:10 extrude Final - Rubber feet new z0=-0.30 h=0.68
+17:30:10 extrude Final - Reference - Casio board (C6) new z0=7.00 h=0.80
+17:30:17 extrude Final - Reference - Casio board (C6) cut z0=6.90 h=1.00
+17:30:17 extrude Final - Reference - Casio board (C6) cut z0=6.90 h=1.00
+17:30:18 extrude Final - Reference - LCD (dummy) new z0=6.80 h=3.75
+17:30:20 extrude Final - Slide cover new z0=13.10 h=1.20
+17:30:21 fillet Final - Slide cover 2 edges r=1.00
+17:30:25 extrude Final - Slide cover join z0=10.00 h=3.11
+17:30:26 extrude Final - Slide cover cut z0=9.90 h=3.19
+17:30:29 stage shell done
+
+   75 s
+== grind
+grind ok: ['solar_box', 'rib_b', 'lr44_cup', 'camera_window', 'magnet_slot']
+
+   4 s
+== pcb
+pcb ok: 155 bodies, board 0.71 thick, F face at Z 7.00
+
+   10 s
+== parts
+parts ok
+e-paper FPC path from the panel edge into J2 (2.0 inside) 12.7 mm vs 14.3 supplied
+camera FPC: path module -> into J1 58.7 mm vs 70.5 cable: 11.8 mm slack lies in a loop (not modelled); ribbon modelled 1.46 mm under the board (tallest part in its path)
+LiPo leads: plug at front-view X 8.4, LiPo end at X 2.1
+magnet pins end at front-view Y 72.37; J3/header body Y 65.72..77.05, Z 4.41..6.94; pin axis Z 5.70
+
+   28 s
+== check
+(finished after the bridge timed out)
+17:31:11 stage check
+17:31:11 check: 242 bodies
+17:32:28 check: 0/242 bodies, 232 pairs, 0 hits, 76 s
+17:33:36 check: 25/242 bodies, 470 pairs, 0 hits, 145 s
+17:33:57 check: 50/242 bodies, 470 pairs, 0 hits, 166 s
+17:34:04 check: 75/242 bodies, 485 pairs, 0 hits, 173 s
+17:34:09 check: 100/242 bodies, 501 pairs, 6 hits, 177 s
+17:34:14 check: 125/242 bodies, 508 pairs, 6 hits, 183 s
+17:34:17 check: 150/242 bodies, 511 pairs, 6 hits, 186 s
+17:34:22 check: 175/242 bodies, 525 pairs, 6 hits, 190 s
+17:34:27 check: 200/242 bodies, 525 pairs, 6 hits, 195 s
+17:34:31 check: 225/242 bodies, 531 pairs, 9 hits, 200 s
+17:34:31 stage check done
+
+   201 s
+== export
+exported f3d + step
+
+   7 s
+== renders
+(finished after the bridge timed out)
+17:34:40 stage renders
+17:36:58 stage renders done
+
+   139 s

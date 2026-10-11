@@ -1,0 +1,289 @@
+{
+ "panel": "Goldenmorning T190X7-C30-01H",
+ "date": "2026-10-09",
+ "assumptions": {
+  "outline": [
+   25.8,
+   49.72
+  ],
+  "active_area": [
+   22.7,
+   42.72
+  ],
+  "aa_centre_kicad": [
+   150.0,
+   93.1
+  ],
+  "thickness_cases": {
+   "t203": 2.03,
+   "t218": 2.18
+  },
+  "extra_vs_baseline": {
+   "t203": 0.6,
+   "t218": 0.75
+  },
+  "where_extra": "backlight/frame; TFT glass+ledge+tail exit, CF glass and polarizer on top shift up by the extra (supported by the T190X7-C30-01 V1.0 drawing p.5: side view shows the tail leaving at the TFT-glass level under the CF glass, metal frame SUS304 0.15T on the backlight side, module 2.11+-0.05)",
+  "tape": 0.1,
+  "tail": {
+   "len_nominal": 36.6,
+   "tol": 0.5,
+   "width": 15.5,
+   "t": 0.3,
+   "stiffener": 4.5,
+   "dy_finger1": 0.5
+  },
+  "build": "build_final_assembly_v15.py <stages> out=variant_goldenmorning/t203|t218 lcd_dt=0.60|0.75"
+ },
+ "baseline": {
+  "panel": "ER-TFT019-1 1.43",
+  "lcd_top_Z": 9.33,
+  "free_to_plate": 1.27,
+  "to_mask": 1.48,
+  "to_lens": 1.57,
+  "bow_gap_36_6": 0.25,
+  "contact_from": 37.1
+ },
+ "t203": {
+  "stack": {
+   "tape": [
+    7.8,
+    7.9
+   ],
+   "backlight": [
+    7.9,
+    9.15
+   ],
+   "tft": [
+    9.15,
+    9.5
+   ],
+   "tail_on_ledge": [
+    9.5,
+    9.8
+   ],
+   "lcd_top": 9.93,
+   "plate_underside": 10.6,
+   "mask": [
+    10.81,
+    10.91
+   ]
+  },
+  "free_to_plate": 0.67,
+  "to_mask": 0.88,
+  "to_lens": 0.97,
+  "tail_to_plate": 0.83,
+  "tail_to_mask": 1.01,
+  "solar_dummy": 3.12,
+  "u1_panel": 0.97,
+  "lcd_keymat": 11.02,
+  "shortest_route": 30.8,
+  "bow_r": [
+   1.2,
+   1.2,
+   1.2
+  ],
+  "top_bend_r": 1.0,
+  "j5_insertion": 2.0,
+  "j5_zmid": 6.42,
+  "tail_slot_walls": 0.35,
+  "tail_slot_ends": [
+   2.75,
+   1.75
+  ],
+  "tail_q4": 1.315,
+  "tailcase": {
+   "36.1": {
+    "bow_Z_outer": 2.8,
+    "gap_rib_B": 0.8,
+    "overlap_mm3": 0.0
+   },
+   "36.6": {
+    "bow_Z_outer": 2.55,
+    "gap_rib_B": 0.55,
+    "overlap_mm3": 0.0
+   },
+   "37.1": {
+    "bow_Z_outer": 2.3,
+    "gap_rib_B": 0.3,
+    "overlap_mm3": 0.0
+   },
+   "37.4": {
+    "bow_Z_outer": 2.15,
+    "gap_rib_B": 0.15,
+    "overlap_mm3": 0.0
+   },
+   "37.6": {
+    "bow_Z_outer": 2.05,
+    "gap_rib_B": 0.05,
+    "overlap_mm3": 0.0
+   },
+   "37.8": {
+    "bow_Z_outer": 1.95,
+    "gap_rib_B": 0.0,
+    "overlap_mm3": 0.737
+   },
+   "38.0": {
+    "bow_Z_outer": 1.85,
+    "gap_rib_B": 0.0,
+    "overlap_mm3": 2.27
+   }
+  },
+  "contact_from_mm": 37.7,
+  "interference": {
+   "bodies": 194,
+   "pairs": 410,
+   "lumps": 68,
+   "errors": 0,
+   "note": "same 68 intended lumps as baseline (62 tail tip in J5, 4 magnet legs in J3, 2 LiPo leads in plug)"
+  },
+  "fulltable": {
+   "rows": 527,
+   "fails": [
+    [
+     [
+      "PCB",
+      "board"
+     ],
+     [
+      "Front shell",
+      "Front shell"
+     ],
+     0.1
+    ]
+   ]
+  }
+ },
+ "t218": {
+  "stack": {
+   "tape": [
+    7.8,
+    7.9
+   ],
+   "backlight": [
+    7.9,
+    9.3
+   ],
+   "tft": [
+    9.3,
+    9.65
+   ],
+   "tail_on_ledge": [
+    9.65,
+    9.95
+   ],
+   "lcd_top": 10.08,
+   "plate_underside": 10.6,
+   "mask": [
+    10.81,
+    10.91
+   ]
+  },
+  "free_to_plate": 0.52,
+  "to_mask": 0.73,
+  "to_lens": 0.82,
+  "tail_to_plate": 0.68,
+  "tail_to_mask": 0.86,
+  "solar_dummy": 3.08,
+  "u1_panel": 0.97,
+  "lcd_keymat": 11.02,
+  "shortest_route": 30.95,
+  "bow_r": [
+   1.2,
+   1.2,
+   1.2
+  ],
+  "top_bend_r": 1.0,
+  "j5_insertion": 2.0,
+  "j5_zmid": 6.42,
+  "tail_slot_walls": 0.35,
+  "tail_slot_ends": [
+   2.75,
+   1.75
+  ],
+  "tail_q4": 1.315,
+  "tailcase": {
+   "36.1": {
+    "bow_Z_outer": 2.875,
+    "gap_rib_B": 0.875,
+    "overlap_mm3": 0.0
+   },
+   "36.6": {
+    "bow_Z_outer": 2.625,
+    "gap_rib_B": 0.625,
+    "overlap_mm3": 0.0
+   },
+   "37.1": {
+    "bow_Z_outer": 2.375,
+    "gap_rib_B": 0.375,
+    "overlap_mm3": 0.0
+   },
+   "37.4": {
+    "bow_Z_outer": 2.225,
+    "gap_rib_B": 0.225,
+    "overlap_mm3": 0.0
+   },
+   "37.6": {
+    "bow_Z_outer": 2.125,
+    "gap_rib_B": 0.125,
+    "overlap_mm3": 0.0
+   },
+   "37.8": {
+    "bow_Z_outer": 2.025,
+    "gap_rib_B": 0.025,
+    "overlap_mm3": 0.0
+   },
+   "38.0": {
+    "bow_Z_outer": 1.925,
+    "gap_rib_B": 0.0,
+    "overlap_mm3": 1.116
+   },
+   "38.2": {
+    "bow_Z_outer": 1.825,
+    "gap_rib_B": 0.0,
+    "overlap_mm3": 2.658
+   }
+  },
+  "contact_from_mm": 37.85,
+  "interference": {
+   "bodies": 194,
+   "pairs": 410,
+   "lumps": 68,
+   "errors": 0,
+   "note": "same 68 intended lumps as baseline (62 tail tip in J5, 4 magnet legs in J3, 2 LiPo leads in plug)"
+  },
+  "fulltable": {
+   "rows": 527,
+   "fails": [
+    [
+     [
+      "PCB",
+      "board"
+     ],
+     [
+      "Front shell",
+      "Front shell"
+     ],
+     0.1
+    ]
+   ]
+  }
+ },
+ "tail_datum_caveat": {
+  "note": "The model measures the tail from the TFT glass edge (as baseline). On the T190X7-C30-01 drawing the 36.6+-0.5 dimension starts at the LCM (frame/backlight) edge. With the -01H outline (backlight 49.72 vs glass 48.52) that edge is 0.6 mm beyond the glass, so glass-edge->tip would be 37.2 nominal, 36.7-37.7 range.",
+  "glass_edge_equiv": {
+   "nominal": 37.2,
+   "max": 37.7
+  },
+  "gap_rib_B_if_LCM_datum": {
+   "t203": {
+    "37.2": 0.25,
+    "37.7": 0.0
+   },
+   "t218": {
+    "37.2": 0.325,
+    "37.7": 0.075
+   }
+  }
+ },
+ "verdict": "fits with conditions: no grind, 0.1 tape OK; measure tail (glass edge->tip <= ~37.5 for 2.03, <= ~37.6 for 2.18 keeps >= 0.1 mm to rib B; contact from 37.7/37.85); confirm thickness and tail datum with Goldenmorning"
+}

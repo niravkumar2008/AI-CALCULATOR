@@ -30,6 +30,7 @@ bool parseSolveResult(const std::string& text, SolveResult& out, std::string& er
   out.choice = str(j["choice"]);
   if (out.choice.size() > 4) out.choice.clear();  // a label, not a sentence
   out.answer = str(j["answer"]);
+  out.check = str(j["check"]);
   out.steps = list(j["steps"]);
   if (out.readable && out.answer.empty()) {
     err = "reply has no answer";

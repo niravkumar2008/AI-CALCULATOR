@@ -12,12 +12,14 @@
 #include "enhance.h"
 #include "focus.h"
 
+#include "log.h"
 #include "pins.h"
+#include "power.h"
 
 #include <ESP32_OV5640_AF.h>
 
 namespace {
-std::string g_name = "none";
+std::string g_name = "off until the first scan";
 bool g_ok = false;
 SemaphoreHandle_t g_lock;  // one user of the sensor at a time (scan vs preview)
 std::string g_last;        // last scan photo, for the preview page
@@ -25,6 +27,9 @@ std::string g_lastDetail;  // its close-up of the writing, if one was made
 volatile uint32_t g_holdUntil = 0;  // see cameraHoldUntil()
 constexpr uint32_t kTryMs = 750;    // one careful-scan setting: settle + frame + check
 constexpr uint32_t kFramesMs = 2000; // the 8 frames to choose from
+constexpr uint32_t kCamPowerSettleMs = 5;    // regulators up before RESET is released (review N3)
+constexpr uint32_t kCamResetReleaseMs = 20;  // after RESET, before the first SCCB access
+constexpr uint32_t kFocusWaitMs = 2000;      // autofocus modules: wait for "focused" this long
 
 // Every setting the preview page can change: name, min, max, default.
 struct Tuning {
@@ -76,7 +81,7 @@ bool g_is5640 = false;
 bool g_lowMem = false;  // under 4 MB of PSRAM
 int scanSize() { return g_is5640 ? (g_lowMem ? FRAMESIZE_QXGA : FRAMESIZE_QSXGA) : tuning("framesize"); }
 
-bool g_asleep = false;  // powered down while the calculator is off (cameraSleep)
+bool g_asleep = true;  // powered down (at start, and while the calculator is off): the next scan powers it up
 
 // The OV5640 module's lens motor: its focus firmware is loaded at start and
 // runs continuous autofocus; a scan waits until it reports "focused".
@@ -86,7 +91,7 @@ constexpr uint8_t kFocused = 0x10;  // FW_STATUS_S_FOCUSED
 
 void startAutofocus(sensor_t* s) {
   g_hasAf = g_af.start(s) && g_af.focusInit() == 0 && g_af.autoFocusMode() == 0;
-  Serial.println(g_hasAf ? "Autofocus on." : "Autofocus not available (fixed-focus module?).");
+  LOGF("cam", "%s", g_hasAf ? "autofocus on" : "autofocus not available (fixed-focus module?)");
 }
 
 // Caller holds the lock. Up to maxMs; a fixed-focus module returns at once.
@@ -357,10 +362,22 @@ bool cameraBegin() {
   }
   loadTuning();
   g_lowMem = ESP.getPsramSize() < 4u * 1024 * 1024;
-  // The camera's regulators are off until CAM_PWR_EN goes high.
+  // Power-up order (review N3): RESET and PWDN low first, then both camera
+  // regulators (CAM_PWR_EN), 5 ms to settle; esp_camera_init then pulses RESET
+  // and waits before talking SCCB. PWDN is never driven high: a powered-down
+  // sensor is simply unpowered.
+  // RESET is open-drain: R8 (10 k to CAM_2V8) pulls it high, so the pin never pushes
+  // 3.3 V into the 2.8 V net (review M3). esp_camera_init pulses it push-pull for
+  // 20 ms, which is harmless; it is set back to open-drain right after.
+  pinMode(PIN_CAM_RESET, OUTPUT_OPEN_DRAIN);
+  digitalWrite(PIN_CAM_RESET, LOW);
+  pinMode(PIN_CAM_PWDN, OUTPUT);
+  digitalWrite(PIN_CAM_PWDN, LOW);
   pinMode(PIN_CAM_PWR_EN, OUTPUT);
   digitalWrite(PIN_CAM_PWR_EN, HIGH);
-  delay(20);  // regulators up and settled before the camera is reset
+  delay(kCamPowerSettleMs);
+  digitalWrite(PIN_CAM_RESET, HIGH);
+  delay(kCamResetReleaseMs);
   for (const CameraPins& p : kCameraVariants) {
     camera_config_t c = configFor(p);
     if (esp_camera_init(&c) != ESP_OK) {
@@ -387,6 +404,8 @@ bool cameraBegin() {
     // White paper fools auto-exposure into darkening the whole picture. The
     // DSP exposure mode meters more evenly, and lens correction stops the
     // corners going dark. Exposure +1 (default above) lifts the paper back up.
+    pinMode(PIN_CAM_RESET, OUTPUT_OPEN_DRAIN);  // released: R8 holds it at 2.8 V
+    digitalWrite(PIN_CAM_RESET, HIGH);
     s->set_aec2(s, 1);
     s->set_lenc(s, 1);
     s->set_bpc(s, 1);
@@ -398,7 +417,8 @@ bool cameraBegin() {
     return true;
   }
   g_name = "not found";
-  digitalWrite(PIN_CAM_PWR_EN, LOW);
+  powerCameraPinsSafe();  // regulators off, every camera pin disabled with no pull
+  g_asleep = true;        // try again (power-up included) at the next scan
   return false;
 }
 
@@ -433,7 +453,7 @@ bool cameraCapture(std::string& jpeg, std::string& detail, std::string& error,
     g_holdUntil = millis() + cameraHoldEstimateMs();
     // Tuning runs at the "framesize" setting (quick to decode); exposure
     // carries over to the scan size.
-    if (tuning("careful")) Serial.println(autoTuneLocked().c_str());
+    if (tuning("careful")) LOGF("cam", "%s", autoTuneLocked().c_str());
     useSize(scanSize());  // also back to full size if the live view was running
     // Pressing = shakes a hand-held calculator, and exposure needs a few
     // frames to settle after idle: wait the "settle" time (1.5 s by default).
@@ -442,7 +462,7 @@ bool cameraCapture(std::string& jpeg, std::string& detail, std::string& error,
     while (millis() - t0 < settleMs) {
       if (camera_fb_t* fb = esp_camera_fb_get()) esp_camera_fb_return(fb);
     }
-    waitForFocus(2000);  // autofocus modules only
+    waitForFocus(kFocusWaitMs);  // autofocus modules only
     g_holdUntil = millis() + kFramesMs;  // the countdown, if focusing took a moment
     for (int i = 0; i < kFrames; ++i) {
       camera_fb_t* fb = esp_camera_fb_get();
@@ -474,7 +494,7 @@ bool cameraCapture(std::string& jpeg, std::string& detail, std::string& error,
   }
 
   if (g_is5640 || g_lowMem) {  // no room for a close-up in 2 MB, and the OV5640 doesn't need one
-    Serial.printf("Focus %s -> kept %d; %u KB photo, no close-up; %lu ms\n", scores.c_str(),
+    LOGF("cam", "focus %s -> kept %d; %u KB photo, no close-up; %lu ms", scores.c_str(),
                   int(bestFocus.score), unsigned(jpeg.size() / 1024), millis() - t1);
   } else {
     // Zoom + enhance: the writing's close-up (or the whole frame when the
@@ -483,7 +503,7 @@ bool cameraCapture(std::string& jpeg, std::string& detail, std::string& error,
     const bool zoomed = k.use;
     if (!zoomed && thumbW > 0) k = calc::Crop{true, 0, 0, thumbW * 4, thumbH * 4};
     if (k.use && !enhancedCopy(jpeg, k, detail)) detail.clear();
-    Serial.printf("Focus %s -> kept %d; %s %dx%d -> %u KB enhanced; analysis %lu ms\n", scores.c_str(),
+    LOGF("cam", "focus %s -> kept %d; %s %dx%d -> %u KB enhanced; analysis %lu ms", scores.c_str(),
                   int(bestFocus.score), zoomed ? "zoomed on the writing" : "whole frame", k.w, k.h,
                   unsigned(detail.size() / 1024), millis() - t1);
   }
@@ -505,14 +525,59 @@ void cameraSleep() {
   g_ok = false;
   g_asleep = true;
   g_sensorSize = -1;
-  // Regulators off: the sensor and its autofocus motor draw nothing. Its
-  // control pins float (the board's pull-down holds PWDN) so no pin drives
-  // a powered-down camera. The next scan powers it up again.
-  for (const CameraPins& p : kCameraVariants) {
-    if (p.pwdn >= 0) pinMode(p.pwdn, INPUT);
-    if (p.reset >= 0) pinMode(p.reset, INPUT);
+  // Regulators off: the sensor and its autofocus motor draw nothing. Every
+  // camera pin is left disabled with no pull-up or pull-down (the SCCB driver
+  // turns pull-ups on, and 3.3 V on SIOD/SIOC would back-power the sensor
+  // through R18/R19). The board's R9 holds PWDN low. The next scan powers it up.
+  powerCameraPinsSafe();
+}
+
+bool cameraIsOn() { return g_ok && !g_asleep; }
+
+bool cameraPreviewFrame(std::vector<uint8_t>& gray, int& w, int& h, bool& focused) {
+  if (g_asleep || !g_ok) cameraBegin();  // first frame: powers the camera up (~1 s with the AF firmware)
+  if (!g_ok) return false;
+  Lock lock;
+  // QVGA JPEG decoded at 1/2 scale = 160x120 gray: small and quick (~20 ms to decode),
+  // and still more pixels than the 162x122 viewfinder needs. The frame buffer was
+  // sized for the scan photo, so nothing new is allocated.
+  useSize(FRAMESIZE_QVGA);
+  // One buffer (2 MB PSRAM): the frame waiting in it was taken when the last one was
+  // returned, possibly half a second ago. Drop it so the viewfinder shows "now".
+  if (camera_fb_t* stale = esp_camera_fb_get()) esp_camera_fb_return(stale);
+  camera_fb_t* fb = esp_camera_fb_get();
+  if (!fb) return false;
+  Decode d;
+  const bool ok = fb->format == PIXFORMAT_JPEG && fb->len &&
+                  thumbnail(reinterpret_cast<const char*>(fb->buf), fb->len, d, JPG_SCALE_2X);
+  esp_camera_fb_return(fb);
+  if (!ok) return false;
+  gray.swap(d.thumb);
+  w = d.outW;
+  h = d.outH;
+  focused = !g_hasAf || g_af.getFWStatus() == kFocused;  // continuous AF runs on the sensor itself
+  return true;
+}
+
+bool cameraSelfTest(std::string& sensor, size_t& bytes, uint32_t& ms, bool& autofocus) {
+  const uint32_t t0 = millis();
+  bytes = 0;
+  if (!g_ok) cameraBegin();
+  sensor = g_name;
+  autofocus = g_hasAf;
+  if (!g_ok) {
+    ms = millis() - t0;
+    return false;
   }
-  digitalWrite(PIN_CAM_PWR_EN, LOW);
+  {
+    Lock lock;
+    useSize(FRAMESIZE_VGA);  // quick: proves the bus, the clock and the JPEG encoder
+    std::string jpeg;
+    for (int i = 0; i < 3 && jpeg.empty(); ++i) grab(jpeg);
+    bytes = jpeg.size();
+  }
+  ms = millis() - t0;
+  return bytes > 1000;
 }
 
 bool cameraFrame(std::string& jpeg) {

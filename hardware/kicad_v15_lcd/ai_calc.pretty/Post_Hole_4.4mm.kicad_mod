@@ -1,0 +1,59 @@
+(footprint "Post_Hole_4.4mm"
+	(version 20260206)
+	(generator "pcbnew")
+	(generator_version "10.0")
+	(layer "F.Cu")
+	(property "Reference" "H**"
+		(at 0 -3.6 0)
+		(layer "F.SilkS")
+		(hide yes)
+		(uuid "8bb2be19-a42d-40dc-b7cb-0f82ce88cf52")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Value" "Post hole 4.4 (Casio peg)"
+		(at 0 0 0)
+		(layer "F.Fab")
+		(uuid "70186e7b-8e8e-4d70-a95f-827c06d6251b")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Datasheet" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "7163fe64-ea14-4ca4-89a0-5d241a8b34e0")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(property "Description" ""
+		(at 0 0 0)
+		(layer "F.Fab")
+		(hide yes)
+		(uuid "1e39fab4-5496-4977-8fc0-f1ada9a9d03c")
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+		)
+	)
+	(attr exclude_from_pos_files exclude_from_bom)
+	(duplicate_pad_numbers_are_jumpers no)
+	(pad "" np_thru_hole circle
+		(at 0 0)
+		(size 4.4 4.4)
+		(drill 4.4)
+		(layers "*.Mask")
+		(uuid "aa9d1b33-c064-47ee-9f9e-5e1db25bbed4")
+	)
+	(embedded_fonts no)
+)
