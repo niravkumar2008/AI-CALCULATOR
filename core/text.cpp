@@ -8,6 +8,16 @@ int textLength(const std::string& utf8) {
   return static_cast<int>(decodeUtf8(utf8).size());
 }
 
+std::string utf8Prefix(const std::string& utf8, size_t maxBytes) {
+  if (utf8.size() <= maxBytes) return utf8;
+  size_t cut = maxBytes;
+  // Back over continuation bytes (10xxxxxx) to the start of the character the cut is in
+  // (at most 3: a longer run is broken text anyway, and is cut where it is).
+  for (int i = 0; i < 3 && cut > 0 && (static_cast<unsigned char>(utf8[cut]) & 0xC0) == 0x80; ++i) --cut;
+  if ((static_cast<unsigned char>(utf8[cut]) & 0xC0) == 0x80) cut = maxBytes;
+  return utf8.substr(0, cut);
+}
+
 namespace {
 void wrapParagraph(const std::vector<uint32_t>& cps, int width,
                    std::vector<std::string>& out) {

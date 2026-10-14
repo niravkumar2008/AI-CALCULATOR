@@ -60,6 +60,9 @@ class Viewfinder {
   static constexpr double kSharpMin = 60.0;      // normalised Laplacian variance below this = soft
   int fullEvery = 10;                            // partial refreshes between full refreshes
   int ghostBudget = 3 * kImgW * kImgH;           // flipped pixels before a full refresh is due
+  // feed() also builds the stretched e-paper picture that render() dithers. A platform that
+  // draws the frame itself (the v15 LCD) sets this false and uses only info().
+  bool buildImage = true;
 
   void start(uint32_t nowMs);
   void stop() { running_ = false; }
@@ -97,6 +100,7 @@ class Viewfinder {
   FrameInfo info_;
   std::vector<uint8_t> image_;  // kImgW x kImgH stretched gray
   std::vector<uint8_t> prev_;   // previous frame, 32x24, for motion
+  std::vector<uint8_t> small_;  // this frame's 32x24 (kept so feed() allocates nothing per frame)
   int frameW_ = 0, frameH_ = 0; // size of the last frame fed
 };
 

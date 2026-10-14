@@ -3,6 +3,8 @@
 Started 2026-10-03 (overnight session). Each item says what I assumed in the meantime, so nothing is blocked while you sleep. Answer them in any order. Items once marked **(blocks order)** have all been answered; only the "⭐ Start here" list below is current.
 
 ## ⭐ Start here: v15-LCD (added 2026-10-08 evening)
+> **2026-10-11 (from Nirav):** v14 was **never ordered**, and the v15-LCD board **has been ordered** (details not recorded). Every "v14 ordered 10/8" below is wrong; the v14-only items have no boards to apply to. Plan: 5 samples first, then bulk.
+
 **v14 was ordered on 10/8 (tag `v14-order`, frozen); the list for it below still applies to the v14 boards.** The **v15-LCD board is verified "ORDER"** (`verification/14_v15_final_preorder.md`): order it with `ORDER_WALKTHROUGH_v15_lcd.md` (files `fab_v15_lcd/`, 21:38), and buy **3 × BuyDisplay ER-TFT019-1 (no touch)**. Nothing blocks the v15 order. Status: `FINAL_STATUS.md` → "Current plan".
 
 **Closed for v15 (2026-10-08):** panel choice (ER-TFT019-1, datasheet-verified; Adafruit #5394 only a fallback; bulk from Alibaba Goldenmorning/ZJY after a sample check), R23 value (15 Ω C22810), tail route (slot x 180.5–181.5, J5 at (158.6, 93.1), one bow), board side of the pin-1 question (J5 mirrored; confirmed on two independent drawings), key-pad positions (SW1/SW2/SW50 moved to the Casio contacts). Sources: `stage15_lcd.md` §9, reviews 13, 14, 15.
@@ -32,7 +34,7 @@ Started 2026-10-03 (overnight session). Each item says what I assumed in the mea
 6. **needs Nirav (meter).** **J4 battery polarity** (meter: red wire on "+"; if reversed, swap the crimp pins) and **E6**, the camera-ribbon beep test (fingers 2 and 15 to GND).
 
 **Business / later (nothing blocks the order)**
-- **needs Nirav (decision):** Pricing vs VovoCorp (`Claude outputs/COMPETITOR_ANALYSIS.md`); plan is $225 + $15/month, first month free.
+- **needs Nirav (decision):** Pricing vs VovoCorp (`Claude outputs/COMPETITOR_ANALYSIS.md`); plan was $225 + $15/month, first month free. **Decided 2026-10-11:** $225 + AI tutor plan $10/month or $100/year (2 months free), first month free with no card, firmware updates only with the plan, per-account AI cap $5/month and 300 solves/month, buyers 18+ (`Claude outputs/BUSINESS_STATUS_2026-10-11.md`).
 - **needs Nirav (hosting account, may cost money):** Proxy: deploy it (Render or similar; `server/proxy/README.md`) **before Power-Up step 10**, which puts its https address and a device token into each calculator (API key only in the host's environment settings). Real sign-in on the link page before selling (Firmware 1–2 below; `server/proxy/FINAL_REVIEW_server.md` S3).
 - **needs Nirav (read the back labels, take photos):** Donor edition check (Business 8), CAD photo requests (side profile, slide case) only matter for the replica model.
 

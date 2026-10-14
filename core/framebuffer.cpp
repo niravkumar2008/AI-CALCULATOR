@@ -61,4 +61,12 @@ std::string Framebuffer::toAscii() const {
   return s;
 }
 
+uint32_t Framebuffer::hash() const {
+  uint32_t h = 2166136261u;
+  for (const auto& row : px_)
+    for (uint8_t p : row) h = (h ^ p) * 16777619u;
+  for (bool i : icons_) h = (h ^ (i ? 1u : 0u)) * 16777619u;
+  return h;
+}
+
 }  // namespace calc

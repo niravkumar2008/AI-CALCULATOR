@@ -115,11 +115,13 @@ int App::takeRequest() {
 }
 
 void App::startRequest() {
+  readOnly_ = false;
   if (!hasKey_) return showMessage("NO API KEY", noKeyHelp_, false);
   if (lowBattery_) return showMessage("BATTERY LOW", "Plug in the cable to use AI. Maths still works.", false);
   if (!online_) return showMessage("NO CONNECTION", "Turn on your phone's hotspot.", true);
   activeId_ = pendingId_ = nextId_++;
-  captured_ = false;
+  captured_ = !typed_.empty();  // a typed problem has no photo to wait for
+  pendingTyped_ = typed_;
   holdUntilMs_ = 0;
   streaming_ = false;
   busySinceMs_ = nowMs_;
@@ -130,6 +132,7 @@ void App::onKey(Key k) {
   if (k == Key::Off) {
     screen_ = Screen::Off;
     activeId_ = pendingId_ = 0;
+    std::string().swap(pendingTyped_);  // frees it (a PNG of up to ~100 KB)
     streaming_ = false;
     return;
   }
@@ -150,6 +153,7 @@ void App::onKey(Key k) {
     case Screen::Busy:
       if (k == Key::AC) {
         activeId_ = pendingId_ = 0;
+        std::string().swap(pendingTyped_);  // frees it (a PNG of up to ~100 KB)
         screen_ = Screen::Ready;
       }
       break;
@@ -167,9 +171,46 @@ void App::onKey(Key k) {
                revealed_ <= static_cast<int>(result_.steps.size())) {
         ++revealed_;  // next hint (the answer after the last step)
         showTutor();
-      } else if (k == Key::Eq && (screen_ == Screen::Result || retryable_)) startRequest();
+      } else if (k == Key::Eq && !readOnly_ && (screen_ == Screen::Result || retryable_)) startRequest();
       break;
   }
+}
+
+bool App::startTyped(const std::string& png) {
+  if (png.empty()) return false;
+  activeId_ = pendingId_ = 0;
+  streaming_ = false;
+  typed_ = png;
+  screen_ = Screen::Ready;
+  startRequest();
+  return true;
+}
+
+void App::clearTyped() {
+  std::string().swap(typed_);
+  std::string().swap(pendingTyped_);  // frees it (a PNG of up to ~100 KB)
+}
+
+bool App::takeTypedImage(std::string& png) {
+  if (pendingTyped_.empty()) return false;
+  png.swap(pendingTyped_);
+  std::string().swap(pendingTyped_);  // whatever png held goes too
+  return true;
+}
+
+bool App::showSaved(const std::string& replyJson) {
+  SolveResult r;
+  std::string err;
+  if (!parseSolveResult(replyJson, r, err) || !r.readable) return false;
+  activeId_ = pendingId_ = 0;
+  std::string().swap(pendingTyped_);  // frees it (a PNG of up to ~100 KB)
+  streaming_ = false;
+  tutorShown_ = false;
+  result_ = r;
+  verify_ = verifyAnswer(result_.answer, result_.check, computed_);
+  readOnly_ = true;
+  showResult(result_.confidence < kUnclearThreshold);  // the full answer, even in tutor mode
+  return true;
 }
 
 void App::onCaptured(int id) {
@@ -203,10 +244,10 @@ void App::onReply(int id, const std::string& json) {
   streaming_ = false;
   std::string err;
   if (!parseSolveResult(json, result_, err))
-    return showMessage("REPLY ERROR", "Couldn't understand Claude's reply.", true);
+    return showMessage("REPLY ERROR", "Couldn't understand the tutor's reply.", true);
   expression_ = result_.readable ? result_.expression : "";
   if (!result_.readable) {
-    std::string body = "No problem found in the photo.";
+    std::string body = typed_.empty() ? "No problem found in the photo." : "No problem found in the text.";
     if (!result_.unclear.empty()) body += " " + result_.unclear.front();
     return showMessage("NOTHING TO SOLVE", body, true);
   }
@@ -225,14 +266,15 @@ void App::onFailure(int id, Failure f, const std::string& detail) {
   if (!accepts(id)) return;
   activeId_ = 0;
   streaming_ = false;
-  auto body = [&](const char* fallback) { return detail.empty() ? std::string(fallback) : detail; };
+  std::string().swap(pendingTyped_);  // never collected (e.g. the platform refused first): free it
+  auto body =[&](const char* fallback) { return detail.empty() ? std::string(fallback) : detail; };
   switch (f) {
     case Failure::NoConnection: return showMessage("NO CONNECTION", body("Check your phone's hotspot."), true);
     case Failure::NoApiKey: return showMessage("NO API KEY", body(noKeyHelp_.c_str()), false);
-    case Failure::Timeout: return showMessage("TIMED OUT", "Claude took too long to reply.", true);
-    case Failure::ApiBusy: return showMessage("CLAUDE BUSY", "Try again in a moment.", true);
-    case Failure::ApiError: return showMessage("CLAUDE ERROR", body("The request was refused."), true);
-    case Failure::BadReply: return showMessage("REPLY ERROR", "Couldn't understand Claude's reply.", true);
+    case Failure::Timeout: return showMessage("TIMED OUT", "The tutor took too long to reply.", true);
+    case Failure::ApiBusy: return showMessage("AI BUSY", "Try again in a moment.", true);
+    case Failure::ApiError: return showMessage("AI ERROR", body("The request was refused."), true);
+    case Failure::BadReply: return showMessage("REPLY ERROR", "Couldn't understand the tutor's reply.", true);
     case Failure::Camera: return showMessage("CAMERA ERROR", body("Couldn't take the photo."), true);
     case Failure::Account: return showMessage("AI ACCOUNT", body("Link this calculator to use AI."), true);
     case Failure::LowBattery:
@@ -270,7 +312,7 @@ void App::showResult(bool unclear) {
     for (const auto& u : result_.unclear)
       for (auto& l : wrapText("- " + u, kCols)) lines_.push_back({l, false});
     if (result_.unclear.empty()) lines_.push_back({"Parts were hard to read.", false});
-    lines_.push_back({"=: retake the photo", false});
+    if (!readOnly_) lines_.push_back({typed_.empty() ? "=: retake the photo" : "=: send it again", false});
   }
   if (!result_.readAs.empty()) {
     lines_.push_back({"QUESTION", true});
@@ -284,7 +326,7 @@ void App::showResult(bool unclear) {
   if (!result_.expression.empty()) {
     lines_.push_back({"ON THE CALCULATOR", true});
     for (auto& l : wrapText(result_.expression, kCols)) lines_.push_back({l, false});
-    lines_.push_back({"AC: check it and edit it", false});
+    if (!readOnly_) lines_.push_back({"AC: check it and edit it", false});
   }
   screen_ = Screen::Result;
 }
@@ -366,7 +408,7 @@ void App::render(Framebuffer& fb) const {
       fb.drawText(0, kFirst + 4, std::string("Effort: ") +
                                      (effort_ == Effort::Max ? "Max" : effort_ == Effort::Careful ? "Careful" : "Normal") +
                                      " \xE2\x96\xB2\xE2\x96\xBC");  // ▲▼
-      fb.drawText(0, kFirst + 5, "AC:calculator MODE:menu");
+      fb.drawText(0, kFirst + 5, "AC:back MODE:menu");  // back to the Apps menu
       return;
     case Screen::Busy: {
       int dots = static_cast<int>(((nowMs_ - busySinceMs_) / 400) % 4);
@@ -377,7 +419,7 @@ void App::render(Framebuffer& fb) const {
         fb.drawText(0, kFirst + 4, "Taking the photo");
       } else {
         fb.drawText(0, kFirst, (captured_ ? "Solving" : "Reading") + std::string(dots, '.'));
-        fb.drawText(0, kFirst + 1, captured_ ? "Claude is working" : "Hold still");
+        fb.drawText(0, kFirst + 1, captured_ ? "Working on it" : "Hold still");
       }
       fb.drawText(0, kFirst + 5, "AC:cancel");
       return;

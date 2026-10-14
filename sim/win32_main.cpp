@@ -186,10 +186,10 @@ Failure failureForWinHttp(DWORD err, std::string& detail) {
   switch (err) {
     case ERROR_WINHTTP_TIMEOUT: return Failure::Timeout;
     case ERROR_WINHTTP_SECURE_FAILURE:
-      detail = "Secure connection to Claude failed.";
+      detail = "Secure connection to the AI server failed.";
       return Failure::ApiError;
     default:  // name not resolved, cannot connect, connection reset...
-      detail = "Can't reach Claude (error " + std::to_string(err) + ").";
+      detail = "Can't reach the AI server (error " + std::to_string(err) + ").";
       return Failure::NoConnection;
   }
 }

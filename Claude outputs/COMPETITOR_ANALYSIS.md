@@ -1,5 +1,7 @@
 # Competitor analysis: AI calculators (checked 2026-10-03)
 
+> **2026-10-11 (from Nirav):** our brand is **Proofline** and the price is now $225 + AI tutor plan $10/month or $100/year (2 months free), first month free with no card, firmware updates only with the plan, per-account AI cap $5/month and 300 solves/month, buyers 18+. Every "$15/month" below is the old plan. At $10/month we match the apps (Photomath, Mathway, Gauth at $9.99–11.99) but are still above VovoCorp Premium ($5.90–7) and have no free tier after the first month (B1 is partly addressed).
+
 For Nirav. Plain English. Every fact has a source link at the end of its row or line, as [Sx] (list at the bottom, all opened or searched on 2026-10-03). Anything marked **(estimate)** is my own guess, not a published number.
 
 ---

@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Try the calculator</title>
+<link rel="icon" href="data:,">
+<script>
+// A public demo: nothing leaves the browser. Every network API is blocked (only the page's
+// own inlined data: URLs are allowed, which never touch the network).
+(function () {
+  var no = function () { return Promise.reject(new Error("offline demo")); };
+  var f = window.fetch;
+  window.fetch = function (u) {
+    var s = typeof u === "string" ? u : (u && u.url) || "";
+    return s.slice(0, 5) === "data:" && f ? f.apply(window, arguments) : no();
+  };
+  if (window.XMLHttpRequest) window.XMLHttpRequest.prototype.open = function () { throw new Error("offline demo"); };
+  if (navigator.sendBeacon) navigator.sendBeacon = function () { return false; };
+  window.WebSocket = window.EventSource = function () { throw new Error("offline demo"); };
+})();
+</script>
+<style>
+:root {
+  --shell: #10141c;
+  --shell-edge: #2a3242;
+  --bezel: #05070a;
+  --ink: #eef2f6;
+  --dim: #93a1b3;
+  --accent: #e07a4f;
+  --shift: #f5b74f;
+  --alpha: #ff7a82;
+  --fn: #263042;
+  --nav: #34405a;
+  --num: #cfd6e0;
+  --num-ink: #121722;
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; background: transparent; }
+body { padding: 8px 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; }
+[hidden] { display: none !important; }
+
+.calc {
+  container-type: inline-size;
+  width: 100%; max-width: 420px; margin: 0 auto;
+  background: linear-gradient(170deg, #161b26 0%, var(--shell) 45%, #0c1017 100%);
+  border: 1px solid var(--shell-edge); border-radius: 28px 28px 40px 40px;
+  padding: 14px 14px 16px; color: var(--ink);
+  box-shadow: 0 1px 0 #2f394c inset, 0 16px 36px rgba(0,0,0,.32);
+  user-select: none; -webkit-user-select: none; -webkit-touch-callout: none;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+}
+.brand { display: flex; align-items: center; justify-content: space-between; margin: 0 4px 10px; }
+.brand .name { color: var(--accent); font-weight: 800; letter-spacing: .16em; font-size: 15px; }
+.brand .lens { width: 12px; height: 12px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #6c7fa0, #0c0f16 62%); border: 2px solid #1c2230; }
+
+.bezel { position: relative; background: var(--bezel); border-radius: 14px; padding: 8px; border: 1px solid #1f2633; }
+.screen { display: block; width: 100%; height: auto; aspect-ratio: 320 / 170; border-radius: 4px; background: #000;
+  image-rendering: pixelated; image-rendering: crisp-edges; }
+.status { position: absolute; inset: 8px; display: grid; place-items: center; text-align: center; padding: 12px;
+  color: var(--dim); font-size: 14px; border-radius: 4px; background: #0b0e14; }
+
+.keys-top { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px 6px; margin-top: 12px; }
+.pad { grid-column: 3 / 5; grid-row: 1 / 3; position: relative; align-self: stretch; margin: 6px 4px 2px;
+  border-radius: 50%; background: radial-gradient(ellipse at 50% 35%, #232c3d, #171d29 70%); border: 2px solid #3a4558; }
+.pad .k { position: absolute; display: block; }
+.pad .k button { width: 100%; height: 100%; border-radius: 10px; font-size: 12px; padding: 0; }
+.pad .u { left: 34%; right: 34%; top: 3%; height: 32%; }
+.pad .d { left: 34%; right: 34%; bottom: 3%; height: 32%; }
+.pad .l { left: 4%; width: 28%; top: 34%; height: 32%; }
+.pad .r { right: 4%; width: 28%; top: 34%; height: 32%; }
+.keys-fn { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 4px 6px; margin-top: 8px; }
+.keys-num { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 4px 8px; margin-top: 10px; }
+
+.k { display: flex; flex-direction: column; min-width: 0; }
+.k .over { display: flex; justify-content: space-between; gap: 2px; height: 13px; padding: 0 1px;
+  font-size: 10px; line-height: 13px; font-weight: 700; white-space: nowrap; overflow: visible; }
+.k .over.c { justify-content: center; }
+.k .over .s { color: var(--shift); }
+.k .over .a { color: var(--alpha); }
+.k .over .b { color: #5cc8c0; }  /* BASE-N: DEC HEX BIN OCT */
+.k button {
+  font: inherit; font-weight: 600; font-size: 13px; color: var(--ink); background: var(--fn);
+  border: 1px solid #39465e; border-radius: 9px; height: 30px; width: 100%; padding: 0 2px; cursor: pointer;
+  box-shadow: 0 2px 0 var(--bezel); white-space: nowrap; overflow: hidden;
+  touch-action: manipulation; -webkit-tap-highlight-color: transparent; user-select: none; -webkit-user-select: none;
+  transition: transform .05s ease-out, box-shadow .05s ease-out, filter .05s ease-out;
+}
+.keys-num .k button { height: 40px; font-size: 18px; color: var(--num-ink); background: var(--num); border-color: #9aa5b5; border-radius: 10px; }
+.k button.hot { background: var(--accent); border-color: #f09b75; color: #fff; }
+.keys-num .k button.hot { color: #fff; background: var(--accent); border-color: #f09b75; font-size: 15px; }
+.k button.shift { color: var(--shift); }
+.k button.alpha { color: var(--alpha); }
+.k button.nav { background: var(--nav); }
+.k button.small { font-size: 11px; }
+.k button.down { transform: translateY(2px); box-shadow: 0 0 0 var(--bezel); filter: brightness(1.25); }
+.keys-num .k button.down { filter: brightness(.85); }
+.k button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.k button sup { font-size: .65em; line-height: 0; }
+.hint { margin: 12px 4px 0; text-align: center; color: var(--dim); font-size: 12px; line-height: 1.4; }
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+
+@supports (font-size: 1cqi) {
+  .brand .name { font-size: clamp(13px, 3.8cqi, 16px); }
+  .k .over { font-size: clamp(8px, 2.5cqi, 11px); }
+  .k button { font-size: clamp(10px, 3.3cqi, 14px); height: clamp(26px, 7.6cqi, 32px); }
+  .k button.small { font-size: clamp(9px, 2.8cqi, 12px); }
+  .keys-num .k button { font-size: clamp(15px, 4.8cqi, 20px); height: clamp(34px, 10cqi, 42px); }
+  .keys-num .k button.hot { font-size: clamp(12px, 3.8cqi, 16px); }
+  .hint { font-size: clamp(11px, 3cqi, 13px); }
+}
+@media (prefers-reduced-motion: reduce) { .k button { transition: none; } }
+</style>
+</head>
+<body>
+<main class="calc" aria-label="Proofline calculator demo">
+  <div class="brand"><span class="name">PROOFLINE</span><span class="lens" aria-hidden="true"></span></div>
+  <div class="bezel">
+    <canvas id="screen" class="screen" width="320" height="170" role="img" aria-label="Calculator screen: loading"></canvas>
+    <div id="status" class="status" role="status">Loading the calculator…</div>
+  </div>
+  <p id="live" class="sr-only" aria-live="polite"></p>
+  <div class="keys-top" id="keysTop"></div>
+  <div class="keys-fn" id="keysFn"></div>
+  <div class="keys-num" id="keysNum"></div>
+  <p class="hint">Press the keys, or type on a keyboard. MODE&nbsp;4 opens the Apps.</p>
+</main>
+
+<script>
+/*SIM_JS*/
+</script>
+<script>
+(function () {
+  "use strict";
+  var PHOTO = "__PHOTO_DATA_URI__";
+  // In DKey order (core/keys.h). [label, aria name, shift label, alpha label, style, BASE-N label]
+  var KEYS = [
+    ["SHIFT", "Shift", "", "", "shift small"], ["ALPHA", "Alpha", "", "", "alpha small"],
+    ["▲", "Up", "", "", "nav"], ["▼", "Down", "", "", "nav"], ["◀", "Left", "", "", "nav"], ["▶", "Right", "", "", "nav"],
+    ["MODE", "Mode", "SETUP", "", "small"], ["ON", "On", "", "", "small"],
+    ["CALC", "Calc", "SOLVE", "", "small"], ["∫dx", "Integral", "d/dx", "", ""],
+    ["x<sup>−1</sup>", "Reciprocal", "x!", "", ""], ["log<sub>a</sub>b", "Log base a of b", "", "", "small"],
+    ["▭/▭", "Fraction", "", "", ""], ["√▭", "Square root", "∛", "", ""], ["x²", "Square", "x³", "", "", "DEC"],
+    ["x<sup>▭</sup>", "Power", "▭√", "", "", "HEX"], ["log", "Log", "10<sup>x</sup>", "", "", "BIN"], ["ln", "Natural log", "e<sup>x</sup>", "", "", "OCT"],
+    ["(−)", "Negative", "∠", "A", ""], ["° ′ ″", "Degrees minutes seconds", "", "B", "small"], ["hyp", "Hyperbolic", "Abs", "C", ""],
+    ["sin", "Sine", "sin⁻¹", "D", ""], ["cos", "Cosine", "cos⁻¹", "E", ""], ["tan", "Tangent", "tan⁻¹", "F", ""],
+    ["RCL", "Recall", "STO", "", "small"], ["ENG", "Engineering", "←", "", "small"], ["(", "Open bracket", "%", "", ""],
+    [")", "Close bracket", ",", "X", ""], ["S⇔D", "Standard to decimal", "", "Y", "small"], ["M+", "Memory plus", "M−", "M", ""],
+    ["7", "7", "", "", ""], ["8", "8", "", "", ""], ["9", "9", "CLR", "", ""], ["DEL", "Delete", "INS", "", "hot"], ["AC", "All clear", "OFF", "", "hot"],
+    ["4", "4", "MATRIX", "", ""], ["5", "5", "VECTOR", "", ""], ["6", "6", "", "", ""], ["×", "Multiply", "nPr", "", ""], ["÷", "Divide", "nCr", "", ""],
+    ["1", "1", "", "", ""], ["2", "2", "CMPLX", "", ""], ["3", "3", "BASE", "", ""], ["+", "Plus", "", "", ""], ["−", "Minus", "", "", ""],
+    ["0", "0", "Rnd", "", ""], [".", "Decimal point", "Ran#", "RanInt", ""], ["×10<sup>x</sup>", "Times ten to the power", "π", "e", "small"],
+    ["Ans", "Answer", "", "", "small"], ["=", "Equals", "", "", ""]
+  ];
+  var K = { Shift: 0, Alpha: 1, Up: 2, Down: 3, Left: 4, Right: 5, Mode: 6, On: 7, Del: 33, AC: 34, Eq: 49 };
+  // PC characters that show a key pressed (the key the calculator gets for it).
+  var CHAR_KEY = { "7": 30, "8": 31, "9": 32, "4": 35, "5": 36, "6": 37, "1": 40, "2": 41, "3": 42, "0": 45,
+    ".": 46, "+": 43, "-": 44, "*": 38, "/": 39, "(": 26, ")": 27, "=": 49, "^": 15, "m": 6, "o": 7,
+    "s": 21, "c": 22, "t": 23, "l": 16, "n": 17, "r": 13, "q": 14, "i": 10, "f": 12, "~": 18, "E": 47, "j": 25,
+    "h": 20, "k": 24, "\"": 19, "w": 28, "M": 29, "a": 48, "g": 11, "[": 0, "]": 1 };
+
+  var buttons = [];
+  function makeKey(i, extraClass) {
+    var d = KEYS[i];
+    var wrap = document.createElement("div");
+    wrap.className = "k" + (extraClass ? " " + extraClass : "");
+    if (!extraClass) {
+      var over = document.createElement("div");
+      over.className = "over" + (d[2] && (d[3] || d[5]) ? "" : " c");
+      over.setAttribute("aria-hidden", "true");
+      if (d[2]) { var s = document.createElement("span"); s.className = "s"; s.innerHTML = d[2]; over.appendChild(s); }
+      if (d[3]) { var a = document.createElement("span"); a.className = "a"; a.textContent = d[3]; over.appendChild(a); }
+      if (d[5]) { var b = document.createElement("span"); b.className = "b"; b.textContent = d[5]; over.appendChild(b); }
+      wrap.appendChild(over);
+    }
+    var b = document.createElement("button");
+    b.type = "button";
+    b.innerHTML = d[0];
+    b.setAttribute("aria-label", d[1]);
+    if (d[4]) b.className = d[4];
+    b.dataset.k = i;
+    wrap.appendChild(b);
+    buttons[i] = b;
+    return wrap;
+  }
+  var top = document.getElementById("keysTop"), fn = document.getElementById("keysFn"), num = document.getElementById("keysNum");
+  var pad = document.createElement("div");
+  pad.className = "pad";
+  // Row 1: SHIFT ALPHA [pad] MODE ON; row 2: CALC ∫dx [pad] x⁻¹ logab
+  [0, 1].forEach(function (i) { top.appendChild(makeKey(i)); });
+  top.appendChild(pad);
+  [6, 7, 8, 9, 10, 11].forEach(function (i) { top.appendChild(makeKey(i)); });
+  pad.appendChild(makeKey(2, "u")); pad.appendChild(makeKey(3, "d"));
+  pad.appendChild(makeKey(4, "l")); pad.appendChild(makeKey(5, "r"));
+  for (var i = 12; i <= 29; i++) fn.appendChild(makeKey(i));
+  for (i = 30; i <= 49; i++) num.appendChild(makeKey(i));
+
+  var canvas = document.getElementById("screen"), ctx = canvas.getContext("2d");
+  var statusEl = document.getElementById("status"), live = document.getElementById("live");
+  var sim = null, img = null, W = 320, H = 170;
+  var summaryAt = 0, lastSummary = "";
+
+  function flash(k) {
+    var b = buttons[k];
+    if (!b) return;
+    b.classList.add("down");
+    setTimeout(function () { b.classList.remove("down"); }, 120);
+  }
+  function afterInput() { summaryAt = performance.now() + 450; }
+  function press(k) {
+    if (!sim) return;
+    sim._sim_key(k);
+    afterInput();
+  }
+
+  // Mouse / touch: the key goes on pointerdown (no click delay); keyboard activation of a
+  // focused button (Enter / Space) arrives as a click with detail 0.
+  document.querySelector(".calc").addEventListener("pointerdown", function (e) {
+    var b = e.target.closest && e.target.closest("button[data-k]");
+    if (!b || e.button > 0) return;
+    e.preventDefault();
+    b.classList.add("down");
+    press(Number(b.dataset.k));
+  });
+  ["pointerup", "pointercancel", "pointerleave"].forEach(function (t) {
+    document.addEventListener(t, function () {
+      for (var j = 0; j < buttons.length; j++) if (buttons[j]) buttons[j].classList.remove("down");
+    });
+  });
+  document.querySelector(".calc").addEventListener("click", function (e) {
+    var b = e.target.closest && e.target.closest("button[data-k]");
+    if (b && e.detail === 0) { flash(Number(b.dataset.k)); press(Number(b.dataset.k)); }
+  });
+  document.addEventListener("contextmenu", function (e) {
+    if (e.target.closest && e.target.closest(".calc")) e.preventDefault();
+  });
+
+  // The PC keyboard.
+  document.addEventListener("keydown", function (e) {
+    if (!sim || e.ctrlKey || e.metaKey || e.altKey) return;
+    var onButton = e.target && e.target.tagName === "BUTTON";
+    if (onButton && (e.key === "Enter" || e.key === " ")) return;  // the focused key itself
+    var onKb = sim._sim_on_keyboard() === 1;
+    var k = -1;
+    switch (e.key) {
+      case "Enter":
+        if (onKb) { sim._sim_cursor_to_send(); }  // Type it / a note: Enter sends (saves)
+        k = K.Eq; break;
+      case "Backspace": k = K.Del; break;
+      case "Escape": k = K.AC; break;
+      case "ArrowUp": k = K.Up; break;
+      case "ArrowDown": k = K.Down; break;
+      case "ArrowLeft": k = K.Left; break;
+      case "ArrowRight": k = K.Right; break;
+      case "Tab":
+        if (onKb) { e.preventDefault(); sim._sim_cursor_to_send(); afterInput(); }
+        return;
+    }
+    if (k >= 0) {
+      e.preventDefault();
+      flash(k);
+      press(k);
+      return;
+    }
+    if (e.key.length === 1) {
+      var c = e.key.charCodeAt(0);
+      if (c < 32 || c > 126) return;
+      if (sim._sim_type_char(c)) {
+        e.preventDefault();
+        if (!onKb && CHAR_KEY[e.key] !== undefined) flash(CHAR_KEY[e.key]);
+        afterInput();
+      }
+    }
+  });
+
+  function frame() {
+    if (sim._sim_step()) {
+      var p = sim._sim_rgba();
+      img.data.set(sim.HEAPU8.subarray(p, p + W * H * 4));
+      ctx.putImageData(img, 0, 0);
+    }
+    var now = performance.now();
+    if (summaryAt && now >= summaryAt) {
+      summaryAt = 0;
+      var s = sim.UTF8ToString(sim._sim_summary());
+      if (s !== lastSummary) {
+        lastSummary = s;
+        canvas.setAttribute("aria-label", s);
+        live.textContent = s;
+      }
+    }
+  }
+
+  function loadPhoto() {
+    var im = new Image();
+    im.onload = function () {
+      try {
+        var c = document.createElement("canvas");
+        c.width = 320; c.height = 240;
+        var x = c.getContext("2d");
+        var s = Math.max(320 / im.width, 240 / im.height);
+        var w = im.width * s, h = im.height * s;
+        x.drawImage(im, (320 - w) / 2, (240 - h) / 2, w, h);
+        var px = x.getImageData(0, 0, 320, 240).data;
+        var dst = sim._sim_photo_buffer();
+        var heap = sim.HEAPU8;
+        for (var i = 0, j = 0; i < px.length; i += 4, j += 3) {
+          heap[dst + j] = px[i]; heap[dst + j + 1] = px[i + 1]; heap[dst + j + 2] = px[i + 2];
+        }
+        sim._sim_photo_set();
+      } catch (e) { /* no photo: AI Solve goes straight to its home screen */ }
+    };
+    im.src = PHOTO;
+  }
+
+  function fail() {
+    statusEl.textContent = "The calculator couldn’t start in this browser.";
+    statusEl.hidden = false;
+  }
+  try {
+    createSim().then(function (m) {
+      sim = m;
+      W = sim._sim_width(); H = sim._sim_height();
+      img = ctx.createImageData(W, H);
+      sim._sim_init();
+      loadPhoto();
+      statusEl.hidden = true;
+      summaryAt = performance.now();
+      // The firmware's loop, ~60 times a second (a timer rather than animation frames, so
+      // a solve in progress still finishes, throttled, while the page is hidden).
+      setInterval(frame, 16);
+    }, fail);
+  } catch (e) { fail(); }
+})();
+</script>
+</body>
+</html>

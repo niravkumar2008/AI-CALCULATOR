@@ -146,7 +146,9 @@ const FrameInfo& Viewfinder::feed(const uint8_t* g, int w, int h, bool afFocused
   fi.sharpness = focusMeasure(g, w, h, fi.lo, fi.hi);
 
   // Motion: mean change of a 32x24 thumbnail from the previous frame.
-  std::vector<uint8_t> small(32 * 24);
+  // small_ and prev_ swap each frame, so after the second frame neither is reallocated.
+  std::vector<uint8_t>& small = small_;
+  small.resize(32 * 24);
   for (int y = 0; y < 24; ++y)
     for (int x = 0; x < 32; ++x) small[y * 32 + x] = g[(y * h / 24) * w + (x * w / 32)];
   if (prev_.size() == small.size()) {
@@ -192,10 +194,11 @@ const FrameInfo& Viewfinder::feed(const uint8_t* g, int w, int h, bool afFocused
   }
 
   // The whole frame, stretched, at the size it is drawn (nearest neighbour is
-  // enough: the panel has fewer pixels than the frame in both directions).
-  image_.assign(size_t(kImgW) * kImgH, 255);
+  // enough: the panel has fewer pixels than the frame in both directions). assign() keeps
+  // the capacity, so this allocates once per run. Skipped where render() isn't used.
+  if (buildImage) image_.assign(size_t(kImgW) * kImgH, 255);
   const int range = std::max(1, fi.hi - fi.lo);
-  for (int y = 0; y < kImgH; ++y) {
+  for (int y = 0; buildImage && y < kImgH; ++y) {
     const int sy = y * h / kImgH;
     for (int x = 0; x < kImgW; ++x) {
       const int v = (int(g[sy * w + x * w / kImgW]) - fi.lo) * 255 / range;

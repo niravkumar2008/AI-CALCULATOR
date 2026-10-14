@@ -52,7 +52,7 @@ class JsonParser {
   }
 
   bool parseValue(Json& v, int depth) {
-    if (depth > 64) return fail("nesting too deep");
+    if (depth > Json::kMaxDepth) return fail("nesting too deep");
     skipWs();
     if (i_ >= t_.size()) return fail("unexpected end");
     char c = t_[i_];
@@ -106,39 +106,88 @@ class JsonParser {
     return true;
   }
 
+  // Strings end up on the screen: control characters other than \n (escaped ones: \b \f
+  // \u0000 ...) become '?', \t and \r a space, a lone or mismatched surrogate '?', and bytes
+  // that are not valid UTF-8 '?' (one per byte), so what is stored is always valid UTF-8.
+  static void putCp(std::string& s, uint32_t cp) {
+    if (cp >= 0x20 && cp < 0x7F) s += static_cast<char>(cp);  // printable ASCII: as is
+    else if (cp == '\n') s += '\n';
+    else if (cp == '\t' || cp == '\r') s += ' ';
+    else if (cp < 0x20 || cp == 0x7F || (cp >= 0xD800 && cp <= 0xDFFF)) s += '?';
+    else s += encodeUtf8({cp});
+  }
+
+  // A raw (unescaped) UTF-8 sequence starting with lead byte c at i_ - 1: appended if valid
+  // (no overlongs, surrogates or code points past U+10FFFF), else '?' for the lead byte.
+  void rawUtf8(std::string& s, unsigned char c) {
+    int n = c >= 0xF0 ? 3 : c >= 0xE0 ? 2 : c >= 0xC0 ? 1 : -1;
+    if (c >= 0xF5 || c == 0xC0 || c == 0xC1) n = -1;
+    if (n < 0 || i_ + static_cast<size_t>(n) > t_.size()) {
+      s += '?';
+      return;
+    }
+    uint32_t cp = c & (0x3F >> n);
+    for (int k = 0; k < n; ++k) {
+      const unsigned char b = static_cast<unsigned char>(t_[i_ + static_cast<size_t>(k)]);
+      if ((b & 0xC0) != 0x80) {
+        s += '?';
+        return;
+      }
+      cp = (cp << 6) | (b & 0x3F);
+    }
+    static const uint32_t kMin[4] = {0, 0x80, 0x800, 0x10000};
+    if (cp < kMin[n] || cp > 0x10FFFF || (cp >= 0xD800 && cp <= 0xDFFF)) {
+      s += '?';
+      return;
+    }
+    s.append(t_, i_ - 1, static_cast<size_t>(n) + 1);
+    i_ += static_cast<size_t>(n);
+  }
+
   bool parseString(std::string& s) {
     ++i_;  // opening quote
     s.clear();
     while (i_ < t_.size()) {
       char c = t_[i_++];
       if (c == '"') return true;
-      if (static_cast<unsigned char>(c) < 0x20) return fail("control character in string");
-      if (c != '\\') { s += c; continue; }
+      const unsigned char u = static_cast<unsigned char>(c);
+      if (u < 0x20) return fail("control character in string");
+      if (u >= 0x80) {
+        rawUtf8(s, u);
+        continue;
+      }
+      if (c != '\\') { putCp(s, u); continue; }
       if (i_ >= t_.size()) break;
       char e = t_[i_++];
       switch (e) {
         case '"': s += '"'; break;
         case '\\': s += '\\'; break;
         case '/': s += '/'; break;
-        case 'b': s += '\b'; break;
-        case 'f': s += '\f'; break;
-        case 'n': s += '\n'; break;
-        case 'r': s += '\r'; break;
-        case 't': s += '\t'; break;
+        case 'b': putCp(s, '\b'); break;
+        case 'f': putCp(s, '\f'); break;
+        case 'n': putCp(s, '\n'); break;
+        case 'r': putCp(s, '\r'); break;
+        case 't': putCp(s, '\t'); break;
         case 'u': {
           uint32_t cp;
           if (!hex4(cp)) return false;
-          if (cp >= 0xD800 && cp <= 0xDBFF) {  // surrogate pair
-            uint32_t lo;
+          if (cp >= 0xD800 && cp <= 0xDBFF) {  // a high surrogate: a low one must follow
+            uint32_t lo = 0;
             if (i_ + 2 <= t_.size() && t_[i_] == '\\' && t_[i_ + 1] == 'u') {
+              const size_t back = i_;
               i_ += 2;
               if (!hex4(lo)) return false;
-              cp = 0x10000 + ((cp - 0xD800) << 10) + (lo - 0xDC00);
+              if (lo >= 0xDC00 && lo <= 0xDFFF) {
+                cp = 0x10000 + ((cp - 0xD800) << 10) + (lo - 0xDC00);
+              } else {
+                cp = '?';
+                i_ = back;  // not a pair: the second \u is read on its own
+              }
             } else {
               cp = '?';
             }
           }
-          s += encodeUtf8({cp});
+          putCp(s, cp);  // a lone low surrogate (DC00-DFFF) is '?' too
           break;
         }
         default: return fail("bad escape");

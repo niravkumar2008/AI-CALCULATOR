@@ -160,6 +160,51 @@ def contact_sheet(shots, names):
     return sheet
 
 
+def apps_sheet(shots):
+    """MODE 4: the calculator's LCD look, then every Apps screen in colour, in sections."""
+    S, cols, pad, cap = 2, 4, 18, 28
+    cw, ch = 320 * S, 170 * S
+    lcd = ["01_calc_home", "02_calc_typing", "03_calc_result", "05_calc_result_functions", "06_calc_shift",
+           "08_calc_syntax_error", "10_menu_mode", "11_setup", "L01_screen_look", "L02_calc_result_plain",
+           "L03_calc_pow_square", "43_exam_mode_calc", "A80_exam_mode_menu", "A81_exam_apps_off", "40_off_charging"]
+    sections = [("Calculator: classic mono LCD look (no colour; exam bar inverted)", [n for n in lcd if n in shots]),
+                ("Calculator modes (LCD look): STAT, SETUP Frequency, TABLE, CALC, SOLVE, integral, d/dx",
+                 sorted(n for n in shots if n.startswith("M"))),
+                ("MODE 5 EQN (LCD look): type list, coefficient editors, results, complex roots, messages",
+                 sorted(n for n in shots if n.startswith("E"))),
+                ("MODE 6 CMPLX (LCD look): a+bi, SHIFT 2 menu, polar entry and r<theta, SETUP, R<=>I split, exam",
+                 sorted(n for n in shots if n.startswith("C"))),
+                ("MODE 7 BASE-N (LCD look): DEC / HEX / BIN / OCT, A-F, SHIFT 3 menu, logic, prefixes, errors, exam",
+                 sorted(n for n in shots if n.startswith("B") and n[1:3].isdigit())),
+                ("MODE 8 MATRIX / MODE 9 VECTOR (LCD look): Dim, editors, SHIFT 4 / 5 menus, MatAns, det, inverse, dot, cross, exam",
+                 sorted(n for n in shots if n.startswith("X") and n[1:3].isdigit()))]
+    groups = [("Apps menu", ("A0",)), ("Type it", ("A1",)), ("History", ("A2",)), ("Notes", ("A3",)),
+              ("Settings and Link", ("A4",)), ("Geography", ("A5", "A60", "A61")), ("Periodic Table", ("A7",))]
+    for title, pre in groups:
+        sections.append(("Apps (colour): " + title, sorted(n for n in shots if n.startswith(pre))))
+    sections.append(("AI Solve inside Apps (colour)", [n for n in ("20_ai_ready", "23_ai_solving", "24_ai_answer_page1",
+                                                                   "27_ai_failure_busy", "28_ai_failure_timeout",
+                                                                   "72_camera_focused") if n in shots]))
+    height = 70
+    for _, names in sections:
+        height += 40 + ((len(names) + cols - 1) // cols) * (ch + cap + pad)
+    sheet = Image.new("RGB", (pad + cols * (cw + pad), height), (245, 245, 243))
+    d = ImageDraw.Draw(sheet)
+    d.text((pad, 18), "v15 LCD, MODE 4 Apps: every new screen, drawn by the firmware's own code (x2)",
+           font=label_font(30), fill=(20, 20, 20))
+    y = 70
+    for title, names in sections:
+        d.text((pad, y + 6), title, font=label_font(24), fill=(224, 122, 79))
+        y += 40
+        for i, n in enumerate(names):
+            x = pad + (i % cols) * (cw + pad)
+            yy = y + (i // cols) * (ch + cap + pad)
+            sheet.paste(shots[n].resize((cw, ch), Image.NEAREST), (x, yy))
+            d.text((x, yy + ch + 4), n, font=label_font(20, False), fill=(40, 40, 40))
+        y += ((len(names) + cols - 1) // cols) * (ch + cap + pad)
+    return sheet
+
+
 # ---------------------------------------------------------------- 5. framed
 def framed(key_png, ui, tint=0.10):
     """The screenshot warped into the green (chroma-key) active area of a v15 render, as
@@ -197,14 +242,17 @@ def main():
         name = rename.get(p, os.path.splitext(os.path.basename(p))[0])
         im = Image.open(p).convert("RGB")
         shots[name] = im
-    for old in glob.glob(os.path.join(OUT, "[0-9][0-9]_*.png")) + glob.glob(os.path.join(X3, "[0-9][0-9]_*.png")):
-        os.remove(old)
+    for pat in ("[0-9][0-9]_*.png", "A[0-9][0-9]_*.png", "L[0-9][0-9]_*.png", "M[0-9][0-9]_*.png", "E[0-9][0-9]_*.png",
+                "C[0-9][0-9]_*.png", "B[0-9][0-9]_*.png", "X[0-9][0-9]_*.png"):
+        for old in glob.glob(os.path.join(OUT, pat)) + glob.glob(os.path.join(X3, pat)):
+            os.remove(old)
     for name, im in shots.items():
         im.save(os.path.join(OUT, name + ".png"))
         im.resize((960, 510), Image.NEAREST).save(os.path.join(X3, name + "_x3.png"))
 
     status_sheet(shots).save(os.path.join(OUT, "sheet_status_bar_variants.png"))
     contact_sheet(shots, sorted(shots)).save(os.path.join(OUT, "sheet_all_screens.png"))
+    apps_sheet(shots).save(os.path.join(OUT, "apps_contact_sheet.png"))
 
     picks = ["03_calc_result", "05_calc_result_functions", "10_menu_mode", "20_ai_ready", "24_ai_answer_page1",
              "50_setup_by_phone", "53_ota_progress_42", "61_selftest_colour_bars", "72_camera_focused",

@@ -1,5 +1,7 @@
 # Who should build the board? JLCPCB vs the alternatives
 
+> **2026-10-11 (from Nirav):** the v14 order this was written for never happened. v15-LCD has been ordered; which vendor was used isn't recorded here.
+
 Written 2026-10-06 for the v14 order (5 bare PCBs, 2 assembled). Research only: no quotes were placed, no accounts created. Prices are estimates from published price lists and public reports; only an uploaded quote is exact.
 
 ## Verdict (one line)

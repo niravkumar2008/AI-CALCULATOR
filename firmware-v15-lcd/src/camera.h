@@ -40,6 +40,9 @@ bool cameraPreviewMode();  // true while the sensor is in preview (RGB565) mode
 // frame time; null if the camera is not in preview mode or gave nothing. `focused` = the
 // lens is in focus (always true on a fixed-focus module).
 camera_fb_t* cameraPreviewGrab(bool& focused);
+// Gives the frame back (takes the camera lock). Release every frame before a scan starts:
+// the scan's switch to JPEG mode frees the preview buffers (a frame from before that is
+// dropped, not returned).
 void cameraPreviewRelease(camera_fb_t* fb);
 // Autofocus: start a new single-shot focus now (a key press), and where it stands.
 enum class CamFocus : uint8_t { NoAf, Focusing, Focused };

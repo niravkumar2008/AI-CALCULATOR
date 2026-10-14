@@ -22,7 +22,9 @@ struct Status {
   bool lowBattery = false;   // AI lock-out
 };
 
-// Layout (pixels): status bar on top, soft-key bar at the bottom, content between.
+// Layout (pixels) of the Apps look: status bar on top, soft-key bar at the bottom, content
+// between. The calculator (LCD look) has its own Casio layout in ui.cpp: a thin indicator
+// row and no soft-key bar (owner, 2026-10-11).
 constexpr int kStatusH = 22;
 constexpr int kSoftH = 20;
 constexpr int kContentY = kStatusH + 2;
@@ -41,17 +43,23 @@ void showProgress(const std::string& title, const std::string& line1, const std:
 // The next show*() redraws whatever it is given (after the viewfinder owned the panel).
 void invalidate();
 
-// Colours shared with the viewfinder overlay and the self-test.
+constexpr uint16_t rgb565(uint8_t r, uint8_t g, uint8_t b) {
+  return uint16_t(((r & 0xF8) << 8) | ((g & 0xFC) << 3) | (b >> 3));
+}
+
+// The brand colours (the Apps look: navy and orange), shared with the viewfinder overlay
+// and the self-test. The calculator itself is drawn in the classic mono "LCD" look
+// (ui.cpp: Palette); full colour is only inside the Apps menu (docs/MODE4_APPS_SPEC.md).
 namespace color {
-constexpr uint16_t bg = 0x0861;       // near black (#101418)
-constexpr uint16_t bar = 0x1986;      // status / soft-key bar (#1c2430)
-constexpr uint16_t text = 0xEF7D;     // main text (#e8eef4)
-constexpr uint16_t dim = 0x8D30;      // secondary text (#8fa3b8)
-constexpr uint16_t accent = 0x3E1F;   // highlight (#39c3ff)
-constexpr uint16_t result = 0x7FD3;   // results (#7cfc9a)
-constexpr uint16_t warn = 0xFE69;     // amber (#ffcc4d)
-constexpr uint16_t error = 0xB105;    // red (#b0202a)
-constexpr uint16_t good = 0x2E88;     // green (#2ad144)
+constexpr uint16_t bg = rgb565(0x10, 0x14, 0x1c);      // navy (#10141c)
+constexpr uint16_t bar = rgb565(0x1a, 0x21, 0x30);     // status / soft-key bar (#1a2130)
+constexpr uint16_t text = rgb565(0xee, 0xf2, 0xf6);    // main text (#eef2f6)
+constexpr uint16_t dim = rgb565(0x93, 0xa1, 0xb3);     // secondary text (#93a1b3), 7:1 on bg
+constexpr uint16_t accent = rgb565(0xe0, 0x7a, 0x4f);  // brand orange (#e07a4f)
+constexpr uint16_t result = rgb565(0xff, 0xff, 0xff);  // results
+constexpr uint16_t warn = rgb565(0xf5, 0xb7, 0x4f);    // amber (#f5b74f)
+constexpr uint16_t error = rgb565(0xd6, 0x3a, 0x3f);   // red (#d63a3f)
+constexpr uint16_t good = rgb565(0x4c, 0xc3, 0x8a);    // green (#4cc38a)
 constexpr uint16_t black = 0x0000;
 constexpr uint16_t white = 0xFFFF;
 }  // namespace color

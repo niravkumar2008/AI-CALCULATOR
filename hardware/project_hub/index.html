@@ -199,12 +199,12 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
   <div>
     <span class="pill blue">Snapshot 2026-10-10</span>
     <h1>A scientific calculator that photographs a problem and gets it solved by Claude.</h1>
-    <p class="lede">A custom board (ESP32-S3, camera, Wi-Fi, magnetic charging) inside a Casio fx-115ES shell. Without a subscription it's still an ordinary scientific calculator; the AI solve needs the $15/month plan. The plan is to market it as a homework and study tool, because the SAT and ACT ban calculators with a camera or Wi-Fi.</p>
+    <p class="lede">A custom board (ESP32-S3, camera, Wi-Fi, magnetic charging) inside a Casio fx-115ES shell. Without a subscription it's still an ordinary scientific calculator; the AI solve needs the Proofline plan ($10/month or $100/year since 2026-10-11; was $15/month). The plan is to market it as a homework and study tool, because the SAT and ACT ban calculators with a camera or Wi-Fi.</p>
     <div class="facts">
-      <span class="pill">$225 + $15/month, 1st month free</span>
+      <span class="pill">$225 + $10/mo or $100/yr, 1st month free (2026-10-11)</span>
       <span class="pill">500 solves/month cap</span>
-      <span class="pill ok">v14 e-paper: ordered 10/8</span>
-      <span class="pill warn">v15 LCD: verified ORDER, not ordered</span>
+      <span class="pill warn">v14 e-paper: never ordered (2026-10-11)</span>
+      <span class="pill ok">v15 LCD: ordered (details not recorded)</span>
     </div>
   </div>
   <div class="shot"><img src="img/hero_v15_lcd.jpg" alt="v15 colour LCD calculator render with the screen on, showing an AI-solved integral" width="981" height="760"></div>
@@ -246,7 +246,7 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
   <p class="sub">Both use the same board outline, holes, camera, charger and magnet connector. v15 swaps the e-paper for a colour LCD and moves 3 key pads to the Casio contact positions.</p>
   <div class="builds">
     <article class="card build">
-      <div class="head"><div><h3>v14 · e-paper</h3><span class="pill ok">Ordered 10/8 · boards ≈ 10/18–22</span></div><span class="pill">tag v14-order</span></div>
+      <div class="head"><div><h3>v14 · e-paper</h3><span class="pill warn">Never ordered (2026-10-11)</span></div><span class="pill">tag v14-order</span></div>
       <div class="pic"><img src="img/front_v14.jpg" alt="v14 front view" loading="lazy">
       <dl class="kv">
         <dt>Screen</dt><dd>Waveshare 2.13" e-paper, 250 × 122 (SSD1680)</dd>
@@ -262,7 +262,7 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
       </ul>
     </article>
     <article class="card build">
-      <div class="head"><div><h3>v15 · colour LCD</h3><span class="pill warn">Verified ORDER · not ordered yet</span></div><span class="pill">review 14</span></div>
+      <div class="head"><div><h3>v15 · colour LCD</h3><span class="pill ok">Ordered (2026-10-11) · 5 samples first</span></div><span class="pill">review 14</span></div>
       <div class="pic"><img src="img/front_v15.jpg" alt="v15 front view with the colour screen on" loading="lazy">
       <dl class="kv">
         <dt>Screen</dt><dd>1.9" 170 × 320 IPS, ST7789 (BuyDisplay ER-TFT019-1)</dd>
@@ -317,7 +317,7 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
       <div class="k"><span class="tag">Decision</span><b>Battery plan</b><small>150 mAh now, or the 1,200–1,500 mAh cell first</small></div>
       <div class="k"><span class="tag">Decision</span><b>R5 → 15 k</b><small>Means new v15 Gerbers/BOM and a fresh check</small></div>
       <div class="k"><span class="tag">Decision</span><b>Touch panel later</b><small>Needs GPIOs v15 doesn't have, so a later-board question</small></div>
-      <div class="k"><span class="tag">Business</span><b>Pricing vs VovoCorp</b><small>Plan: $225 + $15/month</small></div>
+      <div class="k"><span class="tag">Business</span><b>Pricing vs VovoCorp</b><small>2026-10-11: $225 + $10/mo or $100/yr</small></div>
       <div class="k"><span class="tag">Account</span><b>Deploy the proxy</b><small>Render or similar, before Power-up step 10; real sign-in before selling</small></div>
       <div class="k"><span class="tag">Photos</span><b>Donor edition check + CAD photos</b><small>Back labels; side profile, slide case</small></div>
     </div>
@@ -472,7 +472,7 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
 <!-- 7. MONEY -->
 <section id="money">
   <h2>Money snapshot</h2>
-  <p class="sub">Budget $2,000. Price $225 + $15/month. All figures are estimates from the cost model until real invoices replace them.</p>
+  <p class="sub">Budget $2,000. Price $225 + $10/month or $100/year since 2026-10-11; ≈ $794 left after the v15 order and 5 samples (estimate). The charts below are the 10/8 plan (with $15/month and the v14 order, which never happened). All figures are estimates from the cost model until real invoices replace them.</p>
   <div class="charts">
     <div class="card fig">
       <h3>The $2,000 budget</h3>
@@ -523,7 +523,7 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
       </div>
     </div>
     <div class="card fig" style="grid-column:1/-1">
-      <h3>Does $15/month cover the Claude API?</h3>
+      <h3>Does $15/month cover the Claude API? (old price; at $10/month with the $5 cap every paying user still covers it)</h3>
       <div class="legend"><span><i style="background:var(--c1)"></i>Typical user (5 solves/day)</span><span><i style="background:var(--c2)"></i>At the 500/month cap</span><span><i style="background:var(--ink)"></i>$15 subscription</span></div>
       <svg style="max-width:760px" viewBox="0 0 600 236" role="img" aria-label="Monthly API cost per user by model versus the 15 dollar subscription">
         <text x="120" y="38" font-size="13" text-anchor="end" font-weight="700">Opus 5.5</text>
@@ -550,7 +550,7 @@ footer{padding:36px 0 48px;color:var(--muted);font-size:13px}
   <p class="sub">Estimates from the roadmap. Each day an order slips moves the later dates by a day.</p>
   <div class="two">
     <ol class="tl">
-      <li class="done"><div class="when">Thu 10/8</div><div class="what"><b>v14 ordered at JLCPCB.</b> v15 LCD verified "ORDER" the same evening.</div></li>
+      <li class="done"><div class="when">Thu 10/8</div><div class="what"><b>v14 ordered at JLCPCB.</b> (2026-10-11: it never was; v15 LCD has been ordered.) v15 LCD verified "ORDER" the same evening.</div></li>
       <li class="now"><div class="when">From 10/9, Nirav's call</div><div class="what"><b>v15 order</b> + 3 × ER-TFT019-1. Boards ≈ 10–14 days after the order.</div></li>
       <li><div class="when">10/9 – 10/15</div><div class="what">JLCPCB builds. Buy 3 Casio shells, grind 5 shells, deploy the proxy.</div></li>
       <li><div class="when">≈ 10/12 – 10/16</div><div class="what">Adafruit, Seeed, Waveshare and AliExpress parts arrive.</div></li>

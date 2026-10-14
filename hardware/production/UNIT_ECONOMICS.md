@@ -2,12 +2,14 @@
 
 Written 2026-10-06 for Nirav, **updated 2026-10-08 for the new plan** (5 v14 e-paper testers, then the v15-LCD board, a bigger battery later) and **again on the evening of 10/8**: the v15-LCD board is verified "ORDER" (`../verification/14_v15_final_preorder.md`), the panel is the **BuyDisplay ER-TFT019-1**, and the v15 JLCPCB order is now in the cash plan. Every number here comes from `COST_MODEL.xlsx` in this folder (rebuilt by `build_cost_model.py`). If you change a blue cell there, these numbers change with it. Companion files: `KNOCKOFF_SHELL_PLAN.md` (the clone shell), `QA_TEST_PLAN.md` (testing), `../stage15_lcd.md` (the LCD board), `Claude outputs/AI_Calculator_Shopping_List.xlsx` (what to buy now) and `Claude outputs/Alibaba_Bulk_Sourcing.xlsx` (bulk prices; the new sheet "v15-LCD cost by batch" has the LCD bill of materials).
 
+> **2026-10-11 (from Nirav):** v14 was **never ordered** and v15-LCD **has been ordered**. The $275 "already paid on 10/8" v14 order and the 5 v14 e-paper testers below didn't happen; the plan is **5 v15-LCD samples first, then bulk**. Prices are now $225 + AI tutor plan $10/month or $100/year (2 months free), first month free with no card, firmware updates only with the plan, per-account AI cap $5/month and 300 solves/month, buyers 18+. **Recomputed numbers: section 8** (the real v15 order total isn't recorded, so the $270 estimate is still used).
+
 **The short answer:**
 - **The 5 testers cost about $664 in cash** with option C. That's $275 for the JLCPCB order (already paid on 10/8) plus $389 for the rest.
 - **The LCD version costs the same as the e-paper one at 10 units and $2–3 less from 100 on:** $92 vs $92 at 10 units, $42 vs $46 at 100, $32 vs $34 at 1,000. At 10 the panel is the datasheet-verified BuyDisplay ER-TFT019-1 ($6.22 @10); from 100 on it is an Alibaba panel at $2.30–2.50 (after a sample check), and the simpler board pays for the extra socket and FETs.
 - **The LCD drains the battery much faster**, though: about 1.5 h of screen-on time on the 150 mAh cell. The 1,200–1,500 mAh cell adds about $3 a unit at 100 ($2 at 1,000) and gives 13–17 h.
 - **At $225 the calculator makes about $101–163 a unit** from 10 units on, whichever version you build.
-- **The $15 subscription covers the Claude API for a typical student.** A heavy user at the 500-solve cap costs more than $15 on Opus 5.5, but not on Sonnet 5.5.
+- *(Superseded 2026-10-11: the plan is $10/month or $100/year with a $5 / 300-solve cap; every paying user covers the API, see §8.)* **The $15 subscription covers the Claude API for a typical student.** A heavy user at the 500-solve cap costs more than $15 on Opus 5.5, but not on Sonnet 5.5.
 - **Ordering v15 now (≈ $270 delivered, estimate) plus 3 panels (≈ $32) means the $2,000 no longer covers a 10-unit LCD pilot.** The full plan with a 10-unit pilot comes to about **$2,475, which is $475 over**. If the 5 assembled v15 boards become the first pilot units, a **5-unit pilot** is about $11 over, a **4-unit pilot** leaves about $62, and a 5-unit pilot with **Sonnet 5.5** for the beta leaves about $30 (section 5).
 
 Most inputs are still estimates: the clone shell price, tariffs, the LCD panel quote, how many buyers keep paying, and how much students actually use it. Treat the numbers as "about right", not exact.
@@ -83,7 +85,7 @@ How to read it:
 | **Hardware profit, LCD** | **$106** | **$120** | **$163** |
 | **Hardware profit, LCD + 1,200–1,500 mAh** | **$101** | **$117** | **$161** |
 
-## 4. Does $15 a month cover the Claude API?
+## 4. Does $15 a month cover the Claude API? (history; the 2026-10-11 prices are in §8)
 
 **For a typical user, yes.** "Typical" means about 5 photo solves a day, or 150 a month.
 
@@ -102,11 +104,11 @@ What's left from the $15 per paying user per month on Opus 5.5 (after the 74¢ c
 
 Over a year, one buyer's subscription is worth about **$34 of profit** at 100 units (Opus). This assumes 70 % start paying after the free month and 8 % cancel each month, which is about 5.3 paid months out of 12. Both percentages are guesses until the testers and the pilot give real numbers.
 
-## 5. Where the $2,000 goes (new order of steps)
+## 5. Where the $2,000 goes (new order of steps) (superseded 2026-10-11 by §8.5)
 
 | # | What | When | $ |
 |---|---|---|---|
-| 1 | v14 JLCPCB order: 5 PCBs, 5 assembled, delivered | paid 10/8 | 275 |
+| 1 | v14 JLCPCB order: 5 PCBs, 5 assembled, delivered **(2026-10-11: never ordered)** | not paid | 275 |
 | 2 | Tester parts, 3 shells, shipping, supplies (option C) | now, before boards land (~10/18–22) | 389 |
 | 3 | v15-LCD prototype panels: 3 × BuyDisplay ER-TFT019-1 + shipping (estimate) | now, with the v15 order | 32 |
 | 4 | **v15-LCD JLCPCB order** (verified ORDER): 5 PCBs, 5 assembled, delivered (estimate) | now | 270 |
@@ -159,3 +161,107 @@ Over a year, one buyer's subscription is worth about **$34 of profit** at 100 un
 | 70 % start paying, 8 % cancel a month | Inputs "Subscription behaviour" | Tester / pilot conversions |
 | Clone shell $3.99 at 100 | Unit cost row 2 | The seller's written quote for the plain version |
 | ~35 % import duty | Unit cost row 13 | The tariff line on the v14 JLCPCB checkout |
+
+---
+
+## 8. Update 2026-10-11: Proofline prices, v15 ordered, 5 samples (supersedes the numbers above where they conflict)
+
+**Facts from Nirav (2026-10-11):** brand **Proofline** (company "Proofline Corporation", not registered yet). Device **$225**. AI tutor plan **$10/month or $100/year** (2 months free). **First month free, no card.** Firmware updates only with the plan. Per-account AI spend cap **$5/month, 300 solves/month** (was $15/month and a 500-solve cap; the "$8 cap" figure in some notes is also superseded). Buyers **18+**. **v14 was never ordered; v15-LCD has been ordered** (vendor, quantity, total and delivery date **not recorded — ask Nirav**). Plan: **5 samples first, then bulk.** Preorders in 2027.
+
+Sections 1, 3, 4 and 5 above are kept as history. What changed: section 1 (v14 testers) didn't happen; the $15 subscription in sections 3–4 is now $10 / $100; the cash plan in section 5 loses the $275 v14 row, the $389 tester parts and the 10-unit pilot. Section 2 (unit cost) still stands: it already describes the v15-LCD board.
+
+### 8.1 Inputs used (and where they come from)
+
+| Input | Value | Source |
+|---|---|---|
+| AI cost per solve | **$0.026** | `Claude outputs/LAUNCH_ROADMAP.md` §3.3, Sonnet 5.5 row ($2 / $10 per M tokens, 2,500 in + 2,100 out per solve; token counts are estimates). §4 above gives $3.77/month with caching, close to the same. |
+| Typical solves per user per month | **150** | Same table, "150/mo (typical)"; `COST_MODEL.xlsx` Inputs "5 solves a day". A guess until the sample log replaces it. |
+| Stripe | **2.9 % + 30¢ per charge, + 0.7 % Billing** on subscriptions | 2.9 % + 30¢ from `COST_MODEL.xlsx` Inputs; 0.7 % Billing given by Nirav 2026-10-11. The device sale pays 2.9 % + 30¢ only. |
+| Cloudflare Workers | **$5/month when needed** (free tier until then) | Given 2026-10-11. Replaces the $25/month proxy host. |
+| Unit cost, LCD v15, 150 mAh | **$91.92 / $42.22 / $31.69** at 10 / 100 / 1,000 (incl. selling-legally: $91.92 / $77.69 / $35.23) | `COST_MODEL.xlsx` → Versions (section 2 above). No part prices were changed. |
+| Selling-legally one-time | **$3,547** | `COST_MODEL.xlsx` (FCC $1,750, lawyer $300, LLC $97, trademark $700, insurance $700). |
+| Conversion / churn | 70 % pay after the free month; 8 %/month cancel | `COST_MODEL.xlsx` Inputs (guesses). Yearly payers are assumed to stay the full year. |
+
+### 8.2 Subscription money per paying user per month
+
+| | Monthly $10 | Yearly $100 (per month) |
+|---|---|---|
+| Gross | $10.00 | $8.33 |
+| Stripe 2.9 % + 0.7 % Billing + 30¢ | −$0.66 | −$3.90 a year = −$0.33 |
+| **Net** | **$9.34** | **$8.01** ($96.10 a year) |
+| AI, typical (150 × $0.026) | −$3.90 | −$3.90 |
+| **Left, typical user** | **$5.44** | **$4.11** |
+| Left, user at the $5 cap | $4.34 | $3.01 |
+
+**Three mixes** (share of paying users on the yearly plan):
+
+| | 30 % yearly | 50 % yearly | 70 % yearly |
+|---|---|---|---|
+| Gross per paying user-month | $9.50 | $9.17 | $8.83 |
+| Net after Stripe | $8.94 | $8.67 | $8.41 |
+| **Left after AI (typical)** | **$5.04** | **$4.77** | **$4.51** |
+| Left after AI (at the $5 cap) | $3.94 | $3.67 | $3.41 |
+| 12-month subscription value per device sold* | $30.35 | $31.54 | $32.73 |
+
+\* Per device sold: 70 % convert; a monthly payer averages 7.50 paid months in months 2–12 at 8 % churn (= 7.50 × $5.44 = $40.82); a yearly payer gives one paid year ($96.10 − 12 × $3.90 = $49.30). Value = 0.7 × (yearly share × $49.30 + monthly share × $40.82). Yearly is less per month but worth more per buyer because nobody churns inside the year.
+
+**What the cap means:** at $0.026 a solve the **$5 cap is reached at ≈ 192 solves**, before the 300-solve cap. So the worst any account can cost is $5.00 a month, and **every paying user is profitable even at the cap**. The 300-solve cap only binds if a solve costs less than $0.0167 (for example Haiku-first routing, ≈ $0.010 in `LAUNCH_ROADMAP.md` §3.3). On Opus 5.5 ($0.052) the $5 cap would hit at ≈ 96 solves.
+
+**Free first month, no card:** every activated device costs up to $5 of AI (typical $3.90) whether or not it converts. It's counted once, in the hardware profit below.
+
+**Cloudflare $5/month** is covered by the first subscriber ($5.04 left at a 30 % yearly mix).
+
+### 8.3 Hardware profit per $225 unit (LCD v15, 150 mAh)
+
+| Per unit | 10 | 100 | 1,000 |
+|---|---|---|---|
+| Price | $225.00 | $225.00 | $225.00 |
+| Card fee 2.9 % + 30¢ | −$6.83 | −$6.83 | −$6.83 |
+| Shipping to the customer | −$6.00 | −$6.00 | −$6.00 |
+| Returns / warranty 3 % | −$6.75 | −$6.75 | −$6.75 |
+| Free-month AI (typical, Sonnet) | −$3.90 | −$3.90 | −$3.90 |
+| Unit cost incl. selling-legally from 100 | −$91.92 | −$77.69 | −$35.23 |
+| **Hardware profit** | **$109.60** | **$123.83** | **$166.29** |
+| Old (section 3, free month on Opus $7.52) | $106 | $120 | $163 |
+
+Without the selling-legally share, the 100-unit contribution is **$159.30** (= $201.52 − $42.22).
+
+### 8.4 Break-even
+
+| Fixed costs to recover | ÷ contribution per unit | Units |
+|---|---|---|
+| Selling-legally $3,547 | $159.30 (hardware, 100-unit variable cost) | **23** |
+| $3,547 + the $2,000 budget + 12 × $5 Cloudflare = $5,607 | $159.30 (hardware only) | **36** |
+| Same $5,607 | $190.84 (hardware + 12-month subscription at 50 % yearly) | **30** |
+
+### 8.5 Cash plan vs the $2,000 (replaces section 5)
+
+| # | What | When | $ |
+|---|---|---|---|
+| 1 | v15-LCD order (ordered; **real total not recorded**, model estimate) | ordered by 2026-10-11 | 270.00 |
+| 2 | Parts for the **5 v15 samples** (camera, LCD panel, battery, magnet, cable, shell, freight, scrap) = 5 × ($91.92 − $18.00 board) | on arrival | 369.60 |
+| 3 | Knockoff shell samples (4 from 2 sellers) | Nov – Dec | 60.00 |
+| 4 | Bulk supplier samples (camera, bare LCD, cells, magnet pair) | after the shells pass | 90.00 |
+| 5 | Cloudflare Workers, 3 months | at deploy | 15.00 |
+| 6 | AI for the 5 sample users' free month, at the $5 cap | samples | 25.00 |
+| 7 | Lawyer / IP clinic | before units leave | 150.00 |
+| 8 | Company filing (repo figure = Indiana LLC $97; a corporation's fee isn't in the repo) | before taking money | 97.00 |
+| 9 | Domain + email | at deploy | 20.00 |
+| | Subtotal | | 1,096.60 |
+| | 10 % contingency | | 109.66 |
+| | **Total** | | **1,206.26** |
+| | **Left from $2,000** | | **≈ 793.74** |
+
+The old v14 row ($275), the tester parts ($389), the 3-panel line ($32, now inside row 2) and the 10-unit pilot ($679) are gone. Optional: 5 more pilot units with new boards (5 × $91.92 + 10 % = $505.56) would leave ≈ $288.
+
+**Not inside the $2,000:** the first 100 public units (≈ $4,220) + selling-legally (≈ $3,550) ≈ **$7,770** (section 5 figure). Using the ≈ $794 left, that needs **≈ 32 preorders** at $225 after card fees ($218.18 each).
+
+### 8.6 Numbers to replace first (new)
+
+| Guess | Replace with |
+|---|---|
+| v15 order ≈ $270 | **The real v15 order total, vendor, quantity, delivery date (not recorded — ask Nirav)** |
+| 150 solves/month, $0.026/solve | Real usage from the 5 samples and the Cloudflare Worker logs |
+| 70 % convert after a no-card free month | Sample and preorder data |
+| Yearly share 30–70 % | Stripe test-mode → live data |
+| Company filing $97 (LLC) | The real fee for Proofline Corporation in its state |

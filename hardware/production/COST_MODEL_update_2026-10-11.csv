@@ -1,0 +1,59 @@
+section,item,value,unit,source_or_formula
+inputs,Device price,225,$,Nirav 2026-10-11
+inputs,Plan monthly price,10,$/month,Nirav 2026-10-11
+inputs,Plan yearly price,100,$/year,Nirav 2026-10-11 (2 months free)
+inputs,Free months,1,months,"Nirav 2026-10-11 (no card)"
+inputs,AI spend cap per account,5,$/month,Nirav 2026-10-11
+inputs,Solve cap per account,300,solves/month,Nirav 2026-10-11
+inputs,AI cost per solve,0.026,$,LAUNCH_ROADMAP.md 3.3 Sonnet 5.5 row (token counts are estimates)
+inputs,Typical solves per month,150,solves,LAUNCH_ROADMAP.md 3.3 typical; COST_MODEL Inputs 5/day
+inputs,Stripe percent,0.029,%,COST_MODEL Inputs
+inputs,Stripe fixed,0.30,$,COST_MODEL Inputs
+inputs,Stripe Billing percent (subscriptions only),0.007,%,Nirav 2026-10-11
+inputs,Cloudflare Workers,5,$/month,Nirav 2026-10-11 (when needed)
+inputs,Conversion after free month,0.70,%,COST_MODEL Inputs (guess)
+inputs,Monthly churn,0.08,%/month,COST_MODEL Inputs (guess)
+inputs,Unit cost LCD 150mAh @10 / @100 / @1000 (before legal),91.92 / 42.22 / 31.69,$,COST_MODEL Versions
+inputs,Unit cost LCD 150mAh incl. selling-legally @10 / @100 / @1000,91.92 / 77.69 / 35.23,$,COST_MODEL Versions
+inputs,Selling-legally one-time,3547,$,COST_MODEL (FCC 1750 + lawyer 300 + LLC 97 + TM 700 + insurance 700)
+inputs,v15 order (ordered; real total NOT RECORDED),270,$,COST_MODEL Inputs v15_order estimate
+subscription,Monthly plan net per month,9.34,$,10 - (10*3.6% + 0.30)
+subscription,Yearly plan net per year,96.10,$,100 - (100*3.6% + 0.30)
+subscription,Yearly plan net per month,8.01,$,96.10 / 12
+subscription,AI typical per month,3.90,$,150 * 0.026
+subscription,Solves until the $5 cap,192,solves,5 / 0.026
+subscription,30% yearly: gross / net / left typical / left at cap,9.50 / 8.94 / 5.04 / 3.94,$/paying user-month,
+subscription,50% yearly: gross / net / left typical / left at cap,9.17 / 8.67 / 4.77 / 3.67,$/paying user-month,
+subscription,70% yearly: gross / net / left typical / left at cap,8.83 / 8.41 / 4.51 / 3.41,$/paying user-month,
+subscription,Monthly payer 12-month value,40.82,$,7.5046 paid months (8% churn) * 5.44
+subscription,Yearly payer 12-month value,49.30,$,96.10 - 12*3.90
+subscription,12-month value per device sold @30/50/70% yearly,30.35 / 31.54 / 32.73,$,0.7 * (y*49.30 + (1-y)*40.82)
+hardware,Card fee on $225,6.83,$,225*2.9% + 0.30
+hardware,Shipping to customer,6.00,$,COST_MODEL Inputs
+hardware,Warranty 3%,6.75,$,COST_MODEL Inputs
+hardware,Free-month AI typical,3.90,$,150 * 0.026
+hardware,Profit per unit @10 / @100 / @1000,109.60 / 123.83 / 166.29,$,201.52 - unit cost incl. legal
+hardware,Contribution per unit @100 before legal,159.30,$,201.52 - 42.22
+breakeven,Units to recover selling-legally 3547,23,units,3547 / 159.30
+breakeven,Units to recover 3547 + 2000 + 60 Cloudflare (hardware only),36,units,5607 / 159.30
+breakeven,Same incl. 12-month subscription @50% yearly,30,units,5607 / 190.84
+cash,v15 order (estimate; real total not recorded),270.00,$,
+cash,Parts for 5 v15 samples,369.60,$,5 * (91.92 - 18.00 board)
+cash,Knockoff shell samples,60.00,$,COST_MODEL Cash budget
+cash,Bulk supplier samples,90.00,$,COST_MODEL Cash budget
+cash,Cloudflare 3 months,15.00,$,3 * 5
+cash,AI free month for 5 sample users at the cap,25.00,$,5 * 5
+cash,Lawyer / IP clinic,150.00,$,COST_MODEL Cash budget
+cash,Company filing (repo has Indiana LLC fee only),97.00,$,COST_MODEL Inputs llc
+cash,Domain + email,20.00,$,COST_MODEL Cash budget
+cash,Subtotal,1096.60,$,
+cash,Contingency 10%,109.66,$,
+cash,Total,1206.26,$,
+cash,Left from 2000,793.74,$,
+cash,First 100 units + selling legally (not in budget),7770,$,UNIT_ECONOMICS.md 5 (4220 + 3550)
+cash,Preorders needed,32,units,(7770 - 793.74) / (225*0.971 - 0.30)
+superseded,v14 JLCPCB order 275 (paid 10/8),0,$,2026-10-11: never ordered
+superseded,Tester parts option C 388.97,0,$,2026-10-11: e-paper testers dropped
+superseded,10-unit v15 pilot 679,0,$,2026-10-11: plan is 5 samples then bulk
+superseded,Proxy hosting 25/month,0,$,2026-10-11: Cloudflare Workers 5/month
+superseded,Subscription 15/month and 500-solve cap,0,$,2026-10-11: 10/month or 100/year; 5/month and 300 solves

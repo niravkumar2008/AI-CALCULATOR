@@ -63,7 +63,7 @@ void claudeSolve(const std::string& apiKey, const std::string& jpeg, const std::
     int code = c.lastError(err, sizeof(err));
     // mbedTLS errors mean we reached a server but couldn't trust it.
     if (code != 0) return cb.fail(Failure::ApiError, std::string("Secure connection failed: ") + err);
-    return cb.fail(Failure::NoConnection, "Can't reach Claude.");
+    return cb.fail(Failure::NoConnection, "Can't reach the AI server.");
   }
 
   std::string head = std::string("POST ") + kApiPath + " HTTP/1.1\r\n" +

@@ -2,6 +2,8 @@
 
 Research only, 2026-10-08. Nothing was ordered and nothing was committed. Written for Nirav.
 
+> **2026-10-11 (from Nirav):** the screen decision is final: colour LCD, and the v15-LCD board has been ordered. Whether the ER-TFT019-1 panels have been ordered, and how many, isn't recorded here.
+
 ## Verdict (read this first)
 
 > **Updated 2026-10-08 evening (final pre-order review, `verification/14_v15_final_preorder.md`): the panel to buy is the BuyDisplay ER-TFT019-1.** The original research verdict (Adafruit #5394 for prototypes) is kept below for the record, but it is superseded.

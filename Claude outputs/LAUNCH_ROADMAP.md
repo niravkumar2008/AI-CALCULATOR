@@ -1,4 +1,4 @@
-# AI Calculator launch roadmap
+# Proofline (AI calculator) launch roadmap
 
 Written Saturday 2026-10-03. **Re-planned 2026-10-08, updated the evening of 10/8** (v15-LCD verified "ORDER", BuyDisplay ER-TFT019-1 panel, v15 order in the budget):
 - 5 v14 e-paper testers, then the v15-LCD board, then knockoff shells and bulk.
@@ -7,7 +7,17 @@ Written Saturday 2026-10-03. **Re-planned 2026-10-08, updated the evening of 10/
 
 Chart data (timeline tasks, price-scaling table, API costs) is in `launch_roadmap_data.json` in this folder. The page version is `launch_roadmap.html`.
 
-> **Status 2026-10-08:**
+> **Status correction 2026-10-11 (from Nirav; overrides everything below where they conflict):**
+> - **v14 (e-paper) was never ordered.** It was only a design iteration. Everything below that says "v14 ordered 10/8", "paid 10/8", the v14 tester build, or the ≈ 10/18–22 v14 arrival is wrong.
+> - **v15 (colour LCD) has been ordered.** The screen decision is made: colour LCD. Order date, vendor, quantity, total paid and delivery date aren't recorded here yet (not recorded / ask Nirav; the plan was JLCPCB, 5 PCBs, 5 assembled, ≈ $270 estimate).
+> - **Plan: build 5 samples first (v15-LCD), then move to more bulk-focused production.**
+> - **Brand: Proofline** (company "Proofline Corporation", not registered yet; domain and email are still placeholders, `proofline.example`). Replaces "AI·CALC" and "[Brand]".
+> - **Prices (replace $225 + $15/month and the 500-solve cap):** $225 + AI tutor plan $10/month or $100/year (2 months free), first month free with no card, firmware updates only with the plan, per-account AI cap $5/month and 300 solves/month, buyers 18+.
+> - **Software (built and tested, not deployed):** website (28 pages, store + subscriptions with Stripe in test mode only, waitlist), Cloudflare Worker API (stages 1 + 3), v15 firmware with MODE 4 Apps, Casio-exact calculator screens, desktop + browser simulators. To do: firmware → Cloudflare API (stage 2), Turnstile, real email sending, deploy.
+> - **Preorders planned for 2027.**
+> - The cost/budget tables below still contain the v14 line (≈ $275) and the v14 e-paper tester parts. **Recomputed numbers: section 8 at the end of this file** and `hardware/production/UNIT_ECONOMICS.md` §8.
+>
+> **Status 2026-10-08 (superseded on 2026-10-11, see above):**
 > - **The v14 board is ordered at JLCPCB** (git tag `v14-order`, files in `hardware/kicad/` and `hardware/fab/`, frozen). It's 5 PCBs, assembly qty 5 assumed (Nirav was choosing 2 vs 5 at checkout).
 > - **Delivered cost:** about $200–240 for 2 assembled, or about $50–60 more for 5 assembled. Both include DHL and the ~35 % US duty collected at checkout.
 > - **Boards arrive about 10/18–22.**
@@ -18,7 +28,7 @@ Chart data (timeline tasks, price-scaling table, API costs) is in `launch_roadma
 > - **API proxy:** exists (`server/proxy/`). It gives each device its own token, a 30-day free trial and a 500 solves/month cap.
 > - **Factory self-test:** exists (SHIFT + ALPHA, ON).
 > - **Camera hole:** 7 mm.
-> - **Price:** **$225 + $15/month, first month free**.
+> - **Price:** **$225 + $15/month, first month free**. *(Superseded 2026-10-11: $225 + AI tutor plan $10/month or $100/year (2 months free), first month free with no card, firmware updates only with the plan, per-account AI cap $5/month and 300 solves/month, buyers 18+.)*
 
 ---
 
@@ -26,15 +36,15 @@ Chart data (timeline tasks, price-scaling table, API costs) is in `launch_roadma
 
 | Question | Answer |
 |---|---|
-| What's ordered | **v14 at JLCPCB, 10/8**: 5 PCBs, 5 assembled (assumed), ≈ **$275 delivered** (estimate: $220 for 2 assembled + $55 for 3 more). |
-| What you build next | **5 testers** in genuine Casio fx-115ES shells (you own 2, buy 3 at ≈ $20). **Option C** (recommended): units 1–3 with the current Seeed / Waveshare / Adafruit parts, units 4–5 with generic parts. |
-| What it costs | **≈ $664 for the 5 testers with option C**, incl. the JLCPCB order (option A ≈ $662, option B ≈ $572). Plus the **v15-LCD order ≈ $270 delivered (estimate)** and **3 × ER-TFT019-1 ≈ $32** (estimate incl. shipping). That's **≈ $966 spent now**, leaving ≈ $1,034 of the $2,000. |
-| When you'll have working units | Boards ≈ **10/18–22** → board #1 working ≈ 2 days later → all 5 testers ≈ **10/25–29** (estimate). |
-| The next board | **v15-LCD**: a 1.9" 170×320 colour IPS LCD replaces the e-paper (`hardware/stage15_lcd.md`, reviews 13 and 14). **Verified "ORDER"** on 10/8 (R23 15 Ω, SHIFT/ALPHA/ON pads moved to the Casio positions). Order whenever Nirav is ready; the bench checks (pin-1 diode test, backlight current, 3.3 V, colours, tail length, the 3 moved keys) happen after arrival and can't block the order. |
+| What's ordered | **2026-10-11: v15-LCD is ordered; v14 was never ordered** (v15 date, vendor, quantity and total not recorded yet). Old text: **v14 at JLCPCB, 10/8**: 5 PCBs, 5 assembled (assumed), ≈ **$275 delivered** (estimate: $220 for 2 assembled + $55 for 3 more). |
+| What you build next | **2026-10-11: 5 v15-LCD samples first, then bulk-focused production.** The e-paper tester plan below assumed v14 boards that were never ordered. Old text: **5 testers** in genuine Casio fx-115ES shells (you own 2, buy 3 at ≈ $20). **Option C** (recommended): units 1–3 with the current Seeed / Waveshare / Adafruit parts, units 4–5 with generic parts. |
+| What it costs | **2026-10-11: ≈ $1,206 for the v15 order (estimate) + 5 samples + samples, legal and services, ≈ $794 left of $2,000 (§8).** Old text: **≈ $664 for the 5 testers with option C**, incl. the JLCPCB order (option A ≈ $662, option B ≈ $572). Plus the **v15-LCD order ≈ $270 delivered (estimate)** and **3 × ER-TFT019-1 ≈ $32** (estimate incl. shipping). That's **≈ $966 spent now**, leaving ≈ $1,034 of the $2,000. |
+| When you'll have working units | **2026-10-11: depends on the v15 delivery date (not recorded yet).** Old v14-based estimate: Boards ≈ **10/18–22** → board #1 working ≈ 2 days later → all 5 testers ≈ **10/25–29** (estimate). |
+| The next board | **2026-10-11: v15-LCD is ordered** (no longer "next"). **v15-LCD**: a 1.9" 170×320 colour IPS LCD replaces the e-paper (`hardware/stage15_lcd.md`, reviews 13 and 14). **Verified "ORDER"** on 10/8 (R23 15 Ω, SHIFT/ALPHA/ON pads moved to the Casio positions). Order whenever Nirav is ready; the bench checks (pin-1 diode test, backlight current, 3.3 V, colours, tail length, the 3 moved keys) happen after arrival and can't block the order. |
 | Cost per unit (`COST_MODEL.xlsx`) | E-paper **$92 at 10 · $46 at 100 · $34 at 1,000**. LCD **$92 · $42 · $32** (BuyDisplay panel at 10, Alibaba from 100). LCD + 1,200–1,500 mAh battery **$97 · $45 · $34**. At 100 units, add ≈ $35 of one-time selling-legally costs per unit. |
-| Does the $2,000 cover it? | The whole plan (testers, **v15 order + 3 panels**, knockoff and bulk samples, **10-unit v15-LCD pilot** re-using the 5 v15 boards, server, API, lawyer, LLC, 10 % contingency) comes to **≈ $2,475, about $475 over**. A **4-unit pilot** fits with ≈ $62 left; 5 units is ≈ $11 over, or ≈ $30 left with Sonnet 5.5 for the beta (`UNIT_ECONOMICS.md` §5). |
+| Does the $2,000 cover it? | **2026-10-11: yes, ≈ $794 left after the v15 order and 5 samples (§8).** Old text: The whole plan (testers, **v15 order + 3 panels**, knockoff and bulk samples, **10-unit v15-LCD pilot** re-using the 5 v15 boards, server, API, lawyer, LLC, 10 % contingency) comes to **≈ $2,475, about $475 over**. A **4-unit pilot** fits with ≈ $62 left; 5 units is ≈ $11 over, or ≈ $30 left with Sonnet 5.5 for the beta (`UNIT_ECONOMICS.md` §5). |
 | Claude API | Opus 5.5 ≈ **$7.52 per typical user a month**. It **loses money at the 500-solve cap** ($24.72). Sonnet 5.5 is ≈ $3.77 typical and $12.40 at the cap, so **it covers the cap** (`UNIT_ECONOMICS.md` §4). |
-| Price (decided 10/4) | **$225** per calculator + **$15/month**, **first month free**, 500 solves/month fair-use cap. Without a subscription it must still work as a normal scientific calculator. |
+| Price (decided 10/4) | **2026-10-11: $225 + AI tutor plan $10/month or $100/year (2 months free), first month free with no card, firmware updates only with the plan, per-account AI cap $5/month and 300 solves/month, buyers 18+.** Old text: **$225** per calculator + **$15/month**, **first month free**, 500 solves/month fair-use cap. Without a subscription it must still work as a normal scientific calculator. |
 | Biggest legal facts | 1. A camera + Wi-Fi calculator is **banned on the SAT and ACT** [S16], so market it as a homework and study tool. 2. **Don't sell modified Casio shells at scale** (trademark risk): testers only, then knockoff and own shells. 3. Before selling to the public you need an **FCC Part 15B SDoC** (about $1–2.5k [S10]), and the battery needs a **UN38.3 test summary**. |
 
 ---
@@ -42,6 +52,8 @@ Chart data (timeline tasks, price-scaling table, API costs) is in `launch_roadma
 ## 1. What to buy now (`AI_Calculator_Shopping_List.xlsx`)
 
 ### 1A. The JLCPCB order (done 10/8)
+
+> **2026-10-11 (from Nirav):** this v14 order never happened. Kept for the record only; the ordered board is v15-LCD (1C).
 
 | Item | Qty | Total | Notes |
 |---|---|---|---|
@@ -68,6 +80,8 @@ Each total includes shipping (Adafruit $15, Seeed $12, Waveshare $20 and AliExpr
 
 ### 1C. v15-LCD order and panels (verified "ORDER", 2026-10-08)
 
+> **2026-10-11 (from Nirav):** the v15-LCD board has been ordered. Vendor, quantity, total and delivery date aren't recorded here; the table is the plan, not the confirmed order. Whether the panels were bought is also not recorded (5 samples need 5 panels).
+
 | Item | Qty | Total | Why |
 |---|---|---|---|
 | **v15-LCD JLCPCB order**: 5 PCBs, 5 assembled, delivered | 1 | **≈ $270** (estimate, $255–285) | Verified "ORDER" in `hardware/verification/14_v15_final_preorder.md`. Same settings as v14; step by step in `hardware/ORDER_WALKTHROUGH_v15_lcd.md`. One fewer extended part type than v14 (13), but R23 C22810 is new. J5, Q4, Q5, R21–R23 (15 Ω), C36 are placed by JLCPCB. |
@@ -82,6 +96,8 @@ Each total includes shipping (Adafruit $15, Seeed $12, Waveshare $20 and AliExpr
 ## 2. Timeline
 
 ### 2A. From the order to v15 (estimate)
+
+> **2026-10-11 (from Nirav):** v14 was never ordered and v15-LCD has been ordered. The v14 rows below (10/8 order, ≈ 10/18–22 arrival, the 5 e-paper testers) no longer apply. The plan is 5 v15-LCD samples first, then bulk; the updated timeline to the 2027 preorders is in section 8.
 
 | Date | Task | Who | Waits on |
 |---|---|---|---|
@@ -99,14 +115,14 @@ Each total includes shipping (Adafruit $15, Seeed $12, Waveshare $20 and AliExpr
 | Dec 2026 – Jan 2027 | **v15-LCD pilot** in knockoff shells: 4–10 units depending on the budget (the 5 v15 boards count). Bulk samples (bare LCD panels, 1,200–1,500 mAh cell, OEM camera, magnet pair). | Nirav | knockoff go/no-go |
 | 2027 | **Knockoff / bulk**: pre-orders → 100 units (FCC SDoC, LLC, lawyer first) → own 3D-printed drop-in shell with the 1,200–1,500 mAh battery. | Nirav | pre-orders |
 
-**Critical path:** v14 order (10/8) → boards ≈ 10/18–22 → 5 testers built and tested (≈ 10/29) → feedback (≈ 2 weeks) → pilot → knockoff/bulk. The **v15-LCD order** (verified, any day from 10/9) and its bench checks run in parallel with the testers. Only the JLCPCB and shipping legs are outside your control.
+**Critical path (2026-10-11):** v15-LCD ordered (date not recorded) → v15 arrival (date not recorded) → 5 v15-LCD samples built and tested → software deploy → preorders (2027) → bulk-focused production. **Old v14-based path, superseded:** v14 order (10/8) → boards ≈ 10/18–22 → 5 testers built and tested (≈ 10/29) → feedback (≈ 2 weeks) → pilot → knockoff/bulk. The **v15-LCD order** (verified, any day from 10/9) and its bench checks run in parallel with the testers. Only the JLCPCB and shipping legs are outside your control.
 
 ### 2B. Phases
 
 | Phase | When (estimate) | Units | What happens | What Nirav does |
 |---|---|---|---|---|
-| **Testers (v14 e-paper)** | Oct – early Nov 2026 | 5 | Genuine Casio shells; option C parts; real usage data | Build, test, collect feedback |
-| **v15-LCD** | Oct – Nov 2026 | 5 boards (verified ORDER 10/8) | Colour 1.9" LCD (BuyDisplay ER-TFT019-1); bench checks on arrival | Order it, run the bench checks |
+| **Testers (v14 e-paper)** (2026-10-11: dropped, v14 was never ordered; the 5 samples are v15-LCD) | Oct – early Nov 2026 | 5 | Genuine Casio shells; option C parts; real usage data | Build, test, collect feedback |
+| **v15-LCD** | Oct – Nov 2026 | 5 samples first (verified ORDER 10/8; ordered by 2026-10-11, order quantity not recorded) | Colour 1.9" LCD (BuyDisplay ER-TFT019-1); bench checks on arrival | Ordered (2026-10-11). Build the 5 samples, run the bench checks |
 | **Pilot (knockoff shells)** | Dec 2026 – Jan 2027 | 4–10 | v15-LCD in 991ES-style clones; testers aged 13+; FCC pre-scan | Support, fixes |
 | **First sales** | Mar – Jun 2027 | ~100 | LLC, FCC SDoC, pre-orders (about 36 at $225 fund the batch) | Run the business |
 | **Own shell + big battery** | 2027 | 100+ | 3D-printed drop-in shell; 1,200–1,500 mAh cell (13–17 h of screen-on time with the LCD) | CAD + fit |
@@ -116,12 +132,14 @@ Each total includes shipping (Adafruit $15, Seeed $12, Waveshare $20 and AliExpr
 
 ### 2C. The $2,000 (`hardware/production/COST_MODEL.xlsx` → Cash budget)
 
+> **2026-10-11 (from Nirav):** this table is the 10/8 plan, kept for the record. The re-planned budget (no v14 order, no e-paper testers, 5 v15 samples, Cloudflare instead of the proxy host) is in section 8: ≈ $1,206 total, ≈ $794 left.
+
 | # | What | When | $ |
 |---|---|---|---|
-| 1 | v14 JLCPCB order (5 PCBs, 5 assembled, delivered) | paid 10/8 | 275 |
+| 1 | v14 JLCPCB order (5 PCBs, 5 assembled, delivered) **(2026-10-11: never ordered; dropped in §8)** | not paid | 275 |
 | 2 | Tester parts, 3 shells, shipping, supplies (option C) | now | 389 |
 | 3 | v15-LCD panels: 3 × BuyDisplay ER-TFT019-1 + shipping (estimate) | now | 32 |
-| 4 | **v15-LCD JLCPCB order**: 5 PCBs, 5 assembled, delivered (estimate) | now | 270 |
+| 4 | **v15-LCD JLCPCB order**: 5 PCBs, 5 assembled, delivered (estimate) | ordered by 2026-10-11 (real total not recorded) | 270 |
 | 5 | Knockoff shell samples (4 from 2 sellers) | late Oct | 60 |
 | 6 | Bulk samples (camera, bare LCD panels, small + big cells, magnet pair) | after the shells pass | 90 |
 | 7 | v15-LCD pilot, 10 units (all parts, freight, scrap; re-uses the 5 v15 boards, so 5 more boards) | Dec – Jan | 679 |
@@ -318,7 +336,7 @@ Building blocks that make this possible. Build them in this order:
 | 2b | **LCD battery life**: ~1.5 h of screen-on time on 150 mAh | Testers and users charge every 1–2 days | Backlight time-out in the firmware; the 1,200–1,500 mAh cell in the custom/knockoff shell (+ ≈ $3 a unit at 100) |
 | 2c | **Budget**: with the v15 order the full plan is ≈ $475 over $2,000 | Can't fund a 10-unit pilot | 4–5-unit pilot from the v15 boards, Sonnet 5.5 for the beta, pre-orders before the 100 batch |
 | 3 | **Camera ribbon orientation (J1 reversed)** is about 90 % certain (verification 01/03) | No image | Buy the same Seeed module; run the E6 beep test; a 180° cable twist fixes it |
-| 4 | **Tariff/DDP cost** higher than expected | +$30–70 per JLCPCB order; +35 %+ at volume [S8] | Put the real 10/8 checkout total into the cost model; budget the high end |
+| 4 | **Tariff/DDP cost** higher than expected | +$30–70 per JLCPCB order; +35 %+ at volume [S8] | Put the real v15 checkout total into the cost model (2026-10-11: there was no 10/8 v14 order); budget the high end |
 | 5 | **API key in firmware / unlimited API use** | Stolen key, surprise bill | Proxy + per-device token + caps before any unit leaves your hands |
 | 6 | Supply of #5412 cable (35 in stock on 10/6 [S3]) | No way to charge | Order the 5 first; Jameco/DigiKey as backup |
 | 7 | Legal: selling Casio-branded altered units; marketing to under-13s | Takedown, liability | Custom shell before sales; 13+ only; never "exam-approved" |
@@ -354,3 +372,39 @@ Building blocks that make this possible. Build them in this order:
 - [S25] Indiana LLC $97 online: https://www.zenind.com/help/post/indiana-llc-cost-in-2026-filing-fees-ongoing-costs-and-compliance
 - [S26] Amazon FBA 2026 small standard 4–8 oz about $3.15 + 3.5 % fuel surcharge: https://novadata.io/resources/blog/amazon-seller-fees-explained
 - Claude API prices: Anthropic model price table (claude-api reference, cached 2026-09-25)
+
+---
+
+## 8. Update 2026-10-11: Proofline plan to the 2027 preorders (supersedes §0, §2 and the $15 figures above where they conflict)
+
+Facts from Nirav, 2026-10-11. Full working in `hardware/production/UNIT_ECONOMICS.md` §8; one-page summary `BUSINESS_STATUS_2026-10-11.md` (this folder).
+
+| | Now (2026-10-11) | Was |
+|---|---|---|
+| Brand | **Proofline** (Proofline Corporation, not registered; `proofline.example` placeholders) | "AI·CALC", "[Brand]" |
+| Price | **$225** + AI tutor plan **$10/month or $100/year**; first month free, no card; firmware updates only with the plan | $225 + $15/month |
+| AI cap | **$5/month and 300 solves/month** per account | 500 solves/month |
+| Buyers | **18+** | 13+ |
+| Boards | **v15-LCD ordered** (vendor/qty/total/date **not recorded — ask Nirav**); v14 **never ordered** | "v14 ordered 10/8" |
+| Next build | **5 v15 samples, then bulk-focused production** | 5 e-paper testers, then a 4–10-unit pilot |
+| Software | Built and tested, **not deployed**: 28-page site (store + subscriptions, Stripe **test mode**, waitlist), Cloudflare Worker API (stages 1 + 3), v15 firmware with MODE 4 Apps, Casio-exact screens, simulators. To do: firmware → Cloudflare API (stage 2), Turnstile, real email, deploy | Python proxy on Render |
+| Sales | **Preorders planned for 2027** | First sales Mar–Jun 2027 |
+
+**Recomputed numbers (estimates; `UNIT_ECONOMICS.md` §8):**
+- AI ≈ **$0.026/solve** (§3.3 Sonnet row) → **$3.90** per typical user a month; the $5 cap binds at ≈ 192 solves.
+- Left per paying user a month after Stripe (2.9 % + 30¢ + 0.7 % Billing) and AI: **$5.04 / $4.77 / $4.51** at 30 / 50 / 70 % on the yearly plan. Still **$3.41–3.94 at the cap**.
+- Hardware profit per $225 LCD unit: **$109.60 / $123.83 / $166.29** at 10 / 100 / 1,000.
+- Break-even: **23 units** for the $3,547 selling-legally bill; **36** to also recover the $2,000 (30 counting a year of subscription).
+- $2,000 plan: v15 order ($270 est.) + 5 samples ($369.60) + shell and bulk samples ($150) + Cloudflare, AI, lawyer, company, domain ($307) + 10 % = **≈ $1,206 → ≈ $794 left**.
+- First 100 units + selling-legally ≈ $7,770 → **≈ 32 preorders**.
+
+**Timeline to the 2027 preorders (proposed; the v15 delivery date isn't recorded, so every date is an estimate):**
+
+| When | What | Who |
+|---|---|---|
+| Oct – Nov 2026 | v15 boards arrive (≈ 10–14 days door to door for JLCPCB); bench checks (`hardware/ARRIVAL_CHECKLIST.md` §4); sample #1 end to end, then samples 2–5 | Nirav + Claude |
+| Nov – Dec 2026 | Firmware → Cloudflare API (stage 2), Turnstile, real email, deploy site + Worker (Stripe still test mode); adult testers use the 5 samples | Claude + Nirav |
+| Dec 2026 – Feb 2027 | Knockoff shell + bulk samples, LCD quote; lawyer/IP clinic; register Proofline Corporation; trademark search; real domain | Nirav |
+| Q1 – Q2 2027 | FCC SDoC plan, insurance, Stripe live; **preorders open** (≈ 32+ to fund 100 units); then the 100-unit batch | Nirav |
+
+**Critical path (2026-10-11):** v15 delivery → bench checks → 5 samples → software stage 2 + deploy → company + lawyer → preorders.

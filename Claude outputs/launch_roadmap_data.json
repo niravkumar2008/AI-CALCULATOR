@@ -1,6 +1,8 @@
 {
   "generated": "2026-10-03",
-  "updated": "2026-10-08 (evening: v15-LCD verified ORDER)",
+  "updated": "2026-10-11 (Proofline prices; v15-LCD ordered; v14 never ordered; 5 samples then bulk)",
+  "updated_before_2026-10-11": "2026-10-08 (evening: v15-LCD verified ORDER)",
+  "status_2026-10-11": "From Nirav 2026-10-11 (overrides older keys where they conflict): v14 e-paper was NEVER ordered (design iteration only). v15 colour LCD HAS been ordered; vendor, quantity, total and delivery date NOT RECORDED (ask Nirav). Plan: 5 v15 samples first, then bulk-focused production. Brand Proofline (Proofline Corporation, not registered; proofline.example placeholders). Price $225 + AI tutor plan $10/month or $100/year, first month free with no card, firmware updates only with the plan, per-account AI cap $5/month and 300 solves/month, buyers 18+. Software built and tested, not deployed: 28-page site (store + subscriptions, Stripe test mode, waitlist), Cloudflare Worker API (stages 1+3), v15 firmware with MODE 4 Apps, Casio-exact screens, simulators. To do: firmware -> Cloudflare API (stage 2), Turnstile, real email, deploy. Preorders planned for 2027. timeline_tasks and plan_2026_10_08 are the 10/8 plan, kept for the record.",
   "status_2026-10-08": "v14 ordered at JLCPCB on 2026-10-08 (5 PCBs, PCBA qty 5 assumed; git tag v14-order). Boards about 10/18-22. 5 v14 e-paper testers in genuine Casio shells (option C). v15-LCD verified ORDER the same evening (hardware/verification/14_v15_final_preorder.md; files hardware/fab_v15_lcd/; hardware/ORDER_WALKTHROUGH_v15_lcd.md), panel BuyDisplay ER-TFT019-1 (3 pcs); bench checks after arrival. Knockoff shells and bulk after the testers.",
   "status_2026-10-06": "Not ordered as of Tue 2026-10-06. Boards land about 10-14 days door-to-door after the JLCPCB order (about 10/17-10/21 for an order on 10/7); JLCPCB about $200-240 delivered (US import duty ~35-37.5 % collected at checkout, de-minimis suspended since 2026-06-24, + $20-40 shipping; hardware/FAB_VENDOR_COMPARISON.md); every task dated 10/5 or later moves by the same number of days. Battery is the Adafruit #1317 150 mAh; camera window is 7 mm; tape is 0.1 mm, no foam.",
   "timeline_tasks": [
@@ -116,6 +118,32 @@
       "depends_on": [
         "2026-12-07"
       ]
+    }
+  ],
+  "timeline_tasks_2026-10-11": [
+    {
+      "date": "2026-10 to 2026-11 (estimate; v15 delivery date not recorded)",
+      "task": "v15 boards arrive; bench checks (ARRIVAL_CHECKLIST section 4); sample #1 end to end, then samples 2-5",
+      "owner": "Nirav + Claude",
+      "depends_on": []
+    },
+    {
+      "date": "2026-11 to 2026-12 (estimate)",
+      "task": "Firmware -> Cloudflare API (stage 2), Turnstile, real email sending, deploy site + Worker (Stripe test mode)",
+      "owner": "Claude + Nirav",
+      "depends_on": []
+    },
+    {
+      "date": "2026-12 to 2027-02 (estimate)",
+      "task": "Knockoff shell + bulk samples, LCD quote, lawyer/IP clinic, register Proofline Corporation, trademark search, real domain",
+      "owner": "Nirav",
+      "depends_on": []
+    },
+    {
+      "date": "2027 Q1-Q2 (estimate)",
+      "task": "FCC SDoC plan, insurance, Stripe live; preorders open (about 32+ to fund 100 units); then the 100-unit batch",
+      "owner": "Nirav",
+      "depends_on": []
     }
   ],
   "timeline_tasks_before_2026-10-08": [
@@ -524,6 +552,102 @@
     },
     "first_100_public_units_cash_usd": 7768.55,
     "preorders_needed": 36
+  },
+  "plan_2026_10_11": {
+    "source": "hardware/production/UNIT_ECONOMICS.md section 8 (hand-computed 2026-10-11 from COST_MODEL.xlsx inputs; estimates)",
+    "prices": {
+      "device_usd": 225,
+      "plan_monthly_usd": 10,
+      "plan_yearly_usd": 100,
+      "free_months": 1,
+      "ai_cap_usd_per_month": 5,
+      "solve_cap_per_month": 300,
+      "buyers_min_age": 18
+    },
+    "ai": {
+      "cost_per_solve_usd": 0.026,
+      "cost_per_solve_source": "LAUNCH_ROADMAP.md section 3.3, Sonnet 5.5 row (token counts are estimates)",
+      "typical_solves_per_month": 150,
+      "typical_cost_per_month_usd": 3.9,
+      "solves_until_5usd_cap": 192
+    },
+    "stripe": {
+      "pct": 0.029,
+      "fixed_usd": 0.3,
+      "billing_pct_subscriptions": 0.007
+    },
+    "cloudflare_usd_per_month": 5,
+    "subscription_per_paying_user_month_usd": {
+      "monthly_net": 9.34,
+      "yearly_net_per_month": 8.01,
+      "yearly_share_30pct": {
+        "gross": 9.5,
+        "net": 8.94,
+        "left_typical": 5.04,
+        "left_at_cap": 3.94,
+        "value_12m_per_device_sold": 30.35
+      },
+      "yearly_share_50pct": {
+        "gross": 9.17,
+        "net": 8.67,
+        "left_typical": 4.77,
+        "left_at_cap": 3.67,
+        "value_12m_per_device_sold": 31.54
+      },
+      "yearly_share_70pct": {
+        "gross": 8.83,
+        "net": 8.41,
+        "left_typical": 4.51,
+        "left_at_cap": 3.41,
+        "value_12m_per_device_sold": 32.73
+      }
+    },
+    "hardware_profit_at_225_lcd_150mAh_usd": {
+      "quantities": [
+        10,
+        100,
+        1000
+      ],
+      "profit": [
+        109.6,
+        123.83,
+        166.29
+      ],
+      "unit_cost_incl_legal": [
+        91.92,
+        77.69,
+        35.23
+      ]
+    },
+    "break_even_units": {
+      "selling_legally_3547": 23,
+      "plus_budget_and_cloudflare_hardware_only": 36,
+      "same_with_12m_subscription": 30
+    },
+    "cash_vs_budget_usd": {
+      "v15_order_estimate_real_total_not_recorded": 270.0,
+      "parts_5_samples": 369.6,
+      "knockoff_shell_samples": 60.0,
+      "bulk_samples": 90.0,
+      "cloudflare_3_months": 15.0,
+      "ai_free_month_5_users_at_cap": 25.0,
+      "lawyer": 150.0,
+      "company_filing_repo_llc_fee": 97.0,
+      "domain_email": 20.0,
+      "subtotal": 1096.6,
+      "contingency_10pct": 109.66,
+      "total": 1206.26,
+      "left_from_2000": 793.74
+    },
+    "first_100_units_plus_legal_usd": 7770,
+    "preorders_needed": 32,
+    "superseded": [
+      "v14 JLCPCB order 275 (never ordered)",
+      "tester parts option C 388.97",
+      "10-unit pilot 679",
+      "proxy hosting 25/month",
+      "subscription 15/month and 500-solve cap"
+    ]
   },
   "price_scaling": {
     "units": "USD per finished calculator",

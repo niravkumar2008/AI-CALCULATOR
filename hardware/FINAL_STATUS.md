@@ -2,9 +2,11 @@
 
 ## Current plan (2026-10-08)
 
+> **2026-10-11 (from Nirav):** **v14 was never ordered** (it was a design iteration only). **v15-LCD has been ordered**, so the screen decision is made: colour LCD. Plan: **5 samples first, then bulk-focused production.** Order date, vendor, quantity, total and delivery date of the v15 order aren't recorded here yet (ask Nirav). Brand **Proofline** (Proofline Corporation, not registered). Price: $225 + AI tutor plan $10/month or $100/year (2 months free), first month free with no card, firmware updates only with the plan, per-account AI cap $5/month and 300 solves/month, buyers 18+. Preorders planned for 2027. Items 1, 2 and 5 below are superseded where they say v14 was ordered, that the 5 testers are v14 e-paper units, or $15/month. Business summary: `Claude outputs/BUSINESS_STATUS_2026-10-11.md`.
+
 1. **v14 (e-paper) is frozen and ordered.** It was ordered at JLCPCB on 10/8: 5 PCBs, assembly qty 5 assumed (Nirav was choosing 2 vs 5). The git tag is `v14-order`, the files are in `kicad/` and `fab/`, and the archive copy is in `archive/`. Boards arrive about **10/18–22**. Everything below this block describes v14 and still applies to it.
 2. **5 testers in genuine Casio fx-115ES shells** (you own 2, buy 3). Parts option **C** is recommended: units 1–3 use the current Seeed/Waveshare/Adafruit parts and units 4–5 use the generic ones. That comes to **≈ $664 in total**, including the $275 JLCPCB order; option A ≈ $662, option B ≈ $572. Build and test the testers, then collect feedback.
-3. **v15-LCD is the next board, verified "ORDER"** (final pre-order review `verification/14_v15_final_preorder.md`, 2026-10-08 evening). It swaps the e-paper for a 1.9" 170×320 colour IPS LCD. ERC 0, DRC 0/0/0/0, copper-to-hole ≥ 0.25 mm, CPL 20/20, all parts in JLCPCB stock. **Not ordered yet; no panel test is needed before ordering.**
+3. **v15-LCD is the next board, verified "ORDER"** (final pre-order review `verification/14_v15_final_preorder.md`, 2026-10-08 evening). It swaps the e-paper for a 1.9" 170×320 colour IPS LCD. ERC 0, DRC 0/0/0/0, copper-to-hole ≥ 0.25 mm, CPL 20/20, all parts in JLCPCB stock. **Not ordered yet; no panel test is needed before ordering.** **2026-10-11: ordered** (details not recorded yet).
    - **Order it:** `ORDER_WALKTHROUGH_v15_lcd.md` (same JLCPCB settings as v14: FR-4, 2 layers, 0.8 mm, ENIG 1U", qty 5, tented, min via 0.3, remove mark, Standard PCBA top side, rails right + bottom only, depanel, photo confirmation, review before payment). Expected ≈ $255–285 delivered with 5 assembled (≈ $270).
    - **Upload files:** `fab_v15_lcd/` (regenerated 2026-10-08 21:38): `ai_calc_v15_lcd_gerbers_JLCPCB.zip`, `ai_calc_v15_lcd_BOM_JLCPCB.csv`, `ai_calc_v15_lcd_CPL_JLCPCB.csv`. v14 stays frozen (tag `v14-order`).
    - **Panel: BuyDisplay ER-TFT019-1, no touch**, ~$6–7 each ($6.22 @10, $5.71 @100), datasheet-verified pin for pin; buy 3. Adafruit #5394 is only an optional fallback. Bulk: Alibaba Goldenmorning / ZJY (~$2.30–2.50) after a sample check (plastic frame). The ER-CON30HT-1 socket is not needed.
@@ -16,7 +18,7 @@
    - Knockoff shells for bulk (`production/KNOCKOFF_SHELL_PLAN.md`).
    - A 1,200–1,500 mAh battery in the custom or knockoff shell. The LCD gets ~1.5 h of screen-on time from the 150 mAh cell and 13–17 h from the big one.
    - A 3D-printed drop-in shell.
-5. **Money:** $225 + $15/month (first month free), on a $2,000 budget.
+5. **Money (2026-10-11):** $225 + $10/month or $100/year (first month free, no card; $5 / 300-solve cap per account), on a $2,000 budget: ≈ $794 left after the v15 order (estimate) and 5 samples (`production/UNIT_ECONOMICS.md` §8). **Old (10/8):** $225 + $15/month (first month free), on a $2,000 budget; the figures below are the 10/8 plan.
    - Cost per unit: LCD ≈ $92 / $42 / $32 at 10 / 100 / 1,000 (BuyDisplay panel at 10, Alibaba from 100); e-paper ≈ $92 / $46 / $34.
    - With the v15 order (≈ $270) and 3 panels (≈ $32) in the plan, a 10-unit LCD pilot is **≈ $475 over** the $2,000. Re-using the 5 v15 boards: a 5-unit pilot is ≈ $11 over, a 4-unit pilot leaves ≈ $62, 5 units + Sonnet 5.5 leaves ≈ $30.
    - On Opus 5.5 the API costs ≈ $7.5/user/month and loses money at the 500-solve cap; Sonnet 5.5 covers the cap.

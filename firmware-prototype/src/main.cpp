@@ -34,7 +34,7 @@
 using namespace calc;
 
 // Headroom for JSON, TLS and the calculator's recursive parser (default is 8 KB).
-SET_LOOP_TASK_STACK_SIZE(16 * 1024);
+SET_LOOP_TASK_STACK_SIZE(32 * 1024);  // 2026-10-12: the shared core's deepest expression needs ~20 KB
 
 namespace {
 
@@ -113,6 +113,10 @@ void solveTask(void*) {
       post(new Event{Event::Fail, id, error, 0, Failure::Camera});
       continue;
     }
+    // Review F-1: the photo is taken, so the camera powers down before the Wi-Fi upload
+    // (~100 mA otherwise until the calculator is switched off). Only while the scan is still
+    // wanted: after AC the viewfinder may be starting on the same camera.
+    if (g_wantedId == id) cameraSleep();
     // Wi-Fi was switched on when AI SOLVE opened and joins while the photo is taken;
     // give a slow hotspot a few more seconds before giving up.
     for (uint32_t w = millis(); WiFi.status() != WL_CONNECTED && millis() - w < kSolveWifiWaitMs && g_wantedId == id;)
@@ -158,10 +162,10 @@ const char* failureText(Failure f) {
   switch (f) {
     case Failure::NoConnection: return "No connection: check the phone's hotspot.";
     case Failure::NoApiKey: return "Not set up: use = on SETUP 6, or proxy and token in the Serial Monitor.";
-    case Failure::Timeout: return "Claude took too long to reply.";
-    case Failure::ApiBusy: return "Claude is busy: try again in a moment.";
-    case Failure::ApiError: return "Claude refused the request.";
-    case Failure::BadReply: return "Claude's reply couldn't be read.";
+    case Failure::Timeout: return "The tutor took too long to reply.";
+    case Failure::ApiBusy: return "The AI is busy: try again in a moment.";
+    case Failure::ApiError: return "The AI refused the request.";
+    case Failure::BadReply: return "The tutor's reply couldn't be read.";
     case Failure::Camera: return "Couldn't take the photo.";
     case Failure::Account: return "The AI account refused it (link / subscription / monthly cap).";
     case Failure::LowBattery: return "Battery too low for AI: charge it.";

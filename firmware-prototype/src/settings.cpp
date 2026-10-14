@@ -104,7 +104,7 @@ SerialCmd handle(Settings& s, const std::string& raw, std::string (*statusText)(
     g_ask = Ask::Token;
     Serial.println("Paste this calculator's device token and press Enter:");
   } else if (line == "key") {
-    Serial.println("The calculator no longer takes a Claude API key: the key lives on the proxy server.\n"
+    Serial.println("The calculator no longer takes an AI service key: the key lives on the proxy server.\n"
                    "Type proxy and token instead (see firmware/FIRMWARE_STAGE13.md).");
   } else if (line == "status") {
     Serial.println(statusText().c_str());
@@ -170,7 +170,7 @@ std::string settingsCheckProxy(std::string& url) {
 
 std::string settingsCheckToken(const std::string& token) {
   if (token.rfind("sk-ant-", 0) == 0)
-    return "That is a Claude API key. Never put it in the calculator: it belongs on the proxy server only.";
+    return "That looks like an AI service key. Never put it in the calculator: it belongs on the server only.";
   if (token.size() < kTokenMin || token.size() > kTokenMax || token.find_first_of(" \t\"") != std::string::npos)
     return "That doesn't look like a device token (dt_ + 40 characters).";
   return "";

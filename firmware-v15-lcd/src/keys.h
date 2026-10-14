@@ -17,4 +17,8 @@ bool keysPrepareSleep();
 // caught by interrupts (or the scanner's own memory), so none are lost while
 // the e-paper is busy refreshing.
 void keysPoll(void (*press)(calc::DKey));
+// For the calculator's cancel hook (calc::setCancelHook), called while a long ∫ / d/dx /
+// SOLVE runs inside a key press: reads the scanner's queued events into a small buffer
+// (keysPoll() delivers them afterwards, in order) and says whether AC (or ON) was pressed.
+bool keysCancelPressed();
 

@@ -11,6 +11,11 @@ class Json {
  public:
   enum class Type { Null, Bool, Number, String, Array, Object };
 
+  // Nesting allowed in a document (deeper: a parse error). Claude's replies and the Worker's
+  // need 4. Parsing, copying and destroying a tree all recurse once per level, so this bounds
+  // their stack too (~2 KB on the ESP32 at 20, where 64 levels took ~6 KB to destroy).
+  static constexpr int kMaxDepth = 20;
+
   Type type() const { return type_; }
   bool isNull() const { return type_ == Type::Null; }
   bool isBool() const { return type_ == Type::Bool; }

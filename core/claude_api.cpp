@@ -1,6 +1,7 @@
 #include "claude_api.h"
 
 #include "json.h"
+#include "text.h"
 
 namespace calc {
 
@@ -146,8 +147,10 @@ const char* solveSchema() { return kSchema; }
 std::string buildSolveRequest(const std::string& jpeg, const std::string& detail, const char* effort,
                               bool withSystem) {
   auto image = [](const std::string& bytes) {
-    return "{\"type\":\"image\",\"source\":{\"type\":\"base64\",\"media_type\":\"image/jpeg\","
-           "\"data\":\"" + base64Encode(bytes) + "\"}},";
+    // A typed problem (Type it, png.h) is a PNG; the camera's photos are JPEGs.
+    const bool png = bytes.compare(0, 8, std::string("\x89PNG\r\n\x1a\n", 8)) == 0;
+    return std::string("{\"type\":\"image\",\"source\":{\"type\":\"base64\",\"media_type\":\"") +
+           (png ? "image/png" : "image/jpeg") + "\",\"data\":\"" + base64Encode(bytes) + "\"}},";
   };
   const char* ask = detail.empty()
                         ? "Solve the problem in this photo."
@@ -244,7 +247,7 @@ bool classifyFailure(int status, const std::string& body, const StreamReader& st
       if (type == "device_unknown" || type == "device_not_linked" || type == "subscription_inactive" ||
           type == "fair_use_exceeded" || type == "free_tier_exhausted" || type == "rate_limited") {
         f = Failure::Account;
-        detail = j["error"]["message"].asString().substr(0, 110);
+        detail = utf8Prefix(j["error"]["message"].asString(), 110);
         return true;
       }
     }
@@ -263,19 +266,19 @@ bool classifyFailure(int status, const std::string& body, const StreamReader& st
     Json j;
     std::string err;
     if (Json::parse(body, j, err) && j["error"]["message"].isString())
-      detail = j["error"]["message"].asString().substr(0, 70);
+      detail = utf8Prefix(j["error"]["message"].asString(), 70);
     else
       detail = "HTTP error " + std::to_string(status) + ".";
     return true;
   }
   if (!stream.errorType().empty()) {  // error event mid-stream
     f = stream.errorType() == "overloaded_error" ? Failure::ApiBusy : Failure::ApiError;
-    detail = stream.errorMessage().substr(0, 70);
+    detail = utf8Prefix(stream.errorMessage(), 70);
     return true;
   }
   if (stream.stopReason() == "refusal") {
     f = Failure::ApiError;
-    detail = "Claude declined to answer this one.";
+    detail = "The tutor declined this one.";
     return true;
   }
   if (stream.stopReason() == "max_tokens") {

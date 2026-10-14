@@ -1,5 +1,5 @@
 @echo off
-rem Builds ui_sim_v15.exe: the v15 LCD firmware's drawing code (ui.cpp, fbtext.cpp,
+rem Builds ui_sim_v15.exe: the v15 LCD firmware's drawing code (ui*.cpp, fbtext.cpp,
 rem vf_lcd.cpp, selftest.cpp, unchanged) + core/ + LovyanGFX's own LGFX_Sprite, on the PC,
 rem with the MSVC Build Tools (same detection as tests\msvc\build_and_run.bat).
 rem LovyanGFX comes from the firmware's PlatformIO libdeps: run  pio run -e v15lcd  once
@@ -25,5 +25,5 @@ if not exist "%OUT%\lgfx\LGFXBase.obj" (
   cl %COMMON% /W0 /c /Fo:"%OUT%\lgfx\\" "%LGFX%\lgfx\v1\LGFXBase.cpp" "%LGFX%\lgfx\v1\lgfx_v1.cpp" "%LGFX%\lgfx\v1\lgfx_fonts.cpp" "%LGFX%\lgfx\utility\*.c" "%HERE%lgfx_host_panel.cpp" "%HERE%lgfx_host_platform.cpp" "%HERE%lgfx_host_font_stubs.c" >"%OUT%\lgfx_build.log" 2>&1 || ( type "%OUT%\lgfx_build.log" & exit /b 1 )
 )
 rem 2. Firmware drawing code + core + harness
-cl %COMMON% /W3 /I "%HERE%shim\fw" /I "%HERE%." /I "%FW%" /I "%ROOT%\core" /I "%ROOT%\tests\msvc\shim" /FI gccbuiltins.h /DPREVIEW_SWAP_BYTES=0 /DBOARD_V15_LCD=1 /Fo:"%OUT%\app\\" /Fe:"%OUT%\ui_sim_v15.exe" "%HERE%harness.cpp" "%HERE%host_hw.cpp" "%HERE%selftest_tu.cpp" "%FW%\ui.cpp" "%FW%\fbtext.cpp" "%FW%\vf_lcd.cpp" "%ROOT%\core\*.cpp" "%OUT%\lgfx\*.obj" || exit /b 1
+cl %COMMON% /W3 /I "%HERE%shim\fw" /I "%HERE%." /I "%FW%" /I "%ROOT%\core" /I "%ROOT%\tests\msvc\shim" /FI gccbuiltins.h /DPREVIEW_SWAP_BYTES=0 /DBOARD_V15_LCD=1 /Fo:"%OUT%\app\\" /Fe:"%OUT%\ui_sim_v15.exe" "%HERE%harness.cpp" "%HERE%host_hw.cpp" "%HERE%selftest_tu.cpp" "%FW%\ui*.cpp" "%FW%\fbtext.cpp" "%FW%\vf_lcd.cpp" "%ROOT%\core\*.cpp" "%OUT%\lgfx\*.obj" || exit /b 1
 echo Built %OUT%\ui_sim_v15.exe

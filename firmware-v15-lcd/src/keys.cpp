@@ -158,24 +158,58 @@ bool keysPrepareSleep() {
   return false;
 }
 
+namespace {
+// Scanner events read while the calculator was busy (keysCancelPressed()), for keysPoll().
+constexpr int kPendingMax = 16;
+uint8_t g_pending[kPendingMax];
+int g_pendingCount = 0;
+bool g_pendingAc = false;
+
+DKey keyOf(uint8_t ev) {
+  const int code = (ev & 0x7F) - 1;  // key number 1..80 = row * 10 + column + 1
+  const int row = code / 10, col = code % 10;
+  if (code < 0 || row >= kRows || col >= kCols) return X;
+  return kMatrix[row][col];
+}
+
+void handleEvent(uint8_t ev, void (*press)(DKey)) {
+  const DKey k = keyOf(ev);
+  if (k == X) return;
+  g_down[int(k)] = (ev & 0x80) != 0;
+  if (ev & 0x80) {  // pressed
+    press(k);
+    if (repeats(k)) g_repeat.start(k);
+  } else if (k == g_repeat.key) {
+    g_repeat.stop();
+  }
+}
+}  // namespace
+
+bool keysCancelPressed() {
+  if (g_onPressed) return true;  // ON clears like AC (keysPoll() still delivers it)
+  if (g_tcaOk && digitalRead(PIN_KEYPAD_INT) == LOW) {
+    for (int n = tcaRead(kKeyLckEc) & 0x0F; n > 0 && g_pendingCount < kPendingMax; --n) {
+      const uint8_t ev = tcaRead(kKeyEventA);
+      g_pending[g_pendingCount++] = ev;
+      if ((ev & 0x80) && keyOf(ev) == DKey::AC) g_pendingAc = true;
+    }
+    if (!(tcaRead(kKeyLckEc) & 0x0F)) tcaWrite(kIntStat, 0x01);  // all read: K_INT handled
+  }
+  return g_pendingAc;
+}
+
 void keysPoll(void (*press)(DKey)) {
   pollOn(press);
+  if (g_pendingCount > 0) {  // read during a long calculation: delivered first, in order
+    uint8_t evs[kPendingMax];
+    const int n = g_pendingCount;
+    for (int i = 0; i < n; ++i) evs[i] = g_pending[i];
+    g_pendingCount = 0;
+    g_pendingAc = false;
+    for (int i = 0; i < n; ++i) handleEvent(evs[i], press);
+  }
   if (g_tcaOk && digitalRead(PIN_KEYPAD_INT) == LOW) {
-    for (int n = tcaRead(kKeyLckEc) & 0x0F; n > 0; --n) {
-      const uint8_t ev = tcaRead(kKeyEventA);
-      const int code = (ev & 0x7F) - 1;  // key number 1..80 = row * 10 + column + 1
-      const int row = code / 10, col = code % 10;
-      if (code < 0 || row >= kRows || col >= kCols) continue;
-      const DKey k = kMatrix[row][col];
-      if (k == X) continue;
-      g_down[int(k)] = (ev & 0x80) != 0;
-      if (ev & 0x80) {  // pressed
-        press(k);
-        if (repeats(k)) g_repeat.start(k);
-      } else if (k == g_repeat.key) {
-        g_repeat.stop();
-      }
-    }
+    for (int n = tcaRead(kKeyLckEc) & 0x0F; n > 0; --n) handleEvent(tcaRead(kKeyEventA), press);
     tcaWrite(kIntStat, 0x01);  // K_INT handled
     if (g_tcaOk && digitalRead(PIN_KEYPAD_INT) == LOW && !(tcaRead(kKeyLckEc) & 0x0F))
       tcaWrite(kIntStat, 0x1F);  // other flags (overflow, GPI) also hold INT low

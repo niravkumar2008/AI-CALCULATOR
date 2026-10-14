@@ -19,7 +19,7 @@
 using namespace calc;
 
 // Headroom for JSON, TLS and the calculator's recursive parser (default is 8 KB).
-SET_LOOP_TASK_STACK_SIZE(16 * 1024);
+SET_LOOP_TASK_STACK_SIZE(32 * 1024);  // 2026-10-12: the shared core's deepest expression needs ~20 KB
 
 namespace {
 
@@ -107,10 +107,10 @@ const char* failureText(Failure f) {
   switch (f) {
     case Failure::NoConnection: return "No connection: check the phone's hotspot.";
     case Failure::NoApiKey: return "No API key: type key in the Serial Monitor.";
-    case Failure::Timeout: return "Claude took too long to reply.";
-    case Failure::ApiBusy: return "Claude is busy: try again in a moment.";
-    case Failure::ApiError: return "Claude refused the request.";
-    case Failure::BadReply: return "Claude's reply couldn't be read.";
+    case Failure::Timeout: return "The tutor took too long to reply.";
+    case Failure::ApiBusy: return "The AI is busy: try again in a moment.";
+    case Failure::ApiError: return "The AI refused the request.";
+    case Failure::BadReply: return "The tutor's reply couldn't be read.";
     case Failure::Camera: return "Couldn't take the photo.";
     case Failure::Account: return "The AI account refused the request.";
     case Failure::LowBattery: return "Battery too low for AI.";
@@ -359,7 +359,7 @@ void serviceSend() {
         g_prePhoto.clear();
         return previewSetResult("", err);
       }
-      Serial.println("Send: photo taken; leaving the preview network to reach Claude...");
+      Serial.println("Send: photo taken; leaving the preview network to reach the AI server...");
       previewSuspend();
       connectWifi();
       g_send = SendStep::WaitWifi;

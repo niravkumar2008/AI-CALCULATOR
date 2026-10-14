@@ -82,3 +82,12 @@ Running log for the autonomous task list of 2026-10-10 (tasks: Goldenmorning fit
   - The v15 guide says the TW302030 is "150 mAh"; it is 140.
   - The grind-map SVG and the photo labels still say 15–50.
   - The guide pictures and text still draw strip 2 at 1 mm. Fix in progress.
+
+## 2026-10-11: hardware status and business update (from Nirav)
+
+- **v14 (e-paper) was never ordered.** It was only a refinement/design iteration. Earlier entries in this log that say "v14 ordered" are wrong on that point; the history above is left as written.
+- **v15 (colour LCD) has been ordered.** The screen decision is made. Order date, vendor, quantity, total and delivery date aren't recorded in the repo yet.
+- **Plan:** build 5 samples first, then move to more bulk-focused production. Preorders planned for 2027.
+- **Brand Proofline** (Proofline Corporation, not registered). **Prices:** $225 + $10/month or $100/year, first month free with no card, $5 / 300-solve cap per account, buyers 18+.
+- Dated notes added (nothing removed) to LAUNCH_ROADMAP (+ new §8), launch_roadmap.html (+ update section) and launch_roadmap_data.json, FINAL_STATUS, HANDOFF, ORDER_CHECKLIST, ARRIVAL_CHECKLIST, FAB_VENDOR_COMPARISON, LCD_PANEL_OPTIONS, archive/README, QUESTIONS_AND_ISSUES, stage15_lcd, UNIT_ECONOMICS (+ new §8), ORDER_WALKTHROUGH_v15_lcd, KNOCKOFF_SHELL_PLAN, firmware-v15-lcd/README, firmware/FIRMWARE_STAGE13, COMPETITOR_ANALYSIS and project_hub/index.html. New: `Claude outputs/BUSINESS_STATUS_2026-10-11.md`, `hardware/production/COST_MODEL_update_2026-10-11.csv`.
+- **Open:** the real v15 order numbers; `COST_MODEL.xlsx` / Shopping List get the update via `update_xlsx_2026-10-11.py` (openpyxl); the simulators still show "AI·CALC" in their UI (product code, not changed here); verification reports keep their original wording as records.

@@ -2,6 +2,8 @@
 
 The v15 version of `ORDER_WALKTHROUGH.md` (which stays as the v14 record). The board was verified **"ORDER"** by the final pre-order review `verification/14_v15_final_preorder.md` (ERC 0, DRC 0/0/0/0, copper-to-hole ≥ 0.25 mm, CPL 20/20 against freshly fetched EasyEDA footprints, every part in JLCPCB stock on 2026-10-08 21:30). Overall status: `FINAL_STATUS.md`. v14 stays frozen (git tag `v14-order`, `kicad/`, `fab/`): **don't upload anything from `fab/`.**
 
+> **2026-10-11 (from Nirav):** this board **has been ordered**. v14 was never ordered, so the settings below are the ones planned for v14, not settings from a real v14 order, and the "v14 came to about $275" figure in section 8 is an estimate. Record the real v15 vendor, quantity and total here when known.
+
 The settings below are the ones Nirav used for the v14 order on 10/8. Go slowly and check each step.
 
 ## 0. Before you start

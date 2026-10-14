@@ -10,6 +10,6 @@ for /d %%d in ("%ProgramFiles(x86)%\Microsoft Visual Studio\*") do if exist "%%d
 for /d %%d in ("%ProgramFiles%\Microsoft Visual Studio\*") do if exist "%%d\Community\VC\Auxiliary\Build\vcvars64.bat" set "VS=%%d\Community"
 if not defined VS ( echo MSVC Build Tools not found - install the "Desktop development with C++" Build Tools & exit /b 1 )
 call "%VS%\VC\Auxiliary\Build\vcvars64.bat" >nul
-cl /nologo /std:c++17 /EHsc /O2 /W3 /utf-8 /I "%HERE%shim" /FI gccbuiltins.h /D_CRT_SECURE_NO_WARNINGS /Fe:"%HERE%tests.exe" /Fo:"%HERE%\" "%ROOT%\tests\tests.cpp" "%ROOT%\core\*.cpp" || exit /b 1
+cl /nologo /std:c++17 /EHsc /O2 /W3 /utf-8 /I "%HERE%shim" /FI gccbuiltins.h /D_CRT_SECURE_NO_WARNINGS /Fe:"%HERE%tests.exe" /Fo:"%HERE%\" "%ROOT%\tests\tests.cpp" "%ROOT%\tests\geo_tests.cpp" "%ROOT%\tests\periodic_tests.cpp" "%ROOT%\tests\engine_regress_tests.cpp" "%ROOT%\tests\stat_table_tests.cpp" "%ROOT%\tests\eqn_tests.cpp" "%ROOT%\tests\cmplx_tests.cpp" "%ROOT%\tests\basen_tests.cpp" "%ROOT%\tests\matvec_tests.cpp" "%ROOT%\tests\numeric_tests.cpp" "%ROOT%\tests\worker_api_tests.cpp" "%ROOT%\tests\fuzz_tests.cpp" "%ROOT%\core\*.cpp" || exit /b 1
 cd /d "%ROOT%"
 "%HERE%tests.exe"

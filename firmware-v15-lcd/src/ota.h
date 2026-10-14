@@ -1,4 +1,5 @@
-// Over-the-air firmware updates from the AI proxy (review S1).
+// Over-the-air firmware updates from the AI server (review S1): the proxy or the Worker
+// (Settings::api), which answer GET /v1/firmware and /v1/firmware/image the same way.
 //
 // The flash holds two app slots (platformio.ini: min_spiffs.csv, 1.9 MB each). An update
 // is downloaded from the proxy (GET /v1/firmware for the manifest, then the image), its
@@ -10,6 +11,12 @@
 //
 // The image is sent over TLS to a root-pinned proxy that only answers this calculator's
 // device token, and its hash is checked; there is no signing key in the firmware.
+// Before the slot is marked bootable the image itself is checked too (review F-18): it must
+// carry this firmware's version mark (ota.cpp) for the same board family, the version the
+// manifest announced, not the running one, and not older unless the manifest says
+// "rollback": true. That guards against a wrong upload, not an attacker: image signing
+// (secure boot) is still out of scope. Images built before this check have no mark, so
+// they can't be installed over the air from here on.
 #pragma once
 #include <functional>
 #include <string>
@@ -22,6 +29,7 @@ struct OtaInfo {
   std::string sha256;      // 64 hex characters
   std::string path;        // where to GET it, e.g. "/v1/firmware/image"
   size_t size = 0;
+  bool rollback = false;   // manifest "rollback": true allows an older version than the running one
 };
 
 // Only on a cable, or a well-charged cell: a download is a long Wi-Fi burst.

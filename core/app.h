@@ -51,6 +51,26 @@ class App {
   // for an id that is no longer active (e.g. cancelled with AC) are ignored.
   int takeRequest();
   void onCaptured(int id);
+
+  // ---- Type it (png.h): a typed problem goes through the same photo request ----
+  // Drops whatever was on screen and starts a request (the same checks as =)
+  // whose image is `png`, not a camera photo. False (nothing changes) for an
+  // empty image, so an empty text can never be sent. While a typed problem is
+  // the source, = on its answer or error ("send it again") resends the same image.
+  bool startTyped(const std::string& png);
+  void clearTyped();  // back to photos: = takes a picture again
+  bool typed() const { return !typed_.empty(); }
+  // After takeRequest() returned an id: true once, with the PNG to send in place
+  // of the camera's JPEG (buildSolveRequest() marks it image/png). The platform
+  // then skips the camera and onCaptured(); otherwise false and it takes a photo.
+  bool takeTypedImage(std::string& png);
+
+  // ---- History: a saved reply shown again ----
+  // Shows a reply saved earlier (the JSON onReply() got) as an answer screen,
+  // read-only: = does nothing, nothing is sent and nothing goes to the
+  // calculator. False (nothing changes) for a damaged or unreadable reply.
+  bool showSaved(const std::string& replyJson);
+  bool readOnly() const { return readOnly_; }
   // While the reply streams in: show the answer early (steps follow).
   void onPartialAnswer(int id, double confidence, const std::string& answer);
   void onReply(int id, const std::string& replyJson);
@@ -125,6 +145,9 @@ class App {
   std::string expression_;
   std::vector<Line> lines_;
   int top_ = 0;
+  std::string typed_;         // Type it: the PNG this session sends ("" = camera photos)
+  std::string pendingTyped_;  // handed to the platform once per request
+  bool readOnly_ = false;     // showing a saved answer from History
 };
 
 }  // namespace calc

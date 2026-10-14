@@ -2,6 +2,8 @@
 
 Written 2026-10-06. **Naming note (2026-10-08):** "v15" in this file means the board refitted to the clone shell. Since then "v15" became the **v15-LCD** board for the fx-115ES shell (verified "ORDER", `../verification/14_v15_final_preorder.md`); the clone refit would be the board after it, built on v15-LCD (colour LCD, BuyDisplay ER-TFT019-1 or an Alibaba panel), so read "v15" below as "the knockoff board". Companion to `QA_TEST_PLAN.md`, `COST_MODEL.xlsx` and `UNIT_ECONOMICS.md` in this folder.
 
+> **2026-10-11 (from Nirav):** v14 was never ordered; the v15-LCD board (fx-115ES shell) has been ordered. Plan: 5 samples first, then bulk-focused production.
+
 **Where this sits in the plan.** The first 2 prototypes go in ground Casio fx-115ES shells (board v14, `../FINAL_STATUS.md`). The next 10–100 units go in cheap Casio-style clone shells from Alibaba (the "991ES PLUS" family: Runzon RZ-991ES PLUS, "OS-991ES Plus", generic "991ES PLUS 417 functions"), which needs a **v15 board** laid out for the clone's posts, ribs and key mat. The long-term answer is our own 3D-printed / moulded drop-in shell, which removes the trade-dress problem entirely (`../enclosure/replica/` is the unbranded CAD starting point).
 
 **Why a clone and not more Casios:** a donor fx-115ES costs about $21 with tax and arrives with a Casio logo we must not sell; a clone is $3.25–3.99 at MOQ 20 on Alibaba (Accio market summary, 2026-10-05; `Claude outputs/Alibaba_Bulk_Sourcing.xlsx` S1) and can be ordered without a logo. The clone is **not** the same mould as the Casio, so nothing from the v14 hole map can be assumed. Everything below exists to find out what changed.

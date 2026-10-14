@@ -4,10 +4,15 @@
 #include <Preferences.h>
 #include <esp_mac.h>
 
+#include <mutex>
+
 #include "log.h"
 
 namespace {
+// One Preferences object, used by the loop and by the phone-setup page's HTTP task: every
+// begin() ... end() runs under this lock, so the two never interleave on it.
 Preferences g_prefs;
+std::mutex g_prefsLock;
 std::string g_line;
 enum class Ask { Nothing, Ssid, Password, Proxy, Token } g_ask = Ask::Nothing;
 std::string g_newSsid;
@@ -36,7 +41,10 @@ void help() {
       "  selftest  factory self-test (keys, screen, camera, Wi-Fi, battery) -> JSON\n"
       "  setup     phone setup: a Wi-Fi network + page to enter all of the above (setup off to stop)\n"
       "  update    check the AI server for new firmware and install it (cable in)\n"
-      "  forget    erase the hotspot, proxy and token from this calculator\n"
+      "  api       which AI server is used: api proxy | api worker [https://api...] (shows it without arguments)\n"
+      "  register  (Worker) register this calculator again now: a new, unlinked token and link code\n"
+      "  enroll hs_...  QA only: store this board's enrolment secret (from scripts/enroll-board.mjs)\n"
+      "  forget    erase the hotspot, servers and tokens from this calculator (not the enrolment)\n"
       "  keys ..   press calculator keys, e.g.  keys 1/3=   (full list in README)\n"
       "  bright N  screen brightness 10-100 % (saved; SHIFT + up/down on the keypad does the same)\n"
       "  screen dim|off|sleep N   seconds without a key before the light dims / goes off /\n"
@@ -107,7 +115,7 @@ SerialCmd handle(Settings& s, const std::string& raw, std::string (*statusText)(
     g_ask = Ask::Token;
     Serial.println("Paste this calculator's device token and press Enter:");
   } else if (line == "key") {
-    Serial.println("The calculator no longer takes a Claude API key: the key lives on the proxy server.\n"
+    Serial.println("The calculator no longer takes an AI service key: the key lives on the proxy server.\n"
                    "Type proxy and token instead (see firmware/FIRMWARE_STAGE13.md).");
   } else if (line == "status") {
     Serial.println(statusText().c_str());
@@ -142,10 +150,64 @@ SerialCmd handle(Settings& s, const std::string& raw, std::string (*statusText)(
     return SerialCmd::Screen;
   } else if (line == "exam off") {
     return SerialCmd::ExamOff;
+  } else if (line == "api") {
+    Serial.printf("AI server: %s (%s), token %s%s\n", s.worker() ? "Worker" : "proxy",
+                  s.serverUrl().empty() ? "address not set" : s.serverUrl().c_str(), s.tokenHint().c_str(),
+                  s.worker() ? (factoryEnrolled() ? ", board enrolled" : ", board not enrolled") : "");
+  } else if (line == "api proxy") {
+    s.api = Api::Proxy;
+    settingsSave(s);
+    LOGF("settings", "AI server: the proxy (%s)", s.proxyUrl.empty() ? "address not set: type proxy" : s.proxyUrl.c_str());
+    return SerialCmd::Changed;
+  } else if (line == "api worker" || line.rfind("api worker ", 0) == 0) {
+    std::string url = line.size() > 10 ? trim(line.substr(10)) : "";
+    if (url.empty()) {
+      if (s.workerUrl.empty()) {
+        Serial.println("Give the Worker's address: api worker https://api.example.com");
+        return SerialCmd::None;
+      }
+    } else {
+      const std::string why = settingsCheckWorker(url);
+      if (!why.empty()) {
+        Serial.printf("%s\n", why.c_str());
+        return SerialCmd::None;
+      }
+      if (url != s.workerUrl) {  // a token belongs to one server
+        s.workerUrl = url;
+        s.workerToken.clear();
+        s.workerDeviceId.clear();
+      }
+    }
+    s.api = Api::Worker;
+    settingsSave(s);
+    LOGF("settings", "AI server: the Worker at %s (%s)", s.workerUrl.c_str(),
+         s.workerToken.empty() ? "registers on the next Wi-Fi connection" : "registered");
+    return SerialCmd::Changed;
+  } else if (line == "register") {
+    return SerialCmd::Register;
+  } else if (line == "enroll" || line.rfind("enroll ", 0) == 0) {
+    const std::string secret = line.size() > 7 ? trim(line.substr(7)) : "";
+    if (secret.size() != 46 || secret.rfind("hs_", 0) != 0 ||
+        secret.find_first_not_of("ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789_-", 3) != std::string::npos) {
+      Serial.println("That isn't an enrolment secret (hs_ + 43 characters from scripts/enroll-board.mjs).");
+      return SerialCmd::None;
+    }
+    {
+      std::lock_guard<std::mutex> lock(g_prefsLock);
+      g_prefs.begin("factory", false);
+      g_prefs.putString("hw_secret", secret.c_str());
+      g_prefs.end();
+    }
+    // A token from before the enrolment belongs to an unenrolled device: register again.
+    s.workerToken.clear();
+    s.workerDeviceId.clear();
+    settingsSave(s);
+    LOGF("settings", "board enrolled (secret saved; it is never shown). %s", deviceId().c_str());
+    return SerialCmd::Changed;
   } else if (line == "forget") {
     s = Settings{};
     settingsSave(s);
-    LOGF("settings", "hotspot, proxy and token erased");
+    LOGF("settings", "hotspot, servers and tokens erased (the board's enrolment stays)");
     return SerialCmd::Changed;
   } else if (!line.empty()) {
     help();
@@ -155,12 +217,39 @@ SerialCmd handle(Settings& s, const std::string& raw, std::string (*statusText)(
 }  // namespace
 
 void settingsSave(const Settings& s) {
+  std::lock_guard<std::mutex> lock(g_prefsLock);
   g_prefs.begin("calc", false);
   g_prefs.putString("ssid", s.ssid.c_str());
   g_prefs.putString("pass", s.password.c_str());
   g_prefs.putString("proxy", s.proxyUrl.c_str());
   g_prefs.putString("token", s.deviceToken.c_str());
+  g_prefs.putString("api", s.worker() ? "worker" : "proxy");
+  g_prefs.putString("wurl", s.workerUrl.c_str());
+  g_prefs.putString("wtoken", s.workerToken.c_str());
+  g_prefs.putString("wdevid", s.workerDeviceId.c_str());
   g_prefs.end();
+}
+
+std::string factorySecret() {
+  std::lock_guard<std::mutex> lock(g_prefsLock);
+  // Read-write open: a read-only begin() of a namespace that was never written fails noisily.
+  g_prefs.begin("factory", false);
+  std::string secret = g_prefs.getString("hw_secret", "").c_str();
+  g_prefs.end();
+  return secret;
+}
+
+bool factoryEnrolled() { return !factorySecret().empty(); }
+
+std::string settingsCheckWorker(std::string& url) {
+  while (!url.empty() && url.back() == '/') url.pop_back();
+  const bool clean = url.size() > kUrlMin && url.size() < kUrlMax && url.find_first_of(" \t\"\r\n") == std::string::npos;
+#if CALC_ALLOW_HTTP
+  const bool scheme = url.rfind("https://", 0) == 0 || url.rfind("http://", 0) == 0;
+  return clean && scheme ? "" : "The Worker's address must start with https:// (or http:// on a bench build) and have no spaces.";
+#else
+  return clean && url.rfind("https://", 0) == 0 ? "" : "The Worker's address must start with https:// and have no spaces.";
+#endif
 }
 
 std::string settingsCheckWifi(const std::string& ssid, const std::string& password) {
@@ -172,27 +261,31 @@ std::string settingsCheckWifi(const std::string& ssid, const std::string& passwo
 
 std::string settingsCheckProxy(std::string& url) {
   while (!url.empty() && url.back() == '/') url.pop_back();
+  // No spaces, quotes or line breaks: a CR / LF would end the HTTP request line early.
   const bool ok = url.rfind("https://", 0) == 0 && url.size() > kUrlMin && url.size() < kUrlMax &&
-                  url.find_first_of(" \t\"") == std::string::npos;
+                  url.find_first_of(" \t\"\r\n") == std::string::npos;
   return ok ? "" : "The AI server address must start with https:// and have no spaces.";
 }
 
 std::string settingsCheckToken(const std::string& token) {
   if (token.rfind("sk-ant-", 0) == 0)
-    return "That is a Claude API key. Never put it in the calculator: it belongs on the proxy server only.";
-  if (token.size() < kTokenMin || token.size() > kTokenMax || token.find_first_of(" \t\"") != std::string::npos)
+    return "That looks like an AI service key. Never put it in the calculator: it belongs on the server only.";
+  // CR / LF too: the token goes into an HTTP header.
+  if (token.size() < kTokenMin || token.size() > kTokenMax || token.find_first_of(" \t\"\r\n") != std::string::npos)
     return "That doesn't look like a device token (dt_ + 40 characters).";
   return "";
 }
 
 std::string Settings::tokenHint() const {
-  if (deviceToken.empty()) return "not set";
-  if (deviceToken.size() < 10) return "set";
-  return deviceToken.substr(0, 5) + "..." + deviceToken.substr(deviceToken.size() - 2);
+  const std::string& t = serverToken();
+  if (t.empty()) return worker() ? "not registered yet" : "not set";
+  if (t.size() < 10) return "set";
+  return t.substr(0, 5) + "..." + t.substr(t.size() - 2);
 }
 
 Settings settingsLoad() {
   Settings s;
+  std::lock_guard<std::mutex> lock(g_prefsLock);
   g_prefs.begin("calc", false);
   // Older firmware kept a Claude API key here. This firmware never uses one:
   // erase it so the calculator holds no key at all.
@@ -204,6 +297,10 @@ Settings settingsLoad() {
   s.password = g_prefs.getString("pass", "").c_str();
   s.proxyUrl = g_prefs.getString("proxy", "").c_str();
   s.deviceToken = g_prefs.getString("token", "").c_str();
+  s.api = g_prefs.getString("api", "proxy") == "worker" ? Api::Worker : Api::Proxy;
+  s.workerUrl = g_prefs.getString("wurl", "").c_str();
+  s.workerToken = g_prefs.getString("wtoken", "").c_str();
+  s.workerDeviceId = g_prefs.getString("wdevid", "").c_str();
   g_prefs.end();
   return s;
 }
@@ -229,6 +326,7 @@ SerialCmd settingsPoll(Settings& s, std::string (*statusText)(), std::string& ar
 }
 
 void examSave(bool active, uint32_t elapsedMs) {
+  std::lock_guard<std::mutex> lock(g_prefsLock);
   g_prefs.begin("calc", false);
   g_prefs.putBool("exam", active);
   g_prefs.putUInt("examMs", active ? elapsedMs : 0);
@@ -236,6 +334,7 @@ void examSave(bool active, uint32_t elapsedMs) {
 }
 
 bool examLoad(uint32_t& elapsedMs) {
+  std::lock_guard<std::mutex> lock(g_prefsLock);
   g_prefs.begin("calc", true);
   bool on = g_prefs.getBool("exam", false);
   elapsedMs = g_prefs.getUInt("examMs", 0);

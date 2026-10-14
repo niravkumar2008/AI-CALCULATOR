@@ -1,5 +1,7 @@
 # JLCPCB order checklist (stage 14, silk "AI CALC v14 2026-10-04")
 
+> **2026-10-11 (from Nirav):** this v14 checklist was never used: v14 was never ordered. The board that was ordered is v15-LCD (`ORDER_WALKTHROUGH_v15_lcd.md`); its vendor, quantity and total aren't recorded here yet.
+
 One order, no second board. The full click-by-click version, with the meter checks, is `ORDER_WALKTHROUGH.md`. Overall status and what's left: `FINAL_STATUS.md`.
 
 **Board state:** DRC 0 errors / 0 warnings / 0 unconnected / 0 schematic-parity issues. ERC 0. Every copper item is ≥ 0.25 mm from every hole. What stage 14 fixed is in `stage14_verification_fixes.md`.

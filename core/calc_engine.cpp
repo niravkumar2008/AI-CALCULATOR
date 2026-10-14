@@ -1,5 +1,7 @@
 #include "calc_engine.h"
 
+#include "numeric.h"  // ∫( and d/dx( templates
+
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
@@ -45,6 +47,18 @@ const TokInfo kTok[] = {
     {"\xCF\x80", false}, {"e", false}, {"Ans", false}, {"PreAns", false}, {"Ran#", false},
     {"A", false}, {"B", false}, {"C", false}, {"D", false}, {"E", false}, {"F", false},
     {"X", false}, {"Y", false}, {"M", false},
+    {"=", false}, {"\xE2\x88\xAB(", true}, {"d/dx(", true},  // = ∫( d/dx( (core/numeric.h)
+    {"i", false}, {"\xE2\x88\xA0", false},  // CMPLX (core/cmplx.h): i ∠
+    {"arg(", true}, {"Conjg(", true},
+    {"\xE2\x96\xB6r\xE2\x88\xA0\xCE\xB8", false}, {"\xE2\x96\xB6" "a+bi", false},  // ▶r∠θ ▶a+bi
+    // BASE-N (core/basen.h): and or xnor xor Not( Neg(, the prefixes d h b o, hex digits A-F
+    {"and", false}, {"or", false}, {"xnor", false}, {"xor", false}, {"Not(", true}, {"Neg(", true},
+    {"d", false}, {"h", false}, {"b", false}, {"o", false},
+    {"A", false}, {"B", false}, {"C", false}, {"D", false}, {"E", false}, {"F", false},
+    // MATRIX / VECTOR (core/matvec.h): the variables, det( Trn(, the dot product (· as the fx-ES's •)
+    {"MatA", false}, {"MatB", false}, {"MatC", false}, {"MatAns", false},
+    {"VctA", false}, {"VctB", false}, {"VctC", false}, {"VctAns", false},
+    {"det(", true}, {"Trn(", true}, {"\xC2\xB7", false},
 };
 static_assert(sizeof(kTok) / sizeof(kTok[0]) == static_cast<size_t>(Tok::Count), "token table");
 
@@ -52,7 +66,8 @@ bool isDigit(Tok t) { return t <= Tok::D9; }
 bool isFunc(Tok t) { return t >= Tok::Sin && t <= Tok::RanInt; }
 bool isValue(Tok t) { return t >= Tok::Pi && t <= Tok::VarM; }
 bool startsOperand(Tok t) {
-  return isDigit(t) || t == Tok::Dot || t == Tok::Exp10 || t == Tok::Open || isFunc(t) || isValue(t);
+  return isDigit(t) || t == Tok::Dot || t == Tok::Exp10 || t == Tok::Open || isFunc(t) || isValue(t) ||
+         t == Tok::Integ || t == Tok::Deriv;
 }
 }  // namespace
 
@@ -117,14 +132,22 @@ bool endsOperand(Tok t) {
 
 bool parseExpression(const std::string& s, std::vector<Tok>& out) {
   out.clear();
+  size_t i = 0;
   int closeAfterOperand = 0;  // "2^3": the Casio's ^( needs a ")" after the 3
+  // A postfix function next (x², x³, x⁻¹, x!, %)? On the Casio those (type A) bind tighter
+  // than ^, so "2^3²" is 2^(3²) = 512: the ")" waits until after them.
+  auto postfixAhead = [&](size_t j) {
+    while (j < s.size() && s[j] == ' ') ++j;
+    return matchAt(s, j, "\xC2\xB2", false) || matchAt(s, j, "\xC2\xB3", false) ||
+           matchAt(s, j, "\xE2\x81\xBB\xC2\xB9", false) || matchAt(s, j, "!", false) || matchAt(s, j, "%", false);
+  };
   auto finishOperand = [&]() {
+    if (postfixAhead(i)) return;
     while (closeAfterOperand > 0) {
       out.push_back(Tok::Close);
       --closeAfterOperand;
     }
   };
-  size_t i = 0;
   while (i < s.size()) {
     unsigned char c = static_cast<unsigned char>(s[i]);
     if (c == ' ') {
@@ -180,7 +203,9 @@ bool parseExpression(const std::string& s, std::vector<Tok>& out) {
       if (!matchAt(s, i, a.text, true)) continue;
       i += std::char_traits<char>::length(a.text);
       out.push_back(a.tok);
-      if (isValue(a.tok) || a.tok == Tok::Close) finishOperand();
+      if (isValue(a.tok) || a.tok == Tok::Close || a.tok == Tok::Sq || a.tok == Tok::Cube || a.tok == Tok::Inv ||
+          a.tok == Tok::Fact || a.tok == Tok::Pct)
+        finishOperand();
       found = true;
       break;
     }
@@ -202,15 +227,18 @@ bool parseExpression(const std::string& s, std::vector<Tok>& out) {
 namespace {
 constexpr long long kMaxExact = 1000000000000000LL;  // keep num/den below 1e15
 
+// In unsigned arithmetic, so LLONG_MIN (whose llabs() is undefined, and whose % -1 traps)
+// can't crash it. A gcd too big for a long long (2^63: only LLONG_MIN with 0 or itself)
+// gives 1, so callers that divide by it leave the numbers as they are.
 long long gcdLL(long long a, long long b) {
-  a = std::llabs(a);
-  b = std::llabs(b);
-  while (b) {
-    long long t = a % b;
-    a = b;
-    b = t;
+  unsigned long long x = a < 0 ? 0ull - static_cast<unsigned long long>(a) : static_cast<unsigned long long>(a);
+  unsigned long long y = b < 0 ? 0ull - static_cast<unsigned long long>(b) : static_cast<unsigned long long>(b);
+  while (y) {
+    const unsigned long long t = x % y;
+    x = y;
+    y = t;
   }
-  return a;
+  return x > static_cast<unsigned long long>(LLONG_MAX) ? 1 : static_cast<long long>(x);
 }
 
 // Exact n/d in lowest terms, or an inexact value if it gets too big. Plain
@@ -299,9 +327,71 @@ struct Fail {
   int pos;
 };
 
+// Stack per nesting level matters on the ESP32 (a 32 KB loop task): the parser recurses once
+// per bracket / function, so the precedence levels are inlined into one small frame
+// (addSub) and everything with big locals (functions, numbers, templates, the maths) is kept
+// out of it. Measured with the Xtensa -Os -fstack-usage build (PORT_NOTES.md 2026-10-11).
+#if defined(__GNUC__)
+#define CALC_NOINLINE __attribute__((noinline))
+#define CALC_INLINE inline __attribute__((always_inline))
+#elif defined(_MSC_VER)
+#define CALC_NOINLINE __declspec(noinline)
+#define CALC_INLINE __forceinline
+#else
+#define CALC_NOINLINE
+#define CALC_INLINE inline
+#endif
+
+// The current run (EvalRun): one thread evaluates at a time (the calculator's own task).
+struct RunState {
+  int scopes = 0;        // EvalRun scopes open
+  int depthBase = 0;     // nesting already used by the evaluation that started this one (∫ f)
+  long evals = 0;        // f evaluations so far
+  bool stopped = false;  // budget spent or cancelled
+};
+RunState g_run;
+bool (*g_cancelled)() = nullptr;
+
+// While an ∫ / d/dx evaluates its f: the f's parser starts at the outer nesting.
+struct DepthBase {
+  int saved;
+  explicit DepthBase(int depth) : saved(g_run.depthBase) { g_run.depthBase = depth; }
+  ~DepthBase() { g_run.depthBase = saved; }
+};
+
 class Parser {
  public:
-  Parser(const std::vector<Tok>& t, Vars& v, AngleUnit u, double (*rnd)()) : t_(t), vars_(v), unit_(u), rnd_(rnd) {}
+  Parser(const std::vector<Tok>& t, Vars& v, AngleUnit u, double (*rnd)())
+      : t_(t), vars_(v), unit_(u), rnd_(rnd), depth_(g_run.depthBase) {}
+
+  // One operation on values already computed (realOp(), for core/cmplx.cpp): exactly what the
+  // parse below does with them (combine(), postfix(), apply()).
+  Num op(Tok k, const Num& a, const Num& b, bool two) {
+    switch (k) {
+      case Tok::Add: case Tok::Sub: case Tok::Mul: case Tok::Div: case Tok::Frac:
+      case Tok::NPr: case Tok::NCr: case Tok::Pow: case Tok::XRoot: {
+        Num l = a;
+        combine(k, l, b);
+        return l;
+      }
+      case Tok::Neg: return negate(a);
+      case Tok::Sq: return check(times(a, a));
+      case Tok::Cube: return check(times(times(a, a), a));
+      case Tok::Inv: return check(divide(Num::ofInt(1), a));
+      case Tok::Fact: return check(factorial(a));
+      case Tok::Pct: return check(divide(a, Num::ofInt(100)));
+      default:
+        if (isFunc(k)) return apply(k, a, b, two);
+        syntax();
+    }
+  }
+  // The number at token i (realNumber()).
+  Num numberAt(size_t& i) {
+    i_ = i;
+    const Num r = number();
+    i = i_;
+    return r;
+  }
 
   Num run() {
     if (t_.empty()) throw Fail{CalcError::Syntax, 0};
@@ -338,78 +428,137 @@ class Parser {
     if (!end()) syntax();
   }
 
+  // One more level open (a bracket, a function, ^( or a template): Stack ERROR past the limit.
+  void enter() {
+    if (++depth_ > kMaxNesting) throw Fail{CalcError::Stack, static_cast<int>(i_)};
+  }
+
+  // The precedence levels below each have one call site of the next, so they all inline into
+  // expr(): one frame per nesting level (the recursion goes expr → primary → addSub → expr).
+  // Each writes its value into `out` and runs left to right: the first operand straight into
+  // out, then "op operand" (into r) while an op follows, combined into out.
   Num addSub() {
-    Num l = mulDiv();
-    while (at(Tok::Add) || at(Tok::Sub)) {
-      bool add = t_[i_++] == Tok::Add;
-      Num r = mulDiv();
-      l = check(add ? plus(l, r) : minus(l, r));
-    }
-    return l;
+    Num v;
+    expr(v);
+    return v;
   }
 
-  Num mulDiv() {
-    Num l = perm();
-    while (at(Tok::Mul) || at(Tok::Div)) {
-      bool mul = t_[i_++] == Tok::Mul;
-      Num r = perm();
-      l = check(mul ? times(l, r) : divide(l, r));
+  void expr(Num& out) {
+    Num r;
+    bool first = true;
+    Tok op = Tok::Add;
+    for (;;) {
+      mulDiv(first ? out : r);
+      if (!first) combine(op, out, r);
+      first = false;
+      if (!at(Tok::Add) && !at(Tok::Sub)) return;
+      op = t_[i_++];
     }
-    return l;
   }
 
-  Num perm() {
-    Num l = implicitMul();
-    while (at(Tok::NPr) || at(Tok::NCr)) {
-      bool p = t_[i_++] == Tok::NPr;
-      Num r = implicitMul();
-      l = check(nPr(l, r, p));
+  CALC_INLINE void mulDiv(Num& out) {
+    Num r;
+    bool first = true;
+    Tok op = Tok::Mul;
+    for (;;) {
+      perm(first ? out : r);
+      if (!first) combine(op, out, r);
+      first = false;
+      if (!at(Tok::Mul) && !at(Tok::Div)) return;
+      op = t_[i_++];
     }
-    return l;
+  }
+
+  CALC_INLINE void perm(Num& out) {
+    Num r;
+    bool first = true;
+    Tok op = Tok::NPr;
+    for (;;) {
+      implicitMul(first ? out : r);
+      if (!first) combine(op, out, r);
+      first = false;
+      if (!at(Tok::NPr) && !at(Tok::NCr)) return;
+      op = t_[i_++];
+    }
   }
 
   // "2π", "3sin(30)", "(1+2)(3+4)": multiplication without a sign binds
   // tighter than × and ÷ (so 1÷2π = 1÷(2π), as on the Casio).
-  Num implicitMul() {
-    Num l = neg();
-    while (!end() && startsOperand(t_[i_])) l = check(times(l, neg()));
-    return l;
-  }
-
-  Num neg() {
-    if (at(Tok::Neg)) {
-      ++i_;
-      Num r = neg();
-      return negate(r);
+  CALC_INLINE void implicitMul(Num& out) {
+    Num r;
+    bool first = true;
+    for (;;) {
+      neg(first ? out : r);
+      if (!first) combine(Tok::Mul, out, r);
+      first = false;
+      if (end() || !startsOperand(t_[i_])) return;
     }
-    return frac();
   }
 
-  Num frac() {
-    Num l = power();
-    while (at(Tok::Frac)) {
+  // (−) binds looser than ^ and the postfix functions (−2² = −4); a run of them is counted,
+  // not recursed into (99 × (−) would otherwise be 99 frames).
+  CALC_INLINE void neg(Num& out) {
+    bool minus = false;
+    while (at(Tok::Neg)) {
       ++i_;
-      Num r = power();
-      l = check(divide(l, r));
+      minus = !minus;
     }
-    return l;
+    frac(out);
+    if (minus) combine(Tok::Neg, out, out);
   }
 
-  Num power() {
-    Num l = postfix();
+  CALC_INLINE void frac(Num& out) {
+    Num r;
+    bool first = true;
+    for (;;) {
+      power(first ? out : r);
+      if (!first) combine(Tok::Frac, out, r);
+      first = false;
+      if (!at(Tok::Frac)) return;
+      ++i_;
+    }
+  }
+
+  // ^( ) and ⁿ√( ) share the postfix functions' priority and run left to right, as on
+  // the Casio: 2^(3)² = 8² = 64, 2^(3)! = 40320, and 2^3^2 = (2^3)^2 = 64.
+  CALC_INLINE void power(Num& out) {
+    operand(out);
     while (at(Tok::Pow) || at(Tok::XRoot)) {
-      bool p = t_[i_++] == Tok::Pow;
-      if (++depth_ > 24) throw Fail{CalcError::Stack, static_cast<int>(i_)};
-      Num r = addSub();
+      const Tok op = t_[i_++];
+      enter();
+      Num r;
+      expr(r);
       close();
       --depth_;
-      l = check(p ? pow(l, r) : root(l, r));
+      combine(op, out, r);
+      postfixInto(out);
     }
-    return l;
   }
 
-  Num postfix() {
-    Num v = primary();
+  // An operand with its postfix functions.
+  CALC_NOINLINE void operand(Num& out) {
+    out = primary();
+    postfixInto(out);
+  }
+  CALC_NOINLINE void postfixInto(Num& v) { v = postfix(v); }
+
+  // l = l op r, checked (Neg: l = −l). Out of line: its temporaries stay out of expr()'s frame.
+  CALC_NOINLINE void combine(Tok op, Num& l, const Num& r) const {
+    switch (op) {
+      case Tok::Add: l = check(plus(l, r)); return;
+      case Tok::Sub: l = check(minus(l, r)); return;
+      case Tok::Mul: l = check(times(l, r)); return;
+      case Tok::Div: case Tok::Frac: l = check(divide(l, r)); return;
+      case Tok::NPr: case Tok::NCr: l = check(nPr(l, r, op == Tok::NPr)); return;
+      case Tok::Pow: l = check(pow(l, r)); return;
+      case Tok::XRoot: l = check(root(l, r)); return;
+      case Tok::Neg: l = negate(l); return;
+      default: return;
+    }
+  }
+
+  // x², x³, x⁻¹, x!, % applied to v, as many as follow.
+  CALC_NOINLINE Num postfix(Num v) {
     while (!end()) {
       Tok k = t_[i_];
       if (k == Tok::Sq) v = times(v, v);
@@ -424,7 +573,7 @@ class Parser {
     return v;
   }
 
-  Num number() {
+  CALC_NOINLINE Num number() {
     // digits [. digits] [E [-] digits]; "E3" alone means 1E3
     long long mant = 0;
     int scale = 0, digits = 0;
@@ -462,6 +611,8 @@ class Parser {
         ++i_;
       }
       if (n == 0) syntax();
+      // A second ×10 or a decimal point in the exponent: 1E2E3 is not 1E2 × 1E3.
+      if (at(Tok::Exp10) || at(Tok::Dot)) syntax();
       if (negEx) ex = -ex;
     }
     int e10 = ex - scale;
@@ -479,32 +630,79 @@ class Parser {
     return check(Num::ofDouble(static_cast<double>(mant) * std::pow(10.0, e10)));
   }
 
-  Num primary() {
+  CALC_NOINLINE Num primary() {
     if (end()) syntax();
     Tok k = t_[i_];
     if (isDigit(k) || k == Tok::Dot || k == Tok::Exp10) return number();
     if (k == Tok::Open) {
       ++i_;
-      if (++depth_ > 24) throw Fail{CalcError::Stack, static_cast<int>(i_)};
+      enter();
       Num r = addSub();
       close();
       --depth_;
       return r;
     }
-    if (isValue(k)) {
-      ++i_;
-      switch (k) {
-        case Tok::Pi: return Num::ofDouble(kPi);
-        case Tok::E: return Num::ofDouble(kE);
-        case Tok::Ran: {
-          double r = std::floor(rnd_() * 1000) / 1000;  // 3 decimal places, like Ran#
-          return makeExact(static_cast<long long>(r * 1000), 1000);
-        }
-        default: return vars_.get(k);
-      }
-    }
+    if (isValue(k)) return value();
     if (isFunc(k)) return function();
+    if (k == Tok::Integ || k == Tok::Deriv) return calculus();
     syntax();
+  }
+
+  CALC_NOINLINE Num value() {
+    const Tok k = t_[i_++];
+    switch (k) {
+      case Tok::Pi: return Num::ofDouble(kPi);
+      case Tok::E: return Num::ofDouble(kE);
+      case Tok::Ran: {
+        double r = std::floor(rnd_() * 1000) / 1000;  // 3 decimal places, like Ran#
+        return makeExact(static_cast<long long>(r * 1000), 1000);
+      }
+      default: return vars_.get(k);
+    }
+  }
+
+  // ∫( f , a , b [, tol] ) and d/dx( f , a [, tol] ): f is kept as tokens (X is its
+  // variable) and handed to core/numeric.cpp with the evaluated arguments. f is evaluated
+  // with this level (and the template's own frames) already counted: one nesting budget.
+  CALC_NOINLINE Num calculus() {
+    const Tok k = t_[i_++];
+    enter();
+    const size_t s = i_;
+    int level = 0;
+    while (!end() && !(level == 0 && (at(Tok::Comma) || at(Tok::Close)))) {
+      const Tok c = t_[i_];
+      if (c == Tok::Integ || c == Tok::Deriv) syntax();  // no ∫ or d/dx inside f
+      if (tokOpensBracket(c)) ++level;
+      else if (c == Tok::Close) --level;
+      ++i_;
+    }
+    if (i_ == s || !at(Tok::Comma)) syntax();
+    const std::vector<Tok> f(t_.begin() + static_cast<std::ptrdiff_t>(s), t_.begin() + static_cast<std::ptrdiff_t>(i_));
+    ++i_;
+    const Num a = addSub();
+    Num b;
+    if (k == Tok::Integ) {
+      if (!at(Tok::Comma)) syntax();
+      ++i_;
+      b = addSub();
+    }
+    double tol = 0;  // 0 = the default
+    if (at(Tok::Comma)) {
+      ++i_;
+      tol = addSub().v;
+      if (!(tol > 0)) math();
+    }
+    close();
+    EvalResult r;
+    {
+      const DepthBase inner(depth_ + kTemplateDepth);
+      r = numeric::evalTemplate(k, f, a.v, b.v, tol, vars_, unit_, rnd_);
+    }
+    --depth_;
+    if (r.error == CalcError::Syntax || r.error == CalcError::Stack)
+      throw Fail{r.error, static_cast<int>(s) + r.errorPos};
+    if (r.error != CalcError::None) throw Fail{r.error, static_cast<int>(i_ > 0 ? i_ - 1 : 0)};
+    return check(r.value);
   }
 
   double toRad(double a) const {
@@ -524,9 +722,10 @@ class Parser {
     return std::fabs(r - v) < 1e-15 ? r : v;
   }
 
-  Num function() {
+  // A function's arguments (in the recursion: a small frame), then its value (apply()).
+  CALC_NOINLINE Num function() {
     Tok k = t_[i_++];
-    if (++depth_ > 24) throw Fail{CalcError::Stack, static_cast<int>(i_)};
+    enter();
     Num a = addSub();
     Num b;
     bool two = false;
@@ -540,6 +739,10 @@ class Parser {
     }
     close();
     --depth_;
+    return apply(k, a, b, two);
+  }
+
+  CALC_NOINLINE Num apply(Tok k, const Num& a, const Num& b, bool two) const {
     const double x = a.v;
     switch (k) {
       case Tok::Sin: return check(Num::ofDouble(clean(std::sin(reduce(x)))));
@@ -651,7 +854,7 @@ class Parser {
   static Num times(const Num& a, const Num& b) {
     return exactTimes(a, b);
   }
-  Num divide(const Num& a, const Num& b) const {
+  CALC_NOINLINE Num divide(const Num& a, const Num& b) const {
     if (b.v == 0) math();
     if (a.exact && b.exact) {
       Num inv;  // b flipped over
@@ -661,7 +864,8 @@ class Parser {
     return Num::ofDouble(a.v / b.v);
   }
 
-  Num pow(const Num& base, const Num& ex) const {
+  CALC_NOINLINE Num pow(const Num& base, const Num& ex) const {
+    if (base.v == 0 && ex.v == 0) math();  // 0^0 is undefined (Math ERROR on the Casio)
     if (ex.exact && ex.den == 1 && base.exact && ex.num >= -64 && ex.num <= 64) {
       if (base.v == 0 && ex.num < 0) math();
       Num r = Num::ofInt(1);
@@ -680,7 +884,7 @@ class Parser {
     return Num::ofDouble(std::pow(base.v, ex.v));
   }
 
-  Num root(const Num& index, const Num& x) const {
+  CALC_NOINLINE Num root(const Num& index, const Num& x) const {
     if (index.v == 0) math();
     if (x.exact && index.exact && index.den == 1 && index.num >= 2 && index.num <= 3) {
       long long n = index.num;
@@ -705,14 +909,14 @@ class Parser {
     return Num::ofDouble(std::pow(x.v, 1.0 / index.v));
   }
 
-  Num factorial(const Num& a) const {
+  CALC_NOINLINE Num factorial(const Num& a) const {
     if (!isInt(a) || a.v < 0 || a.v > 69) math();
     Num r = Num::ofInt(1);
     for (long long k = 2; k <= asInt(a); ++k) r = times(r, Num::ofInt(k));
     return r;
   }
 
-  Num nPr(const Num& n, const Num& r, bool perm) const {
+  CALC_NOINLINE Num nPr(const Num& n, const Num& r, bool perm) const {
     if (!isInt(n) || !isInt(r)) math();
     long long N = asInt(n), R = asInt(r);
     if (N < 0 || R < 0 || R > N || N >= 10000000000LL) math();
@@ -729,7 +933,30 @@ class Parser {
 
 }  // namespace
 
+void setCancelHook(bool (*cancelled)()) { g_cancelled = cancelled; }
+
+EvalRun::EvalRun() {
+  if (g_run.scopes++ == 0) {
+    g_run.evals = 0;
+    g_run.stopped = false;
+    g_run.depthBase = 0;
+  }
+}
+
+EvalRun::~EvalRun() { --g_run.scopes; }
+
+bool evalRunStep() {
+  if (g_run.scopes == 0) return true;  // outside a run (a direct numeric:: call in a test)
+  if (g_run.stopped) return false;
+  if (++g_run.evals > kMaxFunctionEvals) g_run.stopped = true;
+  else if (((g_run.evals - 1) & 63) == 0 && g_cancelled && g_cancelled()) g_run.stopped = true;
+  return !g_run.stopped;
+}
+
+bool evalRunStopped() { return g_run.scopes > 0 && g_run.stopped; }
+
 EvalResult evaluate(const std::vector<Tok>& toks, Vars& vars, AngleUnit unit, double (*random)()) {
+  const EvalRun run;
   EvalResult r;
   try {
     Parser p(toks, vars, unit, random);
@@ -739,6 +966,33 @@ EvalResult evaluate(const std::vector<Tok>& toks, Vars& vars, AngleUnit unit, do
     r.errorPos = f.pos;
   }
   return r;
+}
+
+bool realOp(Tok op, const Num& a, const Num& b, bool two, AngleUnit unit, double (*random)(), Num& out,
+            CalcError& err) {
+  static const std::vector<Tok> kNone;
+  static Vars unused;  // op() reads no variable
+  try {
+    Parser p(kNone, unused, unit, random);
+    out = p.op(op, a, b, two);
+    return true;
+  } catch (const Fail& f) {
+    err = f.e;
+    return false;
+  }
+}
+
+bool realNumber(const std::vector<Tok>& toks, size_t& i, Num& out, CalcError& err, int& errPos) {
+  static Vars unused;
+  try {
+    Parser p(toks, unused, AngleUnit::Deg, nullptr);
+    out = p.numberAt(i);
+    return true;
+  } catch (const Fail& f) {
+    err = f.e;
+    errPos = f.pos;
+    return false;
+  }
 }
 
 // ---------------------------------------------------------------- formatting
@@ -826,6 +1080,7 @@ const char* errorText(CalcError e) {
     case CalcError::Math: return "Math ERROR";
     case CalcError::Stack: return "Stack ERROR";
     case CalcError::Argument: return "Argument ERROR";
+    case CalcError::Dim: return "Dim ERROR";
     default: return "";
   }
 }

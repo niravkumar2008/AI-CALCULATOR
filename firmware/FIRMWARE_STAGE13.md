@@ -29,7 +29,7 @@ at the end.
 | Battery | Straight line from 3.3 to 4.2 V | **LiPo discharge curve** (`core/battery.cpp`, tested), averaging 8 readings. AI is refused below **3.6 V** on battery: "BATTERY LOW", maths still works |
 | Charging | STAT read with an internal pull | STAT is read **only while VBUS_SENSE is high**, because R20 now pulls up to VBUS_SENSE. No internal pulls on IO35 |
 | Claude key | Stored in the calculator (`key` command) | **The calculator never holds the key.** It sends the photo to **our proxy** (`server/proxy/`) with its own device token. The proxy holds the key. On first start the new firmware **erases any old key** left in flash |
-| Accounts | — | Pairing code, then link page, then first month free. The server keeps the subscription state ($15/month), a fair-use cap of **500 solves/month**, and an optional free daily tier |
+| Accounts | — | Pairing code, then link page, then first month free. The server keeps the subscription state ($15/month at the time; 2026-10-11: $10/month or $100/year), a fair-use cap of **500 solves/month** (2026-10-11: $5/month and 300 solves per account), and an optional free daily tier |
 | Self-test | — | Factory self-test: hold **SHIFT + ALPHA, press ON** (or type `selftest`). It prints one JSON line |
 | AI answers | — | **✓ verified:** Claude also sends `check`, a calculation for its final number. The calculator's own engine re-computes it and shows ✓ when they agree, or **⚠ CALCULATOR GETS …** when they don't |
 | Viewfinder | — | **Live camera preview** in AI SOLVE (partial refresh, ~2–2.5 fps), with brackets, a crosshair, focus / hold-still status and a text box. = takes the photo. AC or 30 s idle turns the camera off. See "Camera preview" below |

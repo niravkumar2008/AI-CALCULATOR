@@ -76,7 +76,7 @@ std::string formPage(const std::string& notice, bool bad) {
        escape(g_current.proxyUrl) + "\" placeholder=\"https://...\">";
   p += "<label for=\"token\">Device token</label><input id=\"token\" name=\"token\" type=\"password\" maxlength=\"100\" placeholder=\"" +
        escape(g_current.deviceToken.empty() ? "dt_... from the AI server" : "now: " + g_current.tokenHint()) + "\">";
-  p += "<p class=\"help\">The token identifies this calculator to the AI server. It is never a Claude API key.</p>";
+  p += "<p class=\"help\">The token identifies this calculator to the AI server. It is never an AI service key.</p>";
   p += "<button type=\"submit\">Save to the calculator</button></form>";
   p += "<p class=\"help\" style=\"margin-top:1.4rem\">After saving, the calculator leaves this network: rejoin your usual Wi-Fi. "
        "To link the calculator to your account, open AI SOLVE (MODE 4) and press =: it shows the code for the link page.</p>";

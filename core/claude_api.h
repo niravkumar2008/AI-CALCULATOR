@@ -13,6 +13,7 @@ constexpr const char* kApiPath = "/v1/messages";
 constexpr const char* kApiVersion = "2023-06-01";
 
 // The full request body for one photo (JPEG bytes, not yet base64-encoded).
+// PNG bytes (a typed problem from App::takeTypedImage()) are sent as image/png.
 // Streams the reply, asks for the fixed JSON reply format, and lets Claude
 // think first when a problem needs it. `detail`, if not empty, is a
 // full-resolution close-up of the writing in the same photo (see focus.h),

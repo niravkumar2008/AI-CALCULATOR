@@ -33,17 +33,26 @@ inline void radical(LGFX_Sprite& s, int x, int y, int scale, uint16_t color) {
   }
 }
 
+// SETUP > Screen look > "LCD dots" (the mono calculator look only, ui.cpp sets it per
+// frame): glyphs at 3x and up are drawn as separate square dots with a 1 px gap, like a
+// dot-matrix LCD. Smaller text stays solid (1-px dots at 2x would lose too much contrast).
+inline bool& lcdDots() {
+  static bool on = false;
+  return on;
+}
+
 // One glyph at (x, y), each font pixel drawn `scale` x `scale` LCD pixels.
 inline void glyph(LGFX_Sprite& s, int x, int y, const calc::Glyph* g, int scale, uint16_t color) {
   if (g->cp == 0x221A && scale >= 2) {
     radical(s, x, y, scale, color);
     return;
   }
+  const int dot = lcdDots() && scale >= 3 ? scale - 1 : scale;
   for (int r = 0; r < kGlyphH; ++r) {
     const uint8_t bits = g->rows[r];
     if (!bits) continue;
     for (int c = 0; c < kGlyphW; ++c)
-      if (bits & (0x10 >> c)) s.fillRect(x + c * scale, y + r * scale, scale, scale, color);
+      if (bits & (0x10 >> c)) s.fillRect(x + c * scale, y + r * scale, dot, dot, color);
   }
 }
 

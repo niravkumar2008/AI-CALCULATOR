@@ -36,6 +36,9 @@ class Framebuffer {
   // '#' for lit pixels, '.' for unlit; one line per pixel row, prefixed by an
   // icon line. Used by snapshot tests and to skip identical e-paper refreshes.
   std::string toAscii() const;
+  // FNV-1a over the pixels and icons: the same picture always gives the same value. Cheap
+  // enough to call every loop to skip redraws (toAscii builds a 7.7 KB string).
+  uint32_t hash() const;
   const uint8_t* pixels() const { return &px_[0][0]; }  // kHeight rows of kWidth bytes (0/1)
 
  private:

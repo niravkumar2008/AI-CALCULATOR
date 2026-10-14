@@ -73,10 +73,14 @@ std::string formPage(const std::string& notice, bool bad) {
   p += "<p class=\"help\">On iPhone turn on Maximize Compatibility; the calculator only sees 2.4 GHz.</p>";
   p += "<label for=\"pass\">Hotspot password</label><input id=\"pass\" name=\"pass\" type=\"password\" maxlength=\"63\" placeholder=\"8-63 characters\">";
   p += "<label for=\"proxy\">AI server address</label><input id=\"proxy\" name=\"proxy\" inputmode=\"url\" maxlength=\"200\" value=\"" +
-       escape(g_current.proxyUrl) + "\" placeholder=\"https://...\">";
-  p += "<label for=\"token\">Device token</label><input id=\"token\" name=\"token\" type=\"password\" maxlength=\"100\" placeholder=\"" +
-       escape(g_current.deviceToken.empty() ? "dt_... from the AI server" : "now: " + g_current.tokenHint()) + "\">";
-  p += "<p class=\"help\">The token identifies this calculator to the AI server. It is never a Claude API key.</p>";
+       escape(g_current.serverUrl()) + "\" placeholder=\"https://...\">";
+  if (g_current.worker()) {  // the Worker hands out the token itself (POST /v1/device/register)
+    p += "<p class=\"help\">The calculator registers itself with the AI server: no token to type.</p>";
+  } else {
+    p += "<label for=\"token\">Device token</label><input id=\"token\" name=\"token\" type=\"password\" maxlength=\"100\" placeholder=\"" +
+         escape(g_current.deviceToken.empty() ? "dt_... from the AI server" : "now: " + g_current.tokenHint()) + "\">";
+    p += "<p class=\"help\">The token identifies this calculator to the AI server. It is never an AI service key.</p>";
+  }
   p += "<button type=\"submit\">Save to the calculator</button></form>";
   p += "<p class=\"help\" style=\"margin-top:1.4rem\">After saving, the calculator leaves this network: rejoin your usual Wi-Fi. "
        "To link the calculator to your account, open AI SOLVE (MODE 4) and press =: it shows the code for the link page.</p>";
@@ -88,7 +92,7 @@ std::string savedPage(const Settings& s) {
   std::string p = kHead;
   p += "<h1>Saved</h1><p class=\"ok\">The calculator keeps these settings.</p><ul>";
   p += "<li>Hotspot: <b>" + escape(s.ssid.empty() ? "not set" : s.ssid) + "</b></li>";
-  p += "<li>AI server: <b>" + escape(s.proxyUrl.empty() ? "not set" : s.proxyUrl) + "</b></li>";
+  p += "<li>AI server: <b>" + escape(s.serverUrl().empty() ? "not set" : s.serverUrl()) + "</b></li>";
   p += "<li>Device token: <b>" + escape(s.tokenHint()) + "</b></li></ul>";
   p += "<p>This network closes in a few seconds. Rejoin your usual Wi-Fi, turn the phone's hotspot on, "
        "then MODE 4 on the calculator and = to solve (the first = shows a code to link your account).</p>";
@@ -157,17 +161,28 @@ esp_err_t saveHandler(httpd_req_t* req) {
   std::string why;
   if (!ssid.empty() || !pass.empty()) {
     if (ssid.empty()) ssid = s.ssid;  // new password for the saved hotspot
+    // The same hotspot picked again with the password left empty: keep its password, as the
+    // page promises (review F-9). A different hotspot with no password is an open one.
+    if (pass.empty() && ssid == s.ssid) pass = s.password;
     why = settingsCheckWifi(ssid, pass);
     if (!why.empty()) return sendHtml(req, formPage(why, true));
     s.ssid = ssid;
     s.password = pass;
   }
-  if (!proxy.empty()) {
+  if (!proxy.empty() && s.worker()) {  // the field is the address of the server in use
+    why = settingsCheckWorker(proxy);
+    if (!why.empty()) return sendHtml(req, formPage(why, true));
+    if (proxy != s.workerUrl) {  // a token belongs to one server: register with the new one
+      s.workerUrl = proxy;
+      s.workerToken.clear();
+      s.workerDeviceId.clear();
+    }
+  } else if (!proxy.empty()) {
     why = settingsCheckProxy(proxy);
     if (!why.empty()) return sendHtml(req, formPage(why, true));
     s.proxyUrl = proxy;
   }
-  if (!token.empty()) {
+  if (!token.empty() && !s.worker()) {
     why = settingsCheckToken(token);
     if (!why.empty()) return sendHtml(req, formPage(why, true));
     s.deviceToken = token;
@@ -180,8 +195,8 @@ esp_err_t saveHandler(httpd_req_t* req) {
     g_haveSaved = true;
     g_savedAt = millis() | 1;
   }
-  LOGF("setup", "saved from the phone: hotspot \"%s\", proxy %s, token %s", s.ssid.c_str(),
-       s.proxyUrl.empty() ? "not set" : s.proxyUrl.c_str(), s.tokenHint().c_str());
+  LOGF("setup", "saved from the phone: hotspot \"%s\", %s %s, token %s", s.ssid.c_str(), s.worker() ? "Worker" : "proxy",
+       s.serverUrl().empty() ? "not set" : s.serverUrl().c_str(), s.tokenHint().c_str());
   return sendHtml(req, savedPage(s));
 }
 

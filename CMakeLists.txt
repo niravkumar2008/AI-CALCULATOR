@@ -7,7 +7,8 @@ file(GLOB CORE core/*.cpp)
 add_library(core STATIC ${CORE})
 target_compile_options(core PRIVATE -Wall -Wextra)
 
-add_executable(tests tests/tests.cpp)
+add_executable(tests tests/tests.cpp tests/geo_tests.cpp tests/periodic_tests.cpp tests/engine_regress_tests.cpp
+  tests/stat_table_tests.cpp tests/eqn_tests.cpp tests/cmplx_tests.cpp tests/basen_tests.cpp tests/matvec_tests.cpp tests/numeric_tests.cpp tests/worker_api_tests.cpp tests/fuzz_tests.cpp)
 target_link_libraries(tests core)
 
 if(WIN32)

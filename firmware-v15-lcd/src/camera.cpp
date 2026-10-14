@@ -92,6 +92,21 @@ Mode g_mode = Mode::Jpeg;
 const CameraPins* g_pins = nullptr;  // the layout that answered
 void ensureJpeg();                   // below: back to scan mode before a capture (caller holds the lock)
 
+// Preview frames handed out by cameraPreviewGrab() and not yet released, each with the
+// driver generation it came from. A deinit (mode switch or sleep) frees the driver's
+// buffers, so a frame from an older generation must never be given back to it (review F-2).
+uint32_t g_driverGen = 1;  // bumped by every esp_camera_deinit(); caller holds the lock
+struct HeldFrame {
+  camera_fb_t* fb;
+  uint32_t gen;
+};
+HeldFrame g_held[4] = {};
+
+void deinitDriver() {
+  esp_camera_deinit();
+  ++g_driverGen;
+}
+
 // The OV5640 module's lens motor: its focus firmware is loaded at start and
 // runs continuous autofocus; a scan waits until it reports "focused".
 OV5640 g_af;
@@ -259,7 +274,7 @@ bool switchMode(Mode mode) {
   if (!g_ok || !g_pins) return false;
   if (g_mode == mode) return true;
   const uint32_t t0 = millis();
-  esp_camera_deinit();
+  deinitDriver();
   g_ok = false;
   g_hasAf = false;
   if (!bringUp(*g_pins, mode)) {
@@ -595,7 +610,7 @@ bool cameraCapture(std::string& jpeg, std::string& detail, std::string& error,
 void cameraSleep() {
   if (!g_ok || g_asleep) return;
   Lock lock;
-  esp_camera_deinit();
+  deinitDriver();
   g_ok = false;
   g_asleep = true;
   g_sensorSize = -1;
@@ -689,11 +704,35 @@ camera_fb_t* cameraPreviewGrab(bool& focused) {
     fb = nullptr;
   }
   focused = !g_hasAf || g_af.getFWStatus() == kFocused;
+  if (fb) {
+    for (HeldFrame& h : g_held)
+      if (!h.fb) {
+        h = {fb, g_driverGen};
+        return fb;
+      }
+    esp_camera_fb_return(fb);  // never more than 2 are out; refuse a third rather than lose track
+    fb = nullptr;
+  }
   return fb;
 }
 
+// Under the lock, so a frame is never returned while a scan is switching the driver's mode
+// (review F-2); a frame from before a deinit is only forgotten (its buffer is already freed).
 void cameraPreviewRelease(camera_fb_t* fb) {
-  if (fb) esp_camera_fb_return(fb);
+  if (!fb) return;
+  Lock lock;
+  for (HeldFrame& h : g_held)  // the current driver's first (a new buffer may reuse an old address)
+    if (h.fb == fb && h.gen == g_driverGen) {
+      if (g_ok && g_mode == Mode::Rgb565) esp_camera_fb_return(fb);
+      h = {};
+      return;
+    }
+  for (HeldFrame& h : g_held)
+    if (h.fb == fb) {
+      LOGF("cam", "a preview frame outlived its driver: not returned");
+      h = {};
+      return;
+    }
 }
 
 bool cameraRefocus() {
@@ -714,15 +753,17 @@ CamFocus cameraFocusState() {
   return g_af.getFWStatus() == kFocused ? CamFocus::Focused : CamFocus::Focusing;
 }
 
+// The last scan is kept in RAM, so it is still there after the camera went to sleep
+// (the solve task powers it down right after the photo).
 bool cameraLastPhoto(std::string& jpeg) {
-  if (!g_ok) return false;
+  if (!g_lock) return false;
   Lock lock;
   jpeg = g_last;
   return !jpeg.empty();
 }
 
 bool cameraLastDetail(std::string& jpeg) {
-  if (!g_ok) return false;
+  if (!g_lock) return false;
   Lock lock;
   jpeg = g_lastDetail;
   return !jpeg.empty();

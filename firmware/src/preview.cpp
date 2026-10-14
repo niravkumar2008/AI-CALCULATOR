@@ -51,11 +51,11 @@ pre{white-space:pre-wrap;font:.85rem/1.4 ui-monospace,monospace}
 <p class="focus"><span>Focus</span> <b id="focus">&ndash;</b> <span id="best"></span></p>
 <p class="help">Move the camera closer and further: the distance with the highest number is where your writing is sharpest.</p>
 <div class="btns">
- <button class="primary" id="send">Send to Claude</button>
+ <button class="primary" id="send">Send to the tutor</button>
 </div>
 <p id="msg" role="status" aria-live="polite"></p>
 <section id="answer" hidden aria-labelledby="ansTitle">
- <h2 id="ansTitle">Claude's answer</h2>
+ <h2 id="ansTitle">The answer</h2>
  <p id="readAs" class="help"></p>
  <p id="ans" class="ans"></p>
  <ol id="steps"></ol>
@@ -75,7 +75,7 @@ pre{white-space:pre-wrap;font:.85rem/1.4 ui-monospace,monospace}
  <button class="primary" id="save">Save for scans</button>
  <button id="reset">Reset to defaults</button>
 </div>
-<p class="help"><b>Send to Claude</b> scans what the camera sees right now. Changes apply at once. <b>Save for scans</b> keeps them after a restart.
+<p class="help"><b>Send to the tutor</b> scans what the camera sees right now. Changes apply at once. <b>Save for scans</b> keeps them after a restart.
 The live view runs at a smaller size for speed; scans use the Photo size.
 Blurry at every setting? The lens focus is fixed: try 20&ndash;30 cm and check the lens has no protective film.</p>
 </main><script>
@@ -165,7 +165,7 @@ async function poll(){
   if(live)startLive();load();return;
  }
  const s=Math.round((Date.now()-waitStart)/1000);
- msg(s<90?'Solving... the calculator stepped off this network to reach Claude ('+s+' s). The answer also shows on the calculator.'
+ msg(s<90?'Solving... the calculator stepped off this network to reach the tutor ('+s+' s). The answer also shows on the calculator.'
   :'Still not back ('+s+' s). If your laptop switched to another Wi-Fi, rejoin the AI-Calc network; this page keeps checking.');
  setTimeout(poll,2000);
 }
@@ -182,7 +182,7 @@ document.getElementById('send').onclick=async()=>{
    if(left<=0)return done();msg('Hold still: '+left+' s');setTimeout(tickDown,250);};
   tickDown();
  });
- msg('Got the photo. Sending to Claude...');
+ msg('Got the photo. Sending to the tutor...');
  waiting=true;waitStart=Date.now();setTimeout(poll,3000);
 };
 getResult().then(r=>{if(r)lastN=r.n;});
@@ -480,7 +480,7 @@ bool previewStart(std::string& message) {
             "   (it has no internet; that's expected. Stay on it anyway.\n"
             "   Use the laptop, not the iPhone: an iPhone joining it would stop its own hotspot.)\n"
             "2. Open  http://192.168.4.1/?t=" + std::string(g_token) + "\n"
-            "Send on the page scans with Claude: the calculator steps off this network for a few\n"
+            "Send on the page scans with the tutor: the calculator steps off this network for a few\n"
             "seconds to use the hotspot, then comes back. Type preview off when done.";
   return true;
 }
@@ -536,6 +536,6 @@ void previewSetResult(const std::string& replyJson, const std::string& error) {
   ++g_resultNo;
   g_result = "{\"n\":" + std::to_string(g_resultNo) +
              (replyOk ? ",\"reply\":" + replyJson
-                      : ",\"error\":" + jsonText(error.empty() ? "Claude's reply couldn't be read." : error)) +
+                      : ",\"error\":" + jsonText(error.empty() ? "The tutor's reply couldn't be read." : error)) +
              "}";
 }

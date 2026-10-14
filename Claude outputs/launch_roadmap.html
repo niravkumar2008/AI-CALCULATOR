@@ -1,4 +1,4 @@
-<title>AI Calculator Launch Roadmap</title>
+<title>Proofline Launch Roadmap</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <style>
@@ -62,12 +62,53 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
 
 <div class="wrap">
 <header style="display:flex;flex-direction:column;gap:10px">
-  <div class="eyebrow">Plan · written Sat 2026-10-03 · re-planned Thu 2026-10-08 (v14 ordered; 5 testers; v15-LCD verified ORDER)</div>
-  <h1>AI Calculator Launch Roadmap</h1>
+  <div class="eyebrow">Plan · written Sat 2026-10-03 · re-planned Thu 2026-10-08 · updated Sun 2026-10-11 (v15-LCD ordered; v14 never ordered; Proofline prices)</div>
+  <h1>Proofline Launch Roadmap</h1>
   <p class="lede">Your plan from the v14 order to a product that a factory builds and ships without you. v14 is ordered (10/8). Next come 5 e-paper testers in Casio shells and, in parallel, the new colour-LCD board (v15-LCD, verified "ORDER" on 10/8), then knockoff shells and bulk. It also covers how the cost per calculator falls as you scale and the legal steps you can't skip. Numbers marked <span class="est">estimate</span> are reasoned guesses, not quotes. Source numbers [S#] are listed at the bottom.</p>
 </header>
 
+<section id="update-2026-10-11">
+  <h2>Update 2026-10-11 · Proofline</h2>
+  <p class="note"><b>From Nirav, 2026-10-11 (overrides the rest of this page where they conflict):</b> v14 (e-paper) was <b>never ordered</b>; <b>v15 (colour LCD) has been ordered</b> (vendor, quantity, total and delivery date <b>not recorded — ask Nirav</b>). Plan: <b>5 samples first, then bulk-focused production</b>. Brand <b>Proofline</b> (Proofline Corporation, not registered; <code>proofline.example</code> placeholders). Preorders planned for <b>2027</b>. The sections below are the 10/8 plan, kept for the record.</p>
+  <div class="lcd-row">
+    <div class="lcd"><span>Board ordered</span><b>v15-LCD</b><span>details not recorded · v14 never ordered</span></div>
+    <div class="lcd"><span>Price</span><b>$225</b><span>+ $10/month or $100/year · 1st month free, no card</span></div>
+    <div class="lcd"><span>AI cap per account</span><b>$5 / 300</b><span>per month · ≈ $3.90 typical (150 × $0.026)</span></div>
+    <div class="lcd"><span>Left per subscriber</span><b>$4.51–5.04</b><span>a month, 70 → 30 % on yearly <span class="est">estimate</span></span></div>
+    <div class="lcd"><span>Profit per device, LCD</span><b>$110 → $166</b><span>at 10 → 1,000 units <span class="est">estimate</span></span></div>
+    <div class="lcd"><span>$2,000 budget</span><b>≈ $794 left</b><span>after v15 order + 5 samples + 10 % <span class="est">estimate</span></span></div>
+  </div>
+  <h3>Subscription money per paying user a month</h3>
+  <p>Stripe 2.9 % + 30¢ + 0.7 % Billing; AI ≈ $0.026 a solve (Sonnet 5.5, §3.3) × 150 solves. The $5 cap hits at ≈ 192 solves, so even a capped user is profitable.</p>
+  <div class="tbl"><table>
+    <tr><th>Payers on the yearly plan</th><th class="n">Gross</th><th class="n">After Stripe</th><th class="n">Left, typical</th><th class="n">Left, at the $5 cap</th><th class="n">12-month value per device sold</th></tr>
+    <tr><td>30 %</td><td class="n">$9.50</td><td class="n">$8.94</td><td class="n">$5.04</td><td class="n">$3.94</td><td class="n">$30.35</td></tr>
+    <tr class="key"><td>50 %</td><td class="n">$9.17</td><td class="n">$8.67</td><td class="n">$4.77</td><td class="n">$3.67</td><td class="n">$31.54</td></tr>
+    <tr><td>70 %</td><td class="n">$8.83</td><td class="n">$8.41</td><td class="n">$4.51</td><td class="n">$3.41</td><td class="n">$32.73</td></tr>
+  </table></div>
+  <h3>The $2,000, re-planned</h3>
+  <div class="tbl"><table>
+    <tr><th>What</th><th class="n">Cost</th></tr>
+    <tr class="key"><td>v15-LCD order (ordered; real total not recorded) <span class="est">estimate</span></td><td class="n">≈ $270</td></tr>
+    <tr class="key"><td>Parts for 5 v15 samples: 5 × ($91.92 − $18 board)</td><td class="n">≈ $370</td></tr>
+    <tr><td>Knockoff shell + bulk supplier samples</td><td class="n">≈ $150</td></tr>
+    <tr><td>Cloudflare 3 months, AI free month for 5 users, lawyer, company filing, domain</td><td class="n">≈ $307</td></tr>
+    <tr><td>10 % contingency</td><td class="n">≈ $110</td></tr>
+    <tr class="total"><td>Total (≈ $794 left of $2,000)</td><td class="n">≈ $1,206</td></tr>
+  </table></div>
+  <p>Break-even: <b>23 units</b> for the ≈ $3,547 selling-legally bill; <b>36</b> to also recover the $2,000 (30 with a year of subscription). First 100 units + selling legally ≈ $7,770 → <b>≈ 32 preorders</b>. Full working: <code>hardware/production/UNIT_ECONOMICS.md</code> §8 and <code>Claude outputs/BUSINESS_STATUS_2026-10-11.md</code>.</p>
+  <h3>To the 2027 preorders <span class="est">estimate</span></h3>
+  <div class="tbl"><table>
+    <tr><th>When</th><th>What</th></tr>
+    <tr><td>Oct – Nov 2026</td><td>v15 boards arrive; bench checks; sample #1 end to end, then samples 2–5</td></tr>
+    <tr><td>Nov – Dec 2026</td><td>Firmware → Cloudflare API (stage 2), Turnstile, real email, deploy site + Worker (Stripe test mode)</td></tr>
+    <tr><td>Dec 2026 – Feb 2027</td><td>Shell and bulk samples, LCD quote, lawyer, register Proofline Corporation, trademark search</td></tr>
+    <tr class="key"><td>Q1 – Q2 2027</td><td>FCC SDoC plan, insurance, Stripe live, <b>preorders open</b>, then the 100-unit batch</td></tr>
+  </table></div>
+</section>
+
 <section>
+  <h2>The 10/8 plan (kept for the record; superseded where it conflicts with the update above)</h2>
   <div class="lcd-row">
     <div class="lcd"><span>v14 ordered</span><b>10/8</b><span>5 PCBs, 5 assembled · ≈ $275 delivered</span></div>
     <div class="lcd"><span>5 testers (option C)</span><b>≈ $664</b><span>incl. JLCPCB · A ≈ $662 · B ≈ $572</span></div>
@@ -81,7 +122,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
 </section>
 
 <section id="money">
-  <h2>0 · Your $2,000 and the $225 + $15 plan</h2>
+  <h2>0 · Your $2,000 and the $225 + $15 plan (10/8 version)</h2>
   <h3>Where the $2,000 goes</h3>
   <p>In plan order, from <code>hardware/production/COST_MODEL.xlsx</code> (Cash budget). With the v15 order in it, the full plan with a 10-unit LCD pilot comes to about <b>$475 over</b>. A 4-unit pilot built from the v15 boards fits with about $62 left (5 units ≈ $11 over, or ≈ $30 left with Sonnet 5.5 for the beta).</p>
   <div class="tbl"><table>
@@ -109,7 +150,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
   </table></div>
   <p class="lede">The LCD version costs the same as the e-paper one at 10 (BuyDisplay panel, $6.22 @10) and a few dollars less from 100 on: the Alibaba panel is $2.30–2.50 instead of $4–6.60, and the board loses 17 booster parts. The 1,200–1,500 mAh cell gives some of that back (≈ +$3 a unit at 100).</p>
 
-<h3>What each subscriber earns at $15 a month</h3>
+<h3>What each subscriber earns at $15 a month (old price; see the 2026-10-11 update at the top)</h3>
   <div class="tbl"><table>
     <tr><th>How they use it</th><th class="n">API cost</th><th class="n">Card fee</th><th>Verdict</th></tr>
     <tr><td>Typical (5 solves a day), Opus 5.5</td><td class="n">$7.52</td><td class="n">$0.74</td><td>≈ $6.39 left at 100 units (after the server share)</td></tr>
@@ -120,7 +161,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
 <ul>
     <li><b>The free first month</b> costs you about $3.77 (Sonnet) to $7.52 (Opus) in API per buyer. Cheap, and it gets every buyer linked and using it.</li>
     <li><b>Fair-use cap:</b> 500 solves a month is safe on Sonnet 5.5. On Opus 5.5 it has to come down to about 280, or a heavy user costs more than they pay.</li>
-    <li><b>Offer a yearly plan</b> at about $150 (two months free). It brings cash in earlier and keeps people longer.</li>
+    <li><b>Offer a yearly plan</b> at about $150 (two months free). <i>2026-10-11: decided $100/year next to $10/month.</i> It brings cash in earlier and keeps people longer.</li>
     <li><b>Bill through Stripe</b> on your own site or companion app, not an app store, so you keep the 30 % an app store would take.</li>
     <li><b>The calculator without a subscription</b> should still work as a normal scientific calculator. That keeps the $225 fair and avoids "bricked device" complaints.</li>
   </ul>
@@ -252,7 +293,7 @@ code{font:13px var(--mono);background:var(--bg);padding:1px 4px;border-radius:3p
     <tr><td>Opus 5.5</td><td class="n">$0.052</td><td class="n">$3.12</td><td class="n">$7.80</td><td class="n">$20.80</td></tr>
     <tr><td>Haiku first, Sonnet on 20 %</td><td class="n">$0.010</td><td class="n">$0.62</td><td class="n">$1.56</td><td class="n">$4.16</td></tr>
   </table></div>
-  <p><b>Your plan:</b> $15 a month after a free first month. On Opus 5.5 (≈ $7.52 typical) that leaves ≈ $6–7 a month per subscriber, but a user at the 500 cap loses money. Sonnet 5.5 (≈ $3.77) covers even the cap (§0). <b>The calculator must never hold your API key</b>: before any unit leaves your hands, route requests through the proxy with per-device tokens, rate limits and a kill switch.</p>
+  <p><b>Your plan (until 2026-10-11; now $10/month or $100/year, $5 / 300-solve cap):</b> $15 a month after a free first month. On Opus 5.5 (≈ $7.52 typical) that leaves ≈ $6–7 a month per subscriber, but a user at the 500 cap loses money. Sonnet 5.5 (≈ $3.77) covers even the cap (§0). <b>The calculator must never hold your API key</b>: before any unit leaves your hands, route requests through the proxy with per-device tokens, rate limits and a kill switch.</p>
 </section>
 
 <section id="legal">

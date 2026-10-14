@@ -13,4 +13,8 @@ std::vector<std::string> wrapText(const std::string& utf8, int width);
 // Number of characters (code points) in a UTF-8 string.
 int textLength(const std::string& utf8);
 
+// The first bytes of UTF-8 text, at most maxBytes, never ending part-way through a
+// character (a cut that would split one moves back to its start).
+std::string utf8Prefix(const std::string& utf8, size_t maxBytes);
+
 }  // namespace calc

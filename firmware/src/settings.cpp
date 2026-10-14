@@ -26,7 +26,7 @@ void help() {
   Serial.println(
       "\nCommands:\n"
       "  wifi    set the hotspot name and password\n"
-      "  key     set your Claude API key (not shown on screen)\n"
+      "  key     set your AI API key (not shown on screen)\n"
       "  status  camera, Wi-Fi and key status\n"
       "  scan    list the Wi-Fi networks the calculator can see\n"
       "  preview live camera view + settings on your phone (preview off to stop)\n"
@@ -64,7 +64,7 @@ SerialCmd handle(Settings& s, const std::string& raw, std::string (*statusText)(
     case Ask::Key:
       g_ask = Ask::Nothing;
       if (line.rfind("sk-ant-", 0) != 0 || line.size() < 30 || line.find_first_of(" \t") != std::string::npos) {
-        Serial.println("That doesn't look like a Claude API key (they start with sk-ant-). Type key to try again.");
+        Serial.println("That doesn't look like an AI API key. Type key to try again.");
         return SerialCmd::None;
       }
       s.apiKey = line;
@@ -78,7 +78,7 @@ SerialCmd handle(Settings& s, const std::string& raw, std::string (*statusText)(
     Serial.println("Hotspot name (exactly as your phone shows it):");
   } else if (line == "key") {
     g_ask = Ask::Key;
-    Serial.println("Paste your Claude API key and press Enter:");
+    Serial.println("Paste your AI API key and press Enter:");
   } else if (line == "status") {
     Serial.println(statusText().c_str());
   } else if (line == "preview") {

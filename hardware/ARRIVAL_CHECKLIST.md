@@ -2,6 +2,8 @@
 
 Written 2026-10-06 for board v14 and firmware stage14-2026.10.10 (sections 1–3); v15-LCD boards: section 4 (added 2026-10-08). One page. Entry point for everything else: `FINAL_STATUS.md`.
 
+> **2026-10-11 (from Nirav):** no v14 boards are coming (v14 was never ordered). The boards that will arrive are v15-LCD (section 4); sections 1–3 still describe the shared steps. The vendor, quantity and delivery date of the v15 order aren't recorded yet, so section 4's JLCPCB row is the plan, not a confirmed order. Plan: build 5 samples first, then bulk.
+
 Guides: **Power-Up** (PU) https://claude.ai/artifact/PqTARcDutvwxS5aGB8iEG9 · **Grinding** (GR) https://claude.ai/artifact/9rCWyw8MeHP2z8FWijnyfL · **Assembly** (AS) https://claude.ai/artifact/8BTC57FZ3JFwiDdiLprwtY. Section links below add `#id` to those addresses (sources: `bringup_guide.html`, `enclosure/final_assembly/grinding_manual.html`, `enclosure/final_assembly/assembly_guide.html`).
 
 ## 1. What arrives, from whom, and what to check on the box
