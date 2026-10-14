@@ -2676,6 +2676,53 @@ static void testBugHunt15() {
   }
 }
 
+// The Proofline loading screen: covers the calculator while setup() runs,
+// holds the full bar a moment, and comes back briefly after ON.
+static void testSplash() {
+  using K = DKey;
+  Device d;
+  d.setRandomSource(fixedRandom);
+  d.setSplash(true);
+  d.tick(1000);
+  d.startBoot();
+  CHECK(d.splashShowing() && d.splashPercent() == 0);
+  d.setBootStep(50, "Loading settings");
+  snapshot("splash_loading", d);
+  keys(d, {K::D7});  // a key while loading reaches the calculator but doesn't skip
+  CHECK(d.splashShowing() && d.expression().size() == 1);
+  d.tick(1300);
+  d.finishBoot();  // only 300 ms in: stays up until kSplashMinMs
+  CHECK(d.splashPercent() == 100);
+  d.tick(1000 + Device::kSplashMinMs - 1);
+  CHECK(d.splashShowing());
+  d.tick(1000 + Device::kSplashMinMs);
+  CHECK(!d.splashShowing());
+
+  // ON: a short time-driven splash; any key skips it.
+  keys(d, {K::Shift, K::AC, K::On});
+  CHECK(d.splashShowing() && d.splashPercent() == 0);
+  d.tick(1000 + Device::kSplashMinMs + Device::kOnSplashMs / 2);
+  CHECK(d.splashPercent() == 50);
+  keys(d, {K::D3});
+  CHECK(!d.splashShowing() && d.expression().size() == 1);
+
+  // Without steps the bar follows time but never fills before finishBoot().
+  Device t;
+  t.tick(0);
+  t.startBoot();
+  t.tick(10000);
+  CHECK(t.splashPercent() == 95);
+  t.finishBoot();  // already long enough: just the short hold
+  CHECK(t.splashShowing());
+  t.tick(10000 + Device::kSplashHoldMs);
+  CHECK(!t.splashShowing());
+
+  // Without setSplash(true), ON goes straight to the calculator (the tests above rely on it).
+  Device plain;
+  keys(plain, {K::Shift, K::AC, K::On});
+  CHECK(!plain.splashShowing());
+}
+
 int main() {
   std::setvbuf(stdout, nullptr, _IONBF, 0);  // every line out, even if a test crashes
   testModes();
@@ -2713,6 +2760,7 @@ int main() {
                           runMatVecTests() +
                           runFuzzTests();
   g_fail += moduleFails;
+  testSplash();
   std::printf("%d passed, %d failed\n", g_pass, g_fail);
   return g_fail ? 1 : 0;
 }

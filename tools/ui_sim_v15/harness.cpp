@@ -943,6 +943,22 @@ int main(int argc, char** argv) {
     ui::invalidate();
     ui::showLines({"UPDATE FAILED", "Download stopped (61%)", "", "The old firmware", "keeps running.", "AC:back"}, chg);
     host::save("56_ota_failed");
+    // main.cpp's cold-start loading screen, and the core's splash after ON (via showDevice).
+    ui::invalidate();
+    ui::showSplash(45, "Loading apps");
+    host::save("57_splash_boot");
+    Device d;
+    setup(d);
+    d.setSplash(true);
+    d.tick(host::nowMs);
+    d.onKey(DKey::Shift);
+    d.onKey(DKey::AC);  // off
+    d.onKey(DKey::On);
+    host::nowMs += Device::kOnSplashMs / 2;
+    d.tick(host::nowMs);
+    d.render(g_fb);
+    ui::showDevice(d, g_fb, normal, host::nowMs, true);
+    host::save("58_splash_after_on");
   }
   // 8. Self-test (selftest.cpp, run whole; every frame saved).
   std::printf("self-test:\n");

@@ -40,6 +40,10 @@ void showLines(const std::vector<std::string>& lines, const Status& st);
 // A progress screen (firmware update): title, two text lines, 0-100 %.
 void showProgress(const std::string& title, const std::string& line1, const std::string& line2, int percent,
                   const Status& st);
+// The Proofline loading screen: logo, "AI CALCULATOR", a 0-100 % bar and the step being
+// done ("" = none). setup() calls it on a cold start; showDevice() shows it whenever the
+// core's splash is up (Device::splashShowing(), e.g. for a moment after ON).
+void showSplash(int percent, const std::string& step);
 // The next show*() redraws whatever it is given (after the viewfinder owned the panel).
 void invalidate();
 

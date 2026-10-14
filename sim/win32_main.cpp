@@ -593,6 +593,9 @@ int WINAPI WinMain(HINSTANCE inst, HINSTANCE, LPSTR, int show) {
   g_dev.setOnline(true);
   g_dev.setBlinkingCursor(true);
   g_dev.setNetInfo("PC", g_apiKey.empty() ? "sample mode" : "api_key.txt", "Edit api_key.txt");
+  g_dev.setSplash(true);
+  g_dev.startBoot();  // nothing to load: the bar just fills
+  g_dev.finishBoot();
   g_dev.tick(GetTickCount());
   WNDCLASSW wc = {};
   wc.lpfnWndProc = wndProc;

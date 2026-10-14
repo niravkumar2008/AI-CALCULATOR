@@ -328,6 +328,9 @@ void Board::boot() {
   ui::invalidate();
   d.setNoKeyHelp("Set up: = on SETUP 6 (phone), or USB: proxy, token.");
   d.setRandomSource([] { return esp_random() / 4294967296.0; });
+  d.setSplash(true);  // the Proofline splash at start and after ON, as on the board
+  d.startBoot();      // nothing to load: the bar just fills
+  d.finishBoot();
   d.setTypedSolveSupported(true);
   d.setBlinkingCursor(true);
   d.setHasApiKey(true);  // the simulator's fake tutor is always "set up"

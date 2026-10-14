@@ -887,6 +887,14 @@ void bootMessage(Wake wake) {
   if (otaPendingVerify()) LOGF("ota", "first run of a new firmware: it confirms itself in %lu s", (unsigned long)(kOtaConfirmAfterMs / 1000));
 }
 
+// One frame of the Proofline loading screen while setup() works.
+void bootStep(int percent, const char* step) {
+  g_dev.setBootStep(percent, step);
+  g_dev.tick(millis());
+  g_dev.render(g_fb);
+  screenShow(g_fb, g_dev.dotMatrix());
+}
+
 }  // namespace
 
 void setup() {
@@ -901,6 +909,11 @@ void setup() {
   bootMessage(wake);
 
   g_settingsLock = xSemaphoreCreateMutex();
+  if (!woke) {  // cold start: the Proofline loading screen (a wake from sleep stays instant)
+    g_dev.tick(millis());
+    g_dev.startBoot();
+    bootStep(30, "Loading settings");
+  }
   WiFi.onEvent(onWifiEvent);
   g_settings = settingsLoad();
   g_dev.setNoKeyHelp("Set up: = on SETUP 6 (phone), or USB: proxy, token.");
@@ -917,6 +930,7 @@ void setup() {
   g_wasExam = g_dev.examActive();
   g_examSavedAt = millis();
   g_wasOff = g_dev.isOff();
+  if (!woke) bootStep(70, g_dev.radiosAllowed() ? "Connecting Wi-Fi" : "Exam mode: AI off");
   applySettings();
   serviceBattery(true);
   g_lastKeyAt = millis();
@@ -928,6 +942,8 @@ void setup() {
   g_grabLock = xSemaphoreCreateMutex();
   g_frameLock = xSemaphoreCreateMutex();
   xTaskCreatePinnedToCore(grabTask, "viewfinder", 8192, nullptr, 1, nullptr, 0);
+  g_dev.tick(millis());
+  g_dev.finishBoot();  // cold start: loop() shows the full bar briefly, then the calculator
 
   if (!woke) {
     // Factory self-test: SHIFT + ALPHA + ON held while the board starts.

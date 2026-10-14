@@ -200,6 +200,9 @@ void Board::boot(const std::string& apps) {
   ui::invalidate();
   d.setNoKeyHelp("This demo needs no set-up.");
   d.setRandomSource([] { return esp_random() / 4294967296.0; });
+  d.setSplash(true);  // the Proofline splash at start and after ON, as on the board
+  d.startBoot();      // nothing to load: the bar just fills
+  d.finishBoot();
   d.setTypedSolveSupported(true);
   d.setBlinkingCursor(true);
   d.setHasApiKey(true);  // the demo tutor is always "set up"

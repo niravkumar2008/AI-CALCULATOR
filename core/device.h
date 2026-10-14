@@ -140,6 +140,24 @@ class Device {
     charging_ = charging;
   }
 
+  // ---- Proofline splash: logo, loading bar and the step being done ----
+  // startBoot() shows it from a cold start until finishBoot(); setBootStep()
+  // moves the bar and names the step ("Starting camera"). With no steps the
+  // bar fills with time. It stays up at least kSplashMinMs so the logo is
+  // seen, and with setSplash(true) it also shows for kOnSplashMs after ON.
+  // The calculator underneath keeps working: keys still reach it, and once
+  // loading is done any key also skips the splash.
+  static constexpr uint32_t kSplashMinMs = 1500;
+  static constexpr uint32_t kSplashHoldMs = 400;  // full bar stays this long after finishBoot()
+  static constexpr uint32_t kOnSplashMs = 800;
+  void startBoot();
+  void setBootStep(int percent, const std::string& step);
+  void finishBoot();
+  void setSplash(bool onPowerOn) { splashOnPowerOn_ = onPowerOn; }
+  bool splashShowing() const;
+  int splashPercent() const;  // 0-100, what the bar shows now
+  const std::string& splashStep() const { return bootStep_; }  // "" = none
+
   // ---- exam mode ----
   bool examActive() const { return exam_; }
   uint32_t examElapsedMs() const { return examMs_; }
@@ -401,6 +419,7 @@ class Device {
   void drawMenu(Framebuffer& fb) const;
   void drawApps(Framebuffer& fb) const;
   void drawToast(Framebuffer& fb) const;
+  void drawSplash(Framebuffer& fb) const;
   std::string engText() const;
 
   App app_;
@@ -498,6 +517,13 @@ class Device {
   std::string version_;
   std::string linkCode_, linkUrl_, linkPlan_;
   bool linked_ = false;
+
+  // splash
+  bool booting_ = false;
+  bool splashOnPowerOn_ = false;
+  uint32_t splashStart_ = 0, splashLen_ = 0;  // splashLen_ 0 = not showing (unless booting_)
+  int bootPercent_ = -1;                      // -1 = no steps given: the bar follows time
+  std::string bootStep_;
 };
 
 }  // namespace calc

@@ -430,7 +430,8 @@ void setGrabbing(bool on) {
 }
 
 bool onAiReady() {
-  return !g_dev.isOff() && g_dev.mode() == Mode::Ai && g_dev.view() == View::Ai && g_dev.ai().screen() == Screen::Ready;
+  // Not while the Proofline splash is up after ON: the viewfinder would draw over it.
+  return !g_dev.isOff() && !g_dev.splashShowing() && g_dev.mode() == Mode::Ai && g_dev.view() == View::Ai && g_dev.ai().screen() == Screen::Ready;
 }
 
 // ---- screens drawn by this file (not by Device): setup mode, updates ----
@@ -1549,6 +1550,13 @@ void bootMessage(Wake wake) {
   if (otaPendingVerify()) LOGF("ota", "first run of a new firmware: it confirms itself in %lu s", (unsigned long)(kOtaConfirmAfterMs / 1000));
 }
 
+// One frame of the Proofline loading screen while setup() works (cold start only).
+void bootStep(int percent, const char* step) {
+  g_dev.setBootStep(percent, step);
+  g_dev.tick(millis());
+  ui::showSplash(g_dev.splashPercent(), g_dev.splashStep());
+}
+
 }  // namespace
 
 void setup() {
@@ -1563,11 +1571,19 @@ void setup() {
   calc::setCancelHook([] { return keysCancelPressed(); });
   lcd::begin();  // v15: power sequence + init (~150 ms); the light comes on with the first frame
   ui::begin();
+  g_dev.setSplash(true);  // the splash for a moment after ON (Device::kOnSplashMs; any key skips it)
+  if (!woke) {            // cold start: the loading screen while setup() works
+    g_dev.tick(millis());
+    g_dev.startBoot();
+    bootStep(5, "Starting up");
+    lcd::setLevel(lcd::brightness());  // the light normally comes on with the first loop()
+  }
   if (!woke) delay(kBootSerialDelayMs);
   bootMessage(wake);
 
   g_settingsLock = xSemaphoreCreateMutex();
   g_preLock = xSemaphoreCreateMutex();
+  if (!woke) bootStep(20, "Loading settings");
   WiFi.onEvent(onWifiEvent);
   g_settings = settingsLoad();
   g_dev.setNoKeyHelp("Set up: = on SETUP 6 (phone), or USB: proxy, token.");
@@ -1593,6 +1609,7 @@ void setup() {
   }
   // MODE 4 Apps: history / notes from flash, the link state, the version for About, and
   // the Settings screen values from the backlight's own NVS settings.
+  if (!woke) bootStep(45, "Loading apps");
   appsLoad();
   linkLoad();
   g_dev.setVersion(kFirmwareVersion);
@@ -1600,6 +1617,7 @@ void setup() {
   g_wasExam = g_dev.examActive();
   g_examSavedAt = millis();
   g_wasOff = g_dev.isOff();
+  if (!woke) bootStep(65, g_dev.radiosAllowed() ? "Connecting Wi-Fi" : "Exam mode: AI off");
   applySettings();
   serviceBattery(true);
   g_lastKeyAt = millis();
@@ -1608,6 +1626,7 @@ void setup() {
   g_events = xQueueCreate(16, sizeof(Event*));
   // 16 KB stack: TLS handshakes need the room. Core 0, away from the loop.
   xTaskCreatePinnedToCore(solveTask, "solve", 16384, nullptr, 1, nullptr, 0);
+  if (!woke) bootStep(85, "Starting camera");
   g_vf.buildImage = false;  // the LCD shows the colour frame itself (vf_lcd.cpp): no e-paper picture
   g_grabLock = xSemaphoreCreateMutex();
   g_frameLock = xSemaphoreCreateMutex();
@@ -1626,6 +1645,8 @@ void setup() {
     }
     Serial.println(statusText().c_str());
   }
+  g_dev.tick(millis());
+  g_dev.finishBoot();  // cold start: loop() shows the full bar briefly, then the calculator
 }
 
 void loop() {

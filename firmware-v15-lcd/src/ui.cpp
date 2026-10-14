@@ -615,6 +615,7 @@ void showDevice(const Device& dev, const Framebuffer& fb, const Status& st, uint
   // (SLPOUT + 120 ms) just for the cursor blink. The hash is kept, so the first loop with the
   // light back on draws the current picture.
   if (!force && lcd::lightOff()) return;
+  if (!dev.isOff() && dev.splashShowing()) return showSplash(dev.splashPercent(), dev.splashStep());
   const View view = dev.view();
   const calc::numeric::RunnerBase* runner = dev.isOff() ? nullptr : runnerOf(dev);
   const bool editing = (view == View::Calc && !dev.showingResult() && !dev.isOff()) || view == View::Keyboard ||
@@ -748,6 +749,33 @@ void showProgress(const std::string& title, const std::string& line1, const std:
   gd::textCentered(s, kW / 2, by + bh + 8, std::to_string(percent) + "%", kTextScale, pal().text);
   s.fillRect(0, kH - kSoftH, kW, kSoftH, pal().bar);
   gd::text(s, kMarginX, kH - kSoftH + 3, "Don't turn it off.", kTextScale, pal().warn);
+  lcd::flush();
+}
+
+void showSplash(int percent, const std::string& step) {
+  if (!lcd::ok()) return;
+  percent = percent < 0 ? 0 : percent > 100 ? 100 : percent;
+  const uint32_t h = fnv1a("S" + std::to_string(percent) + step);
+  if (h == g_shownHash) return;
+  g_shownHash = h;
+  usePalette(false);  // the brand's navy and orange, like the other firmware screens
+  gd::lcdDots() = false;
+  LGFX_Sprite& s = lcd::canvas();
+  s.fillSprite(pal().bg);
+  // Tick mark + "Proofline" at 4x, centred as one group.
+  constexpr int kNameScale = 4, kTickW = 26, kGap = 10, kNameY = 30;
+  const int nameW = gd::width("Proofline", kNameScale);
+  const int x0 = (kW - (kTickW + kGap + nameW)) / 2;
+  const int ty = kNameY + 6;
+  s.drawWideLine(x0 + 2, ty + 12, x0 + 9, ty + 19, 2.5f, pal().accent);
+  s.drawWideLine(x0 + 9, ty + 19, x0 + kTickW - 2, ty + 1, 2.5f, pal().accent);
+  gd::text(s, x0 + kTickW + kGap, kNameY, "Proofline", kNameScale, pal().result);
+  gd::textCentered(s, kW / 2, kNameY + 40, "AI CALCULATOR", kTextScale, pal().dim);
+  // The bar.
+  const int bx = 40, by = 104, bw = kW - 80, bh = 12;
+  s.drawRoundRect(bx, by, bw, bh, 6, pal().dim);
+  if (percent > 0) s.fillRoundRect(bx + 2, by + 2, (bw - 4) * percent / 100, bh - 4, 4, pal().accent);
+  if (!step.empty()) gd::textCentered(s, kW / 2, by + bh + 14, step, kTextScale, pal().dim);
   lcd::flush();
 }
 

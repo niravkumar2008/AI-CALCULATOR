@@ -200,6 +200,7 @@ Device::Device() { random_ = defaultRandom; }
 void Device::tick(uint32_t nowMs) {
   if (!timeKnown_) {
     nowMs_ = lastKeyMs_ = nowMs;
+    splashStart_ = nowMs;  // a splash started before the first tick counts from here
     timeKnown_ = true;
   }
   const uint32_t dt = nowMs - nowMs_;  // unsigned: survives millis() wrap-around
@@ -211,6 +212,7 @@ void Device::tick(uint32_t nowMs) {
   }
   const bool aiBusy = app_.activeRequest() != 0;
   if (view_ != View::Off && !aiBusy && nowMs - lastKeyMs_ >= kAutoOffMs) powerOff();
+  if (!booting_ && splashLen_ && nowMs - splashStart_ >= splashLen_) splashLen_ = 0;
 }
 
 void Device::powerOn() {
@@ -221,6 +223,12 @@ void Device::powerOn() {
   toastOn_ = false;
   clearEntry();
   shift_ = alpha_ = sto_ = rcl_ = false;
+  if (splashOnPowerOn_ && !booting_) {
+    splashStart_ = nowMs_;
+    splashLen_ = kOnSplashMs;
+    bootPercent_ = -1;
+    bootStep_.clear();
+  }
 }
 
 void Device::powerOff() {
@@ -228,6 +236,48 @@ void Device::powerOff() {
   view_ = View::Off;
   shift_ = alpha_ = sto_ = rcl_ = false;
   offSequence_ = 0;
+  splashLen_ = 0;
+}
+
+// ---------------------------------------------------------------- splash
+
+void Device::startBoot() {
+  booting_ = true;
+  splashStart_ = nowMs_;
+  splashLen_ = 0;
+  bootPercent_ = -1;
+  bootStep_ = "Starting up";
+}
+
+void Device::setBootStep(int percent, const std::string& step) {
+  bootPercent_ = percent < 0 ? 0 : percent > 100 ? 100 : percent;
+  bootStep_ = step;
+}
+
+void Device::finishBoot() {
+  if (!booting_) return;
+  booting_ = false;
+  if (bootPercent_ >= 0) {
+    bootPercent_ = 100;
+    bootStep_ = "Ready";
+  } else {
+    bootStep_.clear();  // time-driven bar: just let it fill
+  }
+  const uint32_t shown = nowMs_ - splashStart_;
+  splashLen_ = shown + kSplashHoldMs > kSplashMinMs ? shown + kSplashHoldMs : kSplashMinMs;
+}
+
+bool Device::splashShowing() const {
+  if (view_ == View::Off) return false;
+  return booting_ || (splashLen_ && nowMs_ - splashStart_ < splashLen_);
+}
+
+int Device::splashPercent() const {
+  if (bootPercent_ >= 0) return bootPercent_;
+  const uint32_t len = booting_ ? kSplashMinMs : (splashLen_ ? splashLen_ : 1);
+  const uint32_t p = (nowMs_ - splashStart_) * 100u / len;
+  const uint32_t cap = booting_ ? 95u : 100u;  // never "full" before loading is done
+  return static_cast<int>(p > cap ? cap : p);
 }
 
 void Device::startExam() {
@@ -289,6 +339,7 @@ void Device::setNetInfo(const std::string& ssid, const std::string& keyHint, con
 
 void Device::onKey(DKey k) {
   lastKeyMs_ = nowMs_;
+  if (!booting_) splashLen_ = 0;  // any key skips a finished splash, then does its job
   if (view_ == View::Off) {
     // SHIFT, 7, ON (in that order, while off) starts exam mode.
     if (k == DKey::Shift) {
@@ -2161,6 +2212,34 @@ void Device::drawMenu(Framebuffer& fb) const {
   }
 }
 
+// Proofline logo (a tick mark and the name at 2x), "AI CALCULATOR", a loading
+// bar and the step being done. Steps of 10% keep e-paper refreshes few.
+void Device::drawSplash(Framebuffer& fb) const {
+  static const char* kTick[] = {
+      "........##", ".......###", "......###.", "##...###..",
+      "###.###...", ".#####....", "..###.....", "...#......",
+  };
+  constexpr int kLeft = 12, kWidth = 101;  // tick 10 + gap 3 + "Proofline" 88
+  for (int r = 0; r < 8; ++r)
+    for (int c = 0; c < 10; ++c)
+      if (kTick[r][c] == '#') fb.set(kLeft + c, 11 + r, true);
+  fb.drawTextPx(kLeft + 13, 8, "Proofline", 2);
+
+  const std::string sub = "AI CALCULATOR";
+  fb.drawTextPx((Framebuffer::kWidth - textLength(sub) * kCharW + 1) / 2, 26, sub);
+
+  constexpr int kBarY = 37, kBarH = 7;
+  fb.fillRect(kLeft, kBarY, kWidth, kBarH, true);
+  fb.fillRect(kLeft + 1, kBarY + 1, kWidth - 2, kBarH - 2, false);
+  const int pct = splashPercent() / 10 * 10;
+  fb.fillRect(kLeft + 2, kBarY + 2, (kWidth - 4) * pct / 100, kBarH - 4, true);
+
+  std::vector<uint32_t> cps = decodeUtf8(bootStep_);
+  if (cps.size() > static_cast<size_t>(Framebuffer::kCols)) cps.resize(Framebuffer::kCols);
+  const std::string step = encodeUtf8(cps);
+  fb.drawTextPx((Framebuffer::kWidth - textLength(step) * kCharW + 1) / 2, 49, step);
+}
+
 void Device::render(Framebuffer& fb) const {
   fb.clear();
   if (view_ == View::Off) {
@@ -2172,6 +2251,7 @@ void Device::render(Framebuffer& fb) const {
     }
     return;
   }
+  if (splashShowing()) return drawSplash(fb);
   drawStatus(fb);
   switch (view_) {
     case View::Calc: drawCalc(fb); break;

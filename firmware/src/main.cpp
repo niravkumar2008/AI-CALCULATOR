@@ -423,6 +423,14 @@ void serviceExam() {
 }
 
 
+// One frame of the Proofline loading screen while setup() works.
+void bootStep(int percent, const char* step) {
+  g_dev.setBootStep(percent, step);
+  g_dev.tick(millis());
+  g_dev.render(g_fb);
+  screenShow(g_fb, g_dev.dotMatrix());
+}
+
 }  // namespace
 
 void setup() {
@@ -449,9 +457,14 @@ void setup() {
   attachInterrupt(digitalPinToInterrupt(PIN_KEY_ON), onBootChange, CHANGE);
 
   screenBegin();
+  g_dev.setSplash(true);
+  g_dev.tick(millis());
+  g_dev.startBoot();
+  bootStep(10, "Starting camera");
   g_cameraOk = cameraBegin();
   Serial.printf("Camera: %s\n", cameraName());
 
+  bootStep(50, "Loading settings");
   WiFi.onEvent(onWifiEvent);
   g_settings = settingsLoad();
   g_dev.setNoKeyHelp("Connect USB, open the Serial Monitor and type key.");
@@ -465,12 +478,15 @@ void setup() {
     g_dev.onKey(DKey::Mode);
     g_dev.onKey(DKey::D4);
   }
+  bootStep(75, g_dev.radiosAllowed() ? "Connecting Wi-Fi" : "Exam mode: AI off");
   applySettings();
 
   g_requests = xQueueCreate(4, sizeof(int));
   g_events = xQueueCreate(16, sizeof(Event*));
   // 16 KB stack: TLS handshakes need the room. Core 0, away from the loop.
   xTaskCreatePinnedToCore(solveTask, "solve", 16384, nullptr, 1, nullptr, 0);
+  g_dev.tick(millis());
+  g_dev.finishBoot();  // loop() shows the full bar briefly, then the calculator
 
   Serial.println(statusText().c_str());
 }

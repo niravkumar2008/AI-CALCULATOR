@@ -37,6 +37,9 @@ EMSCRIPTEN_KEEPALIVE void sim_init(double seed) {
   g_device.setHasApiKey(true);
   g_device.setNoKeyHelp("Allow Claude for this page (it asks on the first scan).");
   g_device.setNetInfo("Browser", "via your Claude account", "Simulator: nothing to set.");
+  g_device.setSplash(true);
+  g_device.startBoot();  // nothing to load: the bar just fills
+  g_device.finishBoot();
 }
 
 EMSCRIPTEN_KEEPALIVE void sim_key(int k) {
