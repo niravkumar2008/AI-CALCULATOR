@@ -1,0 +1,803 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Proofline: the AI study tutor that works like a real calculator</title>
+  <meta name="description" content="Snap a problem, press =, and see the answer with every step. A real scientific calculator with an AI tutor and an exam mode anyone can see. Join the waitlist.">
+  <!-- TODO(domain): swap proofline.example for the real domain once it's bought. -->
+  <link rel="canonical" href="https://proofline.example/">
+  <!-- The header is always navy, so the browser chrome matches it in both modes. -->
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Proofline">
+  <meta property="og:title" content="Snap a problem. Learn every step.">
+  <meta property="og:description" content="An AI study tutor inside a real scientific calculator. It shows every step, and its exam mode turns the AI off where everyone can see it.">
+  <meta property="og:url" content="https://proofline.example/">
+  <meta property="og:image" content="https://proofline.example/assets/og-image.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:image:alt" content="A scientific calculator next to the words: Snap a problem. Learn every step.">
+  <meta name="twitter:card" content="summary_large_image">
+  <!-- @head -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#10141c">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script src="/assets/js/site.js" defer></script>
+  <!-- /@head -->
+  <link rel="preload" as="image" type="image/avif"
+        imagesrcset="assets/img/hero-front-560.avif 560w, assets/img/hero-front-960.avif 960w, assets/img/hero-front-1060.avif 1060w"
+        imagesizes="(min-width: 60rem) min(40rem, 52vw), min(78vw, 26rem)" fetchpriority="high">
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Proofline",
+    "url": "https://proofline.example/"
+  }
+  </script>
+  <!-- FAQPage data is generated from the visible answers below; keep them identical. -->
+  <!-- @faq-jsonld -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Can I use it on the SAT, ACT or AP exams?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "No. It has Wi-Fi and a camera, so it isn’t allowed on the SAT, ACT or AP exams, even in exam mode. Bring a standard calculator to those. For a school test, ask your teacher: turn on exam mode, or leave it at home."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Who is it for?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "High school and college students, 13 and up. You must be 18 or older to buy it and hold the account."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens to the photos?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Each photo is used only to solve that problem. Photos are not stored. We keep only usage counts, such as how many solves you used this month. Read the privacy policy for the details."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens after the free month?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The calculator tells you plainly that the free month is over. To keep using AI Solve, subscribe from your account page: $10 a month, or $100 a year. There is no free tier after the first month."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "When does it ship?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Not yet. Our first prototype boards are ordered. We’re building 5 samples first, then moving to production; preorders are planned for 2027. Join the waitlist to hear first."
+      }
+    }
+  ]
+}
+  </script>
+  <!-- /@faq-jsonld -->
+</head>
+<body>
+  <!-- @header -->
+  <a class="skip-link" href="#main">Skip to content</a>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#232a38"/><rect x="8" y="11" width="16" height="3.6" rx="1.8" fill="#e07a4f"/><rect x="8" y="17.4" width="16" height="3.6" rx="1.8" fill="#e07a4f"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+      <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.1 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.2L20.5 8H6.2"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="17" cy="20" r="1.2"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 4.2 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4.2M12 17.2v.1"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+      <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.8 12.6a9 9 0 0 1 12.4 0M9.1 16.1a4.3 4.3 0 0 1 5.8 0"/><circle cx="12" cy="19.3" r=".6" fill="currentColor"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header band-dark" data-scrolled="false">
+    <div class="container header__bar">
+      <a class="brand" translate="no" href="/" aria-label="Proofline home">
+        <svg aria-hidden="true"><use href="#i-mark"/></svg>
+        <span>Proofline</span>
+      </a>
+
+      <nav class="nav" aria-label="Main">
+        <ul class="nav__list">
+          <li>
+            <details class="nav__menu" data-menu>
+              <summary>Shop<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/shop/">All products</a></li>
+                <li><a href="/shop/calculator/">The calculator</a></li>
+                <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
+                <li><a href="/cart/">Cart</a></li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details class="nav__menu" data-menu>
+              <summary>Product<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/how-it-works/">How it works</a></li>
+                <li><a href="/features/ai-solve/">AI Solve</a></li>
+                <li><a href="/features/apps/">Apps</a></li>
+                <li><a href="/features/exam-mode/">Exam mode</a></li>
+                <li><a href="/features/calculator/">The calculator</a></li>
+                <li><a href="/try-it/">Try it in your browser</a></li>
+                <li><a href="/specs/">Specs</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a class="nav__link" href="/pricing/">Pricing</a></li>
+          <li>
+            <details class="nav__menu" data-menu>
+              <summary>Support<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/faq/">FAQ</a></li>
+                <li><a href="/support/setup/">Setup guide</a></li>
+                <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+                <li><a href="/teachers/">For teachers</a></li>
+                <li><a href="/honest/">Honest by design</a></li>
+                <li><a href="/support/">Contact and support</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <a class="icon-link" href="/account/" aria-label="Your account">
+          <svg aria-hidden="true"><use href="#i-user"/></svg><span class="icon-link__text">Account</span>
+        </a>
+        <a class="icon-link icon-link--cart" href="/cart/" aria-label="Cart" data-cart-link>
+          <svg aria-hidden="true"><use href="#i-cart"/></svg><span class="icon-link__text">Cart</span>
+          <span class="cart-badge" data-cart-count hidden>0</span>
+        </a>
+        <a class="btn btn--primary btn--sm header__cta" href="/#join" data-focus-email aria-label="Join the waitlist"><span class="cta-long">Join the waitlist</span><span class="cta-short" aria-hidden="true">Join</span></a>
+        <details class="mobile-menu" data-mobile-menu>
+          <summary class="icon-link" aria-label="Menu"><svg class="mm-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="mm-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
+          <div class="mobile-menu__sheet">
+            <p class="mobile-menu__group">Shop</p>
+            <ul>
+              <li><a href="/shop/">All products</a></li>
+              <li><a href="/shop/calculator/">The calculator</a></li>
+              <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
+              <li><a href="/cart/">Cart</a></li>
+            </ul>
+            <p class="mobile-menu__group">Product</p>
+            <ul>
+              <li><a href="/how-it-works/">How it works</a></li>
+              <li><a href="/features/ai-solve/">AI Solve</a></li>
+              <li><a href="/features/apps/">Apps</a></li>
+              <li><a href="/features/exam-mode/">Exam mode</a></li>
+              <li><a href="/features/calculator/">The calculator</a></li>
+              <li><a href="/try-it/">Try it in your browser</a></li>
+              <li><a href="/specs/">Specs</a></li>
+              <li><a href="/pricing/">Pricing</a></li>
+            </ul>
+            <p class="mobile-menu__group">Support</p>
+            <ul>
+              <li><a href="/faq/">FAQ</a></li>
+              <li><a href="/support/setup/">Setup guide</a></li>
+              <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+              <li><a href="/teachers/">For teachers</a></li>
+              <li><a href="/honest/">Honest by design</a></li>
+              <li><a href="/support/">Contact and support</a></li>
+              <li><a href="/account/">Your account</a></li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+  <!-- /@header -->
+  <!-- Icons used only on this page (the shared ones come with the header). -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-play" viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.6v12.8a.9.9 0 0 0 1.37.77l10.2-6.4a.9.9 0 0 0 0-1.54L9.37 4.83A.9.9 0 0 0 8 5.6z"/></symbol>
+      <symbol id="i-pause" viewBox="0 0 24 24" fill="currentColor"><rect x="6.5" y="5" width="3.8" height="14" rx="1"/><rect x="13.7" y="5" width="3.8" height="14" rx="1"/></symbol>
+      <symbol id="i-keys" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><rect x="3" y="4" width="7.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="7.5" height="6.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="6.5" rx="2"/></symbol>
+      <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><rect x="8" y="5.5" width="8" height="4" rx="1"/><path d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 16.5h.01M12 16.5h.01M15.5 16.5h.01"/></symbol>
+      <symbol id="i-magnet" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4v8a3 3 0 0 0 6 0V4h4v8a7 7 0 0 1-14 0z"/><path d="M5 8h4M15 8h4"/></symbol>
+      <symbol id="i-apps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><rect x="3.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.8"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.8"/><circle cx="17" cy="17" r="3.6"/></symbol>
+      <symbol id="i-light-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18h6M10 21h4M8.5 14.5A6 6 0 0 1 12 4a6 6 0 0 1 5.2 9"/><path d="M3 3l18 18"/></symbol>
+      <symbol id="i-steps" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M4 6h3M4 12h3M4 18h3M10 6h10M10 12h10M10 18h6"/></symbol>
+      <symbol id="i-family" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="8.5" cy="7" r="3"/><path d="M3 20v-1.5A5 5 0 0 1 8 13.5h1a5 5 0 0 1 5 5V20"/><circle cx="17" cy="10" r="2.3"/><path d="M15.5 14.2a4 4 0 0 1 5.5 3.8V20"/></symbol>
+      <symbol id="i-sparkle-off" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v3M12 18v3M3 12h3M18 12h3"/><path d="M3 3l18 18"/></symbol>
+    </defs>
+  </svg>
+
+  <main id="main">
+    <!-- 1. HERO ------------------------------------------------------------- -->
+    <section class="hero band-dark" id="top" aria-labelledby="hero-title">
+      <div class="container hero__grid">
+        <div class="hero__copy">
+          <p class="hero__status" data-hero="0">In development · Preorders planned for 2027</p>
+          <h1 id="hero-title" data-hero="1">Snap a problem. <span class="accent">Learn every step.</span></h1>
+          <p class="hero__sub" data-hero="2">An AI tutor inside a real scientific calculator. Point the camera, press <kbd translate="no">=</kbd>, and it shows the answer with every step worked out.</p>
+
+          <form class="waitlist" id="join" action="/api/waitlist" method="post" data-hero="3" data-source="hero">
+            <input type="hidden" name="source" value="hero"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
+            <label class="waitlist__label" for="email-hero">Get an email when preorders open</label>
+            <div class="waitlist__row">
+              <input class="field" id="email-hero" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-hero msg-hero">
+              <!-- honeypot: real people never see or fill this -->
+              <div class="hp" aria-hidden="true"><label for="company-hero">Company</label><input id="company-hero" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+              <button class="btn btn--primary" type="submit">Join the waitlist</button>
+            </div>
+            <label class="waitlist__age" for="age-hero"><input id="age-hero" name="age_ok" type="checkbox" required aria-describedby="msg-hero">I’m 13 or older</label>
+            <p class="waitlist__note" id="note-hero">No payment now. <a href="privacy/">Privacy policy</a></p>
+            <p class="waitlist__msg" id="msg-hero" role="status" aria-live="polite"></p>
+          </form>
+        </div>
+
+        <div class="hero__media" data-hero-media>
+          <picture>
+            <source type="image/avif" srcset="assets/img/hero-front-560.avif 560w, assets/img/hero-front-960.avif 960w, assets/img/hero-front-1060.avif 1060w" sizes="(min-width: 60rem) min(40rem, 52vw), min(78vw, 26rem)">
+            <source type="image/webp" srcset="assets/img/hero-front-560.webp 560w, assets/img/hero-front-960.webp 960w, assets/img/hero-front-1060.webp 1060w" sizes="(min-width: 60rem) min(40rem, 52vw), min(78vw, 26rem)">
+            <img src="assets/img/hero-front-960.png" width="1060" height="761" fetchpriority="high" decoding="async"
+                 alt="The calculator from the front: a grey scientific calculator with a wide screen, a rubber keypad, and a magnetic charging plug beside it.">
+          </picture>
+        </div>
+      </div>
+    </section>
+
+    <!-- 2. HOW IT WORKS ------------------------------------------------------ -->
+    <section class="section band-dark" id="how" aria-labelledby="how-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">How it works</span>
+          <h2 id="how-title">Point. Press <span class="key" translate="no">=</span>. Learn.</h2>
+        </div>
+
+        <div class="how__grid">
+          <ol class="steps" data-steps>
+            <li class="step" data-step="0" data-reveal>
+              <span class="step__num" aria-hidden="true">1</span>
+              <div>
+                <h3>Point</h3>
+                <p>Press <kbd translate="no">MODE</kbd> <kbd translate="no">4</kbd> to open Apps, then <kbd translate="no">1</kbd> for AI Solve. The screen turns into a live camera viewfinder. Aim it at the problem.</p>
+              </div>
+            </li>
+            <li class="step" data-step="1" data-reveal>
+              <span class="step__num" aria-hidden="true">2</span>
+              <div>
+                <h3>Press <span class="key" translate="no">=</span></h3>
+                <p>Press <kbd translate="no">=</kbd> to take the photo. The calculator works out the answer in a few seconds.</p>
+              </div>
+            </li>
+            <li class="step" data-step="2" data-reveal>
+              <span class="step__num" aria-hidden="true">3</span>
+              <div>
+                <h3>Learn the steps</h3>
+                <p>The answer appears on the calculator with every step. If the handwriting is unclear, it says so instead of guessing. AI can make mistakes. That’s why it shows every step, so you can check the working.</p>
+              </div>
+            </li>
+          </ol>
+
+          <figure data-reveal>
+            <div class="video-frame" data-video data-playing="false">
+              <img src="assets/video/ai-solve-poster-960.jpg"
+                   srcset="assets/video/ai-solve-poster-960.webp 960w, assets/video/ai-solve-poster-1600.webp 1600w"
+                   sizes="(min-width: 60rem) 44rem, 100vw" width="1600" height="900" loading="lazy" decoding="async"
+                   alt="The calculator screen showing an answer, 16.75, with three numbered steps underneath.">
+              <!-- The video is added by site.js only when this frame nears the screen. -->
+              <noscript>
+                <video src="assets/video/ai-solve.mp4" poster="assets/video/ai-solve-poster-960.jpg" controls muted playsinline preload="none" width="1600" height="900"></video>
+              </noscript>
+              <button class="video-btn" type="button" data-video-toggle hidden aria-label="Play the AI Solve video">
+                <svg class="icon-pause" aria-hidden="true"><use href="#i-pause"/></svg>
+                <svg class="icon-play" aria-hidden="true"><use href="#i-play"/></svg>
+                <span data-video-label>Play</span>
+              </button>
+            </div>
+            <figcaption class="video-caption">13‑second demo, no sound: snap a problem, press = to shoot, see every step.</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- 3. TRY IT ------------------------------------------------------------ -->
+    <section class="section" id="try" aria-labelledby="try-title">
+      <div class="container try__grid">
+        <div class="try__copy" data-reveal>
+          <span class="eyebrow">Try it</span>
+          <h2 id="try-title">Try the calculator.</h2>
+          <p class="lead" style="margin-top:var(--s-4)">This is our real calculator engine, running in your browser. Do a sum, then try AI Solve.</p>
+
+          <div class="keys" aria-label="To try AI Solve, press MODE, then 4, then equals.">
+            <span class="keycap" translate="no" aria-hidden="true">MODE</span>
+            <span class="keys__then" aria-hidden="true">then</span>
+            <span class="keycap" translate="no" aria-hidden="true">4</span>
+            <span class="keys__then" aria-hidden="true">then</span>
+            <span class="keycap keycap--accent" translate="no" aria-hidden="true">=</span>
+          </div>
+
+          <ul class="try__list">
+            <li>Fractions, trig, logs, memory and replay all work.</li>
+            <li>Press <kbd translate="no">=</kbd> again in AI Solve to see the next demo answer.</li>
+          </ul>
+
+          <p class="try__note">
+            <svg aria-hidden="true"><use href="#i-info"/></svg>
+            <span>AI Solve here uses demo answers. There’s no camera in your browser, and nothing you type is sent anywhere.</span>
+          </p>
+        </div>
+
+        <div class="sim" data-sim data-state="idle" data-reveal>
+          <div class="sim__cover">
+            <picture>
+              <source type="image/avif" srcset="assets/img/hero-front-560.avif">
+              <img src="assets/img/hero-front-560.webp" width="560" height="402" loading="lazy" decoding="async" alt="">
+            </picture>
+            <button class="btn btn--primary" type="button" data-sim-load>Load the calculator</button>
+            <p data-sim-msg>About 500&nbsp;KB. It loads by itself when you scroll here.</p>
+            <noscript><p><a href="try/">Open the calculator on its own page</a></p></noscript>
+          </div>
+          <!-- iframe is created by site.js; data-src keeps it from loading early -->
+          <template data-sim-template>
+            <iframe title="Interactive calculator demo" src="try/" loading="lazy" referrerpolicy="no-referrer"></iframe>
+          </template>
+        </div>
+      </div>
+    </section>
+
+    <!-- 4. BUILT LIKE A REAL CALCULATOR ------------------------------------- -->
+    <section class="section section--tint" id="built" aria-labelledby="built-title">
+      <div class="container built__grid">
+        <figure class="built__figure" data-reveal>
+          <picture>
+            <source type="image/avif" srcset="assets/img/exploded-front-560.avif 560w, assets/img/exploded-front-905.avif 905w" sizes="(min-width: 60rem) 34rem, 92vw">
+            <source type="image/webp" srcset="assets/img/exploded-front-560.webp 560w, assets/img/exploded-front-905.webp 905w" sizes="(min-width: 60rem) 34rem, 92vw">
+            <img src="assets/img/exploded-front-905.png" width="905" height="968" loading="lazy" decoding="async"
+                 alt="An exploded view of the calculator: the front shell, the rubber keymat, our green circuit board, and the back shell, with the magnetic charging plug.">
+          </picture>
+          <figcaption class="figure-note">CAD render. Prototype photos coming soon.</figcaption>
+          <!-- PHOTO SLOT: when the first prototype is photographed (website/PHOTO_SHOT_LIST.md),
+               add a real photo here as a second <picture> and keep the CAD render as a fallback. -->
+        </figure>
+
+        <div>
+          <div class="section-head" data-reveal style="margin-bottom:var(--s-6)">
+            <span class="eyebrow">The hardware</span>
+            <h2 id="built-title">Built like a real calculator.</h2>
+            <p>Our own circuit board inside a familiar scientific-calculator shell, with the standard US key layout.</p>
+          </div>
+          <ul class="features">
+            <li class="feature" data-reveal>
+              <span class="feature__icon"><svg aria-hidden="true"><use href="#i-keys"/></svg></span>
+              <div><h3>Real keys</h3><p>A real rubber keymat, so the keys press like a calculator’s.</p></div>
+            </li>
+            <li class="feature" data-reveal>
+              <span class="feature__icon"><svg aria-hidden="true"><use href="#i-calc"/></svg></span>
+              <div><h3>A full calculator, offline</h3><p>Fractions, trig, logs, statistics, equations, complex numbers, matrices and vectors. No Wi-Fi needed. <a href="/features/calculator/">See the calculator</a></p></div>
+            </li>
+            <li class="feature" data-reveal>
+              <span class="feature__icon"><svg aria-hidden="true"><use href="#i-apps"/></svg></span>
+              <div><h3>Apps in color</h3><p>Press <kbd translate="no">MODE</kbd> <kbd translate="no">4</kbd> for Notes, History, Geography, a full periodic table and more. Most work offline. <a href="/features/apps/">See the apps</a></p></div>
+            </li>
+            <li class="feature" data-reveal>
+              <span class="feature__icon"><svg aria-hidden="true"><use href="#i-magnet"/></svg></span>
+              <div><h3>Magnetic charging</h3><p>The charging plug snaps on with a magnet.</p></div>
+            </li>
+            <li class="feature" data-reveal>
+              <span class="feature__icon"><svg aria-hidden="true"><use href="#i-wifi"/></svg></span>
+              <div><h3>Sets itself up</h3><p>Join Wi-Fi once and it registers itself. Link it once with a short code on your phone or computer.</p></div>
+            </li>
+            <li class="feature" data-reveal>
+              <span class="feature__icon"><svg aria-hidden="true"><use href="#i-light-off"/></svg></span>
+              <div><h3>No LED</h3><p>Nothing blinks or glows on the desk.</p></div>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- SHOP ---------------------------------------------------------------- -->
+    <section class="section" id="shop" aria-labelledby="shop-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Shop</span>
+          <h2 id="shop-title">Two things to know about.</h2>
+          <p>The calculator, and the AI tutor plan that powers AI Solve. Preorders are planned for 2027.</p>
+        </div>
+        <div class="product-grid">
+          <article class="product-card" data-reveal>
+            <a class="product-card__media" href="/shop/calculator/" tabindex="-1" aria-hidden="true">
+              <picture>
+                <source type="image/avif" srcset="/assets/img/hero-front-560.avif">
+                <img src="/assets/img/hero-front-560.webp" width="560" height="402" loading="lazy" decoding="async" alt="">
+              </picture>
+            </a>
+            <div class="product-card__body">
+              <h3><a href="/shop/calculator/">The calculator</a></h3>
+              <p>A full scientific calculator with AI Solve, a real keymat and exam mode.</p>
+              <p class="product-card__price">$225</p>
+              <a class="btn btn--ghost" href="/shop/calculator/">See the calculator</a>
+            </div>
+          </article>
+          <article class="product-card" data-reveal>
+            <a class="product-card__media" href="/shop/ai-tutor-plan/" tabindex="-1" aria-hidden="true">
+              <picture>
+                <source type="image/webp" srcset="/assets/video/ai-solve-poster-960.webp">
+                <img src="/assets/video/ai-solve-poster-960.jpg" width="960" height="540" loading="lazy" decoding="async" alt="">
+              </picture>
+            </a>
+            <div class="product-card__body">
+              <h3><a href="/shop/ai-tutor-plan/">AI tutor plan</a></h3>
+              <p>AI Solve with every step, up to 300 solves a month. First month free, cancel anytime.</p>
+              <p class="product-card__price">$10<span class="price__unit"> / month, or $100 / year</span></p>
+              <a class="btn btn--ghost" href="/shop/ai-tutor-plan/">About the plan</a>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 5. HONEST BY DESIGN -------------------------------------------------- -->
+    <section class="section band-dark" id="honest" aria-labelledby="honest-title">
+      <div class="container">
+        <div class="honest__grid">
+          <div class="honest__lead" data-reveal>
+            <span class="eyebrow">Honest by design</span>
+            <h2 id="honest-title">A tutor, not a shortcut.</h2>
+            <p class="lead">It’s built to help students learn. Every answer shows the working, and exam mode switches the AI off where everyone can see it.</p>
+
+            <div class="exam-copy">
+              <h3><svg width="22" height="22" aria-hidden="true" style="color:var(--accent-ink)"><use href="#i-lock"/></svg>Exam mode</h3>
+              <p>Press <kbd translate="no">SHIFT</kbd> <kbd translate="no">MODE</kbd> <kbd translate="no">8</kbd> <kbd translate="no">=</kbd>. The status bar turns black, so a teacher can tell at a glance.</p>
+              <ul>
+                <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>The AI, the camera, Wi-Fi and all the apps turn off.</span></li>
+                <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>It ends by itself after 12&nbsp;hours.</span></li>
+                <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Or a teacher unlocks it with a USB cable.</span></li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="device" data-exam-demo data-exam="false" data-reveal>
+            <div class="lcd-bezel">
+              <div class="lcd" translate="no" role="img" aria-label="Calculator screen" data-lcd-label>
+                <div class="lcd__status">
+                  <span>D</span>
+                  <span class="exam-only">
+                    <svg aria-hidden="true" style="display:inline;vertical-align:-0.15em"><use href="#i-lock"/></svg>
+                    EXAM <span data-exam-clock>0:00</span>
+                  </span>
+                  <span class="push ai-only">
+                    <svg aria-hidden="true"><use href="#i-wifi"/></svg>
+                    AI
+                  </span>
+                </div>
+                <div class="lcd__body">
+                  <div class="lcd__view" data-view="normal">
+                    <div class="lcd__label">ANSWER</div>
+                    <div class="lcd__big">16.75 (= 67/4)</div>
+                    <div class="lcd__rule"></div>
+                    <div class="lcd__line">1. 2⁵ = 32, sin 30° = 0.5</div>
+                    <div class="lcd__line">2. 32 × 0.5 = 16</div>
+                    <div class="lcd__line">3. 3/4 + 16 = 16.75</div>
+                  </div>
+                  <div class="lcd__view" data-view="exam" hidden>
+                    <div><span class="lcd__inv">EXAM MODE ON</span></div>
+                    <div class="lcd__line">AI, camera and Wi-Fi</div>
+                    <div class="lcd__line">are off.</div>
+                    <div class="lcd__line">Unlock: USB cable,</div>
+                    <div class="lcd__line">or wait 12&nbsp;hours.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="device__keys" aria-hidden="true">
+              <span class="keycap keycap--shift" translate="no" data-key="0">SHIFT</span>
+              <span class="keycap" translate="no" data-key="1">MODE</span>
+              <span class="keycap" translate="no" data-key="2">8</span>
+              <span class="keycap keycap--accent" translate="no" data-key="3">=</span>
+            </div>
+            <div class="device__actions">
+              <button class="btn btn--ghost" type="button" data-exam-toggle aria-pressed="false">Show exam mode</button>
+            </div>
+            <p class="device__caption" data-exam-caption aria-live="polite">A screen recreated from the calculator’s firmware.</p>
+          </div>
+        </div>
+
+        <p class="honest__more" data-reveal>
+          <a href="/honest/">How it keeps learning honest</a>
+        </p>
+      </div>
+    </section>
+
+    <!-- 6. SPECS ------------------------------------------------------------- -->
+    <section class="section" id="specs" aria-labelledby="specs-title">
+      <div class="container specs__grid">
+        <div class="specs__aside" data-reveal>
+          <span class="eyebrow">Specs</span>
+          <h2 id="specs-title">What’s inside.</h2>
+          <p class="lead" style="margin-top:var(--s-4)">We publish the specs so you know exactly what you’re getting.</p>
+          <picture>
+            <source type="image/avif" srcset="assets/img/hero-back-560.avif 560w, assets/img/hero-back-960.avif 960w" sizes="(min-width: 60rem) 30rem, 92vw">
+            <source type="image/webp" srcset="assets/img/hero-back-560.webp 560w, assets/img/hero-back-960.webp 960w" sizes="(min-width: 60rem) 30rem, 92vw">
+            <img src="assets/img/hero-back-960.png" width="1021" height="800" loading="lazy" decoding="async"
+                 alt="The back of the calculator: a dark navy shell with a small camera lens and a magnetic charging plug.">
+          </picture>
+          <p class="figure-note">CAD render of the back. The camera sits near the bottom edge.</p>
+        </div>
+
+        <table class="spec-table" data-spec-table>
+          <caption>Prototype specifications. They may change before preorders open.</caption>
+          <tbody>
+            <tr data-reveal><th scope="row">Processor</th><td translate="no">ESP32-S3</td></tr>
+            <tr data-reveal><th scope="row">Camera</th><td>5&nbsp;MP autofocus, on the back</td></tr>
+            <tr data-reveal><th scope="row">Screen</th><td>A sharp color display</td></tr>
+            <tr data-reveal><th scope="row">Battery</th><td>150&nbsp;mAh, rechargeable<small>Battery life will be measured on our first samples.</small></td></tr>
+            <tr data-reveal><th scope="row">Charging</th><td>Magnetic connector</td></tr>
+            <tr data-reveal><th scope="row">Connectivity</th><td>Wi-Fi, 2.4&nbsp;GHz<small>Home Wi-Fi or a phone hotspot. School login pages aren’t supported.</small></td></tr>
+            <tr data-reveal><th scope="row">Keys</th><td>Rubber keymat, standard US scientific layout</td></tr>
+            <tr data-reveal><th scope="row">AI Solve</th><td>Included with the AI tutor plan<small>Needs Wi-Fi. Everything else works offline.</small></td></tr>
+            <tr data-reveal><th scope="row">Lights</th><td>None. No LED.</td></tr>
+            <tr data-reveal><th scope="row">Updates</th><td>Over Wi-Fi <span class="tag">planned</span></td></tr>
+            <tr data-reveal><th scope="row">Certification</th><td>FCC testing <span class="tag">to do</span></td></tr>
+          </tbody>
+        </table>
+        <p class="honest__more specs__more"><a href="/specs/">See all specs</a></p>
+      </div>
+    </section>
+
+    <!-- 7. PRICING ----------------------------------------------------------- -->
+    <section class="section section--tint" id="pricing" aria-labelledby="pricing-title">
+      <div class="container pricing__grid">
+        <div class="pricing__copy" data-reveal>
+          <span class="eyebrow">Pricing</span>
+          <h2 id="pricing-title">One price for the calculator. One for the tutor.</h2>
+          <div class="price-points">
+            <div>
+              <h3>First month free</h3>
+              <p>It starts when you first link the calculator. No card needed. When it ends, the calculator tells you plainly.</p>
+            </div>
+            <div>
+              <h3>300&nbsp;solves a month</h3>
+              <p>A fair-use limit. That’s about 10 a day.</p>
+            </div>
+            <div>
+              <h3>Cancel anytime</h3>
+              <p>From your account page. No phone call, no form.</p>
+            </div>
+            <div>
+              <h3>Bought by adults, made for students</h3>
+              <p>You must be 18 or older to buy it. It’s made for high school and college students, 13 and up.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="price-card" data-reveal>
+          <div class="price-card__row">
+            <div class="price"><span class="price__num">$225</span><span class="price__unit">calculator</span></div>
+          </div>
+          <p class="price-card__lede">Then the AI tutor plan for AI Solve and updates. Pay by the year or by the month.</p>
+
+          <div class="plan-options">
+            <div class="plan-option plan-option--best">
+              <p class="plan-option__head"><span class="plan-option__name">Yearly</span><span class="badge">2 months free</span></p>
+              <p class="price"><span class="price__num">$100</span><span class="price__unit">a year</span></p>
+              <p class="plan-option__note">About $8.33 a month. You save $20 compared with 12 months at $10. Our pick.</p>
+            </div>
+            <div class="plan-option">
+              <p class="plan-option__head"><span class="plan-option__name">Monthly</span></p>
+              <p class="price"><span class="price__num">$10</span><span class="price__unit">a month</span></p>
+              <p class="plan-option__note">Pay as you go. Cancel anytime.</p>
+            </div>
+          </div>
+
+          <ul class="price-list">
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>AI Solve, up to 300&nbsp;solves a month, shared by up to 3 calculators on one account</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Answers with every step worked out</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Software updates, only with the plan</span></li>
+            <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>First month free, from when you first link it</span></li>
+          </ul>
+
+          <div class="math">
+            <h3>Your first year</h3>
+            <dl>
+              <dt>Calculator</dt><dd>$225</dd>
+              <dt>Month 1</dt><dd>free</dd>
+              <dt>Yearly plan (12 months)</dt><dd>$100</dd>
+              <dt class="total">Total, paying yearly</dt><dd class="total">$325</dd>
+              <dt class="math__alt">Or monthly: months 2 to 12 (11 × $10)</dt><dd class="math__alt">$110</dd>
+              <dt class="total">Total, paying monthly</dt><dd class="total">$335</dd>
+            </dl>
+          </div>
+
+          <a class="btn btn--primary" href="#join" data-focus-email>Join the waitlist</a>
+          <p class="price-card__fine">We’re not taking payment yet. Preorders are planned for 2027.</p>
+          <p class="price-card__links"><a href="/pricing/">Pricing details</a> · <a href="/shop/ai-tutor-plan/">About the AI tutor plan</a></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- 8. FAQ --------------------------------------------------------------- -->
+    <section class="section" id="faq" aria-labelledby="faq-title">
+      <div class="container faq__grid">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">FAQ</span>
+          <h2 id="faq-title">Questions, answered straight.</h2>
+          <p>Something else? Email <a href="mailto:hello@proofline.example">hello@proofline.example</a>.</p>
+        </div>
+
+        <div class="faq" data-faq>
+          <details id="faq-exams">
+            <summary>Can I use it on the SAT, ACT or AP exams?<span class="chev" aria-hidden="true"><svg><use href="#i-plus"/></svg></span></summary>
+            <div class="faq__answer">
+              <p><strong>No.</strong> It has Wi-Fi and a camera, so it isn’t allowed on the SAT, ACT or AP exams, even in exam mode. Bring a standard calculator to those.</p>
+              <p>For a school test, ask your teacher: turn on exam mode, or leave it at home.</p>
+            </div>
+          </details>
+          <details id="faq-ages">
+            <summary>Who is it for?<span class="chev" aria-hidden="true"><svg><use href="#i-plus"/></svg></span></summary>
+            <div class="faq__answer">
+              <p>High school and college students, 13 and up. You must be 18 or older to buy it and hold the account.</p>
+            </div>
+          </details>
+          <details id="faq-photos">
+            <summary>What happens to the photos?<span class="chev" aria-hidden="true"><svg><use href="#i-plus"/></svg></span></summary>
+            <div class="faq__answer">
+              <p>Each photo is used only to solve that problem. <strong>Photos are not stored.</strong> We keep only usage counts, such as how many solves you used this month.</p>
+              <p>Read the <a href="privacy/">privacy policy</a> for the details.</p>
+            </div>
+          </details>
+          <details id="faq-after-free-month">
+            <summary>What happens after the free month?<span class="chev" aria-hidden="true"><svg><use href="#i-plus"/></svg></span></summary>
+            <div class="faq__answer">
+              <p>The calculator tells you plainly that the free month is over. To keep using AI Solve, subscribe from your account page: $10 a month, or $100 a year. There is no free tier after the first month.</p>
+            </div>
+          </details>
+          <details id="faq-shipping">
+            <summary>When does it ship?<span class="chev" aria-hidden="true"><svg><use href="#i-plus"/></svg></span></summary>
+            <div class="faq__answer">
+              <p>Not yet. Our first prototype boards are ordered. We’re building 5 samples first, then moving to production; preorders are planned for 2027. <a href="#join" data-focus-email>Join the waitlist</a> to hear first.</p>
+            </div>
+          </details>
+        </div>
+          <p class="honest__more"><a href="/faq/">See all questions</a></p>
+      </div>
+    </section>
+
+    <!-- EXPLORE ------------------------------------------------------------- -->
+    <section class="section section--tint" id="explore" aria-labelledby="explore-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Explore</span>
+          <h2 id="explore-title">Find what you need.</h2>
+        </div>
+        <div class="card-grid">
+          <a class="card" href="/features/apps/" data-reveal><h3>Apps</h3><p>Seven apps behind <span translate="no">MODE 4</span>, from AI Solve to the periodic table.</p><span class="card__more">See the apps<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+          <a class="card" href="/how-it-works/" data-reveal><h3>How it works</h3><p>From the box to the first answer.</p><span class="card__more">Read more<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+          <a class="card" href="/features/exam-mode/" data-reveal><h3>Exam mode</h3><p>The AI off, and a black status bar anyone can see.</p><span class="card__more">Read more<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+          <a class="card" href="/specs/" data-reveal><h3>Specs</h3><p>Everything inside, in one table.</p><span class="card__more">See specs<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+          <a class="card" href="/pricing/" data-reveal><h3>Pricing</h3><p>The calculator, the AI tutor plan and the first-year total.</p><span class="card__more">Read more<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+          <a class="card" href="/teachers/" data-reveal><h3>For teachers</h3><p>How to spot exam mode at a glance.</p><span class="card__more">Read more<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+          <a class="card" href="/support/setup/" data-reveal><h3>Setup guide</h3><p>Wi-Fi, linking, and your first AI Solve.</p><span class="card__more">Read the guide<svg aria-hidden="true"><use href="#i-arrow"/></svg></span></a>
+        </div>
+      </div>
+    </section>
+
+    <!-- 9. CLOSING CTA ------------------------------------------------------- -->
+    <section class="section band-dark closing" id="waitlist" aria-labelledby="closing-title">
+      <div class="container closing__grid">
+        <div data-reveal>
+          <h2 id="closing-title">Be first in line. <span class="accent">No payment now.</span></h2>
+          <p class="closing__lede">We’ll email you when preorders open. Nothing else.</p>
+        </div>
+        <form class="waitlist" action="/api/waitlist" method="post" data-reveal data-source="footer">
+          <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
+          <label class="waitlist__label" for="email-footer">Your email</label>
+          <div class="waitlist__row">
+            <input class="field" id="email-footer" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-footer msg-footer">
+            <div class="hp" aria-hidden="true"><label for="company-footer">Company</label><input id="company-footer" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+            <button class="btn btn--primary" type="submit">Join the waitlist</button>
+          </div>
+          <label class="waitlist__age" for="age-footer"><input id="age-footer" name="age_ok" type="checkbox" required aria-describedby="msg-footer">I’m 13 or older</label>
+          <p class="waitlist__note" id="note-footer"><a href="privacy/">Privacy policy</a></p>
+          <p class="waitlist__msg" id="msg-footer" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- @footer -->
+  <footer class="site-footer band-dark">
+    <div class="container footer__grid">
+      <div class="footer__intro">
+        <a class="brand" translate="no" href="/" aria-label="Proofline home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Proofline</span></a>
+        <p>The AI study tutor that works like a real scientific calculator. In development; preorders planned for 2027.</p>
+        <form class="waitlist waitlist--compact" action="/api/waitlist" method="post" data-source="footer">
+          <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
+          <label class="waitlist__label" for="email-sitefoot">Get an email when preorders open</label>
+          <div class="waitlist__row">
+            <input class="field" id="email-sitefoot" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-sitefoot msg-sitefoot">
+            <div class="hp" aria-hidden="true"><label for="company-sitefoot">Company</label><input id="company-sitefoot" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+            <button class="btn btn--primary" type="submit">Join</button>
+          </div>
+          <label class="waitlist__age" for="age-sitefoot"><input id="age-sitefoot" name="age_ok" type="checkbox" required aria-describedby="msg-sitefoot">I’m 13 or older</label>
+          <p class="waitlist__note" id="note-sitefoot">No payment now. <a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__msg" id="msg-sitefoot" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <nav class="footer__cols" aria-label="Footer">
+        <div>
+          <p class="footer__head">Shop</p>
+          <ul>
+            <li><a href="/shop/">All products</a></li>
+            <li><a href="/shop/calculator/">The calculator</a></li>
+            <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+            <li><a href="/cart/">Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Product</p>
+          <ul>
+            <li><a href="/how-it-works/">How it works</a></li>
+            <li><a href="/features/ai-solve/">AI Solve</a></li>
+            <li><a href="/features/apps/">Apps</a></li>
+            <li><a href="/features/exam-mode/">Exam mode</a></li>
+            <li><a href="/features/calculator/">The calculator</a></li>
+            <li><a href="/try-it/">Try it</a></li>
+            <li><a href="/specs/">Specs</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Support</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/support/setup/">Setup guide</a></li>
+            <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+            <li><a href="/teachers/">For teachers</a></li>
+            <li><a href="/support/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Company</p>
+          <ul>
+            <li><a href="/honest/">Honest by design</a></li>
+            <li><a href="/account/">Your account</a></li>
+            <li><a href="/privacy/">Privacy</a></li>
+            <li><a href="/terms/">Terms</a></li>
+            <li><a href="/refunds/">Refunds and warranty</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="legal">
+        <p>Not affiliated with Casio Computer Co., Ltd.</p>
+        <p>Prices in US dollars. © 2026 Proofline Corporation.</p>
+        <!-- TODO(contact): real support address once the domain is bought. -->
+        <p>Contact: <a href="mailto:hello@proofline.example">hello@proofline.example</a></p>
+      </div>
+    </div>
+  </footer>
+  <!-- /@footer -->
+</body>
+</html>

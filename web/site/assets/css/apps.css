@@ -1,0 +1,140 @@
+/* Screens from the calculator's own software (Apps page and a few product pages).
+   The images are 2x and 3x nearest-neighbour copies of the 320 x 170 screen;
+   image-rendering keeps the pixels square when the browser scales them. */
+
+.screen {
+  margin: 0;
+}
+.screen__frame {
+  display: block;
+  padding: clamp(8px, 1.6vw, 14px);
+  border-radius: 16px;
+  background: #0b0e14;
+  box-shadow: 0 0 0 1px var(--line-strong), 0 18px 40px -24px rgb(16 20 28 / 0.55);
+}
+.screen__frame picture {
+  display: block;
+}
+.screen__frame img {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 32 / 17;
+  border-radius: 3px;
+  image-rendering: pixelated;
+}
+.screen figcaption {
+  margin-top: var(--s-3);
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+
+/* One big screen with two smaller ones under it. */
+.screens {
+  display: grid;
+  gap: var(--s-4);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+}
+.screens > .screen:first-child {
+  grid-column: 1 / -1;
+}
+.screens .screen:not(:first-child) .screen__frame {
+  padding: clamp(5px, 1vw, 9px);
+  border-radius: 11px;
+}
+
+/* Two screens side by side (stacked on phones). */
+.screen-pair {
+  display: grid;
+  gap: var(--s-5);
+}
+@media (min-width: 40rem) {
+  .screen-pair {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+
+/* An app section: screens on one side, copy on the other. */
+.app-block {
+  display: grid;
+  gap: var(--s-7);
+  align-items: center;
+}
+@media (min-width: 60rem) {
+  .app-block {
+    grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+    gap: var(--s-8);
+  }
+  .app-block--flip > :first-child {
+    order: 2;
+  }
+}
+.app-block .copy h2 {
+  font-size: clamp(1.75rem, 1.3rem + 1.6vw, 2.5rem);
+}
+
+/* Small "needs Wi-Fi" / "works offline" labels next to an app name. */
+.app-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+}
+.app-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font: 500 0.8125rem/1.5 var(--font-mono);
+  color: var(--ink-2);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}
+.app-tag svg {
+  width: 15px;
+  height: 15px;
+}
+.app-tag--offline svg {
+  color: var(--ok);
+}
+.app-tag--online svg {
+  color: var(--accent-ink);
+}
+
+/* "Screens from our prototype software" note under a group of screens. */
+.screens-note {
+  margin-top: var(--s-5);
+  font-size: 0.8125rem;
+  font-family: var(--font-mono);
+  color: var(--ink-2);
+  text-align: center;
+}
+
+/* Calculator modes (STAT, TABLE, SOLVE, integrals) on /features/calculator/:
+   a screen with a short heading and text under it, two per row from tablet width. */
+.calc-modes {
+  display: grid;
+  gap: var(--s-7) var(--s-6);
+}
+@media (min-width: 40rem) {
+  .calc-modes {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+}
+.calc-mode h3 {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--s-2) var(--s-3);
+  margin-top: var(--s-4);
+}
+.calc-mode p {
+  margin-top: var(--s-2);
+  color: var(--ink-2);
+}
+.calc-mode__key {
+  font: 500 0.8125rem/1.5 var(--font-mono);
+  color: var(--ink-2);
+  padding: 0.1rem 0.5rem;
+  border-radius: 6px;
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+}

@@ -1,0 +1,40 @@
+# Copy this file to .dev.vars (git-ignored) and fill in what you need for local development.
+# Values here override [vars] in wrangler.toml when you run `npm run dev`.
+
+# Your Anthropic API key (server-side only, never on a calculator). Leave blank to run without
+# real solves (the solve endpoint then answers 503 "unavailable").
+ANTHROPIC_API_KEY=
+
+# Optional: Resend API key for real sign-in e-mails. Blank = e-mails only go to the dev outbox.
+RESEND_API_KEY=
+
+# Key for the hashes of e-mails that had a free month. Required in production (32+ characters,
+# make it with: node -e "console.log(require('crypto').randomBytes(32).toString('base64url'))").
+# With DEV_MODE=1 a fixed development value is used when this is blank.
+TRIAL_PEPPER=
+
+# Optional: enables board enrolment and firmware publishing (/v1/admin/*). Must be at least
+# 32 characters (use the same node command as above); shorter or blank = admin endpoints off (404).
+ADMIN_TOKEN=
+
+# Optional: Cloudflare Turnstile secret. When set, sign-in requires a turnstile_token.
+TURNSTILE_SECRET=
+
+# Local testing helpers (/__dev/outbox, /__dev/user), and permission to use an http:// PUBLIC_URL.
+# Only honoured on localhost / 127.0.0.1. NEVER set this in production.
+# `npm run dev` already passes DEV_MODE=1.
+# DEV_MODE=1
+
+# Point solves at a mock Anthropic server for tests (web/tests starts one):
+# ANTHROPIC_BASE_URL=http://127.0.0.1:8788
+
+# ---- Stage 3: Stripe (use SANDBOX keys only here; `node web/dev/run-local.mjs` needs none of these,
+# it runs a fake Stripe). A restricted key (rk_test_...) is recommended over sk_test_.
+STRIPE_SECRET_KEY=
+STRIPE_WEBHOOK_SECRET=
+# Price ids from the Stripe dashboard (price_...):
+# STRIPE_PRICE_SUB=          (AI tutor plan, monthly)
+# STRIPE_PRICE_SUB_YEARLY=   (same plan, yearly; empty = yearly not offered)
+# STRIPE_PRICE_DEVICE=
+# STRIPE_TAX=0
+# STORE_OPEN=0

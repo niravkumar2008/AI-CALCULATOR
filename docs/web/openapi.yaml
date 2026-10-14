@@ -1,0 +1,1220 @@
+﻿openapi: 3.1.0
+info:
+  title: AI Calculator API
+  version: 1.0.0-draft
+  description: |
+    Contract for the sell-and-subscribe layer (docs/web/PLAN.md), approved 2026-10-08.
+    Agents code against this file and never change it on their own; propose changes to the lead.
+
+    Two audiences, one Cloudflare Worker:
+    - Devices: `https://api.<domain>/v1/*`, `Authorization: Bearer dt_...`.
+    - Browser (portal, site): `https://<domain>/api/*`, session cookie `sid`
+      (HttpOnly, Secure, SameSite=Lax). Every state-changing `/api/*` call except the
+      Stripe webhook must send `Content-Type: application/json` and an `Origin` equal to
+      the site origin, otherwise 403 `forbidden`. (`/api/waitlist` also accepts a plain
+      HTML form post, `application/x-www-form-urlencoded`, with the same Origin rule.)
+
+    Errors (all endpoints) use `Error`. `error.message` is at most 110 characters, plain
+    English, safe to show on the calculator screen as is. Server-side details go to logs only.
+
+    Times are Unix seconds (integer). Money is integer micro-USD unless named `*_cents`.
+servers:
+  - url: https://api.proofline.example
+    description: Devices (placeholder domain)
+  - url: https://proofline.example
+    description: Browser (placeholder domain)
+  - url: http://localhost:8787
+    description: wrangler dev
+
+tags:
+  - name: device
+  - name: auth
+  - name: account
+  - name: billing
+  - name: store
+  - name: webhooks
+  - name: site
+  - name: admin
+  - name: ops
+
+paths:
+  /healthz:
+    get:
+      tags: [ops]
+      summary: Liveness. Does not reveal the model, keys or config.
+      security: []
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok]
+                properties:
+                  ok: { type: boolean, const: true }
+
+  # ---------------------------------------------------------------- device
+  /v1/device/register:
+    post:
+      tags: [device]
+      summary: First boot, or after "Unlink". Issues a new unlinked device token.
+      description: |
+        No auth. Rate limit 5 per IP per hour (429 `rate_limited`). Blocked server-side
+        only by rate limits; an unlinked token cannot spend money. The token is returned
+        once; the server stores only SHA-256(token). Calling again from the same hw_id
+        creates a new device row; the old one stays until revoked or purged (unlinked
+        devices unused for 30 days are deleted).
+      security: []
+      parameters:
+        - $ref: '#/components/parameters/Firmware'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [hw_id]
+              properties:
+                hw_id:
+                  type: string
+                  pattern: '^calc-[0-9a-f]{12}$'
+                  description: MAC-derived, spoofable. Never used for auth on its own.
+                hw_secret:
+                  type: string
+                  pattern: '^hs_[A-Za-z0-9_-]{43}$'
+                  description: |
+                    Per-board enrolment secret written to NVS (namespace `factory`, never erased
+                    by Forget/Unlink) during the first USB flash at QA, and registered with
+                    `POST /v1/admin/hardware`. Registration succeeds without it (dev boards),
+                    but only a device registered with a matching (hw_id, hw_secret) pair is
+                    `enrolled`, and only enrolled boards can ever start the free month, once
+                    per board (security review S1).
+                    A well-formed but wrong hw_secret still returns 201 (registered, not
+                    enrolled), so the endpoint is not an oracle for secrets.
+      responses:
+        '201':
+          description: Registered
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [device_id, token, pair_code, link_url, expires_at]
+                properties:
+                  device_id: { $ref: '#/components/schemas/DeviceId' }
+                  token: { $ref: '#/components/schemas/DeviceToken' }
+                  pair_code: { $ref: '#/components/schemas/PairCode' }
+                  link_url:
+                    type: string
+                    format: uri
+                    description: '`https://<domain>/link?code=<pair_code>` (shown as a QR).'
+                  expires_at: { type: integer, description: Pair code expiry }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+        '503': { $ref: '#/components/responses/Unavailable' }
+
+  /v1/pair/start:
+    post:
+      tags: [device]
+      summary: New pairing code for this device (replaces any older unclaimed code).
+      security: [{ deviceToken: [] }]
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdHeader'
+        - $ref: '#/components/parameters/Firmware'
+      responses:
+        '200':
+          description: Code issued, or device already linked
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [already_linked]
+                properties:
+                  already_linked: { type: boolean }
+                  code: { $ref: '#/components/schemas/PairCode' }
+                  link_url: { type: string, format: uri }
+                  expires_at: { type: integer }
+        '401': { $ref: '#/components/responses/DeviceUnauthorized' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /v1/device/status:
+    get:
+      tags: [device]
+      summary: What the calculator should show. Polled every 5 s while pairing, else on demand.
+      security: [{ deviceToken: [] }]
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdHeader'
+        - $ref: '#/components/parameters/Firmware'
+      responses:
+        '200':
+          description: Status
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/DeviceStatus' }
+        '401': { $ref: '#/components/responses/DeviceUnauthorized' }
+
+  /v1/solve:
+    post:
+      tags: [device]
+      summary: Solve a photographed problem. Streams Anthropic-format SSE.
+      description: |
+        The server owns the system prompt, model, max_tokens, thinking settings and output
+        schema. From the body it reads ONLY the images and `tutor`; every other field is
+        ignored. Two body shapes are accepted (SolveRequest or LegacySolveRequest) so
+        boards flashed before stage 2 keep working.
+
+        Order of checks (first failure wins, no upstream call is made on any failure):
+        auth -> linked -> entitled -> device burst limit (6/min) [all before the body is
+        read, review S6] -> body valid -> one solve in flight per device -> user monthly
+        solves and spend -> global daily spend cap. The spend reservation is atomic in D1; any DB error -> 503 `unavailable`
+        (fail closed).
+
+        On 200 the body is `text/event-stream` in Anthropic Messages streaming format,
+        passed through byte for byte. If the upstream fails mid-stream, the server emits
+        a final `event: error` with an `Error` payload and closes. Usage is settled from
+        the stream's `message_delta.usage`.
+      security: [{ deviceToken: [] }]
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdHeader'
+        - $ref: '#/components/parameters/Firmware'
+      requestBody:
+        required: true
+        description: Max 8 MiB (8,388,608 bytes) raw body (413 `payload_too_large`).
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/SolveRequest'
+                - $ref: '#/components/schemas/LegacySolveRequest'
+      responses:
+        '200':
+          description: SSE stream
+          content:
+            text/event-stream:
+              schema: { type: string }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/DeviceUnauthorized' }
+        '402':
+          description: '`device_not_linked` (message includes the link URL and a fresh code) or `subscription_inactive` (trial over, subscription ended, or linked with plan none; message = DeviceStatus.reason).'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '413':
+          description: '`payload_too_large`'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '429':
+          description: '`rate_limited` (burst or one-in-flight) or `quota_exceeded` (monthly solves or spend).'
+          headers:
+            Retry-After: { schema: { type: integer } }
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '502':
+          description: '`upstream_error` (Anthropic failed before streaming started)'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '503':
+          description: '`spend_cap` (global daily cap reached) or `unavailable` (DB or config error, fail closed).'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /v1/firmware:
+    get:
+      tags: [device]
+      summary: Is there a newer published firmware?
+      security: [{ deviceToken: [] }]
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdHeader'
+        - $ref: '#/components/parameters/Firmware'
+        - $ref: '#/components/parameters/FirmwareFamily'
+      description: |
+        Without `family` (every board flashed before 2026-10-11): the legacy channel, i.e.
+        whatever was last published without `family`, exactly as before (plus the optional
+        `family` / `rollback` fields, which old firmware ignores). With `family`: only the
+        image last published for that family; when none is, `update` is false. A device
+        never gets another family's image this way.
+      responses:
+        '200':
+          description: Update info
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/FirmwareManifest' }
+              examples:
+                family:
+                  summary: A family image is published (device sent ?family=v15lcd)
+                  value:
+                    update: true
+                    version: v15lcd-2026.10.11
+                    size: 1203456
+                    sha256: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+                    path: /v1/firmware/image?family=v15lcd
+                    family: v15lcd
+                    rollback: false
+                rollback:
+                  summary: A rollback to an older build of the family
+                  value:
+                    update: true
+                    version: v15lcd-2026.10.09
+                    size: 1199872
+                    sha256: 60303ae22b998861bce3b28f33eec1be758a213c86c93c076dbe9f558c11c752
+                    path: /v1/firmware/image?family=v15lcd
+                    family: v15lcd
+                    rollback: true
+                legacy:
+                  summary: No family sent, legacy channel
+                  value:
+                    update: true
+                    version: stage14-2026.10.08
+                    size: 150000
+                    sha256: 9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+                    path: /v1/firmware/image
+                    family: null
+                    rollback: false
+                nothing:
+                  summary: Nothing published for this family
+                  value: { update: false, family: v15lcd }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/DeviceUnauthorized' }
+
+  /v1/firmware/image:
+    get:
+      tags: [device]
+      summary: Download the published firmware image (from Workers KV).
+      description: Fetch the manifest's `path` as is (it carries `?family=` when the check did).
+      security: [{ deviceToken: [] }]
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdHeader'
+        - $ref: '#/components/parameters/FirmwareFamily'
+      responses:
+        '200':
+          description: Image
+          content:
+            application/octet-stream:
+              schema: { type: string, format: binary }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/DeviceUnauthorized' }
+        '404':
+          description: '`not_found` (nothing published)'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  # ---------------------------------------------------------------- auth
+  /api/auth/login:
+    post:
+      tags: [auth]
+      summary: E-mail a sign-in link. Always 204 (no account enumeration).
+      description: |
+        Creates the user on first sign-in. Link = `https://<domain>/login/confirm?token=...`,
+        valid 15 min, single use. Rate limit 5 per e-mail per hour and 20 per IP per hour
+        (both silently drop extra e-mails but still return 204, except IP limit -> 429).
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [email, age_confirmed]
+              properties:
+                email: { type: string, format: email, maxLength: 254 }
+                turnstile_token:
+                  type: string
+                  maxLength: 2048
+                  description: Required when the server has TURNSTILE_SECRET set (403 forbidden if missing or invalid, 503 if verification is unreachable); rejected with 400 when it is not set.
+                age_confirmed:
+                  type: boolean
+                  const: true
+                  description: Account holder confirms they are 18+ (buyers and account holders are adults; users 13+).
+      responses:
+        '204': { description: Sent (or silently ignored) }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /api/auth/confirm:
+    post:
+      tags: [auth]
+      summary: Exchange the e-mailed token for a session.
+      description: |
+        The e-mail link opens a static page (`/login/confirm`) with a "Sign in" button that
+        POSTs here, so e-mail link scanners that prefetch GET URLs cannot burn the token.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [token]
+              properties:
+                token: { type: string, minLength: 32, maxLength: 128 }
+      responses:
+        '204':
+          description: Signed in
+          headers:
+            Set-Cookie:
+              schema: { type: string }
+              description: '`sid=<random>; HttpOnly; Secure; SameSite=Lax; Path=/; Max-Age=2592000`'
+        '400':
+          description: '`invalid_token` (unknown, used or expired)'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+
+  /api/auth/logout:
+    post:
+      tags: [auth]
+      summary: Delete the current session.
+      security: [{ session: [] }]
+      responses:
+        '204': { description: 'Signed out, cookie cleared. Also 204 when there was no session (idempotent).' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+
+  # ---------------------------------------------------------------- account
+  /api/me:
+    get:
+      tags: [account]
+      summary: Account, plan, usage and devices for the portal.
+      security: [{ session: [] }]
+      responses:
+        '200':
+          description: Account
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Account' }
+        '401': { $ref: '#/components/responses/SessionRequired' }
+    delete:
+      tags: [account]
+      summary: Delete account. Deletes the Stripe customer (cancelling every subscription immediately), revokes all devices, erases e-mail.
+      description: |
+        Billing stops first: if the account has a Stripe customer, it is deleted at Stripe
+        (DELETE /v1/customers/{id}), which cancels all its subscriptions at once and makes any
+        still-open Checkout page fail. A customer already gone at Stripe (404) is fine; any
+        other Stripe failure answers 503 `unavailable` and nothing is erased (try again later).
+        Local subscriptions are then marked canceled. A subscription that still reaches the
+        webhook for a deleted account is cancelled at Stripe. Store orders (with the buyer's
+        email and shipping address) are kept, because they're tax and shipping records; how
+        long, and whether to anonymise them after that, is for the lawyer (GUIDE section 6).
+      security: [{ session: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [confirm_email]
+              properties:
+                confirm_email: { type: string, format: email }
+      responses:
+        '204': { description: 'Deleted; session cleared' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/SessionRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '503':
+          description: '`unavailable` (Stripe could not delete the customer; nothing was erased)'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /api/devices/claim:
+    post:
+      tags: [account]
+      summary: Link a calculator to this account with the code on its screen.
+      description: |
+        Atomic: succeeds only if the code exists, is unexpired and unclaimed. Codes are
+        normalised (upper case, dash and spaces removed, O->0 not applied: the alphabet has
+        no O/0/I/1). Rate limit 10 attempts per user per 10 min. Max 3 active devices per
+        account (409 `device_limit`). Starts the free trial (decision D2) only if ALL hold:
+        the device is enrolled, that board's trial was never used, the account never had a
+        trial, the e-mail (by hash, surviving account deletion) never had a trial, and the
+        daily new-trial cap (env MAX_NEW_TRIALS_PER_DAY, default 20) is not reached.
+        If the only blocker is the daily cap, the claim fails with 429 `rate_limited`
+        (Retry-After until UTC midnight) and the code is not consumed, so nobody loses a
+        trial. Otherwise an ineligible device links with plan `none` (subscribe to use AI;
+        reason "No free month for this calculator. Subscribe at <host>/account to use AI.").
+      security: [{ session: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [code]
+              properties:
+                code: { type: string, minLength: 8, maxLength: 12 }
+                label: { $ref: '#/components/schemas/Label' }
+      responses:
+        '201':
+          description: Linked
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Device' }
+        '400':
+          description: '`invalid_code` (unknown, expired or already used; one message for all three) or `bad_request` (bad label)'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '401': { $ref: '#/components/responses/SessionRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409':
+          description: '`device_limit`'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /api/devices/{device_id}:
+    patch:
+      tags: [account]
+      summary: Rename a device.
+      security: [{ session: [] }]
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [label]
+              properties:
+                label: { $ref: '#/components/schemas/Label' }
+      responses:
+        '200':
+          description: Updated
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Device' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/SessionRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/devices/{device_id}/revoke:
+    post:
+      tags: [account]
+      summary: Revoke a device token immediately. Irreversible; the calculator must re-register and be paired again.
+      security: [{ session: [] }]
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdPath'
+      responses:
+        '204': { description: Revoked }
+        '401': { $ref: '#/components/responses/SessionRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404':
+          description: '`not_found` (also returned for devices owned by another account)'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  # ---------------------------------------------------------------- billing
+  /api/billing/checkout:
+    post:
+      tags: [billing]
+      summary: Create a Stripe Checkout Session for the subscription. Returns its URL.
+      description: |
+        mode=subscription, price = env STRIPE_PRICE_SUB (interval "month", the default) or
+        env STRIPE_PRICE_SUB_YEARLY (interval "year"), customer = the account's Stripe
+        customer (created on first call, idempotency key `customer-<user id>`),
+        client_reference_id = user id. No trial in Stripe under decision D2 (the free month
+        is our own trial). Terms consent with an "I am 18 or older" line unless
+        STRIPE_REQUIRE_TOS=0; Stripe Tax when STRIPE_TAX=1. 409 `already_subscribed` if a
+        trialing/active/past_due/unpaid/incomplete subscription on either plan price (monthly
+        or yearly) exists, in our database or (for an existing Stripe customer) at Stripe
+        itself (use the portal instead; it also switches month <-> year). 400 `bad_request`
+        for an unknown interval or extra field, or interval "year" while
+        STRIPE_PRICE_SUB_YEARLY is empty. The
+        session expires after 31 minutes; success_url `<PUBLIC_URL>/account/?checkout=done`,
+        cancel_url `<PUBLIC_URL>/account/?checkout=cancelled`. Rate limit 10 per account per
+        10 min. 503 `unavailable` when Stripe isn't configured or fails.
+      security: [{ session: [] }]
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              properties:
+                interval: { type: string, enum: [month, year], default: month }
+      responses:
+        '200':
+          description: Redirect target
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RedirectUrl' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/SessionRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409':
+          description: '`already_subscribed`'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+        '503':
+          description: '`unavailable` (Stripe not configured or not reachable)'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /api/billing/portal:
+    post:
+      tags: [billing]
+      summary: Create a Stripe Customer Portal session (cancel, card, invoices). Returns its URL.
+      description: return_url `<PUBLIC_URL>/account/`.
+      security: [{ session: [] }]
+      responses:
+        '200':
+          description: Redirect target
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RedirectUrl' }
+        '401': { $ref: '#/components/responses/SessionRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '409':
+          description: '`no_customer` (never subscribed)'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+        '503':
+          description: '`unavailable` (Stripe not configured or not reachable)'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  # ---------------------------------------------------------------- store
+  /api/store/checkout:
+    post:
+      tags: [store]
+      summary: Create a Stripe Checkout Session to buy the calculator. No login needed.
+      description: |
+        mode=payment, price = env STRIPE_PRICE_DEVICE, US shipping address collection,
+        phone optional, automatic_tax if env STRIPE_TAX=1, consent to ToS required
+        (consent_collection.terms_of_service=required), metadata.kind=device, expires after
+        31 minutes; success_url `<PUBLIC_URL>/order/complete/`, cancel_url
+        `<PUBLIC_URL>/cart/?checkout=cancelled`. Rate limits: a global cap of
+        STORE_GLOBAL_PER_HOUR (default 300) checkouts per hour for all visitors together,
+        checked first with a read only (429 `rate_limited`, "The store is busy right now..."),
+        then 10 per IP per hour (429 `rate_limited`); a request is counted toward the global
+        cap only once it passes the per-IP limit, so one address can't use up the global cap.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [quantity]
+              properties:
+                quantity: { type: integer, minimum: 1, maximum: 3 }
+      responses:
+        '200':
+          description: Redirect target
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RedirectUrl' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+        '503':
+          description: '`sold_out` (env STORE_OPEN=0) or `unavailable`'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  /api/store/status:
+    get:
+      tags: [store]
+      summary: Whether the store takes orders right now (the site shows "Preorder" or "Join the waitlist").
+      description: |
+        `open` is true only when STORE_OPEN=1 and the Stripe key and STRIPE_PRICE_DEVICE are
+        set. `max_quantity` is the most calculators per order. No login, no Stripe call;
+        cacheable for 60 seconds.
+      security: []
+      responses:
+        '200':
+          description: Store status
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [open, max_quantity]
+                properties:
+                  open: { type: boolean }
+                  max_quantity: { type: integer, minimum: 1, const: 3 }
+
+  # ---------------------------------------------------------------- webhooks
+  /api/stripe/webhook:
+    post:
+      tags: [webhooks]
+      summary: Stripe events. Verified with the Stripe-Signature header (5 min tolerance).
+      description: |
+        The raw body is verified before parsing with Stripe's signing scheme (HMAC-SHA256 of
+        "<t>.<body>" with STRIPE_WEBHOOK_SECRET, constant-time compare, |now - t| <= 300 s);
+        failure -> 400 and nothing is written. A verified event whose `livemode` doesn't
+        match the key (sk_live_/rk_live_ vs test) is also refused with 400 `bad_signature`.
+        Idempotent on event id (`stripe_events`, recorded in the same transaction as the
+        event's effects). Handled: checkout.session.completed / async_payment_succeeded /
+        async_payment_failed (device orders: only sessions with mode=payment and
+        metadata.kind=device; an order that is `paid` or `failed` never changes again; for
+        subscription sessions the subscription is re-read from Stripe),
+        customer.subscription.created|updated|deleted|paused|resumed and
+        invoice.paid|payment_succeeded|payment_failed (the subscription is always re-read
+        from Stripe and stored as it is now, so delivery order doesn't matter). Subscriptions
+        are mapped to an account by the Stripe customer id we created, never by metadata; a
+        live subscription for a deleted account is cancelled at Stripe. Only subscriptions on
+        STRIPE_PRICE_SUB or STRIPE_PRICE_SUB_YEARLY grant AI; past_due keeps AI for 3 days from the first failed
+        payment. Unknown event types -> 200 and ignored. 503 while STRIPE_WEBHOOK_SECRET is
+        unset or when the database or Stripe fails (Stripe retries).
+      security: []
+      parameters:
+        - name: Stripe-Signature
+          in: header
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { type: object }
+      responses:
+        '200':
+          description: 'Accepted (or duplicate, or ignored type)'
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties: false
+                required: [received]
+                properties:
+                  received: { type: boolean, const: true }
+                  duplicate: { type: boolean, description: 'Present (true) when this event id was already applied.' }
+        '400':
+          description: '`bad_signature` (also a livemode mismatch)'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '503':
+          description: DB error; Stripe retries
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+
+  # ---------------------------------------------------------------- site
+  /api/waitlist:
+    post:
+      tags: [site]
+      summary: Join the launch waitlist (web/site forms). No login.
+      description: |
+        Same answer whether or not the address was already on the list (no enumeration); a
+        repeat sign-up changes nothing (the first touch's tracking is kept).
+        "I'm 13 or older" must be confirmed: `age_ok: true` (JSON) or `age_ok=on` (form),
+        otherwise 400 `bad_request` "Please confirm you are 13 or older to join the waitlist."
+        Tracking: `source` is the form (unknown values become `site`); `utm_source`,
+        `utm_medium`, `utm_campaign` and `ref` (referral code) are lower-cased and stored only if
+        they match `^[a-z0-9_-]{1,40}$` (otherwise stored as NULL, the sign-up still succeeds; a
+        non-string value is a 400). Counts by channel are admin-only (D1 queries, GUIDE 8.1).
+        A non-empty `company` (hidden honeypot) is accepted and dropped. Rate limit 5 per IP
+        per hour; global cap WAITLIST_DAILY_CAP (default 20,000) new addresses per UTC day, an
+        abuse backstop: when it is reached nothing is stored and the answer is 429 `rate_limited`
+        "The waitlist is busy today. Please try again tomorrow."
+        JSON body -> 201 {ok:true}. A plain HTML form post -> 303 to `<PUBLIC_URL>/?waitlist=joined#waitlist`.
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [email, age_ok]
+              properties:
+                email: { type: string, format: email, maxLength: 254 }
+                age_ok: { type: boolean, const: true, description: The person confirmed they are 13 or older. }
+                source: { type: string, enum: [hero, footer, site] }
+                utm_source: { $ref: '#/components/schemas/WaitlistTag' }
+                utm_medium: { $ref: '#/components/schemas/WaitlistTag' }
+                utm_campaign: { $ref: '#/components/schemas/WaitlistTag' }
+                ref: { $ref: '#/components/schemas/WaitlistTag' }
+                company: { type: string, maxLength: 200, description: Honeypot; leave empty. }
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [email, age_ok]
+              properties:
+                email: { type: string }
+                age_ok: { type: string, const: 'on', description: The 13+ checkbox (sent only when ticked). }
+                source: { type: string }
+                utm_source: { type: string, description: Empty means none. }
+                utm_medium: { type: string, description: Empty means none. }
+                utm_campaign: { type: string, description: Empty means none. }
+                ref: { type: string, description: Empty means none. }
+                company: { type: string }
+      responses:
+        '201':
+          description: On the list
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [ok]
+                properties:
+                  ok: { type: boolean, const: true }
+        '303': { description: 'Form post: back to the site' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  # ---------------------------------------------------------------- admin
+  /v1/admin/hardware:
+    post:
+      tags: [admin]
+      summary: Enrol one board at QA (used by web/api/scripts/enroll-board.mjs).
+      description: |
+        Disabled (404) unless ADMIN_TOKEN is set. Stores SHA-256(hw_secret) against hw_id.
+        Re-enrolling an existing hw_id replaces the secret but never resets `trial_used`.
+      security: [{ adminToken: [] }]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [hw_id, hw_secret]
+              properties:
+                hw_id: { type: string, pattern: '^calc-[0-9a-f]{12}$' }
+                hw_secret: { type: string, pattern: '^hs_[A-Za-z0-9_-]{43}$' }
+      responses:
+        '201':
+          description: Enrolled
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [hw_id, trial_used]
+                properties:
+                  hw_id: { type: string }
+                  trial_used: { type: boolean }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401':
+          description: '`unauthorized`'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /v1/admin/firmware:
+    post:
+      tags: [admin]
+      summary: Publish a firmware image (used by web/api/scripts/publish-firmware.mjs).
+      description: |
+        Disabled (404) unless env ADMIN_TOKEN is set. Constant-time comparison. Image must
+        be 100 KB to 0x1E0000 bytes and start with 0xE9. Server computes sha256.
+
+        Channels: without `family` the image goes to the legacy channel (KV keys `meta` /
+        `image`, what devices that send no family get). With `family=v15lcd` it goes to that
+        family's channel only (KV keys `meta:v15lcd` / `image:v15lcd`); `version` must then
+        start with `v15lcd-`. Each publish replaces the channel's previous image.
+
+        Rollback: to send a family back to an older build, publish that older image again
+        with `rollback=1` (script: `--rollback`). The manifest then says `rollback: true`
+        and devices accept the downgrade (they refuse an older version otherwise). The next
+        normal publish (without `rollback`) clears it.
+      security: [{ adminToken: [] }]
+      parameters:
+        - name: version
+          in: query
+          required: true
+          schema: { type: string, pattern: '^[0-9A-Za-z.\-]{1,32}$' }
+        - name: family
+          in: query
+          required: false
+          description: Board family channel; `version` must start with `<family>-`.
+          schema: { type: string, pattern: '^[A-Za-z0-9]{1,24}$' }
+          example: v15lcd
+        - name: rollback
+          in: query
+          required: false
+          description: '`1` / `true` marks this publish as a rollback (default false).'
+          schema: { type: string, enum: ['', '0', '1', 'true', 'false'] }
+      requestBody:
+        required: true
+        content:
+          application/octet-stream:
+            schema: { type: string, format: binary }
+      responses:
+        '201':
+          description: Published
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [version, size, sha256]
+                properties:
+                  version: { type: string }
+                  size: { type: integer }
+                  sha256: { type: string }
+                  family:
+                    type: [string, 'null']
+                    description: The channel published to (null = legacy channel).
+                  rollback: { type: boolean }
+              example:
+                version: v15lcd-2026.10.09
+                size: 1199872
+                sha256: 60303ae22b998861bce3b28f33eec1be758a213c86c93c076dbe9f558c11c752
+                family: v15lcd
+                rollback: true
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401':
+          description: '`unauthorized`'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+components:
+  securitySchemes:
+    deviceToken:
+      type: http
+      scheme: bearer
+      description: '`dt_` + 43 base64url chars. Server stores SHA-256 only.'
+    session:
+      type: apiKey
+      in: cookie
+      name: sid
+    adminToken:
+      type: apiKey
+      in: header
+      name: x-admin-token
+
+  parameters:
+    DeviceIdHeader:
+      name: x-device-id
+      in: header
+      required: false
+      description: '`calc-<mac>`. Recorded for the portal (clone spotting); never used for auth.'
+      schema: { type: string, pattern: '^calc-[0-9a-f]{12}$' }
+    Firmware:
+      name: x-firmware
+      in: header
+      required: false
+      schema: { type: string, maxLength: 32 }
+    FirmwareFamily:
+      name: family
+      in: query
+      required: false
+      description: |
+        The board family, i.e. the text before the first `-` of the running firmware
+        version (`v15lcd-2026.10.11` -> `v15lcd`). Absent or empty -> legacy channel.
+        Malformed -> 400 `bad_request`.
+      schema: { type: string, pattern: '^[A-Za-z0-9]{1,24}$' }
+      example: v15lcd
+    DeviceIdPath:
+      name: device_id
+      in: path
+      required: true
+      schema: { $ref: '#/components/schemas/DeviceId' }
+
+  responses:
+    BadRequest:
+      description: '`bad_request`'
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Forbidden:
+      description: '`forbidden` (bad Origin or Content-Type on a browser call)'
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    NotFound:
+      description: '`not_found`'
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    RateLimited:
+      description: '`rate_limited`'
+      headers:
+        Retry-After: { schema: { type: integer } }
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    Unavailable:
+      description: '`unavailable`'
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    SessionRequired:
+      description: '`unauthorized` (no or expired session)'
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+    DeviceUnauthorized:
+      description: |
+        `unauthorized` (missing/unknown token; device should re-register) or
+        `device_revoked` (show "removed from its account", offer MODE 4 > Settings > Link calculator to link again).
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+
+  schemas:
+    Error:
+      type: object
+      required: [type, error]
+      properties:
+        type: { type: string, const: error }
+        error:
+          type: object
+          required: [type, message]
+          properties:
+            type:
+              type: string
+              enum:
+                - bad_request
+                - unauthorized
+                - forbidden
+                - not_found
+                - device_revoked
+                - device_not_linked
+                - subscription_inactive
+                - quota_exceeded
+                - rate_limited
+                - spend_cap
+                - payload_too_large
+                - upstream_error
+                - unavailable
+                - invalid_token
+                - invalid_code
+                - device_limit
+                - already_subscribed
+                - no_customer
+                - bad_signature
+                - sold_out
+            message: { type: string, maxLength: 110 }
+
+    DeviceId:
+      type: string
+      pattern: '^dev_[0-9a-f]{16}$'
+    DeviceToken:
+      type: string
+      pattern: '^dt_[A-Za-z0-9_-]{43}$'
+    PairCode:
+      type: string
+      description: 8 chars from `ABCDEFGHJKLMNPQRSTUVWXYZ23456789`, shown as XXXX-XXXX.
+      pattern: '^[A-HJ-NP-Z2-9]{4}-?[A-HJ-NP-Z2-9]{4}$'
+    Label:
+      type: string
+      minLength: 1
+      maxLength: 40
+      pattern: '^[^<>\x00-\x1f]+$'
+
+    PlanState:
+      type: string
+      enum: [none, trial, active, past_due, inactive]
+      description: |
+        none = never had trial or subscription; trial = our free month; active / past_due
+        mirror Stripe (past_due still solves for 3 days); inactive = trial over or
+        subscription ended.
+
+    DeviceStatus:
+      type: object
+      required: [linked, plan, can_solve]
+      properties:
+        linked: { type: boolean }
+        plan: { $ref: '#/components/schemas/PlanState' }
+        can_solve: { type: boolean }
+        reason:
+          type: string
+          maxLength: 110
+          description: Present when can_solve is false; ready to show on screen.
+        account_hint:
+          type: string
+          maxLength: 40
+          description: Masked e-mail for the Link calculator screen (MODE 4 > Settings), e.g. "n***@gmail.com". Only when linked.
+        trial_ends_at: { type: integer }
+        period_end: { type: integer }
+        solves_this_month: { type: integer }
+        solves_limit: { type: integer }
+        pair_code:
+          description: |
+            Added 2026-10-11 (optional; older servers omit it). Not linked: the current
+            unexpired link code, formatted XXXX-XXXX, the same code `reason` names (a fresh
+            one is issued when the old one has under a minute left). Linked: null.
+          oneOf:
+            - $ref: '#/components/schemas/PairCode'
+            - type: 'null'
+          example: K7QM-3XTR
+        link_url:
+          type: string
+          format: uri
+          description: |
+            Added 2026-10-11 (optional). The site's link page, PUBLIC_URL + "/link/", where the
+            owner types `pair_code`. Present whether linked or not.
+          example: https://proofline.example/link/
+        plan_reason:
+          type: string
+          enum: [not_linked, trial, active, past_due, free_month_over, inactive, no_trial]
+          description: |
+            Added 2026-10-11 (optional). The plan state as a short code, so the device need
+            not parse `reason`. Agrees with `reason`:
+            not_linked = no account (reason = "Link this calculator: ...");
+            trial = free month running; active = paid subscription; past_due = payment
+            failed, still solving during the 3-day grace;
+            free_month_over = trial ended, never subscribed (reason = "Your free month is over...");
+            inactive = subscription ended (reason = "Your subscription has ended...");
+            no_trial = linked but no free month for this board/account (reason = "No free month...").
+            trial / active / past_due can still have can_solve false for the monthly limit or
+            the daily spend cap; `reason` then says which.
+          example: trial
+      example:
+        linked: false
+        plan: none
+        can_solve: false
+        reason: 'Link this calculator: go to proofline.example/link and enter code K7QM-3XTR'
+        pair_code: K7QM-3XTR
+        link_url: https://proofline.example/link/
+        plan_reason: not_linked
+
+    FirmwareManifest:
+      type: object
+      required: [update]
+      description: |
+        Answer of GET /v1/firmware. When nothing is published on the asked channel only
+        `update: false` (and `family` when the device sent one) is present; otherwise all of
+        version, size, sha256, path, family and rollback are.
+      properties:
+        update: { type: boolean, description: true when published version != x-firmware (string compare) }
+        version: { type: string }
+        size: { type: integer }
+        sha256: { type: string, pattern: '^[0-9a-f]{64}$' }
+        path:
+          type: string
+          pattern: '^/v1/firmware/image(\?family=[A-Za-z0-9]{1,24})?$'
+          description: Download path, GET it as is. Carries `?family=` when the check did.
+        family:
+          type: [string, 'null']
+          pattern: '^[A-Za-z0-9]{1,24}$'
+          description: |
+            Added 2026-10-11 (optional). The family the image was published for; null for
+            an image on the legacy channel (published without family).
+        rollback:
+          type: boolean
+          description: |
+            Added 2026-10-11 (optional; absent = false). True when the image was published as
+            a rollback: install it even if its version is older than the running one.
+            Never makes a device install another family's image.
+
+    Device:
+      type: object
+      required: [id, label, created_at, revoked]
+      properties:
+        id: { $ref: '#/components/schemas/DeviceId' }
+        label: { type: string }
+        hw_id: { type: string }
+        fw_version: { type: string }
+        created_at: { type: integer }
+        last_seen_at: { type: integer }
+        revoked: { type: boolean }
+
+    Account:
+      type: object
+      required: [email, plan, plan_interval, has_billing, usage, devices]
+      properties:
+        email: { type: string, format: email }
+        plan: { $ref: '#/components/schemas/PlanState' }
+        plan_interval:
+          type: [string, 'null']
+          enum: [month, year, null]
+          description: Billing interval of the subscription behind an active or past_due plan; null otherwise (trial, none, inactive).
+        has_billing:
+          type: boolean
+          description: A Stripe customer exists, so /api/billing/portal works (Manage billing).
+        trial_ends_at: { type: integer }
+        period_end: { type: integer }
+        cancel_at_period_end: { type: boolean }
+        usage:
+          type: object
+          required: [solves_this_month, solves_limit, spend_limit_reached]
+          properties:
+            solves_this_month: { type: integer }
+            solves_limit: { type: integer }
+            spend_limit_reached: { type: boolean }
+        devices:
+          type: array
+          items: { $ref: '#/components/schemas/Device' }
+
+    RedirectUrl:
+      type: object
+      required: [url]
+      properties:
+        url:
+          type: string
+          format: uri
+          description: |
+            Always a https://checkout.stripe.com or https://billing.stripe.com URL. (Local
+            development only, DEV_MODE=1: the fake Stripe's own page on 127.0.0.1.)
+
+    WaitlistTag:
+      type: string
+      description: |
+        A tracking tag from the page link (POST /api/waitlist). Lower-cased by the API and kept
+        only if it matches ^[a-z0-9_-]{1,40}$; anything else is stored as NULL (not an error).
+
+    ImagePart:
+      type: object
+      required: [media_type, data]
+      additionalProperties: false
+      properties:
+        media_type: { type: string, enum: [image/jpeg, image/png] }
+        data: { type: string, contentEncoding: base64, description: 'Max 5 MiB (5,242,880 bytes) decoded per request in total, else 400 bad_request' }
+
+    SolveRequest:
+      type: object
+      additionalProperties: false
+      required: [images]
+      properties:
+        images:
+          type: array
+          minItems: 1
+          maxItems: 2
+          items: { $ref: '#/components/schemas/ImagePart' }
+        tutor: { type: boolean, default: false }
+
+    LegacySolveRequest:
+      type: object
+      description: |
+        Body sent by firmware before stage 2 (a Messages-API body). Only
+        `messages[0].content[*]` items with `type: image` (source.type base64) and the
+        top-level `tutor` are read; everything else (system, model, max_tokens, text,
+        output_config, tools...) is ignored. Deprecated; removed once all devices run
+        stage-2 firmware.
+      required: [messages]
+      properties:
+        messages:
+          type: array
+          minItems: 1
+          items:
+            type: object
+            required: [content]
+            properties:
+              content:
+                type: array
+                items: { type: object }
+        tutor: { type: boolean }

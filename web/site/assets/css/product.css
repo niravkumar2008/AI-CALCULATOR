@@ -1,0 +1,218 @@
+/* Product pages: how it works, features, try it, specs, pricing.
+   Only what site.css doesn't already have. Colours come from the site tokens,
+   so light and dark mode follow automatically. */
+
+/* Two columns, top-aligned (site.css .split centres them). */
+.split--top {
+  align-items: start;
+}
+
+/* A plain list with check marks (or crosses) in front. */
+.ticks {
+  display: grid;
+  gap: var(--s-3);
+}
+.ticks li {
+  display: grid;
+  grid-template-columns: 1.25rem minmax(0, 1fr);
+  gap: var(--s-3);
+  color: var(--ink-2);
+}
+.ticks li strong {
+  color: var(--ink);
+}
+.ticks svg {
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  color: var(--ok);
+}
+.ticks--off svg {
+  color: var(--ink-2);
+}
+.ticks + .callout,
+.ticks + p {
+  margin-top: var(--s-5);
+}
+
+/* A titled panel inside a .split column (one level, never nested). */
+.panel {
+  padding: clamp(var(--s-5), 1rem + 1.5vw, var(--s-6));
+  border-radius: var(--r-lg);
+  background: var(--surface-2);
+  box-shadow: 0 0 0 1px var(--line);
+}
+.panel h3 {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-bottom: var(--s-4);
+}
+.panel h3 svg {
+  flex: none;
+  width: 22px;
+  height: 22px;
+  color: var(--accent-ink);
+}
+
+/* Static numbered steps (no video sync): reuse .steps, keep every number lit. */
+.steps--static .step__num {
+  border-color: var(--accent-ink);
+  color: var(--accent-ink);
+}
+.steps--static .step p + p {
+  margin-top: var(--s-2);
+}
+.step .keys {
+  margin-top: var(--s-3);
+}
+
+/* Short paragraph after a block, e.g. "Read the setup guide". */
+.more-links {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+  margin-top: var(--s-7);
+}
+
+/* Prose that sits beside a figure. */
+.copy > * + * {
+  margin-top: var(--s-4);
+}
+.copy p {
+  color: var(--ink-2);
+}
+.copy .lead {
+  color: var(--ink-2);
+}
+
+/* Figures on product pages. */
+.product-figure picture {
+  display: block;
+}
+.product-figure img {
+  width: 100%;
+  max-width: 34rem;
+  margin-inline: auto;
+}
+@media (prefers-color-scheme: dark) {
+  .product-figure picture {
+    background: radial-gradient(ellipse 62% 58% at 52% 48%, rgb(150 165 190 / 0.22), rgb(150 165 190 / 0) 72%);
+  }
+}
+
+/* Spec groups on the specs page: a heading above a .spec-table. */
+.spec-group + .spec-group {
+  margin-top: var(--s-8);
+}
+.spec-group h2 {
+  margin-bottom: var(--s-5);
+  font-size: clamp(1.5rem, 1.2rem + 1vw, 1.875rem);
+}
+.spec-group > p {
+  margin-bottom: var(--s-4);
+  color: var(--ink-2);
+}
+
+/* Pricing: calculator only vs calculator + AI tutor plan. */
+.compare {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--text-base);
+}
+.compare caption {
+  text-align: left;
+  padding-bottom: var(--s-4);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+.compare th,
+.compare td {
+  padding: var(--s-4) var(--s-3);
+  border-bottom: 1px solid var(--line);
+  text-align: left;
+  vertical-align: top;
+}
+.compare th:first-child {
+  padding-left: 0;
+}
+.compare thead th {
+  border-bottom: 1px solid var(--line-strong);
+  font: 600 1.0625rem/1.3 var(--font-body);
+  color: var(--ink);
+}
+.compare thead th small {
+  display: block;
+  margin-top: 0.15rem;
+  font: 500 0.875rem/1.4 var(--font-mono);
+  color: var(--ink-2);
+}
+.compare tbody th {
+  font-weight: 500;
+  color: var(--ink);
+}
+.compare td {
+  color: var(--ink-2);
+  width: 30%;
+}
+.compare td svg {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  margin-right: 0.35rem;
+  vertical-align: -0.3em;
+}
+.compare .yes svg {
+  color: var(--ok);
+}
+.compare .no svg {
+  color: var(--ink-2);
+}
+.compare .plan {
+  background: color-mix(in srgb, var(--accent) 6%, transparent);
+}
+@media (max-width: 30rem) {
+  .compare th,
+  .compare td {
+    padding-inline: var(--s-2);
+    font-size: 0.9375rem;
+  }
+  .compare td svg {
+    display: block;
+    margin: 0 0 0.2rem;
+  }
+}
+
+/* A row of plain facts on the pricing page. */
+.price-points--row {
+  display: grid;
+  gap: var(--s-5);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+}
+
+/* The exam-mode demo outside the homepage: keep its copy readable on paper too. */
+.exam-demo-wrap {
+  display: grid;
+  gap: var(--s-7);
+  align-items: center;
+}
+@media (min-width: 60rem) {
+  .exam-demo-wrap {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--s-8);
+  }
+}
+
+/* The simulator page: give the copy column room on its own. */
+.try-page .try__copy h2 {
+  margin-top: var(--s-7);
+  font-size: clamp(1.375rem, 1.2rem + 0.8vw, 1.75rem);
+}
+.try-page .try__copy h2:first-child {
+  margin-top: 0;
+}
+
+/* Keep short compound words (Wi-Fi) from breaking at the hyphen in headings. */
+.nowrap {
+  white-space: nowrap;
+}

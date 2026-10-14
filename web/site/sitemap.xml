@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- TODO(domain): replace proofline.example with the real domain. Personal pages (login, link, account, cart, order) and the noindex legal drafts (privacy, terms, refunds) are left out on purpose. -->
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url><loc>https://proofline.example/</loc></url>
+  <url><loc>https://proofline.example/shop/</loc></url>
+  <url><loc>https://proofline.example/shop/calculator/</loc></url>
+  <url><loc>https://proofline.example/shop/ai-tutor-plan/</loc></url>
+  <url><loc>https://proofline.example/how-it-works/</loc></url>
+  <url><loc>https://proofline.example/features/</loc></url>
+  <url><loc>https://proofline.example/features/ai-solve/</loc></url>
+  <url><loc>https://proofline.example/features/apps/</loc></url>
+  <url><loc>https://proofline.example/features/exam-mode/</loc></url>
+  <url><loc>https://proofline.example/features/calculator/</loc></url>
+  <url><loc>https://proofline.example/try-it/</loc></url>
+  <url><loc>https://proofline.example/specs/</loc></url>
+  <url><loc>https://proofline.example/pricing/</loc></url>
+  <url><loc>https://proofline.example/faq/</loc></url>
+  <url><loc>https://proofline.example/support/</loc></url>
+  <url><loc>https://proofline.example/support/setup/</loc></url>
+  <url><loc>https://proofline.example/support/wi-fi/</loc></url>
+  <url><loc>https://proofline.example/teachers/</loc></url>
+  <url><loc>https://proofline.example/honest/</loc></url>
+</urlset>

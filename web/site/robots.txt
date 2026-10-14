@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /account/
+Disallow: /login/
+Disallow: /link/
+Disallow: /cart/
+Disallow: /order/
+
+# TODO(domain): real domain once bought.
+Sitemap: https://proofline.example/sitemap.xml

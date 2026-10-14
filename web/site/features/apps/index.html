@@ -1,0 +1,668 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Apps · Proofline</title>
+  <meta name="description" content="Press MODE 4 for seven apps in color: AI Solve, Type it, History, Notes, Geography, Periodic Table and Settings. Most work offline.">
+  <!-- TODO(domain): swap proofline.example for the real domain once it's bought. -->
+  <link rel="canonical" href="https://proofline.example/features/apps/">
+  <!-- @head -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#10141c">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script src="/assets/js/site.js" defer></script>
+  <!-- /@head -->
+  <link rel="stylesheet" href="/assets/css/product.css">
+  <link rel="stylesheet" href="/assets/css/apps.css">
+  <!-- @breadcrumb-jsonld -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://proofline.example/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Features",
+      "item": "https://proofline.example/features/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Apps",
+      "item": "https://proofline.example/features/apps/"
+    }
+  ]
+}
+  </script>
+  <!-- /@breadcrumb-jsonld -->
+</head>
+<body>
+  <!-- @header -->
+  <a class="skip-link" href="#main">Skip to content</a>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#232a38"/><rect x="8" y="11" width="16" height="3.6" rx="1.8" fill="#e07a4f"/><rect x="8" y="17.4" width="16" height="3.6" rx="1.8" fill="#e07a4f"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+      <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.1 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.2L20.5 8H6.2"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="17" cy="20" r="1.2"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 4.2 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4.2M12 17.2v.1"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+      <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.8 12.6a9 9 0 0 1 12.4 0M9.1 16.1a4.3 4.3 0 0 1 5.8 0"/><circle cx="12" cy="19.3" r=".6" fill="currentColor"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header band-dark" data-scrolled="false">
+    <div class="container header__bar">
+      <a class="brand" translate="no" href="/" aria-label="Proofline home">
+        <svg aria-hidden="true"><use href="#i-mark"/></svg>
+        <span>Proofline</span>
+      </a>
+
+      <nav class="nav" aria-label="Main">
+        <ul class="nav__list">
+          <li>
+            <details class="nav__menu" data-menu>
+              <summary>Shop<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/shop/">All products</a></li>
+                <li><a href="/shop/calculator/">The calculator</a></li>
+                <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
+                <li><a href="/cart/">Cart</a></li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details class="nav__menu is-current" data-menu>
+              <summary>Product<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/how-it-works/">How it works</a></li>
+                <li><a href="/features/ai-solve/">AI Solve</a></li>
+                <li><a aria-current="page" href="/features/apps/">Apps</a></li>
+                <li><a href="/features/exam-mode/">Exam mode</a></li>
+                <li><a href="/features/calculator/">The calculator</a></li>
+                <li><a href="/try-it/">Try it in your browser</a></li>
+                <li><a href="/specs/">Specs</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a class="nav__link" href="/pricing/">Pricing</a></li>
+          <li>
+            <details class="nav__menu" data-menu>
+              <summary>Support<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/faq/">FAQ</a></li>
+                <li><a href="/support/setup/">Setup guide</a></li>
+                <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+                <li><a href="/teachers/">For teachers</a></li>
+                <li><a href="/honest/">Honest by design</a></li>
+                <li><a href="/support/">Contact and support</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <a class="icon-link" href="/account/" aria-label="Your account">
+          <svg aria-hidden="true"><use href="#i-user"/></svg><span class="icon-link__text">Account</span>
+        </a>
+        <a class="icon-link icon-link--cart" href="/cart/" aria-label="Cart" data-cart-link>
+          <svg aria-hidden="true"><use href="#i-cart"/></svg><span class="icon-link__text">Cart</span>
+          <span class="cart-badge" data-cart-count hidden>0</span>
+        </a>
+        <a class="btn btn--primary btn--sm header__cta" href="/#join" data-focus-email aria-label="Join the waitlist"><span class="cta-long">Join the waitlist</span><span class="cta-short" aria-hidden="true">Join</span></a>
+        <details class="mobile-menu" data-mobile-menu>
+          <summary class="icon-link" aria-label="Menu"><svg class="mm-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="mm-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
+          <div class="mobile-menu__sheet">
+            <p class="mobile-menu__group">Shop</p>
+            <ul>
+              <li><a href="/shop/">All products</a></li>
+              <li><a href="/shop/calculator/">The calculator</a></li>
+              <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
+              <li><a href="/cart/">Cart</a></li>
+            </ul>
+            <p class="mobile-menu__group">Product</p>
+            <ul>
+              <li><a href="/how-it-works/">How it works</a></li>
+              <li><a href="/features/ai-solve/">AI Solve</a></li>
+              <li><a aria-current="page" href="/features/apps/">Apps</a></li>
+              <li><a href="/features/exam-mode/">Exam mode</a></li>
+              <li><a href="/features/calculator/">The calculator</a></li>
+              <li><a href="/try-it/">Try it in your browser</a></li>
+              <li><a href="/specs/">Specs</a></li>
+              <li><a href="/pricing/">Pricing</a></li>
+            </ul>
+            <p class="mobile-menu__group">Support</p>
+            <ul>
+              <li><a href="/faq/">FAQ</a></li>
+              <li><a href="/support/setup/">Setup guide</a></li>
+              <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+              <li><a href="/teachers/">For teachers</a></li>
+              <li><a href="/honest/">Honest by design</a></li>
+              <li><a href="/support/">Contact and support</a></li>
+              <li><a href="/account/">Your account</a></li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+  <!-- /@header -->
+  <main id="main">
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+      <defs>
+        <symbol id="i-camera" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h3l1.5-2.5h7L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.5"/></symbol>
+        <symbol id="i-keyboard" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="2.5" y="6" width="19" height="12" rx="2"/><path d="M6 10h.01M9.3 10h.01M12.6 10h.01M15.9 10h.01M18 10h.01M6 13.5h.01M18 13.5h.01M8.5 14.5h7"/></symbol>
+        <symbol id="i-clock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></symbol>
+        <symbol id="i-note" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l4 4v14H6z"/><path d="M14.5 3v4.5H19M9 12h7M9 15.5h7M9 19h4"/></symbol>
+        <symbol id="i-globe" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.6 2.6 3.8 5.6 3.8 9s-1.2 6.4-3.8 9c-2.6-2.6-3.8-5.6-3.8-9S9.4 5.6 12 3z"/></symbol>
+        <symbol id="i-atom" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="4" width="16" height="16" rx="2.5"/><path d="M8 9.5V8h4v1.5M10 8v6"/><path d="M8 16.5h8"/></symbol>
+        <symbol id="i-gear" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M12 2.8v2.4M12 18.8v2.4M2.8 12h2.4M18.8 12h2.4M5.5 5.5l1.7 1.7M16.8 16.8l1.7 1.7M5.5 18.5l1.7-1.7M16.8 7.2l1.7-1.7"/></symbol>
+        <symbol id="i-calc" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2.5" width="14" height="19" rx="2.5"/><rect x="8" y="5.5" width="8" height="4" rx="1"/><path d="M8.5 13h.01M12 13h.01M15.5 13h.01M8.5 16.5h.01M12 16.5h.01M15.5 16.5h.01"/></symbol>
+        <symbol id="i-tag" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.3"/></symbol>
+        <symbol id="i-keys" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linejoin="round"><rect x="3" y="4" width="7.5" height="6.5" rx="2"/><rect x="13.5" y="4" width="7.5" height="6.5" rx="2"/><rect x="3" y="13.5" width="7.5" height="6.5" rx="2"/><rect x="13.5" y="13.5" width="7.5" height="6.5" rx="2"/></symbol>
+      </defs>
+    </svg>
+
+    <section class="page-hero band-dark" aria-labelledby="page-title">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/features/">Features</a></li><li><span aria-current="page">Apps</span></li></ol></nav>
+        <h1 id="page-title">A calculator first. Apps when you want them.</h1>
+        <p class="lead">It starts as a normal scientific calculator. Press <kbd translate="no">MODE</kbd> <kbd translate="no">4</kbd> and Apps opens in color: seven apps, from AI Solve to a full periodic table. Most of them work without Wi-Fi.</p>
+        <div class="page-hero__actions">
+          <a class="btn btn--ghost" href="/try-it/">Try the apps in your browser</a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="two-looks" aria-labelledby="two-looks-title">
+      <div class="container app-block">
+        <div data-reveal>
+        <div class="screens">
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/apps-menu-640.webp 640w, /assets/img/apps/apps-menu-960.webp 960w" sizes="(min-width: 60rem) 34rem, 92vw">
+            <img src="/assets/img/apps/apps-menu-640.png" width="640" height="340" decoding="async"
+                 alt="The Apps menu in color: a camera icon, AI SOLVE, “Photo a problem, solve it”, arrows to the next app, and the key hints Move, Open and Back.">
+          </picture></span>
+        </figure>
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/calc-result-640.webp 640w, /assets/img/apps/calc-result-960.webp 960w" sizes="(min-width: 60rem) 17rem, 46vw">
+            <img src="/assets/img/apps/calc-result-640.png" width="640" height="340" decoding="async"
+                 alt="The calculator screen in its classic look, grey-green with dark digits: 2×(3+4)²÷7+√(16) and the answer, 18.">
+          </picture></span>
+        </figure>
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/mode-menu-640.webp 640w, /assets/img/apps/mode-menu-960.webp 960w" sizes="(min-width: 60rem) 17rem, 46vw">
+            <img src="/assets/img/apps/mode-menu-640.png" width="640" height="340" decoding="async"
+                 alt="The MODE menu in the classic look: 1:COMP, 2:STAT, 3:TABLE, 4:APPS, 5:EQN, 6:CMPLX, 7:BASE-N, 8:MATRIX and 9:VECTOR.">
+          </picture></span>
+        </figure>
+        </div>
+        </div>
+        <div class="copy" data-reveal>
+          <span class="eyebrow">Two looks</span>
+          <h2 id="two-looks-title">Classic calculator. Then color.</h2>
+          <p>Switch it on and it looks and works like a classic scientific calculator: a grey-green screen, dark digits, and the keys where you expect them.</p>
+          <p>Press <kbd translate="no">MODE</kbd>, then <kbd translate="no">4</kbd> for Apps. The screen turns to full color, one app at a time. Move with <kbd translate="no">◀</kbd> <kbd translate="no">▶</kbd>, press <kbd translate="no">=</kbd> to open an app (or its number, 1 to 7), and <kbd translate="no">AC</kbd> to go back to the calculator, with your sum still there.</p>
+          <div class="keys" aria-label="To open Apps, press MODE, then 4.">
+            <span class="keycap" translate="no" aria-hidden="true">MODE</span>
+            <span class="keys__then" aria-hidden="true">then</span>
+            <span class="keycap keycap--accent" translate="no" aria-hidden="true">4</span>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <p class="screens-note">Real screens from our prototype software, drawn by the calculator’s own code. Prototype photos coming soon.</p>
+      </div>
+    </section>
+
+    <section class="section section--tint" id="all-apps" aria-labelledby="all-apps-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Seven apps</span>
+          <h2 id="all-apps-title">What’s inside Apps.</h2>
+          <p>AI Solve and Type it need Wi-Fi and the AI tutor plan. The rest work offline, with or without the plan.</p>
+        </div>
+        <div class="card-grid">
+          <a class="card" href="#ai-solve">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-camera"/></svg></span>
+            <h3>AI Solve</h3>
+            <p>Photograph a problem. Get the answer and every step.</p>
+            <span class="card__more">Jump to it<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+          <a class="card" href="#type-it">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-keyboard"/></svg></span>
+            <h3>Type it</h3>
+            <p>Type a problem instead of taking a photo.</p>
+            <span class="card__more">Jump to it<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+          <a class="card" href="#history">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-clock"/></svg></span>
+            <h3>History</h3>
+            <p>Your last 20 answers, saved on the calculator.</p>
+            <span class="card__more">Jump to it<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+          <a class="card" href="#notes">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-note"/></svg></span>
+            <h3>Notes</h3>
+            <p>Up to 10 short notes.</p>
+            <span class="card__more">Jump to it<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+          <a class="card" href="#geography">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-globe"/></svg></span>
+            <h3>Geography</h3>
+            <p>A world map with 177 countries, their capitals and a quiz.</p>
+            <span class="card__more">Jump to it<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+          <a class="card" href="#periodic-table">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-atom"/></svg></span>
+            <h3>Periodic Table</h3>
+            <p>All 118 elements, with details, lists, search and trend graphs.</p>
+            <span class="card__more">Jump to it<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+          <a class="card" href="#settings">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-gear"/></svg></span>
+            <h3>Settings</h3>
+            <p>Brightness, sleep, Wi-Fi, the link code, battery and more.</p>
+            <span class="card__more">Jump to it<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="ai-solve" aria-labelledby="ai-solve-title">
+      <div class="container app-block">
+        <div data-reveal>
+        <div class="screens">
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/ai-solve-answer-640.webp 640w, /assets/img/apps/ai-solve-answer-960.webp 960w" sizes="(min-width: 60rem) 34rem, 92vw">
+            <img src="/assets/img/apps/ai-solve-answer-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="An AI Solve answer: x = 5, the question “Solve for x: 3x + 7 = 22”, and step 1 of 3 below it.">
+          </picture></span>
+        </figure>
+        </div>
+        </div>
+        <div class="copy" data-reveal>
+          <span class="eyebrow">App 1 of 7 · AI Solve</span>
+          <h2 id="ai-solve-title">Snap a problem. See every step.</h2>
+          <p class="app-tags"><span class="app-tag app-tag--online"><svg aria-hidden="true"><use href="#i-wifi"/></svg>Needs Wi-Fi</span> <span class="app-tag app-tag--online"><svg aria-hidden="true"><use href="#i-tag"/></svg>AI tutor plan</span></p>
+          <p>The screen becomes a live camera viewfinder. Point the camera on the back at a problem, press <kbd translate="no">=</kbd> to take the photo, and the answer appears on the calculator with every step worked out.</p>
+          <p>It works for math and science, plus basic finance. If the handwriting is unclear, it says so instead of guessing.</p>
+          <p>AI can make mistakes. That’s why it shows every step, so you can check the working.</p>
+          <p><a class="btn btn--ghost" href="/features/ai-solve/">More about AI Solve</a></p>
+        </div>
+      </div>
+    </section>
+    <section class="section section--tint" id="type-it" aria-labelledby="type-it-title">
+      <div class="container app-block app-block--flip">
+        <div data-reveal>
+        <div class="screens">
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/type-it-640.webp 640w, /assets/img/apps/type-it-960.webp 960w" sizes="(min-width: 60rem) 34rem, 92vw">
+            <img src="/assets/img/apps/type-it-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="Type it: the text “SOLVE 3x+7=22 FOR x” above an on-screen keyboard of letters, digits and math symbols, with SPACE, DEL and SEND.">
+          </picture></span>
+        </figure>
+        </div>
+        </div>
+        <div class="copy" data-reveal>
+          <span class="eyebrow">App 2 of 7 · Type it</span>
+          <h2 id="type-it-title">No photo? Type the problem.</h2>
+          <p class="app-tags"><span class="app-tag app-tag--online"><svg aria-hidden="true"><use href="#i-wifi"/></svg>Needs Wi-Fi</span> <span class="app-tag app-tag--online"><svg aria-hidden="true"><use href="#i-tag"/></svg>AI tutor plan</span></p>
+          <p>An on-screen keyboard with letters, digits and math symbols. Move with the arrow keys and press <kbd translate="no">=</kbd> to type a character. The number and operator keys type straight in. Up to 160 characters.</p>
+          <p>Send it, and the answer comes back just like a photo answer, with every step.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="history" aria-labelledby="history-title">
+      <div class="container app-block">
+        <div data-reveal>
+        <div class="screens">
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/history-640.webp 640w, /assets/img/apps/history-960.webp 960w" sizes="(min-width: 60rem) 34rem, 92vw">
+            <img src="/assets/img/apps/history-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="History: three saved answers, newest first (12.5 cm², x = 4 or x = −1, and x = 5), then Clear history.">
+          </picture></span>
+        </figure>
+        </div>
+        </div>
+        <div class="copy" data-reveal>
+          <span class="eyebrow">App 3 of 7 · History</span>
+          <h2 id="history-title">Your last 20 answers.</h2>
+          <p class="app-tags"><span class="app-tag app-tag--offline"><svg aria-hidden="true"><use href="#i-check"/></svg>Works offline</span> <span class="app-tag app-tag--offline"><svg aria-hidden="true"><use href="#i-check"/></svg>No plan needed</span></p>
+          <p>Every AI Solve and Type it answer is saved on the calculator itself, newest first. Open one to see the full answer and its steps again. Reading them doesn’t need Wi-Fi.</p>
+          <p>Clear the list whenever you like. It’s also cleared when the calculator is removed from the account.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section section--tint" id="notes" aria-labelledby="notes-title">
+      <div class="container app-block app-block--flip">
+        <div data-reveal>
+        <div class="screen-pair">
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/notes-list-640.webp 640w, /assets/img/apps/notes-list-960.webp 960w" sizes="(min-width: 60rem) 17rem, 46vw">
+            <img src="/assets/img/apps/notes-list-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="Notes: “+ New note” and two notes, one starting “AREA = πR^2, CIRCUMFERENCE” and one reading “QUIZ FRIDAY CH 4 AND 5”.">
+          </picture></span>
+        </figure>
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/note-view-640.webp 640w, /assets/img/apps/note-view-960.webp 960w" sizes="(min-width: 60rem) 17rem, 46vw">
+            <img src="/assets/img/apps/note-view-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="Note 1 open: formulas for the area and circumference of a circle and the volume of a sphere, with Edit and Delete.">
+          </picture></span>
+        </figure>
+        </div>
+        </div>
+        <div class="copy" data-reveal>
+          <span class="eyebrow">App 4 of 7 · Notes</span>
+          <h2 id="notes-title">Ten short notes, always with you.</h2>
+          <p class="app-tags"><span class="app-tag app-tag--offline"><svg aria-hidden="true"><use href="#i-check"/></svg>Works offline</span> <span class="app-tag app-tag--offline"><svg aria-hidden="true"><use href="#i-check"/></svg>No plan needed</span></p>
+          <p>Keep up to 10 notes of up to 160 characters each, typed with the same on-screen keyboard. Open a note to read it, edit it or delete it.</p>
+          <p>Notes are saved on the calculator, so they’re still there after it’s switched off. In exam mode they can’t be opened.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="geography" aria-labelledby="geography-title">
+      <div class="container app-block">
+        <div data-reveal>
+        <div class="screens">
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/geo-map-640.webp 640w, /assets/img/apps/geo-map-960.webp 960w" sizes="(min-width: 60rem) 34rem, 92vw">
+            <img src="/assets/img/apps/geo-map-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="Geography: a world map with Japan selected and its capital marked, labelled “Japan · Tokyo”.">
+          </picture></span>
+        </figure>
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/geo-card-640.webp 640w, /assets/img/apps/geo-card-960.webp 960w" sizes="(min-width: 60rem) 17rem, 46vw">
+            <img src="/assets/img/apps/geo-card-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="The country card for Japan: capital Tokyo, continent Asia, ISO code JPN, latitude and longitude.">
+          </picture></span>
+        </figure>
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/geo-quiz-640.webp 640w, /assets/img/apps/geo-quiz-960.webp 960w" sizes="(min-width: 60rem) 17rem, 46vw">
+            <img src="/assets/img/apps/geo-quiz-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="The capitals quiz: “What is the capital of eSwatini?” with four choices: Banjul, Tripoli, Mbabane and Juba.">
+          </picture></span>
+        </figure>
+        </div>
+        </div>
+        <div class="copy" data-reveal>
+          <span class="eyebrow">App 5 of 7 · Geography</span>
+          <h2 id="geography-title">The world map, in your pocket.</h2>
+          <p class="app-tags"><span class="app-tag app-tag--offline"><svg aria-hidden="true"><use href="#i-check"/></svg>Works offline</span> <span class="app-tag app-tag--offline"><svg aria-hidden="true"><use href="#i-check"/></svg>No plan needed</span></p>
+          <p>A world map with 177 countries. Move from country to country with the arrow keys, zoom in, and see each capital marked on the map.</p>
+          <p>Open a country card (capital, continent, country code, latitude and longitude), browse an A–Z list, find a country by its first letters, show one continent at a time, or take the capitals quiz.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section section--tint" id="periodic-table" aria-labelledby="periodic-table-title">
+      <div class="container app-block app-block--flip">
+        <div data-reveal>
+        <div class="screens">
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/periodic-table-640.webp 640w, /assets/img/apps/periodic-table-960.webp 960w" sizes="(min-width: 60rem) 34rem, 92vw">
+            <img src="/assets/img/apps/periodic-table-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="The periodic table, each element colored by category, with hydrogen selected: 1 H Hydrogen 1.008.">
+          </picture></span>
+        </figure>
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/periodic-detail-640.webp 640w, /assets/img/apps/periodic-detail-960.webp 960w" sizes="(min-width: 60rem) 17rem, 46vw">
+            <img src="/assets/img/apps/periodic-detail-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="Element details for iron: transition metal, mass 55.845 u, group 8, period 4, d-block, solid at 25 °C, configuration [Ar] 3d⁶ 4s².">
+          </picture></span>
+        </figure>
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/periodic-graph-640.webp 640w, /assets/img/apps/periodic-graph-960.webp 960w" sizes="(min-width: 60rem) 17rem, 46vw">
+            <img src="/assets/img/apps/periodic-graph-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="A graph of electronegativity against atomic number across the elements, with the cursor on 26 Fe Iron at 1.83.">
+          </picture></span>
+        </figure>
+        </div>
+        </div>
+        <div class="copy" data-reveal>
+          <span class="eyebrow">App 6 of 7 · Periodic Table</span>
+          <h2 id="periodic-table-title">All 118 elements.</h2>
+          <p class="app-tags"><span class="app-tag app-tag--offline"><svg aria-hidden="true"><use href="#i-check"/></svg>Works offline</span> <span class="app-tag app-tag--offline"><svg aria-hidden="true"><use href="#i-check"/></svg>No plan needed</span></p>
+          <p>A full periodic table, every element colored by category, like the periodic table apps on graphing calculators.</p>
+          <p>Open any element for its details: mass, group, period, block, state at room temperature, electron configuration, electronegativity, density and more. List the elements by number, name or symbol, find one by its symbol or atomic number, highlight one category at a time, and graph trends across the table, such as electronegativity, ionization energy, atomic radius, density, melting and boiling points.</p>
+        </div>
+      </div>
+    </section>
+    <section class="section" id="settings" aria-labelledby="settings-title">
+      <div class="container app-block">
+        <div data-reveal>
+        <div class="screens">
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/settings-640.webp 640w, /assets/img/apps/settings-960.webp 960w" sizes="(min-width: 60rem) 34rem, 92vw">
+            <img src="/assets/img/apps/settings-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="Settings: brightness at 70%, sleep timer 5 min, Wi-Fi and key connected, Link calculator, and Screen look.">
+          </picture></span>
+        </figure>
+        </div>
+        </div>
+        <div class="copy" data-reveal>
+          <span class="eyebrow">App 7 of 7 · Settings</span>
+          <h2 id="settings-title">Everything in one place.</h2>
+          <p class="app-tags"><span class="app-tag app-tag--offline"><svg aria-hidden="true"><use href="#i-check"/></svg>Works offline</span> <span class="app-tag app-tag--offline"><svg aria-hidden="true"><use href="#i-check"/></svg>No plan needed</span></p>
+          <p>Brightness, the screen sleep timer, Wi-Fi, the link code for your account, the screen look, exam mode, the battery level and the software version.</p>
+          <p>Setting up Wi-Fi and linking the calculator need Wi-Fi, of course. The rest works anywhere.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tint" id="offline" aria-labelledby="offline-title">
+      <div class="container">
+        <div class="section-head" data-reveal>
+          <span class="eyebrow">Offline and the plan</span>
+          <h2 id="offline-title">What needs <span class="nowrap">Wi-Fi</span> and the plan, and what doesn’t.</h2>
+          <p>Only the two apps that work out answers for you need Wi-Fi and the AI tutor plan.</p>
+        </div>
+        <div class="split split--top">
+          <div class="panel" data-reveal>
+            <h3><svg aria-hidden="true"><use href="#i-calc"/></svg>Works offline, no plan needed</h3>
+            <ul class="ticks">
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>The full scientific calculator</span></li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Geography</span></li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Periodic Table</span></li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Notes</span></li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>History (reading the answers already saved)</span></li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Settings (setting up Wi-Fi and linking need Wi-Fi)</span></li>
+            </ul>
+          </div>
+          <div class="panel" data-reveal>
+            <h3><svg aria-hidden="true"><use href="#i-wifi"/></svg>Needs Wi-Fi and the AI tutor plan</h3>
+            <ul class="ticks">
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>AI Solve</span></li>
+              <li><svg aria-hidden="true"><use href="#i-check"/></svg><span>Type it</span></li>
+            </ul>
+            <p>The first month is free, starting when you first link the calculator. After that the plan is $10 a month or $100 a year. Software updates come only with the plan.</p>
+          </div>
+        </div>
+        <p class="more-links"><a class="btn btn--ghost" href="/pricing/">See pricing</a></p>
+      </div>
+    </section>
+
+    <section class="section" id="exam" aria-labelledby="exam-title">
+      <div class="container app-block">
+        <div data-reveal>
+        <div class="screens">
+        <figure class="screen">
+          <span class="screen__frame"><picture>
+            <source type="image/webp" srcset="/assets/img/apps/exam-apps-off-640.webp 640w, /assets/img/apps/exam-apps-off-960.webp 960w" sizes="(min-width: 60rem) 34rem, 92vw">
+            <img src="/assets/img/apps/exam-apps-off-640.png" width="640" height="340" loading="lazy" decoding="async"
+                 alt="In exam mode, MODE 4 shows “APPS ARE OFF. Exam mode is on.” under a black bar with a padlock, EXAM and a timer.">
+          </picture></span>
+        </figure>
+        </div>
+        </div>
+        <div class="copy" data-reveal>
+          <span class="eyebrow">Exam mode</span>
+          <h2 id="exam-title">In exam mode, every app is off.</h2>
+          <p>Press <kbd translate="no">SHIFT</kbd> <kbd translate="no">MODE</kbd> <kbd translate="no">8</kbd> <kbd translate="no">=</kbd>. The AI, the camera and Wi-Fi turn off, and so do all the apps. <kbd translate="no">MODE</kbd> <kbd translate="no">4</kbd> just says “Apps are off”.</p>
+          <p>Notes and History can’t be opened until exam mode ends, and turning exam mode on closes any app that’s open. The calculator keeps working, and the black status bar shows a teacher it’s on.</p>
+          <p><a class="btn btn--ghost" href="/features/exam-mode/">More about exam mode</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--tint" aria-labelledby="keep-title">
+      <div class="container">
+        <div class="section-head">
+          <span class="eyebrow">Keep exploring</span>
+          <h2 id="keep-title">There’s more to see.</h2>
+        </div>
+        <div class="card-grid">
+          <a class="card" href="/try-it/">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-keys"/></svg></span>
+            <h3>Try it in your browser</h3>
+            <p>The calculator’s own software, apps included, running on this website.</p>
+            <span class="card__more">Try it<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+          <a class="card" href="/features/calculator/">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-calc"/></svg></span>
+            <h3>The calculator</h3>
+            <p>A full scientific calculator that works offline, with real rubber keys.</p>
+            <span class="card__more">Read more<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+          <a class="card" href="/teachers/">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-lock"/></svg></span>
+            <h3>For teachers</h3>
+            <p>How to spot exam mode at a glance.</p>
+            <span class="card__more">Read more<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band band-dark" aria-labelledby="cta-title">
+      <div class="container cta-band__inner">
+        <div>
+          <h2 id="cta-title">Be first in line.</h2>
+          <p>We’ll email you when preorders open. They’re planned for 2027. No payment now.</p>
+        </div>
+        <form class="waitlist" action="/api/waitlist" method="post" data-source="site">
+          <input type="hidden" name="source" value="site"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
+          <label class="waitlist__label" for="email-apps">Your email</label>
+          <div class="waitlist__row">
+            <input class="field" id="email-apps" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-apps msg-apps">
+            <div class="hp" aria-hidden="true"><label for="company-apps">Company</label><input id="company-apps" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+            <button class="btn btn--primary" type="submit">Join the waitlist</button>
+          </div>
+          <label class="waitlist__age" for="age-apps"><input id="age-apps" name="age_ok" type="checkbox" required aria-describedby="msg-apps">I’m 13 or older</label>
+          <p class="waitlist__note" id="note-apps"><a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__msg" id="msg-apps" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <!-- @footer -->
+  <footer class="site-footer band-dark">
+    <div class="container footer__grid">
+      <div class="footer__intro">
+        <a class="brand" translate="no" href="/" aria-label="Proofline home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Proofline</span></a>
+        <p>The AI study tutor that works like a real scientific calculator. In development; preorders planned for 2027.</p>
+        <form class="waitlist waitlist--compact" action="/api/waitlist" method="post" data-source="footer">
+          <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
+          <label class="waitlist__label" for="email-sitefoot">Get an email when preorders open</label>
+          <div class="waitlist__row">
+            <input class="field" id="email-sitefoot" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-sitefoot msg-sitefoot">
+            <div class="hp" aria-hidden="true"><label for="company-sitefoot">Company</label><input id="company-sitefoot" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+            <button class="btn btn--primary" type="submit">Join</button>
+          </div>
+          <label class="waitlist__age" for="age-sitefoot"><input id="age-sitefoot" name="age_ok" type="checkbox" required aria-describedby="msg-sitefoot">I’m 13 or older</label>
+          <p class="waitlist__note" id="note-sitefoot">No payment now. <a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__msg" id="msg-sitefoot" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <nav class="footer__cols" aria-label="Footer">
+        <div>
+          <p class="footer__head">Shop</p>
+          <ul>
+            <li><a href="/shop/">All products</a></li>
+            <li><a href="/shop/calculator/">The calculator</a></li>
+            <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+            <li><a href="/cart/">Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Product</p>
+          <ul>
+            <li><a href="/how-it-works/">How it works</a></li>
+            <li><a href="/features/ai-solve/">AI Solve</a></li>
+            <li><a aria-current="page" href="/features/apps/">Apps</a></li>
+            <li><a href="/features/exam-mode/">Exam mode</a></li>
+            <li><a href="/features/calculator/">The calculator</a></li>
+            <li><a href="/try-it/">Try it</a></li>
+            <li><a href="/specs/">Specs</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Support</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/support/setup/">Setup guide</a></li>
+            <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+            <li><a href="/teachers/">For teachers</a></li>
+            <li><a href="/support/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Company</p>
+          <ul>
+            <li><a href="/honest/">Honest by design</a></li>
+            <li><a href="/account/">Your account</a></li>
+            <li><a href="/privacy/">Privacy</a></li>
+            <li><a href="/terms/">Terms</a></li>
+            <li><a href="/refunds/">Refunds and warranty</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="legal">
+        <p>Not affiliated with Casio Computer Co., Ltd.</p>
+        <p>Prices in US dollars. © 2026 Proofline Corporation.</p>
+        <!-- TODO(contact): real support address once the domain is bought. -->
+        <p>Contact: <a href="mailto:hello@proofline.example">hello@proofline.example</a></p>
+      </div>
+    </div>
+  </footer>
+  <!-- /@footer -->
+</body>
+</html>

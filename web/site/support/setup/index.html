@@ -1,0 +1,407 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Setup guide · Proofline</title>
+  <meta name="description" content="Set up the calculator in six steps: charge it, join Wi-Fi, let it register, link it to your account and try AI Solve.">
+  <!-- TODO(domain): swap proofline.example for the real domain once it's bought. -->
+  <link rel="canonical" href="https://proofline.example/support/setup/">
+  <!-- @head -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#10141c">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script src="/assets/js/site.js" defer></script>
+  <!-- /@head -->
+  <link rel="stylesheet" href="/assets/css/support.css">
+  <!-- @breadcrumb-jsonld -->
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "https://proofline.example/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Support",
+      "item": "https://proofline.example/support/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "Setup guide",
+      "item": "https://proofline.example/support/setup/"
+    }
+  ]
+}
+  </script>
+  <!-- /@breadcrumb-jsonld -->
+</head>
+<body>
+  <!-- @header -->
+  <a class="skip-link" href="#main">Skip to content</a>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#232a38"/><rect x="8" y="11" width="16" height="3.6" rx="1.8" fill="#e07a4f"/><rect x="8" y="17.4" width="16" height="3.6" rx="1.8" fill="#e07a4f"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+      <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.1 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.2L20.5 8H6.2"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="17" cy="20" r="1.2"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 4.2 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4.2M12 17.2v.1"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+      <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.8 12.6a9 9 0 0 1 12.4 0M9.1 16.1a4.3 4.3 0 0 1 5.8 0"/><circle cx="12" cy="19.3" r=".6" fill="currentColor"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header band-dark" data-scrolled="false">
+    <div class="container header__bar">
+      <a class="brand" translate="no" href="/" aria-label="Proofline home">
+        <svg aria-hidden="true"><use href="#i-mark"/></svg>
+        <span>Proofline</span>
+      </a>
+
+      <nav class="nav" aria-label="Main">
+        <ul class="nav__list">
+          <li>
+            <details class="nav__menu" data-menu>
+              <summary>Shop<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/shop/">All products</a></li>
+                <li><a href="/shop/calculator/">The calculator</a></li>
+                <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
+                <li><a href="/cart/">Cart</a></li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details class="nav__menu" data-menu>
+              <summary>Product<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/how-it-works/">How it works</a></li>
+                <li><a href="/features/ai-solve/">AI Solve</a></li>
+                <li><a href="/features/apps/">Apps</a></li>
+                <li><a href="/features/exam-mode/">Exam mode</a></li>
+                <li><a href="/features/calculator/">The calculator</a></li>
+                <li><a href="/try-it/">Try it in your browser</a></li>
+                <li><a href="/specs/">Specs</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a class="nav__link" href="/pricing/">Pricing</a></li>
+          <li>
+            <details class="nav__menu is-current" data-menu>
+              <summary>Support<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/faq/">FAQ</a></li>
+                <li><a aria-current="page" href="/support/setup/">Setup guide</a></li>
+                <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+                <li><a href="/teachers/">For teachers</a></li>
+                <li><a href="/honest/">Honest by design</a></li>
+                <li><a href="/support/">Contact and support</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <a class="icon-link" href="/account/" aria-label="Your account">
+          <svg aria-hidden="true"><use href="#i-user"/></svg><span class="icon-link__text">Account</span>
+        </a>
+        <a class="icon-link icon-link--cart" href="/cart/" aria-label="Cart" data-cart-link>
+          <svg aria-hidden="true"><use href="#i-cart"/></svg><span class="icon-link__text">Cart</span>
+          <span class="cart-badge" data-cart-count hidden>0</span>
+        </a>
+        <a class="btn btn--primary btn--sm header__cta" href="/#join" data-focus-email aria-label="Join the waitlist"><span class="cta-long">Join the waitlist</span><span class="cta-short" aria-hidden="true">Join</span></a>
+        <details class="mobile-menu" data-mobile-menu>
+          <summary class="icon-link" aria-label="Menu"><svg class="mm-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="mm-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
+          <div class="mobile-menu__sheet">
+            <p class="mobile-menu__group">Shop</p>
+            <ul>
+              <li><a href="/shop/">All products</a></li>
+              <li><a href="/shop/calculator/">The calculator</a></li>
+              <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
+              <li><a href="/cart/">Cart</a></li>
+            </ul>
+            <p class="mobile-menu__group">Product</p>
+            <ul>
+              <li><a href="/how-it-works/">How it works</a></li>
+              <li><a href="/features/ai-solve/">AI Solve</a></li>
+              <li><a href="/features/apps/">Apps</a></li>
+              <li><a href="/features/exam-mode/">Exam mode</a></li>
+              <li><a href="/features/calculator/">The calculator</a></li>
+              <li><a href="/try-it/">Try it in your browser</a></li>
+              <li><a href="/specs/">Specs</a></li>
+              <li><a href="/pricing/">Pricing</a></li>
+            </ul>
+            <p class="mobile-menu__group">Support</p>
+            <ul>
+              <li><a href="/faq/">FAQ</a></li>
+              <li><a aria-current="page" href="/support/setup/">Setup guide</a></li>
+              <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+              <li><a href="/teachers/">For teachers</a></li>
+              <li><a href="/honest/">Honest by design</a></li>
+              <li><a href="/support/">Contact and support</a></li>
+              <li><a href="/account/">Your account</a></li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+  <!-- /@header -->
+  <main id="main">
+    <section class="page-hero band-dark">
+      <div class="container">
+        <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/support/">Support</a></li><li><span aria-current="page">Setup guide</span></li></ol></nav>
+        <h1>Set up your calculator.</h1>
+        <p class="lead">Six steps, from the first charge to your first AI Solve. Wi-Fi takes a minute, and you link it once.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container narrow">
+        <p class="callout" style="margin-bottom:var(--s-7)">
+          <svg aria-hidden="true"><use href="#i-info"/></svg>
+          <span>This guide follows the prototype. Exact menu names and key steps may change on the final firmware, and we’ll update this page when they do.</span>
+        </p>
+
+        <ol class="steps guide-steps">
+          <li class="step" id="charge">
+            <span class="step__num" aria-hidden="true">1</span>
+            <div>
+              <h2>Charge it</h2>
+              <p>Snap the magnetic charging connector onto the calculator and let it charge. It has a rechargeable battery.</p>
+            </div>
+          </li>
+
+          <li class="step" id="wi-fi">
+            <span class="step__num" aria-hidden="true">2</span>
+            <div>
+              <h2>Join Wi-Fi</h2>
+              <p>Press <kbd translate="no">SHIFT</kbd> then <kbd translate="no">MODE</kbd> to open SETUP, and choose Wi-Fi.</p>
+              <div class="keys" aria-hidden="true">
+                <span class="keycap keycap--shift" translate="no">SHIFT</span>
+                <span class="keys__then">then</span>
+                <span class="keycap" translate="no">MODE</span>
+              </div>
+              <p>Then pick one:</p>
+              <ul>
+                <li><strong>Type on keys:</strong> choose your network and type its password on the calculator’s keypad.</li>
+                <li><strong>Set up with phone:</strong> follow the steps on the calculator’s screen to do it from your phone.</li>
+              </ul>
+              <p>Use 2.4 GHz home Wi-Fi or a phone hotspot. School networks with a login page aren’t supported.</p>
+            </div>
+          </li>
+
+          <li class="step" id="register">
+            <span class="step__num" aria-hidden="true">3</span>
+            <div>
+              <h2>It registers itself</h2>
+              <p>The first time it joins Wi-Fi, the calculator registers itself. There are no codes or web addresses to type for this part.</p>
+            </div>
+          </li>
+
+          <li class="step" id="link">
+            <span class="step__num" aria-hidden="true">4</span>
+            <div>
+              <h2>Link it to your account</h2>
+              <p>To use AI Solve, the account holder (18 or older) links the calculator to their account once, on any phone or computer:</p>
+              <ul>
+                <li>Sign in at <a href="/login/">the sign-in page</a>.</li>
+                <li>Open <a href="/link/">Link a calculator</a>.</li>
+                <li>On the calculator, press MODE then 4 to open Apps, then choose Settings and Link calculator to show the code.</li>
+                <li>Enter the 8-character code shown on the calculator, or scan the QR code on its screen with your phone.</li>
+              </ul>
+              <p>One account can have up to 3 calculators.</p>
+            </div>
+          </li>
+
+          <li class="step" id="first-solve">
+            <span class="step__num" aria-hidden="true">5</span>
+            <div>
+              <h2>Your first AI Solve</h2>
+              <p>Press <kbd translate="no">MODE</kbd> <kbd translate="no">4</kbd> to open Apps, then <kbd translate="no">1</kbd> for AI Solve. The screen becomes a live camera viewfinder. Point the camera on the back at a problem and press <kbd translate="no">=</kbd> to take the photo.</p>
+              <div class="keys" aria-hidden="true">
+                <span class="keycap" translate="no">MODE</span>
+                <span class="keys__then">then</span>
+                <span class="keycap" translate="no">4</span>
+                <span class="keys__then">then</span>
+                <span class="keycap" translate="no">1</span>
+                <span class="keys__then">point, then</span>
+                <span class="keycap keycap--accent" translate="no">=</span>
+              </div>
+              <p>The answer and every step appear on the calculator. If the handwriting is unclear, it says so instead of guessing.</p>
+            </div>
+          </li>
+
+          <li class="step" id="plan">
+            <span class="step__num" aria-hidden="true">6</span>
+            <div>
+              <h2>The free month and the AI tutor plan</h2>
+              <p>Your first month of the AI tutor plan is free. It starts when you first link the calculator, and no card is needed.</p>
+              <p>When the free month ends, the calculator tells you plainly. To keep using AI Solve, subscribe from your account page: $10 a month, or $100 a year. Cancel anytime. Without the plan, it’s still a full scientific calculator that works offline.</p>
+            </div>
+          </li>
+        </ol>
+      </div>
+    </section>
+
+    <section class="section section--tint" id="trouble" aria-labelledby="trouble-title">
+      <div class="container narrow">
+        <div class="section-head section-head--tight">
+          <h2 id="trouble-title">If something goes wrong</h2>
+        </div>
+        <div class="prose">
+          <ul>
+            <li><strong>It won’t join Wi-Fi.</strong> Most often the network is 5 GHz only, or it has a login page. <a href="/support/wi-fi/">Wi-Fi help</a> walks through the fixes.</li>
+            <li><strong>The code isn’t accepted.</strong> Check all 8 characters and that you’re signed in, then show a new code on the calculator and try again.</li>
+            <li><strong>AI Solve won’t start.</strong> Check that exam mode isn’t on. It turns off the AI, the camera and Wi-Fi until it ends after 12 hours or a teacher unlocks it with a USB cable.</li>
+            <li><strong>Something else.</strong> See the <a href="/faq/">FAQ</a> or email <a href="mailto:hello@proofline.example">hello@proofline.example</a>.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="section related" aria-labelledby="related-title">
+      <div class="container">
+        <div class="section-head section-head--tight">
+          <h2 id="related-title">Related</h2>
+        </div>
+        <div class="card-grid">
+          <a class="card" href="/support/wi-fi/">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-wifi"/></svg></span>
+            <h3>Wi-Fi help</h3>
+            <p>2.4 GHz, hotspots, school networks and wrong passwords.</p>
+            <span class="card__more">Fix Wi-Fi<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+          <a class="card" href="/link/">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-check"/></svg></span>
+            <h3>Link a calculator</h3>
+            <p>Enter the code from the calculator’s screen.</p>
+            <span class="card__more">Link now<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+          <a class="card" href="/faq/#setup">
+            <span class="card__icon"><svg aria-hidden="true"><use href="#i-info"/></svg></span>
+            <h3>Setup questions</h3>
+            <p>Offline use, updates and why linking is needed.</p>
+            <span class="card__more">Read the FAQ<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-band band-dark" aria-labelledby="cta-title">
+      <div class="container cta-band__inner">
+        <div>
+          <h2 id="cta-title">Not on sale yet.</h2>
+          <p>Join the waitlist and we’ll email you when preorders open. No payment now.</p>
+        </div>
+        <form class="waitlist" action="/api/waitlist" method="post" data-source="site">
+          <input type="hidden" name="source" value="site"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
+          <label class="waitlist__label" for="email-setup">Your email</label>
+          <div class="waitlist__row">
+            <input class="field" id="email-setup" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-setup msg-setup">
+            <div class="hp" aria-hidden="true"><label for="company-setup">Company</label><input id="company-setup" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+            <button class="btn btn--primary" type="submit">Join the waitlist</button>
+          </div>
+          <label class="waitlist__age" for="age-setup"><input id="age-setup" name="age_ok" type="checkbox" required aria-describedby="msg-setup">I’m 13 or older</label>
+          <p class="waitlist__note" id="note-setup"><a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__msg" id="msg-setup" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+    </section>
+  </main>
+  <!-- @footer -->
+  <footer class="site-footer band-dark">
+    <div class="container footer__grid">
+      <div class="footer__intro">
+        <a class="brand" translate="no" href="/" aria-label="Proofline home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Proofline</span></a>
+        <p>The AI study tutor that works like a real scientific calculator. In development; preorders planned for 2027.</p>
+        <form class="waitlist waitlist--compact" action="/api/waitlist" method="post" data-source="footer">
+          <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
+          <label class="waitlist__label" for="email-sitefoot">Get an email when preorders open</label>
+          <div class="waitlist__row">
+            <input class="field" id="email-sitefoot" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-sitefoot msg-sitefoot">
+            <div class="hp" aria-hidden="true"><label for="company-sitefoot">Company</label><input id="company-sitefoot" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+            <button class="btn btn--primary" type="submit">Join</button>
+          </div>
+          <label class="waitlist__age" for="age-sitefoot"><input id="age-sitefoot" name="age_ok" type="checkbox" required aria-describedby="msg-sitefoot">I’m 13 or older</label>
+          <p class="waitlist__note" id="note-sitefoot">No payment now. <a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__msg" id="msg-sitefoot" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <nav class="footer__cols" aria-label="Footer">
+        <div>
+          <p class="footer__head">Shop</p>
+          <ul>
+            <li><a href="/shop/">All products</a></li>
+            <li><a href="/shop/calculator/">The calculator</a></li>
+            <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+            <li><a href="/cart/">Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Product</p>
+          <ul>
+            <li><a href="/how-it-works/">How it works</a></li>
+            <li><a href="/features/ai-solve/">AI Solve</a></li>
+            <li><a href="/features/apps/">Apps</a></li>
+            <li><a href="/features/exam-mode/">Exam mode</a></li>
+            <li><a href="/features/calculator/">The calculator</a></li>
+            <li><a href="/try-it/">Try it</a></li>
+            <li><a href="/specs/">Specs</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Support</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a aria-current="page" href="/support/setup/">Setup guide</a></li>
+            <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+            <li><a href="/teachers/">For teachers</a></li>
+            <li><a href="/support/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Company</p>
+          <ul>
+            <li><a href="/honest/">Honest by design</a></li>
+            <li><a href="/account/">Your account</a></li>
+            <li><a href="/privacy/">Privacy</a></li>
+            <li><a href="/terms/">Terms</a></li>
+            <li><a href="/refunds/">Refunds and warranty</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="legal">
+        <p>Not affiliated with Casio Computer Co., Ltd.</p>
+        <p>Prices in US dollars. © 2026 Proofline Corporation.</p>
+        <!-- TODO(contact): real support address once the domain is bought. -->
+        <p>Contact: <a href="mailto:hello@proofline.example">hello@proofline.example</a></p>
+      </div>
+    </div>
+  </footer>
+  <!-- /@footer -->
+</body>
+</html>

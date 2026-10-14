@@ -1,5 +1,15 @@
 # AI Calculator
 
+> **Update 2026-10-11:** this README describes the e-paper prototype firmware and simulators in this branch.
+> Current state: the product is branded **Proofline**; the **v15 colour-LCD board** is ordered (5 samples, then
+> bulk; v14 was never ordered) and its firmware lives on branch `claude/v15-mode4-menu`, where **MODE 4 opens
+> Apps** (AI Solve, Type it, History, Notes, Geography, Periodic Table, Settings incl. Link calculator) and exam
+> mode turns all apps off. The website, subscription server and store are in `web/` (start with
+> [web/SITE_README.md](web/SITE_README.md) and [docs/web/GUIDE.md](docs/web/GUIDE.md)); nothing is deployed.
+> The firmware still talks to the older Python server/proxy; connecting it to the new server is the open
+> "stage 2" of [docs/web/PLAN.md](docs/web/PLAN.md). (The "Stage 2" and "Stage 4" headings below are the
+> firmware's own older stage numbers, not the web plan's.)
+
 ## Stage 4: the full calculator
 
 The device now works like a Casio fx-300ES PLUS in COMP mode, with the AI photo solver as mode 4 in the MODE menu. The same C++ code runs in three places:

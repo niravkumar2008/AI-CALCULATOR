@@ -1,0 +1,18 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "launch-site",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["-m", "http.server", "8765", "--bind", "127.0.0.1", "--directory", "web/site"],
+      "port": 8765
+    },
+    {
+      "name": "local-all",
+      "runtimeExecutable": "node",
+      "runtimeArgs": ["web/dev/run-local.mjs"],
+      "port": 8787,
+      "url": "http://127.0.0.1:8787"
+    }
+  ]
+}

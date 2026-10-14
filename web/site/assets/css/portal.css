@@ -1,0 +1,511 @@
+/* Proofline account portal: sign in, confirm, link a calculator, account.
+   Only what site.css doesn't already provide. Reuses its tokens, so light and dark mode,
+   focus rings and buttons come from there. Mobile first; 44px targets; 16px inputs. */
+
+/* ------------------------------------------------------------------ layout */
+/* Components below set display; the hidden attribute must still win. */
+.portal [hidden] {
+  display: none !important;
+}
+
+.portal {
+  max-width: 40rem;
+  margin-inline: auto;
+  padding-block: var(--s-7) var(--section);
+}
+.portal h1 {
+  font-size: clamp(2.125rem, 1.6rem + 2.4vw, 3rem);
+  line-height: 1.05;
+}
+.portal h1:focus {
+  outline: none;
+}
+.portal .lead {
+  margin-top: var(--s-3);
+}
+.portal h2 {
+  font-size: 1.5rem;
+  line-height: 1.15;
+}
+.portal [tabindex="-1"]:focus {
+  outline: none;
+}
+
+.site-header .header-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--s-2);
+  flex: none;
+}
+
+/* ------------------------------------------------------------------ cards */
+.card {
+  margin-top: var(--s-5);
+  padding: var(--s-5);
+  border: 1px solid var(--line);
+  border-radius: var(--r-lg);
+  background: var(--surface-2);
+  box-shadow: var(--shadow-sm);
+}
+.card > * + * {
+  margin-top: var(--s-4);
+}
+.card p {
+  color: var(--ink-2);
+}
+.card--danger {
+  border-color: color-mix(in srgb, var(--bad) 45%, var(--line));
+}
+.card--danger h2 {
+  color: var(--bad);
+}
+@media (min-width: 40rem) {
+  .card {
+    padding: var(--s-6);
+  }
+}
+
+.card__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--s-2) var(--s-4);
+}
+.card__head .count {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  color: var(--ink-2);
+}
+
+/* ------------------------------------------------------------------ forms */
+.form {
+  margin-top: var(--s-6);
+  display: grid;
+  gap: var(--s-5);
+}
+.form-row {
+  display: grid;
+  gap: var(--s-2);
+}
+.form-row > label,
+.label {
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--ink);
+}
+.label .optional {
+  font-weight: 400;
+  color: var(--ink-2);
+}
+.form .field {
+  width: 100%;
+  flex: none;
+}
+.field--code {
+  font-family: var(--font-mono);
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.field--code::placeholder {
+  letter-spacing: 0.12em;
+}
+.hint {
+  font-size: 0.875rem;
+  color: var(--ink-2);
+}
+.field-error {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  color: var(--bad);
+}
+.field-error:empty {
+  display: none;
+}
+
+/* Checkbox with a 44px tap target: the whole label is clickable. */
+.check {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--s-3);
+  min-height: 44px;
+  padding-block: var(--s-2);
+  cursor: pointer;
+  font-size: var(--text-sm);
+  color: var(--ink);
+}
+.check input {
+  flex: none;
+  width: 1.375rem;
+  height: 1.375rem;
+  margin: 0.05rem 0 0;
+  accent-color: var(--cta-bg);
+  cursor: pointer;
+}
+.check input:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+.check[data-invalid="true"] input {
+  outline: 2px solid var(--bad);
+  outline-offset: 2px;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-3);
+}
+.actions .btn {
+  flex: 1 1 100%;
+}
+@media (min-width: 30rem) {
+  .actions .btn {
+    flex: 0 0 auto;
+  }
+}
+.btn[disabled],
+.btn[aria-disabled="true"] {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+.btn[disabled]:active {
+  transform: none;
+}
+.btn--danger {
+  background: var(--bad);
+  color: #fff;
+}
+@media (prefers-color-scheme: dark) {
+  .btn--danger {
+    color: #10141c; /* #f08f86 with navy text: 7.4:1 */
+  }
+}
+.btn--link {
+  min-height: 44px;
+  padding: 0 var(--s-2);
+  background: none;
+  border: 0;
+  color: var(--accent-ink);
+  font: 600 var(--text-sm) / 1 var(--font-body);
+  text-decoration: underline;
+  text-underline-offset: 0.18em;
+  cursor: pointer;
+}
+
+/* ------------------------------------------------------------------ messages */
+.msg {
+  overflow-wrap: anywhere;
+  font-size: var(--text-sm);
+  font-weight: 500;
+}
+.msg:empty {
+  display: none;
+}
+.portal > .msg,
+.card .msg {
+  margin-top: var(--s-4);
+}
+.msg[data-tone="error"] {
+  color: var(--bad);
+}
+.msg[data-tone="ok"] {
+  color: var(--ok);
+}
+
+.notice {
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+  margin-top: var(--s-5);
+  padding: var(--s-4) var(--s-5);
+  border-radius: var(--r);
+  background: color-mix(in srgb, var(--ink-2) 8%, transparent);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  color: var(--ink);
+  overflow-wrap: anywhere;
+}
+.notice:empty,
+.notice[hidden] {
+  display: none;
+}
+.notice[data-tone="ok"] {
+  background: color-mix(in srgb, var(--ok) 12%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ok) 40%, transparent);
+}
+.notice[data-tone="error"] {
+  background: color-mix(in srgb, var(--bad) 10%, transparent);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--bad) 45%, transparent);
+}
+.notice > * + * {
+  margin-top: var(--s-2);
+}
+.notice__body {
+  min-width: 0;
+}
+.notice__body > * + * {
+  margin-top: var(--s-2);
+}
+
+/* ------------------------------------------------------------------ loading */
+.loading {
+  display: flex;
+  align-items: center;
+  gap: var(--s-3);
+  margin-top: var(--s-6);
+  color: var(--ink-2);
+}
+.loading .spinner {
+  width: 1.25rem;
+  height: 1.25rem;
+  border-radius: 50%;
+  border: 2px solid currentColor;
+  border-right-color: transparent;
+  animation: spin 640ms linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+  .loading .spinner {
+    animation: none;
+    opacity: 0.6;
+  }
+}
+
+/* ------------------------------------------------------------------ account summary */
+.facts {
+  display: grid;
+  gap: var(--s-4);
+}
+.facts > div {
+  display: grid;
+  gap: var(--s-1);
+}
+.facts dt {
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink-2);
+}
+.facts dd {
+  color: var(--ink);
+  font-weight: 500;
+  overflow-wrap: anywhere;
+}
+.facts dd .sub {
+  display: block;
+  margin-top: var(--s-1);
+  font-weight: 400;
+  color: var(--ink-2);
+  font-size: var(--text-sm);
+}
+.plan-bad {
+  color: var(--bad);
+}
+
+.meter {
+  width: 100%;
+  height: 0.5rem;
+  margin-top: var(--s-2);
+  border-radius: var(--r-pill);
+  background: var(--line);
+  overflow: hidden;
+}
+.meter__fill {
+  height: 100%;
+  width: 0;
+  border-radius: inherit;
+  background: var(--accent);
+}
+.meter[data-full="true"] .meter__fill {
+  background: var(--bad);
+}
+
+/* ------------------------------------------------------------------ devices */
+.devices {
+  display: grid;
+  gap: var(--s-3);
+}
+.device-item {
+  padding: var(--s-4);
+  border: 1px solid var(--line);
+  border-radius: var(--r);
+  background: var(--bg);
+}
+.device-item__name {
+  font-family: var(--font-body);
+  font-size: 1.125rem;
+  font-weight: 600;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+.device-item__meta {
+  margin-top: var(--s-1);
+  font-size: var(--text-sm);
+  color: var(--ink-2);
+}
+.device-item__tech {
+  margin-top: var(--s-1);
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--ink-2);
+  overflow-wrap: anywhere;
+}
+.device-item__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+.device-item__rename {
+  display: grid;
+  gap: var(--s-2);
+  margin-top: var(--s-3);
+}
+.device-item__rename[hidden] {
+  display: none;
+}
+.empty {
+  color: var(--ink-2);
+}
+
+/* ------------------------------------------------------------------ dialog */
+.dialog {
+  width: min(32rem, calc(100vw - 2rem));
+  max-height: calc(100dvh - 2rem);
+  padding: var(--s-5);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--r-lg);
+  background: var(--surface-2);
+  color: var(--ink);
+  box-shadow: var(--shadow-md);
+  overflow: auto;
+}
+.dialog:not([open]) {
+  display: none;
+}
+.dialog::backdrop {
+  background: rgb(16 20 28 / 0.6);
+}
+.dialog > * + *,
+.dialog > form > * + * {
+  margin-top: var(--s-4);
+}
+.dialog p {
+  color: var(--ink-2);
+}
+.dialog h2 {
+  font-size: 1.5rem;
+}
+/* Fallback for browsers without <dialog>: portal.js adds this class. */
+.dialog.is-fallback {
+  position: fixed;
+  inset: 50% auto auto 50%;
+  z-index: 200;
+  transform: translate(-50%, -50%);
+  margin: 0;
+}
+.dialog-scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 199;
+  background: rgb(16 20 28 / 0.6);
+}
+
+/* ------------------------------------------------------------------ print */
+@media print {
+  .actions,
+  .device-item__actions,
+  .card--danger {
+    display: none !important;
+  }
+}
+
+/* ------------------------------------------------------------------ plan picker (Monthly / Yearly)
+   Real radio buttons inside labels, so keyboard (arrow keys), screen readers and no-JS all work.
+   The selected card gets a 2px accent ring; the radio itself stays visible. */
+.plan-pick {
+  margin: var(--s-5) 0 0;
+  padding: 0;
+  border: 0;
+  min-width: 0;
+}
+.plan-pick__legend {
+  padding: 0;
+  margin-bottom: var(--s-3);
+  font-weight: 600;
+  font-size: var(--text-sm);
+  color: var(--ink);
+}
+.plan-pick__options {
+  display: grid;
+  gap: var(--s-3);
+}
+@media (min-width: 36rem) {
+  .plan-pick__options {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: 40rem;
+  }
+}
+.plan-opt {
+  display: flex;
+  gap: var(--s-3);
+  align-items: flex-start;
+  min-height: 44px;
+  padding: var(--s-4);
+  border-radius: var(--r);
+  background: var(--surface-2);
+  box-shadow: inset 0 0 0 1px var(--line-strong);
+  color: var(--ink);
+  cursor: pointer;
+}
+.plan-opt:has(input:checked) {
+  box-shadow: inset 0 0 0 2px var(--accent-ink);
+}
+.plan-opt:has(input:focus-visible) {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+}
+.plan-opt input {
+  flex: none;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin: 0.15rem 0 0;
+  accent-color: var(--accent-ink);
+  cursor: pointer;
+}
+.plan-opt input:focus-visible {
+  outline: none;
+}
+.plan-opt__body {
+  display: grid;
+  gap: var(--s-1);
+  min-width: 0;
+}
+.plan-opt__top {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--s-2);
+}
+.plan-opt__name {
+  font-weight: 600;
+}
+.plan-opt__price {
+  color: var(--ink-2);
+  font-size: var(--text-sm);
+}
+.plan-opt__price .price__num {
+  font: 700 1.5rem/1.1 var(--font-display);
+  color: var(--ink);
+}
+.plan-opt__note {
+  color: var(--ink-2);
+  font-size: var(--text-sm);
+}
+
+/* Long button labels wrap instead of running off narrow screens. */
+.portal .btn {
+  white-space: normal;
+  text-align: center;
+}
