@@ -1,0 +1,651 @@
+<title>Knockoff Measurement Sheet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Public+Sans:wght@400;600&family=JetBrains+Mono:wght@400;600;700&display=swap">
+<style>
+/* Layout: a workshop inspection sheet. To-scale drawings with numbered spots first, then one card per reading
+   with picture steps, grouped by which half of the calculator is on the desk. */
+:root {
+  --bg: #ECEFEA; --panel: #F8F9F6; --ink: #1B201D; --muted: #56605A; --line: #B9C1BB;
+  --accent: #0D6C66; --hi: #F2B705; --hi-ink: #1B201D; --done: #2F9E5A; --red: #D01012;
+  --shell: #DCD8CC; --shell-edge: #8F8A7C; --cavity: #EFECE3; --navy: #2F3B5C; --navy-in: #46557D;
+  --pcb: #1E5E45; --steel: #C3C8CC; --steel-edge: #6F777D; --lcd: #C9D8C4; --lcd-ink: #1B201D;
+  --solar: #2B2740; --win: #8F6BD0; --cam: #2D3336; --keyo: #FFFFFF;
+  --must: #F2B705; --should: #0D6C66; --nice: #9AA3A8;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111513; --panel: #181D1A; --ink: #E4E8E4; --muted: #9DA7A0; --line: #3E4842;
+  --accent: #45BDB3; --hi: #F2C230; --done: #3DB66C; --red: #FF4B3E;
+  --shell: #4A473F; --shell-edge: #9A9484; --cavity: #2C2B27; --navy: #3A4870; --navy-in: #24304F;
+  --pcb: #2A7A59; --steel: #6C747A; --steel-edge: #A8B0B5; --lcd: #9DB397; --keyo: #181D1A;
+  --should: #45BDB3; --nice: #6E777C; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111513; --panel: #181D1A; --ink: #E4E8E4; --muted: #9DA7A0; --line: #3E4842;
+  --accent: #45BDB3; --hi: #F2C230; --done: #3DB66C; --red: #FF4B3E;
+  --shell: #4A473F; --shell-edge: #9A9484; --cavity: #2C2B27; --navy: #3A4870; --navy-in: #24304F;
+  --pcb: #2A7A59; --steel: #6C747A; --steel-edge: #A8B0B5; --lcd: #9DB397; --keyo: #181D1A;
+  --should: #45BDB3; --nice: #6E777C; color-scheme: dark; }
+body { background: var(--bg); color: var(--ink); font: 15px/1.55 var(--body); padding-inline: 16px; padding-block: 0 64px; }
+.wrap { max-width: 1120px; margin: 0 auto; }
+header { padding-block: 40px 22px; border-bottom: 2px solid var(--ink); display: grid; gap: 12px; }
+.eyebrow-h { font: 600 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 800 clamp(32px, 6vw, 58px)/1 var(--display); font-stretch: 78%; margin: 0; text-wrap: balance; }
+.lede { max-width: 68ch; margin: 0; }
+.bar { display: flex; flex-wrap: wrap; gap: 10px 16px; align-items: center; }
+.prog { flex: 1 1 260px; min-width: 0; display: grid; gap: 6px; font: 13px var(--mono); color: var(--muted); }
+.track { height: 10px; border-radius: 5px; background: var(--panel); border: 1px solid var(--line); overflow: hidden; }
+.fill { height: 100%; background: var(--done); width: 0; transition: width .3s; }
+button { font: 600 14px var(--body); border-radius: 6px; padding: 9px 14px; cursor: pointer; border: 1.5px solid var(--ink); background: var(--panel); color: var(--ink); }
+button.primary { background: var(--hi); color: var(--hi-ink); border-color: var(--hi); }
+button:focus-visible, input:focus-visible, .co:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+.legend { display: flex; flex-wrap: wrap; gap: 6px 18px; font: 13px var(--mono); color: var(--muted); }
+.chip { display: inline-block; min-width: 44px; text-align: center; font: 700 12px var(--mono); border-radius: 10px; padding: 2px 7px; border: 1.5px solid; white-space: nowrap; }
+.chip.must { background: var(--must); border-color: var(--must); color: var(--hi-ink); }
+.chip.should { border-color: var(--should); color: var(--should); }
+.chip.nice { border-color: var(--nice); color: var(--muted); }
+.chip.done { background: var(--done); border-color: var(--done); color: #fff; }
+section { padding-block: 34px 4px; }
+h2 { font: 750 clamp(22px, 3.2vw, 30px)/1.1 var(--display); font-stretch: 82%; margin: 0 0 6px; text-wrap: balance; }
+.sec-intro { max-width: 68ch; color: var(--muted); margin: 0 0 16px; }
+.plate { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px; min-width: 0; margin: 0; }
+.figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; align-items: start; }
+@media (max-width: 760px) { .figs { grid-template-columns: 1fr; } }
+.plate h3 { font: 700 17px var(--display); font-stretch: 86%; margin: 0 0 8px; }
+figcaption { font: 12.5px/1.5 var(--mono); color: var(--muted); margin-top: 10px; }
+.fig { width: 100%; height: auto; display: block; }
+.scroll { overflow-x: auto; }
+.scroll .fig { min-width: 620px; }
+svg text { font-family: var(--mono); }
+/* overview drawings */
+.shell { fill: var(--shell); stroke: var(--shell-edge); stroke-width: 1.5; }
+.cavity { fill: var(--cavity); stroke: var(--shell-edge); stroke-width: .8; }
+.shellB { fill: var(--navy); stroke: var(--navy); stroke-width: 1.5; }
+.cavityB { fill: var(--navy-in); stroke: #8592B8; stroke-width: .8; }
+.keyo { fill: var(--keyo); stroke: var(--shell-edge); stroke-width: 1; }
+.rowrib { stroke: var(--shell-edge); stroke-width: 2.4; opacity: .55; }
+.win { fill: none; stroke: var(--win); stroke-width: 2; stroke-dasharray: 7 5; }
+.rib { fill: var(--shell-edge); }
+.pinp { fill: var(--shell-edge); }
+.mat { fill: #4A5157; fill-opacity: .16; stroke: #4A5157; stroke-width: 1.6; stroke-dasharray: 8 4; }
+.solar { fill: var(--solar); }
+.solarframe { fill: none; stroke: var(--shell-edge); stroke-width: 3; }
+.pocket { fill: var(--shell); stroke: var(--shell-edge); stroke-width: 2; }
+.pocketin { fill: var(--cavity); stroke: var(--shell-edge); stroke-width: 1; }
+.spost { fill: var(--shell); stroke: var(--ink); stroke-width: 1.6; }
+.phole { fill: var(--ink); }
+.lpost { fill: var(--shell-edge); stroke: var(--ink); stroke-width: 1; }
+.ribB { stroke: #9AA6CC; stroke-width: 4; stroke-linecap: round; }
+.ringB { fill: none; stroke: #9AA6CC; stroke-width: 4; }
+.door { fill: none; stroke: #9AA6CC; stroke-width: 1.5; stroke-dasharray: 4 3; }
+.hole { fill: var(--bg); stroke: #9AA6CC; stroke-width: 1.5; }
+.boss { fill: #6D7AA3; stroke: #C2CAE4; stroke-width: 1; }
+.camzone { fill: none; stroke: var(--red); stroke-width: 1.5; stroke-dasharray: 4 3; }
+.camhole { fill: var(--bg); stroke: var(--red); stroke-width: 3; }
+.shellB ~ .lab, .shellB ~ .note { fill: #E8ECF6; }
+.lab { fill: var(--ink); font-size: 12px; }
+.lab.inv { fill: #F1F3F1; }
+.note { fill: var(--muted); font-size: 12px; }
+.arh { fill: var(--ink); }
+.dim line { stroke: var(--ink); stroke-width: 1.4; }
+.shellB ~ .dim line { stroke: #E8ECF6; }
+.shellB ~ defs .arh { fill: #E8ECF6; }
+.co line { stroke: var(--ink); stroke-width: 1.2; }
+.shellB ~ .co line { stroke: #E8ECF6; }
+.co .dot { fill: var(--red); stroke: #fff; stroke-width: 1.2; }
+.co rect { fill: var(--hi); stroke: var(--ink); stroke-width: 1.2; }
+.co text { fill: var(--hi-ink); font-size: 12px; font-weight: 700; text-anchor: middle; }
+.co { cursor: pointer; }
+.co.ok rect { fill: var(--done); }
+.co.ok text { fill: #fff; }
+/* side cut */
+.sideB { fill: var(--navy); }
+.sideF { fill: var(--shell); stroke: var(--shell-edge); }
+.sidePCB { fill: var(--pcb); }
+.sideCam { fill: var(--cam); }
+.sideLens { fill: #0E1418; stroke: #55606A; stroke-width: 2; }
+.sidePost { fill: var(--shell); stroke: var(--shell-edge); }
+.sideRing { fill: #6D7AA3; }
+.sideKey { fill: #4A5157; }
+.sideLCD { fill: var(--lcd); stroke: var(--muted); }
+.seam { stroke: var(--red); stroke-width: 1.5; stroke-dasharray: 6 4; }
+.dimS line { stroke: var(--ink); stroke-width: 1.3; }
+.pillS rect { fill: var(--hi); stroke: var(--ink); stroke-width: 1.2; }
+.pillS text { fill: var(--hi-ink); font-size: 12px; font-weight: 700; text-anchor: middle; }
+/* done strip */
+.donegrid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 250px), 1fr)); gap: 10px; }
+.doneitem { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 4px 10px; align-items: start; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 10px 12px; }
+.doneitem .v { font: 700 15px var(--mono); }
+.doneitem .d { grid-column: 2; font-size: 13.5px; color: var(--muted); }
+/* tools */
+.tools { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 240px), 1fr)); gap: 14px; }
+.tool { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px; display: grid; gap: 6px; align-content: start; }
+.tool svg { width: 100%; height: auto; display: block; }
+.tool b { font: 700 16px var(--display); font-stretch: 88%; }
+.tool span { font-size: 14px; color: var(--muted); }
+/* checklist */
+.group { margin-top: 28px; }
+.group h3 { font: 700 20px var(--display); font-stretch: 85%; margin: 0 0 2px; }
+.group > p { margin: 0 0 12px; color: var(--muted); font-size: 14.5px; max-width: 72ch; }
+.rows { display: grid; gap: 10px; }
+.row { display: grid; grid-template-columns: 64px minmax(0, 1fr) minmax(0, 220px); gap: 12px; align-items: start;
+  background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px; }
+.row.filled { border-color: var(--done); }
+.row.target { box-shadow: 0 0 0 2px var(--hi); }
+.row .t { font-weight: 600; font-size: 16px; }
+.row .h { font-size: 14px; color: var(--muted); margin-top: 3px; }
+.row .a { font: 12.5px var(--mono); color: var(--muted); margin-top: 6px; }
+.row .n { font-size: 13.5px; margin-top: 8px; padding: 6px 9px; border-left: 3px solid var(--hi); background: var(--bg); border-radius: 0 6px 6px 0; }
+.row .n b { color: var(--accent); font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; margin-right: 6px; }
+.idc { display: grid; gap: 8px; justify-items: start; }
+.inp { display: flex; gap: 6px; align-items: center; }
+.inp input { width: 100%; min-width: 0; font: 15px var(--mono); padding: 8px 9px; border-radius: 6px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); font-variant-numeric: tabular-nums; }
+.inp span { font: 12.5px var(--mono); color: var(--muted); min-width: 28px; }
+.how { grid-column: 2 / -1; list-style: none; margin: 4px 0 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 178px), 1fr)); gap: 10px; }
+.how li { background: var(--bg); border: 1px solid var(--line); border-radius: 6px; padding: 8px; display: grid; gap: 6px; align-content: start; position: relative; }
+.how svg { width: 100%; height: auto; display: block; }
+.sn { position: absolute; top: 6px; left: 6px; width: 22px; height: 22px; border-radius: 11px; background: var(--ink); color: var(--bg); font: 700 12px/22px var(--mono); text-align: center; }
+.sc { font-size: 13px; line-height: 1.4; }
+@media (max-width: 640px) { .row { grid-template-columns: 56px minmax(0, 1fr); } .inp { grid-column: 1 / -1; } .how { grid-column: 1 / -1; } }
+/* step-picture parts */
+.cs { fill: var(--steel); stroke: var(--steel-edge); stroke-width: 1; }
+.lcdS { fill: var(--lcd); }
+.lcdt { fill: var(--lcd-ink); font-size: 8.5px; font-weight: 700; text-anchor: middle; }
+.lcdt.sm { font-size: 7px; }
+.tick { stroke: var(--steel-edge); stroke-width: .8; }
+.rul { fill: #D9DDE0; stroke: var(--steel-edge); stroke-width: .8; }
+.sh { fill: var(--shell); stroke: var(--shell-edge); stroke-width: 1; }
+.shB { fill: var(--navy); stroke: var(--navy); stroke-width: 1; }
+.part { fill: var(--shell); stroke: var(--shell-edge); stroke-width: 1; }
+.pg { fill: var(--shell); stroke: var(--shell-edge); stroke-width: 1; }
+.ra { stroke: var(--red); stroke-width: 2; fill: none; }
+.spot { fill: none; stroke: var(--red); stroke-width: 1.6; }
+.st { fill: var(--ink); font-size: 9px; text-anchor: middle; }
+.st.l { text-anchor: start; }
+.big { fill: var(--ink); font-size: 18px; font-weight: 700; text-anchor: middle; }
+.fbox { fill: var(--panel); stroke: var(--ink); stroke-width: 1.2; }
+.fbox.ok { fill: var(--done); stroke: var(--done); }
+.ft { fill: var(--ink); font-size: 10px; font-weight: 700; text-anchor: middle; }
+.fbox.ok + .ft { fill: #fff; }
+.mk { stroke: #fff; stroke-width: 2; fill: none; stroke-linecap: round; }
+.phone { fill: var(--ink); }
+.cone { stroke: var(--muted); stroke-dasharray: 3 3; fill: none; }
+.paper { fill: #FFFFFF; stroke: #9AA0A6; stroke-width: .8; }
+.ink2 { fill: #9AA0A6; }
+.pcbS { fill: var(--pcb); }
+.camS { fill: var(--cam); }
+.ringS { fill: #6D7AA3; }
+.solarS { fill: var(--solar); }
+.out { margin-top: 14px; }
+.out textarea { width: 100%; min-height: 170px; font: 13px var(--mono); background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 6px; padding: 10px; box-sizing: border-box; }
+.confirm { display: inline-flex; gap: 8px; align-items: center; font-size: 14px; }
+footer { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+@media (prefers-reduced-motion: reduce) { .fill { transition: none; } }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow-h">AI Calculator · knockoff shell (RZ-991ES PLUS type) · bulk refit</div>
+  <h1>Knockoff Measurement Sheet</h1>
+  <p class="lede">Your photos show the knockoff is almost a copy of the Casio fx-115ES, so this sheet only asks for what a photo can't show: <b>heights</b>, plus a few checks. Under each box you'll see the fx-115ES number in grey. If your reading is within about 0.3 mm of it, that's great news: nothing changes. Click a numbered spot on a drawing to jump to its box. When you're done, press <b>Copy readings</b> and paste the text into the chat.</p>
+  <div class="bar">
+    <div class="prog"><span id="progText">0 of 0 filled</span><div class="track"><div class="fill" id="progFill"></div></div></div>
+    <button class="primary" id="copyBtn" type="button">Copy readings</button>
+    <button id="clearBtn" type="button">Clear all</button>
+    <span class="confirm" id="clearConfirm" hidden>Erase every reading? <button id="clearYes" type="button">Erase</button><button id="clearNo" type="button">Keep</button></span>
+  </div>
+  <div class="legend"><span><span class="chip must">must</span> can change the board or the case</span><span><span class="chip should">should</span> improves the fit</span><span><span class="chip nice">nice</span> a double-check</span><span>Readings save in this browser only.</span></div>
+</header>
+
+<section>
+  <h2>Already settled</h2>
+  <p class="sec-intro">These came from your photos and the readings you already sent. No need to measure them again.</p>
+  <div class="donegrid">
+    <div class="doneitem"><span class="chip done">✓</span><span class="v">v15 board fits</span><span class="d">The paper board sits flat in the front shell and every post comes up through its hole.</span></div>
+    <div class="doneitem"><span class="chip done">✓</span><span class="v">key mat matches</span><span class="d">The knockoff key mat lines up exactly with the real fx-115ES, so the key pads stay. Its heights are still needed (M13–M16).</span></div>
+    <div class="doneitem"><span class="chip done">✓</span><span class="v">PCB 0.76 mm</span><span class="d">0.03 inch, the same as our 0.8 mm board. No shim needed.</span></div>
+  </div>
+</section>
+
+<section>
+  <h2>Your tools, set up once</h2>
+  <p class="sec-intro">Do these three things before the first reading. They take two minutes and stop the two mistakes that cost the most time: reading in inches, and forgetting the ruler's own thickness.</p>
+  <div class="tools" id="tools"></div>
+</section>
+
+<section>
+  <h2>Where to measure</h2>
+  <p class="sec-intro">Both drawings are to scale, drawn from the CAD model of the knockoff. Left: the front shell from the inside, the way it lies on the desk with the back cover off, so left and right are swapped compared with the front of the calculator. Right: the back cover from the inside. Below them, a side cut shows what each depth reading means.</p>
+  <div class="figs">
+    <figure class="plate"><h3>Front shell, inside up</h3>
+<svg class="fig" viewBox="0 0 433 760" role="img" aria-label="Knockoff front shell seen from the inside, with numbered measuring spots">
+<path class="shell" d="M373.6,74.9 L375.2,84.4 L375.2,94.4 L375.2,104.4 L375.2,114.4 L375.2,124.5 L375.2,134.5 L375.2,144.5 L375.2,154.5 L375.2,164.5 L375.2,174.5 L375.2,184.6 L375.2,194.6 L375.2,204.6 L375.2,214.6 L375.2,224.6 L375.2,234.6 L375.2,244.7 L375.2,254.7 L375.2,264.7 L375.2,274.7 L375.2,284.7 L375.2,294.7 L375.2,304.8 L375.1,314.8 L374.9,324.8 L374.4,334.8 L373.8,344.8 L373.1,354.8 L372.5,364.8 L371.9,374.8 L371.6,384.8 L371.4,394.8 L371.4,404.8 L371.4,414.8 L371.4,424.9 L371.4,434.9 L371.4,444.9 L371.4,454.9 L371.4,464.9 L371.4,474.9 L371.4,485.0 L371.4,495.0 L371.4,505.0 L371.4,515.0 L371.4,525.0 L371.4,535.0 L371.4,545.1 L371.4,555.1 L371.4,565.1 L371.4,575.1 L371.4,585.1 L371.4,595.2 L371.3,605.2 L371.0,615.2 L370.4,625.2 L369.7,635.2 L369.0,645.2 L367.9,655.1 L365.4,664.6 L361.0,672.8 L354.0,678.2 L345.0,681.3 L335.3,683.8 L325.6,686.1 L315.8,688.2 L306.0,690.1 L296.1,691.9 L286.2,693.4 L276.3,694.7 L266.3,695.7 L256.4,696.4 L246.4,696.9 L236.3,697.3 L226.3,697.5 L216.3,697.6 L206.3,697.5 L196.3,697.3 L186.3,696.9 L176.3,696.4 L166.3,695.7 L156.3,694.7 L146.4,693.4 L136.5,691.8 L126.7,690.0 L116.9,688.1 L107.1,686.0 L97.4,683.6 L87.7,681.1 L78.9,678.3 L72.5,673.6 L68.1,665.7 L65.5,656.2 L64.3,646.3 L63.7,636.3 L63.0,626.3 L62.4,616.3 L62.0,606.3 L61.8,596.3 L61.8,586.3 L61.8,576.3 L61.8,566.3 L61.8,556.3 L61.8,546.2 L61.8,536.2 L61.8,526.2 L61.8,516.2 L61.8,506.2 L61.8,496.2 L61.8,486.1 L61.8,476.1 L61.8,466.1 L61.8,456.1 L61.8,446.1 L61.8,436.0 L61.8,426.0 L61.8,416.0 L61.8,406.0 L61.8,396.0 L61.6,386.0 L61.1,376.0 L60.6,366.0 L59.9,356.0 L59.2,346.0 L58.6,336.0 L58.2,326.0 L58.0,316.0 L58.0,305.9 L58.0,295.9 L58.0,285.9 L58.0,275.9 L58.0,265.9 L58.0,255.9 L58.0,245.8 L58.0,235.8 L58.0,225.8 L58.0,215.8 L58.0,205.8 L58.0,195.7 L58.0,185.7 L58.0,175.7 L58.0,165.7 L58.0,155.7 L58.0,145.7 L58.0,135.6 L58.0,125.6 L58.0,115.6 L58.0,105.6 L58.0,95.6 L58.0,85.6 L59.4,76.0 L64.0,68.0 L71.6,63.1 L81.0,61.3 L91.0,60.8 L101.0,60.4 L111.0,60.1 L121.0,59.8 L131.0,59.5 L141.0,59.2 L151.0,58.9 L161.0,58.6 L171.0,58.4 L181.0,58.3 L191.0,58.2 L201.0,58.1 L211.0,58.0 L221.0,58.0 L231.0,58.1 L241.0,58.2 L251.0,58.3 L261.0,58.4 L271.0,58.6 L281.1,58.9 L291.0,59.2 L301.0,59.5 L311.0,59.8 L321.0,60.1 L331.0,60.4 L341.0,60.7 L351.0,61.2 L360.5,62.8 L368.5,67.3 Z"/>
+<path class="cavity" d="M369.5,76.0 L369.5,76.6 L369.6,78.5 L369.6,82.4 L369.6,86.3 L369.6,90.3 L369.6,94.3 L369.6,98.2 L369.6,102.2 L369.6,106.2 L369.6,110.2 L369.6,114.1 L369.6,118.1 L369.6,122.1 L369.6,126.1 L369.6,130.0 L369.6,134.0 L369.6,138.0 L369.6,142.0 L369.6,145.9 L369.6,149.9 L369.6,153.9 L369.6,157.8 L369.6,161.8 L369.6,165.8 L369.6,169.8 L369.6,173.7 L369.6,177.7 L369.6,181.7 L369.6,185.7 L369.6,189.6 L369.6,193.6 L369.6,197.6 L369.6,201.6 L369.6,205.5 L369.6,209.5 L369.6,213.5 L369.6,217.4 L369.6,221.4 L369.6,225.4 L369.6,229.4 L369.6,233.3 L369.6,237.3 L369.6,241.3 L369.6,245.3 L369.6,249.2 L369.6,253.2 L369.6,257.2 L369.6,261.2 L369.6,265.1 L369.6,269.1 L369.6,273.1 L369.6,277.0 L369.6,281.0 L369.6,285.0 L369.6,289.0 L369.6,292.9 L369.6,296.9 L369.6,300.9 L369.6,304.9 L369.6,308.8 L369.6,312.8 L369.6,316.7 L369.5,320.6 L369.4,324.5 L369.2,328.4 L369.0,332.4 L368.8,336.3 L368.5,340.3 L368.3,344.2 L368.0,348.2 L367.7,352.1 L367.4,356.1 L367.1,360.1 L366.9,364.1 L366.6,368.1 L366.4,372.1 L366.2,376.1 L366.0,380.2 L365.9,384.2 L365.8,388.2 L365.8,392.3 L365.8,396.2 L365.8,400.2 L365.8,404.2 L365.8,408.2 L365.8,412.1 L365.8,416.1 L365.8,420.1 L365.8,424.1 L365.8,428.0 L365.8,432.0 L365.8,436.0 L365.8,440.0 L365.8,443.9 L365.8,447.9 L365.8,451.9 L365.8,455.8 L365.8,459.8 L365.8,463.8 L365.8,467.8 L365.8,471.7 L365.8,475.7 L365.8,479.7 L365.8,483.7 L365.8,487.6 L365.8,491.6 L365.8,495.6 L365.8,499.6 L365.8,503.5 L365.8,507.5 L365.8,511.5 L365.8,515.4 L365.8,519.4 L365.8,523.4 L365.8,527.4 L365.8,531.3 L365.8,535.3 L365.8,539.3 L365.8,543.3 L365.8,547.2 L365.8,551.2 L365.8,555.2 L365.8,559.2 L365.8,563.1 L365.8,567.1 L365.8,571.1 L365.8,575.0 L365.8,579.0 L365.8,583.0 L365.8,587.0 L365.8,590.9 L365.8,594.9 L365.8,598.9 L365.8,602.9 L365.8,606.6 L365.7,609.4 L365.5,612.4 L365.4,615.4 L365.3,618.3 L365.0,621.8 L364.8,625.5 L364.5,629.1 L364.3,632.7 L364.0,636.4 L363.7,640.0 L363.5,643.7 L363.2,647.3 L363.0,650.9 L362.7,654.6 L362.5,657.7 L362.2,659.2 L362.1,659.9 L361.7,660.7 L360.6,662.8 L359.1,666.1 L357.6,669.3 L356.2,672.2 L355.2,672.2 L352.0,673.0 L350.5,673.3 L348.9,673.6 L345.8,674.0 L342.8,675.2 L341.4,675.7 L338.6,676.4 L335.3,677.2 L331.9,678.1 L328.6,678.9 L325.3,679.7 L322.4,680.4 L321.0,680.7 L318.4,681.0 L315.3,681.8 L312.6,682.5 L310.5,683.0 L308.3,683.3 L305.7,683.7 L302.5,684.2 L299.9,684.8 L298.5,685.2 L295.6,685.6 L292.2,686.1 L288.7,686.6 L285.3,687.1 L281.9,687.6 L278.5,688.1 L275.6,688.5 L274.1,688.6 L271.6,688.7 L269.1,689.0 L267.6,689.2 L266.0,689.3 L263.6,689.4 L261.1,689.8 L259.6,690.0 L256.6,690.1 L253.1,690.2 L249.5,690.4 L245.9,690.5 L242.4,690.7 L238.8,690.8 L235.3,690.9 L231.7,691.1 L228.4,691.2 L224.8,691.2 L222.9,691.1 L220.7,691.1 L216.6,691.1 L212.5,691.1 L210.3,691.1 L208.4,691.2 L204.8,691.2 L201.5,691.1 L197.9,690.9 L194.4,690.8 L190.8,690.7 L187.3,690.5 L183.7,690.4 L180.1,690.2 L176.6,690.1 L173.6,690.0 L172.1,689.8 L169.6,689.4 L167.2,689.3 L165.6,689.2 L164.1,689.0 L161.6,688.7 L159.1,688.6 L157.6,688.5 L154.7,688.1 L151.3,687.6 L147.9,687.1 L144.5,686.6 L141.0,686.1 L137.6,685.6 L134.7,685.2 L133.3,684.8 L130.7,684.2 L127.5,683.7 L124.9,683.3 L122.7,683.0 L120.6,682.5 L117.9,681.8 L114.8,681.0 L112.2,680.7 L110.7,680.4 L109.2,680.0 L107.3,679.6 L105.5,679.1 L103.3,678.5 L100.2,677.8 L97.2,677.0 L94.2,676.3 L91.8,675.7 L90.4,675.2 L87.4,674.0 L84.3,673.6 L82.7,673.3 L81.2,673.0 L78.0,672.2 L77.0,672.2 L76.7,671.6 L75.2,668.4 L73.6,665.2 L72.1,662.0 L71.1,660.0 L71.0,659.2 L70.7,657.6 L70.6,656.0 L70.4,654.2 L70.2,650.6 L69.9,646.9 L69.7,643.2 L69.5,639.5 L69.2,635.8 L69.0,632.1 L68.8,628.4 L68.6,624.7 L68.3,621.0 L68.1,617.3 L67.9,613.6 L67.6,609.9 L67.4,606.5 L67.4,602.9 L67.4,598.9 L67.4,594.9 L67.4,590.9 L67.4,587.0 L67.4,583.0 L67.4,579.0 L67.4,575.0 L67.4,571.1 L67.4,567.1 L67.4,563.1 L67.4,559.2 L67.4,555.2 L67.4,551.2 L67.4,547.2 L67.4,543.3 L67.4,539.3 L67.4,535.3 L67.4,531.3 L67.4,527.4 L67.4,523.4 L67.4,519.4 L67.4,515.4 L67.4,511.5 L67.4,507.5 L67.4,503.5 L67.4,499.6 L67.4,495.6 L67.4,491.6 L67.4,487.6 L67.4,483.7 L67.4,479.7 L67.4,475.7 L67.4,471.7 L67.4,467.8 L67.4,463.8 L67.4,459.8 L67.4,455.8 L67.4,451.9 L67.4,447.9 L67.4,443.9 L67.4,440.0 L67.4,436.0 L67.4,432.0 L67.4,428.0 L67.4,424.1 L67.4,420.1 L67.4,416.1 L67.4,412.1 L67.4,408.2 L67.4,404.2 L67.4,400.2 L67.4,396.2 L67.4,392.2 L67.3,388.2 L67.2,384.1 L67.0,380.1 L66.8,376.1 L66.6,372.1 L66.3,368.1 L66.1,364.1 L65.8,360.1 L65.5,356.1 L65.2,352.1 L64.9,348.2 L64.7,344.2 L64.4,340.3 L64.2,336.3 L64.0,332.4 L63.8,328.5 L63.7,324.6 L63.6,320.7 L63.6,316.8 L63.6,312.8 L63.6,308.8 L63.6,304.9 L63.6,300.9 L63.6,296.9 L63.6,292.9 L63.6,289.0 L63.6,285.0 L63.6,281.0 L63.6,277.0 L63.6,273.1 L63.6,269.1 L63.6,265.1 L63.6,261.2 L63.6,257.2 L63.6,253.2 L63.6,249.2 L63.6,245.3 L63.6,241.3 L63.6,237.3 L63.6,233.3 L63.6,229.4 L63.6,225.4 L63.6,221.4 L63.6,217.4 L63.6,213.5 L63.6,209.5 L63.6,205.5 L63.6,201.6 L63.6,197.6 L63.6,193.6 L63.6,189.6 L63.6,185.7 L63.6,181.7 L63.6,177.7 L63.6,173.7 L63.6,169.8 L63.6,165.8 L63.6,161.8 L63.6,157.8 L63.6,153.9 L63.6,149.9 L63.6,145.9 L63.6,142.0 L63.6,138.0 L63.6,134.0 L63.6,130.0 L63.6,126.1 L63.6,122.1 L63.6,118.1 L63.6,114.1 L63.6,110.2 L63.6,106.2 L63.6,102.2 L63.6,98.2 L63.6,94.3 L63.6,90.3 L63.6,86.3 L63.6,82.4 L63.6,78.5 L63.7,76.6 L63.7,76.0 L64.8,74.6 L67.1,71.6 L69.4,68.5 L70.7,66.8 L71.2,66.8 L74.6,66.5 L78.1,66.3 L81.5,66.0 L85.0,65.8 L88.3,65.6 L90.3,65.5 L92.2,65.4 L94.2,65.5 L96.5,65.6 L99.5,65.3 L102.3,65.1 L104.9,65.0 L106.9,64.9 L108.8,64.8 L110.6,64.9 L113.0,65.1 L116.1,64.9 L118.8,64.7 L121.4,64.5 L123.2,64.5 L125.5,64.6 L128.8,64.4 L131.9,64.2 L135.0,64.1 L137.8,63.9 L139.6,64.0 L142.0,64.2 L144.5,64.0 L146.5,63.8 L148.5,63.7 L150.3,63.6 L152.1,63.7 L154.4,63.8 L156.8,63.6 L158.8,63.5 L160.8,63.5 L162.7,63.4 L164.6,63.5 L166.9,63.5 L169.3,63.4 L171.1,63.2 L172.9,63.3 L175.2,63.4 L178.2,63.2 L181.0,63.1 L183.4,62.9 L185.2,63.0 L187.5,63.2 L189.8,63.1 L191.7,63.0 L193.7,63.1 L196.0,63.2 L198.4,63.0 L200.2,62.8 L202.1,62.8 L204.1,62.8 L206.1,62.9 L208.3,62.9 L210.5,62.9 L212.5,62.8 L215.2,62.8 L218.0,62.8 L220.7,62.8 L222.7,62.9 L224.9,62.9 L227.1,62.9 L229.1,62.8 L231.1,62.8 L233.0,62.8 L234.8,63.0 L237.2,63.2 L239.5,63.1 L241.5,63.0 L243.4,63.1 L245.7,63.2 L248.0,63.0 L249.8,62.9 L252.2,63.1 L255.0,63.2 L258.0,63.4 L260.3,63.3 L262.1,63.2 L263.9,63.4 L266.2,63.5 L268.6,63.5 L270.5,63.4 L272.4,63.5 L274.4,63.5 L276.4,63.6 L278.8,63.8 L281.1,63.7 L282.9,63.6 L284.7,63.7 L286.7,63.8 L288.7,64.0 L291.2,64.2 L293.6,64.0 L295.4,63.9 L298.2,64.1 L301.3,64.2 L304.4,64.4 L307.7,64.6 L310.0,64.5 L311.8,64.5 L314.4,64.7 L317.1,64.9 L320.2,65.1 L322.6,64.9 L324.4,64.8 L326.3,64.9 L328.3,65.0 L330.9,65.1 L333.7,65.3 L336.7,65.6 L339.0,65.5 L341.0,65.4 L342.9,65.5 L344.9,65.6 L348.2,65.8 L351.7,66.0 L355.1,66.3 L358.6,66.5 L362.0,66.8 L362.5,66.8 L363.8,68.5 L366.1,71.6 L368.4,74.6 Z"/>
+<line class="rowrib" x1="367.3" y1="378.3" x2="65.7" y2="378.3"/>
+<line class="rowrib" x1="367.0" y1="414.7" x2="66.2" y2="414.7"/>
+<line class="rowrib" x1="367.0" y1="452.6" x2="66.2" y2="452.6"/>
+<line class="rowrib" x1="367.0" y1="490.3" x2="66.2" y2="490.3"/>
+<line class="rowrib" x1="367.0" y1="535.8" x2="66.2" y2="535.8"/>
+<line class="rowrib" x1="367.0" y1="580.3" x2="66.2" y2="580.3"/>
+<line class="rowrib" x1="366.0" y1="624.8" x2="67.4" y2="624.8"/>
+<line class="rowrib" x1="183.6" y1="336.7" x2="63.0" y2="336.7"/>
+<line class="rowrib" x1="249.6" y1="336.7" x2="369.9" y2="336.7"/>
+<line class="rowrib" x1="359.3" y1="668.2" x2="73.9" y2="668.2"/>
+<rect class="keyo" x="90.2" y="497.2" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="90.2" y="541.7" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="90.2" y="586.2" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="90.2" y="630.7" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="92.3" y="384.1" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="92.3" y="421.8" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="92.3" y="459.9" width="35.6" height="23.6" rx="4.8"/>
+<ellipse class="keyo" cx="110.1" cy="313.8" rx="16.6" ry="11.2"/>
+<rect class="keyo" x="93.9" y="348.4" width="32.4" height="24.0" rx="4.8"/>
+<rect class="keyo" x="134.7" y="384.1" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="134.7" y="421.8" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="134.7" y="459.9" width="35.6" height="23.6" rx="4.8"/>
+<ellipse class="keyo" cx="152.5" cy="313.8" rx="16.6" ry="11.2"/>
+<rect class="keyo" x="136.3" y="348.4" width="32.4" height="24.0" rx="4.8"/>
+<rect class="keyo" x="141.6" y="497.2" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="141.6" y="541.7" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="141.6" y="586.2" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="141.6" y="630.7" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="177.6" y="384.1" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="177.6" y="421.8" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="177.6" y="459.9" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="193.0" y="497.2" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="193.0" y="541.7" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="193.0" y="586.2" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="193.0" y="630.7" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="220.0" y="384.1" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="220.0" y="421.8" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="220.0" y="459.9" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="244.4" y="497.2" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="244.4" y="541.7" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="244.4" y="586.2" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="244.4" y="630.7" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="262.9" y="384.1" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="262.9" y="421.8" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="262.9" y="459.9" width="35.6" height="23.6" rx="4.8"/>
+<ellipse class="keyo" cx="280.7" cy="313.8" rx="16.6" ry="11.2"/>
+<rect class="keyo" x="264.5" y="348.4" width="32.4" height="24.0" rx="4.8"/>
+<rect class="keyo" x="295.8" y="497.2" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="295.8" y="541.7" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="295.8" y="586.2" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="295.8" y="630.7" width="47.2" height="32.8" rx="4.8"/>
+<rect class="keyo" x="305.3" y="384.1" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="305.3" y="421.8" width="35.6" height="23.6" rx="4.8"/>
+<rect class="keyo" x="305.3" y="459.9" width="35.6" height="23.6" rx="4.8"/>
+<ellipse class="keyo" cx="323.1" cy="313.8" rx="16.6" ry="11.2"/>
+<rect class="keyo" x="306.9" y="348.4" width="32.4" height="24.0" rx="4.8"/>
+<circle class="keyo" cx="216.6" cy="332.9" r="30.8"/>
+<rect class="win" x="95.3" y="154.0" width="242.6" height="97.2" rx="4.0"/>
+<text class="lab" x="216.6" y="206.6" text-anchor="middle">screen window</text>
+<path class="rib" d="M76.8,290.4 L72.8,290.4 L72.8,122.4 L76.8,122.4 Z"/>
+<path class="rib" d="M356.4,290.4 L360.4,290.4 L360.4,122.4 L356.4,122.4 Z"/>
+<path class="pinp" d="M76.4,240.2 L76.4,234.2 L79.8,234.2 L79.8,240.2 Z"/>
+<path class="pinp" d="M76.4,199.4 L76.4,193.4 L79.8,193.4 L79.8,199.4 Z"/>
+<path class="pinp" d="M76.4,165.4 L76.4,159.4 L79.8,159.4 L79.8,165.4 Z"/>
+<path class="pinp" d="M76.4,286.4 L76.4,278.4 L80.0,278.4 L80.0,286.4 Z"/>
+<path class="pinp" d="M356.8,240.2 L356.8,234.2 L353.4,234.2 L353.4,240.2 Z"/>
+<path class="pinp" d="M356.8,199.4 L356.8,193.4 L353.4,193.4 L353.4,199.4 Z"/>
+<path class="pinp" d="M356.8,165.4 L356.8,159.4 L353.4,159.4 L353.4,165.4 Z"/>
+<path class="pinp" d="M356.8,286.4 L356.8,278.4 L353.2,278.4 L353.2,286.4 Z"/>
+<rect class="solarframe" x="96.6" y="91.0" width="144.0" height="52.0" rx="4.0"/>
+<rect class="solar" x="100.6" y="95.0" width="136.0" height="44.0" rx="3.0"/>
+<text class="lab inv" x="168.6" y="121.0" text-anchor="middle">solar cell</text>
+<circle class="pocket" cx="266.2" cy="106.6" r="28.0"/>
+<circle class="pocket" cx="315.8" cy="106.6" r="28.0"/>
+<circle class="pocketin" cx="266.2" cy="106.6" r="24.8"/>
+<circle class="pocketin" cx="315.8" cy="106.6" r="24.8"/>
+<text class="lab" x="291.0" y="150.6" text-anchor="middle">2 round pockets</text>
+<circle class="spost" cx="80.4" cy="90.2" r="9.2"/>
+<circle class="phole" cx="80.4" cy="90.2" r="3.4"/>
+<circle class="spost" cx="352.8" cy="90.2" r="9.2"/>
+<circle class="phole" cx="352.8" cy="90.2" r="3.4"/>
+<circle class="spost" cx="126.8" cy="334.4" r="9.2"/>
+<circle class="phole" cx="126.8" cy="334.4" r="3.4"/>
+<circle class="spost" cx="312.8" cy="334.4" r="9.2"/>
+<circle class="phole" cx="312.8" cy="334.4" r="3.4"/>
+<circle class="spost" cx="138.6" cy="673.0" r="9.2"/>
+<circle class="phole" cx="138.6" cy="673.0" r="3.4"/>
+<circle class="spost" cx="294.6" cy="673.0" r="9.2"/>
+<circle class="phole" cx="294.6" cy="673.0" r="3.4"/>
+<circle class="lpost" cx="140.0" cy="537.4" r="6.8"/>
+<circle class="lpost" cx="300.8" cy="414.0" r="6.8"/>
+<circle class="lpost" cx="139.0" cy="576.4" r="6.8"/>
+<circle class="lpost" cx="132.1" cy="378.8" r="6.8"/>
+<circle class="lpost" cx="293.4" cy="537.4" r="6.8"/>
+<circle class="lpost" cx="301.3" cy="377.8" r="6.8"/>
+<circle class="lpost" cx="138.6" cy="625.2" r="6.8"/>
+<circle class="lpost" cx="293.0" cy="625.2" r="6.8"/>
+<rect class="mat" x="86.5" y="297.9" width="260.2" height="391.6" rx="12.0"/>
+<text class="lab" x="216.6" y="681.5" text-anchor="middle">key mat (dashed)</text>
+<g class="co" data-id="K-M2"><line x1="312.8" y1="334.4" x2="370.8" y2="308.4"/><circle class="dot" cx="312.8" cy="334.4" r="3"/><rect x="357.6" y="298.4" width="26.4" height="20" rx="10"/><text x="370.8" y="312.6">M2</text></g>
+<g class="co" data-id="K-M10"><line x1="294.6" y1="673.0" x2="350.6" y2="651.0"/><circle class="dot" cx="294.6" cy="673.0" r="3"/><rect x="333.8" y="641.0" width="33.6" height="20" rx="10"/><text x="350.6" y="655.2">M10</text></g>
+<g class="co" data-id="K-M3"><line x1="315.8" y1="106.6" x2="355.8" y2="28.0"/><circle class="dot" cx="315.8" cy="106.6" r="3"/><rect x="342.6" y="18.0" width="26.4" height="20" rx="10"/><text x="355.8" y="32.2">M3</text></g>
+<g class="co" data-id="K-M9"><line x1="96.6" y1="117.0" x2="60.6" y2="28.0"/><circle class="dot" cx="96.6" cy="117.0" r="3"/><rect x="47.4" y="18.0" width="26.4" height="20" rx="10"/><text x="60.6" y="32.2">M9</text></g>
+<g class="co" data-id="K-M8"><line x1="356.4" y1="186.4" x2="402.4" y2="216.4"/><circle class="dot" cx="356.4" cy="186.4" r="3"/><rect x="389.2" y="206.4" width="26.4" height="20" rx="10"/><text x="402.4" y="220.6">M8</text></g>
+<g class="co" data-id="K-M8"><line x1="76.8" y1="186.4" x2="30.8" y2="216.4"/><circle class="dot" cx="76.8" cy="186.4" r="3"/><rect x="17.6" y="206.4" width="26.4" height="20" rx="10"/><text x="30.8" y="220.6">M8</text></g>
+<g class="dim"><line x1="352.8" y1="74.2" x2="80.4" y2="74.2" marker-start="url(#arF)" marker-end="url(#arF)"/></g>
+<g class="co" data-id="K-M11"><line x1="216.6" y1="74.2" x2="216.6" y2="28.0"/><circle class="dot" cx="216.6" cy="74.2" r="3"/><rect x="199.8" y="18.0" width="33.6" height="20" rx="10"/><text x="216.6" y="32.2">M11</text></g>
+<g class="co" data-id="K-M13"><line x1="184.6" y1="481.9" x2="114.6" y2="507.9"/><circle class="dot" cx="184.6" cy="481.9" r="3"/><rect x="97.8" y="497.9" width="33.6" height="20" rx="10"/><text x="114.6" y="512.1">M13</text></g>
+<g class="dim"><line x1="272.6" y1="251.2" x2="272.6" y2="297.9" marker-start="url(#arF)" marker-end="url(#arF)"/></g>
+<g class="co" data-id="K-M17"><line x1="272.6" y1="274.6" x2="122.6" y2="274.6"/><circle class="dot" cx="272.6" cy="274.6" r="3"/><rect x="105.8" y="264.6" width="33.6" height="20" rx="10"/><text x="122.6" y="278.8">M17</text></g>
+<g class="co" data-id="K-M6"><line x1="307.9" y1="251.2" x2="307.9" y2="273.2"/><circle class="dot" cx="307.9" cy="251.2" r="3"/><rect x="294.7" y="263.2" width="26.4" height="20" rx="10"/><text x="307.9" y="277.4">M6</text></g>
+<defs><marker id="arF" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L9 5L0 9z" class="arh"/></marker></defs>
+</svg>
+      <figcaption>Cream = shell. Dark posts with a hole = screw posts; small grey dots = locating posts. Purple dashes = the screen window. The two round pockets and the solar cell are at the top, as in your photo K01.</figcaption></figure>
+    <figure class="plate"><h3>Back cover, inside up</h3>
+<svg class="fig" viewBox="0 0 433 760" role="img" aria-label="Back cover seen from the inside, with numbered measuring spots">
+<path class="shellB" d="M59.6,74.9 L58.0,84.4 L58.0,94.4 L58.0,104.5 L58.0,114.5 L58.0,124.5 L58.0,134.5 L58.0,144.6 L58.0,154.6 L58.0,164.6 L58.0,174.6 L58.0,184.7 L58.0,194.7 L58.0,204.7 L58.0,214.7 L58.0,224.8 L58.0,234.8 L58.0,244.8 L58.0,254.8 L58.0,264.9 L58.0,274.9 L58.0,284.9 L58.0,295.0 L58.0,305.0 L58.0,315.0 L58.0,325.0 L58.0,335.1 L58.0,345.1 L58.0,355.1 L58.0,365.1 L58.0,375.2 L58.0,385.2 L58.0,395.2 L58.0,405.2 L58.0,415.3 L58.0,425.3 L58.0,435.3 L58.0,445.4 L58.0,455.4 L58.0,465.4 L58.0,475.4 L58.0,485.5 L58.0,495.5 L58.0,505.5 L58.0,515.5 L58.0,525.6 L58.0,535.6 L58.0,545.6 L58.0,555.6 L58.0,565.7 L58.0,575.7 L58.0,585.7 L58.0,595.8 L58.1,605.8 L58.5,615.8 L59.1,625.8 L59.7,635.8 L60.4,645.8 L61.5,655.7 L63.9,665.3 L67.8,674.4 L73.7,681.1 L82.2,684.5 L91.9,686.8 L101.6,689.2 L111.4,691.5 L121.2,693.6 L131.0,695.4 L140.9,697.0 L150.9,698.3 L160.8,699.5 L170.8,700.4 L180.8,701.0 L190.8,701.5 L200.8,701.8 L210.8,701.9 L220.9,701.9 L230.9,701.8 L240.9,701.5 L250.9,701.1 L260.9,700.6 L270.9,699.7 L280.9,698.5 L290.8,697.2 L300.7,695.7 L310.5,693.8 L320.3,691.7 L330.1,689.5 L339.8,687.1 L349.5,684.7 L358.2,681.5 L364.6,675.4 L368.8,666.7 L371.4,657.2 L372.6,647.3 L373.3,637.3 L373.9,627.3 L374.5,617.3 L375.0,607.3 L375.2,597.2 L375.2,587.2 L375.2,577.2 L375.2,567.2 L375.2,557.1 L375.2,547.1 L375.2,537.1 L375.2,527.1 L375.2,517.0 L375.2,507.0 L375.2,497.0 L375.2,486.9 L375.2,476.9 L375.2,466.9 L375.2,456.9 L375.2,446.8 L375.2,436.8 L375.2,426.8 L375.2,416.8 L375.2,406.7 L375.2,396.7 L375.2,386.7 L375.2,376.7 L375.2,366.6 L375.2,356.6 L375.2,346.6 L375.2,336.5 L375.2,326.5 L375.2,316.5 L375.2,306.5 L375.2,296.4 L375.2,286.4 L375.2,276.4 L375.2,266.4 L375.2,256.3 L375.2,246.3 L375.2,236.3 L375.2,226.3 L375.2,216.2 L375.2,206.2 L375.2,196.2 L375.2,186.1 L375.2,176.1 L375.2,166.1 L375.2,156.1 L375.2,146.0 L375.2,136.0 L375.2,126.0 L375.2,116.0 L375.2,105.9 L375.2,95.9 L375.2,85.9 L373.8,76.3 L369.3,68.3 L361.8,63.2 L352.5,61.3 L342.5,60.8 L332.5,60.4 L322.5,60.1 L312.5,59.8 L302.5,59.5 L292.4,59.2 L282.4,58.9 L272.4,58.6 L262.4,58.5 L252.4,58.3 L242.4,58.2 L232.4,58.1 L222.4,58.0 L212.3,58.0 L202.3,58.1 L192.3,58.2 L182.3,58.3 L172.3,58.4 L162.3,58.6 L152.2,58.9 L142.2,59.2 L132.2,59.5 L122.2,59.8 L112.2,60.1 L102.2,60.4 L92.2,60.7 L82.2,61.2 L72.7,62.8 L64.7,67.3 Z"/>
+<path class="cavityB" d="M67.2,78.6 L67.2,82.4 L67.2,86.3 L67.2,90.3 L67.2,94.3 L67.2,98.2 L67.2,102.2 L67.2,106.2 L67.2,110.2 L67.2,114.1 L67.2,118.1 L67.2,122.1 L67.2,126.1 L67.2,130.0 L67.2,134.0 L67.2,138.0 L67.2,142.0 L67.2,145.9 L67.2,149.9 L67.2,153.9 L67.2,157.8 L67.2,161.8 L67.2,165.8 L67.2,169.8 L67.2,173.7 L67.2,177.7 L67.2,181.7 L67.2,185.7 L67.2,189.6 L67.2,193.6 L67.2,197.6 L67.2,201.6 L67.2,205.5 L67.2,209.5 L67.2,213.5 L67.2,217.4 L67.2,221.4 L67.2,225.4 L67.2,229.4 L67.2,233.3 L67.2,237.3 L67.2,241.3 L67.2,245.3 L67.2,249.2 L67.2,253.2 L67.2,257.2 L67.2,261.2 L67.2,265.1 L67.2,269.1 L67.2,273.1 L67.2,277.0 L67.2,281.0 L67.2,285.0 L67.2,289.0 L67.2,292.9 L67.2,296.9 L67.2,300.9 L67.2,304.9 L67.2,308.8 L67.2,312.8 L67.2,316.6 L67.3,320.5 L67.4,324.4 L67.6,328.3 L67.8,332.2 L68.0,336.1 L68.3,340.0 L68.5,344.0 L68.8,347.9 L69.1,351.9 L69.4,355.9 L69.7,359.9 L69.9,363.9 L70.2,367.9 L70.4,371.9 L70.6,376.0 L70.8,380.0 L70.9,384.1 L71.0,388.2 L71.0,392.2 L71.0,396.2 L71.0,400.2 L71.0,404.2 L71.0,408.2 L71.0,412.1 L71.0,416.1 L71.0,420.1 L71.0,424.1 L71.0,428.0 L71.0,432.0 L71.0,436.0 L71.0,440.0 L71.0,443.9 L71.0,447.9 L71.0,451.9 L71.0,455.8 L71.0,459.8 L71.0,463.8 L71.0,467.8 L71.0,471.7 L71.0,475.7 L71.0,479.7 L71.0,483.7 L71.0,487.6 L71.0,491.6 L71.0,495.6 L71.0,499.6 L71.0,503.5 L71.0,507.5 L71.0,511.5 L71.0,515.4 L71.0,519.4 L71.0,523.4 L71.0,527.4 L71.0,531.3 L71.0,535.3 L71.0,539.3 L71.0,543.3 L71.0,547.2 L71.0,551.2 L71.0,555.2 L71.0,559.2 L71.0,563.1 L71.0,567.1 L71.0,571.1 L71.0,575.0 L71.0,579.0 L71.0,583.0 L71.0,587.0 L71.0,590.9 L71.0,594.9 L71.0,598.9 L71.0,602.9 L71.0,606.6 L71.1,609.3 L71.3,612.3 L71.4,615.3 L71.5,618.1 L71.8,621.6 L72.0,625.2 L72.3,628.8 L72.5,632.5 L72.8,636.1 L73.1,639.8 L73.3,643.4 L73.6,647.0 L73.8,650.7 L74.1,654.3 L74.3,657.3 L74.5,658.6 L74.7,659.1 L75.8,661.2 L77.4,664.6 L78.9,667.8 L79.3,668.6 L78.5,668.6 L82.0,669.5 L83.4,669.8 L84.8,670.0 L88.3,670.5 L91.6,671.8 L92.9,672.2 L95.5,672.9 L98.8,673.7 L102.1,674.6 L105.5,675.4 L108.8,676.2 L111.5,676.9 L112.8,677.1 L115.5,677.5 L118.8,678.3 L121.5,679.0 L123.4,679.5 L125.4,679.8 L128.0,680.2 L131.4,680.6 L134.1,681.3 L135.4,681.6 L138.1,682.0 L141.6,682.5 L145.0,683.0 L148.4,683.5 L151.8,684.0 L155.3,684.5 L157.9,684.9 L159.2,685.0 L161.9,685.1 L164.6,685.5 L166.0,685.6 L167.3,685.7 L170.0,685.8 L172.6,686.2 L173.9,686.4 L176.7,686.5 L180.3,686.6 L183.8,686.8 L187.4,686.9 L190.9,687.1 L194.5,687.2 L198.1,687.3 L201.6,687.5 L204.9,687.6 L208.4,687.6 L210.2,687.5 L212.5,687.5 L216.6,687.5 L220.7,687.5 L223.0,687.5 L224.8,687.6 L228.3,687.6 L231.6,687.5 L235.1,687.3 L238.7,687.2 L242.3,687.1 L245.8,686.9 L249.4,686.8 L252.9,686.6 L256.5,686.5 L259.3,686.4 L260.6,686.2 L263.2,685.8 L265.9,685.7 L267.2,685.6 L268.6,685.5 L271.3,685.1 L274.0,685.0 L275.3,684.9 L277.9,684.5 L281.4,684.0 L284.8,683.5 L288.2,683.0 L291.6,682.5 L295.1,682.0 L297.8,681.6 L299.1,681.3 L301.8,680.6 L305.2,680.2 L307.8,679.8 L309.8,679.5 L311.7,679.0 L314.4,678.3 L317.7,677.5 L320.4,677.1 L321.8,676.9 L323.2,676.5 L325.0,676.1 L326.8,675.6 L329.0,675.0 L332.1,674.3 L335.1,673.5 L338.1,672.8 L340.3,672.2 L341.5,671.8 L344.9,670.5 L348.4,670.0 L349.8,669.8 L351.2,669.5 L353.8,668.8 L353.2,670.1 L354.8,666.9 L356.3,663.6 L357.8,660.4 L358.6,658.8 L358.7,658.6 L358.9,657.1 L359.1,655.7 L359.2,653.9 L359.4,650.4 L359.7,646.7 L359.9,643.0 L360.1,639.3 L360.4,635.6 L360.6,631.9 L360.8,628.2 L361.1,624.5 L361.3,620.8 L361.5,617.1 L361.7,613.4 L362.0,609.7 L362.2,606.4 L362.2,602.9 L362.2,598.9 L362.2,594.9 L362.2,590.9 L362.2,587.0 L362.2,583.0 L362.2,579.0 L362.2,575.0 L362.2,571.1 L362.2,567.1 L362.2,563.1 L362.2,559.2 L362.2,555.2 L362.2,551.2 L362.2,547.2 L362.2,543.3 L362.2,539.3 L362.2,535.3 L362.2,531.3 L362.2,527.4 L362.2,523.4 L362.2,519.4 L362.2,515.4 L362.2,511.5 L362.2,507.5 L362.2,503.5 L362.2,499.6 L362.2,495.6 L362.2,491.6 L362.2,487.6 L362.2,483.7 L362.2,479.7 L362.2,475.7 L362.2,471.7 L362.2,467.8 L362.2,463.8 L362.2,459.8 L362.2,455.8 L362.2,451.9 L362.2,447.9 L362.2,443.9 L362.2,440.0 L362.2,436.0 L362.2,432.0 L362.2,428.0 L362.2,424.1 L362.2,420.1 L362.2,416.1 L362.2,412.1 L362.2,408.2 L362.2,404.2 L362.2,400.2 L362.2,396.2 L362.2,392.1 L362.3,388.1 L362.4,384.0 L362.6,379.9 L362.8,375.9 L363.0,371.9 L363.3,367.8 L363.5,363.8 L363.8,359.8 L364.1,355.9 L364.4,351.9 L364.7,347.9 L364.9,344.0 L365.2,340.1 L365.4,336.2 L365.6,332.3 L365.8,328.4 L365.9,324.5 L366.0,320.6 L366.0,316.7 L366.0,312.8 L366.0,308.8 L366.0,304.9 L366.0,300.9 L366.0,296.9 L366.0,292.9 L366.0,289.0 L366.0,285.0 L366.0,281.0 L366.0,277.0 L366.0,273.1 L366.0,269.1 L366.0,265.1 L366.0,261.2 L366.0,257.2 L366.0,253.2 L366.0,249.2 L366.0,245.3 L366.0,241.3 L366.0,237.3 L366.0,233.3 L366.0,229.4 L366.0,225.4 L366.0,221.4 L366.0,217.4 L366.0,213.5 L366.0,209.5 L366.0,205.5 L366.0,201.6 L366.0,197.6 L366.0,193.6 L366.0,189.6 L366.0,185.7 L366.0,181.7 L366.0,177.7 L366.0,173.7 L366.0,169.8 L366.0,165.8 L366.0,161.8 L366.0,157.8 L366.0,153.9 L366.0,149.9 L366.0,145.9 L366.0,142.0 L366.0,138.0 L366.0,134.0 L366.0,130.0 L366.0,126.1 L366.0,122.1 L366.0,118.1 L366.0,114.1 L366.0,110.2 L366.0,106.2 L366.0,102.2 L366.0,98.2 L366.0,94.3 L366.0,90.3 L366.0,86.3 L366.0,82.4 L366.0,78.6 L365.9,77.3 L365.6,76.8 L363.3,73.7 L361.0,70.7 L360.7,70.3 L358.3,70.1 L354.9,69.9 L351.4,69.6 L348.0,69.4 L344.7,69.2 L342.8,69.1 L341.0,69.0 L339.1,69.1 L336.6,69.2 L333.4,68.9 L330.7,68.7 L328.1,68.6 L326.1,68.5 L324.5,68.4 L322.9,68.5 L320.2,68.7 L316.9,68.5 L314.1,68.3 L311.8,68.1 L310.1,68.1 L307.7,68.2 L304.2,68.0 L301.1,67.8 L298.0,67.6 L295.4,67.5 L293.9,67.6 L291.1,67.8 L288.4,67.5 L286.5,67.4 L284.5,67.3 L282.9,67.2 L281.3,67.3 L278.7,67.4 L276.2,67.2 L274.3,67.1 L272.3,67.1 L270.5,67.0 L268.7,67.1 L266.2,67.1 L263.7,67.0 L262.1,66.9 L260.4,66.9 L258.0,67.0 L254.8,66.8 L252.0,66.7 L249.8,66.5 L248.2,66.6 L245.7,66.8 L243.3,66.7 L241.5,66.6 L239.6,66.7 L237.1,66.8 L234.5,66.5 L232.8,66.4 L231.1,66.4 L229.2,66.4 L227.2,66.5 L224.9,66.5 L222.6,66.5 L220.6,66.4 L218.0,66.4 L215.2,66.4 L212.6,66.4 L210.6,66.5 L208.3,66.5 L206.0,66.5 L204.0,66.4 L202.1,66.4 L200.4,66.4 L198.7,66.5 L196.1,66.8 L193.6,66.7 L191.7,66.6 L189.9,66.7 L187.5,66.8 L185.0,66.6 L183.4,66.5 L181.2,66.7 L178.4,66.8 L175.2,67.0 L172.7,66.9 L171.1,66.9 L169.5,67.0 L167.0,67.1 L164.5,67.1 L162.7,67.0 L160.9,67.1 L158.9,67.1 L157.0,67.2 L154.5,67.4 L151.9,67.3 L150.3,67.2 L148.7,67.3 L146.7,67.4 L144.8,67.5 L142.1,67.8 L139.3,67.6 L137.8,67.5 L135.2,67.6 L132.1,67.8 L129.0,68.0 L125.5,68.2 L123.1,68.1 L121.4,68.1 L119.1,68.3 L116.3,68.5 L113.0,68.7 L110.3,68.5 L108.7,68.4 L107.1,68.5 L105.1,68.6 L102.5,68.7 L99.8,68.9 L96.6,69.2 L94.1,69.1 L92.2,69.0 L90.4,69.1 L88.5,69.2 L85.2,69.4 L81.8,69.6 L78.3,69.9 L74.9,70.1 L72.5,70.3 L72.2,70.7 L69.9,73.7 L67.6,76.8 L67.3,77.3 Z"/>
+<line class="ribB" x1="88.6" y1="158.2" x2="354.2" y2="156.2"/>
+<line class="ribB" x1="95.4" y1="211.4" x2="188.6" y2="211.0"/>
+<line class="ribB" x1="188.6" y1="211.0" x2="244.6" y2="210.7"/>
+<line class="ribB" x1="244.6" y1="210.7" x2="347.4" y2="210.2"/>
+<line class="ribB" x1="73.8" y1="259.4" x2="356.6" y2="258.6"/>
+<line class="ribB" x1="173.4" y1="157.4" x2="171.8" y2="259.0"/>
+<line class="ribB" x1="259.8" y1="157.0" x2="255.4" y2="259.0"/>
+<line class="ribB" x1="102.2" y1="309.4" x2="331.0" y2="309.4"/>
+<line class="ribB" x1="216.2" y1="305.4" x2="215.0" y2="348.2"/>
+<line class="ribB" x1="163.4" y1="474.2" x2="267.0" y2="474.6"/>
+<line class="ribB" x1="164.2" y1="517.0" x2="267.8" y2="517.4"/>
+<line class="ribB" x1="163.4" y1="561.4" x2="267.0" y2="562.2"/>
+<line class="ribB" x1="163.0" y1="605.4" x2="268.2" y2="606.2"/>
+<line class="ribB" x1="219.0" y1="517.0" x2="214.2" y2="655.4"/>
+<line class="ribB" x1="332.6" y1="86.6" x2="200.6" y2="134.6"/>
+<line class="ribB" x1="200.6" y1="134.8" x2="332.6" y2="134.8"/>
+<line class="ribB" x1="332.6" y1="134.8" x2="332.6" y2="86.8"/>
+<line class="ribB" x1="332.6" y1="86.8" x2="200.6" y2="86.8"/>
+<line class="ribB" x1="200.6" y1="86.8" x2="200.6" y2="134.8"/>
+<line class="ribB" x1="233.6" y1="134.8" x2="233.6" y2="86.8"/>
+<line class="ribB" x1="266.6" y1="134.8" x2="266.6" y2="86.8"/>
+<line class="ribB" x1="299.6" y1="134.8" x2="299.6" y2="86.8"/>
+<line class="ribB" x1="200.6" y1="110.8" x2="332.6" y2="110.8"/>
+<circle class="ringB" cx="215.8" cy="329.4" r="16.8"/>
+<circle class="ringB" cx="214.6" cy="401.4" r="24.8"/>
+<rect class="door" x="111.4" y="76.6" width="64.0" height="60.0" rx="6.0"/>
+<circle class="hole" cx="143.4" cy="106.6" r="24.0"/>
+<circle class="boss" cx="352.8" cy="90.2" r="11.0"/>
+<circle class="phole" cx="352.8" cy="90.2" r="3.4"/>
+<circle class="boss" cx="80.4" cy="90.2" r="11.0"/>
+<circle class="phole" cx="80.4" cy="90.2" r="3.4"/>
+<circle class="boss" cx="306.4" cy="334.4" r="11.0"/>
+<circle class="phole" cx="306.4" cy="334.4" r="3.4"/>
+<circle class="boss" cx="120.4" cy="334.4" r="11.0"/>
+<circle class="phole" cx="120.4" cy="334.4" r="3.4"/>
+<circle class="boss" cx="294.6" cy="673.0" r="11.0"/>
+<circle class="phole" cx="294.6" cy="673.0" r="3.4"/>
+<circle class="boss" cx="138.6" cy="673.0" r="11.0"/>
+<circle class="phole" cx="138.6" cy="673.0" r="3.4"/>
+<rect class="camzone" x="199.6" y="194.0" width="34.0" height="34.0" rx="4"/>
+<circle class="camhole" cx="216.6" cy="211.0" r="14.0"/>
+<text class="lab" x="216.6" y="237.0" text-anchor="middle">camera spot</text>
+<g class="dim"><line x1="246.6" y1="58.0" x2="246.6" y2="211.0" marker-start="url(#arB)" marker-end="url(#arB)"/></g>
+<text class="lab" x="252.6" y="138.5">38 mm</text>
+<g class="co" data-id="K-M4"><line x1="216.6" y1="211.0" x2="152.6" y2="193.0"/><circle class="dot" cx="216.6" cy="211.0" r="3"/><rect x="139.4" y="183.0" width="26.4" height="20" rx="10"/><text x="152.6" y="197.2">M4</text></g>
+<g class="co" data-id="K-M7"><line x1="239.4" y1="401.4" x2="291.4" y2="377.4"/><circle class="dot" cx="239.4" cy="401.4" r="3"/><rect x="278.2" y="367.4" width="26.4" height="20" rx="10"/><text x="291.4" y="381.6">M7</text></g>
+<text class="note" x="216.6" y="751.9" text-anchor="middle">fx-115ES layout: your photo K-P1 replaces this</text>
+<defs><marker id="arB" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L9 5L0 9z" class="arh"/></marker></defs>
+</svg>
+      <figcaption>Navy = back cover. Light lines = ribs and rings (copied from the fx-115ES until your photo arrives). The red circle is where our camera looks out: centred left to right, 38 mm down from the top edge.</figcaption></figure>
+  </div>
+  <figure class="plate" style="margin-top:18px"><h3>Side cut through the screen area</h3><div class="scroll">
+<svg class="fig" viewBox="0 0 760 330" role="img" aria-label="Side cut of the closed calculator showing what each depth reading means">
+<defs><marker id="ar2" viewBox="0 0 10 10" refX="5" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1L9 5L0 9z" class="arh"/></marker></defs>
+<text class="lab" x="20" y="22" style="font-weight:700">BACK OF THE CALCULATOR</text><text class="lab" x="20" y="318" style="font-weight:700">FRONT (screen, keys)</text>
+<path class="sideB" d="M20 40h720v16h-8v12h-8v-12H48v12h-8v-12H20z"/>
+<text class="lab inv" x="380" y="52" text-anchor="middle">back cover</text>
+<line class="seam" x1="12" y1="80" x2="748" y2="80"/><text class="lab" x="748" y="74" text-anchor="end" style="fill:var(--red)">rim (where the two halves meet)</text>
+<path class="sideF" d="M20 80h28v196h664V80h28v220H20z"/>
+<text class="lab" x="380" y="292" text-anchor="middle">front shell</text>
+<rect class="sidePost" x="128" y="190" width="18" height="86"/><rect class="sidePost" x="610" y="190" width="18" height="86"/>
+<text class="lab" x="137" y="268" text-anchor="middle" transform="rotate(-90 137 268)" dy="4">post</text>
+<rect class="sidePCB" x="60" y="182" width="640" height="8"/><text class="lab" x="672" y="178" text-anchor="end">our board</text>
+<rect class="sideLCD" x="300" y="190" width="170" height="44" rx="2"/><text class="lab" x="385" y="216" text-anchor="middle">colour screen</text>
+<rect class="sideCam" x="357" y="106" width="56" height="76" rx="3"/><rect class="sideLens" x="370" y="70" width="30" height="36" rx="3"/><text class="lab inv" x="385" y="150" text-anchor="middle">camera</text>
+<rect class="sideRing" x="196" y="68" width="10" height="30"/><rect class="sideRing" x="540" y="68" width="10" height="30"/><text class="lab" x="556" y="104">ring / rib</text>
+<rect x="486" y="190" width="214" height="7" fill="#4A5157"/><text class="lab" x="496" y="210">rubber key mat</text>
+<path d="M516 197v20h48v-20M576 197v20h48v-20" fill="#4A5157"/><rect x="530" y="191" width="20" height="4" fill="#15181B"/><rect x="590" y="191" width="20" height="4" fill="#15181B"/>
+<rect class="sideKey" x="520" y="236" width="40" height="64" rx="4"/><rect class="sideKey" x="580" y="236" width="40" height="64" rx="4"/>
+<g class="dimS">
+ <line x1="96" y1="80" x2="96" y2="190" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+ <line x1="470" y1="56" x2="470" y2="80" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+ <line x1="230" y1="68" x2="230" y2="98" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+ <line x1="752" y1="40" x2="752" y2="300" marker-start="url(#ar2)" marker-end="url(#ar2)"/>
+</g>
+<g class="pillS co" data-id="K-M2"><rect x="70" y="124" width="52" height="20" rx="10"/><text x="96" y="138">M2</text></g>
+<g class="pillS co" data-id="K-M4"><rect x="478" y="58" width="52" height="20" rx="10"/><text x="504" y="72">M4</text></g>
+<g class="pillS co" data-id="K-M7"><rect x="236" y="74" width="52" height="20" rx="10"/><text x="262" y="88">M7</text></g>
+<g class="dimS"><line x1="650" y1="80" x2="650" y2="190" marker-start="url(#ar2)" marker-end="url(#ar2)"/></g>
+<g class="pillS co" data-id="K-M13"><rect x="620" y="118" width="60" height="20" rx="10"/><text x="650" y="132">M13</text></g>
+<g class="pillS co" data-id="K-M5"><rect x="700" y="160" width="52" height="20" rx="10"/><text x="726" y="174">M5</text></g>
+</svg></div>
+  <figcaption>Not to scale: the thickness is drawn about 8 times taller. The board's key side rests on the post tops (M2) and on the key mat's ridges (M13). M2 and M4 together set the space behind our board for the camera (5.4 mm camera + 0.3 mm air). The ring or rib (M7) must not reach down into the camera or the chip.</figcaption></figure>
+</section>
+
+<section>
+  <h2>Readings</h2>
+  <p class="sec-intro">Each box has picture steps: follow the numbers. Write two readings with a slash, like <b>5.45 / 5.50</b>. If a part isn't there on your knockoff, type <b>none</b>. If you're unsure, type your best reading and add a word, like <b>5.2 wobbly</b>.</p>
+  <div id="list"></div>
+  <div class="out" id="outWrap" hidden>
+    <p class="sec-intro" id="outMsg">Copied. Paste it into the chat.</p>
+    <textarea id="outText" readonly aria-label="Readings as text"></textarea>
+  </div>
+</section>
+
+<footer>For the knockoff refit of the v15 board. Drawings come from hardware/knockoff/cad (build 1, 2026-10-14), made from photos K01–K10 and the fx-115ES readings. Reading names match hardware/knockoff/photo_review_2026-10-14.md.</footer>
+</div>
+
+<script>
+const GROUPS = [
+  { id: "front", t: "Front shell, inside up", d: "Take the back cover off and lay the front shell face down on the table, inside up. Lift out the key mat and the old board so you can reach the posts. Every depth here starts from the rim: the flat edge all round where the back cover sits." },
+  { id: "mat", t: "Rubber key mat", d: "The mat sits between the keys and our board. Its black pills press on the board's gold pads, and its white raised ridges are what the board presses against. Its layout matches the real Casio, so only its heights matter here." },
+  { id: "back", t: "Back cover, inside up", d: "Lay the back cover on the table, inside up. Same method: steel ruler flat across its rim, depth rod down." },
+  { id: "closed", t: "Closed calculator", d: "Put it back together with the screws in. These two are quick checks of the overall size." },
+  { id: "photo", t: "Photos", d: "The back cover is the one part I have no picture of. These photos let me draw it properly." },
+];
+const ITEMS = [
+  { id: "K-M2", g: "front", p: "must", t: "Rim to the top of a screw post", w: "Any of the big round posts with a hole in the middle (the board sits on these)", h: "Key mat out for this one. Steel ruler flat across the rim, right over the post. Stand the calipers on the ruler and push the depth rod down until it touches the top of the post. Take away R.", a: "6.3", u: "mm", how: ["depthPost", "minusR"],
+    n: "The board's key side rests on these posts (and on the key mat, M13). On the fx-115ES the board's back was 5.5 below the rim; add the 0.8 board and the post tops are at 6.3. Within 0.3 mm of that, the board, screen and camera heights all stay." },
+  { id: "K-M3", g: "front", p: "must", t: "Rim to the top of the two round pockets", w: "The two round cups at the top corner, next to the solar cell", h: "Ruler across the rim over the pockets, depth rod down onto the top edge of a pocket wall (not inside the cup). One number is enough if both are the same.", a: "3.6", u: "mm", how: ["depthPocket", "minusR"],
+    n: "Our battery plug (5.5 mm tall) and the battery sit near these pockets. A small number means the pockets stick up high and may need trimming." },
+  { id: "K-M8", g: "front", p: "should", t: "Rim to the top of the thin ribs beside the screen (left / right)", w: "The thin wall that runs along each side, next to the screen window", h: "Ruler across the rim, depth rod onto the top of the thin rib. Do both sides, write left / right.", a: "4.5 / 4.5", u: "mm", how: ["depthRib", "minusR"],
+    n: "On the fx-115ES these ribs crossed the board's edge, and we planned to file them down about 1 mm. A bigger number here means less filing." },
+  { id: "K-M9", g: "front", p: "should", t: "Rim to the top of the frame around the solar cell", w: "The raised frame round the dark solar strip", h: "Ruler across the rim, depth rod onto the frame's top edge.", a: "6.6", u: "mm", how: ["depthFrame", "minusR"] },
+  { id: "K-M10", g: "front", p: "nice", t: "Screw post outside diameter", w: "Any screw post", h: "Outside jaws across the post. Turn the calipers a quarter turn and read again. Write the bigger one.", a: "3.85", u: "mm", how: ["dia"] },
+  { id: "K-M11", g: "front", p: "nice", t: "Top-corner screw posts, centre to centre", w: "The two posts in the top corners", h: "Outside jaws round both posts (outside edge to outside edge). Take away one post width (M10).", a: "68.1", u: "mm", how: ["c2c"] },
+  { id: "K-M13", g: "mat", p: "must", t: "Key mat in the shell: rim to the top of the mat's back (top / middle / bottom)", w: "Key mat lying in the front shell as it sits when closed, keys in their holes, white ridges facing you", h: "Ruler across the rim. Depth rod down onto the top of the white raised ridges, not into a hole. Do it near the top row, the middle and the bottom row, and write top / middle / bottom.", a: "6.3", u: "mm", how: ["matSeat", "matSpots", "minusR"],
+    n: "Our board presses on these ridges. If they stand higher than the post tops (M2), the rubber gets squeezed when the screws go in. A little squeeze is normal; too much and keys can press themselves, too little and they feel dead." },
+  { id: "K-M14", g: "mat", p: "must", t: "Mat sheet thickness at a flat spot", w: "Key mat out of the shell, a flat part of the sheet away from ridges and keys", h: "Outside jaws across the sheet near its edge. Close gently: rubber squashes, so stop as soon as the jaws touch.", a: "0.8", u: "mm", how: ["matThick"] },
+  { id: "K-M15", g: "mat", p: "should", t: "Mat thickness at a raised ridge", w: "One of the white raised lines on the back of the mat, where it reaches the mat's edge", h: "Outside jaws across the sheet and the ridge together. Same gentle squeeze.", a: "unknown", u: "mm", how: ["matRidge"] },
+  { id: "K-M16", g: "mat", p: "must", t: "How deep the black pills sit below the ridges (small key / big key)", w: "Back of the mat, white ridges up", h: "Lay the mat keys down on the table. Rest the end of the calipers across two ridges and push the depth rod down onto the black pill. Do a small key and a big number key.", a: "0.3", u: "mm", how: ["matPill", "matPillAB"],
+    n: "This is the gap between the black pill and our gold key pad before you press. A big gap means a hard press; no gap means the key can press itself." },
+  { id: "K-M17", g: "mat", p: "should", t: "Gap from the mat's top edge to the screen window", w: "Key mat in the shell", h: "Ruler or calipers from the mat's top edge to the bottom edge of the window opening, on the inside.", a: "~11.7", u: "mm", how: ["matGap"],
+    n: "Our colour screen sits just above this edge, on the board's key side. The mat must not run under the screen." },
+  { id: "K-M4", g: "back", p: "must", t: "Back cover: rim to the inside floor, at the camera spot", w: "Centred left to right, 38 mm down from the top edge", h: "Steel ruler flat across the rim, over the camera spot. Depth rod down to the floor. If the cover is flat there and the rod barely moves, that's fine: write the small number.", a: "0.5", u: "mm", how: ["campos", "depthFloor", "minusR"],
+    n: "(M2 − 0.8) + this = the space behind our board. The camera needs 5.7 mm (5.4 tall + 0.3 air). The fx-115ES gave 6.0." },
+  { id: "K-M7", g: "back", p: "must", t: "Tallest ring or rib near the camera spot: height above the floor", w: "Rings and ribs on the inside of the back cover, in the screen half", h: "Find the tallest one near the camera spot. Ruler across the rim, depth rod onto its top = A. Then the rod down to the floor beside it = B. Type A / B and I'll work out the height.", a: "4.0 tall", u: "mm", how: ["depthRing", "ringAB"],
+    n: "On the fx-115ES the rings were 4 mm tall and pressed on the camera and the chip. Lower is better." },
+  { id: "K-M5", g: "closed", p: "should", t: "Closed thickness: top end / bottom end", w: "Screws in. Top end = by the screen, bottom end = by the number keys", h: "Outside jaws across the whole calculator, front to back, near each end. Don't squeeze the keys.", a: "11.8 / 11.3", u: "mm", how: ["thick"] },
+  { id: "K-M6", g: "closed", p: "should", t: "Screen window: width × height", w: "The clear window on the front", h: "Use the small top jaws inside the window opening and spread them to its edges. Width first, then height.", a: "60.65 × 24.3", u: "mm", how: ["window"],
+    n: "Our colour screen's lit area is 42.7 × 22.7 mm. It needs a window at least 23.3 mm tall." },
+  { id: "K-M12", g: "closed", p: "nice", t: "Window top edge to the case top edge", w: "Front of the calculator", h: "Calipers' depth rod or a ruler, from the very top edge of the case down to the top edge of the window.", a: "24.0", u: "mm", how: ["winTop"] },
+  { id: "K-P1", g: "photo", p: "must", t: "Back cover inside, empty, straight down", w: "On the table, inside up, ruler laid across the rim", h: "Phone flat above it, about 35 cm away, 2× zoom, no flash. The whole cover and the ruler in the frame.", a: "", u: "", how: ["photoBack"] },
+  { id: "K-P2", g: "photo", p: "must", t: "Back cover with the paper board laid in it", w: "Paper board printed side up, in the cover as it would sit when closed", h: "Same as K-P1. This shows me where the camera, battery and ribs land.", a: "", u: "", how: ["photoPaper"] },
+  { id: "K-P3", g: "photo", p: "nice", t: "Back cover outside", w: "Shows any battery door, screw holes and feet", h: "Straight down, ruler beside it.", a: "", u: "", how: ["photoOut"] },
+];
+
+const KEY = "aicalc-knockoff-measure-v1";
+let vals = {};
+try { vals = JSON.parse(localStorage.getItem(KEY) || "{}") || {}; } catch (e) { vals = {}; }
+function save() { try { localStorage.setItem(KEY, JSON.stringify(vals)); } catch (e) {} }
+
+/* ---------- picture-step helpers (viewBox 160 × 110) ---------- */
+const svgP = (inner) => `<svg viewBox="0 0 160 110" aria-hidden="true">${inner}</svg>`;
+const T = (x, y, s, cls = "st") => `<text x="${x}" y="${y}" class="${cls}">${s}</text>`;
+const arrow = (x1, y1, x2, y2) => `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" class="ra" marker-end="url(#ra)"/>`;
+const spot = (x, y) => `<circle cx="${x}" cy="${y}" r="5" class="spot"/><circle cx="${x}" cy="${y}" r="1.8" fill="var(--red)"/>`;
+const okM = (x, y) => `<circle cx="${x}" cy="${y}" r="8" fill="var(--done)"/><path d="M${x - 4} ${y}l3 3 5-6" class="mk"/>`;
+const noM = (x, y) => `<circle cx="${x}" cy="${y}" r="8" fill="var(--red)"/><path d="M${x - 3.5} ${y - 3.5}l7 7m0-7l-7 7" class="mk"/>`;
+const box = (x, y, w, s, cls = "fbox") => `<rect x="${x}" y="${y}" width="${w}" height="22" rx="4" class="${cls}"/>${T(x + w / 2, y + 15, s, "ft")}`;
+function ticks(x, y, len, step, dir = 1) { let t = ""; for (let i = x + 4; i < x + len; i += step) t += `M${i} ${y}v${dir * ((i - x) % (step * 4) === 4 ? 4 : 2)}`; return `<path d="${t}" class="tick"/>`; }
+// calipers lying flat: beam from x, jaws hang down; gap = jaw spacing; val = screen text; inside = small upper jaws too
+function cal(x, y, gap, val, inside) {
+  const s = x + gap;
+  return `<rect x="${x}" y="${y}" width="142" height="9" rx="1.5" class="cs"/>${ticks(x + 6, y, 132, 5)}
+    <path d="M${x} ${y + 9}h8v30h-4l-4-6z" class="cs"/>${inside ? `<path d="M${x} ${y}v-12h4l4 12z" class="cs"/>` : ""}
+    <path d="M${s} ${y + 9}h8v24l-4 6h-4z" class="cs"/>${inside ? `<path d="M${s + 8} ${y}v-12h-4l-4 12z" class="cs"/>` : ""}
+    <rect x="${s - 2}" y="${y - 8}" width="42" height="25" rx="3" class="cs"/>
+    <rect x="${s + 5}" y="${y - 5}" width="30" height="12" rx="1.5" class="lcdS"/>${T(s + 20, y + 4, val, "lcdt")}`;
+}
+// calipers standing up on a ruler at height yb, depth rod pushed down by rod px
+function vcal(x, yb, rod, val) {
+  return `<line x1="${x + 4.5}" y1="${yb}" x2="${x + 4.5}" y2="${yb + rod}" stroke="var(--steel-edge)" stroke-width="2"/>
+    <rect x="${x}" y="${yb - 30}" width="9" height="30" rx="1.5" class="cs"/>
+    <rect x="${x + 9}" y="${yb - 28}" width="34" height="20" rx="3" class="cs"/>
+    <rect x="${x + 13}" y="${yb - 25}" width="26" height="11" rx="1.5" class="lcdS"/>${T(x + 26, yb - 16.5, val, "lcdt sm")}`;
+}const rulerFlat = (x, y, w) => `<rect x="${x}" y="${y}" width="${w}" height="4" rx="1" class="rul"/>`;
+// U-shaped section of a shell half, lying inside up: outer x, rim y, width, depth
+const shellU = (x, y, w, d, cls = "sh") => `<path d="M${x} ${y}v${d}h${w}v-${d}h-5v${d - 5}h-${w - 10}v-${d - 5}z" class="${cls}"/>`;
+const post = (cx, yb, r, h, cls = "pg") => `<rect x="${cx - r}" y="${yb - h}" width="${2 * r}" height="${h}" class="${cls}"/><rect x="${cx - 1.2}" y="${yb - h}" width="2.4" height="${h * .7}" fill="var(--ink)" opacity=".5"/>`;
+function depthScene(target) {
+  // shell rim at y 34, floor inside at y 96
+  let part = "", sx = 92, sy = 96, cls = "sh", lab = "";
+  if (target === "post") { part = post(92, 96, 7, 38); sy = 58; lab = "post"; }
+  if (target === "pocket") { part = `<rect x="74" y="66" width="5" height="30" class="pg"/><rect x="104" y="66" width="5" height="30" class="pg"/><rect x="79" y="90" width="25" height="6" fill="var(--cavity)"/>`; sx = 76.5; sy = 66; lab = "pocket wall"; }
+  if (target === "rib") { part = `<rect x="88" y="52" width="4" height="44" class="pg"/>`; sx = 90; sy = 52; lab = "thin rib"; }
+  if (target === "frame") { part = `<rect x="70" y="72" width="4" height="24" class="pg"/><rect x="112" y="72" width="4" height="24" class="pg"/><rect x="74" y="90" width="38" height="4" class="solarS"/>`; sx = 72; sy = 72; lab = "frame"; }
+  if (target === "floor") { cls = "shB"; sx = 92; sy = 74; lab = "floor"; }
+  if (target === "ring") { cls = "shB"; part = `<rect x="88" y="52" width="8" height="22" class="ringS"/>`; sx = 92; sy = 52; lab = "ring top"; }
+  const d = target === "floor" || target === "ring" ? 45 : 67;
+  const scene = shellU(14, 34, 132, d, cls) + (target === "floor" || target === "ring" ? "" : "") + part;
+  return svgP(`${scene}${rulerFlat(8, 30, 144)}${vcal(sx - 4.5, 30, sy - 30, "")}${spot(sx, sy)}${cls === "shB" ? T(sx, 100, "↑ " + lab) : T(sx + 30, sy + 4, lab, "st l")}`);
+}
+const tilted = (cx) => `<g transform="rotate(-14 ${cx} 70)"><rect x="${cx - 14}" y="52" width="5" height="34" class="cs"/><rect x="${cx + 9}" y="52" width="5" height="34" class="cs"/></g>`;
+
+const STEPS = {
+  depthPost:  [[depthScene("post"), "Ruler flat across the rim. Calipers stand on it; rod down onto the top of the post."]],
+  depthPocket:[[depthScene("pocket"), "Rod onto the top of the pocket wall, not down into the cup."]],
+  depthRib:   [[depthScene("rib"), "Rod onto the top edge of the thin rib. Then the other side."]],
+  depthFrame: [[depthScene("frame"), "Rod onto the top edge of the frame round the solar strip."]],
+  matSeat:    [[svgP(`${shellU(14, 34, 132, 67)}<rect x="19" y="80" width="122" height="5" fill="#4A5157"/>${[30, 58, 86, 114].map(x => `<rect x="${x}" y="74" width="5" height="6" fill="#EDEDE6" stroke="#9AA0A6" stroke-width=".6"/>`).join("")}${[44, 72, 100].map(x => `<path d="M${x - 8} 85v8h16v-8" fill="#4A5157"/>`).join("")}${rulerFlat(8, 30, 144)}${vcal(56, 30, 44, "")}${spot(60.5, 74)}${T(124, 70, "ridge", "st")}`), "Mat in the shell, ridges up. Rod onto the top of a ridge."]],
+  matSpots:   [[svgP(`<rect x="46" y="6" width="68" height="100" rx="8" class="sh"/><rect x="56" y="14" width="48" height="22" rx="2" fill="none" stroke="var(--win)" stroke-dasharray="3 2"/><rect x="52" y="44" width="56" height="58" rx="4" fill="#4A5157"/>${spot(80, 50)}${spot(80, 72)}${spot(80, 96)}${T(118, 53, "top", "st l")}${T(118, 75, "middle", "st l")}${T(118, 99, "bottom", "st l")}`), "Repeat near the top row, the middle and the bottom row. Type top / middle / bottom."]],
+  matThick:   [[svgP(`<rect x="20" y="70" width="120" height="7" rx="1" fill="#4A5157"/><path d="M48 77v10h18v-10M98 77v10h18v-10" fill="#4A5157"/>${cal(4, 32, 20, "0.80")}${T(80, 104, "flat spot at the edge")}`), "Jaws across the sheet only. Close until they just touch."],
+               [svgP(`<rect x="22" y="44" width="34" height="26" rx="3" fill="#4A5157"/><path d="M18 57h42" stroke="var(--red)" stroke-width="2"/>${noM(39, 88)}<rect x="104" y="44" width="34" height="26" rx="3" fill="#4A5157"/>${okM(121, 88)}${T(39, 32, "squeezed")}${T(121, 32, "just touching")}`), "Don't squeeze: rubber reads thin when pressed."]],
+  matRidge:   [[svgP(`<rect x="20" y="70" width="120" height="7" rx="1" fill="#4A5157"/><rect x="26" y="64" width="8" height="6" fill="#EDEDE6" stroke="#9AA0A6" stroke-width=".6"/>${cal(4, 26, 32, "")}${T(80, 104, "sheet + ridge together")}`), "Jaws across the sheet and one ridge where it reaches the mat's edge."]],
+  matPill:    [[svgP(`<rect x="0" y="100" width="160" height="6" fill="var(--line)"/><path d="M60 64v36h40v-36" fill="#4A5157"/><rect x="18" y="58" width="124" height="6" fill="#4A5157"/>${[40, 112].map(x => `<rect x="${x}" y="52" width="6" height="6" fill="#EDEDE6" stroke="#9AA0A6" stroke-width=".6"/>`).join("")}<rect x="66" y="62" width="28" height="4" fill="#15181B"/><rect x="30" y="44" width="100" height="8" rx="1" class="cs"/>${vcal(75.5, 44, 18, "")}${spot(80, 62)}<text x="80" y="92" class="st" style="fill:#F1F3F1">key</text>`), "Mat keys down. Calipers' end across two ridges, rod down onto the black pill."]],
+  matPillAB:  [[svgP(`<ellipse cx="46" cy="58" rx="16" ry="11" fill="#15181B"/><ellipse cx="114" cy="58" rx="22" ry="14" fill="#15181B"/>${T(46, 92, "small key")}${T(114, 92, "big key")}<rect x="40" y="10" width="80" height="22" rx="4" class="fbox"/>${T(80, 25, "small / big", "ft")}`), "One small key and one big number key. Type small / big."]],
+  matGap:     [[svgP(`<rect x="22" y="6" width="116" height="100" rx="8" class="sh"/><rect x="36" y="14" width="88" height="32" rx="2" fill="none" stroke="var(--win)" stroke-width="1.5" stroke-dasharray="4 3"/><rect x="34" y="62" width="92" height="40" rx="3" fill="#4A5157"/><line x1="80" y1="47" x2="80" y2="61" class="ra" marker-start="url(#ra)" marker-end="url(#ra)"/>${box(90, 43, 40, "gap")}${T(80, 33, "window")}${T(80, 86, "key mat", "st")}`), "From the mat's top edge up to the window's bottom edge."]],
+  depthFloor: [[depthScene("floor"), "Back cover: ruler across its rim, rod down to the floor at the camera spot."]],
+  depthRing:  [[depthScene("ring"), "A = rod onto the top of the tallest ring or rib."]],
+  ringAB:     [[svgP(`${shellU(14, 34, 132, 45, "shB")}<rect x="56" y="52" width="8" height="22" class="ringS"/>${rulerFlat(8, 30, 144)}${vcal(95.5, 30, 44, "B")}${spot(100, 74)}${T(100, 100, "↑ floor")}`), "B = rod down to the floor right beside it. Type A / B."]],
+  minusR:     [[svgP(`${box(6, 44, 48, "reading")}${T(62, 60, "−", "big")}${box(72, 44, 26, "R")}${T(106, 60, "=", "big")}${box(114, 44, 40, "✓", "fbox ok")}${T(80, 92, "type the ✓ number", "st")}`), "Take away R (the ruler's thickness). Type the answer."]],
+  dia:        [[svgP(`<rect x="46" y="56" width="28" height="44" class="pg"/><ellipse cx="60" cy="56" rx="14" ry="4.5" class="pg"/><ellipse cx="60" cy="56" rx="4" ry="1.5" fill="var(--ink)"/>${cal(38, 24, 36, "3.85")}`), "Outside jaws across the post."],
+               [svgP(`<rect x="66" y="56" width="28" height="44" class="pg"/><ellipse cx="80" cy="56" rx="14" ry="4.5" class="pg"/><path d="M50 40a32 12 0 1 0 60 0" class="ra" marker-end="url(#ra)"/>${T(80, 24, "turn ¼, read again")}`), "Read twice. Write the bigger one."]],
+  c2c:        [[svgP(`<rect x="22" y="62" width="18" height="38" class="pg"/><rect x="120" y="62" width="18" height="38" class="pg"/>${cal(4, 24, 132, "")}${T(80, 106, "outside to outside = A")}`), "Jaws outside both corner posts = A."],
+               [svgP(`${box(6, 44, 34, "A")}${T(48, 60, "−", "big")}${box(56, 44, 44, "M10")}${T(108, 60, "=", "big")}${box(116, 44, 38, "✓", "fbox ok")}`), "Take away one post width (M10)."]],
+  campos:     [[svgP(`<path d="M44 6h72a8 8 0 0 1 8 8v86a8 8 0 0 1-8 8H44a8 8 0 0 1-8-8V14a8 8 0 0 1 8-8z" class="shB"/>
+                 <line x1="80" y1="6" x2="80" y2="34" class="ra" marker-start="url(#ra)" marker-end="url(#ra)"/>${spot(80, 38)}
+                 <text x="86" y="22" class="st l" style="fill:#E8ECF6">38 mm</text><line x1="40" y1="38" x2="120" y2="38" stroke="#E8ECF6" stroke-dasharray="2 3"/><text x="80" y="58" class="st" style="fill:#E8ECF6">centred</text>`), "Find the spot: centred, 38 mm down from the top edge (behind the middle of the screen)."]],
+  thick:      [[svgP(`<path d="M18 62h124v22H18z" class="part"/><path d="M18 62h124v6H18z" class="shB"/>${cal(9, 24, 136, "")}${T(80, 100, "top end: by the screen")}`), "Jaws across the closed calculator near the top end."],
+               [svgP(`<path d="M18 64h124v20H18z" class="part"/><path d="M18 64h124v6H18z" class="shB"/>${cal(9, 26, 134, "")}${T(80, 100, "bottom end: by the 0 key")}`), "Then near the bottom end. Type top / bottom."]],
+  window:     [[svgP(`<rect x="10" y="30" width="140" height="74" rx="6" class="part"/><rect x="28" y="50" width="104" height="40" rx="2" fill="var(--bg)" stroke="var(--win)" stroke-width="1.5"/>${cal(21, 66, 102, "60.7", true)}`), "Small top jaws inside the window. Spread to the left and right edges."],
+               [svgP(`<rect x="34" y="20" width="92" height="84" rx="6" class="part"/><rect x="46" y="34" width="68" height="56" rx="2" fill="var(--bg)" stroke="var(--win)" stroke-width="1.5"/><g transform="rotate(90 80 62)">${cal(18, 58, 62, "24.3", true)}</g>`), "Turn the calipers and do the height. Type width × height."]],
+  winTop:     [[svgP(`<rect x="22" y="14" width="116" height="92" rx="8" class="part"/><rect x="40" y="50" width="80" height="34" rx="2" fill="var(--bg)" stroke="var(--win)" stroke-width="1.5"/><line x1="80" y1="14" x2="80" y2="50" class="ra" marker-start="url(#ra)" marker-end="url(#ra)"/>${box(88, 22, 40, "24.0")}`), "From the case's top edge down to the window's top edge."]],
+  photoBack:  [[svgP(`<rect x="44" y="64" width="72" height="34" rx="5" class="shB"/>${rulerFlat(40, 78, 80)}<rect x="56" y="6" width="48" height="24" rx="4" class="phone"/><path d="M64 30L46 62M96 30L114 62" class="cone"/>`), "Phone flat, straight above. Cover and ruler fill the frame."],
+               [svgP(`<g transform="rotate(-18 40 40)"><rect x="18" y="28" width="44" height="22" rx="4" class="phone"/></g>${noM(40, 82)}<rect x="96" y="28" width="44" height="22" rx="4" class="phone"/>${okM(118, 82)}${T(80, 104, "no flash · 2× zoom")}`), "Not tilted. Soft light, no flash."]],
+  photoPaper: [[svgP(`<rect x="34" y="20" width="92" height="84" rx="8" class="shB"/><rect x="42" y="26" width="76" height="72" rx="5" class="paper"/>
+                 <rect x="74" y="36" width="12" height="12" class="ink2"/><rect x="50" y="56" width="18" height="14" class="ink2"/><rect x="92" y="72" width="18" height="6" class="ink2"/><circle cx="80" cy="42" r="4" fill="none" stroke="var(--red)" stroke-width="1.5"/>`), "Paper board in the back cover, printed side up, lined up as it sits when closed."],
+               [svgP(`<rect x="44" y="64" width="72" height="34" rx="5" class="shB"/><rect x="50" y="68" width="60" height="26" rx="3" class="paper"/>${rulerFlat(40, 98, 80)}<rect x="56" y="6" width="48" height="24" rx="4" class="phone"/><path d="M64 30L46 62M96 30L114 62" class="cone"/>`), "Photo straight down, ruler in the frame."]],
+  photoOut:   [[svgP(`<rect x="44" y="60" width="72" height="40" rx="6" class="shB"/><rect x="66" y="70" width="16" height="12" rx="2" fill="none" stroke="#9AA6CC"/><circle cx="52" cy="66" r="2" fill="#9AA6CC"/><circle cx="108" cy="66" r="2" fill="#9AA6CC"/>${rulerFlat(40, 102, 80)}<rect x="56" y="6" width="48" height="24" rx="4" class="phone"/><path d="M64 30L46 56M96 30L114 56" class="cone"/>`), "Outside face up, ruler beside it, straight down."]],
+};
+const TOOLS = [
+  [svgP(`<rect x="10" y="40" width="140" height="12" rx="2" class="cs"/>${ticks(16, 40, 128, 5)}<rect x="70" y="26" width="56" height="40" rx="5" class="cs"/><rect x="78" y="31" width="40" height="17" rx="2" class="lcdS"/>${T(98, 43.5, "5.50 mm", "lcdt")}<circle cx="86" cy="58" r="4.5" fill="var(--ink)"/><circle cx="110" cy="58" r="4.5" fill="var(--hi)"/>${T(110, 76, "mm/in")}${arrow(130, 86, 114, 64)}${T(86, 76, "zero")}`),
+   "1. Millimetres", "Press the mm/in button until the screen shows mm. Your last reading (0.03) was in inches."],
+  [svgP(`<rect x="10" y="40" width="140" height="12" rx="2" class="cs"/>${ticks(16, 40, 128, 5)}<path d="M10 52h8v30h-4l-4-6zM18 52h8v24l-4 6h-4z" class="cs"/><rect x="16" y="26" width="56" height="40" rx="5" class="cs"/><rect x="24" y="31" width="40" height="17" rx="2" class="lcdS"/>${T(44, 43.5, "0.00", "lcdt")}<circle cx="32" cy="58" r="4.5" fill="var(--hi)"/>${arrow(56, 92, 36, 64)}${T(100, 96, "jaws closed → zero")}`),
+   "2. Zero it", "Close the jaws fully, then press zero. Do this again whenever you switch it on."],
+  [svgP(`<rect x="20" y="58" width="120" height="6" rx="1" class="rul"/>${ticks(24, 58, 112, 6)}${cal(9, 24, 88 - 9 - 8 + 8, "0.80")}${T(80, 96, "R = ruler thickness")}`),
+   "3. Measure your ruler: R", "Pinch the steel ruler between the big jaws. Write R down (about 0.5 to 1 mm). Every depth below has R taken away."],
+];
+
+/* ---------- build the page ---------- */
+document.getElementById("tools").innerHTML = TOOLS.map(([svg, b, s]) => `<div class="tool">${svg}<b>${b}</b><span>${s}</span></div>`).join("")
+  + `<svg width="0" height="0" style="position:absolute"><defs><marker id="ra" viewBox="0 0 10 10" refX="6" refY="5" markerWidth="4" markerHeight="4" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" fill="var(--red)"/></marker></defs></svg>`;
+function howHTML(it) {
+  const steps = (it.how || []).flatMap(k => STEPS[k] || []);
+  if (!steps.length) return "";
+  return `<ol class="how">${steps.map(([svg, cap], i) => `<li><span class="sn">${i + 1}</span>${svg}<span class="sc">${cap}</span></li>`).join("")}</ol>`;
+}
+const list = document.getElementById("list");
+for (const g of GROUPS) {
+  const el = document.createElement("div");
+  el.className = "group";
+  el.innerHTML = `<h3>${g.t}</h3><p>${g.d}</p><div class="rows"></div>`;
+  const rows = el.querySelector(".rows");
+  for (const it of ITEMS.filter(i => i.g === g.id)) {
+    const r = document.createElement("div");
+    r.className = "row"; r.id = "row-" + it.id;
+    r.innerHTML = `<div class="idc"><span class="chip ${it.p}">${it.id.replace("K-", "")}</span></div>
+      <div style="min-width:0"><div class="t">${it.t}</div><div class="h"><b>Where:</b> ${it.w}. ${it.h}</div>
+      ${it.a ? `<div class="a">fx-115ES: ${it.a}${it.u && !/[a-z]/.test(it.a) ? " " + it.u : ""}</div>` : ""}
+      ${it.n ? `<div class="n"><b>why it matters</b>${it.n}</div>` : ""}</div>
+      <label class="inp"><input id="in-${it.id}" type="text" autocomplete="off" placeholder="${it.u ? "reading" : "sent? type yes"}" aria-label="${it.id} ${it.t}"><span>${it.u || ""}</span></label>${howHTML(it)}`;
+    const inp = r.querySelector("input");
+    inp.value = vals[it.id] || "";
+    inp.addEventListener("input", () => { const v = inp.value.trim(); if (v) vals[it.id] = v; else delete vals[it.id]; save(); refresh(); });
+    rows.appendChild(r);
+  }
+  list.appendChild(el);
+}
+function refresh() {
+  let n = 0;
+  for (const it of ITEMS) {
+    const ok = !!vals[it.id]; if (ok) n++;
+    document.getElementById("row-" + it.id).classList.toggle("filled", ok);
+    document.querySelectorAll(`.co[data-id="${it.id}"]`).forEach(c => c.classList.toggle("ok", ok));
+  }
+  const must = ITEMS.filter(i => i.p === "must"), md = must.filter(i => vals[i.id]).length;
+  document.getElementById("progText").textContent = `${n} of ${ITEMS.length} filled · ${md} of ${must.length} must`;
+  document.getElementById("progFill").style.width = (100 * n / ITEMS.length) + "%";
+}
+document.querySelectorAll(".co[data-id]").forEach(c => {
+  c.setAttribute("tabindex", "0"); c.setAttribute("role", "button");
+  c.setAttribute("aria-label", "Go to " + c.dataset.id);
+  const go = () => {
+    const r = document.getElementById("row-" + c.dataset.id); if (!r) return;
+    r.scrollIntoView({ behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "center" });
+    document.querySelectorAll(".row.target").forEach(x => x.classList.remove("target"));
+    r.classList.add("target"); setTimeout(() => r.querySelector("input").focus({ preventScroll: true }), 300);
+  };
+  c.addEventListener("click", go);
+  c.addEventListener("keydown", e => { if (e.key === "Enter" || e.key === " ") { e.preventDefault(); go(); } });
+});
+function asText() {
+  const lines = ["Knockoff measurements (mm)"];
+  for (const g of GROUPS) {
+    const rows = ITEMS.filter(i => i.g === g.id && vals[i.id]);
+    if (!rows.length) continue;
+    lines.push("", "# " + g.t);
+    for (const i of rows) lines.push(`${i.id} ${i.t}: ${vals[i.id]}${i.a ? " (fx-115ES " + i.a + ")" : ""}`);
+  }
+  const missing = ITEMS.filter(i => i.p === "must" && !vals[i.id]).map(i => i.id);
+  if (missing.length) lines.push("", "Still to do (must): " + missing.join(", "));
+  return lines.join("\n");
+}
+document.getElementById("copyBtn").addEventListener("click", () => {
+  const t = asText(), wrap = document.getElementById("outWrap"), ta = document.getElementById("outText"), msg = document.getElementById("outMsg");
+  ta.value = t; wrap.hidden = false;
+  const fallback = () => { msg.textContent = "Couldn't copy automatically. The text is selected below: copy it and paste it into the chat."; ta.focus(); ta.select(); };
+  try { navigator.clipboard.writeText(t).then(() => { msg.textContent = "Copied. Paste it into the chat."; }, fallback); } catch (e) { fallback(); }
+});
+const cc = document.getElementById("clearConfirm");
+document.getElementById("clearBtn").addEventListener("click", () => { cc.hidden = false; });
+document.getElementById("clearNo").addEventListener("click", () => { cc.hidden = true; });
+document.getElementById("clearYes").addEventListener("click", () => {
+  vals = {}; save(); document.querySelectorAll(".inp input").forEach(i => i.value = ""); cc.hidden = true; refresh();
+});
+refresh();
+</script>

@@ -1,0 +1,230 @@
+12:44:19 stage new
+12:44:19 stage new done
+12:44:19 stage front
+12:44:21 extrude Knockoff - Front shell new z0=1.50 h=10.30
+12:44:21 fillet Knockoff - Front shell 2 edges r=2.00
+12:44:21 extrude Knockoff - Front shell cut z0=-60.00 h=120.00
+12:44:21 fillet Knockoff - Front shell 2 edges r=0.60
+12:44:22 extrude Knockoff - Front shell cut z0=1.40 h=8.70
+12:44:23 extrude Knockoff - Front shell cut z0=10.09 h=0.51
+12:44:24 extrude Knockoff - Front shell join z0=9.30 h=0.81
+12:44:24 extrude Knockoff - Front shell join z0=9.30 h=0.81
+12:44:25 extrude Knockoff - Front shell join z0=9.20 h=0.91
+12:44:26 extrude Knockoff - Front shell join z0=9.30 h=0.81
+12:44:28 extrude Knockoff - Front shell join z0=9.65 h=0.46
+12:44:30 extrude Knockoff - Front shell cut z0=9.25 h=0.85
+12:44:31 extrude Knockoff - Front shell join z0=5.50 h=5.11
+12:44:31 extrude Knockoff - Front shell cut z0=5.50 h=4.10
+12:44:31 extrude Knockoff - Front shell join z0=6.70 h=3.91
+12:44:32 extrude Knockoff - Front shell cut z0=6.60 h=3.10
+12:44:32 extrude Knockoff - Front shell join z0=6.00 h=4.61
+12:44:32 extrude Knockoff - Front shell join z0=6.60 h=4.01
+12:44:33 extrude Knockoff - Front shell join z0=7.00 h=3.61
+12:44:33 extrude Knockoff - Front shell join z0=7.50 h=3.11
+12:44:33 extrude Knockoff - Front shell join z0=7.00 h=3.61
+12:44:34 extrude Knockoff - Front shell join z0=5.10 h=5.51
+12:44:34 extrude Knockoff - Front shell cut z0=5.00 h=5.55
+12:44:35 extrude Knockoff - Front shell join z0=8.10 h=2.51
+12:44:35 extrude Knockoff - Front shell cut z0=10.80 h=1.01
+12:44:35 extrude Knockoff - Front shell cut z0=9.10 h=3.20
+12:44:35 extrude Knockoff - Front shell cut z0=10.10 h=2.20
+12:44:38 extrude Knockoff - Front shell cut z0=9.10 h=3.20
+12:44:40 extrude Knockoff - Front shell cut z0=10.90 h=0.41
+12:44:42 extrude Knockoff - Front shell new z0=1.49 h=8.31
+12:44:43 extrude Knockoff - Front shell cut z0=-60.00 h=120.00
+12:44:54 extrude Knockoff - Front shell cut z0=1.40 h=6.90
+12:44:55 extrude Knockoff - Front shell join z0=1.10 h=9.51
+12:44:55 extrude Knockoff - Front shell join z0=2.40 h=6.20
+12:44:56 extrude Knockoff - Front shell cut z0=5.90 h=1.00
+12:44:56 stage front done
+12:44:57 stage back
+12:44:58 extrude Knockoff - Back cover new z0=0.00 h=1.50
+12:44:58 fillet Knockoff - Back cover 2 edges r=1.20
+12:45:02 extrude Knockoff - Back cover cut z0=1.00 h=1.50
+12:45:12 extrude Knockoff - Back cover join z0=1.49 h=1.51
+12:45:20 extrude Knockoff - Back cover new z0=1.49 h=8.31
+12:45:22 extrude Knockoff - Back cover new z0=1.49 h=8.31
+12:45:23 extrude Knockoff - Back cover cut z0=-60.00 h=120.00
+12:45:24 extrude Knockoff - Back cover cut z0=1.50 h=9.30
+12:45:26 extrude Knockoff - Back cover join z0=0.99 h=2.01
+12:45:27 extrude Knockoff - Back cover join z0=0.99 h=4.41
+12:45:28 extrude Knockoff - Back cover join z0=0.99 h=1.01
+12:45:29 extrude Knockoff - Back cover join z0=0.99 h=4.01
+12:45:29 extrude Knockoff - Back cover join z0=0.99 h=4.01
+12:45:29 extrude Knockoff - Back cover join z0=0.99 h=4.01
+12:45:30 extrude Knockoff - Back cover join z0=0.99 h=5.01
+12:45:30 extrude Knockoff - Back cover join z0=0.99 h=5.51
+12:45:31 extrude Knockoff - Back cover cut z0=-1.00 h=6.50
+12:45:31 extrude Knockoff - Back cover cut z0=-1.00 h=2.20
+12:45:31 extrude Knockoff - Back cover cut z0=-1.00 h=1.60
+12:45:32 extrude Knockoff - Back cover cut z0=-1.00 h=2.01
+12:45:32 extrude Knockoff - Back cover cut z0=-1.00 h=2.01
+12:45:32 extrude Knockoff - Back cover cut z0=-1.00 h=1.40
+12:45:33 extrude Knockoff - Back cover cut z0=0.95 h=2.15
+12:45:33 extrude Knockoff - Back cover join z0=0.99 h=1.21
+12:45:33 extrude Knockoff - Back cover cut z0=5.90 h=1.00
+12:45:34 stage back done
+12:45:36 stage keys
+12:45:36 extrude Knockoff - Keymat new z0=7.82 h=0.80
+12:45:46 extrude Knockoff - Keymat cut z0=7.70 h=1.10
+12:45:48 extrude Knockoff - Keymat join z0=8.61 h=0.99
+12:45:48 extrude Knockoff - Keymat cut z0=7.80 h=1.90
+12:45:54 extrude Knockoff - Keycaps new z0=9.62 h=0.40
+12:46:01 extrude Knockoff - Keycaps join z0=10.01 h=1.29
+12:46:07 extrude Knockoff - Keycaps join z0=11.30 h=1.50
+12:46:08 extrude Knockoff - Keycaps cut z0=12.50 h=3.00
+12:46:09 extrude Knockoff - Keycaps cut z0=9.52 h=0.60
+12:46:10 stage keys done
+12:46:12 stage parts
+12:46:12 extrude Knockoff - Window lens new z0=10.82 h=0.80
+12:46:13 extrude Knockoff - Solar cell (dummy) new z0=10.00 h=0.55
+12:46:14 extrude Knockoff - Battery lid new z0=0.00 h=0.58
+12:46:15 extrude Knockoff - Battery lid cut z0=-0.10 h=0.35
+12:46:15 extrude Knockoff - Rubber feet new z0=-0.30 h=0.68
+12:46:16 extrude Knockoff - Reference - Casio board (C6) new z0=7.00 h=0.80
+12:46:27 extrude Knockoff - Reference - Casio board (C6) cut z0=6.90 h=1.00
+12:46:28 extrude Knockoff - Reference - Casio board (C6) cut z0=6.90 h=1.00
+12:46:28 extrude Knockoff - Reference - LCD (dummy) new z0=6.80 h=3.75
+12:46:30 extrude Knockoff - Slide case (stored) new z0=5.95 h=8.35
+12:46:30 fillet Knockoff - Slide case (stored) 53 edges r=1.00
+12:46:31 extrude Knockoff - Slide case (stored) cut z0=5.85 h=7.25
+12:46:32 extrude Knockoff - Slide case (stored) join z0=5.95 h=0.90
+12:46:34 stage parts done
+12:46:34 stage looks
+12:46:36 stage looks done
+12:46:36 stage check
+12:47:03 check | Knockoff - Front shell                 1 bodies   13.49 cm3   79.4 x 159.9 x  10.7 mm
+12:47:03 check | Knockoff - Back cover                  1 bodies   17.35 cm3   79.9 x 161.3 x   9.8 mm
+12:47:03 check | Knockoff - Keymat                      1 bodies    5.89 cm3   64.7 x  97.5 x   1.8 mm
+12:47:03 check | Knockoff - Keycaps                    47 bodies    8.73 cm3   63.5 x  90.7 x   3.2 mm
+12:47:03 check | Knockoff - Window lens                 1 bodies    1.51 cm3   65.4 x  29.0 x   0.8 mm
+12:47:03 check | Knockoff - Solar cell (dummy)          1 bodies    0.21 cm3   34.2 x  11.2 x   0.6 mm
+12:47:03 check | Knockoff - Battery lid                 1 bodies    0.13 cm3   15.7 x  14.7 x   0.6 mm
+12:47:03 check | Knockoff - Rubber feet                 4 bodies    0.10 cm3   61.0 x 121.0 x   0.7 mm
+12:47:03 check | Knockoff - Reference - Casio board (C6)   1 bodies    4.93 cm3   65.1 x  97.9 x   0.8 mm
+12:47:03 check | Knockoff - Reference - LCD (dummy)     1 bodies    7.14 cm3   68.0 x  28.0 x   3.8 mm
+12:47:03 check | Knockoff - Slide case (stored)         1 bodies   18.51 cm3   81.9 x 162.3 x   8.4 mm
+12:47:03 check | bodies checked: 60
+12:47:03 check | interferences: 1
+12:47:03 check |   Front shell  <->  Back cover : 0.0007 cm3
+12:47:03 check | pairwise boolean check: 162 pairs with overlapping boxes, 1 real overlaps
+12:47:03 check |   Knockoff - Front shell / Front shell  <->  Knockoff - Back cover / Back cover : 0.0007 cm3
+12:47:03 stage check done
+12:47:28 stage shots
+12:47:36 stage shots done
+12:48:01 stage new
+12:48:02 stage new done
+12:48:02 stage front
+12:48:03 extrude Knockoff - Front shell new z0=1.50 h=10.30
+12:48:03 fillet Knockoff - Front shell 2 edges r=2.00
+12:48:03 extrude Knockoff - Front shell cut z0=-60.00 h=120.00
+12:48:04 fillet Knockoff - Front shell 2 edges r=0.60
+12:48:04 extrude Knockoff - Front shell cut z0=1.40 h=8.70
+12:48:06 extrude Knockoff - Front shell cut z0=10.09 h=0.51
+12:48:06 extrude Knockoff - Front shell join z0=9.30 h=0.81
+12:48:06 extrude Knockoff - Front shell join z0=9.30 h=0.81
+12:48:07 extrude Knockoff - Front shell join z0=9.20 h=0.91
+12:48:08 extrude Knockoff - Front shell join z0=9.30 h=0.81
+12:48:09 extrude Knockoff - Front shell join z0=9.65 h=0.46
+12:48:10 extrude Knockoff - Front shell cut z0=9.25 h=0.85
+12:48:11 extrude Knockoff - Front shell join z0=5.50 h=5.11
+12:48:12 extrude Knockoff - Front shell cut z0=5.50 h=4.10
+12:48:12 extrude Knockoff - Front shell join z0=6.70 h=3.91
+12:48:12 extrude Knockoff - Front shell cut z0=6.60 h=3.10
+12:48:13 extrude Knockoff - Front shell join z0=6.00 h=4.61
+12:48:13 extrude Knockoff - Front shell join z0=6.60 h=4.01
+12:48:13 extrude Knockoff - Front shell join z0=7.00 h=3.61
+12:48:14 extrude Knockoff - Front shell join z0=7.50 h=3.11
+12:48:14 extrude Knockoff - Front shell join z0=7.00 h=3.61
+12:48:14 extrude Knockoff - Front shell join z0=5.10 h=5.51
+12:48:15 extrude Knockoff - Front shell cut z0=5.00 h=5.55
+12:48:15 extrude Knockoff - Front shell join z0=8.10 h=2.51
+12:48:15 extrude Knockoff - Front shell cut z0=10.80 h=1.01
+12:48:15 extrude Knockoff - Front shell cut z0=9.10 h=3.20
+12:48:16 extrude Knockoff - Front shell cut z0=10.10 h=2.20
+12:48:17 extrude Knockoff - Front shell cut z0=9.10 h=3.20
+12:48:18 extrude Knockoff - Front shell cut z0=10.90 h=0.41
+12:48:20 extrude Knockoff - Front shell new z0=1.49 h=8.31
+12:48:20 extrude Knockoff - Front shell cut z0=-60.00 h=120.00
+12:48:30 extrude Knockoff - Front shell cut z0=1.40 h=6.90
+12:48:31 extrude Knockoff - Front shell join z0=1.10 h=9.51
+12:48:31 extrude Knockoff - Front shell join z0=2.40 h=6.20
+12:48:31 extrude Knockoff - Front shell cut z0=5.90 h=1.00
+12:48:32 stage front done
+12:48:32 stage back
+12:48:33 extrude Knockoff - Back cover new z0=0.00 h=1.50
+12:48:33 fillet Knockoff - Back cover 2 edges r=1.20
+12:48:38 extrude Knockoff - Back cover cut z0=1.00 h=1.50
+12:48:48 extrude Knockoff - Back cover join z0=1.49 h=1.51
+12:48:55 extrude Knockoff - Back cover new z0=1.49 h=8.31
+12:48:57 extrude Knockoff - Back cover new z0=1.49 h=8.31
+12:48:57 extrude Knockoff - Back cover cut z0=-60.00 h=120.00
+12:48:59 extrude Knockoff - Back cover cut z0=1.50 h=9.30
+12:49:01 extrude Knockoff - Back cover join z0=0.99 h=2.01
+12:49:02 extrude Knockoff - Back cover join z0=0.99 h=4.41
+12:49:03 extrude Knockoff - Back cover join z0=0.99 h=1.01
+12:49:04 extrude Knockoff - Back cover join z0=0.99 h=4.01
+12:49:04 extrude Knockoff - Back cover join z0=0.99 h=4.01
+12:49:04 extrude Knockoff - Back cover join z0=0.99 h=4.01
+12:49:05 extrude Knockoff - Back cover join z0=0.99 h=5.01
+12:49:05 extrude Knockoff - Back cover join z0=0.99 h=5.51
+12:49:06 extrude Knockoff - Back cover cut z0=-1.00 h=6.50
+12:49:06 extrude Knockoff - Back cover cut z0=-1.00 h=2.20
+12:49:06 extrude Knockoff - Back cover cut z0=-1.00 h=1.60
+12:49:07 extrude Knockoff - Back cover cut z0=-1.00 h=2.01
+12:49:07 extrude Knockoff - Back cover cut z0=-1.00 h=2.01
+12:49:07 extrude Knockoff - Back cover cut z0=-1.00 h=1.40
+12:49:08 extrude Knockoff - Back cover cut z0=0.95 h=2.15
+12:49:08 extrude Knockoff - Back cover join z0=0.99 h=1.21
+12:49:08 extrude Knockoff - Back cover cut z0=5.90 h=1.00
+12:49:08 stage back done
+12:49:11 stage keys
+12:49:12 extrude Knockoff - Keymat new z0=7.82 h=0.80
+12:49:19 extrude Knockoff - Keymat cut z0=7.70 h=1.10
+12:49:20 extrude Knockoff - Keymat join z0=8.61 h=0.99
+12:49:21 extrude Knockoff - Keymat cut z0=7.80 h=1.90
+12:49:26 extrude Knockoff - Keycaps new z0=9.62 h=0.40
+12:49:32 extrude Knockoff - Keycaps join z0=10.01 h=1.29
+12:49:39 extrude Knockoff - Keycaps join z0=11.30 h=1.50
+12:49:40 extrude Knockoff - Keycaps cut z0=12.50 h=3.00
+12:49:40 extrude Knockoff - Keycaps cut z0=9.52 h=0.60
+12:49:42 stage keys done
+12:49:45 stage parts
+12:49:45 extrude Knockoff - Window lens new z0=10.82 h=0.80
+12:49:45 extrude Knockoff - Solar cell (dummy) new z0=10.00 h=0.55
+12:49:46 extrude Knockoff - Battery lid new z0=0.00 h=0.58
+12:49:47 extrude Knockoff - Battery lid cut z0=-0.10 h=0.35
+12:49:47 extrude Knockoff - Rubber feet new z0=-0.30 h=0.68
+12:49:48 extrude Knockoff - Reference - Casio board (C6) new z0=7.00 h=0.80
+12:50:00 extrude Knockoff - Reference - Casio board (C6) cut z0=6.90 h=1.00
+12:50:01 extrude Knockoff - Reference - Casio board (C6) cut z0=6.90 h=1.00
+12:50:01 extrude Knockoff - Reference - LCD (dummy) new z0=6.80 h=3.75
+12:50:03 extrude Knockoff - Slide case (stored) new z0=5.95 h=8.35
+12:50:03 fillet Knockoff - Slide case (stored) 53 edges r=1.00
+12:50:04 extrude Knockoff - Slide case (stored) cut z0=5.85 h=7.25
+12:50:05 extrude Knockoff - Slide case (stored) join z0=5.95 h=0.90
+12:50:06 stage parts done
+12:50:06 stage looks
+12:50:08 stage looks done
+12:50:08 stage check
+12:50:33 check | Knockoff - Front shell                 1 bodies   13.46 cm3   79.4 x 159.9 x  10.7 mm
+12:50:33 check | Knockoff - Back cover                  1 bodies   17.35 cm3   79.9 x 161.3 x   9.8 mm
+12:50:33 check | Knockoff - Keymat                      1 bodies    5.89 cm3   64.7 x  97.5 x   1.8 mm
+12:50:33 check | Knockoff - Keycaps                    47 bodies    8.73 cm3   63.5 x  90.7 x   3.2 mm
+12:50:33 check | Knockoff - Window lens                 1 bodies    1.51 cm3   65.4 x  29.0 x   0.8 mm
+12:50:33 check | Knockoff - Solar cell (dummy)          1 bodies    0.21 cm3   34.2 x  11.2 x   0.6 mm
+12:50:33 check | Knockoff - Battery lid                 1 bodies    0.13 cm3   15.7 x  14.7 x   0.6 mm
+12:50:33 check | Knockoff - Rubber feet                 4 bodies    0.10 cm3   61.0 x 121.0 x   0.7 mm
+12:50:33 check | Knockoff - Reference - Casio board (C6)   1 bodies    4.93 cm3   65.1 x  97.9 x   0.8 mm
+12:50:33 check | Knockoff - Reference - LCD (dummy)     1 bodies    7.14 cm3   68.0 x  28.0 x   3.8 mm
+12:50:33 check | Knockoff - Slide case (stored)         1 bodies   18.51 cm3   81.9 x 162.3 x   8.4 mm
+12:50:33 check | bodies checked: 60
+12:50:33 check | interferences: 0
+12:50:33 check | pairwise boolean check: 162 pairs with overlapping boxes, 0 real overlaps
+12:50:33 stage check done
+12:50:33 stage shots
+12:50:40 stage shots done
+12:50:50 stage shots
+12:50:52 stage shots done
+12:51:03 stage export
+12:51:10 stage export done

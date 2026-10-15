@@ -1,0 +1,474 @@
+<title>Proofline Production Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@75..100,500..800&family=Public+Sans:wght@400;600;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+/* Layout: an operations binder. Three quick answers up top, then four tabbed-looking chapters (China hub, money ladder,
+   Kickstarter, batch-1 calendar), each opening with a diagram and closing with the rules that keep cash safe. */
+:root {
+  --bg: #ECEFEA; --panel: #F8F9F6; --ink: #1B201D; --muted: #56605A; --line: #B9C1BB;
+  --accent: #0D6C66; --accent-soft: #D3E7E3; --hi: #F2B705; --hi-ink: #1B201D; --good: #2F9E5A; --warn: #C0392B;
+  --ship: #2F4F86; --cash: #2F9E5A; --risk: #C0392B;
+  --display: "Archivo", "Arial Narrow", system-ui, sans-serif;
+  --body: "Public Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "JetBrains Mono", ui-monospace, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) {
+  --bg: #111513; --panel: #181D1A; --ink: #E4E8E4; --muted: #9DA7A0; --line: #3E4842;
+  --accent: #45BDB3; --accent-soft: #1D3633; --hi: #F2C230; --good: #3DB66C; --warn: #FF6B5E;
+  --ship: #7FA2E0; --cash: #3DB66C; --risk: #FF6B5E; color-scheme: dark; } }
+:root[data-theme="dark"] {
+  --bg: #111513; --panel: #181D1A; --ink: #E4E8E4; --muted: #9DA7A0; --line: #3E4842;
+  --accent: #45BDB3; --accent-soft: #1D3633; --hi: #F2C230; --good: #3DB66C; --warn: #FF6B5E;
+  --ship: #7FA2E0; --cash: #3DB66C; --risk: #FF6B5E; color-scheme: dark; }
+body { background: var(--bg); color: var(--ink); font: 15.5px/1.6 var(--body); padding-inline: 16px; padding-block: 0 72px; }
+.wrap { max-width: 1080px; margin: 0 auto; }
+header { padding-block: 40px 24px; border-bottom: 2px solid var(--ink); display: grid; gap: 12px; }
+.eb { font: 600 12px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--accent); }
+h1 { font: 800 clamp(34px, 6vw, 60px)/1 var(--display); font-stretch: 78%; margin: 0; text-wrap: balance; }
+.lede { max-width: 68ch; margin: 0; color: var(--muted); }
+nav { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 6px; }
+nav a { font: 600 13px var(--mono); color: var(--accent); text-decoration: none; border: 1.5px solid var(--accent); border-radius: 14px; padding: 3px 11px; }
+nav a:hover, nav a:focus-visible { background: var(--accent); color: var(--panel); outline: none; }
+.answers { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; margin-top: 26px; }
+@media (max-width: 860px) { .answers { grid-template-columns: 1fr; } }
+.ans { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px; display: grid; gap: 6px; align-content: start; min-width: 0; }
+.ans .q { font: 600 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.ans .a { font: 750 21px/1.2 var(--display); font-stretch: 86%; }
+.ans p { margin: 0; font-size: 14.5px; }
+section { padding-block: 44px 4px; scroll-margin-top: 12px; }
+h2 { font: 750 clamp(25px, 3.6vw, 34px)/1.1 var(--display); font-stretch: 82%; margin: 0 0 8px; text-wrap: balance; }
+h2 .n { font: 600 13px var(--mono); color: var(--accent); letter-spacing: .1em; display: block; margin-bottom: 6px; }
+h3 { font: 700 19px/1.25 var(--display); font-stretch: 88%; margin: 26px 0 8px; }
+p { max-width: 70ch; }
+.intro { color: var(--muted); max-width: 70ch; margin: 0 0 16px; }
+.plate { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 16px; min-width: 0; margin: 14px 0; }
+.scroll { overflow-x: auto; }
+.fig { width: 100%; height: auto; display: block; min-width: 640px; }
+svg text { font-family: var(--mono); }
+table { width: 100%; border-collapse: collapse; font-size: 14.5px; background: var(--panel); }
+th, td { text-align: left; padding: 9px 11px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font: 600 11.5px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); background: var(--bg); }
+td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; font-family: var(--mono); font-size: 13.5px; }
+.tblwrap { overflow-x: auto; border: 1px solid var(--line); border-radius: 6px; margin: 12px 0; }
+.tblwrap table { min-width: 680px; }
+.pill { display: inline-block; font: 700 11px var(--mono); border-radius: 10px; padding: 1px 8px; border: 1.5px solid; white-space: nowrap; }
+.pill.go { color: var(--good); border-color: var(--good); }
+.pill.no { color: var(--warn); border-color: var(--warn); }
+.pill.maybe { color: var(--hi-ink); background: var(--hi); border-color: var(--hi); }
+.steps { list-style: none; padding: 0; margin: 12px 0; display: grid; gap: 10px; counter-reset: s; }
+.steps li { counter-increment: s; display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 12px; }
+.steps li::before { content: counter(s); width: 28px; height: 28px; border-radius: 14px; background: var(--ink); color: var(--bg); font: 700 13px/28px var(--mono); text-align: center; }
+.steps b { display: block; }
+.steps span { color: var(--muted); font-size: 14.5px; }
+.rungs { display: grid; gap: 12px; margin: 14px 0; }
+.rung { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 16px; background: var(--panel); border: 1px solid var(--line); border-left: 5px solid var(--accent); border-radius: 6px; padding: 14px 16px; }
+@media (max-width: 640px) { .rung { grid-template-columns: 1fr; } }
+.rung .when { font: 600 12px var(--mono); color: var(--accent); text-transform: uppercase; letter-spacing: .06em; }
+.rung .units { font: 800 28px/1 var(--display); font-stretch: 80%; margin-top: 4px; }
+.rung .units small { font: 600 12px var(--mono); color: var(--muted); display: block; margin-top: 4px; letter-spacing: .04em; }
+.rung h4 { font: 700 18px var(--display); font-stretch: 88%; margin: 0 0 6px; }
+.kv { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px 16px; margin-top: 8px; }
+@media (max-width: 760px) { .kv { grid-template-columns: 1fr; } }
+.kv div { font-size: 14px; min-width: 0; }
+.kv b { display: block; font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.gate { margin-top: 10px; font-size: 14px; padding: 7px 10px; background: var(--accent-soft); border-radius: 4px; }
+.gate b { font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-right: 6px; }
+.note { font-size: 14.5px; padding: 10px 12px; border-left: 3px solid var(--hi); background: var(--panel); border-radius: 0 6px 6px 0; margin: 14px 0; max-width: 78ch; }
+.note b:first-child { font: 600 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--accent); margin-right: 6px; }
+.risk { border-left-color: var(--risk); }
+.two { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
+@media (max-width: 760px) { .two { grid-template-columns: 1fr; } }
+.card { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 14px 16px; min-width: 0; }
+.card h4 { font: 700 17px var(--display); font-stretch: 88%; margin: 0 0 6px; }
+.card ul { margin: 6px 0 0; padding-left: 18px; font-size: 14.5px; }
+.card li { margin: 3px 0; }
+.sources { font-size: 13.5px; color: var(--muted); columns: 2 320px; column-gap: 28px; }
+.sources a { color: var(--accent); word-break: break-word; }
+.sources li { break-inside: avoid; margin: 0 0 6px; }
+footer { margin-top: 40px; padding-top: 14px; border-top: 1px solid var(--line); font-size: 13px; color: var(--muted); }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* diagram parts */
+.box { fill: var(--panel); stroke: var(--line); stroke-width: 1.4; }
+.boxA { fill: var(--accent-soft); stroke: var(--accent); stroke-width: 1.6; }
+.boxS { fill: var(--panel); stroke: var(--ship); stroke-width: 1.6; }
+.t { fill: var(--ink); font-size: 13px; }
+.t.b { font-weight: 600; }
+.t.s { fill: var(--muted); font-size: 11.5px; }
+.t.c { text-anchor: middle; }
+.flow { stroke: var(--ship); stroke-width: 2; fill: none; }
+.flowC { stroke: var(--cash); stroke-width: 2.4; fill: none; }
+.arh { fill: var(--ship); }
+.arhC { fill: var(--cash); }
+.bar { fill: var(--accent); }
+.barK { fill: var(--hi); }
+.barS { fill: var(--ship); }
+.barG { fill: var(--good); }
+.grid line { stroke: var(--line); stroke-width: 1; }
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eb">Proofline · production and funding · 15 Oct 2026 · updated with the founder pre-order plan</div>
+  <h1>From 5 samples to 1,000 calculators</h1>
+  <p class="lede">How the parts get from China to you, how each batch gets paid for before you buy it, and exactly how a Kickstarter campaign works, step by step, with Proofline's own numbers. Prices are estimates unless they come from your cost model; tariff and shipping rules changed a lot in 2025–26, so the rules here are checked to October 2026 and marked where you must confirm them.</p>
+  <nav aria-label="Chapters"><a href="#yourplan">0 · Your plan: sell 4 prototypes</a><a href="#hub">1 · China hub</a><a href="#ladder">2 · Money ladder</a><a href="#kickstarter">3 · Kickstarter</a><a href="#calendar">4 · Batch 1 calendar</a><a href="#rules">5 · Rules and risks</a><a href="#sources">Sources</a></nav>
+</header>
+
+<div class="answers">
+  <div class="ans"><span class="q">Is one hub in China faster?</span><span class="a">Not faster. Cheaper and calmer.</span>
+    <p>Everything waits for the slowest supplier, so the whole kit lands about when the last parcel would have. What you gain: one customs entry instead of five, one courier fee, someone to count and photograph parts before they leave China. Worth it from the 100-unit batch on, not for samples.</p></div>
+  <div class="ans"><span class="q">Your plan: sell 4 prototypes at $250?</span><span class="a">Yes, as founder pre-orders.</span>
+    <p>It brings in about $916 after fees, so you'd have <b>$2,000 + that profit, about $2,916</b>. Three must-dos first: plain shells instead of the Casio ones, the FCC test before they ship, and the LLC + Indiana sales-tax certificate. Then the money snowballs: 20 → 40 → 100 units with no loan.</p></div>
+  <div class="ans"><span class="q">Kickstarter in one line</span><span class="a">Pre-orders with a safety net.</span>
+    <p>People pledge during 30 days. If the $9,500 goal isn't reached, nobody pays and you owe nothing. If it is, Kickstarter charges the cards and pays you about 2 weeks later, minus about 8–10 %. Then you build and ship.</p></div>
+</div>
+
+
+<!-- ═════════════════════════════ 0. YOUR PLAN ═════════════════════════════ -->
+<section id="yourplan">
+  <h2><span class="n">CHAPTER 0</span>Your plan: sell 4 of the 5 prototypes, then grow batch by batch</h2>
+  <p class="intro">Your idea: sell 4 prototypes at $250, keep 1 for demos, and spend the money on more units, which get cheaper the more you build. It works, and it's the safest way to start, because every batch is paid by the one before. Three helpers checked the money, the per-unit cost at each batch size, and the legal side. Here's what they found.</p>
+
+  <h3>1. What the 4 sales really give you</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Per prototype sold</th><th class="num">$</th><th>Where the number comes from</th></tr></thead>
+    <tbody>
+      <tr><td>Price</td><td class="num">250.00</td><td>your plan</td></tr>
+      <tr><td>Card fee (2.9 % + 30¢)</td><td class="num">−7.55</td><td>cost model input</td></tr>
+      <tr><td>Shipping to the buyer</td><td class="num">−6.00</td><td>cost model estimate</td></tr>
+      <tr><td>Returns allowance (3 %)</td><td class="num">−7.50</td><td>cost model estimate</td></tr>
+      <tr><td><b>Net per sale · for 4</b></td><td class="num"><b>228.95 · 915.80</b></td><td>the free AI month is already in the budget</td></tr>
+    </tbody></table></div>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Phase 0 (paid separately, not from the $2,000)</th><th class="num">$</th></tr></thead>
+    <tbody>
+      <tr><td>Prototype parts for the 5 samples, boards included (your figure, 15 Oct)</td><td class="num">500.00</td></tr>
+      <tr><td>Before selling: shell samples $60, bulk samples $90, server $15, sample AI $25, lawyer check $150, LLC $97, domain $20</td><td class="num">457.00</td></tr>
+    </tbody></table></div>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Your cash after phase 0</th><th class="num">$</th></tr></thead>
+    <tbody>
+      <tr><td>Your budget (starts after phase 0, untouched by it)</td><td class="num">2,000.00</td></tr>
+      <tr><td>+ the 4 prototype sales at $250 (net)</td><td class="num">+915.80</td></tr>
+      <tr><td><b>Cash to build with</b></td><td class="num"><b>≈ 2,916</b></td></tr>
+    </tbody></table></div>
+  <p>So you start the build with <b>the full $2,000 plus the sale profit, about $2,916</b>. Phase 0 (about $500 of parts plus the pre-sale basics) is paid before that and doesn't come out of the $2,000.</p>
+  <p><b>Not counted in the total (your rule):</b> supplies you buy once and reuse for many calculators: the acrylic sheet, mask vinyl, tapes, glue, drill bits, JST-PH leads, heat-shrink and the soldering iron (about $120 on the Amazon list). They're one-time tools, so they aren't charged to the prototypes or to any round.</p>
+
+  <h3>2. Three things that must happen before anyone pays</h3>
+  <ol class="steps">
+    <li><div><b>Plain shells, not Casio ones.</b><span>The 5 samples sit in genuine Casio fx-115ES shells. Selling a Casio shell with different insides is the classic "materially different goods" trademark case, even with the logo covered. Move the 4 boards into plain knockoff shells (about $6 each) before selling, and keep the Casio units as your own demo units.</span></div></li>
+    <li><div><b>Sell them as paid "founder pre-orders"; ship after the FCC test.</b><span>The ESP32 module's FCC approval covers only its radio. The whole calculator still needs its own Part 15B test (an SDoC). Before that, US rules (47 CFR 2.803) allow you to <i>take</i> payment if you tell the buyer in writing that delivery depends on the test and promise a full refund, but not to <i>deliver</i>. Budget about $700–1,500 for the test (offshore labs from about $660, US labs $3–5k). The same test covers every later batch if the design doesn't change, so it isn't wasted money.</span></div></li>
+    <li><div><b>LLC + Indiana Registered Retail Merchant Certificate, and collect 7 % sales tax.</b><span>You're "in business", so the casual-sale exemption doesn't apply. The certificate is $25 on INBiz. Get a product-liability insurance quote, and write a one-paragraph warranty and refund policy. If you're under 18, a parent is the account holder for Stripe, the bank and the LLC.</span></div></li>
+  </ol>
+  <div class="note"><b>Also</b>Film the Kickstarter video and photos with all 5 samples <i>before</i> you send 4 away. Ship each one in a firm box with the device held still; one small installed cell (≈ 0.55 Wh) ships by USPS or UPS Ground with no special battery mark. Don't sell to minors without a parent buying, don't claim it's allowed in exams (it has Wi-Fi and a camera), and don't market it to children 12 and under.</div>
+
+  <h3>3. "Slightly cheaper at more units" is really "a lot cheaper"</h3>
+  <p>Worked out line by line from your cost model and supplier prices (knockoff shell, v15 LCD board, 150 mAh cell, about 35 % import duty):</p>
+  <div class="plate"><div class="scroll">
+  <svg class="fig" viewBox="0 0 980 260" role="img" aria-label="Cost per calculator by batch size: $157 at 5, $113 at 10, $78 at 20, $77 at 25, $60 at 50, $47 at 100">
+    <g class="grid"><line x1="70" y1="20" x2="70" y2="220"/><line x1="70" y1="220" x2="960" y2="220"/>
+      <line x1="70" y1="157.2" x2="960" y2="157.2" stroke-dasharray="3 4"/><line x1="70" y1="94.4" x2="960" y2="94.4" stroke-dasharray="3 4"/><line x1="70" y1="31.6" x2="960" y2="31.6" stroke-dasharray="3 4"/></g>
+    <text class="t s" x="62" y="224" text-anchor="end">$0</text><text class="t s" x="62" y="161" text-anchor="end">$50</text><text class="t s" x="62" y="98" text-anchor="end">$100</text><text class="t s" x="62" y="36" text-anchor="end">$150</text>
+    <!-- scale 1.256 px per $ ; bars -->
+    <rect class="bar" x="110" y="23.2" width="90" height="196.8"/><text class="t b c" x="155" y="17">$157</text><text class="t c" x="155" y="240">5</text>
+    <rect class="bar" x="250" y="77.6" width="90" height="142.4"/><text class="t b c" x="295" y="71">$113</text><text class="t c" x="295" y="240">10</text>
+    <rect class="barG" x="390" y="122.0" width="90" height="98.0"/><text class="t b c" x="435" y="116">$78</text><text class="t c" x="435" y="240">20</text>
+    <rect class="bar" x="530" y="123.9" width="90" height="96.1"/><text class="t b c" x="575" y="118">$77</text><text class="t c" x="575" y="240">25</text>
+    <rect class="barG" x="670" y="145.1" width="90" height="74.9"/><text class="t b c" x="715" y="139">$60</text><text class="t c" x="715" y="240">50</text>
+    <rect class="barG" x="810" y="160.9" width="90" height="59.1"/><text class="t b c" x="855" y="155">$47</text><text class="t c" x="855" y="240">100</text>
+    <text class="t s" x="960" y="256" text-anchor="end">units in the batch · green = sizes that fit the suppliers' minimum orders</text>
+  </svg></div></div>
+  <ul class="card" style="list-style:disc;padding-left:30px">
+    <li><b>The two big drops are 5 → 10 and 10 → 20.</b> JLCPCB's fixed ≈ $77 per order and the shipping charges spread over more units, and at 20 the shells, LCDs, cameras and magnets switch from retail to Alibaba prices.</li>
+    <li><b>Build in 20s, not 25s.</b> Shells have a minimum of 20 and magnets come in 20s, so 25 forces extras and saves only $1.46 a unit.</li>
+    <li><b>Duty doesn't shrink much:</b> still about $9.50 a unit at 100, because the $800 duty-free limit is gone.</li>
+    <li>This line-by-line check comes out a little higher than the cost model ($113 vs $92 at 10, $47 vs $42 at 100), mainly because it charges duty per shipment. The plan uses the higher, safer numbers.</li>
+  </ul>
+
+  <h3>4. The snowball: each batch paid by the one before</h3>
+  <p>Start with the ≈ $2,916, pay the FCC test from it, then build in sizes that fit the suppliers' minimums. Each sale at $225 nets about $201.52 (after card fee, shipping, returns and the free AI month). One-time costs are paid where they're needed: insurance before round 1 ships, trademark before round 2.</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Step</th><th class="num">Units</th><th class="num">Cost each</th><th class="num">Cash needed</th><th class="num">Cash before</th><th>How the gap is covered</th><th class="num">Cash in</th><th class="num">Cash after</th></tr></thead>
+    <tbody>
+      <tr><td>Sell the 4 prototypes (pre-orders), pay the FCC test (≈ $1,000)</td><td class="num">4</td><td class="num">—</td><td class="num">1,000</td><td class="num">2,916</td><td>—</td><td class="num">(in the 2,916)</td><td class="num">≈ 1,916</td></tr>
+      <tr><td><b>Round 1</b> (insurance ≈ $700 paid from it)</td><td class="num">20</td><td class="num">$70.50</td><td class="num">1,410</td><td class="num">1,916</td><td>none needed (cash covers it)</td><td class="num">4,030</td><td class="num">≈ 3,836</td></tr>
+      <tr><td><b>Round 2</b> (trademark ≈ $700 paid from it)</td><td class="num">40</td><td class="num">≈ $61</td><td class="num">2,440</td><td class="num">3,836</td><td>none needed</td><td class="num">8,061</td><td class="num">≈ 8,757</td></tr>
+      <tr><td><b>Round 3</b> (+ $100 test jig)</td><td class="num">100</td><td class="num">$44.57</td><td class="num">4,560</td><td class="num">8,757</td><td>none needed</td><td class="num">20,152</td><td class="num">≈ 24,350</td></tr>
+    </tbody></table></div>
+  <p>That's <b>164 calculators sold and about $24,000 in the bank</b> with no loan and no Kickstarter, <b>if</b> buyers keep coming. That's the real limit: the snowball moves only as fast as you can sell 20, then 40, then 100 calculators from your own site, which means building the waitlist anyway. Subscription income comes on top (about $30 a device a year). Cost per unit excludes your own time (about 37 min a unit) and the samples already paid for.</p>
+
+  <h3>5. Snowball or Kickstarter? Do both, in that order</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th></th><th>Snowball (your plan)</th><th>Kickstarter</th></tr></thead>
+    <tbody>
+      <tr><td>Money risk</td><td>You pay for each batch before it sells; unsold units are yours to sit on.</td><td>All-or-nothing: no unit is bought unless backers have paid.</td></tr>
+      <tr><td>Speed to 100 sold</td><td>About 8–9 months (around July 2027) if sales keep up.</td><td>The day the campaign ends if about 100 back it; later if only 40.</td></tr>
+      <tr><td>Fees</td><td>Card fee only (≈ 3 %)</td><td>About 8–10 %</td></tr>
+      <tr><td>What it needs</td><td>Steady sales on your own site</td><td>A big launch-day waitlist (400–2,000 emails)</td></tr>
+    </tbody></table></div>
+  <ol class="steps">
+    <li><div><b>Now:</b> film the video and photos with all 5 samples, then rebuild 4 in plain shells and sell them as founder pre-orders.</div></li>
+    <li><div><b>With the ≈ $2,916:</b> the FCC test, then round 1 straight away (no pre-orders needed first), and the waitlist.</div></li>
+    <li><div><b>Round 1 (20 units)</b> from pre-orders: real buyers, real reviews and real footage for the campaign.</div></li>
+    <li><div><b>Kickstarter for the 100:</b> the FCC test and the legal basics are already paid from the snowball, so the goal can drop from $9,500 to about <b>$6,000–7,500</b>, which is easier to hit. Or skip it if the snowball is already selling 40 a month.</div></li>
+  </ol>
+</section>
+
+<!-- ═════════════════════════════ 1. CHINA HUB ═════════════════════════════ -->
+<section id="hub">
+  <h2><span class="n">CHAPTER 1</span>The China hub: one warehouse that collects everything</h2>
+  <p class="intro">A freight forwarder or sourcing agent in Shenzhen gives you a warehouse address. Every supplier ships there by Chinese domestic post (1–3 days, almost free). The agent counts, photographs and repacks it all, then sends one box to you. This is called buyer's consolidation.</p>
+
+  <div class="plate"><div class="scroll">
+  <svg class="fig" viewBox="0 0 980 330" role="img" aria-label="Flow: suppliers in China ship to one forwarder warehouse, which sends one shipment through US customs to you">
+    <defs><marker id="a1" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 1L10 5L0 9z" class="arh"/></marker></defs>
+    <text class="t s" x="16" y="22">SUPPLIERS (CHINA)</text>
+    <g>
+      <rect class="box" x="16" y="34" width="210" height="44" rx="5"/><text class="t b" x="28" y="54">Knockoff shells</text><text class="t s" x="28" y="70">Alibaba, Trade Assurance</text>
+      <rect class="box" x="16" y="88" width="210" height="44" rx="5"/><text class="t b" x="28" y="108">LCD panels · cameras</text><text class="t s" x="28" y="124">Alibaba sellers</text>
+      <rect class="box" x="16" y="142" width="210" height="44" rx="5"/><text class="t b" x="28" y="162">Magnet connectors</text><text class="t s" x="28" y="178">Yiwei (Alibaba)</text>
+      <rect class="box" x="16" y="196" width="210" height="44" rx="5"/><text class="t b" x="28" y="216">LiPo cells (careful)</text><text class="t s" x="28" y="232">dangerous goods: see below</text>
+      <rect class="box" x="16" y="262" width="210" height="44" rx="5"/><text class="t b" x="28" y="282">Assembled boards</text><text class="t s" x="28" y="298">JLCPCB: direct or via hub</text>
+    </g>
+    <path class="flow" d="M226 56 C300 56 300 150 370 150" marker-end="url(#a1)"/>
+    <path class="flow" d="M226 110 C300 110 300 156 370 156" marker-end="url(#a1)"/>
+    <path class="flow" d="M226 164 L370 164" marker-end="url(#a1)"/>
+    <path class="flow" d="M226 218 C300 218 300 172 370 172" marker-end="url(#a1)"/>
+    <path class="flow" d="M226 284 C300 284 300 178 370 178" marker-end="url(#a1)" stroke-dasharray="6 4"/>
+    <text class="t s" x="252" y="40">domestic post, 1–3 days</text>
+    <rect class="boxA" x="372" y="104" width="230" height="122" rx="6"/>
+    <text class="t b" x="388" y="128">Forwarder warehouse</text><text class="t s" x="388" y="146">Shenzhen</text>
+    <text class="t" x="388" y="170">✓ counts every part</text><text class="t" x="388" y="188">✓ photos before you pay the rest</text><text class="t" x="388" y="206">✓ one box, one invoice</text>
+    <path class="flow" d="M602 165 L680 165" marker-end="url(#a1)"/>
+    <text class="t s" x="608" y="152">express 4–7 d</text><text class="t s" x="608" y="186">or air 7–12 d</text>
+    <rect class="boxS" x="682" y="122" width="132" height="86" rx="6"/>
+    <text class="t b c" x="748" y="150">US customs</text><text class="t s c" x="748" y="168">duty ~20–40 %</text><text class="t s c" x="748" y="184">no $800 free</text><text class="t s c" x="748" y="200">limit any more</text>
+    <path class="flow" d="M814 165 L870 165" marker-end="url(#a1)"/>
+    <rect class="box" x="872" y="134" width="96" height="62" rx="6"/><text class="t b c" x="920" y="162">You</text><text class="t s c" x="920" y="180">assemble</text>
+  </svg></div></div>
+
+  <h3>So is it faster? Here is the honest comparison</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Route</th><th>First parts reach you</th><th>Whole kit reaches you</th><th>Customs entries and courier fees</th><th>Quality check before it leaves China</th></tr></thead>
+    <tbody>
+      <tr><td><b>Each supplier ships to you by express</b></td><td>about 5–10 days</td><td>about 10–20 days (staggered)</td><td>one per parcel (5–6 entries, each with its own fee)</td><td>none: you find problems at home</td></tr>
+      <tr><td><b>Everything to a Shenzhen hub, then one express box</b></td><td>about 10–18 days</td><td>about 10–18 days (all together)</td><td>one entry, one fee</td><td>yes: counts and photos</td></tr>
+      <tr><td><b>Hub, then sea freight (LCL)</b></td><td colspan="2">about 35–50 days door to door</td><td>one entry; cheapest per kg</td><td>yes</td></tr>
+    </tbody></table></div>
+  <p>The hub doesn't make anything arrive sooner. Its value is that, since the US ended the $800 duty-free limit for every country (August 2025, written into CBP rules in June 2026), each separate parcel now goes through customs with its own duty and courier handling fee. Five parcels cost five sets of fees; one box costs one.</p>
+
+  <h3>When to use which route</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Stage</th><th>Units</th><th>Route</th><th>Why</th></tr></thead>
+    <tbody>
+      <tr><td>Samples and the 5 testers</td><td class="num">1–10</td><td><span class="pill no">no hub</span> each seller ships by DHL/FedEx</td><td>Few parcels, speed matters most, small duty.</td></tr>
+      <tr><td>Batch 1 (Kickstarter)</td><td class="num">100</td><td><span class="pill go">hub</span> + one express or air box (~15 kg)</td><td>5–6 suppliers, one customs entry, a check before the balance is paid. Ship JLCPCB boards straight to you (they're fast and already pack well).</td></tr>
+      <tr><td>Batch 2</td><td class="num">300</td><td><span class="pill go">hub</span> + air freight</td><td>Air per kg is cheaper than express at this weight.</td></tr>
+      <tr><td>Batch 3 and up</td><td class="num">1,000+</td><td><span class="pill maybe">factory</span> a Shenzhen contract manufacturer builds finished units ("box build") and ships by sea</td><td>Your hand assembly (≈ 37 min a unit) stops scaling around a few hundred; a factory with your test jig does it.</td></tr>
+    </tbody></table></div>
+
+  <div class="note risk"><b>Batteries</b>Loose lithium cells ("UN3480") can only fly on cargo planes, at no more than 30 % charge, with dangerous-goods paperwork, and many forwarders refuse them. Two easy ways round it: for batch 1, buy the 100 cells from a US seller (Adafruit #1317 at $5.95, about $300 more than Alibaba but no shipping trouble); from batch 3, let the factory install the cell, because a battery inside the product ("UN3481, contained in equipment") ships far more easily. Since 1 Jan 2026 even cells packed beside a device must be at ≤ 30 % charge for air.</div>
+
+  <h3>Duty: what you'll pay at the border</h3>
+  <p>Tariffs on Chinese goods changed four times in 2025–26. The Supreme Court struck down the IEEPA tariffs in February 2026; what's left for most Chinese electronics is the Section 301 tariff (7.5–25 % depending on the list) plus a 12.5 % layer added in July 2026, so plan on <b>about 20–40 %</b>. Your cost model uses 35 %, which sits inside that range. Sources disagree on the exact layer, so before batch 1:</p>
+  <ol class="steps">
+    <li><div><b>Search CBP's rulings database (CROSS) for "calculator parts".</b><span>An existing ruling on a similar part tells you the code and rate for free, in minutes.</span></div></li>
+    <li><div><b>If nothing fits, ask CBP for a binding ruling through eRulings.</b><span>Free; usually 30–90 days. Do it right after the Kickstarter launches so the answer is back before you order.</span></div></li>
+    <li><div><b>For batch 1, let the forwarder quote "DDP" (delivered duty paid).</b><span>They pay the duty and add it to the invoice, so nothing surprises you at the door. Ask for an itemised quote that shows the duty line.</span></div></li>
+  </ol>
+
+  <h3>Setting up the hub (do it before batch 1, not now)</h3>
+  <ol class="steps">
+    <li><div><b>Pick 2–3 forwarders and ask the same questions.</b><span>Do you accept parcels from several Alibaba sellers? Fee per inbound parcel and for repacking? Photos on arrival? Express and air-freight DDP price to Indiana for 15 kg? Do you handle lithium batteries (licence, UN38.3 papers)?</span></div></li>
+    <li><div><b>Send each Alibaba seller the hub's address and your order number for the label.</b><span>Pay with Trade Assurance, never more than 30 % deposit; pay the rest after the hub's photos show the right parts and counts.</span></div></li>
+    <li><div><b>Test it once with a small order.</b><span>The knockoff shell samples or the bulk samples are a good dry run: a few parcels, low risk.</span></div></li>
+  </ol>
+</section>
+
+<!-- ═════════════════════════════ 2. MONEY LADDER ═════════════════════════════ -->
+<section id="ladder">
+  <h2><span class="n">CHAPTER 2</span>The money ladder: each batch is paid for before you buy it</h2>
+  <p class="intro">The rule that keeps you safe: <b>never pay for a batch with money you hope to earn from it.</b> Every rung below is funded by money already in the bank, from the rung before. Unit costs are from your <code>COST_MODEL.xlsx</code> (LCD version, 150 mAh cell); the rest are estimates.</p>
+
+  <div class="plate"><div class="scroll">
+  <svg class="fig" viewBox="0 0 980 300" role="img" aria-label="Bar chart: cash needed per batch compared with where it comes from">
+    <g class="grid"><line x1="150" y1="40" x2="150" y2="250"/><line x1="150" y1="250" x2="960" y2="250"/></g>
+    <text class="t s" x="16" y="24">CASH NEEDED vs WHERE IT COMES FROM (estimates, $)</text>
+    <!-- scale: 1 px = $50 -->
+    <text class="t" x="16" y="72">Pilot (5–10)</text>
+    <rect class="bar" x="152" y="58" width="49" height="16"/><text class="t s" x="206" y="70">≈ $2,475 needed (≈ $475 over the $2,000)</text>
+    <rect class="barG" x="152" y="78" width="40" height="10"/><text class="t s" x="206" y="88">$2,000 your budget</text>
+    <text class="t" x="16" y="122">Batch 1 (100)</text>
+    <rect class="bar" x="152" y="108" width="155" height="16"/><text class="t s" x="312" y="120">$7,770 = parts $4,220 + selling-legally $3,550</text>
+    <rect class="barK" x="152" y="128" width="173" height="10"/><text class="t s" x="330" y="138">≈ $8,650 Kickstarter after fees ($9,500 goal)</text>
+    <text class="t" x="16" y="172">Batch 2 (300)</text>
+    <rect class="bar" x="152" y="158" width="222" height="16"/><text class="t s" x="379" y="170">≈ $11,100 parts (+ $2–6k own-shell mould if needed)</text>
+    <rect class="barG" x="152" y="178" width="240" height="10"/><text class="t s" x="397" y="188">≈ $12,000 from batch-1 leftovers + pre-orders</text>
+    <text class="t" x="16" y="222">Batch 3 (1,000)</text>
+    <rect class="bar" x="152" y="208" width="634" height="16"/><text class="t s" x="792" y="220">≈ $31,700 parts</text>
+    <rect class="barG" x="152" y="228" width="500" height="10"/><rect class="barS" x="652" y="228" width="300" height="10"/><text class="t s" x="560" y="246">profit ≈ $25k  +  loan up to $15k</text>
+  </svg></div></div>
+
+  <div class="rungs">
+    <div class="rung"><div><div class="when">Now → Dec 2026</div><div class="units">5–10<small>samples + pilot</small></div></div>
+      <div><h4>Rung 0 · Phase 0, then your $2,000</h4>
+        <p>Phase 0 (paid separately) covers the 5 samples on the v15 boards, shell samples, bulk samples, the lawyer check and the LLC. Then <b>sell 4 of the samples as founder pre-orders at $250</b> (chapter 0) for about $916, and add your untouched $2,000: about <b>$2,916</b> to build with.</p>
+        <div class="kv"><div><b>Cash needed</b>≈ $960 (phase 0)</div><div><b>Comes from</b>paid separately; the $2,000 starts after</div><div><b>Units made</b>5 samples + 4–5 pilot</div></div>
+        <div class="gate"><b>Go to rung 1 when</b>the 4 founder units have shipped after the FCC test, the lawyer has looked at the shell, and the waitlist has ≥ 400 emails (or the snowball rounds in chapter 0 are selling).</div></div></div>
+    <div class="rung"><div><div class="when">Spring 2027</div><div class="units">100<small>batch 1</small></div></div>
+      <div><h4>Rung 1 · Kickstarter</h4>
+        <p>The campaign <i>is</i> the factory money. Goal $9,500 (about 40 backers at an average $240). After Kickstarter's ~8–10 % that's about $8,650, which covers the $7,770 for 100 units and the one-time costs (FCC test, lawyer, LLC, trademark, insurance) with ≈ $880 to spare. If only 40 back it, about 60 of the 100 are yours to sell afterwards: that's rung 2's money.</p>
+        <div class="kv"><div><b>Cash needed</b>$7,770</div><div><b>Comes from</b>backers (paid up front)</div><div><b>Your profit</b>≈ $88–134 a unit</div></div>
+        <div class="gate"><b>Go to rung 2 when</b>every backer has their calculator and the return rate is under 5 %.</div></div></div>
+    <div class="rung"><div><div class="when">Summer → fall 2027</div><div class="units">300<small>batch 2</small></div></div>
+      <div><h4>Rung 2 · Sell what's left + own-site pre-orders</h4>
+        <p>Sell the spare batch-1 units on your own site at $225 (≈ $200 each after card fee and shipping). Open pre-orders for batch 2 with a ship date, and only order batch 2 once pre-orders plus spare-unit sales cover its parts. Kickstarter's "late pledges" can keep taking orders after the campaign too.</p>
+        <div class="kv"><div><b>Cash needed</b>≈ $11,100 (+ mould?)</div><div><b>Comes from</b>≈ 60 spare units + pre-orders</div><div><b>Subscriptions</b>≈ $4–6 profit per paying user a month</div></div>
+        <div class="gate"><b>Go to rung 3 when</b>monthly sales are steady (for example 50+ a month) and you have 3 months of sales history: lenders and Shopify Capital look at that.</div></div></div>
+    <div class="rung"><div><div class="when">2028</div><div class="units">1,000<small>batch 3</small></div></div>
+      <div><h4>Rung 3 · Profit + a cheap loan</h4>
+        <p>Unit cost drops to about $32. Batch 2's profit (≈ $100 × 300) pays most of it; close the gap with <b>Kiva</b> (0 % interest, $1,000–15,000, no credit-score minimum, 12–36 months, needs an 18+ borrower) or an <b>SBA microloan</b> (up to $50,000, usually 8–13 %, needs a business plan). Once you sell on Shopify, <b>Shopify Capital</b> offers advances repaid from sales. Ask your suppliers for better terms now that you're a repeat buyer.</p>
+        <div class="kv"><div><b>Cash needed</b>≈ $31,700</div><div><b>Comes from</b>profit + Kiva/SBA</div><div><b>Factory</b>box build in Shenzhen</div></div>
+        <div class="gate"><b>Then</b>repeat: each batch's profit funds the next, and the subscription income grows on its own.</div></div></div>
+  </div>
+
+  <div class="note risk"><b>The shell question decides the batch-1 budget</b>Your <code>KNOCKOFF_SHELL_PLAN.md</code> says public sales in a Casio-lookalike shell are high-risk unless a lawyer clears the specific shell (trade dress). If the lawyer says no, batch 1 needs your own shell: 3D-printed shells for the first 100, or an aluminium prototype mould (about $2,000–6,000 for a two-part shell, estimate from China mould quotes). In that case raise the Kickstarter goal to about <b>$13,000–16,000</b>. Get the lawyer's answer <b>before</b> you set the goal.</div>
+
+  <h3>Other money worth chasing (no repayment)</h3>
+  <div class="two">
+    <div class="card"><h4>Free money</h4><ul>
+      <li>Student and youth pitch competitions and school or state entrepreneurship grants. Prizes of $500–5,000 are common and a working demo wins them.</li>
+      <li>Local SBDC (Small Business Development Center): free advice, and they know local grants and microlenders.</li>
+      <li>SCORE mentors and university IP clinics: free help with the trade-dress question.</li></ul></div>
+    <div class="card"><h4>Money that costs something</h4><ul>
+      <li><b>Kiva:</b> 0 %, up to $15,000; you first raise from your own network for 15 days, then the public lends.</li>
+      <li><b>SBA microloan:</b> up to $50,000 through a local intermediary; slower, may need collateral.</li>
+      <li><b>Shopify Capital / revenue-based financing:</b> only after sales history; repaid as a share of sales.</li>
+      <li><b>Avoid:</b> credit cards and selling a share of the company this early.</li></ul></div>
+  </div>
+</section>
+
+<!-- ═════════════════════════════ 3. KICKSTARTER ═════════════════════════════ -->
+<section id="kickstarter">
+  <h2><span class="n">CHAPTER 3</span>How Kickstarter works, step by step</h2>
+  <p class="intro">Kickstarter is all-or-nothing pre-orders. You set a goal and a deadline. People pledge. If the total reaches the goal by the deadline, their cards are charged and you get the money; if not, nobody is charged and you owe nothing. You're promising to make and ship a product, so the work is in getting the right people ready <i>before</i> day one.</p>
+
+  <div class="plate"><div class="scroll">
+  <svg class="fig" viewBox="0 0 980 200" role="img" aria-label="Kickstarter timeline: prepare 8 to 12 weeks, campaign 30 days, payout 14 days later, build 6 to 8 weeks, ship">
+    <defs><marker id="a2" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 1L10 5L0 9z" class="arhC"/></marker></defs>
+    <rect class="boxA" x="16" y="50" width="300" height="64" rx="6"/><text class="t b" x="30" y="74">1 · Prepare</text><text class="t s" x="30" y="94">8–12 weeks · waitlist, video, page,</text><text class="t s" x="30" y="108">pre-launch page, rewards, review</text>
+    <rect class="box" x="326" y="50" width="200" height="64" rx="6" style="stroke:var(--hi);stroke-width:2"/><text class="t b" x="340" y="74">2 · Campaign</text><text class="t s" x="340" y="94">30 days · day 1 matters most</text><text class="t s" x="340" y="108">updates, answer comments</text>
+    <rect class="box" x="536" y="50" width="130" height="64" rx="6"/><text class="t b" x="550" y="74">3 · Payout</text><text class="t s" x="550" y="94">+14 days</text><text class="t s" x="550" y="108">(+ bank 3–14 d)</text>
+    <rect class="box" x="676" y="50" width="160" height="64" rx="6"/><text class="t b" x="690" y="74">4 · Build</text><text class="t s" x="690" y="94">order, assemble, test</text><text class="t s" x="690" y="108">6–8 weeks</text>
+    <rect class="box" x="846" y="50" width="120" height="64" rx="6"/><text class="t b" x="860" y="74">5 · Ship</text><text class="t s" x="860" y="94">updates every</text><text class="t s" x="860" y="108">2 weeks till done</text>
+    <path class="flowC" d="M16 150 L960 150" marker-end="url(#a2)"/>
+    <text class="t s" x="16" y="176">Nov 2026 → Feb 2027</text><text class="t s" x="326" y="176">March 2027 (example)</text><text class="t s" x="536" y="176">April</text><text class="t s" x="676" y="176">April → June</text><text class="t s" x="846" y="176">June → July</text>
+  </svg></div></div>
+
+  <h3>Before launch (the part that decides success)</h3>
+  <ol class="steps">
+    <li><div><b>Check who can be the creator.</b><span>Kickstarter requires the account holder to be 18+ with a US bank account and ID. If you're under 18, a parent or guardian creates the project with you and enters their identity and bank details; they're also responsible for delivery. Use your Indiana LLC's bank account once it exists.</span></div></li>
+    <li><div><b>Build the waitlist.</b><span>Your marketing plan's core number. About 2–10 % of engaged sign-ups back on launch day, so 40 backers needs roughly 400–2,000 emails. Post the real samples 3–5 times a week (short video), and collect emails on your site.</span></div></li>
+    <li><div><b>Turn on a Kickstarter pre-launch page.</b><span>People click "notify me", and Kickstarter emails them the moment you go live. Point your videos at it for the last 4–6 weeks.</span></div></li>
+    <li><div><b>Make the page and the video.</b><span>Your draft is in <code>docs/business/KICKSTARTER_DRAFT.md</code>: honest "a tutor, not a shortcut" pitch, only real footage of the samples, what's done vs not done yet, risks and a delivery estimate you can keep.</span></div></li>
+    <li><div><b>Set the rewards.</b><span>From your draft: <b>$5</b> thanks · <b>$195</b> Batch 1 (limited to the first batch) · <b>$210</b> calculator · <b>$285</b> Batch 1 + a year of the plan · <b>$299</b> calculator + a year. US shipping only, charged at pledge at cost + 10 % (Kickstarter's fee applies to shipping too).</span></div></li>
+    <li><div><b>Set the goal from costs, not hopes.</b><span>$9,500 covers 100 units plus the one-time costs after fees (raise it to $13–16k if you need your own shell). A goal you can hit in the first 48 hours makes the project look strong; it can raise more than the goal.</span></div></li>
+    <li><div><b>Submit for review.</b><span>Kickstarter checks hardware projects for a working prototype and honest claims (no photorealistic renders presented as the product). Allow a few days; launch on a Tuesday morning.</span></div></li>
+  </ol>
+
+  <h3>During the 30 days</h3>
+  <ol class="steps">
+    <li><div><b>Day 1: email the whole waitlist, post everywhere.</b><span>Most campaigns get a third of their total in the first two days; that's what puts you on Kickstarter's own pages.</span></div></li>
+    <li><div><b>Post an update every few days.</b><span>New footage, a test result, answers to common questions. Reply to every comment.</span></div></li>
+    <li><div><b>Watch the middle slump; plan the last 48 hours.</b><span>Pledges dip in the middle week and jump at the end when the "ending soon" reminders go out.</span></div></li>
+  </ol>
+
+  <h3>After it ends</h3>
+  <ol class="steps">
+    <li><div><b>Cards are charged; failed ones get 7 days to fix.</b><span>If a few fail, you still get what was collected, even if it ends up slightly under the goal.</span></div></li>
+    <li><div><b>Money arrives about 14 days after the end</b><span>(plus 3–14 business days for your bank). Fees come out first: 5 % to Kickstarter and about 3 % + $0.20 per pledge for card processing, so roughly 8–10 % in total.</span></div></li>
+    <li><div><b>Send the pledge survey.</b><span>Collect shipping addresses (US only) and any add-ons, through Kickstarter's survey or a pledge manager. Keep "late pledges" on so people can still order.</span></div></li>
+    <li><div><b>Order the parts the day the money lands</b><span>(chapter 4 has the calendar). Hold back the AI-plan money from the plan bundles: about $65 per bundle stays in the bank until each year of service is used.</span></div></li>
+    <li><div><b>Build, test, ship, and update every 2 weeks until every reward is delivered.</b><span>Silence is what makes backers angry, not delays. If something slips, say so early with the new date.</span></div></li>
+  </ol>
+
+  <h3>The money from one campaign, worked out</h3>
+  <div class="tblwrap"><table>
+    <thead><tr><th>If the campaign raises…</th><th class="num">Backers (avg $240)</th><th class="num">Fees (≈ 9 %)</th><th class="num">Arrives in your bank</th><th>What it pays for</th></tr></thead>
+    <tbody>
+      <tr><td>$9,500 (the goal)</td><td class="num">≈ 40</td><td class="num">≈ $855</td><td class="num">≈ $8,650</td><td>100 units + one-time costs; ~60 spare units to sell later</td></tr>
+      <tr><td>$15,000</td><td class="num">≈ 63</td><td class="num">≈ $1,350</td><td class="num">≈ $13,650</td><td>the above + your own shell mould, or a bigger batch</td></tr>
+      <tr><td>$25,000</td><td class="num">≈ 104</td><td class="num">≈ $2,250</td><td class="num">≈ $22,750</td><td>sells out batch 1; order 200 and start batch 2 early</td></tr>
+      <tr><td>Below $9,500</td><td class="num">—</td><td class="num">$0</td><td class="num">$0</td><td>nobody is charged; fix the pitch and relaunch</td></tr>
+    </tbody></table></div>
+</section>
+
+<!-- ═════════════════════════════ 4. CALENDAR ═════════════════════════════ -->
+<section id="calendar">
+  <h2><span class="n">CHAPTER 4</span>Batch 1 calendar: from "campaign ends" to "shipped"</h2>
+  <p class="intro">Week 0 is the day the campaign ends. Lead times are typical; the parts that take longest are ordered first. Nothing is ordered before week 2, because that's when the money arrives.</p>
+  <div class="tblwrap"><table>
+    <thead><tr><th>Week</th><th>What happens</th><th class="num">Money out</th></tr></thead>
+    <tbody>
+      <tr><td class="num">0</td><td>Campaign ends. Send the pledge survey. Re-confirm quotes with every supplier and the hub.</td><td class="num">—</td></tr>
+      <tr><td class="num">2–3</td><td>Money arrives. Order 100 boards from JLCPCB (paid in full, they ship to you in ~1–2 weeks). Order shells, panels, cameras and magnets on Alibaba with 30 % deposits, all shipped to the hub. Buy the 100 batteries from a US seller.</td><td class="num">≈ $2,300</td></tr>
+      <tr><td class="num">4–5</td><td>Boards arrive; bench-test a sample of them. Parts arrive at the hub; check the hub's photos and counts, then pay the 70 % balances.</td><td class="num">≈ $1,400</td></tr>
+      <tr><td class="num">5–7</td><td>One box from the hub (DDP, duty included). FCC test and insurance paid if not already.</td><td class="num">≈ $500 + legal</td></tr>
+      <tr><td class="num">6–10</td><td>Assemble and test (~37 min a unit, about 60 hours for 100: plan 2–3 weeks). Grind jigs, QA checklist (<code>QA_TEST_PLAN.md</code>).</td><td class="num">—</td></tr>
+      <tr><td class="num">9–11</td><td>Ship to backers; activate their free month of the plan.</td><td class="num">shipping (paid by backers)</td></tr>
+    </tbody></table></div>
+  <p>So a campaign that ends in late March ships around early-to-mid June. Put a delivery estimate on the page with a month of slack (say July 2027): finishing early is a pleasant surprise, finishing late costs trust.</p>
+</section>
+
+<!-- ═════════════════════════════ 5. RULES & RISKS ═════════════════════════════ -->
+<section id="rules">
+  <h2><span class="n">CHAPTER 5</span>Rules that keep the money safe, and the risks to watch</h2>
+  <div class="two">
+    <div class="card"><h4>Rules</h4><ul>
+      <li>Never order a batch before its money is in the bank.</li>
+      <li>Keep 10 % of every batch budget as contingency.</li>
+      <li>Alibaba: Trade Assurance, chat on-platform, ≤ 30 % deposit, balance only after the hub's photos.</li>
+      <li>Keep the AI-plan money (≈ $65 per plan bundle) aside until that year of service is used.</li>
+      <li>Business money in the LLC's bank account, never mixed with personal money.</li>
+      <li>Every number that's a guess gets replaced with a real quote before you set the Kickstarter goal.</li></ul></div>
+    <div class="card"><h4>Risks</h4><ul>
+      <li><b>Trade dress:</b> the knockoff shell may not be safe to sell publicly; get the lawyer's view before the goal is set.</li>
+      <li><b>Tariffs:</b> changed four times in 18 months; a 10-point jump adds ≈ $3–4 a unit at 100.</li>
+      <li><b>Batteries:</b> forwarders refuse loose cells; buy them in the US for batch 1.</li>
+      <li><b>Too few backers:</b> the goal is all-or-nothing, so a missed goal costs time, not money.</li>
+      <li><b>Your time:</b> 100 units ≈ 60 hours of assembly; past ~300 a factory has to take over.</li>
+      <li><b>FCC:</b> no unit (not even the 4 prototypes) may be delivered before the Part 15B test passes; pre-orders with a written disclosure and refund promise are fine.</li>
+      <li><b>Age:</b> Kickstarter, Kiva and banks need an 18+ account holder; if that isn't you yet, a parent runs those accounts.</li></ul></div>
+  </div>
+
+  <h3>Decisions only you can make</h3>
+  <ol class="steps">
+    <li><div><b>Knockoff shell or your own shell for public sales?</b><span>Book the law-clinic consult; the answer sets the goal ($9,500 vs $13–16k).</span></div></li>
+    <li><div><b>Who is the Kickstarter creator and the bank account holder?</b><span>You (18+) or a parent with you, through the LLC.</span></div></li>
+    <li><div><b>Pilot size: 4 or 5 units?</b><span>Fits the $2,000 (chapter 2, rung 0).</span></div></li>
+    <li><div><b>Launch month.</b><span>Spring 2027 per the marketing plan; pick the month only when the waitlist passes ~400.</span></div></li>
+  </ol>
+</section>
+
+<section id="sources">
+  <h2><span class="n">SOURCES</span>Where the facts come from</h2>
+  <p class="intro">Your own files: <code>hardware/production/UNIT_ECONOMICS.md</code> and <code>COST_MODEL.xlsx</code> (unit costs, the $7,770 batch-1 figure), <code>KNOCKOFF_SHELL_PLAN.md</code> (trade dress, deposits), <code>docs/business/KICKSTARTER_DRAFT.md</code> (rewards, $9,500 goal). Web sources checked 15 Oct 2026; several are commercial sites, so confirm anything you'll spend money on.</p>
+  <ul class="sources">
+    <li>De minimis suspension: <a href="https://www.federalregister.gov/documents/2026/06/24/2026-12670/indefinite-suspension-of-the-de-minimis-exemption-for-merchandise-arriving-through-all-modes-other">Federal Register, 24 Jun 2026</a>; <a href="https://www.cmgm.net/us-de-minimis-exemption-ended-2026-china/">CMGM timeline</a>; <a href="https://www.exfreight.com/de-minimis-rule-china-800-threshold-eliminated/">ExFreight</a></li>
+    <li>China tariffs 2026: <a href="https://gingercontrol.com/blog/importing-from-china-tariff-guide">Ginger Control guide</a>; <a href="https://hsrates.com/en/guides/us-tariffs-on-china-2026/">HSRates</a>; <a href="https://www.tariffstool.com/tariffs-on-electronics">TariffsTool</a>; <a href="https://www.tarifflens.ai/hts/8470.10.0060">TariffLens HTS 8470.10</a></li>
+    <li>Binding rulings: <a href="https://camtomx.com/blog/how-to-request-binding-ruling-cbp-guide">Camtom guide</a>; <a href="https://www.daeryunlaw.com/us/practices/detail/hts-tariff-classification">Daeryun Law</a></li>
+    <li>Consolidation: <a href="https://dimerco.com/optimizing-shipping-from-shenzhen-china-to-usa/">Dimerco</a>; <a href="https://www.globalsources.com/knowledge/shipping-from-shenzhen-china-to-usa/">Global Sources</a></li>
+    <li>Lithium battery shipping: <a href="https://www.faa.gov/sites/faa.gov/files/Lithium-Battery-Shipping-Guide_508_2026.pdf">FAA 2026 guide</a>; <a href="https://www.jauch.com/blog/en/un-38-3-new-regulations-for-the-air-transport-of-lithium-batteries-from-2026/">Jauch on the 2026 30 % rule</a>; <a href="https://www.faa.gov/hazmat/safecargo/icao-lithium-battery-summary-chart">FAA/ICAO chart</a></li>
+    <li>Box build: <a href="https://www.pcbway.com/pcb-assembly.html">PCBWay assembly</a>; JLCPCB consignment: <a href="https://jlc3dp.com/help/answers/detail/130-Consignment-compoment-assembly-from-aliexpress">JLC help</a></li>
+    <li>Moulds: <a href="https://www.daily-tribune.com/online_features/press_releases/haizol-china-injection-molding-industry-report-2026-93-8-of-online-injection-molding-rfqs-get/article_2365ef6b-0569-5eb6-a719-6fe004395b56.html">Haizol 2026 report</a>; <a href="https://proleantech.com/?p=239678">Proleantech</a></li>
+    <li>Kickstarter: <a href="https://www.pledgebox.com/post/how-much-does-kickstarter-take">fees (PledgeBox)</a>; <a href="https://updates.kickstarter.com/how-to-run-a-kickstarter-film-project-after-your-campaign-ends/">payout timing (Kickstarter)</a>; <a href="https://help.kickstarter.com/en-us/articles/16236515-what-happens-if-the-final-funding-amount-is-lower-than-the-goal-after-a-campaign-has-ended">failed pledges (Kickstarter help)</a>; <a href="https://updates.kickstarter.com/who-is-eligible-to-use-kickstarter/">eligibility</a>; <a href="https://techcrunch.com/2024/05/21/kickstarter-now-lets-you-pledge-after-a-campaign-closes">late pledges</a></li>
+    <li>Selling the prototypes: <a href="https://www.law.cornell.edu/cfr/text/47/2.803">47 CFR 2.803</a>; <a href="https://www.ecfr.gov/current/title-47/chapter-I/subchapter-A/part-15/subpart-A/section-15.23">47 CFR 15.23</a>; <a href="https://www.fcc.gov/oet/ea/presentations/files/oct16/11-Operation-of-RF-Devices-Prior-to-Authorization-101216-GM.pdf">FCC on pre-authorization</a>; <a href="https://compliancegate.com/fcc-sdoc">SDoC guide</a>; <a href="https://www.jjrlab.com/news/how-much-does-fcc-part-15-b-certification-testing-cost.html">15B cost</a>; <a href="https://www.lexplug.com/casebrief/davidoff_cie_s_a_v_pld_intern_corp__659b70002423c3ba321efeab">Davidoff v. PLD</a>; <a href="https://about.usps.com/postal-bulletin/2025/pb22690/html/updt_007.htm">USPS lithium update 2025</a>; <a href="https://law.justia.com/codes/indiana/title-6/article-2-5/chapter-8/section-6-2-5-8-1">Indiana IC 6-2.5-8-1</a>; <a href="https://stripe.com/en-gb-us/ssa">Stripe account terms</a></li>
+    <li>JLCPCB fees: <a href="https://jlcpcb.com/help/article/pcb-assembly-price">PCBA price help</a>; <a href="https://techoverflow.net/2024/04/09/jlcpcb-pcba-assembly-price-overview/">price overview</a></li>
+    <li>Loans: <a href="https://www.merchantmaverick.com/reviews/kiva-us-review/">Kiva US review</a>; <a href="https://www.nerdwallet.com/business/loans/learn/sba-microloans">SBA microloans (NerdWallet)</a>; <a href="https://www.nav.com/business-financing-options/sba-loans/sba-microloans/">Nav</a></li>
+  </ul>
+</section>
+
+<footer>Proofline · production and funding plan · 15 Oct 2026. Not legal, tax or financial advice: confirm duty with CBP or a customs broker, the shell with a lawyer, and loan terms with the lender.</footer>
+</div>

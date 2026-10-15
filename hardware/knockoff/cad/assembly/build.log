@@ -1,0 +1,783 @@
+15:50:21 stage new
+15:50:25 saveAs skipped: 2 : InternalValidationError : id.size()
+15:50:25 stage new done
+15:50:25 stage shell
+15:50:27 extrude KO15 - Front shell new z0=1.50 h=10.30
+15:50:27 fillet KO15 - Front shell 2 edges r=2.00
+15:50:27 extrude KO15 - Front shell cut z0=-60.00 h=120.00
+15:50:27 fillet KO15 - Front shell 2 edges r=0.60
+15:50:29 extrude KO15 - Front shell cut z0=1.40 h=8.70
+15:50:31 extrude KO15 - Front shell cut z0=10.09 h=0.51
+15:50:31 extrude KO15 - Front shell join z0=9.30 h=0.81
+15:50:32 extrude KO15 - Front shell join z0=9.30 h=0.81
+15:50:33 extrude KO15 - Front shell join z0=9.20 h=0.91
+15:50:36 extrude KO15 - Front shell join z0=9.30 h=0.81
+15:50:38 extrude KO15 - Front shell join z0=9.65 h=0.46
+15:50:39 extrude KO15 - Front shell cut z0=9.25 h=0.85
+15:50:40 extrude KO15 - Front shell join z0=5.50 h=5.11
+15:50:41 extrude KO15 - Front shell cut z0=5.50 h=4.10
+15:50:41 extrude KO15 - Front shell join z0=6.70 h=3.91
+15:50:42 extrude KO15 - Front shell cut z0=6.60 h=3.10
+15:50:42 extrude KO15 - Front shell join z0=6.00 h=4.61
+15:50:42 extrude KO15 - Front shell join z0=6.60 h=4.01
+15:50:43 extrude KO15 - Front shell join z0=7.00 h=3.61
+15:50:43 extrude KO15 - Front shell join z0=7.50 h=3.11
+15:50:43 extrude KO15 - Front shell join z0=7.00 h=3.61
+15:50:44 extrude KO15 - Front shell join z0=5.10 h=5.51
+15:50:44 extrude KO15 - Front shell cut z0=5.00 h=5.55
+15:50:44 extrude KO15 - Front shell cut z0=5.00 h=4.90
+15:50:45 extrude KO15 - Front shell join z0=5.10 h=5.51
+15:50:45 extrude KO15 - Front shell join z0=8.10 h=2.51
+15:50:46 extrude KO15 - Front shell cut z0=10.80 h=1.01
+15:50:46 extrude KO15 - Front shell cut z0=9.10 h=3.20
+15:50:46 extrude KO15 - Front shell cut z0=10.10 h=2.20
+15:50:49 extrude KO15 - Front shell cut z0=9.10 h=3.20
+15:50:50 extrude KO15 - Front shell cut z0=10.90 h=0.41
+15:50:52 extrude KO15 - Front shell new z0=1.49 h=8.31
+15:50:52 extrude KO15 - Front shell cut z0=-60.00 h=120.00
+15:51:03 extrude KO15 - Front shell cut z0=1.40 h=6.90
+15:51:04 extrude KO15 - Front shell join z0=1.10 h=9.51
+15:51:04 extrude KO15 - Front shell join z0=2.40 h=6.20
+15:51:05 extrude KO15 - Front shell cut z0=5.90 h=1.00
+15:51:06 extrude KO15 - Back cover new z0=0.00 h=1.50
+15:51:06 fillet KO15 - Back cover 2 edges r=1.20
+15:51:11 extrude KO15 - Back cover cut z0=1.00 h=1.50
+15:51:24 extrude KO15 - Back cover join z0=1.49 h=1.51
+15:51:31 extrude KO15 - Back cover new z0=1.49 h=8.31
+15:51:33 extrude KO15 - Back cover new z0=1.49 h=8.31
+15:51:34 extrude KO15 - Back cover cut z0=-60.00 h=120.00
+15:51:35 extrude KO15 - Back cover cut z0=1.50 h=9.30
+15:51:37 extrude KO15 - Back cover join z0=0.99 h=2.01
+15:51:38 extrude KO15 - Back cover join z0=0.99 h=4.41
+15:51:38 extrude KO15 - Back cover join z0=0.99 h=1.01
+15:51:39 stage shell FAILED Traceback (most recent call last):
+  File "<mcp_script>", line 2274, in <module>
+  File "<mcp_script>", line 505, in stage_shell
+  File "C:\Users\r_kas\OneDrive\Documents\GitHub\AI-CALCULATOR\.claude\worktrees\knockoff-pcb-photography-guide-8082f1\hardware\knockoff\build_knockoff_shell.py", line 1384, in stage_back
+    extrude(bk, profiles(sk, test=lambda p: any(inside(p, r) for r in rects)), BACK_PLATE - 0.01,
+                ~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\r_kas\OneDrive\Documents\GitHub\AI-CALCULATOR\.claude\worktrees\knockoff-pcb-photography-guide-8082f1\hardware\knockoff\build_knockoff_shell.py", line 985, in profiles
+    raise RuntimeError("sketch %s formed no profiles" % sk.name)
+RuntimeError: sketch solar box grid formed no profiles
+
+15:51:51 stage new
+15:51:53 saveAs skipped: 2 : InternalValidationError : id.size()
+15:51:53 stage new done
+15:51:53 stage shell
+15:51:54 extrude KO15 - Front shell new z0=1.50 h=10.30
+15:51:54 fillet KO15 - Front shell 2 edges r=2.00
+15:51:55 extrude KO15 - Front shell cut z0=-60.00 h=120.00
+15:51:55 fillet KO15 - Front shell 2 edges r=0.60
+15:51:56 extrude KO15 - Front shell cut z0=1.40 h=8.70
+15:51:57 extrude KO15 - Front shell cut z0=10.09 h=0.51
+15:51:57 extrude KO15 - Front shell join z0=9.30 h=0.81
+15:51:58 extrude KO15 - Front shell join z0=9.30 h=0.81
+15:51:58 extrude KO15 - Front shell join z0=9.20 h=0.91
+15:52:00 extrude KO15 - Front shell join z0=9.30 h=0.81
+15:52:01 extrude KO15 - Front shell join z0=9.65 h=0.46
+15:52:03 extrude KO15 - Front shell cut z0=9.25 h=0.85
+15:52:04 extrude KO15 - Front shell join z0=5.50 h=5.11
+15:52:04 extrude KO15 - Front shell cut z0=5.50 h=4.10
+15:52:04 extrude KO15 - Front shell join z0=6.70 h=3.91
+15:52:05 extrude KO15 - Front shell cut z0=6.60 h=3.10
+15:52:05 extrude KO15 - Front shell join z0=6.00 h=4.61
+15:52:05 extrude KO15 - Front shell join z0=6.60 h=4.01
+15:52:06 extrude KO15 - Front shell join z0=7.00 h=3.61
+15:52:06 extrude KO15 - Front shell join z0=7.50 h=3.11
+15:52:07 extrude KO15 - Front shell join z0=7.00 h=3.61
+15:52:07 extrude KO15 - Front shell join z0=5.10 h=5.51
+15:52:07 extrude KO15 - Front shell cut z0=5.00 h=5.55
+15:52:08 extrude KO15 - Front shell cut z0=5.00 h=4.90
+15:52:08 extrude KO15 - Front shell join z0=5.10 h=5.51
+15:52:08 extrude KO15 - Front shell join z0=8.10 h=2.51
+15:52:09 extrude KO15 - Front shell cut z0=10.80 h=1.01
+15:52:09 extrude KO15 - Front shell cut z0=9.10 h=3.20
+15:52:09 extrude KO15 - Front shell cut z0=10.10 h=2.20
+15:52:12 extrude KO15 - Front shell cut z0=9.10 h=3.20
+15:52:13 extrude KO15 - Front shell cut z0=10.90 h=0.41
+15:52:16 extrude KO15 - Front shell new z0=1.49 h=8.31
+15:52:16 extrude KO15 - Front shell cut z0=-60.00 h=120.00
+15:52:29 extrude KO15 - Front shell cut z0=1.40 h=6.90
+15:52:30 extrude KO15 - Front shell join z0=1.10 h=9.51
+15:52:30 extrude KO15 - Front shell join z0=2.40 h=6.20
+15:52:31 extrude KO15 - Front shell cut z0=5.90 h=1.00
+15:52:32 extrude KO15 - Back cover new z0=0.00 h=1.50
+15:52:32 fillet KO15 - Back cover 2 edges r=1.20
+15:52:37 extrude KO15 - Back cover cut z0=1.00 h=1.50
+15:52:48 extrude KO15 - Back cover join z0=1.49 h=1.51
+15:52:54 extrude KO15 - Back cover new z0=1.49 h=8.31
+15:52:57 extrude KO15 - Back cover new z0=1.49 h=8.31
+15:52:57 extrude KO15 - Back cover cut z0=-60.00 h=120.00
+15:52:58 extrude KO15 - Back cover cut z0=1.50 h=9.30
+15:53:00 extrude KO15 - Back cover join z0=0.99 h=2.01
+15:53:01 extrude KO15 - Back cover join z0=0.99 h=4.41
+15:53:02 extrude KO15 - Back cover join z0=0.99 h=1.01
+15:53:02 extrude KO15 - Back cover join z0=0.99 h=5.51
+15:53:02 extrude KO15 - Back cover cut z0=-1.00 h=6.50
+15:53:03 extrude KO15 - Back cover cut z0=-1.00 h=2.20
+15:53:03 extrude KO15 - Back cover cut z0=-1.00 h=1.60
+15:53:03 extrude KO15 - Back cover cut z0=-1.00 h=2.01
+15:53:04 extrude KO15 - Back cover join z0=0.99 h=0.61
+15:53:04 extrude KO15 - Back cover cut z0=-1.00 h=2.62
+15:53:04 extrude KO15 - Back cover cut z0=-1.00 h=2.62
+15:53:05 extrude KO15 - Back cover cut z0=-1.00 h=1.40
+15:53:05 extrude KO15 - Back cover cut z0=0.95 h=2.15
+15:53:05 extrude KO15 - Back cover join z0=0.99 h=1.21
+15:53:05 extrude KO15 - Back cover cut z0=5.90 h=1.00
+15:53:06 extrude KO15 - Keymat new z0=7.82 h=0.80
+15:53:14 extrude KO15 - Keymat cut z0=7.70 h=1.10
+15:53:16 extrude KO15 - Keymat join z0=8.61 h=0.99
+15:53:16 extrude KO15 - Keymat cut z0=7.80 h=1.90
+15:53:22 extrude KO15 - Keycaps new z0=9.62 h=0.40
+15:53:29 extrude KO15 - Keycaps join z0=10.01 h=1.29
+15:53:36 extrude KO15 - Keycaps join z0=11.30 h=1.50
+15:53:37 extrude KO15 - Keycaps cut z0=12.50 h=3.00
+15:53:38 extrude KO15 - Keycaps cut z0=9.52 h=0.60
+15:53:39 extrude KO15 - Window lens new z0=10.82 h=0.80
+15:53:40 extrude KO15 - Solar cell (dummy) new z0=10.00 h=0.55
+15:53:40 extrude KO15 - Battery lid new z0=0.00 h=0.58
+15:53:42 extrude KO15 - Battery lid cut z0=-0.10 h=0.35
+15:53:42 extrude KO15 - Rubber feet new z0=-0.30 h=0.68
+15:53:43 extrude KO15 - Reference - Casio board (C6) new z0=7.00 h=0.80
+15:53:54 extrude KO15 - Reference - Casio board (C6) cut z0=6.90 h=1.00
+15:53:55 extrude KO15 - Reference - Casio board (C6) cut z0=6.90 h=1.00
+15:53:55 extrude KO15 - Reference - LCD (dummy) new z0=6.80 h=3.75
+15:53:57 extrude KO15 - Slide case (stored) new z0=5.95 h=8.35
+15:53:57 fillet KO15 - Slide case (stored) 53 edges r=1.00
+15:53:58 extrude KO15 - Slide case (stored) cut z0=5.85 h=7.25
+15:53:59 extrude KO15 - Slide case (stored) join z0=5.95 h=0.90
+15:54:01 stage shell done
+15:54:04 stage grind
+15:54:04 extrude KO15 - Back cover cut z0=1.00 h=6.00
+15:54:04 extrude KO15 - Back cover cut z0=-1.00 h=2.50
+15:54:06 extrude KO15 - Front shell cut z0=1.49 h=6.51
+15:54:09 extrude KO15 - Front shell cut z0=1.50 h=9.05
+15:54:09 stage grind done
+15:54:09 stage pcb
+15:54:15 pcb: STEP imported in 5 s
+15:54:17 stage pcb done
+15:54:17 stage parts
+15:54:18 extrude KO15 - LCD panel new z0=7.90 h=0.65
+15:54:18 extrude KO15 - LCD panel new z0=8.55 h=0.35
+15:54:19 extrude KO15 - LCD panel new z0=8.90 h=0.30
+15:54:19 extrude KO15 - LCD panel new z0=9.20 h=0.13
+15:54:20 extrude KO15 - LCD panel new z0=9.33 h=0.02
+15:54:20 extrude KO15 - LCD panel new z0=8.90 h=0.30
+15:54:26 extrude KO15 - Camera module new z0=5.90 h=1.00
+15:54:26 extrude KO15 - Camera module new z0=2.50 h=3.40
+15:54:27 extrude KO15 - Camera module new z0=1.50 h=1.00
+15:54:27 extrude KO15 - Camera module new z0=1.49 h=0.31
+15:54:30 extrude KO15 - LiPo battery new z0=1.00 h=3.80
+15:54:31 extrude KO15 - LiPo battery new z0=1.91 h=4.50
+15:54:47 stage parts done
+15:54:50 stage looks
+15:54:55 stage looks done
+15:54:55 stage check
+15:54:55 check: 193 bodies
+15:55:52 check: 0/193 bodies, 183 pairs, 0 hits, 57 s
+15:56:21 check: 25/193 bodies, 372 pairs, 2 hits, 86 s
+15:56:31 check: 50/193 bodies, 372 pairs, 2 hits, 96 s
+15:56:35 check: 75/193 bodies, 380 pairs, 68 hits, 100 s
+15:56:37 check: 100/193 bodies, 396 pairs, 68 hits, 102 s
+15:56:39 check: 125/193 bodies, 404 pairs, 68 hits, 104 s
+15:56:41 check: 150/193 bodies, 404 pairs, 68 hits, 106 s
+15:56:42 check: 175/193 bodies, 412 pairs, 70 hits, 107 s
+15:56:43 stage check done
+15:57:55 stage new
+15:58:04 saveAs skipped: 2 : InternalValidationError : id.size()
+15:58:04 stage new done
+15:58:04 stage shell
+15:58:05 extrude KO15 - Front shell new z0=1.50 h=10.30
+15:58:06 fillet KO15 - Front shell 2 edges r=2.00
+15:58:06 extrude KO15 - Front shell cut z0=-60.00 h=120.00
+15:58:06 fillet KO15 - Front shell 2 edges r=0.60
+15:58:07 extrude KO15 - Front shell cut z0=1.40 h=8.70
+15:58:08 extrude KO15 - Front shell cut z0=10.09 h=0.51
+15:58:09 extrude KO15 - Front shell join z0=9.30 h=0.81
+15:58:09 extrude KO15 - Front shell join z0=9.30 h=0.81
+15:58:10 extrude KO15 - Front shell join z0=9.20 h=0.91
+15:58:12 extrude KO15 - Front shell join z0=9.30 h=0.81
+15:58:13 extrude KO15 - Front shell join z0=9.65 h=0.46
+15:58:15 extrude KO15 - Front shell cut z0=9.25 h=0.85
+15:58:16 extrude KO15 - Front shell join z0=5.50 h=5.11
+15:58:16 extrude KO15 - Front shell cut z0=5.50 h=4.10
+15:58:17 extrude KO15 - Front shell join z0=6.70 h=3.91
+15:58:17 extrude KO15 - Front shell cut z0=6.60 h=3.10
+15:58:17 extrude KO15 - Front shell join z0=6.00 h=4.61
+15:58:18 extrude KO15 - Front shell join z0=6.60 h=4.01
+15:58:18 extrude KO15 - Front shell join z0=7.00 h=3.61
+15:58:18 extrude KO15 - Front shell join z0=7.50 h=3.11
+15:58:19 extrude KO15 - Front shell join z0=7.00 h=3.61
+15:58:19 extrude KO15 - Front shell join z0=5.10 h=5.51
+15:58:19 extrude KO15 - Front shell cut z0=5.00 h=5.55
+15:58:20 extrude KO15 - Front shell cut z0=5.00 h=4.90
+15:58:20 extrude KO15 - Front shell join z0=5.10 h=5.51
+15:58:20 extrude KO15 - Front shell join z0=8.10 h=2.51
+15:58:21 extrude KO15 - Front shell cut z0=10.80 h=1.01
+15:58:21 extrude KO15 - Front shell cut z0=9.10 h=3.20
+15:58:21 extrude KO15 - Front shell cut z0=10.10 h=2.20
+15:58:24 extrude KO15 - Front shell cut z0=9.10 h=3.20
+15:58:25 extrude KO15 - Front shell cut z0=10.90 h=0.41
+15:58:27 extrude KO15 - Front shell new z0=1.49 h=8.31
+15:58:28 extrude KO15 - Front shell cut z0=-60.00 h=120.00
+15:58:41 extrude KO15 - Front shell cut z0=1.40 h=6.90
+15:58:42 extrude KO15 - Front shell join z0=1.10 h=9.51
+15:58:43 extrude KO15 - Front shell join z0=2.40 h=6.20
+15:58:43 extrude KO15 - Front shell cut z0=5.90 h=1.00
+15:58:45 extrude KO15 - Back cover new z0=0.00 h=1.50
+15:58:45 fillet KO15 - Back cover 2 edges r=1.20
+15:58:50 extrude KO15 - Back cover cut z0=1.00 h=1.50
+15:59:02 extrude KO15 - Back cover join z0=1.49 h=1.51
+15:59:11 extrude KO15 - Back cover new z0=1.49 h=8.31
+15:59:14 extrude KO15 - Back cover new z0=1.49 h=8.31
+15:59:14 extrude KO15 - Back cover cut z0=-60.00 h=120.00
+15:59:16 extrude KO15 - Back cover cut z0=1.50 h=9.30
+15:59:18 extrude KO15 - Back cover join z0=0.99 h=2.01
+15:59:20 extrude KO15 - Back cover join z0=0.99 h=4.41
+15:59:21 extrude KO15 - Back cover join z0=0.99 h=1.01
+15:59:21 extrude KO15 - Back cover join z0=0.99 h=5.51
+15:59:21 extrude KO15 - Back cover cut z0=-1.00 h=6.50
+15:59:22 extrude KO15 - Back cover cut z0=-1.00 h=2.20
+15:59:22 extrude KO15 - Back cover cut z0=-1.00 h=1.60
+15:59:23 extrude KO15 - Back cover cut z0=-1.00 h=2.01
+15:59:23 extrude KO15 - Back cover join z0=0.99 h=0.61
+15:59:23 extrude KO15 - Back cover cut z0=-1.00 h=2.62
+15:59:24 extrude KO15 - Back cover cut z0=-1.00 h=2.62
+15:59:24 extrude KO15 - Back cover cut z0=-1.00 h=6.50
+15:59:25 extrude KO15 - Back cover cut z0=-1.00 h=1.40
+15:59:25 extrude KO15 - Back cover cut z0=0.95 h=2.15
+15:59:26 extrude KO15 - Back cover join z0=0.99 h=1.21
+15:59:26 extrude KO15 - Back cover cut z0=5.90 h=1.00
+15:59:26 extrude KO15 - Keymat new z0=7.82 h=0.80
+15:59:35 extrude KO15 - Keymat cut z0=7.70 h=1.10
+15:59:37 extrude KO15 - Keymat join z0=8.61 h=0.99
+15:59:37 extrude KO15 - Keymat cut z0=7.80 h=1.90
+15:59:43 extrude KO15 - Keycaps new z0=9.62 h=0.40
+15:59:52 extrude KO15 - Keycaps join z0=10.01 h=1.29
+16:00:04 extrude KO15 - Keycaps join z0=11.30 h=1.50
+16:00:06 extrude KO15 - Keycaps cut z0=12.50 h=3.00
+16:00:07 extrude KO15 - Keycaps cut z0=9.52 h=0.60
+16:00:09 extrude KO15 - Window lens new z0=10.82 h=0.80
+16:00:10 extrude KO15 - Solar cell (dummy) new z0=10.00 h=0.55
+16:00:11 extrude KO15 - Battery lid new z0=0.00 h=0.58
+16:00:12 extrude KO15 - Battery lid cut z0=-0.10 h=0.35
+16:00:13 extrude KO15 - Rubber feet new z0=-0.30 h=0.68
+16:00:13 extrude KO15 - Reference - Casio board (C6) new z0=7.00 h=0.80
+16:00:32 extrude KO15 - Reference - Casio board (C6) cut z0=6.90 h=1.00
+16:00:34 extrude KO15 - Reference - Casio board (C6) cut z0=6.90 h=1.00
+16:00:35 extrude KO15 - Reference - LCD (dummy) new z0=6.80 h=3.75
+16:00:40 extrude KO15 - Slide case (stored) new z0=5.95 h=8.35
+16:00:41 fillet KO15 - Slide case (stored) 53 edges r=1.00
+16:00:44 extrude KO15 - Slide case (stored) cut z0=5.85 h=7.25
+16:00:45 extrude KO15 - Slide case (stored) join z0=5.95 h=0.90
+16:00:52 stage shell done
+16:01:00 stage grind
+16:01:00 extrude KO15 - Back cover cut z0=1.00 h=6.00
+16:01:01 extrude KO15 - Back cover cut z0=1.00 h=0.65
+16:01:02 extrude KO15 - Back cover cut z0=-1.00 h=2.50
+16:01:08 extrude KO15 - Front shell cut z0=1.49 h=6.51
+16:01:12 extrude KO15 - Front shell cut z0=1.50 h=9.05
+16:01:14 stage grind done
+16:01:14 stage pcb
+16:01:30 pcb: STEP imported in 15 s
+16:01:34 stage pcb done
+16:01:37 stage parts
+16:01:38 extrude KO15 - LCD panel new z0=7.90 h=0.65
+16:01:39 extrude KO15 - LCD panel new z0=8.55 h=0.35
+16:01:40 extrude KO15 - LCD panel new z0=8.90 h=0.30
+16:01:41 extrude KO15 - LCD panel new z0=9.20 h=0.13
+16:01:42 extrude KO15 - LCD panel new z0=9.33 h=0.02
+16:01:43 extrude KO15 - LCD panel new z0=8.90 h=0.30
+16:01:56 extrude KO15 - Camera module new z0=5.90 h=1.00
+16:01:57 extrude KO15 - Camera module new z0=2.50 h=3.40
+16:01:58 extrude KO15 - Camera module new z0=1.50 h=1.00
+16:01:59 extrude KO15 - Camera module new z0=1.49 h=0.31
+16:02:06 extrude KO15 - LiPo battery new z0=1.00 h=3.80
+16:02:07 extrude KO15 - LiPo battery new z0=1.91 h=4.50
+16:02:45 stage parts done
+16:02:47 stage looks
+16:02:54 stage looks done
+16:02:55 stage legends
+16:02:56 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:02:58 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:02:59 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:00 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:02 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:03 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:04 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:06 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:07 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:08 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:10 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:13 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:15 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:17 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:19 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:21 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:22 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:23 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:25 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:27 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:29 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:30 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:32 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:34 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:36 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:38 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:41 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:43 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:46 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:49 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:51 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:52 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:54 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:03:56 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:00 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:02 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:04 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:06 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:08 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:10 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:14 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:17 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:19 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:20 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:22 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:24 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:04:30 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:32 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:35 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:37 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:39 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:43 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:47 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:49 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:51 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:53 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:56 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:04:58 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:00 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:03 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:05 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:09 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:11 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:13 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:15 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:17 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:20 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:23 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:25 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:28 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:30 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:32 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:34 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:36 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:37 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:38 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:40 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:42 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:43 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:44 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:45 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:45 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:46 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:47 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:48 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:49 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:50 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:05:50 stage legends done
+16:05:53 stage check
+16:05:53 check: 409 bodies
+16:07:22 check: 0/409 bodies, 292 pairs, 4 hits, 90 s
+16:08:03 check: 25/409 bodies, 533 pairs, 5 hits, 130 s
+16:08:27 check: 50/409 bodies, 592 pairs, 5 hits, 154 s
+16:08:54 check: 75/409 bodies, 600 pairs, 71 hits, 181 s
+16:09:09 check: 100/409 bodies, 616 pairs, 71 hits, 196 s
+16:09:39 check: 125/409 bodies, 624 pairs, 71 hits, 226 s
+16:09:57 check: 150/409 bodies, 624 pairs, 71 hits, 244 s
+16:10:14 check: 175/409 bodies, 632 pairs, 73 hits, 261 s
+16:10:22 check: 200/409 bodies, 632 pairs, 73 hits, 269 s
+16:10:22 check: 225/409 bodies, 632 pairs, 73 hits, 269 s
+16:10:22 check: 250/409 bodies, 632 pairs, 73 hits, 269 s
+16:10:22 check: 275/409 bodies, 632 pairs, 73 hits, 269 s
+16:10:22 check: 300/409 bodies, 632 pairs, 73 hits, 269 s
+16:10:22 check: 325/409 bodies, 632 pairs, 73 hits, 269 s
+16:10:22 check: 350/409 bodies, 632 pairs, 73 hits, 269 s
+16:10:22 check: 375/409 bodies, 632 pairs, 73 hits, 269 s
+16:10:22 check: 400/409 bodies, 632 pairs, 73 hits, 269 s
+16:10:22 stage check done
+16:10:28 stage export
+16:10:39 cloud save skipped: 3 : document must be saved with saveAs first
+16:10:39 stage export done
+16:11:08 stage new
+16:11:19 saveAs skipped: 2 : InternalValidationError : id.size()
+16:11:19 stage new done
+16:11:20 stage shell
+16:11:22 extrude KO15 - Front shell new z0=1.50 h=10.30
+16:11:22 fillet KO15 - Front shell 2 edges r=2.00
+16:11:22 extrude KO15 - Front shell cut z0=-60.00 h=120.00
+16:11:22 fillet KO15 - Front shell 2 edges r=0.60
+16:11:24 extrude KO15 - Front shell cut z0=1.40 h=8.70
+16:11:26 extrude KO15 - Front shell cut z0=10.09 h=0.51
+16:11:26 extrude KO15 - Front shell join z0=9.30 h=0.81
+16:11:27 extrude KO15 - Front shell join z0=9.30 h=0.81
+16:11:28 extrude KO15 - Front shell join z0=9.20 h=0.91
+16:11:32 extrude KO15 - Front shell join z0=9.30 h=0.81
+16:11:33 extrude KO15 - Front shell join z0=9.65 h=0.46
+16:11:35 extrude KO15 - Front shell cut z0=9.25 h=0.85
+16:11:36 extrude KO15 - Front shell join z0=5.50 h=5.11
+16:11:37 extrude KO15 - Front shell cut z0=5.50 h=4.10
+16:11:37 extrude KO15 - Front shell join z0=6.70 h=3.91
+16:11:38 extrude KO15 - Front shell cut z0=6.60 h=3.10
+16:11:38 extrude KO15 - Front shell join z0=6.00 h=4.61
+16:11:38 extrude KO15 - Front shell join z0=6.60 h=4.01
+16:11:39 extrude KO15 - Front shell join z0=7.00 h=3.61
+16:11:39 extrude KO15 - Front shell join z0=7.50 h=3.11
+16:11:40 extrude KO15 - Front shell join z0=7.00 h=3.61
+16:11:40 extrude KO15 - Front shell join z0=5.10 h=5.51
+16:11:41 extrude KO15 - Front shell cut z0=5.00 h=5.55
+16:11:41 extrude KO15 - Front shell cut z0=5.00 h=4.90
+16:11:42 extrude KO15 - Front shell join z0=5.10 h=5.51
+16:11:42 extrude KO15 - Front shell join z0=8.10 h=2.51
+16:11:42 extrude KO15 - Front shell cut z0=10.80 h=1.01
+16:11:43 extrude KO15 - Front shell cut z0=9.10 h=3.20
+16:11:43 extrude KO15 - Front shell cut z0=10.10 h=2.20
+16:11:46 extrude KO15 - Front shell cut z0=9.10 h=3.20
+16:11:48 extrude KO15 - Front shell cut z0=10.90 h=0.41
+16:11:51 extrude KO15 - Front shell new z0=1.49 h=8.31
+16:11:51 extrude KO15 - Front shell cut z0=-60.00 h=120.00
+16:12:05 extrude KO15 - Front shell cut z0=1.40 h=6.90
+16:12:06 extrude KO15 - Front shell join z0=1.10 h=9.51
+16:12:07 extrude KO15 - Front shell join z0=2.40 h=6.20
+16:12:07 extrude KO15 - Front shell cut z0=5.90 h=1.00
+16:12:09 extrude KO15 - Back cover new z0=0.00 h=1.50
+16:12:09 fillet KO15 - Back cover 2 edges r=1.20
+16:12:13 extrude KO15 - Back cover cut z0=1.00 h=1.50
+16:12:26 extrude KO15 - Back cover join z0=1.49 h=1.51
+16:12:34 extrude KO15 - Back cover new z0=1.49 h=8.31
+16:12:37 extrude KO15 - Back cover new z0=1.49 h=8.31
+16:12:37 extrude KO15 - Back cover cut z0=-60.00 h=120.00
+16:12:38 extrude KO15 - Back cover cut z0=1.50 h=9.30
+16:12:41 extrude KO15 - Back cover join z0=0.99 h=2.01
+16:12:42 extrude KO15 - Back cover join z0=0.99 h=4.41
+16:12:43 extrude KO15 - Back cover join z0=0.99 h=1.01
+16:12:43 extrude KO15 - Back cover join z0=0.99 h=5.51
+16:12:44 extrude KO15 - Back cover cut z0=-1.00 h=6.50
+16:12:44 extrude KO15 - Back cover cut z0=-1.00 h=2.20
+16:12:45 extrude KO15 - Back cover cut z0=-1.00 h=1.60
+16:12:45 extrude KO15 - Back cover cut z0=-1.00 h=2.01
+16:12:46 extrude KO15 - Back cover join z0=0.99 h=0.61
+16:12:46 extrude KO15 - Back cover cut z0=-1.00 h=2.62
+16:12:46 extrude KO15 - Back cover cut z0=-1.00 h=2.62
+16:12:47 extrude KO15 - Back cover cut z0=-1.00 h=6.50
+16:12:47 extrude KO15 - Back cover cut z0=-1.00 h=2.20
+16:12:47 extrude KO15 - Back cover cut z0=-1.00 h=1.40
+16:12:47 extrude KO15 - Back cover cut z0=0.95 h=2.15
+16:12:48 extrude KO15 - Back cover join z0=0.99 h=1.21
+16:12:48 extrude KO15 - Back cover cut z0=5.90 h=1.00
+16:12:49 extrude KO15 - Keymat new z0=7.82 h=0.80
+16:12:57 extrude KO15 - Keymat cut z0=7.70 h=1.10
+16:12:58 extrude KO15 - Keymat join z0=8.61 h=0.99
+16:12:59 extrude KO15 - Keymat cut z0=7.80 h=1.90
+16:13:05 extrude KO15 - Keycaps new z0=9.62 h=0.40
+16:13:14 extrude KO15 - Keycaps join z0=10.01 h=1.29
+16:13:22 extrude KO15 - Keycaps join z0=11.30 h=1.50
+16:13:23 extrude KO15 - Keycaps cut z0=12.50 h=3.00
+16:13:24 extrude KO15 - Keycaps cut z0=9.52 h=0.60
+16:13:26 extrude KO15 - Window lens new z0=10.82 h=0.80
+16:13:27 extrude KO15 - Solar cell (dummy) new z0=10.00 h=0.55
+16:13:27 extrude KO15 - Battery lid new z0=0.00 h=0.58
+16:13:28 extrude KO15 - Battery lid cut z0=-0.10 h=0.35
+16:13:29 extrude KO15 - Rubber feet new z0=-0.30 h=0.68
+16:13:29 extrude KO15 - Reference - Casio board (C6) new z0=7.00 h=0.80
+16:13:48 extrude KO15 - Reference - Casio board (C6) cut z0=6.90 h=1.00
+16:13:50 extrude KO15 - Reference - Casio board (C6) cut z0=6.90 h=1.00
+16:13:50 extrude KO15 - Reference - LCD (dummy) new z0=6.80 h=3.75
+16:13:53 extrude KO15 - Slide case (stored) new z0=5.95 h=8.35
+16:13:53 fillet KO15 - Slide case (stored) 53 edges r=1.00
+16:13:55 extrude KO15 - Slide case (stored) cut z0=5.85 h=7.25
+16:13:56 extrude KO15 - Slide case (stored) join z0=5.95 h=0.90
+16:14:01 stage shell done
+16:14:03 stage grind
+16:14:03 extrude KO15 - Back cover cut z0=1.00 h=6.00
+16:14:04 extrude KO15 - Back cover cut z0=1.00 h=0.65
+16:14:04 extrude KO15 - Back cover cut z0=-1.00 h=2.50
+16:14:06 extrude KO15 - Front shell cut z0=1.49 h=6.51
+16:14:08 extrude KO15 - Front shell cut z0=1.50 h=9.05
+16:14:09 stage grind done
+16:14:09 stage pcb
+16:14:16 pcb: STEP imported in 7 s
+16:14:18 stage pcb done
+16:14:18 stage parts
+16:14:19 extrude KO15 - LCD panel new z0=7.90 h=0.65
+16:14:20 extrude KO15 - LCD panel new z0=8.55 h=0.35
+16:14:21 extrude KO15 - LCD panel new z0=8.90 h=0.30
+16:14:21 extrude KO15 - LCD panel new z0=9.20 h=0.13
+16:14:22 extrude KO15 - LCD panel new z0=9.33 h=0.02
+16:14:23 extrude KO15 - LCD panel new z0=8.90 h=0.30
+16:14:33 extrude KO15 - Camera module new z0=5.90 h=1.00
+16:14:34 extrude KO15 - Camera module new z0=2.50 h=3.40
+16:14:36 extrude KO15 - Camera module new z0=1.50 h=1.00
+16:14:36 extrude KO15 - Camera module new z0=1.49 h=0.31
+16:14:40 extrude KO15 - LiPo battery new z0=1.00 h=3.80
+16:14:41 extrude KO15 - LiPo battery new z0=1.91 h=4.50
+16:15:13 stage parts done
+16:15:16 stage looks
+16:15:24 stage looks done
+16:15:24 stage legends
+16:15:26 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:28 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:30 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:31 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:32 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:33 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:35 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:37 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:38 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:39 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:40 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:42 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:43 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:44 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:44 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:45 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:46 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:46 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:47 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:48 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:49 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:50 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:50 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:51 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:52 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:52 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:53 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:54 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:55 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:55 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:56 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:57 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:58 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:15:59 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:00 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:01 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:03 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:05 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:06 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:07 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:07 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:08 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:09 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:10 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:10 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:11 extrude KO15 - Key labels new z0=12.80 h=0.04
+16:16:12 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:13 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:14 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:14 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:15 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:16 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:17 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:18 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:19 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:19 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:20 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:21 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:21 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:22 extrude KO15 - Key labels new z0=11.38 h=0.04
+16:16:23 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:24 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:24 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:25 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:26 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:26 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:27 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:28 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:28 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:29 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:30 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:31 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:32 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:32 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:33 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:33 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:34 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:35 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:36 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:37 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:37 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:38 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:39 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:39 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:40 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:40 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:41 extrude KO15 - Key labels new z0=11.30 h=0.04
+16:16:41 stage legends done
+16:16:42 stage check
+16:16:42 check: 409 bodies
+16:17:58 check: 0/409 bodies, 292 pairs, 0 hits, 76 s
+16:18:52 check: 25/409 bodies, 533 pairs, 0 hits, 130 s
+16:19:16 check: 50/409 bodies, 592 pairs, 0 hits, 154 s
+16:19:40 check: 75/409 bodies, 600 pairs, 66 hits, 178 s
+16:19:54 check: 100/409 bodies, 616 pairs, 66 hits, 192 s
+16:20:16 check: 125/409 bodies, 624 pairs, 66 hits, 214 s
+16:20:33 check: 150/409 bodies, 624 pairs, 66 hits, 231 s
+16:20:48 check: 175/409 bodies, 632 pairs, 68 hits, 246 s
+16:20:55 check: 200/409 bodies, 632 pairs, 68 hits, 253 s
+16:20:55 check: 225/409 bodies, 632 pairs, 68 hits, 253 s
+16:20:55 check: 250/409 bodies, 632 pairs, 68 hits, 253 s
+16:20:55 check: 275/409 bodies, 632 pairs, 68 hits, 253 s
+16:20:55 check: 300/409 bodies, 632 pairs, 68 hits, 253 s
+16:20:55 check: 325/409 bodies, 632 pairs, 68 hits, 253 s
+16:20:55 check: 350/409 bodies, 632 pairs, 68 hits, 253 s
+16:20:55 check: 375/409 bodies, 632 pairs, 68 hits, 253 s
+16:20:55 check: 400/409 bodies, 632 pairs, 68 hits, 253 s
+16:20:55 stage check done
+16:20:57 stage export
+16:21:05 cloud save skipped: 3 : document must be saved with saveAs first
+16:21:05 stage export done
+16:21:06 stage v15renders
+16:22:15 stage v15renders done
+09:43:55 extrude KO15 - Templates new z0=-1.65 h=1.60
+09:43:57 extrude KO15 - Templates cut z0=-2.65 h=3.60
+09:43:59 extrude KO15 - Templates cut z0=-2.65 h=3.60
+09:44:04 extrude KO15 - Templates join z0=-1.65 h=13.70
+09:44:10 extrude KO15 - Templates join z0=12.04 h=1.21
+09:44:11 extrude KO15 - Templates cut z0=1.50 h=7.95
+09:44:12 extrude KO15 - Templates cut z0=-2.65 h=3.60
+09:44:13 extrude KO15 - Templates new z0=-1.65 h=1.55
+09:44:14 extrude KO15 - Templates join z0=-2.85 h=1.21
+09:44:14 extrude KO15 - Templates cut z0=-3.85 h=4.80
+09:45:59 extrude KO15 - Templates new z0=-1.65 h=1.60
+09:46:01 extrude KO15 - Templates cut z0=-2.65 h=3.60
+09:46:03 extrude KO15 - Templates cut z0=-2.65 h=3.60
+09:46:22 extrude KO15 - Templates join z0=-1.65 h=13.70
+09:46:34 extrude KO15 - Templates join z0=12.04 h=1.21
+09:46:35 extrude KO15 - Templates cut z0=1.50 h=7.95
+09:46:36 extrude KO15 - Templates cut z0=-2.65 h=3.60
+09:46:37 extrude KO15 - Templates new z0=-1.65 h=1.55
+09:46:38 extrude KO15 - Templates join z0=-2.85 h=1.21
+09:46:38 extrude KO15 - Templates cut z0=-3.85 h=4.80
+09:48:27 extrude KO15 - Templates new z0=-1.65 h=1.60
+09:48:29 extrude KO15 - Templates cut z0=-2.65 h=3.60
+09:48:32 extrude KO15 - Templates cut z0=-2.65 h=3.60
+09:48:56 extrude KO15 - Templates join z0=-1.65 h=13.80
+09:49:12 extrude KO15 - Templates join z0=12.14 h=1.21
+09:49:14 extrude KO15 - Templates cut z0=1.50 h=7.95
+09:49:15 extrude KO15 - Templates cut z0=-2.65 h=3.60
+09:49:15 extrude KO15 - Templates new z0=-1.65 h=1.55
+09:49:16 extrude KO15 - Templates join z0=-2.85 h=1.21
+09:49:17 extrude KO15 - Templates cut z0=-3.85 h=4.80
+10:10:50 stage mask
+10:10:56 extrude KO15 - Window mask new z0=10.81 h=0.10
+10:11:28 stage mask done
+10:12:27 stage clearances
+10:12:28 clear Camera module/* - Back cover/*: 0.71
+10:12:28 clear PCB/J4 - Back cover/*: 0.41
+10:12:28 clear PCB/J3 - Back cover/*: 3.42
+10:12:29 clear PCB/U1 - Back cover/*: 2.5
+10:12:29 clear Magnet connector/* - Back cover/*: 0.71
+10:12:30 clear Magnet connector/* - Front shell/*: 0.25
+10:12:30 clear Magnet connector/* - PCB/board: 0.71
+10:12:30 clear LiPo battery/LiPo pouch (Adafruit #1317) - Back cover/*: 0.0
+10:12:30 clear LiPo battery/LiPo pouch (Adafruit #1317) - PCB/board: 2.2
+10:12:30 clear LiPo battery/JST-PH plug (in J4) - Back cover/*: 0.91
+10:12:30 clear LCD panel/* - Front shell/*: 1.27
+10:12:30 clear LCD panel/* - Keymat/*: 11.02
+10:12:30 clear Ribbons and wires/Camera FPC - Back cover/*: 4.04
+10:12:30 clear Ribbons and wires/LCD FPC - Front shell/*: 1.42
+10:12:31 clear PCB/board - Front shell/*: 0.1
+10:12:31 clear PCB/board - Back cover/*: 1.6
+10:12:35 clear PCB/* - Back cover/*: 0.41
+10:12:35 clear Keymat/* - PCB/board: 0.11
+10:12:35 clear LiPo battery/LiPo pouch (Adafruit #1317) - Front shell/*: 0.3
+10:12:35 clear LiPo battery/* - Front shell/*: 0.3
+10:12:36 clear Ribbons and wires/* - Front shell/*: 1.42
+10:12:44 clear PCB/* - Front shell/*: 0.1
+10:12:44 clear LiPo battery/LiPo pouch (Adafruit #1317) - Screws/*: 2.99
+10:12:44 clear LiPo battery/LiPo pouch (Adafruit #1317) - PCB/J4: 7.04
+10:12:44 clear Ribbons and wires/LiPo lead red - Back cover/*: 1.78
+10:12:44 clear Ribbons and wires/LiPo lead red - PCB/board: 1.59
+10:12:45 clear PCB/U1 - Front shell/*: 1.09
+10:12:45 clear PCB/U1 - Keymat/*: 12.35
+10:12:45 clear PCB/U1 - LCD panel/*: 0.97
+10:12:45 clear PCB/U1 - Screws/*: 19.95
+10:12:46 clear PCB/J5 - Back cover/*: 3.92
+10:12:47 clear PCB/J1 - Back cover/*: 3.91
+10:12:47 clear Ribbons and wires/LCD FPC - Back cover/*: 0.25
+10:12:48 clear Ribbons and wires/LCD FPC - PCB/*: 0.0
+10:12:48 clear PCB/D2 - Back cover/*: 4.66
+10:12:48 clear Window mask/* - LCD panel/*: 1.48
+10:12:48 clear Magnet connector/* - Keymat/*: 50.48
+10:12:48 clear LCD panel/* - Window lens/*: 1.57
+10:12:48 clear LCD panel/* - Solar cell (dummy)/*: 3.33
+10:12:48 clear LCD panel/* - Keycaps/*: 11.76
+10:12:48 clear LCD panel/* - PCB/board: 0.19
+10:12:48 clear LCD panel/* - Back cover/*: 5.9
+10:12:48 clear Ribbons and wires/LCD FPC - LCD panel/*: 0.0
+10:12:48 clear Ribbons and wires/LCD FPC - Camera module/*: 4.28
+10:12:48 clear Ribbons and wires/LCD FPC - Window mask/*: 1.61
+10:12:48 clear Ribbons and wires/LCD FPC - PCB/board: 0.35
+10:12:49 clear Ribbons and wires/LCD FPC - PCB/J1: 54.51
+10:12:49 clear Ribbons and wires/LCD FPC - LiPo battery/*: 5.73
+10:12:49 clear Ribbons and wires/LCD FPC - Screws/*: 11.58
+10:12:49 stage clearances done
+10:12:49 stage fulltable
+10:12:50 fulltable: 0/344 parts, 2 rows, 0 s
+10:13:08 fulltable: 40/344 parts, 167 rows, 19 s
+10:13:25 fulltable: 80/344 parts, 385 rows, 36 s
+10:13:42 fulltable: 120/344 parts, 516 rows, 52 s
+10:13:57 fulltable: 160/344 parts, 600 rows, 68 s
+10:14:14 fulltable: 200/344 parts, 682 rows, 84 s
+10:14:32 fulltable: 240/344 parts, 786 rows, 103 s
+10:15:11 fulltable: 280/344 parts, 995 rows, 141 s
+10:15:52 fulltable: 320/344 parts, 1202 rows, 183 s
+10:16:17 stage fulltable done
+10:16:20 stage tailcase
+10:16:35 tailcase 36.3: bow outer Z 2.400, nearest [{'part': ['PCB', 'board'], 'gap': 0.35, 'overlap_mm3': 0.0, 'at': [-30.85, 37.59, 7.71]}, {'part': ['Back cover', 'Back cover'], 'gap': 0.4, 'overlap_mm3': 0.0, 'at': [-29.8, 47.6, 2.4]}]
+10:16:48 tailcase 36.6: bow outer Z 2.250, nearest [{'part': ['Back cover', 'Back cover'], 'gap': 0.25, 'overlap_mm3': 0.0, 'at': [-29.8, 47.6, 2.25]}, {'part': ['PCB', 'board'], 'gap': 0.35, 'overlap_mm3': 0.0, 'at': [-30.85, 37.59, 7.71]}]
+10:17:01 tailcase 36.9: bow outer Z 2.100, nearest [{'part': ['Back cover', 'Back cover'], 'gap': 0.1, 'overlap_mm3': 0.0, 'at': [-29.8, 47.6, 2.1]}, {'part': ['PCB', 'board'], 'gap': 0.35, 'overlap_mm3': 0.0, 'at': [-30.85, 37.59, 7.71]}]
+10:17:14 tailcase 37.2: bow outer Z 1.950, nearest [{'part': ['Back cover', 'Back cover'], 'gap': 0.0, 'overlap_mm3': 0.737, 'at': [0.0, 0.0, 0.0]}, {'part': ['PCB', 'board'], 'gap': 0.35, 'overlap_mm3': 0.0, 'at': [-30.85, 37.59, 7.71]}]
+10:17:14 stage tailcase done
+10:17:18 stage probe
+10:17:20 extrude KO15 - PROBE (temporary) new z0=7.80 h=2.75
+10:17:22 extrude KO15 - PROBE (temporary) new z0=7.80 h=2.75
+10:17:23 extrude KO15 - PROBE (temporary) new z0=8.00 h=1.40
+10:17:25 extrude KO15 - PROBE (temporary) new z0=8.00 h=1.40
+10:17:26 extrude KO15 - PROBE (temporary) new z0=7.90 h=1.43
+10:17:28 stage probe done
+10:46:31 stage check
+10:46:32 check: 412 bodies
+10:50:01 check: 0/412 bodies, 294 pairs, 0 hits, 209 s
+10:52:05 check: 25/412 bodies, 536 pairs, 0 hits, 333 s
+10:53:12 check: 50/412 bodies, 596 pairs, 0 hits, 400 s
+10:54:26 check: 75/412 bodies, 626 pairs, 66 hits, 474 s
+10:55:06 check: 100/412 bodies, 643 pairs, 66 hits, 514 s
+10:56:11 check: 125/412 bodies, 661 pairs, 66 hits, 579 s
+10:56:50 check: 150/412 bodies, 675 pairs, 66 hits, 618 s
+10:57:32 check: 175/412 bodies, 704 pairs, 68 hits, 660 s
+10:57:49 check: 200/412 bodies, 713 pairs, 68 hits, 677 s
+10:57:50 check: 225/412 bodies, 713 pairs, 68 hits, 678 s
+10:57:51 check: 250/412 bodies, 713 pairs, 68 hits, 679 s
+10:57:52 check: 275/412 bodies, 713 pairs, 68 hits, 680 s
+10:57:53 check: 300/412 bodies, 713 pairs, 68 hits, 681 s
+10:57:54 check: 325/412 bodies, 713 pairs, 68 hits, 682 s
+10:57:55 check: 350/412 bodies, 713 pairs, 68 hits, 683 s
+10:57:56 check: 375/412 bodies, 713 pairs, 68 hits, 684 s
+10:57:57 check: 400/412 bodies, 713 pairs, 68 hits, 685 s
+10:57:57 stage check done
+10:58:00 stage export
+10:58:20 cloud save skipped: 3 : document must be saved with saveAs first
+10:58:20 stage export done
+10:58:36 stage v15renders
+11:01:04 stage v15renders done
+11:01:32 stage v15renders
+11:04:11 stage v15renders done
+11:04:15 stage export
+11:04:36 cloud save skipped: 3 : document must be saved with saveAs first
+11:04:36 stage export done
+11:04:59 stage v15renders
+11:09:09 stage v15renders done
+11:09:11 stage export
+11:09:19 cloud save skipped: 3 : document must be saved with saveAs first
+11:09:19 stage export done

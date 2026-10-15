@@ -1,0 +1,40 @@
+{
+ "time": "2026-10-15 09:49",
+ "check": {
+  "T1 top-end cap": {
+   "hits": [],
+   "closest_gap_to_shell": 0.05
+  },
+  "T2 centre plug": {
+   "hits": [],
+   "closest_gap_to_shell": 0.141
+  }
+ },
+ "stl": [
+  "T1_top_end_cap.stl",
+  "T2_centre_plug.stl"
+ ],
+ "renders": [
+  "render_T1_back",
+  "render_T1_top_window",
+  "render_T1_front"
+ ],
+ "params": {
+  "CLR": 0.35,
+  "WALL": 1.8,
+  "PLATE_T": 1.6,
+  "Y_MIN": 24.0,
+  "CAM": [
+   0.0,
+   42.0
+  ],
+  "notch_x": [
+   11.75,
+   33.25
+  ],
+  "notch_z": [
+   1.5,
+   9.45
+  ]
+ }
+}
