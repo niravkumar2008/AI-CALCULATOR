@@ -1,0 +1,19 @@
+{
+  "name": "ai-calc-web-tests",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Black-box contract tests for the AI Calculator Worker (web/api), with a mock Anthropic server.",
+  "type": "module",
+  "engines": { "node": ">=20" },
+  "scripts": {
+    "test": "node --test --test-concurrency=1 --test-timeout=120000 device.test.mjs solve.test.mjs auth.test.mjs account.test.mjs enrolment.test.mjs firmware.test.mjs dev.test.mjs limits.test.mjs stage3.todo.test.mjs",
+    "test:full": "node run-all.mjs",
+    "mock": "node mock-anthropic.mjs",
+    "selfcheck": "node selfcheck.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "yaml": "^2.6.1"
+  }
+}
