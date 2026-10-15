@@ -26,12 +26,12 @@ python -m http.server 8765 --bind 127.0.0.1 --directory web/site
 Then open http://localhost:8765/. `.claude/launch.json` has both ("local-all" and "launch-site") for the
 browser pane. Nothing is deployed and nothing costs money.
 
-## Pages (29, plus the `/try/` simulator frame)
+## Pages (28, plus the `/try/` simulator frame)
 
 | Section | Paths |
 |---|---|
-| Home | `/` (hero, shop row, explore grid, short FAQ, waitlist) |
-| Shop | `/shop/`, `/shop/calculator/`, `/shop/ai-tutor-plan/`, `/cart/`, `/order/complete/` |
+| Home | `/` (hero, shop row with the one product, explore grid, short FAQ, waitlist) |
+| Shop | `/shop/`, `/shop/calculator/` (the AI tutor plan is a section of it, `#ai-tutor`), `/cart/`, `/order/complete/` |
 | Product | `/how-it-works/`, `/features/` (+ `ai-solve/`, `apps/`, `exam-mode/`, `calculator/`), `/try-it/`, `/specs/`, `/pricing/` |
 | Support | `/faq/` (38 answers), `/support/` (+ `setup/`, `wi-fi/`) |
 | Audiences | `/teachers/`, `/honest/` (the "honest by design" points moved off the homepage) |
@@ -45,12 +45,13 @@ browser pane. Nothing is deployed and nothing costs money.
 |---|---|
 | `assets/css/site.css` | Tokens (colour, type, space, motion), shared chrome, building blocks (page-hero, breadcrumbs, prose, cards, split, callout, product grid, qty, cta-band) |
 | `assets/js/site.js` | Header menus, `window.SiteCart` (localStorage `cart.v1`, max 3), waitlist forms, lazy video, simulator, exam demo, FAQ deep links, reveals |
-| `assets/js/shop.js` | Store status, quantity steppers, gallery, add to cart / preorder, cart page, checkout |
+| `assets/js/shop.js` | Store status, quantity steppers, gallery, add to cart / preorder, cart page, checkout (the plan picker lives only on the account page, in `portal.js`) |
 | `assets/js/portal.js`, `assets/css/portal.css` | Sign in, link a calculator, account (subscribe, manage billing, delete) |
 | `assets/img/`, `assets/video/`, `assets/og-image.jpg` | Fusion render cutouts, the AI Solve video, share image |
 | `assets/img/apps/`, `assets/css/apps.css` | v15 firmware screens (from `hardware/renders_ui_v15/` on the firmware branch), nearest-neighbour 2x/3x: lossless WebP + PNG (lossless WebP is smaller than AVIF for pixel art, so no AVIF). Shown with `image-rendering: pixelated` |
 | `assets/img/calc/` | Calculator-mode screens (STAT editor, TABLE, SOLVE, ∫dx, STAT in exam mode from `M*.png`; EQN quadratic `E12`, CMPLX `C04`, BASE-N xor `B11`, MATRIX inverse `X12`, all in `hardware/renders_ui_v15/`; the Apps page's `apps/mode-menu` is `E01`, the nine-mode menu), same format as `assets/img/apps/`; shown on `/features/calculator/` (`.calc-modes` in `apps.css`) and `/features/exam-mode/` |
-| `_headers`, `robots.txt`, `sitemap.xml` (19 URLs), `site.webmanifest`, favicons | Housekeeping. CSS/JS `max-age=0, must-revalidate`; personal pages `no-store` |
+| `_redirects` | `/shop/ai-tutor-plan/` (retired 2026-10-14: the plan is not sold as a separate product) 301 to `/shop/calculator/#ai-tutor`. Workers static assets apply it before `not_found_handling` |
+| `_headers`, `robots.txt`, `sitemap.xml` (18 URLs), `site.webmanifest`, favicons | Housekeeping. CSS/JS `max-age=0, must-revalidate`; personal pages `no-store` |
 
 ## Shared header and footer
 

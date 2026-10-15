@@ -18,6 +18,8 @@ export interface UserRow {
   deleted_at: number | null;
   plan_override: string | null;
   stripe_customer_id?: string | null;
+  /** Failed (5xx / timeout) customer creates so far: picks the idempotency key (review G9). */
+  stripe_customer_attempt?: number;
 }
 
 export interface DeviceRow {
@@ -42,6 +44,12 @@ export interface PlanInfo {
   cancelAtPeriodEnd?: boolean;
   /** Billing interval of the subscription behind an active / past_due plan; null otherwise. */
   interval: "month" | "year" | null;
+  /**
+   * Review G5: the subscription's latest payment needs the customer to confirm it (3-D Secure),
+   * so the account shows "Confirm your payment". `url` is Stripe's hosted invoice page, if
+   * Stripe sent one. Undefined when nothing needs confirming.
+   */
+  paymentAction?: { url: string | null; since: number };
 }
 
 const PAST_DUE_GRACE_SEC = 3 * 86400;
@@ -65,7 +73,8 @@ export async function planOf(
     .prepare(
       // A live subscription wins over an older ended one (e.g. cancelled, then re-subscribed),
       // whatever order their events arrived in. Then the most recently updated.
-      `SELECT status, price_id, current_period_end, cancel_at_period_end, past_due_since, updated_at FROM subscriptions
+      `SELECT status, price_id, current_period_end, cancel_at_period_end, past_due_since, updated_at,
+              payment_action_at, payment_action_url FROM subscriptions
        WHERE user_id = ?1 AND ((?2 = '' AND ?3 = '') OR price_id IN (NULLIF(?2, ''), NULLIF(?3, '')))
        ORDER BY CASE status WHEN 'active' THEN 0 WHEN 'trialing' THEN 0 WHEN 'past_due' THEN 1 ELSE 2 END,
                 updated_at DESC
@@ -79,6 +88,8 @@ export async function planOf(
       cancel_at_period_end: number;
       past_due_since: number | null;
       updated_at: number;
+      payment_action_at: number | null;
+      payment_action_url: string | null;
     }>();
 
   const interval: PlanInfo["interval"] =
@@ -89,6 +100,11 @@ export async function planOf(
     trialEndsAt,
     periodEnd: sub?.current_period_end ?? undefined,
     cancelAtPeriodEnd: sub ? sub.cancel_at_period_end === 1 : undefined,
+    // Only while the subscription still waits for that money (the webhook clears it otherwise).
+    paymentAction:
+      sub && sub.payment_action_at !== null && ["past_due", "incomplete", "unpaid"].includes(sub.status)
+        ? { url: sub.payment_action_url, since: sub.payment_action_at }
+        : undefined,
   };
 
   // Local tests only (/__dev/user). Never set in production.

@@ -527,10 +527,18 @@ paths:
       description: |
         mode=subscription, price = env STRIPE_PRICE_SUB (interval "month", the default) or
         env STRIPE_PRICE_SUB_YEARLY (interval "year"), customer = the account's Stripe
-        customer (created on first call, idempotency key `customer-<user id>`),
+        customer (created on first call, idempotency key `customer-<user id>`; after a create
+        that failed with a 5xx or a timeout, which Stripe would replay for 24 hours under the
+        same key, the next call first lists the account's e-mail at Stripe and reuses a
+        customer with metadata.user_id = this account, else creates one under
+        `customer-<user id>-r<n>`; the same happens after customer.deleted),
         client_reference_id = user id. No trial in Stripe under decision D2 (the free month
         is our own trial). Terms consent with an "I am 18 or older" line unless
-        STRIPE_REQUIRE_TOS=0; Stripe Tax when STRIPE_TAX=1. 409 `already_subscribed` if a
+        STRIPE_REQUIRE_TOS=0; Stripe Tax when STRIPE_TAX=1 (automatic_tax,
+        billing_address_collection=required, customer_update[address]=auto and
+        [name]=auto, so the full address is saved on the customer). Every Stripe call sends
+        `Stripe-Version: <STRIPE_API_VERSION>`, which is required with a Stripe key unless
+        DEV_MODE=1 (otherwise the Worker fails closed, 503). 409 `already_subscribed` if a
         trialing/active/past_due/unpaid/incomplete subscription on either plan price (monthly
         or yearly) exists, in our database or (for an existing Stripe customer) at Stripe
         itself (use the portal instead; it also switches month <-> year). 400 `bad_request`
@@ -574,7 +582,12 @@ paths:
     post:
       tags: [billing]
       summary: Create a Stripe Customer Portal session (cancel, card, invoices). Returns its URL.
-      description: return_url `<PUBLIC_URL>/account/`.
+      description: |
+        return_url `<PUBLIC_URL>/account/`. configuration = env STRIPE_PORTAL_CONFIG (`bpc_...`,
+        a dedicated portal configuration: only the plan's monthly and yearly prices, cancel at
+        period end, no e-mail edits) when set; otherwise Stripe's account default. A malformed
+        STRIPE_PORTAL_CONFIG fails closed (503). After customer.deleted the account has no
+        customer again, so this answers 409 `no_customer` (not 503) until the next checkout.
       security: [{ session: [] }]
       responses:
         '200':
@@ -603,7 +616,11 @@ paths:
       summary: Create a Stripe Checkout Session to buy the calculator. No login needed.
       description: |
         mode=payment, price = env STRIPE_PRICE_DEVICE, US shipping address collection,
-        phone optional, automatic_tax if env STRIPE_TAX=1, consent to ToS required
+        phone number collected (phone_number_collection[enabled]=true; carriers need it),
+        shipping_options = [env STRIPE_SHIPPING_RATE] when set (`shr_...`, e.g. free US
+        shipping with the shipping tax code; unset = no delivery line), automatic_tax if env
+        STRIPE_TAX=1 (Stripe Tax uses the shipping address; there is no customer yet, so no
+        customer_update), consent to ToS required
         (consent_collection.terms_of_service=required), metadata.kind=device, expires after
         31 minutes; success_url `<PUBLIC_URL>/order/complete/`, cancel_url
         `<PUBLIC_URL>/cart/?checkout=cancelled`. Rate limits: a global cap of
@@ -672,11 +689,27 @@ paths:
         Idempotent on event id (`stripe_events`, recorded in the same transaction as the
         event's effects). Handled: checkout.session.completed / async_payment_succeeded /
         async_payment_failed (device orders: only sessions with mode=payment and
-        metadata.kind=device; an order that is `paid` or `failed` never changes again; for
+        metadata.kind=device; the order stores the session's payment_intent; once an order is
+        `paid` or `failed` no Checkout Session event changes its status again; for
         subscription sessions the subscription is re-read from Stripe),
         customer.subscription.created|updated|deleted|paused|resumed and
         invoice.paid|payment_succeeded|payment_failed (the subscription is always re-read
-        from Stripe and stored as it is now, so delivery order doesn't matter). Subscriptions
+        from Stripe and stored as it is now, so delivery order doesn't matter),
+        invoice.payment_action_required (a renewal needs 3-D Secure: the subscription is
+        re-read the same way and, while Stripe has it past_due/incomplete/unpaid, the account
+        shows `payment_action_required` with the invoice's hosted_invoice_url, kept only if
+        it is https://invoice.stripe.com/...; any other state clears it),
+        customer.deleted (the account linked to that customer loses it: has_billing false,
+        its subscriptions are marked canceled, the next checkout creates a new customer under
+        a fresh idempotency key), charge.refunded (store orders matched by payment_intent:
+        `paid` -> `partially_refunded` -> `refunded`; the refunded amount only grows, so a
+        late copy can't undo a later refund), charge.dispute.created (`paid`,
+        `partially_refunded` or `refunded` -> `disputed`) and charge.dispute.closed
+        (-> `dispute_won` for won or warning_closed, `dispute_lost` for lost; a late
+        `created` never reopens a closed dispute). Charges and disputes that match no store
+        order (e.g. the plan's invoices) change nothing: the plan follows the subscription's
+        status. Order statuses: unpaid, paid, failed, partially_refunded, refunded, disputed,
+        dispute_won, dispute_lost (plus Stripe's no_payment_required). Subscriptions
         are mapped to an account by the Stripe customer id we created, never by metadata; a
         live subscription for a deleted account is cancelled at Stripe. Only subscriptions on
         STRIPE_PRICE_SUB or STRIPE_PRICE_SUB_YEARLY grant AI; past_due keeps AI for 3 days from the first failed
@@ -1135,7 +1168,7 @@ components:
 
     Account:
       type: object
-      required: [email, plan, plan_interval, has_billing, usage, devices]
+      required: [email, plan, plan_interval, has_billing, payment_action_required, usage, devices]
       properties:
         email: { type: string, format: email }
         plan: { $ref: '#/components/schemas/PlanState' }
@@ -1146,6 +1179,18 @@ components:
         has_billing:
           type: boolean
           description: A Stripe customer exists, so /api/billing/portal works (Manage billing).
+        payment_action_required:
+          type: boolean
+          description: |
+            The subscription's latest payment needs the customer to confirm it (3-D Secure,
+            from invoice.payment_action_required). Show "Confirm your payment" and link
+            payment_action_url when present (else Manage billing). Until it's confirmed the
+            plan is past_due, with the usual 3-day grace; false again once Stripe reports the
+            subscription paid (or ended).
+        payment_action_url:
+          type: string
+          format: uri
+          description: Stripe's hosted invoice page (https://invoice.stripe.com/...) where the payment is confirmed. Only with payment_action_required, and only if Stripe sent one.
         trial_ends_at: { type: integer }
         period_end: { type: integer }
         cancel_at_period_end: { type: boolean }

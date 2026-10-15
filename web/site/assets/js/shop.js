@@ -150,6 +150,12 @@
     gal.dataset.ready = "";
     strip.hidden = false;
     select(0, false);
+    // The gallery just got shorter, so a deep link below it (e.g. #ai-tutor, where the old
+    // /shop/ai-tutor-plan/ redirects) would land too far down. Jump to it again.
+    const target = location.hash && document.getElementById(decodeURIComponent(location.hash.slice(1)));
+    if (target && gal.compareDocumentPosition(target) & Node.DOCUMENT_POSITION_FOLLOWING) {
+      requestAnimationFrame(() => target.scrollIntoView({ behavior: "instant", block: "start" }));
+    }
   });
 
   // ------------------------------------------------------------ product page: add to cart / preorder
@@ -355,18 +361,6 @@
 
     render();
   }
-
-  // ------------------------------------------------------------ plan picker (/shop/ai-tutor-plan/)
-  // The choice travels to the account page's Subscribe button as ?plan=year|month.
-  $$("[data-plan-pick]").forEach((pick) => {
-    const sync = () => {
-      const r = pick.querySelector('input[name="interval"]:checked');
-      const v = r && r.value === "month" ? "month" : "year";
-      $$("[data-plan-link]").forEach((a) => (a.href = `/account/?plan=${v}`));
-    };
-    pick.addEventListener("change", sync);
-    sync();
-  });
 
   // ------------------------------------------------------------ order complete
   if ($("[data-clear-cart]")) Cart.set(0);

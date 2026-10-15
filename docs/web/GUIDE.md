@@ -127,6 +127,12 @@ Terms of service" and makes it required.
   due": our server gives 3 days of grace, and a subscription left past due forever would just sit there.
 - **Customer e-mails:** turn on receipts, failed-payment e-mails, and **renewal reminders** (California's
   auto-renewal law expects a reminder; ask the lawyer about timing).
+- **3-D Secure confirmations (important):** Settings → Billing → Subscriptions and emails → turn on **"Send a
+  Stripe-hosted link for customers to confirm their payments when required"**. Some banks make the customer
+  confirm a renewal (3-D Secure / SCA). Stripe then sends that customer an e-mail with the link, and our
+  server (event `invoice.payment_action_required`) shows **"Confirm your payment"** on the account page with
+  the same link, instead of the plan quietly entering its 3-day grace. Test it with the card
+  `4000 0027 6000 3184` and a test clock.
 - **One subscription per customer:** in Checkout settings, turn on "Limit customers to one subscription" if
   it's offered (our server also blocks a second subscription itself).
 
@@ -136,7 +142,12 @@ Settings → Billing → Customer portal:
   cancellation reason (optional).
 - **Switch plans: on**, between the monthly and yearly prices of the AI tutor plan only (prorated). Off:
   quantities, promotion codes.
-- Save the default configuration; the "Manage billing" button won't work until it's saved.
+- Customer information: address on (needed for tax), **e-mail off** (the Stripe e-mail must stay the account
+  e-mail).
+- Save it; the "Manage billing" button won't work until a configuration exists. Better: create a **dedicated
+  configuration** with the settings above (Dashboard, or one API call), copy its id (`bpc_…`) and set
+  `STRIPE_PORTAL_CONFIG` to it. Our server then always asks for that configuration, so later edits to the
+  account's default can't change what customers can do. Empty = the account default.
 
 ### 4.5 Stripe Tax (optional at first)
 Settings → Tax: head-office address (where you ship from), default tax behaviour, then add registrations
@@ -151,13 +162,28 @@ Subscriptions **Write**, everything else **None**. Copy it once (`rk_test_…`) 
 This becomes `STRIPE_SECRET_KEY`.
 
 ### 4.7 The webhook
-Workbench → Webhooks → Create an event destination → your account → **pick an explicit API version** →
-events:
+Workbench → Webhooks → Create an event destination → your account → **pick an explicit API version** (write
+it down: it becomes `STRIPE_API_VERSION`, e.g. `2026-09-30.clover`) → events:
 `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`,
 `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`,
-`customer.subscription.paused`, `customer.subscription.resumed`, `invoice.paid`, `invoice.payment_failed`
+`customer.subscription.paused`, `customer.subscription.resumed`, `invoice.paid`, `invoice.payment_failed`,
+`invoice.payment_action_required`, `customer.deleted`, `charge.refunded`, `charge.dispute.created`,
+`charge.dispute.closed`
 → endpoint URL `https://<your worker address>/api/stripe/webhook` → Reveal the **signing secret** (`whsec_…`).
 That becomes `STRIPE_WEBHOOK_SECRET`. (Do this after section 5 gives you the address.)
+
+**The API version must match.** Our server sends `STRIPE_API_VERSION` with every call, and it refuses to do
+any Stripe work while a key is set without it (the page answers "not available right now" and the log says
+`config_error`). Create the webhook endpoint with **the same** version, so the events and our calls have the
+same shape. When you upgrade later, upgrade both together (new endpoint with the new version, then the
+variable).
+
+What the new events do: `invoice.payment_action_required` shows "Confirm your payment" on the account page
+(section 4.3); `customer.deleted` (someone deleted the customer in the Dashboard) unlinks it, so the next
+checkout makes a new one instead of failing; `charge.refunded` and `charge.dispute.*` move a calculator order
+to `partially_refunded` / `refunded` or `disputed` → `dispute_won` / `dispute_lost` (don't ship a disputed
+order). Make refunds in the Dashboard; the key needs no Refunds permission. `invoice.payment_succeeded` is
+also understood but not needed (it repeats `invoice.paid`).
 
 Stripe retries failed deliveries for up to 3 days in live mode, so short outages are fine: our server answers
 "try again" whenever it can't save something.
@@ -182,7 +208,10 @@ one change, and it's simpler: one deploy, one address, first-party cookies.)
    npx wrangler secret put STRIPE_SECRET_KEY
    npx wrangler secret put STRIPE_WEBHOOK_SECRET
    ```
-5. In `wrangler.toml` `[vars]`: `STRIPE_PRICE_SUB`, `STRIPE_PRICE_SUB_YEARLY`, `STRIPE_PRICE_DEVICE` (sandbox price ids), `STORE_OPEN = "0"`
+5. In `wrangler.toml` `[vars]`: `STRIPE_PRICE_SUB`, `STRIPE_PRICE_SUB_YEARLY`, `STRIPE_PRICE_DEVICE` (sandbox price ids),
+   `STRIPE_API_VERSION` (**required** once the key is set: the webhook endpoint's version, section 4.7),
+   `STRIPE_PORTAL_CONFIG` (`bpc_…`, section 4.4), `STRIPE_SHIPPING_RATE` (optional `shr_…`: a shipping rate,
+   e.g. "Free US shipping", with the shipping tax code `txcd_92010001`; empty = no delivery line), `STORE_OPEN = "0"`
    (the store stays closed until preorders), `PUBLIC_URL = "https://ai-calc-api.<you>.workers.dev"` for now.
 6. `npm run deploy`, then open the address: the website should load, and `/healthz` should say `{"ok":true}`.
 7. Create the webhook (section 4.7) with that address, add its secret (step 4), deploy again.

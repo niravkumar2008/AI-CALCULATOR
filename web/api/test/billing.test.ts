@@ -625,7 +625,7 @@ describe("POST /api/stripe/webhook", () => {
 
   it("unknown event types: 200 and ignored", async () => {
     fakeStripe();
-    const r = await webhook(event("charge.dispute.created", { id: "dp_1" }));
+    const r = await webhook(event("radar.early_fraud_warning.created", { id: "issfr_1" }));
     expect(r.res.status).toBe(200);
     expect(await env.DB.prepare(`SELECT COUNT(*) AS n FROM subscriptions`).first<{ n: number }>()).toEqual({ n: 0 });
   });

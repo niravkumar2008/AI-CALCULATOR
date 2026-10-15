@@ -39,6 +39,8 @@ export interface Env {
   STRIPE_REQUIRE_TOS?: string;
   STRIPE_API_BASE?: string;
   STRIPE_API_VERSION?: string;
+  STRIPE_PORTAL_CONFIG?: string;
+  STRIPE_SHIPPING_RATE?: string;
   STORE_OPEN?: string;
   WAITLIST_DAILY_CAP?: string;
   STORE_GLOBAL_PER_HOUR?: string;
@@ -85,7 +87,9 @@ export interface StripeConfig {
   tax: boolean; // Stripe Tax (automatic_tax) on both checkouts
   requireTos: boolean; // consent_collection.terms_of_service (needs the Terms URL set in Stripe)
   apiBase: string; // https://api.stripe.com, or a local mock in tests
-  apiVersion: string; // '' = the account's default version
+  apiVersion: string; // required whenever a key is set and DEV_MODE is off; '' only in local dev
+  portalConfig: string; // bpc_... passed as `configuration` to portal sessions; '' = account default
+  shippingRate: string; // shr_... offered as the store checkout's shipping option; '' = none
   storeOpen: boolean;
 }
 
@@ -210,6 +214,16 @@ function parseStripe(env: Env, devMode: boolean): StripeConfig {
   }
   const apiVersion = (env.STRIPE_API_VERSION ?? "").trim();
   if (apiVersion && !/^\d{4}-\d{2}-\d{2}(\.[a-z]+)?$/.test(apiVersion)) throw new ConfigError("bad STRIPE_API_VERSION");
+  // Review G4: pin the API version in production. Without it every call (and the shape we
+  // read) follows the account's default version, which changes whenever someone upgrades it in
+  // the Dashboard. The webhook endpoint must be created with the same version (GUIDE 4.7).
+  if (secretKey && !devMode && !apiVersion) {
+    throw new ConfigError("STRIPE_API_VERSION is required with STRIPE_SECRET_KEY unless DEV_MODE=1 (use the webhook endpoint's version)");
+  }
+  const portalConfig = (env.STRIPE_PORTAL_CONFIG ?? "").trim();
+  if (portalConfig && !/^bpc_[A-Za-z0-9]{6,}$/.test(portalConfig)) throw new ConfigError("bad setting STRIPE_PORTAL_CONFIG");
+  const shippingRate = (env.STRIPE_SHIPPING_RATE ?? "").trim();
+  if (shippingRate && !/^shr_[A-Za-z0-9]{6,}$/.test(shippingRate)) throw new ConfigError("bad setting STRIPE_SHIPPING_RATE");
   return {
     secretKey,
     webhookSecret,
@@ -220,6 +234,8 @@ function parseStripe(env: Env, devMode: boolean): StripeConfig {
     requireTos: (env.STRIPE_REQUIRE_TOS ?? "1").trim() !== "0",
     apiBase: base.origin,
     apiVersion,
+    portalConfig,
+    shippingRate,
     storeOpen: (env.STORE_OPEN ?? "").trim() === "1",
   };
 }

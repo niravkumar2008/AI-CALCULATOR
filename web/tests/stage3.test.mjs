@@ -5,6 +5,7 @@ import { test, describe, before } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import { ORIGIN, api, assertError, browser, devUser, fakeIp, linkedDevice, login, now } from './lib.mjs';
+import { MOCK_STRIPE_KEY } from './mock-stripe.mjs';
 
 const STRIPE = (process.env.STRIPE_MOCK_URL || 'http://127.0.0.1:8789').replace(/\/$/, '');
 const SECRET = process.env.STRIPE_WEBHOOK_SECRET || '';
@@ -185,6 +186,10 @@ describe('stage 3: Stripe and waitlist', { skip: !SECRET ? 'STRIPE_WEBHOOK_SECRE
       const r = await browser('POST', '/api/store/checkout', undefined, { quantity: 3 });
       assert.equal(r.status, 200, r.text);
       assert.match(r.json.url, /^https:\/\/checkout\.stripe\.com\//);
+      // The contract's "phone number collected" (carriers need it).
+      const s = (await stripeCalls()).filter((c) => c.path === '/v1/checkout/sessions').at(-1);
+      assert.equal(s.params.mode, 'payment');
+      assert.equal(s.params['phone_number_collection[enabled]'], 'true');
     });
 
     test('store checkout: 10 per IP per hour -> 429 rate_limited with Retry-After', async () => {
@@ -226,7 +231,7 @@ describe('stage 3: Stripe and waitlist', { skip: !SECRET ? 'STRIPE_WEBHOOK_SECRE
     });
 
     test('unknown event type -> 200 and ignored', async () => {
-      assert.equal((await webhook(event('charge.dispute.created', { id: 'dp_x' }))).status, 200);
+      assert.equal((await webhook(event('radar.early_fraud_warning.created', { id: 'issfr_x' }))).status, 200);
     });
 
     test('checkout.session.completed (payment) -> 200 (order recorded; checked in unit tests)', async () => {
@@ -236,6 +241,71 @@ describe('stage 3: Stripe and waitlist', { skip: !SECRET ? 'STRIPE_WEBHOOK_SECRE
         amount_total: 22500, currency: 'usd', customer_details: { email: 'parent@example.test' },
       }));
       assert.equal(r.status, 200);
+    });
+
+    test('refund and dispute events on a store order -> 200 (status machine checked in unit tests)', async () => {
+      const order = {
+        id: 'cs_test_bbRefund', object: 'checkout.session', mode: 'payment', payment_status: 'paid',
+        metadata: { kind: 'device' }, payment_intent: 'pi_bbRefund1',
+        amount_total: 22500, currency: 'usd', customer_details: { email: 'parent@example.test' },
+      };
+      assert.equal((await webhook(event('checkout.session.completed', order))).status, 200);
+      const ch = { id: 'ch_bb1', object: 'charge', payment_intent: 'pi_bbRefund1', amount: 22500, amount_refunded: 1000, refunded: false };
+      assert.equal((await webhook(event('charge.refunded', ch))).status, 200);
+      const dp = { id: 'dp_bb1', object: 'dispute', charge: 'ch_bb1', payment_intent: 'pi_bbRefund1', status: 'needs_response' };
+      assert.equal((await webhook(event('charge.dispute.created', dp))).status, 200);
+      assert.equal((await webhook(event('charge.dispute.closed', { ...dp, status: 'won' }))).status, 200);
+    });
+
+    test('invoice.payment_action_required -> /api/me says confirm your payment, with the invoice page', async () => {
+      const s = await subscriberToBe();
+      const pd = sub(s.customer, 'past_due');
+      await seedSub(pd);
+      const url = 'https://invoice.stripe.com/i/acct_bb/test_confirm';
+      const inv = { id: 'in_bbSca', object: 'invoice', subscription: pd.id, hosted_invoice_url: url };
+      assert.equal((await webhook(event('invoice.payment_action_required', inv))).status, 200);
+      let m = await me(s.user.cookie);
+      assert.equal(m.plan, 'past_due');
+      assert.equal(m.payment_action_required, true);
+      assert.equal(m.payment_action_url, url);
+      await seedSub({ ...pd, status: 'active' });
+      assert.equal((await webhook(event('invoice.paid', { id: 'in_bbSca', object: 'invoice', subscription: pd.id }))).status, 200);
+      m = await me(s.user.cookie);
+      assert.equal(m.payment_action_required, false);
+      assert.equal(m.payment_action_url, undefined);
+    });
+
+    test('customer.deleted -> billing unlinked (portal 409, not 503); the next checkout makes a new customer', async () => {
+      const s = await subscriberToBe();
+      await webhook(event('customer.subscription.created', sub(s.customer, 'active')));
+      // Deleted in the Dashboard: gone at Stripe (its subscriptions cancelled), then the event.
+      const del = await fetch(`${STRIPE}/v1/customers/${s.customer}`, { method: 'DELETE', headers: { authorization: `Bearer ${MOCK_STRIPE_KEY}` } });
+      assert.equal(del.status, 200);
+      assert.equal((await webhook(event('customer.deleted', { id: s.customer, object: 'customer', deleted: true }))).status, 200);
+      const m = await me(s.user.cookie);
+      assert.equal(m.has_billing, false);
+      assert.equal(m.plan, 'inactive');
+      assertError(await browser('POST', '/api/billing/portal', s.user.cookie), 409, 'no_customer');
+      const r = await browser('POST', '/api/billing/checkout', s.user.cookie);
+      assert.equal(r.status, 200, r.text);
+      const fresh = await customerOf(s.user.email);
+      assert.notEqual(fresh, s.customer);
+      const create = (await stripeCalls()).filter((c) => c.method === 'POST' && c.path === '/v1/customers').at(-1);
+      assert.match(create.idempotencyKey, /^customer-usr_[0-9a-f]+-r1$/);
+    });
+
+    test('a 5xx on the first customer create: 503, then the retry uses a fresh idempotency key', async () => {
+      const u = await login();
+      await failNext('/v1/customers', 500, 'POST');
+      assertError(await browser('POST', '/api/billing/checkout', u.cookie), 503, 'unavailable');
+      const before = (await stripeCalls()).length;
+      const r = await browser('POST', '/api/billing/checkout', u.cookie);
+      assert.equal(r.status, 200, r.text);
+      const calls = (await stripeCalls()).slice(before);
+      assert.equal(calls[0].method, 'GET');
+      assert.equal(calls[0].path, '/v1/customers');
+      assert.equal(calls[1].path, '/v1/customers');
+      assert.match(calls[1].idempotencyKey, /-r1$/);
     });
 
     test('event whose livemode does not match the key -> 400 bad_signature', async () => {

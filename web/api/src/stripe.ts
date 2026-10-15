@@ -51,6 +51,7 @@ export async function stripeCall<T = Record<string, any>>(
 ): Promise<T> {
   if (!s.secretKey) throw new StripeError(0, "not_configured", "STRIPE_SECRET_KEY is not set");
   const headers: Record<string, string> = { authorization: `Bearer ${s.secretKey}` };
+  // Always set in production (config refuses a key without STRIPE_API_VERSION unless DEV_MODE).
   if (s.apiVersion) headers["stripe-version"] = s.apiVersion;
   let url = s.apiBase + path;
   let body: string | undefined;

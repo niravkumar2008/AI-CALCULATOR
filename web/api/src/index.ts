@@ -88,6 +88,12 @@ export async function handle(req: Request, env: Env, ctx: ExecutionContext): Pro
   }
 }
 
+/**
+ * How long processed Stripe event ids are kept for de-duplication. (Not exported: workerd
+ * only accepts handlers and functions as named exports of the entry module.)
+ */
+const STRIPE_EVENTS_KEEP_SEC = 30 * 86400;
+
 /** Hourly clean-up (cron in wrangler.toml). */
 export async function cleanup(env: Env, now: number): Promise<void> {
   const unusedSince = now - 30 * 86400;
@@ -118,6 +124,9 @@ export async function cleanup(env: Env, now: number): Promise<void> {
     env.DB.prepare(`DELETE FROM sessions WHERE expires_at < ?1`).bind(now),
     env.DB.prepare(`DELETE FROM rate_limits WHERE window_start < ?1`).bind(now - 2 * 86400),
     env.DB.prepare(`DELETE FROM dev_outbox WHERE created_at < ?1`).bind(now - 86400),
+    // Review G9: processed Stripe event ids. Stripe retries an event for at most 3 days, so
+    // after 30 days the id can't come back; without this the table only grows.
+    env.DB.prepare(`DELETE FROM stripe_events WHERE received_at < ?1`).bind(now - STRIPE_EVENTS_KEEP_SEC),
   ]);
 }
 

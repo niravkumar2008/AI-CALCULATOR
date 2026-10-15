@@ -59,6 +59,12 @@ STRIPE_PRICE_SUB = ""          # AI tutor plan, $10/month
 STRIPE_PRICE_SUB_YEARLY = ""   # AI tutor plan, $100/year (empty = yearly not offered)
 STRIPE_PRICE_DEVICE = ""
 STRIPE_TAX = "0"
+# REQUIRED once STRIPE_SECRET_KEY is set (unless DEV_MODE=1): the same API version the webhook
+# endpoint was created with, e.g. "2026-09-30.clover". Empty + a key = the Worker refuses to
+# start Stripe work (503, config_error in the logs). GUIDE 4.7.
+STRIPE_API_VERSION = ""
+STRIPE_PORTAL_CONFIG = ""   # bpc_... dedicated Customer Portal configuration (empty = account default)
+STRIPE_SHIPPING_RATE = ""   # shr_... shipping rate offered on the calculator checkout (empty = none)
 STORE_OPEN = "0"          # "1" when preorders open; the site switches to "Preorder" by itself
 WAITLIST_DAILY_CAP = "20000"   # abuse backstop only (a viral day must fit); Turnstile is the real bot check
 STORE_GLOBAL_PER_HOUR = "300"

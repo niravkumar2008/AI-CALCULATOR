@@ -57,9 +57,8 @@
             <details class="nav__menu" data-menu>
               <summary>Shop<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
               <ul class="nav__panel">
-                <li><a href="/shop/">All products</a></li>
+                <li><a href="/shop/">Shop overview</a></li>
                 <li><a href="/shop/calculator/">The calculator</a></li>
-                <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
                 <li><a href="/cart/">Cart</a></li>
               </ul>
             </details>
@@ -109,9 +108,8 @@
           <div class="mobile-menu__sheet">
             <p class="mobile-menu__group">Shop</p>
             <ul>
-              <li><a href="/shop/">All products</a></li>
+              <li><a href="/shop/">Shop overview</a></li>
               <li><a href="/shop/calculator/">The calculator</a></li>
-              <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
               <li><a href="/cart/">Cart</a></li>
             </ul>
             <p class="mobile-menu__group">Product</p>
@@ -158,6 +156,16 @@
       <div id="account-view" hidden>
         <section class="card" aria-labelledby="plan-title">
           <h2 id="plan-title">Plan</h2>
+          <div id="pay-action" class="notice" data-tone="warn" role="status" aria-labelledby="pay-action-title" hidden>
+            <div class="notice__body">
+              <h3 id="pay-action-title" class="notice__title">Confirm your payment</h3>
+              <p>Your bank needs you to confirm this month's payment. AI Solve keeps working for 3 days.</p>
+              <div class="actions">
+                <a id="pay-action-link" class="btn btn--primary" href="/account/" hidden>Confirm payment</a>
+                <button id="pay-action-billing" class="btn btn--primary" type="button" hidden>Manage billing</button>
+              </div>
+            </div>
+          </div>
           <dl class="facts">
             <div>
               <dt>Email</dt>
@@ -307,9 +315,8 @@
         <div>
           <p class="footer__head">Shop</p>
           <ul>
-            <li><a href="/shop/">All products</a></li>
+            <li><a href="/shop/">Shop overview</a></li>
             <li><a href="/shop/calculator/">The calculator</a></li>
-            <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
             <li><a href="/pricing/">Pricing</a></li>
             <li><a href="/cart/">Cart</a></li>
           </ul>

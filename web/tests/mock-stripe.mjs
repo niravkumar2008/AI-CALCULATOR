@@ -2,6 +2,8 @@
 //
 // The calls the Worker makes:
 //   POST   /v1/customers                  -> {id: cus_...}   (same id for the same Idempotency-Key)
+//   GET    /v1/customers?email=           -> {data: [...]} customers with that e-mail, deleted ones left
+//                                            out (the retry after a failed create looks here first)
 //   POST   /v1/checkout/sessions          -> {id: cs_test_..., url: https://checkout.stripe.com/...}
 //   POST   /v1/billing_portal/sessions    -> {url: https://billing.stripe.com/...}
 //   DELETE /v1/customers/:id              -> {deleted: true}; cancels that customer's subscriptions
@@ -31,7 +33,7 @@ export function startStripeMock({ port = 8789, host = '127.0.0.1' } = {}) {
   const subs = new Map();
   const customersByKey = new Map();
   const customersByEmail = new Map();
-  const customers = new Set();
+  const customers = new Map(); // id -> {id, object, email, metadata}
   const deletedCustomers = new Set();
   const id = (p) => `${p}_${crypto.randomBytes(7).toString('hex')}`;
 
@@ -84,8 +86,16 @@ export function startStripeMock({ port = 8789, host = '127.0.0.1' } = {}) {
         let cid = customersByKey.get(key);
         if (!cid) customersByKey.set(key, (cid = id('cus')));
         if (params.email) customersByEmail.set(params.email, cid);
-        customers.add(cid);
+        if (!customers.has(cid)) {
+          customers.set(cid, { id: cid, object: 'customer', email: params.email, metadata: { user_id: params['metadata[user_id]'] } });
+        }
         return send(200, { id: cid, object: 'customer', email: params.email });
+      }
+      if (req.method === 'GET' && url.pathname === '/v1/customers') {
+        const data = [...customers.values()]
+          .filter((c) => (!params.email || c.email === params.email) && !deletedCustomers.has(c.id))
+          .slice(0, Math.min(100, Number(params.limit || 10)));
+        return send(200, { object: 'list', url: '/v1/customers', has_more: false, data });
       }
       const cm = /^\/v1\/customers\/([^/]+)$/.exec(url.pathname);
       if (cm && req.method === 'DELETE') {

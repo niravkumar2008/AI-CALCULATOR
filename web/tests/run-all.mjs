@@ -63,6 +63,7 @@ const BASE_VARS = {
   STRIPE_PRICE_SUB_YEARLY: 'price_mockYearly100',
   STRIPE_PRICE_DEVICE: 'price_mockDevice225',
   STRIPE_API_BASE: `http://127.0.0.1:${STRIPE_MOCK_PORT}`,
+  STRIPE_API_VERSION: '2026-09-30.clover', // pinned like production (review G4); the mock ignores it
   STORE_OPEN: '1',
 };
 

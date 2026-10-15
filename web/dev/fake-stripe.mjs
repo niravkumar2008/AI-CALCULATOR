@@ -8,7 +8,10 @@
 //                        re-reads each subscription from here (GET /v1/subscriptions/<id>), so
 //                        the state below is always changed before its webhook is sent.
 //   /portal/<session>    "Manage billing": cancel at period end, cancel now, resume, or
-//                        simulate a failed payment (each sends the matching webhook)
+//                        simulate a failed payment or a renewal that needs 3-D Secure
+//                        (each sends the matching webhook)
+//   /invoice/<invoice>   stands in for Stripe's hosted invoice page: "Confirm payment" makes
+//                        the subscription active again and sends invoice.paid
 // Started by web/dev/run-local.mjs. Never point a real deployment at it.
 
 import http from 'node:http';
@@ -48,6 +51,7 @@ export function startFakeStripe(opts) {
   const customerByKey = new Map();
   const sessions = new Map(); // checkout sessions
   const portals = new Map(); // portal sessions
+  const invoices = new Map(); // id -> {id, subscription, return_url} (3-D Secure simulation)
   const subs = new Map();
   const log = (...a) => console.log('[fake-stripe]', ...a);
 
@@ -123,7 +127,7 @@ export function startFakeStripe(opts) {
           } else {
             await sendEvent('checkout.session.completed', {
               id: s.id, object: 'checkout.session', mode: 'payment', payment_status: 'paid', status: 'complete',
-              metadata: s.metadata, amount_total: 22500 * s.quantity, currency: 'usd',
+              metadata: s.metadata, amount_total: 22500 * s.quantity, currency: 'usd', payment_intent: rid('pi'),
               customer_details: { email: 'test.buyer@example.com', name: 'Test Buyer' },
               collected_information: { shipping_details: { name: 'Test Buyer', address: { line1: '1 Test Street', city: 'Testville', state: 'CA', postal_code: '94000', country: 'US' } } },
             });
@@ -141,7 +145,22 @@ export function startFakeStripe(opts) {
           <form method="post" action="/checkout/${esc(s.id)}/cancel"><button class="secondary" type="submit">Back to the site</button></form></div>`));
       }
 
-      m = /^\/portal\/([\w-]+)(\/(cancel-end|cancel-now|resume|fail|recover))?$/.exec(url.pathname);
+      m = /^\/invoice\/([\w-]+)(\/confirm)?$/.exec(url.pathname);
+      if (m) {
+        const inv = invoices.get(m[1]);
+        if (!inv) return html(404, page('Not found', '<div class="card"><h1>This invoice is gone.</h1></div>'));
+        const sub = subs.get(inv.subscription);
+        if (req.method === 'POST' && m[2] && sub) {
+          sub.status = 'active';
+          await sendEvent('invoice.paid', { id: inv.id, object: 'invoice', parent: { subscription_details: { subscription: sub.id } } });
+          return redirect(inv.return_url);
+        }
+        return html(200, page('Confirm your payment', `<div class="card"><h1>Confirm your payment</h1>
+          <p class="muted">Your bank wants you to confirm this renewal (3-D Secure).</p>
+          <form method="post" action="/invoice/${esc(inv.id)}/confirm"><button>Confirm payment</button></form></div>`));
+      }
+
+      m = /^\/portal\/([\w-]+)(\/(cancel-end|cancel-now|resume|fail|recover|sca))?$/.exec(url.pathname);
       if (m) {
         const p = portals.get(m[1]);
         if (!p) return html(404, page('Not found', '<div class="card"><h1>This billing session has expired.</h1></div>'));
@@ -161,6 +180,14 @@ export function startFakeStripe(opts) {
           } else if (a === 'fail') {
             sub.status = 'past_due';
             await sendEvent('invoice.payment_failed', { id: rid('in'), object: 'invoice', parent: { subscription_details: { subscription: sub.id } } });
+          } else if (a === 'sca') {
+            sub.status = 'past_due';
+            const inv = { id: rid('in'), subscription: sub.id, return_url: p.return_url };
+            invoices.set(inv.id, inv);
+            await sendEvent('invoice.payment_action_required', {
+              id: inv.id, object: 'invoice', hosted_invoice_url: `${base}/invoice/${inv.id}`,
+              parent: { subscription_details: { subscription: sub.id } },
+            });
           } else if (a === 'recover') {
             sub.status = 'active';
             await sendEvent('invoice.paid', { id: rid('in'), object: 'invoice', parent: { subscription_details: { subscription: sub.id } } });
@@ -176,7 +203,8 @@ export function startFakeStripe(opts) {
              <form method="post" action="/portal/${p.id}/cancel-now"><button class="danger">Cancel now</button></form>
              ${sub.status === 'past_due'
                ? `<form method="post" action="/portal/${p.id}/recover"><button class="secondary">Simulate: card fixed, invoice paid</button></form>`
-               : `<form method="post" action="/portal/${p.id}/fail"><button class="secondary">Simulate: next payment fails</button></form>`}`
+               : `<form method="post" action="/portal/${p.id}/fail"><button class="secondary">Simulate: next payment fails</button></form>
+                  <form method="post" action="/portal/${p.id}/sca"><button class="secondary">Simulate: renewal needs 3-D Secure</button></form>`}`
           : '<p class="muted">No active subscription.</p>';
         return html(200, page('Manage billing', `<div class="card"><h1>Manage billing</h1><p class="muted">${esc(customers.get(p.customer)?.email)}</p>${rows}
           <form method="get" action="${esc(p.return_url)}"><button class="secondary">Back to your account</button></form></div>`));
@@ -193,9 +221,15 @@ export function startFakeStripe(opts) {
         if (!id) {
           id = rid('cus');
           customerByKey.set(key, id);
-          customers.set(id, { id, email: params.email });
+          customers.set(id, { id, email: params.email, metadata: { user_id: params['metadata[user_id]'] } });
         }
         return json(200, { id, object: 'customer', email: params.email });
+      }
+      if (req.method === 'GET' && url.pathname === '/v1/customers') {
+        // The Worker looks here after a failed customer create (review G9). Deleted ones are gone.
+        const data = [...customers.values()].filter((c) => !params.email || c.email === params.email)
+          .map((c) => ({ ...c, object: 'customer' }));
+        return json(200, { object: 'list', url: '/v1/customers', has_more: false, data });
       }
       if (req.method === 'POST' && url.pathname === '/v1/checkout/sessions') {
         const id = rid('cs_test');

@@ -26,6 +26,11 @@ export default defineConfig(async () => {
             STRIPE_PRICE_SUB_YEARLY: "price_subYearly100",
             STRIPE_PRICE_DEVICE: "price_device225",
             STRIPE_API_BASE: "https://stripe.test",
+            // Required with a key unless DEV_MODE=1 (review G4); tests switch DEV_MODE off.
+            STRIPE_API_VERSION: "2026-09-30.clover",
+            // Optional (review G3, G7): empty = account default portal, no shipping option.
+            STRIPE_PORTAL_CONFIG: "",
+            STRIPE_SHIPPING_RATE: "",
             STORE_OPEN: "1",
           },
         },

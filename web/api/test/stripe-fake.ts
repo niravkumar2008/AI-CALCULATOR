@@ -26,6 +26,8 @@ export interface FakeStripe {
   deletedCustomers: Set<string>;
   /** Store (a copy of) a subscription as Stripe has it now; returns the stored object. */
   seed: (sub: Record<string, any>) => Record<string, any>;
+  /** Customers created with POST /v1/customers (id -> {id, email, metadata}). */
+  customers: Map<string, Record<string, any>>;
   /** Make the next matching call (optionally only this HTTP method) fail with this status. */
   failNext: (pathPrefix: string, status?: number, method?: string) => void;
   /** Runs before each Stripe call is answered (to simulate something happening meanwhile). */
@@ -49,6 +51,7 @@ export function fakeStripe(passthrough?: (input: RequestInfo | URL, init?: Reque
   const subscriptions = new Map<string, Record<string, any>>();
   const deletedCustomers = new Set<string>();
   const customersByKey = new Map<string, string>();
+  const customers = new Map<string, Record<string, any>>();
   const failures: { prefix: string; status: number; method?: string }[] = [];
   const realFetch = globalThis.fetch;
 
@@ -79,8 +82,16 @@ export function fakeStripe(passthrough?: (input: RequestInfo | URL, init?: Reque
     if (method === "POST" && url.pathname === "/v1/customers") {
       const key = headers["idempotency-key"] ?? nextId("k");
       let id = customersByKey.get(key);
-      if (!id) customersByKey.set(key, (id = nextId("cus")));
+      if (!id) {
+        customersByKey.set(key, (id = nextId("cus")));
+        customers.set(id, { id, object: "customer", email: params.email, metadata: { user_id: params["metadata[user_id]"] } });
+      }
       return Response.json({ id, object: "customer", email: params.email });
+    }
+    if (method === "GET" && url.pathname === "/v1/customers") {
+      // Deleted customers aren't listed (as at Stripe).
+      const data = [...customers.values()].filter((c) => (!params.email || c.email === params.email) && !deletedCustomers.has(c.id));
+      return Response.json({ object: "list", url: "/v1/customers", has_more: false, data });
     }
     const cusMatch = /^\/v1\/customers\/([^/]+)$/.exec(url.pathname);
     if (cusMatch && method === "DELETE") {
@@ -125,6 +136,7 @@ export function fakeStripe(passthrough?: (input: RequestInfo | URL, init?: Reque
     calls,
     subscriptions,
     deletedCustomers,
+    customers,
     seed: (sub) => {
       const copy = structuredClone(sub);
       subscriptions.set(copy.id, copy);

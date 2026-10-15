@@ -631,6 +631,11 @@
           sub: yearly ? "$100 a year." : m.plan_interval === "month" ? "$10 a month." : "",
         };
       }
+      if (p === "past_due" && m.payment_action_required === true) {
+        // Nothing is wrong with the card: the bank just wants the payment confirmed (notice above).
+        const name = m.plan_interval === "year" ? "Yearly plan" : m.plan_interval === "month" ? "Monthly plan" : "Subscribed";
+        return { text: `${name}, waiting for you to confirm the payment`, sub: "Confirm it above to keep AI Solve on." };
+      }
       if (p === "past_due") {
         return {
           text: "Payment problem — update your card in Manage billing to keep AI working.",
@@ -670,6 +675,7 @@
       show($("#btn-subscribe"), !subscribed);
       show(pick, !subscribed);
       show($("#btn-billing"), m.has_billing === true || subscribed);
+      renderPayAction(m);
       // S3-10: subscribing during the free month starts billing today; say so plainly.
       const trialNote = $("#trial-note");
       if (m.plan === "trial" && !subscribed) {
@@ -684,6 +690,38 @@
 
       renderDevices(Array.isArray(m.devices) ? m.devices.filter((d) => d && !d.revoked) : []);
     }
+
+    // A renewal needs the bank's extra check (3-D Secure). Link the payment page the API gives us,
+    // but only https (or, on the local test stack, the fake page on http://127.0.0.1), the same
+    // rule as the shop's checkout redirect. No safe link: fall back to Manage billing.
+    function safePayUrl(raw) {
+      if (typeof raw !== "string" || !raw) return null;
+      let u;
+      try {
+        u = new URL(raw, location.href);
+      } catch {
+        return null;
+      }
+      if (u.protocol === "https:") return u.href;
+      if (isLocal && u.protocol === "http:" && u.hostname === "127.0.0.1") return u.href;
+      return null;
+    }
+    function renderPayAction(m) {
+      const box = $("#pay-action");
+      const on = m.payment_action_required === true;
+      const url = on ? safePayUrl(m.payment_action_url) : null;
+      const link = $("#pay-action-link");
+      if (url) link.href = url;
+      else link.removeAttribute("href");
+      show(link, !!url);
+      show($("#pay-action-billing"), on && !url);
+      // One "Manage billing" is enough: the notice's own button replaces the plain one below.
+      if (on && !url) show($("#btn-billing"), false);
+      show(box, on);
+    }
+    $("#pay-action-billing").addEventListener("click", (e) =>
+      goBilling(e.currentTarget, "/api/billing/portal", "Opening billing…")
+    );
 
     const list = $("#device-list");
     const tpl = $("#device-template");
@@ -841,7 +879,7 @@
     // back/forward cache with the spinner still on. Reset the buttons and refresh.
     window.addEventListener("pageshow", (e) => {
       if (!e.persisted) return;
-      ["#btn-subscribe", "#btn-billing"].forEach((sel) => {
+      ["#btn-subscribe", "#btn-billing", "#pay-action-billing"].forEach((sel) => {
         const b = $(sel);
         if (b && b.hasAttribute("aria-busy")) busy(b, false);
       });

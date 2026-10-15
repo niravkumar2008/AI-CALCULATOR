@@ -29,7 +29,7 @@
       {
         "@type": "Product",
         "name": "Proofline calculator",
-        "description": "An AI study tutor that looks and feels like a real scientific calculator. A full calculator that works offline, with AI Solve: snap a problem, press =, see every step.",
+        "description": "An AI study tutor that looks and feels like a real scientific calculator. A full calculator that works offline, with AI Solve: snap a problem, press =, see every step. AI Solve needs the AI tutor plan (first month free, then $10 a month or $100 a year).",
         "image": [
           "https://proofline.example/assets/img/hero-front-1060.png",
           "https://proofline.example/assets/img/hero-back-1021.png",
@@ -93,9 +93,8 @@
             <details class="nav__menu is-current" data-menu>
               <summary>Shop<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
               <ul class="nav__panel">
-                <li><a href="/shop/">All products</a></li>
+                <li><a href="/shop/">Shop overview</a></li>
                 <li><a aria-current="page" href="/shop/calculator/">The calculator</a></li>
-                <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
                 <li><a href="/cart/">Cart</a></li>
               </ul>
             </details>
@@ -145,9 +144,8 @@
           <div class="mobile-menu__sheet">
             <p class="mobile-menu__group">Shop</p>
             <ul>
-              <li><a href="/shop/">All products</a></li>
+              <li><a href="/shop/">Shop overview</a></li>
               <li><a aria-current="page" href="/shop/calculator/">The calculator</a></li>
-              <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
               <li><a href="/cart/">Cart</a></li>
             </ul>
             <p class="mobile-menu__group">Product</p>
@@ -276,7 +274,7 @@
 
           <ul class="points">
             <li><svg aria-hidden="true"><use href="#i-s-calc"/></svg><span><strong>A full calculator, offline.</strong> Fractions, trig, logs, memory, replay and more. No Wi-Fi needed.</span></li>
-            <li><svg aria-hidden="true"><use href="#i-s-camera"/></svg><span><strong>AI Solve.</strong> Snap a problem. Press <kbd translate="no">=</kbd> to shoot. See every step, right on the calculator. Needs Wi-Fi and the AI tutor plan.</span></li>
+            <li><svg aria-hidden="true"><use href="#i-s-camera"/></svg><span><strong>AI Solve.</strong> Snap a problem. Press <kbd translate="no">=</kbd> to shoot. See every step, right on the calculator. Needs Wi-Fi and the <a href="#ai-tutor">AI tutor plan</a>.</span></li>
             <li><svg aria-hidden="true"><use href="#i-lock"/></svg><span><strong>Exam mode.</strong> Turns the AI, camera and Wi-Fi off, and the status bar turns black so a teacher can see it. Not allowed on the SAT, ACT or AP exams.</span></li>
             <li><svg aria-hidden="true"><use href="#i-s-keys"/></svg><span><strong>Real keys.</strong> A real rubber keymat, so the keys press like a calculator’s.</span></li>
           </ul>
@@ -322,21 +320,20 @@
       </div>
     </section>
 
-    <section class="section section--tint" aria-labelledby="pairs-title">
-      <div class="container split">
-        <figure>
-          <picture>
-            <source type="image/webp" srcset="/assets/video/ai-solve-poster-960.webp 960w, /assets/video/ai-solve-poster-1600.webp 1600w" sizes="(min-width: 60rem) 36rem, 92vw">
-            <img src="/assets/video/ai-solve-poster-960.jpg" width="960" height="540" loading="lazy" decoding="async" style="border-radius:var(--r-lg)"
-                 alt="The calculator's screen showing an AI Solve answer with the steps worked out.">
-          </picture>
-        </figure>
+    <section class="section section--tint" id="ai-tutor" aria-labelledby="ai-tutor-title">
+      <div class="container split" style="align-items:start">
         <div class="section-head" style="margin-bottom:0">
-          <span class="eyebrow">Pairs with</span>
-          <h2 id="pairs-title">The AI tutor plan</h2>
-          <p>$10 a month, or $100 a year, turns on AI Solve: up to 300 solves a month shared by up to 3 calculators on your account, every step shown, plus software updates. The first month is free and starts when you link the calculator. No card needed.</p>
-          <a class="more-link" href="/shop/ai-tutor-plan/">About the plan<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
+          <span class="eyebrow">AI Solve and Type it</span>
+          <h2 id="ai-tutor-title">The AI tutor plan</h2>
+          <p>AI Solve and Type it need the AI tutor plan. The calculator, every calculator mode and the offline apps work without it.</p>
+          <a class="more-link" href="/account/">Manage it from your account<svg aria-hidden="true"><use href="#i-arrow"/></svg></a>
         </div>
+        <dl class="facts">
+          <div><dt>First month</dt><dd>Free when you link the calculator. No card needed.</dd></div>
+          <div><dt>After that</dt><dd>$10 a month, or $100 a year (about 2 months free).</dd></div>
+          <div><dt>Covers</dt><dd>Up to 3 calculators on one account, sharing 300 solves a month, plus software updates.</dd></div>
+          <div><dt>Cancel</dt><dd>Any time, from your account.</dd></div>
+        </dl>
       </div>
     </section>
 
@@ -402,9 +399,8 @@
         <div>
           <p class="footer__head">Shop</p>
           <ul>
-            <li><a href="/shop/">All products</a></li>
+            <li><a href="/shop/">Shop overview</a></li>
             <li><a aria-current="page" href="/shop/calculator/">The calculator</a></li>
-            <li><a href="/shop/ai-tutor-plan/">AI tutor plan</a></li>
             <li><a href="/pricing/">Pricing</a></li>
             <li><a href="/cart/">Cart</a></li>
           </ul>

@@ -38,3 +38,8 @@ STRIPE_WEBHOOK_SECRET=
 # STRIPE_PRICE_DEVICE=
 # STRIPE_TAX=0
 # STORE_OPEN=0
+# The webhook endpoint's API version (e.g. 2026-09-30.clover). Required with a key unless DEV_MODE=1.
+# STRIPE_API_VERSION=
+# Optional: a dedicated Customer Portal configuration (bpc_...) and a store shipping rate (shr_...).
+# STRIPE_PORTAL_CONFIG=
+# STRIPE_SHIPPING_RATE=

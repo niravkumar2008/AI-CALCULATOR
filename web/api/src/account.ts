@@ -51,6 +51,9 @@ export async function getMe(req: Request, env: Env, cfg: Config, now: number): P
     plan_interval: plan.interval,
     // true once a Stripe customer exists: the portal shows "Manage billing" (invoices, card).
     has_billing: Boolean(user.stripe_customer_id),
+    // Review G5: a renewal waits for the customer to confirm it (3-D Secure). The site shows
+    // "Confirm your payment" (linking payment_action_url, Stripe's invoice page, when present).
+    payment_action_required: plan.paymentAction !== undefined,
     usage: {
       solves_this_month: usage.solves,
       solves_limit: cfg.monthlySolves,
@@ -61,6 +64,7 @@ export async function getMe(req: Request, env: Env, cfg: Config, now: number): P
   if (plan.trialEndsAt !== undefined) out.trial_ends_at = plan.trialEndsAt;
   if (plan.periodEnd !== undefined) out.period_end = plan.periodEnd;
   if (plan.cancelAtPeriodEnd !== undefined) out.cancel_at_period_end = plan.cancelAtPeriodEnd;
+  if (plan.paymentAction?.url) out.payment_action_url = plan.paymentAction.url;
   return json(out);
 }
 
