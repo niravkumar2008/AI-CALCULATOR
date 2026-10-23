@@ -1,0 +1,10 @@
+{
+	"autodeskProduct":	"Fusion360",
+	"type":	"script",
+	"author":	"",
+	"description":	{
+		"":	"Builds the TV-to-Suptek VESA adapter plate and checks its size and volume."
+	},
+	"supportedOS":	"windows|mac",
+	"editEnabled":	true
+}
