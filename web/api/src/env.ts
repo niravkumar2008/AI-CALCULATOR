@@ -5,11 +5,17 @@
 export interface Env {
   DB: D1Database;
   FIRMWARE: KVNamespace;
+  /** The static site (web/site), for the few site paths the Worker sees first (/q/*). */
+  ASSETS?: Fetcher;
   ANTHROPIC_API_KEY?: string;
   ANTHROPIC_BASE_URL?: string;
   MODEL?: string;
   MAX_TOKENS?: string;
   EFFORT?: string;
+  /** Upstream effort for each calculator setting sent as SolveRequest.effort (normal/careful/max). */
+  EFFORT_NORMAL?: string;
+  EFFORT_CAREFUL?: string;
+  EFFORT_MAX?: string;
   REFUSAL_FALLBACK?: string;
   UPSTREAM_TIMEOUT_MS?: string;
   PUBLIC_URL?: string;
@@ -62,6 +68,8 @@ export interface Config {
   model: string;
   maxTokens: number;
   effort: string;
+  /** The calculator's own effort setting -> the upstream output_config.effort. */
+  effortByMode: Record<DeviceEffort, string>;
   refusalFallback: boolean;
   upstreamTimeoutMs: number;
   anthropicBaseUrl: string;
@@ -81,8 +89,8 @@ export interface Config {
 export interface StripeConfig {
   secretKey: string; // '' = billing and store answer 503 `unavailable`
   webhookSecret: string; // '' = the webhook answers 503 (Stripe retries until it is set)
-  priceSub: string; // the AI tutor plan, monthly ($10/month)
-  priceSubYearly: string; // the same plan, yearly ($100/year); '' = yearly not offered
+  priceSub: string; // the AI tutor plan, monthly ($15/month)
+  priceSubYearly: string; // the same plan, yearly ($120/year); '' = yearly not offered
   priceDevice: string;
   tax: boolean; // Stripe Tax (automatic_tax) on both checkouts
   requireTos: boolean; // consent_collection.terms_of_service (needs the Terms URL set in Stripe)
@@ -112,6 +120,16 @@ function num(v: string | undefined, def: number, name: string, min = 0): number 
 }
 
 const EFFORTS = new Set(["low", "medium", "high", "xhigh", "max"]);
+
+/** What a calculator may send as SolveRequest.effort (its Normal / Careful / Max setting). */
+export type DeviceEffort = "normal" | "careful" | "max";
+export const DEVICE_EFFORTS: readonly DeviceEffort[] = ["normal", "careful", "max"];
+
+function effortSetting(v: string | undefined, def: string, name: string): string {
+  const e = (v ?? "").trim() || def;
+  if (!EFFORTS.has(e)) throw new ConfigError(`bad setting ${name}`);
+  return e;
+}
 
 export function config(env: Env): Config {
   const c = parseConfig(env);
@@ -159,6 +177,12 @@ function parseConfig(env: Env): Config {
     model: (env.MODEL ?? "").trim() || "claude-sonnet-5-5",
     maxTokens: Math.floor(num(env.MAX_TOKENS, 16000, "MAX_TOKENS", 1)),
     effort,
+    // Normal answers fast; Careful is the old default; Max thinks longest.
+    effortByMode: {
+      normal: effortSetting(env.EFFORT_NORMAL, "medium", "EFFORT_NORMAL"),
+      careful: effortSetting(env.EFFORT_CAREFUL, "high", "EFFORT_CAREFUL"),
+      max: effortSetting(env.EFFORT_MAX, "xhigh", "EFFORT_MAX"),
+    },
     refusalFallback: (env.REFUSAL_FALLBACK ?? "").trim() === "1",
     upstreamTimeoutMs: num(env.UPSTREAM_TIMEOUT_MS, 60000, "UPSTREAM_TIMEOUT_MS", 1000),
     anthropicBaseUrl: base,

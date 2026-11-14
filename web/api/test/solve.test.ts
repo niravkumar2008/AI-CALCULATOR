@@ -1,5 +1,6 @@
 import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
+import { config } from "../src/env";
 import { SOLVE_INSTRUCTIONS, TUTOR_NOTE } from "../src/prompt";
 import {
   JPEG_B64,
@@ -150,10 +151,11 @@ describe("what Claude receives", () => {
     expect(body.stream).toBe(true);
     expect(body.system).toBe(SOLVE_INSTRUCTIONS);
     expect(body.thinking).toEqual({ type: "adaptive" });
-    expect(body.output_config.effort).toBe("high");
+    expect(body.output_config.effort).toBe(config(testEnv()).effort); // the server's EFFORT, not the body's
     expect(body.output_config.format.type).toBe("json_schema");
     expect(Object.keys(body.output_config.format.schema.properties)).toEqual([
-      "readable", "confidence", "unclear", "expression", "choice", "answer", "check", "read_as", "steps",
+      // steps before choice / answer (2026-11-12): the letter is written after the working
+      "readable", "confidence", "unclear", "read_as", "steps", "expression", "check", "choice", "answer",
     ]);
     expect(body.tools).toBeUndefined();
     expect(JSON.stringify(body)).not.toContain("poem");
@@ -177,6 +179,17 @@ describe("what Claude receives", () => {
     const content = calls[0]!.body.messages[0].content;
     expect(content).toHaveLength(2);
     expect(content[1]).toEqual({ type: "text", text: "Solve the problem in this photo." });
+  });
+
+  it("pages: up to 3 photos of one problem, read together (the calculator's + key)", async () => {
+    const { device } = await linkedDevice();
+    const { calls } = mockAnthropic();
+    const three = [1, 2, 3].map(() => ({ media_type: "image/jpeg", data: JPEG_B64 }));
+    const r = await solve(device, { images: three, pages: true });
+    expect(r.res.status).toBe(200);
+    const content = calls[0]!.body.messages[0].content;
+    expect(content).toHaveLength(4);
+    expect(content[3].text).toMatch(/^These 3 photos were taken one after another of the same problem/);
   });
 });
 
@@ -255,7 +268,9 @@ describe("every error a calculator can get (no upstream call on any of them)", (
   });
 
   it("quota_exceeded by monthly solves", async () => {
-    const { device } = await linkedDevice();
+    const { device, email } = await linkedDevice();
+    // A paying account (in the free month the same allowance ends the free month instead).
+    await dbRun(`UPDATE users SET plan_override = 'active' WHERE email = ?`, email);
     const over = { MONTHLY_SOLVES: "1" };
     const { calls } = mockAnthropic();
     expect((await solve(device, solveBody(), over)).res.status).toBe(200);
@@ -266,6 +281,35 @@ describe("every error a calculator can get (no upstream call on any of them)", (
     expect(calls).toHaveLength(1);
     const st = await call("/v1/device/status", { headers: deviceHeaders(device), env: over });
     expect(st.json).toMatchObject({ can_solve: false, reason: e.message });
+  });
+
+  it("the free month ends when its solves are used up, before 30 days", async () => {
+    const { device } = await linkedDevice();
+    const over = { MONTHLY_SOLVES: "2" };
+    const { calls } = mockAnthropic();
+    expect((await solve(device, solveBody(), over)).res.status).toBe(200);
+    expect((await solve(device, solveBody(), over)).res.status).toBe(200);
+    const e = expectError(await solve(device, solveBody(), over), 402, "subscription_inactive");
+    expect(e.message).toContain("free month is over");
+    expect(calls).toHaveLength(2);
+    const st = await call("/v1/device/status", { headers: deviceHeaders(device), env: over });
+    expect(st.json).toMatchObject({ plan: "inactive", can_solve: false, plan_reason: "free_month_over" });
+  });
+
+  it("free-month solves count across calendar months (not reset on the 1st)", async () => {
+    const { device, email } = await linkedDevice();
+    const u = await dbFirst<{ id: string }>(`SELECT id FROM users WHERE email = ?`, email);
+    // The free month started 10 days ago; one settled solve last month, inside it.
+    await dbRun(`UPDATE users SET trial_ends_at = ? WHERE email = ?`, nowSec() + 20 * 86400, email);
+    const t = nowSec() - 5 * 86400;
+    const d = new Date(t * 1000).toISOString();
+    await dbRun(
+      `INSERT INTO usage (id, device_id, user_id, started_at, state, reserved_micro, cost_micro, day, month)
+       VALUES ('use_prevmonth01', ?, ?, ?, 'settled', 0, 1, ?, '2000-01')`,
+      device.device_id, u!.id, t, d.slice(0, 10),
+    );
+    mockAnthropic();
+    expectError(await solve(device, solveBody(), { MONTHLY_SOLVES: "1" }), 402, "subscription_inactive");
   });
 
   it("quota_exceeded by monthly spend (worst case must fit)", async () => {
@@ -290,30 +334,7 @@ describe("every error a calculator can get (no upstream call on any of them)", (
     expect(calls).toHaveLength(6);
   });
 
-  it("rate_limited: one solve in flight per device (stale reservations stop blocking)", async () => {
-    const { device } = await linkedDevice();
-    const u = await dbFirst<{ user_id: string }>(`SELECT user_id FROM devices WHERE id = ?`, device.device_id);
-    const t = nowSec();
-    const day = new Date(t * 1000).toISOString().slice(0, 10);
-    await dbRun(
-      `INSERT INTO usage (id, device_id, user_id, started_at, state, reserved_micro, day, month)
-       VALUES ('use_inflight', ?, ?, ?, 'reserved', 1000, ?, ?)`,
-      device.device_id,
-      u!.user_id,
-      t - 5,
-      day,
-      day.slice(0, 7),
-    );
-    const { spy } = mockAnthropic();
-    const r = await solve(device);
-    const e = expectError(r, 429, "rate_limited");
-    expect(e.message).toMatch(/still running/);
-    expect(r.res.headers.get("retry-after")).toBe("30");
-    expect(spy).not.toHaveBeenCalled();
-
-    await dbRun(`UPDATE usage SET started_at = ? WHERE id = 'use_inflight'`, t - 601);
-    expect((await solve(device)).res.status).toBe(200);
-  });
+  // One solve per device: a new solve replaces the running one (test/supersede.test.ts).
 
   it("spend_cap: global daily cap", async () => {
     const { device } = await linkedDevice();
@@ -389,6 +410,9 @@ describe("every error a calculator can get (no upstream call on any of them)", (
       { images: [{ media_type: "image/jpeg", data: JPEG_B64 }], model: "claude-opus-5-5" },
       { images: [{ media_type: "image/jpeg", data: JPEG_B64, extra: 1 }] },
       { images: [{ media_type: "image/jpeg", data: JPEG_B64 }], tutor: "yes" },
+      { images: [{ media_type: "image/jpeg", data: JPEG_B64 }], pages: "yes" },
+      // pages allows 3, not 4
+      { images: [1, 2, 3, 4].map(() => ({ media_type: "image/jpeg", data: JPEG_B64 })), pages: true },
       { messages: [{ role: "user", content: [{ type: "text", text: "no photo" }] }] },
       { messages: "x" },
       { messages: [{ role: "user", content: [{ type: "image", source: { type: "base64", media_type: "image/webp", data: JPEG_B64 } }] }] },

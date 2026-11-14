@@ -1,18 +1,19 @@
 // Portal account endpoints: /api/me, /api/devices/*.
 
 import type { Config, Env } from "./env";
-import { emailHash, normalisePairCode } from "./crypto";
+import { deviceSuffix, emailHash, normalisePairCode } from "./crypto";
 import { HttpError, MSG, empty, json } from "./http";
 import { clearCookie, requireBrowserWrite, requireUser } from "./auth";
-import { type DeviceRow, monthUsage, planOf } from "./plan";
+import { type DeviceRow, type UserRow, freeMonthOf, monthUsage, planOf } from "./plan";
 import { closeAtStripe } from "./billing";
 import { hitRateLimit, isEmail, isLabel, onlyKeys, rateLimited, readJsonObject } from "./util";
 
-export const MAX_ACTIVE_DEVICES = 3;
+/** One calculator per plan (decided 2026-10-16, docs/LINK_QR_CONTRACT.md). */
+export const MAX_ACTIVE_DEVICES = 1;
 const BODY_LIMIT = 16 * 1024;
 const DEVICE_ID_RE = /^dev_[0-9a-f]{16}$/;
 
-function deviceJson(d: DeviceRow) {
+export function deviceJson(d: DeviceRow) {
   const out: Record<string, unknown> = {
     id: d.id,
     label: d.label ?? "Calculator",
@@ -25,7 +26,7 @@ function deviceJson(d: DeviceRow) {
   return out;
 }
 
-const DEVICE_COLS = `id, hw_id, fw_version, user_id, label, created_at, last_seen_at, revoked_at`;
+export const DEVICE_COLS = `id, hw_id, fw_version, user_id, label, created_at, last_seen_at, revoked_at`;
 
 function labelOrBad(v: unknown): string {
   if (!isLabel(v)) {
@@ -37,7 +38,7 @@ function labelOrBad(v: unknown): string {
 // ------------------------------------------------------------ GET /api/me
 export async function getMe(req: Request, env: Env, cfg: Config, now: number): Promise<Response> {
   const user = await requireUser(req, env, now);
-  const plan = await planOf(env.DB, user, now, cfg.stripe);
+  const plan = await planOf(env.DB, user, now, cfg.stripe, freeMonthOf(cfg));
   const usage = await monthUsage(env.DB, user.id, now);
   const { results } = await env.DB.prepare(
     `SELECT ${DEVICE_COLS} FROM devices WHERE user_id = ?1 ORDER BY created_at`,
@@ -101,38 +102,72 @@ export async function deleteMe(req: Request, env: Env, cfg: Config, now: number)
   return empty(204, { "set-cookie": clearCookie(cfg) });
 }
 
-// ------------------------------------------------------------ POST /api/devices/claim
-export async function claim(req: Request, env: Env, cfg: Config, now: number): Promise<Response> {
-  requireBrowserWrite(req, cfg);
-  const user = await requireUser(req, env, now);
-  const body = await readJsonObject(req, BODY_LIMIT);
-  onlyKeys(body, ["code", "label"]);
-  if (typeof body.code !== "string" || body.code.length < 8 || body.code.length > 12) {
-    throw new HttpError(400, "bad_request", "Enter the 8-character code shown on the calculator.");
-  }
-  const label = body.label === undefined ? null : labelOrBad(body.label);
+// ------------------------------------------------------------ the claim engine (way 1 and way 2)
+/** The device a claim targets, with its board's free-month state. */
+export interface ClaimTarget {
+  device_id: string;
+  hw_id: string | null;
+  enrolled: number;
+  allowed_hw: string | null;
+  trial_used_at: number | null;
+}
 
-  const rl = await hitRateLimit(env.DB, `claim:user:${user.id}`, 600, 10, now);
-  if (!rl.ok) throw rateLimited(rl, "Too many attempts. Please wait 10 minutes.");
+/**
+ * What a claim consumes: the pair code typed on the phone (way 1, /api/devices/claim) or the
+ * link token the calculator redeemed and the phone approved (way 2, link.ts). Everything else
+ * (the 1-device slot, the free-month rules, the atomic batch) is shared by both.
+ */
+export interface ClaimGate {
+  /** SQL condition "the gate is still open", re-checked inside the free-month step. ?1 = now, ?3 = device id, own params from ?8. */
+  openSql: string;
+  openBinds: unknown[];
+  /** Consumes the gate, only while the device is free and the user has fewer than `limit` active devices. */
+  consume(userId: string, limit: number, chained: boolean): D1PreparedStatement;
+  /** The error when the gate was closed (expired, used) by the time the batch ran. */
+  failed(): HttpError;
+}
 
-  const code = normalisePairCode(body.code);
-  if (!code) throw new HttpError(400, "invalid_code", MSG.invalidCode);
+export interface DeviceBrief {
+  id: string;
+  suffix: string;
+  label: string;
+}
 
-  // ---- read-only pre-checks (the batch below re-checks everything atomically)
-  const target = await env.DB.prepare(
-    `SELECT d.id AS device_id, d.hw_id, d.enrolled, h.hw_id AS allowed_hw, h.trial_used_at
-     FROM pair_codes p JOIN devices d ON d.id = p.device_id
-     LEFT JOIN hw_allow h ON h.hw_id = d.hw_id
-     WHERE p.code = ?1 AND p.claimed_at IS NULL AND p.expires_at > ?2
-       AND d.user_id IS NULL AND d.revoked_at IS NULL`,
-  )
-    .bind(code, now)
-    .first<{ device_id: string; hw_id: string | null; enrolled: number; allowed_hw: string | null; trial_used_at: number | null }>();
-  if (!target) throw new HttpError(400, "invalid_code", MSG.invalidCode);
-  const active = await env.DB.prepare(`SELECT COUNT(*) AS n FROM devices WHERE user_id = ?1 AND revoked_at IS NULL`)
-    .bind(user.id)
-    .first<{ n: number }>();
-  if ((active?.n ?? 0) >= MAX_ACTIVE_DEVICES) throw new HttpError(409, "device_limit", MSG.deviceLimit);
+/** The user's active calculator(s) other than `exceptId`, newest first. */
+export async function activeDevices(db: D1Database, userId: string, exceptId = ""): Promise<DeviceBrief[]> {
+  const { results } = await db
+    .prepare(
+      `SELECT id, hw_id, label FROM devices WHERE user_id = ?1 AND revoked_at IS NULL AND id != ?2
+       ORDER BY created_at DESC`,
+    )
+    .bind(userId, exceptId)
+    .all<{ id: string; hw_id: string | null; label: string | null }>();
+  return results.map((d) => ({ id: d.id, suffix: deviceSuffix(d.hw_id, d.id), label: d.label ?? "Calculator" }));
+}
+
+function needsReplace(replaces: DeviceBrief): HttpError {
+  return new HttpError(409, "needs_replace", MSG.needsReplace, {}, { replaces });
+}
+
+/**
+ * Links `target` to `user` through `gate`, in one D1 batch. The 1-device slot: when the user
+ * already has an active calculator, 409 needs_replace unless `replace`, in which case the old
+ * one is revoked in the same batch, only if the link succeeded. Returns the linked device.
+ */
+export async function linkToUser(
+  env: Env,
+  cfg: Config,
+  user: UserRow,
+  target: ClaimTarget,
+  gate: ClaimGate,
+  label: string | null,
+  replace: boolean,
+  now: number,
+): Promise<DeviceRow> {
+  const others = await activeDevices(env.DB, user.id, target.device_id);
+  if (others.length >= MAX_ACTIVE_DEVICES && !replace) throw needsReplace(others[0]!);
+  // With replace the slot check is lifted: the old device(s) are revoked right after the link.
+  const limit = replace ? 1_000_000 : MAX_ACTIVE_DEVICES;
 
   // Free month (decision D2, security review S1): only for an enrolled board whose trial was
   // never used, an account that never had one, and an e-mail (by hash) that never had one,
@@ -158,23 +193,26 @@ export async function claim(req: Request, env: Env, cfg: Config, now: number): P
 
   // ---- one transaction. The claim statements are the same for both paths.
   const claimStmts = (chained: boolean) => [
-    env.DB.prepare(
-      `UPDATE pair_codes SET claimed_at = ?1
-       WHERE code = ?2 AND claimed_at IS NULL AND expires_at > ?1
-         AND device_id IN (SELECT id FROM devices WHERE user_id IS NULL AND revoked_at IS NULL)
-         AND (SELECT COUNT(*) FROM devices WHERE user_id = ?3 AND revoked_at IS NULL) < ?4
-         ${chained ? "AND changes() = 1" : ""}`,
-    ).bind(now, code, user.id, MAX_ACTIVE_DEVICES),
+    gate.consume(user.id, limit, chained),
     env.DB.prepare(
       `UPDATE devices SET user_id = ?1, label = COALESCE(?2, label, 'Calculator')
-       WHERE id = (SELECT device_id FROM pair_codes WHERE code = ?3 AND claimed_at = ?4)
-         AND user_id IS NULL AND revoked_at IS NULL AND changes() = 1`,
-    ).bind(user.id, label, code, now),
+       WHERE id = ?3 AND user_id IS NULL AND revoked_at IS NULL AND changes() = 1`,
+    ).bind(user.id, label, target.device_id),
+    // The 1-device slot: the replaced calculator(s) stop working, only if the link went through.
+    ...(replace
+      ? [
+          env.DB.prepare(
+            `UPDATE devices SET revoked_at = ?1
+             WHERE user_id = ?2 AND revoked_at IS NULL AND id != ?3
+               AND EXISTS (SELECT 1 FROM devices WHERE id = ?3 AND user_id = ?2)`,
+          ).bind(now, user.id, target.device_id),
+        ]
+      : []),
   ];
 
   let results: D1Result[];
   if (eligible) {
-    // R2-5: for an eligible device the trial steps come FIRST and the code is claimed and the
+    // R2-5: for an eligible device the trial steps come FIRST and the gate is consumed and the
     // device linked only if all of them changed a row (changes() = 1 chains each statement to
     // the one before). If the daily cap (or anything else) was hit between the pre-check and
     // this batch, nothing is written at all. R2-4: every step re-checks the board and device.
@@ -184,12 +222,11 @@ export async function claim(req: Request, env: Env, cfg: Config, now: number): P
          WHERE hw_id = ?2 AND trial_used_at IS NULL
            AND EXISTS (SELECT 1 FROM devices WHERE id = ?3 AND hw_id = ?2 AND enrolled = 1
                        AND user_id IS NULL AND revoked_at IS NULL)
-           AND EXISTS (SELECT 1 FROM pair_codes WHERE code = ?8 AND device_id = ?3
-                       AND claimed_at IS NULL AND expires_at > ?1)
+           AND ${gate.openSql}
            AND EXISTS (SELECT 1 FROM users WHERE id = ?4 AND trial_ends_at IS NULL AND deleted_at IS NULL)
            AND NOT EXISTS (SELECT 1 FROM trials_used WHERE email_hash = ?5)
            AND (SELECT COUNT(*) FROM trials_used WHERE used_at >= ?6) < ?7`,
-      ).bind(now, target.allowed_hw, target.device_id, user.id, emailH, dayStart, cfg.maxNewTrialsPerDay, code),
+      ).bind(now, target.allowed_hw, target.device_id, user.id, emailH, dayStart, cfg.maxNewTrialsPerDay, ...gate.openBinds),
       env.DB.prepare(
         `INSERT INTO trials_used (email_hash, used_at) SELECT ?1, ?2 WHERE changes() = 1
          ON CONFLICT (email_hash) DO NOTHING`,
@@ -216,11 +253,9 @@ export async function claim(req: Request, env: Env, cfg: Config, now: number): P
     results = await env.DB.batch(claimStmts(false));
   }
   if (results[0]?.meta.changes !== 1 || results[1]?.meta.changes !== 1) {
-    const again = await env.DB.prepare(`SELECT COUNT(*) AS n FROM devices WHERE user_id = ?1 AND revoked_at IS NULL`)
-      .bind(user.id)
-      .first<{ n: number }>();
-    if ((again?.n ?? 0) >= MAX_ACTIVE_DEVICES) throw new HttpError(409, "device_limit", MSG.deviceLimit);
-    throw new HttpError(400, "invalid_code", MSG.invalidCode);
+    const again = await activeDevices(env.DB, user.id, target.device_id);
+    if (!replace && again.length >= MAX_ACTIVE_DEVICES) throw needsReplace(again[0]!);
+    throw gate.failed();
   }
 
   const dev = await env.DB.prepare(`SELECT ${DEVICE_COLS} FROM devices WHERE id = ?1`)
@@ -228,6 +263,55 @@ export async function claim(req: Request, env: Env, cfg: Config, now: number): P
     .first<DeviceRow>();
   if (!dev) throw new Error("claimed device vanished");
   await env.DB.prepare(`DELETE FROM pair_codes WHERE device_id = ?1 AND claimed_at IS NULL`).bind(dev.id).run();
+  return dev;
+}
+
+// ------------------------------------------------------------ POST /api/devices/claim
+export async function claim(req: Request, env: Env, cfg: Config, now: number): Promise<Response> {
+  requireBrowserWrite(req, cfg);
+  const user = await requireUser(req, env, now);
+  const body = await readJsonObject(req, BODY_LIMIT);
+  onlyKeys(body, ["code", "label", "replace"]);
+  if (typeof body.code !== "string" || body.code.length < 8 || body.code.length > 12) {
+    throw new HttpError(400, "bad_request", "Enter the 8-character code shown on the calculator.");
+  }
+  if (body.replace !== undefined && typeof body.replace !== "boolean") {
+    throw new HttpError(400, "bad_request", "replace must be true or false.");
+  }
+  const label = body.label === undefined ? null : labelOrBad(body.label);
+
+  const rl = await hitRateLimit(env.DB, `claim:user:${user.id}`, 600, 10, now);
+  if (!rl.ok) throw rateLimited(rl, "Too many attempts. Please wait 10 minutes.");
+
+  const code = normalisePairCode(body.code);
+  if (!code) throw new HttpError(400, "invalid_code", MSG.invalidCode);
+
+  // ---- read-only pre-check (the batch in linkToUser re-checks everything atomically)
+  const target = await env.DB.prepare(
+    `SELECT d.id AS device_id, d.hw_id, d.enrolled, h.hw_id AS allowed_hw, h.trial_used_at
+     FROM pair_codes p JOIN devices d ON d.id = p.device_id
+     LEFT JOIN hw_allow h ON h.hw_id = d.hw_id
+     WHERE p.code = ?1 AND p.claimed_at IS NULL AND p.expires_at > ?2
+       AND d.user_id IS NULL AND d.revoked_at IS NULL`,
+  )
+    .bind(code, now)
+    .first<ClaimTarget>();
+  if (!target) throw new HttpError(400, "invalid_code", MSG.invalidCode);
+
+  const gate: ClaimGate = {
+    openSql: `EXISTS (SELECT 1 FROM pair_codes WHERE code = ?8 AND device_id = ?3 AND claimed_at IS NULL AND expires_at > ?1)`,
+    openBinds: [code],
+    consume: (userId, limit, chained) =>
+      env.DB.prepare(
+        `UPDATE pair_codes SET claimed_at = ?1
+         WHERE code = ?2 AND claimed_at IS NULL AND expires_at > ?1
+           AND device_id IN (SELECT id FROM devices WHERE user_id IS NULL AND revoked_at IS NULL)
+           AND (SELECT COUNT(*) FROM devices WHERE user_id = ?3 AND revoked_at IS NULL) < ?4
+           ${chained ? "AND changes() = 1" : ""}`,
+      ).bind(now, code, userId, limit),
+    failed: () => new HttpError(400, "invalid_code", MSG.invalidCode),
+  };
+  const dev = await linkToUser(env, cfg, user, target, gate, label, body.replace === true, now);
   return json(deviceJson(dev), 201);
 }
 

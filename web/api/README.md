@@ -6,7 +6,7 @@ One Cloudflare Worker that does everything the calculators and the account websi
   answer), firmware updates.
 - **Website / portal** (`/api/*`): e-mail sign-in links, linking a calculator with its code,
   renaming and removing calculators, deleting the account, the waitlist, and (stage 3) the
-  AI tutor plan checkout ($10/month or $100/year), "Manage billing", the store and the Stripe webhook.
+  AI tutor plan checkout ($15/month or $120/year), "Manage billing", the store and the Stripe webhook.
 - **The website itself**: the static pages in `web/site/` are served by this same Worker
   (`[assets]` in `wrangler.toml`; see `web/SITE_README.md`).
 
@@ -75,7 +75,8 @@ In `wrangler.toml` under `[vars]` (not secret):
 | Name | Default | What it does |
 |---|---|---|
 | `PUBLIC_URL` | `http://localhost:8787` | The site address. Used in links, codes shown on the calculator, cookie security and the Origin check. Set it to your real address before going live. |
-| `MODEL` / `MAX_TOKENS` / `EFFORT` | `claude-sonnet-5-5` / `16000` / `high` | What the server asks Claude for. |
+| `MODEL` / `MAX_TOKENS` / `EFFORT` | `claude-sonnet-5-5` / `16000` / `high` | What the server asks Claude for. `EFFORT` is used when the calculator sends no `effort`. |
+| `EFFORT_NORMAL` / `EFFORT_CAREFUL` / `EFFORT_MAX` | `medium` / `high` / `xhigh` | Upstream effort for the calculator's Normal / Careful / Max setting (SolveRequest `effort`). |
 | `REFUSAL_FALLBACK` | `0` | `1` lets Anthropic retry a refused photo on another model. Off until the limits know that model's price. |
 | `TRIAL_DAYS` | `30` | Free month length. |
 | `MONTHLY_SOLVES` / `MONTHLY_SPEND_USD` | `300` / `5` | Per-account monthly limits (whichever comes first). |
@@ -86,7 +87,7 @@ In `wrangler.toml` under `[vars]` (not secret):
 | `MAIL_DAILY_CAP` | `80` | At most this many sign-in e-mails per UTC day (Resend free plan: 100). |
 | `REGISTER_GLOBAL_PER_HOUR` | `200` | At most this many calculator registrations per hour in total (plus 5 per IP; IPv6 counted per /64). |
 | `MAIL_FROM` | (empty) | Sender for sign-in e-mails, e.g. `Proofline <login@proofline.example>`. |
-| `STRIPE_PRICE_SUB` / `STRIPE_PRICE_SUB_YEARLY` / `STRIPE_PRICE_DEVICE` | (empty) | Stripe price ids: AI tutor plan monthly ($10) and yearly ($100; empty = monthly only), and the $225 calculator. |
+| `STRIPE_PRICE_SUB` / `STRIPE_PRICE_SUB_YEARLY` / `STRIPE_PRICE_DEVICE` | (empty) | Stripe price ids: AI tutor plan monthly ($15) and yearly ($120; empty = monthly only), and the $225 calculator. |
 | `STRIPE_TAX` | `0` | `1` turns on Stripe Tax at checkout. |
 | `STORE_OPEN` | `0` | `1` when preorders open; the site switches from "Join the waitlist" to "Preorder" by itself. |
 | `WAITLIST_DAILY_CAP` / `STORE_GLOBAL_PER_HOUR` | `20000` / `300` | New waitlist addresses per day (an abuse backstop sized for a viral day; once hit, nothing is stored and the form says "busy, try tomorrow"); store checkouts per hour for everyone. |
@@ -164,7 +165,7 @@ node scripts/publish-firmware.mjs v15lcd-old.bin v15lcd-2026.10.09 <api-url> --f
 | Domain name | About $10-15/year, when you want your own domain (placeholder `proofline.example`) instead of `workers.dev`. |
 | Anthropic API | Every real solve (about $0.01-0.03). Capped by the limits above. Tests cost nothing. |
 | Resend (e-mail) | Free up to 3,000 e-mails/month (100/day). |
-| Stripe | Only takes a fee when someone pays (about $0.66 per $10 monthly payment; see `docs/web/GUIDE.md` section 7). |
+| Stripe | Only takes a fee when someone pays (about $0.84 per $15 monthly payment; see `docs/web/GUIDE.md` section 7). |
 
 ## 7. How the spend cap works (short version)
 

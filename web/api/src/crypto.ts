@@ -32,7 +32,7 @@ export function newDeviceToken(): string {
 
 export const DEVICE_TOKEN_RE = /^dt_[A-Za-z0-9_-]{43}$/;
 
-export function newId(prefix: "dev_" | "usr_" | "use_"): string {
+export function newId(prefix: "dev_" | "usr_" | "use_" | "lt_"): string {
   return prefix + hex(randomBytes(8));
 }
 
@@ -83,4 +83,17 @@ export function formatPairCode(code: string): string {
 export function normalisePairCode(input: string): string | null {
   const s = input.toUpperCase().replace(/[\s-]/g, "");
   return /^[A-HJ-NP-Z2-9]{8}$/.test(s) ? s : null;
+}
+
+// ------------------------------------------------------------ link tokens (QR, way 2)
+/** 'L1.' + 22 base64url characters (128 random bits). Only its SHA-256 is stored. */
+export function newLinkToken(): string {
+  return "L1." + base64url(randomBytes(16));
+}
+
+export const LINK_TOKEN_RE = /^L1\.[A-Za-z0-9_-]{22}$/;
+
+/** The 4-character calculator ID both screens show: the last 4 of hw_id, upper case. */
+export function deviceSuffix(hwId: string | null, deviceId: string): string {
+  return (hwId ?? deviceId).slice(-4).toUpperCase();
 }

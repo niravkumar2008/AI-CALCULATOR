@@ -11,22 +11,25 @@ workers_dev = true
 [[d1_databases]]
 binding = "DB"
 database_name = "ai-calc"
-database_id = "00000000-0000-0000-0000-000000000000"
+database_id = "db024b4f-860c-47d6-9527-27767a77ff8c"
 migrations_dir = "migrations"
 
 # Workers KV for the firmware image (free; no card needed, unlike R2). Before the first deploy run
 # `npx wrangler kv namespace create FIRMWARE` and paste the printed id here.
 [[kv_namespaces]]
 binding = "FIRMWARE"
-id = "00000000000000000000000000000000"
+id = "efce647ae5334e84978f1386714a0577"
 
 # The website (web/site) is served by this same Worker as static assets: one deploy, one
 # address, first-party cookies. Static files are free and unlimited and never run the Worker;
 # only these paths run it. Unknown pages get web/site/404.html.
 [assets]
 directory = "../site"
+binding = "ASSETS"
 not_found_handling = "404-page"
-run_worker_first = ["/api/*", "/v1/*", "/__dev/*", "/healthz"]
+# /q/* (QR link tokens, docs/LINK_QR_CONTRACT.md): the Worker sends /q/L1.<token> to /q/ so
+# the token never stays in the address bar, then serves the static /q/ page.
+run_worker_first = ["/api/*", "/v1/*", "/__dev/*", "/healthz", "/q/*"]
 
 # Hourly clean-up: stale reservations (settled at worst case), unlinked calculators unused for
 # 30 days, expired codes, sessions and counters.
@@ -40,23 +43,26 @@ crons = ["17 * * * *"]
 ANTHROPIC_BASE_URL = "https://api.anthropic.com"
 MODEL = "claude-sonnet-5-5"
 MAX_TOKENS = "16000"
-EFFORT = "high"
+EFFORT = "medium"   # used when the calculator sends no effort (firmware does not send it yet)
+EFFORT_NORMAL = "medium"   # the calculator's Normal / Careful / Max (SolveRequest effort)
+EFFORT_CAREFUL = "high"
+EFFORT_MAX = "xhigh"
 REFUSAL_FALLBACK = "0"   # off until fallback-model pricing is handled (security review S3)
 UPSTREAM_TIMEOUT_MS = "60000"
-PUBLIC_URL = "http://localhost:8787"
+PUBLIC_URL = "http://localhost:8787"   # live address is set by `npm run deploy` (package.json)
 TRIAL_DAYS = "30"
 MONTHLY_SOLVES = "300"
-MONTHLY_SPEND_USD = "5"   # AI cost cap per account per month (plan is $10/month or $100/year)
+MONTHLY_SPEND_USD = "5"   # AI cost cap per account per month (plan is $15/month or $120/year)
 GLOBAL_DAILY_CAP_USD = "50"
 PRICE_IN_PER_MTOK = "2"
 PRICE_OUT_PER_MTOK = "10"
-MAIL_FROM = ""
+MAIL_FROM = "Proofline <onboarding@resend.dev>"   # testing: Resend only delivers to your own account e-mail. At launch: "Proofline <login@your-domain>"
 MAX_NEW_TRIALS_PER_DAY = "20"
 MAIL_DAILY_CAP = "80"
 # Stage 3. Price ids come from the Stripe dashboard (sandbox first, then live). Secrets
 # (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET) go in with `npx wrangler secret put NAME`.
-STRIPE_PRICE_SUB = ""          # AI tutor plan, $10/month
-STRIPE_PRICE_SUB_YEARLY = ""   # AI tutor plan, $100/year (empty = yearly not offered)
+STRIPE_PRICE_SUB = ""          # AI tutor plan, $15/month
+STRIPE_PRICE_SUB_YEARLY = ""   # AI tutor plan, $120/year (empty = yearly not offered)
 STRIPE_PRICE_DEVICE = ""
 STRIPE_TAX = "0"
 # REQUIRED once STRIPE_SECRET_KEY is set (unless DEV_MODE=1): the same API version the webhook

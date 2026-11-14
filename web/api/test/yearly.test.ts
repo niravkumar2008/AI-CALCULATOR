@@ -1,4 +1,4 @@
-// The AI tutor plan monthly ($10, STRIPE_PRICE_SUB) or yearly ($100, STRIPE_PRICE_SUB_YEARLY).
+// The AI tutor plan monthly ($15, STRIPE_PRICE_SUB) or yearly ($120, STRIPE_PRICE_SUB_YEARLY).
 import { env } from "cloudflare:workers";
 import { describe, expect, it } from "vitest";
 import { sha256Hex } from "../src/crypto";

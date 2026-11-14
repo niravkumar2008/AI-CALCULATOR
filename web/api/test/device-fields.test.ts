@@ -109,7 +109,7 @@ describe("firmware families and rollback", () => {
   }
 
   it("a family only sees its own images; no family = legacy channel as before", async () => {
-    const d = await registerDevice();
+    const { device: d } = await linkedDevice(); // updates need the plan or the free month
     // nothing for the family yet
     let chk = await call("/v1/firmware?family=v15lcd", { headers: deviceHeaders(d) });
     expect(chk.json).toEqual({ update: false, family: "v15lcd" });
@@ -164,7 +164,7 @@ describe("firmware families and rollback", () => {
   });
 
   it("rollback: the manifest says so until the next normal publish", async () => {
-    const d = await registerDevice();
+    const { device: d } = await linkedDevice();
     const h = { ...deviceHeaders(d), "x-firmware": "v15lcd-2026.10.11" };
     const rb = await publish("version=v15lcd-2026.10.09&family=v15lcd&rollback=1", image(120_000, 4));
     expect(rb.res.status, rb.text).toBe(201);

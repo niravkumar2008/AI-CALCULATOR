@@ -380,7 +380,7 @@ describe("POST /api/stripe/webhook", () => {
     expect(row).toEqual({ e: end, p: "price_subMonthly15" });
   });
 
-  it("past_due still solves within 3 days of the failed payment (past_due_since), then stops (S3-1)", async () => {
+  it("past_due still solves within 7 days of the failed payment (past_due_since), then stops (S3-1)", async () => {
     fakeStripe();
     const { device, cookie, email } = await linkedDevice();
     await env.DB.prepare(`UPDATE users SET trial_ends_at = ?1 WHERE email = ?2`).bind(now() - 10, email).run();
@@ -402,7 +402,11 @@ describe("POST /api/stripe/webhook", () => {
     expect(await since()).toBe(now() - 2 * 86400);
     expect((await deviceStatus(device.token)).can_solve).toBe(true);
 
-    await env.DB.prepare(`UPDATE subscriptions SET past_due_since = ?1 WHERE id = ?2`).bind(now() - 3 * 86400 - 1, sub.id).run();
+    // 7 days of grace (decided 2026-10-16, was 3): day 6 still solves.
+    await env.DB.prepare(`UPDATE subscriptions SET past_due_since = ?1 WHERE id = ?2`).bind(now() - 6 * 86400, sub.id).run();
+    expect((await deviceStatus(device.token)).can_solve).toBe(true);
+
+    await env.DB.prepare(`UPDATE subscriptions SET past_due_since = ?1 WHERE id = ?2`).bind(now() - 7 * 86400 - 1, sub.id).run();
     st = await deviceStatus(device.token);
     expect(st.can_solve).toBe(false);
     expect(st.reason).toMatch(/subscription has ended/);
@@ -413,7 +417,7 @@ describe("POST /api/stripe/webhook", () => {
     expect((await deviceStatus(device.token)).can_solve).toBe(true);
   });
 
-  it("past_due with the period end far in the future but past_due_since 4 days ago is NOT entitled (S3-1)", async () => {
+  it("past_due with the period end far in the future but past_due_since 8 days ago is NOT entitled (S3-1)", async () => {
     fakeStripe();
     const a = await customerAccount();
     await env.DB.prepare(`UPDATE users SET trial_ends_at = ?1 WHERE id = ?2`).bind(now() - 10, a.userId).run();
@@ -421,6 +425,8 @@ describe("POST /api/stripe/webhook", () => {
     const sub = subscription(a.customer, "past_due", { current_period_end: now() + 29 * 86400 });
     await webhook(event("customer.subscription.updated", sub));
     await env.DB.prepare(`UPDATE subscriptions SET past_due_since = ?1 WHERE id = ?2`).bind(now() - 4 * 86400, sub.id).run();
+    expect((await me(a.cookie)).plan).toBe("past_due"); // inside the 7 days
+    await env.DB.prepare(`UPDATE subscriptions SET past_due_since = ?1 WHERE id = ?2`).bind(now() - 8 * 86400, sub.id).run();
     const m = await me(a.cookie);
     expect(m.plan).toBe("inactive");
     expect(m.period_end).toBe(now() + 29 * 86400);
@@ -440,7 +446,7 @@ describe("POST /api/stripe/webhook", () => {
     await ins("sub_legacyRecent", now() - 86400);
     expect((await me(a.cookie)).plan).toBe("past_due");
     await env.DB.prepare(`DELETE FROM subscriptions`).run();
-    await ins("sub_legacyOld", now() - 4 * 86400);
+    await ins("sub_legacyOld", now() - 8 * 86400);
     expect((await me(a.cookie)).plan).toBe("inactive");
   });
 

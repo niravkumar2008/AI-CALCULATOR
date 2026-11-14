@@ -8,6 +8,7 @@ import {
   type DeviceRow,
   type PlanInfo,
   type UserRow,
+  freeMonthOf,
   globalSpendToday,
   loadUser,
   monthUsage,
@@ -21,6 +22,7 @@ import {
 } from "./plan";
 import { HW_SECRET_RE } from "./admin";
 import { devAllowed } from "./dev";
+import { deviceLinkState } from "./link";
 import { clientIp, hitRateLimit, peekRateLimit, onlyKeys, rateLimited, readJsonObject } from "./util";
 
 const HW_ID_RE = /^calc-[0-9a-f]{12}$/;
@@ -140,7 +142,7 @@ export async function checkLinkedAndEntitled(
 ): Promise<SolveContext> {
   const user = dev.user_id ? await loadUser(env.DB, dev.user_id) : null;
   if (!user) throw await notLinkedError(env.DB, cfg, dev.id, now);
-  const plan = await planOf(env.DB, user, now, cfg.stripe);
+  const plan = await planOf(env.DB, user, now, cfg.stripe, freeMonthOf(cfg));
   if (!plan.entitled) throw notEntitledError(cfg, plan);
   return { user, plan };
 }
@@ -181,9 +183,11 @@ export async function status(req: Request, env: Env, cfg: Config, now: number): 
       pair_code: code,
       link_url: siteLink,
       plan_reason: "not_linked",
+      // QR way 2: "pending_approval" while the phone's Approve tap is awaited, "declined" after a No.
+      link_state: await deviceLinkState(env.DB, dev.id, now),
     });
   }
-  const plan = await planOf(env.DB, user, now, cfg.stripe);
+  const plan = await planOf(env.DB, user, now, cfg.stripe, freeMonthOf(cfg));
   const usage = await monthUsage(env.DB, user.id, now);
   const out: Record<string, unknown> = {
     linked: true,
@@ -195,6 +199,7 @@ export async function status(req: Request, env: Env, cfg: Config, now: number): 
     pair_code: null,
     link_url: siteLink,
     plan_reason: planReason(plan),
+    link_state: await deviceLinkState(env.DB, dev.id, now),
   };
   if (plan.trialEndsAt !== undefined) out.trial_ends_at = plan.trialEndsAt;
   if (plan.periodEnd !== undefined) out.period_end = plan.periodEnd;
@@ -248,10 +253,13 @@ export function firmwarePath(family: string | null): string {
  * GET /v1/firmware[?family=]. Without `family`: the legacy channel, exactly as before plus
  * the optional `family` / `rollback` fields. With `family`: only images published for that
  * family (nothing published for it -> update false; never another family's image).
+ * Software updates come only with the AI tutor plan or the free month (decided 2026-10-11):
+ * an unlinked calculator gets 402 device_not_linked, a lapsed plan 402 subscription_inactive.
  */
-export async function firmwareCheck(req: Request, env: Env, now: number): Promise<Response> {
-  await authDevice(req, env, now);
+export async function firmwareCheck(req: Request, env: Env, cfg: Config, now: number): Promise<Response> {
+  const dev = await authDevice(req, env, now);
   const family = familyParam(req);
+  await checkLinkedAndEntitled(env, cfg, dev, now); // updates come only with the plan or the free month
   const meta = await env.FIRMWARE.get<FirmwareMeta>(firmwareKeys(family).meta, "json");
   if (!meta) return json(family === null ? { update: false } : { update: false, family });
   const current = (req.headers.get("x-firmware") ?? "").trim();
@@ -266,9 +274,10 @@ export async function firmwareCheck(req: Request, env: Env, now: number): Promis
   });
 }
 
-export async function firmwareImage(req: Request, env: Env, now: number): Promise<Response> {
-  await authDevice(req, env, now);
+export async function firmwareImage(req: Request, env: Env, cfg: Config, now: number): Promise<Response> {
+  const dev = await authDevice(req, env, now);
   const family = familyParam(req);
+  await checkLinkedAndEntitled(env, cfg, dev, now);
   // The image carries its own version and hash as KV metadata, so a download never mixes a
   // new manifest with an old image while KV propagates.
   const { value, metadata } = await env.FIRMWARE.getWithMetadata<FirmwareMeta>(firmwareKeys(family).image, "stream");

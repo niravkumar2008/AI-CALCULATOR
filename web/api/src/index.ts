@@ -6,6 +6,7 @@ import { enrolHardware, publishFirmware } from "./admin";
 import { confirm, login, logout } from "./auth";
 import { billingCheckout, billingPortal, storeCheckout, storeStatus, stripeWebhook } from "./billing";
 import { joinWaitlist } from "./waitlist";
+import { approveLinkToken, createLinkToken, getLinkToken, pairRedeem } from "./link";
 import { devRoute } from "./dev";
 import { firmwareCheck, firmwareImage, pairStart, register, status } from "./device";
 import { ConfigError, type Config, type Env, config } from "./env";
@@ -20,10 +21,11 @@ const ROUTES: Record<string, Partial<Record<string, Handler>>> = {
   // ---- calculators
   "/v1/device/register": { POST: (r, e, c, _x, n) => register(r, e, c, n) },
   "/v1/pair/start": { POST: (r, e, c, _x, n) => pairStart(r, e, c, n) },
+  "/v1/pair/redeem": { POST: (r, e, c, _x, n) => pairRedeem(r, e, c, n) },
   "/v1/device/status": { GET: (r, e, c, _x, n) => status(r, e, c, n) },
   "/v1/solve": { POST: (r, e, c, x, n) => solve(r, e, c, x, n) },
-  "/v1/firmware": { GET: (r, e, _c, _x, n) => firmwareCheck(r, e, n) },
-  "/v1/firmware/image": { GET: (r, e, _c, _x, n) => firmwareImage(r, e, n) },
+  "/v1/firmware": { GET: (r, e, c, _x, n) => firmwareCheck(r, e, c, n) },
+  "/v1/firmware/image": { GET: (r, e, c, _x, n) => firmwareImage(r, e, c, n) },
   "/v1/admin/firmware": { POST: (r, e) => publishFirmware(r, e) },
   "/v1/admin/hardware": { POST: (r, e, _c, _x, n) => enrolHardware(r, e, n) },
   // ---- portal
@@ -34,6 +36,10 @@ const ROUTES: Record<string, Partial<Record<string, Handler>>> = {
   "/api/devices/claim": { POST: (r, e, c, _x, n) => claim(r, e, c, n) },
   "/api/devices/:id": { PATCH: (r, e, c, _x, n, id) => renameDevice(r, e, c, id, n) },
   "/api/devices/:id/revoke": { POST: (r, e, c, _x, n, id) => revokeDevice(r, e, c, id, n) },
+  // ---- QR linking, way 2 (docs/LINK_QR_CONTRACT.md)
+  "/api/link-tokens": { POST: (r, e, c, _x, n) => createLinkToken(r, e, c, n) },
+  "/api/link-tokens/:id": { GET: (r, e, _c, _x, n, id) => getLinkToken(r, e, id, n) },
+  "/api/link-tokens/:id/approve": { POST: (r, e, c, x, n, id) => approveLinkToken(r, e, c, x, id, n) },
   // ---- stage 3: Stripe and the launch-site waitlist
   "/api/billing/checkout": { POST: (r, e, c, _x, n) => billingCheckout(r, e, c, n) },
   "/api/billing/portal": { POST: (r, e, c, _x, n) => billingPortal(r, e, c, n) },
@@ -52,17 +58,38 @@ function decodeParam(s: string): string | null {
   }
 }
 
+const PARAM_ROUTES: [RegExp, string][] = [
+  [/^\/api\/devices\/([^/]+)\/revoke$/, "/api/devices/:id/revoke"],
+  [/^\/api\/devices\/([^/]+)$/, "/api/devices/:id"],
+  [/^\/api\/link-tokens\/([^/]+)\/approve$/, "/api/link-tokens/:id/approve"],
+  [/^\/api\/link-tokens\/([^/]+)$/, "/api/link-tokens/:id"],
+];
+
 function match(path: string): { route: string; param: string } | null {
   if (ROUTES[path]) return { route: path, param: "" };
-  let m = /^\/api\/devices\/([^/]+)\/revoke$/.exec(path);
-  let route = "/api/devices/:id/revoke";
-  if (!m) {
-    m = /^\/api\/devices\/([^/]+)$/.exec(path);
-    route = "/api/devices/:id";
+  for (const [re, route] of PARAM_ROUTES) {
+    const m = re.exec(path);
+    if (!m) continue;
+    const param = decodeParam(m[1]!);
+    return param === null ? null : { route, param };
   }
-  if (!m) return null;
-  const param = decodeParam(m[1]!);
-  return param === null ? null : { route, param };
+  return null;
+}
+
+/**
+ * A phone camera that opens a calculator link QR (https://<site>/q/L1.<token>) lands on the
+ * static /q/ page ("This code is for your Proofline calculator..."). The token is dropped from
+ * the address first (302 to /q/), so it isn't kept in the phone's history or shared onwards.
+ */
+async function qrPage(req: Request, env: Env, path: string): Promise<Response> {
+  if (path !== "/q/" && path !== "/q/index.html") {
+    return new Response(null, {
+      status: 302,
+      headers: { location: "/q/", "cache-control": "no-store", "referrer-policy": "no-referrer" },
+    });
+  }
+  if (!env.ASSETS) return error(404, "not_found", MSG.notFound);
+  return env.ASSETS.fetch(new Request(new URL("/q/", req.url), { method: req.method, headers: req.headers }));
 }
 
 export async function handle(req: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -71,6 +98,7 @@ export async function handle(req: Request, env: Env, ctx: ExecutionContext): Pro
     const now = nowSec();
     const path = new URL(req.url).pathname;
     if (path.startsWith("/__dev/")) return await devRoute(req, env, cfg, path, now);
+    if (path === "/q" || path.startsWith("/q/")) return await qrPage(req, env, path);
     const m = match(path);
     if (!m) return error(404, "not_found", MSG.notFound);
     const methods = ROUTES[m.route]!;
@@ -120,10 +148,13 @@ export async function cleanup(env: Env, now: number): Promise<void> {
       unusedSince,
     ),
     env.DB.prepare(`DELETE FROM pair_codes WHERE expires_at < ?1`).bind(now - 86400),
+    env.DB.prepare(`DELETE FROM usage_superseded WHERE superseded_at < ?1`).bind(now - 86400),
     env.DB.prepare(`DELETE FROM login_tokens WHERE expires_at < ?1`).bind(now - 86400),
     env.DB.prepare(`DELETE FROM sessions WHERE expires_at < ?1`).bind(now),
     env.DB.prepare(`DELETE FROM rate_limits WHERE window_start < ?1`).bind(now - 2 * 86400),
     env.DB.prepare(`DELETE FROM dev_outbox WHERE created_at < ?1`).bind(now - 86400),
+    // QR link tokens live 10 minutes (+5 to approve); a day is plenty for support questions.
+    env.DB.prepare(`DELETE FROM link_tokens WHERE created_at < ?1`).bind(now - 86400),
     // Review G9: processed Stripe event ids. Stripe retries an event for at most 3 days, so
     // after 30 days the id can't come back; without this the table only grows.
     env.DB.prepare(`DELETE FROM stripe_events WHERE received_at < ?1`).bind(now - STRIPE_EVENTS_KEEP_SEC),

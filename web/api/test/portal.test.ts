@@ -219,26 +219,52 @@ describe("devices", () => {
     expect(t1).toBeGreaterThan(nowSec() + 29 * 86400);
     await dbRun(`UPDATE users SET trial_ends_at = ? WHERE email = ?`, 1000, s.email);
     const d2 = await registerDevice();
-    await claimCode(s.cookie, d2.pair_code);
+    const c2 = await call("/api/devices/claim", { body: { code: d2.pair_code, replace: true }, headers: browserHeaders(s.cookie) });
+    expect(c2.res.status, c2.text).toBe(201);
     const t2 = (await dbFirst<{ trial_ends_at: number }>(`SELECT trial_ends_at FROM users WHERE email = ?`, s.email))!.trial_ends_at;
     expect(t2).toBe(1000);
   });
 
-  it("max 3 active devices; a refused claim keeps the code usable", async () => {
+  it("1 calculator per plan: 409 needs_replace keeps the code usable; replace:true revokes the old one", async () => {
     const s = await signIn();
-    const ids: string[] = [];
-    for (let i = 0; i < 3; i++) {
-      const d = await registerDevice();
-      const c = await claimCode(s.cookie, d.pair_code);
-      expect(c.res.status).toBe(201);
-      ids.push(d.device_id);
-    }
-    const d4 = await registerDevice();
-    expectError(await claimCode(s.cookie, d4.pair_code), 409, "device_limit");
-    // bad label: also doesn't consume the code
-    expectError(await claimCode(s.cookie, d4.pair_code, "<script>"), 400, "bad_request");
-    expect((await call(`/api/devices/${ids[0]}/revoke`, { body: {}, headers: browserHeaders(s.cookie) })).res.status).toBe(204);
-    expect((await claimCode(s.cookie, d4.pair_code)).res.status).toBe(201);
+    const d1 = await registerDevice();
+    expect((await claimCode(s.cookie, d1.pair_code, "Old one")).res.status).toBe(201);
+    const d2 = await registerDevice();
+    const r = await claimCode(s.cookie, d2.pair_code);
+    expectError(r, 409, "needs_replace");
+    expect(r.json.replaces).toEqual({ id: d1.device_id, suffix: d1.hw_id.slice(-4).toUpperCase(), label: "Old one" });
+    // bad label / bad replace: also don't consume the code
+    expectError(await claimCode(s.cookie, d2.pair_code, "<script>"), 400, "bad_request");
+    expectError(await call("/api/devices/claim", { body: { code: d2.pair_code, replace: "yes" }, headers: browserHeaders(s.cookie) }), 400, "bad_request");
+    expectError(await call("/api/devices/claim", { body: { code: d2.pair_code, replace: false }, headers: browserHeaders(s.cookie) }), 409, "needs_replace");
+    const ok = await call("/api/devices/claim", { body: { code: d2.pair_code, replace: true }, headers: browserHeaders(s.cookie) });
+    expect(ok.res.status, ok.text).toBe(201);
+    expect(ok.json.id).toBe(d2.device_id);
+    const old = await dbFirst<{ revoked_at: number | null; user_id: string }>(`SELECT revoked_at, user_id FROM devices WHERE id = ?`, d1.device_id);
+    expect(old!.revoked_at).toBe(nowSec());
+    expectError(await call("/v1/device/status", { headers: deviceHeaders(d1) }), 401, "device_revoked");
+    const me = await call("/api/me", { headers: { cookie: s.cookie } });
+    expect(me.json.devices.filter((d: any) => !d.revoked).map((d: any) => d.id)).toEqual([d2.device_id]);
+  });
+
+  it("replace:true with a code that fails revokes nothing", async () => {
+    const s = await signIn();
+    const d1 = await registerDevice();
+    await claimCode(s.cookie, d1.pair_code);
+    expectError(await call("/api/devices/claim", { body: { code: "ZZZZ-ZZZZ", replace: true }, headers: browserHeaders(s.cookie) }), 400, "invalid_code");
+    const d2 = await registerDevice();
+    await dbRun(`UPDATE pair_codes SET expires_at = ? WHERE device_id = ?`, nowSec() - 1, d2.device_id);
+    expectError(await call("/api/devices/claim", { body: { code: d2.pair_code, replace: true }, headers: browserHeaders(s.cookie) }), 400, "invalid_code");
+    expect((await dbFirst<any>(`SELECT revoked_at FROM devices WHERE id = ?`, d1.device_id))!.revoked_at).toBeNull();
+  });
+
+  it("after removing the old calculator, a new claim needs no replace", async () => {
+    const s = await signIn();
+    const d1 = await registerDevice();
+    await claimCode(s.cookie, d1.pair_code);
+    expect((await call(`/api/devices/${d1.device_id}/revoke`, { body: {}, headers: browserHeaders(s.cookie) })).res.status).toBe(204);
+    const d2 = await registerDevice();
+    expect((await claimCode(s.cookie, d2.pair_code)).res.status).toBe(201);
   });
 
   it("claim is rate limited to 10 attempts per 10 minutes", async () => {
@@ -324,8 +350,28 @@ describe("firmware", () => {
   }
   const admin = { "x-admin-token": ADMIN_TOKEN, "content-type": "application/octet-stream" };
 
-  it("publish, check and download (works for unlinked devices too)", async () => {
+  it("only with the plan or the free month: unlinked and lapsed calculators are refused", async () => {
     const d = await registerDevice();
+    expectError(await call("/v1/firmware", { headers: deviceHeaders(d) }), 402, "device_not_linked");
+    expectError(await call("/v1/firmware/image", { headers: deviceHeaders(d) }), 402, "device_not_linked");
+
+    const { device, email } = await linkedDevice();
+    expect((await call("/v1/firmware", { headers: deviceHeaders(device) })).res.status).toBe(200);
+    // Free month over (30 days passed).
+    await dbRun(`UPDATE users SET trial_ends_at = ? WHERE email = ?`, nowSec() - 1, email);
+    expectError(await call("/v1/firmware", { headers: deviceHeaders(device) }), 402, "subscription_inactive");
+    expectError(await call("/v1/firmware/image", { headers: deviceHeaders(device) }), 402, "subscription_inactive");
+    // A subscription that ended.
+    await dbRun(`UPDATE users SET plan_override = 'inactive' WHERE email = ?`, email);
+    expectError(await call("/v1/firmware", { headers: deviceHeaders(device) }), 402, "subscription_inactive");
+    expectError(await solve(device), 402, "subscription_inactive");
+    // Paying again: updates come back.
+    await dbRun(`UPDATE users SET plan_override = 'active' WHERE email = ?`, email);
+    expect((await call("/v1/firmware", { headers: deviceHeaders(device) })).res.status).toBe(200);
+  });
+
+  it("publish, check and download (linked calculator in its free month)", async () => {
+    const { device: d } = await linkedDevice();
     let chk = await call("/v1/firmware", { headers: deviceHeaders(d) });
     expect(chk.json).toEqual({ update: false });
     expectError(await call("/v1/firmware/image", { headers: deviceHeaders(d) }), 404, "not_found");

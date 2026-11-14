@@ -123,15 +123,20 @@ async function verifyTurnstile(secret: string, token: unknown, ip: string): Prom
 }
 
 async function sendLoginMail(env: Env, cfg: Config, to: string, link: string): Promise<void> {
-  const from = (env.MAIL_FROM ?? "").trim() || `Proofline <login@${new URL(cfg.publicUrl).hostname}>`;
   const text =
     `Sign in to your Proofline account:\n\n${link}\n\n` +
     `The link works once, for 15 minutes. If you didn't ask for it, ignore this email.`;
+  await sendMail(env, cfg, to, "Your Proofline sign-in link", text);
+}
+
+/** Sends a plain-text e-mail through the mail provider. Never throws (logged instead). */
+export async function sendMail(env: Env, cfg: Config, to: string, subject: string, text: string): Promise<void> {
+  const from = (env.MAIL_FROM ?? "").trim() || `Proofline <login@${new URL(cfg.publicUrl).hostname}>`;
   try {
     const r = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: { authorization: `Bearer ${env.RESEND_API_KEY!.trim()}`, "content-type": "application/json" },
-      body: JSON.stringify({ from, to: [to], subject: "Your Proofline sign-in link", text }),
+      body: JSON.stringify({ from, to: [to], subject, text }),
     });
     if (!r.ok) console.error(JSON.stringify({ event: "mail_failed", status: r.status }));
     await r.body?.cancel().catch(() => {});

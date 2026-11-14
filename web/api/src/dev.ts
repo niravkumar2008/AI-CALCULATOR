@@ -17,11 +17,14 @@ export async function devRoute(req: Request, env: Env, cfg: Config, path: string
   if (!devAllowed(req, cfg)) throw new HttpError(404, "not_found", MSG.notFound);
 
   if (path === "/__dev/outbox" && req.method === "GET") {
-    const email = new URL(req.url).searchParams.get("email") ?? "";
+    const q = new URL(req.url).searchParams;
+    const email = q.get("email") ?? "";
+    // kind=login (default): sign-in links. kind=linked: the "A calculator was linked" notice.
+    const kind = q.get("kind") === "linked" ? "linked" : "login";
     const row = await env.DB.prepare(
-      `SELECT link, token FROM dev_outbox WHERE email = ?1 ORDER BY id DESC LIMIT 1`,
+      `SELECT link, token FROM dev_outbox WHERE email = ?1 AND kind = ?2 ORDER BY id DESC LIMIT 1`,
     )
-      .bind(email.trim().toLowerCase())
+      .bind(email.trim().toLowerCase(), kind)
       .first<{ link: string; token: string }>();
     if (!row) throw new HttpError(404, "not_found", "No e-mail for that address.");
     return json(row);

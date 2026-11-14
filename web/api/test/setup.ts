@@ -8,6 +8,7 @@ const TABLES = [
   "usage",
   "spend_daily",
   "pair_codes",
+  "link_tokens",
   "sessions",
   "login_tokens",
   "subscriptions",

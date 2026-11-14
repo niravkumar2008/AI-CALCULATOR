@@ -52,7 +52,34 @@ export interface PlanInfo {
   paymentAction?: { url: string | null; since: number };
 }
 
-const PAST_DUE_GRACE_SEC = 3 * 86400;
+/** Payment grace: 7 days from the failed payment (decided 2026-10-16, was 3). */
+export const PAST_DUE_GRACE_SEC = 7 * 86400;
+
+/** The free month's two limits: its length in days and the solves it includes. */
+export interface FreeMonthLimits {
+  days: number;
+  solves: number;
+}
+
+export function freeMonthOf(cfg: Config): FreeMonthLimits {
+  return { days: cfg.trialDays, solves: cfg.monthlySolves };
+}
+
+/** When the free month started (trial_ends_at is set to start + days when it is granted). */
+export function trialStartOf(trialEndsAt: number, f: FreeMonthLimits): number {
+  return trialEndsAt - Math.round(f.days * 86400);
+}
+
+/** Solves (reserved or settled) since the free month started, across calendar months. */
+export async function trialSolves(db: D1Database, userId: string, since: number): Promise<number> {
+  const r = await db
+    .prepare(
+      `SELECT COUNT(*) AS n FROM usage WHERE user_id = ?1 AND started_at >= ?2 AND state IN ('reserved','settled')`,
+    )
+    .bind(userId, since)
+    .first<{ n: number }>();
+  return r?.n ?? 0;
+}
 
 /**
  * The account's plan. The AI tutor plan's prices (STRIPE_PRICE_SUB monthly and
@@ -65,6 +92,7 @@ export async function planOf(
   user: UserRow,
   now: number,
   prices: Pick<StripeConfig, "priceSub" | "priceSubYearly"> = { priceSub: "", priceSubYearly: "" },
+  freeMonth?: FreeMonthLimits,
 ): Promise<PlanInfo> {
   const trialEndsAt = user.trial_ends_at ?? undefined;
   const monthly = prices.priceSub;
@@ -124,7 +152,7 @@ export async function planOf(
   if (sub) {
     if (sub.status === "active" || sub.status === "trialing") return { ...base, interval, plan: "active", entitled: true };
     if (sub.status === "past_due") {
-      // S3-1: 3 days from the failed payment (first seen past_due), never from the period end,
+      // S3-1: 7 days from the failed payment (first seen past_due), never from the period end,
       // which Stripe moves forward at renewal even when the charge fails.
       const since = sub.past_due_since ?? sub.updated_at;
       const graceOk = now < since + PAST_DUE_GRACE_SEC;
@@ -132,7 +160,12 @@ export async function planOf(
     }
   }
   // Our own free month (decision D2) also covers a user whose subscription ended mid-trial.
-  if (trialEndsAt !== undefined && trialEndsAt > now) return { ...base, plan: "trial", entitled: true };
+  // It ends after `days` or after `solves` solves, whichever comes first (decided 2026-10-16).
+  if (trialEndsAt !== undefined && trialEndsAt > now) {
+    const used = freeMonth ? await trialSolves(db, user.id, trialStartOf(trialEndsAt, freeMonth)) : 0;
+    if (!freeMonth || used < freeMonth.solves) return { ...base, plan: "trial", entitled: true };
+    return { ...base, plan: "inactive", entitled: false };
+  }
   if (sub || trialEndsAt !== undefined) return { ...base, plan: "inactive", entitled: false };
   return { ...base, plan: "none", entitled: false };
 }

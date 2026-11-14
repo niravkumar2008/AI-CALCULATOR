@@ -22,7 +22,14 @@ export type ErrorType =
   | "already_subscribed"
   | "no_customer"
   | "bad_signature"
-  | "sold_out";
+  | "sold_out"
+  | "needs_replace"
+  | "link_token_invalid"
+  | "link_token_expired"
+  | "link_token_used"
+  | "link_token_state"
+  | "already_linked"
+  | "superseded";
 
 const BASE_HEADERS: Record<string, string> = {
   "cache-control": "no-store",
@@ -47,8 +54,9 @@ export function empty(status = 204, headers: HeadersInit = {}): Response {
   return new Response(null, { status, headers: h });
 }
 
-export function errorBody(type: ErrorType, message: string) {
-  return { type: "error", error: { type, message: clamp110(message) } };
+/** `extra` adds top-level fields next to `error` (e.g. `replaces` on 409 needs_replace). */
+export function errorBody(type: ErrorType, message: string, extra: Record<string, unknown> = {}) {
+  return { type: "error", error: { type, message: clamp110(message) }, ...extra };
 }
 
 export function error(
@@ -56,8 +64,9 @@ export function error(
   type: ErrorType,
   message: string,
   headers: Record<string, string> = {},
+  extra: Record<string, unknown> = {},
 ): Response {
-  return json(errorBody(type, message), status, headers);
+  return json(errorBody(type, message, extra), status, headers);
 }
 
 /** Thrown anywhere in a handler to answer with an error immediately. */
@@ -67,11 +76,12 @@ export class HttpError extends Error {
     readonly type: ErrorType,
     readonly userMessage: string,
     readonly headers: Record<string, string> = {},
+    readonly extra: Record<string, unknown> = {},
   ) {
     super(type);
   }
   response(): Response {
-    return error(this.status, this.type, this.userMessage, this.headers);
+    return error(this.status, this.type, this.userMessage, this.headers, this.extra);
   }
 }
 
@@ -83,6 +93,7 @@ export const MSG = {
   unknownDevice: "This calculator isn't registered. It will register again on its own.",
   burst: "Too many solves in a minute. Please wait a moment.",
   inFlight: "Another solve is still running. Please wait for it to finish.",
+  superseded: "A newer solve replaced this one.",
   tooLarge: "Photo too large. Please take it again.",
   upstream: "The AI service had a problem. Please try again.",
   upstreamMidStream: "The AI reply was cut off. Please try again.",
@@ -95,7 +106,12 @@ export const MSG = {
   signIn: "Please sign in.",
   invalidToken: "This sign-in link is invalid or expired. Please ask for a new one.",
   invalidCode: "That code is unknown, expired or already used. Get a new code on the calculator.",
-  deviceLimit: "This account already has 3 calculators. Remove one first.",
+  needsReplace: "Your plan covers one calculator. Replace the one on your account with this one?",
+  linkTokenInvalid: "This code isn't valid. Get a new code on your phone.",
+  linkTokenExpired: "This code has expired. Get a new code on your phone.",
+  linkTokenUsed: "This code was already used. Get a new code on your phone.",
+  alreadyLinked: "This calculator is linked to another account. Remove it there first.",
+  linkTokenState: "This request isn't waiting for approval any more. Make a new code and scan again.",
 };
 
 export function msgTrialOver(c: Config): string {
