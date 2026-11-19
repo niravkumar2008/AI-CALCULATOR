@@ -41,6 +41,8 @@ const MSG_PAY = {
   interval: 'interval must be "month" or "year".',
   noYearly: "Yearly billing isn't offered right now. Choose monthly.",
   storeBusy: "The store is busy right now. Please try again in a few minutes.",
+  soldOutBatch: "This batch is sold out. Join the waitlist to hear when the next one opens.",
+  fewLeft: (n: number) => `Only ${n} left in this batch. Choose ${n === 1 ? "1" : `up to ${n}`}.`,
 };
 
 function needStripe(cfg: Config, price: "priceSub" | "priceDevice"): StripeConfig {
@@ -57,12 +59,17 @@ function stripeFailed(e: unknown): HttpError {
   return new HttpError(503, "unavailable", MSG_PAY.unavailable);
 }
 
-/** "I'm 18+" and Terms consent shown on both Checkout pages (PLAN section 9). */
-function consentParams(cfg: Config) {
-  if (!cfg.stripe.requireTos) return {};
+/**
+ * "I'm 18+" and Terms consent shown on both Checkout pages (PLAN section 9), plus an optional
+ * line above the Pay button (the store's ship time, so the buyer sees it before paying).
+ */
+function consentParams(cfg: Config, submitNote = "") {
+  const submit = submitNote ? { submit: { message: submitNote } } : {};
+  if (!cfg.stripe.requireTos) return submitNote ? { custom_text: submit } : {};
   return {
     consent_collection: { terms_of_service: "required" },
     custom_text: {
+      ...submit,
       terms_of_service_acceptance: {
         message: `I am 18 or older and agree to the [Terms of service](${cfg.publicUrl}/terms/).`,
       },
@@ -290,6 +297,23 @@ export async function storeCheckout(req: Request, env: Env, cfg: Config, now: nu
   const global = await hitRateLimit(env.DB, "store:global", 3600, cfg.storeGlobalPerHour, now);
   if (!global.ok) throw rateLimited(global, MSG_PAY.storeBusy);
   const s = needStripe(cfg, "priceDevice");
+  // STORE_STOCK: hold the calculators while this Checkout page is open, so a rush can't sell
+  // more than the batch. One statement, so two buyers can't both take the last one.
+  const hold = s.stock > 0 ? `hold_${crypto.randomUUID().replace(/-/g, "")}` : null;
+  if (hold) {
+    const res = await env.DB.prepare(
+      `INSERT INTO orders (id, status, quantity, created_at)
+       SELECT ?1, 'open', ?2, ?3
+       WHERE (SELECT COALESCE(SUM(COALESCE(quantity, 1)), 0) FROM orders WHERE ${UNITS_TAKEN}) + ?2 <= ?4`,
+    )
+      .bind(hold, q, now, s.stock, now - CHECKOUT_TTL_SEC)
+      .run();
+    if (!res.meta.changes) {
+      const left = await unitsLeft(env, cfg, now);
+      if (left && left > 0) throw new HttpError(400, "bad_request", MSG_PAY.fewLeft(left));
+      throw new HttpError(503, "sold_out", MSG_PAY.soldOutBatch);
+    }
+  }
   try {
     const session = await stripeCall(s, "POST", "/v1/checkout/sessions", {
       mode: "payment",
@@ -299,26 +323,70 @@ export async function storeCheckout(req: Request, env: Env, cfg: Config, now: nu
       phone_number_collection: { enabled: true },
       // A shipping rate (shr_..., with the shipping tax code) adds the delivery line, and lets
       // Stripe Tax decide tax on shipping. Unset: no delivery line.
-      shipping_options: s.shippingRate ? [{ shipping_rate: s.shippingRate }] : undefined,
+      // Several rates (e.g. Standard and Priority): the buyer picks one, the first is preselected.
+      shipping_options: s.shippingRates.length ? s.shippingRates.map((r) => ({ shipping_rate: r })) : undefined,
+      allow_promotion_codes: s.promoCodes || undefined,
       customer_creation: "always",
-      metadata: { kind: "device" },
+      metadata: { kind: "device", quantity: String(q) },
       expires_at: now + CHECKOUT_TTL_SEC,
       success_url: `${cfg.publicUrl}/order/complete/`,
       cancel_url: `${cfg.publicUrl}/cart/?checkout=cancelled`,
-      ...consentParams(cfg),
+      ...consentParams(cfg, s.shipNote ? `${s.shipNote}. We email you tracking when it ships.` : ""),
       ...taxParams(cfg, false),
     });
-    return json({ url: checkoutUrl(session, /^checkout\.stripe\.com$/, cfg) });
+    const url = checkoutUrl(session, /^checkout\.stripe\.com$/, cfg);
+    // The hold now carries the session id, so the webhook turns it into the paid order.
+    if (hold && typeof session.id === "string" && session.id.startsWith("cs_")) {
+      await env.DB.prepare(`UPDATE orders SET id = ?1 WHERE id = ?2 AND status = 'open'`)
+        .bind(String(session.id).slice(0, 255), hold)
+        .run();
+    }
+    return json({ url });
   } catch (e) {
+    if (hold) {
+      await env.DB.prepare(`DELETE FROM orders WHERE id = ?1 AND status = 'open'`).bind(hold).run().catch(() => {});
+    }
     throw stripeFailed(e);
   }
 }
 
+/**
+ * Orders that use up stock: paid (or being paid, or under dispute) and Checkout pages still
+ * open. Failed, expired and fully refunded orders give their calculators back. Binds ?5 = the
+ * oldest created_at an open page can have.
+ */
+const UNITS_TAKEN = `(status NOT IN ('open', 'failed', 'expired', 'refunded') OR (status = 'open' AND created_at > ?5))`;
+
+/** Calculators left in this batch, or null when STORE_STOCK is 0 (no limit). */
+export async function unitsLeft(env: Env, cfg: Config, now: number): Promise<number | null> {
+  if (cfg.stripe.stock <= 0) return null;
+  const row = await env.DB.prepare(
+    `SELECT COALESCE(SUM(COALESCE(quantity, 1)), 0) AS n FROM orders WHERE ${UNITS_TAKEN.replace("?5", "?1")}`,
+  )
+    .bind(now - CHECKOUT_TTL_SEC)
+    .first<{ n: number }>();
+  return Math.max(0, cfg.stripe.stock - (row?.n ?? 0));
+}
+
 // ------------------------------------------------------------ GET /api/store/status
-/** Whether the shop can take orders right now (the site shows "Preorder" or "Join the waitlist"). */
-export async function storeStatus(_req: Request, _env: Env, cfg: Config): Promise<Response> {
-  const open = cfg.stripe.storeOpen && Boolean(cfg.stripe.secretKey && cfg.stripe.priceDevice);
-  return json({ open, max_quantity: MAX_DEVICES_PER_ORDER }, 200, { "cache-control": "public, max-age=60" });
+/**
+ * Whether the shop can take orders right now (the site shows "Order" or "Join the waitlist"),
+ * the ship-time line, and, with STORE_STOCK set, how many are left (sold out = closed).
+ */
+export async function storeStatus(_req: Request, env: Env, cfg: Config, now: number): Promise<Response> {
+  let open = cfg.stripe.storeOpen && Boolean(cfg.stripe.secretKey && cfg.stripe.priceDevice);
+  const body: Record<string, unknown> = { open, max_quantity: MAX_DEVICES_PER_ORDER };
+  if (cfg.stripe.shipNote) body.ships = cfg.stripe.shipNote;
+  if (open && cfg.stripe.stock > 0) {
+    const left = (await unitsLeft(env, cfg, now)) ?? 0;
+    open = left > 0;
+    body.open = open;
+    body.sold_out = !open;
+    body.max_quantity = Math.max(1, Math.min(MAX_DEVICES_PER_ORDER, left));
+    if (left <= 10) body.left = left; // only shown when it's really low; never invented
+  }
+  // Short cache: the count changes with every order.
+  return json(body, 200, { "cache-control": `public, max-age=${cfg.stripe.stock > 0 ? 15 : 60}` });
 }
 
 // ------------------------------------------------------------ account deletion
@@ -409,6 +477,11 @@ async function writesFor(env: Env, cfg: Config, ev: { type: string; data: { obje
       return checkoutCompleted(env, cfg, o, now);
     case "checkout.session.async_payment_failed":
       return isDeviceOrder(o) ? [orderUpsert(env, o, now, "failed")] : [];
+    case "checkout.session.expired":
+      // The buyer left the Checkout page: give the held calculators back at once.
+      return isDeviceOrder(o)
+        ? [env.DB.prepare(`UPDATE orders SET status = 'expired' WHERE id = ?1 AND status = 'open'`).bind(String(o.id).slice(0, 255))]
+        : [];
     case "customer.subscription.created":
     case "customer.subscription.updated":
     case "customer.subscription.deleted":
@@ -465,10 +538,14 @@ function orderUpsert(env: Env, s: Obj, now: number, statusOverride?: string): D1
   // dispute). The payment intent (needed to match refunds and disputes) is filled in whenever
   // a copy carries one, even on a settled order.
   return env.DB.prepare(
-    `INSERT INTO orders (id, email, user_id, amount_total, currency, status, shipping_json, created_at, payment_intent)
-     VALUES (?1, ?2, NULL, ?3, ?4, ?5, ?6, ?7, ?8)
+    `INSERT INTO orders (id, email, user_id, amount_total, currency, status, shipping_json, created_at, payment_intent, quantity)
+     VALUES (?1, ?2, NULL, ?3, ?4, ?5, ?6, ?7, ?8, ?9)
      ON CONFLICT (id) DO UPDATE SET
        status = CASE WHEN orders.status IN (${SETTLED_ORDER}) THEN orders.status ELSE excluded.status END,
+       amount_total = CASE WHEN orders.status IN (${SETTLED_ORDER}) THEN orders.amount_total
+                           ELSE COALESCE(excluded.amount_total, orders.amount_total) END,
+       currency = COALESCE(orders.currency, excluded.currency),
+       quantity = COALESCE(orders.quantity, excluded.quantity),
        email = CASE WHEN orders.status IN (${SETTLED_ORDER}) THEN orders.email
                     ELSE COALESCE(excluded.email, orders.email) END,
        shipping_json = CASE WHEN orders.status IN (${SETTLED_ORDER}) THEN orders.shipping_json
@@ -483,7 +560,14 @@ function orderUpsert(env: Env, s: Obj, now: number, statusOverride?: string): D1
     shipping ? JSON.stringify(shipping).slice(0, 4000) : null,
     now,
     pi && PI_RE.test(pi) ? pi.slice(0, 255) : null,
+    quantityOf(s),
   );
+}
+
+/** The calculators in a store session (our own metadata); null for sessions from before it. */
+function quantityOf(s: Obj): number | null {
+  const q = Number(s.metadata?.quantity);
+  return Number.isInteger(q) && q >= 1 && q <= MAX_DEVICES_PER_ORDER ? q : null;
 }
 
 /**

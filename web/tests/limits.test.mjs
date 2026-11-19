@@ -65,7 +65,7 @@ test('trial cap: MAX_NEW_TRIALS_PER_DAY=1 -> 2nd eligible claim 429 rate_limited
   assert.equal(s.json.linked, false, 'the device is still unlinked');
   // The code is still claimable: account a already had a trial, so for a the cap is not
   // the only blocker and the claim goes through (plan stays a's trial).
-  const c = await claim(a.cookie, second.pair_code);
+  const c = await claim(a.cookie, second.pair_code, undefined, true); // 1 calculator per plan
   assert.equal(c.status, 201, `code was consumed by the 429: ${c.text}`);
 });
 

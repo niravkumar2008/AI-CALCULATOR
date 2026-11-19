@@ -9,7 +9,7 @@
     "test": "vitest run",
     "typecheck": "tsc --noEmit",
     "db:migrate:local": "wrangler d1 migrations apply DB --local",
-    "deploy": "wrangler deploy --var PUBLIC_URL:https://ai-calc-api.ai-calc-api.workers.dev"
+    "deploy": "wrangler deploy --var PUBLIC_URL:https://prooflinecalc.org"
   },
   "devDependencies": {
     "@cloudflare/vitest-plugin": "^1.3.7",
@@ -17,5 +17,8 @@
     "typescript": "~5.9",
     "vitest": "^4.1.11",
     "wrangler": "^4.148.0"
+  },
+  "dependencies": {
+    "postal-mime": "4.2.0"
   }
 }

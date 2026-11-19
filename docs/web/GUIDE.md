@@ -29,7 +29,7 @@ Nothing has been deployed, nothing costs money, and nothing is committed: you re
 ## 1. How the money flows (in plain words)
 
 ```
- Customer on the website ──"Subscribe $10/mo or $100/yr"──▶ Stripe's checkout page (card details go to Stripe only)
+ Customer on the website ──"Subscribe $15/mo or $120/yr"──▶ Stripe's checkout page (card details go to Stripe only)
                                                          │
                                                          │ payment succeeds
                                                          ▼
@@ -42,7 +42,7 @@ Nothing has been deployed, nothing costs money, and nothing is committed: you re
 - **Card numbers never touch our code.** Stripe hosts the checkout page and the "Manage billing" page.
 - **The website never decides who paid.** Only Stripe's signed messages (webhooks) change a plan, so nobody
   can unlock AI Solve by faking a "thank you" page.
-- **Customers see one simple thing:** the calculator ($225) and the AI tutor plan ($10/month or $100/year,
+- **Customers see one simple thing:** the calculator ($215 plus tax and shipping) and the AI tutor plan ($15/month or $120/year,
   first month free; updates come with the plan). The site never mentions which AI or payment companies are behind it. (The privacy policy still has
   to list who processes photos and payments: that's a legal requirement, and it's the only place it appears.)
 
@@ -52,9 +52,9 @@ Nothing has been deployed, nothing costs money, and nothing is committed: you re
 |---|---|
 | First month free starts when the calculator is first linked, no card | Try AI Solve for 30 days; nothing to cancel if they don't want it |
 | One free month per calculator and per e-mail, only for calculators we enrolled at QA | Fakes and resellers can't farm free months |
-| $10/month or $100/year (2 months free), up to 300 solves and $5 of AI cost per account per month | Fair use; resets on the 1st |
+| $15/month or $120/year (4 months free), up to 300 solves and $5 of AI cost per account per month | Fair use; resets on the 1st |
 | Firmware updates only with the plan | Without it the calculator still works fully offline, on the version it has |
-| Payment fails → 3 days of grace, counted from the failed payment | "Payment problem" on the account page, then AI stops until the card is fixed |
+| Payment fails → 7 days of grace, counted from the failed payment | "Payment problem" on the account page, then AI stops until the card is fixed |
 | Cancel anytime from the account page (Stripe's billing page) | Cancels at the end of the paid month |
 | Delete account → Stripe customer deleted first | Billing can't continue after an account is gone |
 | $50 a day total AI spending cap | Protects you from a runaway bill |
@@ -106,13 +106,19 @@ a sandbox first, then repeat it in live mode at launch.
 
 ## 4. Set up Stripe (in the sandbox first) **(you)**
 
+**Fast path (2026-11-18):** `web/api/scripts/stripe-setup.mjs` does 4.1, 4.4 and 4.7 in one go (products and prices,
+Standard $8.95 + Priority $14.95 shipping rates, the portal configuration, the webhook with every event below) and
+prints the `wrangler.toml` lines. Run it in your own PowerShell window, not in a chat (it prints the webhook secret once):
+`cd webpi`, `$env:STRIPE_SECRET_KEY = "sk_..."`, `node scripts/stripe-setup.mjs --site https://<your address>`.
+Running it twice makes nothing twice. You still do 4.2, 4.3, 4.5 and 4.6 in the Dashboard.
+
 ### 4.1 Products and prices
 Dashboard → Product catalog → Add product:
 1. **AI tutor plan**, two prices on the same product, both with tax code "Software as a service (SaaS) –
    personal use" (`txcd_10103000`):
-   - Recurring, Monthly, $10.00 USD → `STRIPE_PRICE_SUB`
-   - Recurring, Yearly, $100.00 USD → `STRIPE_PRICE_SUB_YEARLY` (leave empty to offer monthly only)
-2. **The calculator**: One time, $225.00 USD. Tax code: "General – Tangible goods" (`txcd_99999999`).
+   - Recurring, Monthly, $15.00 USD → `STRIPE_PRICE_SUB`
+   - Recurring, Yearly, $120.00 USD → `STRIPE_PRICE_SUB_YEARLY` (leave empty to offer monthly only)
+2. **The calculator**: One time, $215.00 USD, tax added on top ("exclusive"). Tax code: "General – Tangible goods" (`txcd_99999999`).
 3. Copy each **price ID** (starts with `price_`). These become `STRIPE_PRICE_SUB`, `STRIPE_PRICE_SUB_YEARLY`
    and `STRIPE_PRICE_DEVICE`.
 
@@ -124,14 +130,14 @@ Terms of service" and makes it required.
 ### 4.3 Billing settings (important)
 - **Failed payments:** Billing → Revenue recovery (or "Manage failed payments"): turn on Smart Retries, and
   set "If all retries fail" to **cancel the subscription** (or "mark as unpaid"). Don't choose "leave as past
-  due": our server gives 3 days of grace, and a subscription left past due forever would just sit there.
+  due": our server gives 7 days of grace, and a subscription left past due forever would just sit there.
 - **Customer e-mails:** turn on receipts, failed-payment e-mails, and **renewal reminders** (California's
   auto-renewal law expects a reminder; ask the lawyer about timing).
 - **3-D Secure confirmations (important):** Settings → Billing → Subscriptions and emails → turn on **"Send a
   Stripe-hosted link for customers to confirm their payments when required"**. Some banks make the customer
   confirm a renewal (3-D Secure / SCA). Stripe then sends that customer an e-mail with the link, and our
   server (event `invoice.payment_action_required`) shows **"Confirm your payment"** on the account page with
-  the same link, instead of the plan quietly entering its 3-day grace. Test it with the card
+  the same link, instead of the plan quietly entering its 7-day grace. Test it with the card
   `4000 0027 6000 3184` and a test clock.
 - **One subscription per customer:** in Checkout settings, turn on "Limit customers to one subscription" if
   it's offered (our server also blocks a second subscription itself).
@@ -165,7 +171,7 @@ This becomes `STRIPE_SECRET_KEY`.
 Workbench → Webhooks → Create an event destination → your account → **pick an explicit API version** (write
 it down: it becomes `STRIPE_API_VERSION`, e.g. `2026-09-30.clover`) → events:
 `checkout.session.completed`, `checkout.session.async_payment_succeeded`, `checkout.session.async_payment_failed`,
-`customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`,
+`checkout.session.expired`, `customer.subscription.created`, `customer.subscription.updated`, `customer.subscription.deleted`,
 `customer.subscription.paused`, `customer.subscription.resumed`, `invoice.paid`, `invoice.payment_failed`,
 `invoice.payment_action_required`, `customer.deleted`, `charge.refunded`, `charge.dispute.created`,
 `charge.dispute.closed`
@@ -210,9 +216,12 @@ one change, and it's simpler: one deploy, one address, first-party cookies.)
    ```
 5. In `wrangler.toml` `[vars]`: `STRIPE_PRICE_SUB`, `STRIPE_PRICE_SUB_YEARLY`, `STRIPE_PRICE_DEVICE` (sandbox price ids),
    `STRIPE_API_VERSION` (**required** once the key is set: the webhook endpoint's version, section 4.7),
-   `STRIPE_PORTAL_CONFIG` (`bpc_…`, section 4.4), `STRIPE_SHIPPING_RATE` (optional `shr_…`: a shipping rate,
-   e.g. "Free US shipping", with the shipping tax code `txcd_92010001`; empty = no delivery line), `STORE_OPEN = "0"`
-   (the store stays closed until preorders), `PUBLIC_URL = "https://ai-calc-api.<you>.workers.dev"` for now.
+   `STRIPE_PORTAL_CONFIG` (`bpc_…`, section 4.4), `STRIPE_SHIPPING_RATE` (`shr_…`, or several separated by commas,
+   first = preselected; shipping tax code `txcd_92010001`; empty = no delivery line), `STORE_STOCK` (calculators in
+   this batch; the store closes itself when they're sold, open checkouts hold stock for 31 minutes; `0` = no limit),
+   `STORE_SHIP_NOTE` (the ship time shown on the site and above the Pay button: keep it true), `STRIPE_PROMO_CODES`
+   (`1` = a promotion-code box at checkout; make the codes in Dashboard → Product catalog → Coupons), `STORE_OPEN = "0"`
+   (the store stays closed until you're ready), `PUBLIC_URL = "https://ai-calc-api.<you>.workers.dev"` for now.
 6. `npm run deploy`, then open the address: the website should load, and `/healthz` should say `{"ok":true}`.
 7. Create the webhook (section 4.7) with that address, add its secret (step 4), deploy again.
 8. **Test with Stripe's test card** `4242 4242 4242 4242` (any future date, any CVC): sign in, subscribe, check
@@ -244,8 +253,11 @@ the CPU limit.
    address can use up the day's sign-in e-mail budget in about 4 hours (security review S4, round 2).
    Also ask the lawyer how long to keep store orders (they hold the buyer's e-mail and address).
 7. **FCC** testing before selling hardware.
-8. **Open the store** for preorders: `STORE_OPEN = "1"` and deploy. The site switches from "Join the waitlist"
-   to "Preorder" by itself.
+8. **Open the store:** `STORE_OPEN = "1"` and deploy. The site switches from "Join the waitlist" to "Buy now"
+   by itself, and back to the waitlist when `STORE_STOCK` is sold out. Run `npx wrangler d1 migrations apply DB --remote`
+   first (migration 0009 adds the order quantity the stock count needs).
+9. **Ship time:** if you don't state one, the FTC mail-order rule says you must ship within 30 days. `STORE_SHIP_NOTE`
+   states it; if an order will be late, email the buyer before the promised date and offer a refund.
 
 ---
 
@@ -256,15 +268,15 @@ the CPU limit.
 | Everything above in sandbox | now | $0 |
 | Domain | at launch | ~$10–15 / year |
 | Cloudflare Workers Paid | when the free plan's CPU limit bites | $5 / month |
-| Stripe per $10 monthly payment | each month | 2.9% + 30¢ + 0.7% Billing ≈ $0.66 (+0.5% with Stripe Tax ≈ $0.71) |
-| Stripe per $100 yearly payment | each year | ≈ $3.90 (≈ $0.33 a month; + $0.50 with Stripe Tax) |
+| Stripe per $15 monthly payment | each month | 2.9% + 30¢ + 0.7% Billing ≈ $0.84 (+0.5% with Stripe Tax ≈ $0.92) |
+| Stripe per $120 yearly payment | each year | ≈ $4.62 (≈ $0.39 a month; + $0.60 with Stripe Tax) |
 | Stripe per $225 calculator | each sale | ≈ $6.83 (+ tax fee if used) |
 | AI per subscriber | each month | ~$3.90 at 150 solves (cap: $5) |
 | Lawyer review, FCC | before launch | see PLAN section 6 |
 
-At 50 monthly subscribers: $500 of plan revenue a month against roughly $33 of Stripe fees and up to $195
-of AI (at 150 solves each). Yearly subscribers pay less per month ($8.33) but cost less in fees and don't
-drop off month to month. PLAN section 6 was written at $15 and is now out of date on revenue.
+At 50 monthly subscribers: $750 of plan revenue a month against roughly $42 of Stripe fees and up to $195
+of AI (at 150 solves each). Yearly subscribers pay less per month ($10) but cost less in fees and don't
+drop off month to month. PLAN section 6 was written at $15/month, the price again since 2026-10-16 (its spend-cap figures are older).
 
 ---
 

@@ -28,6 +28,10 @@ export default defineConfig(async () => {
             STRIPE_API_BASE: "https://stripe.test",
             // Required with a key unless DEV_MODE=1 (review G4); tests switch DEV_MODE off.
             STRIPE_API_VERSION: "2026-09-30.clover",
+            // wrangler.toml ships launch defaults; the tests start from "off" and switch them per test.
+            STRIPE_PROMO_CODES: "",
+            STORE_STOCK: "0",
+            STORE_SHIP_NOTE: "",
             // Optional (review G3, G7): empty = account default portal, no shipping option.
             STRIPE_PORTAL_CONFIG: "",
             STRIPE_SHIPPING_RATE: "",

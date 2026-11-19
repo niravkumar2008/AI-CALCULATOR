@@ -76,7 +76,7 @@ mode a teacher can see.**
 - Exam mode: SHIFT MODE 8 =. The AI, camera, Wi-Fi and every app turn off, and the status bar turns
   black with a padlock, EXAM and a timer.
 - Not allowed on the SAT, ACT or AP exams, even in exam mode. We say so up front.
-- $225 at retail. The AI tutor plan is $10 a month or $100 a year, with the first month free.
+- $225 at retail. The AI tutor plan is $15 a month or $120 a year, with the first month free.
   Backer prices are below.
 
 [Video here: section 7.]
@@ -133,7 +133,7 @@ We'd rather you know exactly where we are.
 
 | Real today [update on launch day] | Still to come |
 |---|---|
-| The calculator software: the full calculator, STAT, TABLE, SOLVE, calculus, the apps and exam mode, built and tested. You can try it in your browser at proofline.example/try-it/. | Production units. Every unit you back will be built after the campaign. |
+| The calculator software: the full calculator, STAT, TABLE, SOLVE, calculus, the apps and exam mode, built and tested. You can try it in your browser at prooflinecalc.org/try-it/. | Production units. Every unit you back will be built after the campaign. |
 | Our own circuit board, designed by us. The first prototype boards were ordered in October 2026. | Production shell. [Lawyer-checked wording needed: the samples use purchased calculator shells with the branding covered; production units use a shell we source for production. Say how they differ.] |
 | 5 working samples, built by hand. Every clip of the device in this video is one of them, filmed for real. | FCC certification and lithium battery shipping papers. [State status on launch day.] |
 | AI Solve working on the samples, photo to steps. [Only if true on launch day.] | Battery life. It's being measured on the samples, so we don't quote a number yet. |
@@ -172,11 +172,11 @@ first link it, with no card needed.
 - **US shipping** is charged when you pledge: $[X] per calculator [set from a real carrier quote;
   the cost model assumes $6 [UE §8.3]]. **US addresses only.**
 - **You must be 18 or older to back a calculator reward.** It's made for students 13 and up.
-- **Retail prices after the campaign:** $225 for the calculator; the plan is $10 a month or $100 a
+- **Retail prices after the campaign:** $225 for the calculator; the plan is $15 a month or $120 a
   year. Backer prices are lower because you're backing it before it exists.
 - **Without the plan,** it's still a full scientific calculator that works offline, with
   Geography, Periodic Table, Notes and History. Software updates come only with the plan.
-- One plan covers up to 3 calculators on one account, sharing up to 300 solves a month (fair use).
+- One plan covers 1 calculator, with up to 300 solves a month (fair use). Moving to a new calculator is one tap.
 
 ### 2.7 Stretch goals
 
@@ -243,9 +243,9 @@ It shows every step, so you can follow the working and check it. And exam mode t
 a way anyone can see. A tutor, not a shortcut.
 
 **What does it cost after the campaign?**
-The calculator is $225. The AI tutor plan is $10 a month or $100 a year. The first month is free,
+The calculator is $225. The AI tutor plan is $15 a month or $120 a year. The first month is free,
 from when you first link the calculator, with no card needed. There's no free tier after that.
-First year at retail: $325 paying yearly, $335 paying monthly.
+First year at retail: $345 paying yearly, $390 paying monthly.
 
 **What happens if I don't subscribe?**
 It's still a full scientific calculator that works offline, with Geography, Periodic Table, Notes
@@ -263,7 +263,7 @@ Everything except AI Solve and Type it works offline.
 **How do I set it up?**
 It registers itself the first time it joins Wi-Fi. To use AI Solve, the account holder links it
 once: the calculator shows an 8-character code and a QR code (MODE 4 → Settings → Link calculator),
-and you enter it at proofline.example/link/ on any phone or computer.
+and you enter it at prooflinecalc.org/link/ on any phone or computer.
 
 **What happens to my photos?**
 They're used only to solve that problem and are not stored. We keep only usage counts.
@@ -279,7 +279,7 @@ No. It does statistics and regression, function tables, CALC, SOLVE, definite in
 derivatives.
 
 **Can I use one plan on more than one calculator?**
-Yes: up to 3 calculators on one account, sharing up to 300 solves a month.
+One plan covers one calculator. You can move the plan to a new calculator at any time.
 
 **Do you ship outside the US?**
 Not yet. US addresses only.
@@ -321,7 +321,7 @@ plan bundles) − unit cost.
 |---|---|---|---|---|---|---|
 | Batch 1 | $195 | −13 % ($225) | **$88.06** | $86.96 | $73.83 | $123.53 |
 | Proofline | $210 | −7 % | **$101.11** | $100.01 | $86.88 | $136.58 |
-| Batch 1 + a year of the plan | $285 | −12 % ($325 first year) | **$122.26** | $107.96 | $108.03 | $157.73 |
+| Batch 1 + a year of the plan | $285 | −17 % ($345 first year) | **$122.26** | $107.96 | $108.03 | $157.73 |
 | Proofline + a year of the plan | $299 | −8 % | **$134.41** | $120.11 | $120.18 | $169.88 |
 | (For comparison) $225 on Kickstarter | $225 | 0 % | $114.16 | $113.06 | $99.93 | $149.63 |
 
@@ -331,12 +331,12 @@ What this says:
   discount is modest (13 %), inside the usual 15 % to 30 % range guides suggest for hardware
   early birds, but we don't need to go deeper [K7].
 - **The plan bundles are the best value for us and the backer.** Backers save $40 (early) or $26
-  against $325 retail first year; we get the year up front and no churn inside it. Matches the
+  against $345 retail first year; we get the year up front and no churn inside it. Matches the
   "recommend yearly, honestly" rule.
 - **Keep the plan money in reserve.** A bundle backer can cost up to $5 a month of AI for 13 months
   ($65 at the cap). Hold that much per bundle in the bank until the year is used.
 - **Don't add multi-packs** (2 or 3 calculators) yet: no decision on bundles exists in
-  PAGE_BRIEF, and they'd multiply the inventory risk. One plan already covers 3 calculators.
+  PAGE_BRIEF, and they'd multiply the inventory risk. Each plan covers one calculator.
 
 ### 3.3 Funding goal
 
@@ -451,7 +451,7 @@ licensed music, low. Captions burned in (many watch muted).
 | 0:44 to 0:56 | Press SHIFT MODE 8 =; status bar goes black with padlock, EXAM, timer. Camera pulls back across a room (empty classroom or your own room) and the black bar is still visible. Press MODE 4: "Apps are off". | "Exam mode turns the AI, camera, Wi-Fi and apps off. And anyone can see it from across the room." |
 | 0:56 to 1:02 | Text card on plain background | **"Not allowed on the SAT, ACT or AP. Even in exam mode. We'll always tell you that."** |
 | 1:02 to 1:14 | Build log montage: boards in the bag, soldering, the 5 samples lined up (real), a test on the bench | "These are our 5 samples. Every clip you just saw is one of them. Your pledge pays for the first production batch." |
-| 1:14 to 1:22 | Text card: prices | "$195 for Batch 1 backers. The AI tutor plan is $10 a month or $100 a year, first month free." |
+| 1:14 to 1:22 | Text card: prices | "$195 for Batch 1 backers. The AI tutor plan is $15 a month or $120 a year, first month free." |
 | 1:22 to 1:30 | Sample on a desk, phone in a drawer closing; logo card | **"Proofline. A tutor, not a shortcut."** "Back it on Kickstarter. US shipping only." |
 
 **Shot list to capture (one filming day):**

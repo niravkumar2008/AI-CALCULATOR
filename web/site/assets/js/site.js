@@ -9,7 +9,7 @@
   const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
   const saveData = !!(navigator.connection && navigator.connection.saveData);
   const EASE_OUT = "cubic-bezier(0.23, 1, 0.32, 1)";
-  const CONTACT = "hello@proofline.example"; // TODO(contact): real address once the domain is bought
+  const CONTACT = "hello@prooflinecalc.org";
 
   // ------------------------------------------------------------ header menus
   // <details> menus work without JS; this adds: one open at a time, close on outside click,

@@ -115,7 +115,7 @@ test('account that already had a trial: another enrolled board links but the boa
   assert.equal((await claim(u.cookie, d1.pair_code)).status, 201);
   const b2 = await enrol();
   const d2 = await register(b2);
-  assert.equal((await claim(u.cookie, d2.pair_code)).status, 201);
+  assert.equal((await claim(u.cookie, d2.pair_code, undefined, true)).status, 201);
   const s = await status(d2.token);
   assert.equal(s.plan, 'trial', 'still under the account\'s one trial');
   const re = await hw({ hw_id: b2.hw_id, hw_secret: b2.hw_secret });

@@ -184,8 +184,9 @@ export function sidCookie(res) {
   return { raw, value: kv.slice(4), attrs: attrs.map((a) => a.toLowerCase()) };
 }
 
-export async function claim(cookie, code, label) {
+export async function claim(cookie, code, label, replace) {
   const body = label === undefined ? { code } : { code, label };
+  if (replace !== undefined) body.replace = replace;
   return browser('POST', '/api/devices/claim', cookie, body);
 }
 

@@ -101,7 +101,7 @@
           <svg aria-hidden="true"><use href="#i-cart"/></svg><span class="icon-link__text">Cart</span>
           <span class="cart-badge" data-cart-count hidden>0</span>
         </a>
-        <a class="btn btn--primary btn--sm header__cta" href="/#join" data-focus-email aria-label="Join the waitlist"><span class="cta-long">Join the waitlist</span><span class="cta-short" aria-hidden="true">Join</span></a>
+        <a class="btn btn--primary btn--sm header__cta" href="/shop/calculator/" aria-label="Buy the calculator"><span class="cta-long">Buy now: $215</span><span class="cta-short" aria-hidden="true">Buy</span></a>
         <details class="mobile-menu" data-mobile-menu>
           <summary class="icon-link" aria-label="Menu"><svg class="mm-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="mm-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
           <div class="mobile-menu__sheet">
@@ -141,30 +141,30 @@
   <main id="main" class="container">
     <article class="doc">
       <h1>Refunds and warranty</h1>
-      <p class="meta">Template, last edited 10 October 2026</p>
+      <p class="meta">Draft, last edited 18 November 2026</p>
       <div class="review-banner" role="note">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex:none;color:var(--bad)"><path d="M10.3 4.2 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4.2M12 17.2v.1"/></svg>
         <p style="margin:0;color:inherit"><strong>NEEDS LAWYER REVIEW.</strong> This is a draft template, not legal advice and not yet in force. Highlighted items are still to be decided.</p>
       </div>
 
-      <h2>Before preorders</h2>
-      <p>We’re not taking payment yet. Joining the waitlist is free and commits you to nothing.</p>
+      <h2>Cancelling an order</h2>
+      <p>Each calculator is built after you order. You can cancel any time before it ships for a full refund, including tax and shipping: email us your order number.</p>
 
       <h2>Returns</h2>
-      <p>You can return the calculator within <span class="todo">N days</span> of delivery for a refund of the device price. <span class="todo">Who pays return shipping; condition requirements.</span></p>
+      <p>You can return the calculator within 30 days of delivery for a refund of the calculator price and its tax. Email us first and we’ll send return instructions. If it arrived faulty or damaged, we pay return shipping; otherwise you do. It should come back with its parts and without damage beyond normal use.</p>
 
       <h2>The subscription</h2>
       <ul>
         <li>The first month is free, so there’s nothing to refund for it.</li>
-        <li>Cancel anytime from the account page. <span class="todo">Refund rule for a partly used month.</span></li>
+        <li>Cancel anytime from the account page. The plan stays on until the end of the period you paid for; partly used periods aren’t refunded.</li>
       </ul>
 
       <h2>Warranty</h2>
-      <p>The calculator is covered against defects in materials and workmanship for <span class="todo">N months</span> from delivery. We’ll repair or replace it. <span class="todo">Exclusions, for example drops, liquid, or opening the case.</span></p>
-      <p>Battery: <span class="todo">whether the 150&nbsp;mAh battery is covered, and for how long</span>.</p>
+      <p>The calculator is covered against defects in materials and workmanship for 1 year from delivery. We’ll repair or replace it. Not covered: drops, liquid, or damage from opening the case.</p>
+      <p>Battery: covered for the same 1 year against defects. Normal battery wear over time isn’t a defect.</p>
 
       <h2>How to claim</h2>
-      <p>Email <a href="mailto:hello@proofline.example">hello@proofline.example</a> with your order number and a short description of the problem.</p>
+      <p>Email <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a> with your order number and a short description of the problem.</p>
     </article>
   </main>
   <!-- @footer -->
@@ -172,17 +172,17 @@
     <div class="container footer__grid">
       <div class="footer__intro">
         <a class="brand" translate="no" href="/" aria-label="Proofline home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Proofline</span></a>
-        <p>The AI study tutor that works like a real scientific calculator. In development; preorders planned for 2027.</p>
+        <p>The AI study tutor that works like a real scientific calculator. Hand-built in small batches. Ships to US addresses.</p>
         <form class="waitlist waitlist--compact" action="/api/waitlist" method="post" data-source="footer">
           <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
-          <label class="waitlist__label" for="email-sitefoot">Get an email when preorders open</label>
+          <label class="waitlist__label" for="email-sitefoot">Get an email about new batches</label>
           <div class="waitlist__row">
             <input class="field" id="email-sitefoot" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-sitefoot msg-sitefoot">
             <div class="hp" aria-hidden="true"><label for="company-sitefoot">Company</label><input id="company-sitefoot" name="company" type="text" tabindex="-1" autocomplete="off"></div>
             <button class="btn btn--primary" type="submit">Join</button>
           </div>
           <label class="waitlist__age" for="age-sitefoot"><input id="age-sitefoot" name="age_ok" type="checkbox" required aria-describedby="msg-sitefoot">I’m 13 or older</label>
-          <p class="waitlist__note" id="note-sitefoot">No payment now. <a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__note" id="note-sitefoot"><a href="/privacy/">Privacy policy</a></p>
           <p class="waitlist__msg" id="msg-sitefoot" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -232,8 +232,7 @@
       <div class="legal">
         <p>Not affiliated with Casio Computer Co., Ltd.</p>
         <p>Prices in US dollars. © 2026 Proofline Corporation.</p>
-        <!-- TODO(contact): real support address once the domain is bought. -->
-        <p>Contact: <a href="mailto:hello@proofline.example">hello@proofline.example</a></p>
+        <p>Contact: <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a></p>
       </div>
     </div>
   </footer>

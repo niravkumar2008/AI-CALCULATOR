@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Setup guide · Proofline</title>
   <meta name="description" content="Set up the calculator in six steps: charge it, join Wi-Fi, let it register, link it to your account and try AI Solve.">
-  <!-- TODO(domain): swap proofline.example for the real domain once it's bought. -->
-  <link rel="canonical" href="https://proofline.example/support/setup/">
+  <link rel="canonical" href="https://prooflinecalc.org/support/setup/">
   <!-- @head -->
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#10141c">
@@ -31,19 +30,19 @@
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://proofline.example/"
+      "item": "https://prooflinecalc.org/"
     },
     {
       "@type": "ListItem",
       "position": 2,
       "name": "Support",
-      "item": "https://proofline.example/support/"
+      "item": "https://prooflinecalc.org/support/"
     },
     {
       "@type": "ListItem",
       "position": 3,
       "name": "Setup guide",
-      "item": "https://proofline.example/support/setup/"
+      "item": "https://prooflinecalc.org/support/setup/"
     }
   ]
 }
@@ -130,7 +129,7 @@
           <svg aria-hidden="true"><use href="#i-cart"/></svg><span class="icon-link__text">Cart</span>
           <span class="cart-badge" data-cart-count hidden>0</span>
         </a>
-        <a class="btn btn--primary btn--sm header__cta" href="/#join" data-focus-email aria-label="Join the waitlist"><span class="cta-long">Join the waitlist</span><span class="cta-short" aria-hidden="true">Join</span></a>
+        <a class="btn btn--primary btn--sm header__cta" href="/shop/calculator/" aria-label="Buy the calculator"><span class="cta-long">Buy now: $215</span><span class="cta-short" aria-hidden="true">Buy</span></a>
         <details class="mobile-menu" data-mobile-menu>
           <summary class="icon-link" aria-label="Menu"><svg class="mm-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="mm-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
           <div class="mobile-menu__sheet">
@@ -230,7 +229,7 @@
                 <li>On the calculator, press MODE then 4 to open Apps, then choose Settings and Link calculator to show the code.</li>
                 <li>Enter the 8-character code shown on the calculator, or scan the QR code on its screen with your phone.</li>
               </ul>
-              <p>One account can have up to 3 calculators.</p>
+              <p>One account has one calculator at a time. Linking a new one replaces the old one.</p>
             </div>
           </li>
 
@@ -257,7 +256,7 @@
             <div>
               <h2>The free month and the AI tutor plan</h2>
               <p>Your first month of the AI tutor plan is free. It starts when you first link the calculator, and no card is needed.</p>
-              <p>When the free month ends, the calculator tells you plainly. To keep using AI Solve, subscribe from your account page: $10 a month, or $100 a year. Cancel anytime. Without the plan, it’s still a full scientific calculator that works offline.</p>
+              <p>When the free month ends, the calculator tells you plainly. To keep using AI Solve, subscribe from your account page: $15 a month, or $120 a year. Cancel anytime. Without the plan, it’s still a full scientific calculator that works offline.</p>
             </div>
           </li>
         </ol>
@@ -274,7 +273,7 @@
             <li><strong>It won’t join Wi-Fi.</strong> Most often the network is 5 GHz only, or it has a login page. <a href="/support/wi-fi/">Wi-Fi help</a> walks through the fixes.</li>
             <li><strong>The code isn’t accepted.</strong> Check all 8 characters and that you’re signed in, then show a new code on the calculator and try again.</li>
             <li><strong>AI Solve won’t start.</strong> Check that exam mode isn’t on. It turns off the AI, the camera and Wi-Fi until it ends after 12 hours or a teacher unlocks it with a USB cable.</li>
-            <li><strong>Something else.</strong> See the <a href="/faq/">FAQ</a> or email <a href="mailto:hello@proofline.example">hello@proofline.example</a>.</li>
+            <li><strong>Something else.</strong> See the <a href="/faq/">FAQ</a> or email <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a>.</li>
           </ul>
         </div>
       </div>
@@ -312,7 +311,7 @@
       <div class="container cta-band__inner">
         <div>
           <h2 id="cta-title">Not on sale yet.</h2>
-          <p>Join the waitlist and we’ll email you when preorders open. No payment now.</p>
+          <p><a href="/shop/calculator/">Order the calculator</a> ($215), or get an email about new batches and updates.</p>
         </div>
         <form class="waitlist" action="/api/waitlist" method="post" data-source="site">
           <input type="hidden" name="source" value="site"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
@@ -334,17 +333,17 @@
     <div class="container footer__grid">
       <div class="footer__intro">
         <a class="brand" translate="no" href="/" aria-label="Proofline home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Proofline</span></a>
-        <p>The AI study tutor that works like a real scientific calculator. In development; preorders planned for 2027.</p>
+        <p>The AI study tutor that works like a real scientific calculator. Hand-built in small batches. Ships to US addresses.</p>
         <form class="waitlist waitlist--compact" action="/api/waitlist" method="post" data-source="footer">
           <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
-          <label class="waitlist__label" for="email-sitefoot">Get an email when preorders open</label>
+          <label class="waitlist__label" for="email-sitefoot">Get an email about new batches</label>
           <div class="waitlist__row">
             <input class="field" id="email-sitefoot" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-sitefoot msg-sitefoot">
             <div class="hp" aria-hidden="true"><label for="company-sitefoot">Company</label><input id="company-sitefoot" name="company" type="text" tabindex="-1" autocomplete="off"></div>
             <button class="btn btn--primary" type="submit">Join</button>
           </div>
           <label class="waitlist__age" for="age-sitefoot"><input id="age-sitefoot" name="age_ok" type="checkbox" required aria-describedby="msg-sitefoot">I’m 13 or older</label>
-          <p class="waitlist__note" id="note-sitefoot">No payment now. <a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__note" id="note-sitefoot"><a href="/privacy/">Privacy policy</a></p>
           <p class="waitlist__msg" id="msg-sitefoot" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -394,8 +393,7 @@
       <div class="legal">
         <p>Not affiliated with Casio Computer Co., Ltd.</p>
         <p>Prices in US dollars. © 2026 Proofline Corporation.</p>
-        <!-- TODO(contact): real support address once the domain is bought. -->
-        <p>Contact: <a href="mailto:hello@proofline.example">hello@proofline.example</a></p>
+        <p>Contact: <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a></p>
       </div>
     </div>
   </footer>

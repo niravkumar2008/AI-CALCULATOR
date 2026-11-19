@@ -24,7 +24,7 @@ This is an internal document. It names competitors and vendors freely. Marketing
 3. **Our closest competitor, VovoCorp, is priced almost exactly where we are, and gives more
    for free.** Its camera model is **$239.90 (pre-order)**, and it includes **82 AI uses a day
    "free and forever"**, with Premium at about $7/month or $59.90/year [S1]. We are $225 with
-   one free month, then $10/month or $100/year and **no free tier** (PAGE_BRIEF). This is our
+   one free month, then $15/month or $120/year and **no free tier** (PAGE_BRIEF). This is our
    biggest commercial risk.
 4. **VovoCorp sells stealth.** It acts as "a classic 82ms calculator" until a secret PIN is
    entered [S1], an "emergency button" snaps back to the normal screen [S4], and its TikTok
@@ -85,7 +85,7 @@ Prices are US dollars unless noted. "AI" means camera or typed problem solving.
 
 | Product | What it is | Price | AI cost after trial | Positioning and channel | Known complaints | Source |
 |---|---|---|---|---|---|---|
-| **Proofline (us)** | fx-115ES-style scientific calculator, colour screen, camera, AI Solve, exam mode | **$225** | $10/mo or $100/yr; first month free, no card; no free tier after | "A tutor, not a shortcut." Waitlist; site not live yet | n/a (not shipping) | PAGE_BRIEF |
+| **Proofline (us)** | fx-115ES-style scientific calculator, colour screen, camera, AI Solve, exam mode | **$225** | $15/mo or $120/yr; first month free, no card; no free tier after | "A tutor, not a shortcut." Waitlist; site not live yet | n/a (not shipping) | PAGE_BRIEF |
 | **VovoCorp** (Spain) | Casio fx-82MS-look calculator with AI; Pro has a camera | Base $139.90 (list $179.90); **Pro with camera $239.90, pre-order** | **82 uses/day free forever**; Premium ~$7/mo or $59.90/yr (shown as €5.90/€59.90 on some pages); 1 month Premium free | TikTok-first (@vovocorp, Spanish hashtags like #examenes), reseller program ("start reselling and earn money"), free shipping. Lets you pick ChatGPT, Claude, Gemini, DeepSeek. Secret PIN; "emergency button" | Own-site reviews only (4.8 stars, 45 to 63 reviews depending on the page); keys that don't register when pressed lightly | [S1][S2][S3][S4] |
 | **RXO "SUPER AI + Camera"** (Spain, inventoelectronico) | Scientific calculator with AI, camera and chat | **€329** | First month free, then €20/mo (500 credits) | Same shop sells a "cheating calculator" line; password-protected AI mode | n/a | [S5] |
 | **DIY TI-84 ChatGPT mod** ("ChromaLock", YouTube) | Hobby mod with camera and ChatGPT | DIY | n/a | Video titled "I Made the Ultimate Cheating Device", over 1 million views | Teaches students that "AI calculator = cheating" | [S30] |
@@ -146,7 +146,7 @@ content. Segment D drives early preorders and press.
 |---|---|---|---|
 | **"It's a cheating device."** | Teachers, schools, press, platforms | It shows every step so you learn. Exam mode turns the AI, camera and Wi-Fi off and turns the status bar black with a padlock, "EXAM" and a timer, so a teacher can see it at a glance. It is not allowed on the SAT, ACT or AP. | "Undetectable", "stealth", "hidden", "panic button", "pass any test", "teacher won't know" |
 | **"My phone does this for free."** | Students | True: phone apps can solve problems. Proofline is for studying without your phone: real keys, a full offline scientific calculator, every step on every solve, no ads. | Disparaging named apps; "better than ChatGPT" |
-| **"$225 is a lot, plus a subscription."** | Buyers | The first year is $325 on the yearly plan ($225 + $100) or $335 monthly. Without the plan it's still a full offline scientific calculator. First month free, no card, cancel anytime. | Fake discounts, "price going up tomorrow", hiding the plan cost |
+| **"$225 is a lot, plus a subscription."** | Buyers | The first year is $345 on the yearly plan ($225 + $120) or $390 monthly. Without the plan it's still a full offline scientific calculator. First month free, no card, cancel anytime. | Fake discounts, "price going up tomorrow", hiding the plan cost |
 | **"Teachers ban it / my school bans wireless devices."** | Students, teachers | Use it for homework. For school tests, ask your teacher: use exam mode or leave it at home. For the SAT, ACT and AP, bring a standard calculator. | "Approved for school", "allowed in class" |
 | **"What happens to my photos?"** | Buyers, teachers | Photos are used only to solve that problem and are not stored; we keep only usage counts. | Naming processors in marketing (privacy policy only) |
 | **"AI gets things wrong."** | Everyone | Yes, AI can make mistakes. That is why it shows every step, so you can check. If handwriting is unclear, it says so instead of guessing. | "100% accurate", "always right" |
@@ -195,8 +195,8 @@ calculators" that hide their AI, Proofline is honest by design.
 
 | Option | Device | First-year AI cost | First-year total | Notes | Source |
 |---|---|---|---|---|---|
-| **Proofline, yearly plan** | $225 | $100 (after 1 free month) | **$325** | Every step on every solve; up to 3 calculators share 300 solves/month | PAGE_BRIEF |
-| **Proofline, monthly** | $225 | 11 x $10 = $110 | **$335** | | PAGE_BRIEF |
+| **Proofline, yearly plan** | $225 | $120 (after 1 free month) | **$345** | Every step on every solve; 1 calculator, 300 solves/month | PAGE_BRIEF |
+| **Proofline, monthly** | $225 | 11 x $15 = $165 | **$390** | | PAGE_BRIEF |
 | VovoCorp Pro (camera) | $239.90 | $0 (82/day free) or ~$59.90/yr Premium | **$239.90 to ~$300** | Pre-order; ships from Spain | [S1] |
 | RXO SUPER AI + Camera | €329 | €20/mo for 500 credits after 1 month | ~€549 | Spain | [S5] |
 | fx-115ES Plus + Photomath Plus | $22.99 | $69.99 | **~$93** | Two devices (calculator + phone) | [S15][S6] |
@@ -206,10 +206,11 @@ calculators" that hide their AI, Proofline is honest by design.
 
 ### 6.2 What the numbers say
 
-- **Our subscription price is in line with the market.** $10/month matches Photomath, Mathway
-  and Brainly ($9.99) and is below Gauth ($11.99). The yearly $100 is above Mathway and Brainly
-  ($39.99/yr) and Photomath ($69.99/yr) [S6][S7][S9]. The earlier $15/month idea would have
-  been out of line; $10 is right.
+- **Our monthly price is above the phone apps.** Nirav set the plan at $15/month or $120/year
+  on 2026-10-16 (it was $10/$100). $15/month is above Photomath, Mathway and Brainly ($9.99) and
+  Gauth ($11.99). The yearly $120 works out at $10 a month, in line with their monthly prices but
+  above Mathway and Brainly ($39.99/yr) and Photomath ($69.99/yr) [S6][S7][S9]. Lead with the
+  yearly plan and "every step, no ads, no phone".
 - **The device price is in line with VovoCorp's camera model** ($225 vs $239.90) [S1].
 - **The weak spot is the free tier.** VovoCorp gives 82 AI uses a day free forever [S1]; all
   phone apps have free tiers. We go to zero AI after month one. Honest messaging helps
@@ -219,7 +220,7 @@ calculators" that hide their AI, Proofline is honest by design.
   1. Keep as is and lean on "every step, no ads, no phone" (simplest, cheapest to run).
   2. Add a small free allowance after month one (for example a few solves a week) so the AI
      never "switches off" completely. Costs money per user; check the cost model first.
-  3. Make yearly the default and show "$8.33 a month" honestly (already in PAGE_BRIEF).
+  3. Make yearly the default and show "about $10 a month" honestly (already in PAGE_BRIEF).
   4. A preorder-only perk that is real and costs little, such as the first batch's serial
      numbers or an extra free month for waitlist members. Only if it is actually honoured.
 

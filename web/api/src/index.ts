@@ -3,6 +3,7 @@
 
 import { claim, deleteMe, getMe, renameDevice, revokeDevice } from "./account";
 import { enrolHardware, publishFirmware } from "./admin";
+import { business, getMail, listMail, listOrders, mailCleanup, receiveMail, sendReply, shipOrder, stripeMoney, updateMail } from "./office";
 import { confirm, login, logout } from "./auth";
 import { billingCheckout, billingPortal, storeCheckout, storeStatus, stripeWebhook } from "./billing";
 import { joinWaitlist } from "./waitlist";
@@ -28,6 +29,14 @@ const ROUTES: Record<string, Partial<Record<string, Handler>>> = {
   "/v1/firmware/image": { GET: (r, e, c, _x, n) => firmwareImage(r, e, c, n) },
   "/v1/admin/firmware": { POST: (r, e) => publishFirmware(r, e) },
   "/v1/admin/hardware": { POST: (r, e, _c, _x, n) => enrolHardware(r, e, n) },
+  // ---- back office (the Proofline Farm's Business HQ, docs/web/BACK_OFFICE.md)
+  "/v1/admin/business": { GET: (r, e, c, _x, n) => business(r, e, c, n) },
+  "/v1/admin/stripe": { GET: (r, e, c) => stripeMoney(r, e, c) },
+  "/v1/admin/orders": { GET: (r, e) => listOrders(r, e) },
+  "/v1/admin/orders/:id/ship": { POST: (r, e, c, _x, n, id) => shipOrder(r, e, c, id, n) },
+  "/v1/admin/mail": { GET: (r, e) => listMail(r, e) },
+  "/v1/admin/mail/:id": { GET: (r, e, _c, _x, _n, id) => getMail(r, e, id), POST: (r, e, _c, _x, n, id) => updateMail(r, e, id, n) },
+  "/v1/admin/mail/:id/send": { POST: (r, e, _c, _x, n, id) => sendReply(r, e, id, n) },
   // ---- portal
   "/api/auth/login": { POST: (r, e, c, x, n) => login(r, e, c, x, n) },
   "/api/auth/confirm": { POST: (r, e, c, _x, n) => confirm(r, e, c, n) },
@@ -44,7 +53,7 @@ const ROUTES: Record<string, Partial<Record<string, Handler>>> = {
   "/api/billing/checkout": { POST: (r, e, c, _x, n) => billingCheckout(r, e, c, n) },
   "/api/billing/portal": { POST: (r, e, c, _x, n) => billingPortal(r, e, c, n) },
   "/api/store/checkout": { POST: (r, e, c, _x, n) => storeCheckout(r, e, c, n) },
-  "/api/store/status": { GET: (r, e, c) => storeStatus(r, e, c) },
+  "/api/store/status": { GET: (r, e, c, _x, n) => storeStatus(r, e, c, n) },
   "/api/stripe/webhook": { POST: (r, e, c, _x, n) => stripeWebhook(r, e, c, n) },
   "/api/waitlist": { POST: (r, e, c, _x, n) => joinWaitlist(r, e, c, n) },
 };
@@ -59,6 +68,9 @@ function decodeParam(s: string): string | null {
 }
 
 const PARAM_ROUTES: [RegExp, string][] = [
+  [/^\/v1\/admin\/orders\/([^/]+)\/ship$/, "/v1/admin/orders/:id/ship"],
+  [/^\/v1\/admin\/mail\/([^/]+)\/send$/, "/v1/admin/mail/:id/send"],
+  [/^\/v1\/admin\/mail\/([^/]+)$/, "/v1/admin/mail/:id"],
   [/^\/api\/devices\/([^/]+)\/revoke$/, "/api/devices/:id/revoke"],
   [/^\/api\/devices\/([^/]+)$/, "/api/devices/:id"],
   [/^\/api\/link-tokens\/([^/]+)\/approve$/, "/api/link-tokens/:id/approve"],
@@ -158,11 +170,42 @@ export async function cleanup(env: Env, now: number): Promise<void> {
     // Review G9: processed Stripe event ids. Stripe retries an event for at most 3 days, so
     // after 30 days the id can't come back; without this the table only grows.
     env.DB.prepare(`DELETE FROM stripe_events WHERE received_at < ?1`).bind(now - STRIPE_EVENTS_KEEP_SEC),
+    mailCleanup(env, now),
   ]);
+}
+
+/**
+ * Inbound customer e-mail (Cloudflare Email Routing -> "Send to a Worker"). The mail is stored
+ * for the farm's Business HQ and, when MAIL_FORWARD_TO is set, also forwarded to that inbox, so
+ * nothing is lost if one of the two fails. If both fail the handler throws, and the sending
+ * server gets an error and tries again later.
+ */
+export async function inboundEmail(message: ForwardableEmailMessage, env: Env, now: number): Promise<void> {
+  const forwardTo = (env.MAIL_FORWARD_TO ?? "").trim();
+  let stored = false;
+  try {
+    const r = await receiveMail(env, message.raw, { from: message.from, to: message.to, rawSize: message.rawSize }, now);
+    stored = r.stored || r.why !== undefined; // skipped on purpose (own mail, cap, unreadable) is not a failure
+  } catch (e) {
+    console.error(JSON.stringify({ event: "mail_store_failed", detail: String(e).slice(0, 300) }));
+  }
+  let forwarded = false;
+  if (forwardTo) {
+    try {
+      await message.forward(forwardTo);
+      forwarded = true;
+    } catch (e) {
+      console.error(JSON.stringify({ event: "mail_forward_failed", detail: String(e).slice(0, 300) }));
+    }
+  }
+  if (!stored && !forwarded) throw new Error("mail could not be stored or forwarded");
 }
 
 export default {
   fetch: handle,
+  async email(message: ForwardableEmailMessage, env: Env, _ctx: ExecutionContext) {
+    await inboundEmail(message, env, nowSec());
+  },
   async scheduled(_c: ScheduledController, env: Env, ctx: ExecutionContext) {
     ctx.waitUntil(cleanup(env, nowSec()));
   },

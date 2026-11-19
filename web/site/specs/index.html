@@ -5,8 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Specs · Proofline</title>
   <meta name="description" content="Prototype specifications: ESP32-S3, 5 MP autofocus camera, 2.4 GHz Wi-Fi, 150 mAh battery, magnetic charging, no LED.">
-  <!-- TODO(domain): swap proofline.example for the real domain once it's bought. -->
-  <link rel="canonical" href="https://proofline.example/specs/">
+  <link rel="canonical" href="https://prooflinecalc.org/specs/">
   <!-- @head -->
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#10141c">
@@ -31,13 +30,13 @@
       "@type": "ListItem",
       "position": 1,
       "name": "Home",
-      "item": "https://proofline.example/"
+      "item": "https://prooflinecalc.org/"
     },
     {
       "@type": "ListItem",
       "position": 2,
       "name": "Specs",
-      "item": "https://proofline.example/specs/"
+      "item": "https://prooflinecalc.org/specs/"
     }
   ]
 }
@@ -124,7 +123,7 @@
           <svg aria-hidden="true"><use href="#i-cart"/></svg><span class="icon-link__text">Cart</span>
           <span class="cart-badge" data-cart-count hidden>0</span>
         </a>
-        <a class="btn btn--primary btn--sm header__cta" href="/#join" data-focus-email aria-label="Join the waitlist"><span class="cta-long">Join the waitlist</span><span class="cta-short" aria-hidden="true">Join</span></a>
+        <a class="btn btn--primary btn--sm header__cta" href="/shop/calculator/" aria-label="Buy the calculator"><span class="cta-long">Buy now: $215</span><span class="cta-short" aria-hidden="true">Buy</span></a>
         <details class="mobile-menu" data-mobile-menu>
           <summary class="icon-link" aria-label="Menu"><svg class="mm-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="mm-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
           <div class="mobile-menu__sheet">
@@ -187,7 +186,7 @@
       <div class="container">
         <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><span aria-current="page">Specs</span></li></ol></nav>
         <h1 id="page-title">Specifications.</h1>
-        <p class="lead">We publish the specs so you know exactly what you’re getting. These are prototype specifications; they may change before preorders open.</p>
+        <p class="lead">We publish the specs so you know exactly what you’re getting. These are prototype specifications; later batches may change.</p>
       </div>
     </section>
 
@@ -206,7 +205,7 @@
         </div>
 
         <table class="spec-table">
-          <caption>Prototype specifications. They may change before preorders open.</caption>
+          <caption>Prototype specifications. Later batches may change.</caption>
           <tbody>
             <tr><th scope="row">Processor</th><td translate="no">ESP32-S3</td></tr>
             <tr><th scope="row">Camera</th><td>5&nbsp;MP autofocus, on the back</td></tr>
@@ -284,7 +283,7 @@
               <tr><th scope="row">Photos</th><td>Not stored<small>Each photo is used only to solve that problem. We keep only usage counts.</small></td></tr>
               <tr><th scope="row">Exam mode</th><td><span translate="no">SHIFT MODE 8 =</span><small>Turns the AI, camera, Wi-Fi and all apps off. Black status bar. Ends after 12 hours, or a teacher unlocks it with a USB cable.</small></td></tr>
               <tr><th scope="row">Lights</th><td>None. No LED.</td></tr>
-              <tr><th scope="row">Account</th><td>Held by the account holder, 18+<small>Up to 3 calculators per account.</small></td></tr>
+              <tr><th scope="row">Account</th><td>Held by the account holder, 18+<small>One calculator per account.</small></td></tr>
             </tbody>
           </table>
         </div>
@@ -327,7 +326,7 @@
         </div>
         <div class="callout" style="margin-top:var(--s-7)">
           <svg aria-hidden="true"><use href="#i-info"/></svg>
-          <p>These are prototype specifications from our first 5 samples; details may change before preorders open.</p>
+          <p>These are prototype specifications from our first 5 samples; later batches may change.</p>
         </div>
       </div>
     </section>
@@ -360,7 +359,7 @@
           <a class="card" href="/pricing/">
             <span class="card__icon"><svg aria-hidden="true"><use href="#i-tag"/></svg></span>
             <h3>Pricing</h3>
-            <p>$225 for the calculator. The AI tutor plan is $10 a month or $100 a year, first month free.</p>
+            <p>$215 for the calculator. The AI tutor plan is $15 a month or $120 a year, first month free.</p>
             <span class="card__more">Read more<svg aria-hidden="true"><use href="#i-arrow"/></svg></span>
           </a>
         </div>
@@ -371,7 +370,7 @@
       <div class="container cta-band__inner">
         <div>
           <h2 id="cta-title">Be first in line.</h2>
-          <p>We’ll email you when preorders open. They’re planned for 2027. No payment now.</p>
+          <p><a href="/shop/calculator/">Order the calculator</a> ($215), or get an email about new batches and updates.</p>
         </div>
         <form class="waitlist" action="/api/waitlist" method="post" data-source="site">
           <input type="hidden" name="source" value="site"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
@@ -393,17 +392,17 @@
     <div class="container footer__grid">
       <div class="footer__intro">
         <a class="brand" translate="no" href="/" aria-label="Proofline home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Proofline</span></a>
-        <p>The AI study tutor that works like a real scientific calculator. In development; preorders planned for 2027.</p>
+        <p>The AI study tutor that works like a real scientific calculator. Hand-built in small batches. Ships to US addresses.</p>
         <form class="waitlist waitlist--compact" action="/api/waitlist" method="post" data-source="footer">
           <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
-          <label class="waitlist__label" for="email-sitefoot">Get an email when preorders open</label>
+          <label class="waitlist__label" for="email-sitefoot">Get an email about new batches</label>
           <div class="waitlist__row">
             <input class="field" id="email-sitefoot" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-sitefoot msg-sitefoot">
             <div class="hp" aria-hidden="true"><label for="company-sitefoot">Company</label><input id="company-sitefoot" name="company" type="text" tabindex="-1" autocomplete="off"></div>
             <button class="btn btn--primary" type="submit">Join</button>
           </div>
           <label class="waitlist__age" for="age-sitefoot"><input id="age-sitefoot" name="age_ok" type="checkbox" required aria-describedby="msg-sitefoot">I’m 13 or older</label>
-          <p class="waitlist__note" id="note-sitefoot">No payment now. <a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__note" id="note-sitefoot"><a href="/privacy/">Privacy policy</a></p>
           <p class="waitlist__msg" id="msg-sitefoot" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -453,8 +452,7 @@
       <div class="legal">
         <p>Not affiliated with Casio Computer Co., Ltd.</p>
         <p>Prices in US dollars. © 2026 Proofline Corporation.</p>
-        <!-- TODO(contact): real support address once the domain is bought. -->
-        <p>Contact: <a href="mailto:hello@proofline.example">hello@proofline.example</a></p>
+        <p>Contact: <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a></p>
       </div>
     </div>
   </footer>

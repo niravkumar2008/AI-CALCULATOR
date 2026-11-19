@@ -66,7 +66,7 @@ Short, plain, confident, honest. Like a smart friend who is good at math and doe
 | "AI can make mistakes. That's why it shows every step." | "100% accurate", "never wrong" |
 | "Not allowed on the SAT, ACT or AP. Bring a standard calculator." | "Exam-approved", "teacher-proof", "they'll never know" |
 | "Preorders are planned for 2027." | "Shipping soon!", "Only 50 left!" |
-| "$225, plus the AI tutor plan: $10 a month or $100 a year. First month free, no card." | Hiding the plan, "starting at $0" |
+| "$225, plus the AI tutor plan: $15 a month or $120 a year. First month free, no card." | Hiding the plan, "starting at $0" |
 | "Prototype photos coming soon." | Renders passed off as photos |
 | Sentence case, no exclamation marks | "Revolutionary", "game-changing", "unlock", "seamless", "hack" |
 
@@ -187,7 +187,7 @@ students, teachers and tutors, paid a flat fee, loaned a sample, disclosure in t
   2. "How Proofline's exam mode works"
   3. "Answer vs steps: why seeing the working matters"
   4. "Building a calculator from scratch: sample 1 of 5"
-  5. "What the AI tutor plan costs in the first year" ($325 yearly, $335 monthly)
+  5. "What the AI tutor plan costs in the first year" ($345 yearly, $390 monthly)
   6. "Studying without your phone: a setup that works"
 - **Basics:** one topic per page, plain title, the FAQ format already on the site, a link to the
   waitlist at the end. No keyword stuffing.
@@ -281,8 +281,8 @@ render").
 
 25. **Reply video: "Isn't this just a cheating device?"** Show: reply to a real comment (or a
     question you wrote yourself, labelled as such). Show exam mode. Say: "Here's why it isn't."
-26. **"What it really costs in year one."** Show: on-screen maths: $225 + $100 = $325 (yearly) or
-    $225 + 11 x $10 = $335 (monthly); first month free, no card. Say: "Without the plan, it's still
+26. **"What it really costs in year one."** Show: on-screen maths: $225 + $120 = $345 (yearly) or
+    $225 + 11 x $15 = $390 (monthly); first month free, no card. Say: "Without the plan, it's still
     a full offline calculator."
 27. **"What happens to my photos?"** Say: "Used only to solve that problem, not stored. We keep
     only usage counts."
@@ -451,7 +451,7 @@ through years of honest delays [S32]).
 
 - A spreadsheet with one row per post: date, platform, idea number, hook, views, likes, shares,
   comments, link clicks, notes.
-- **A tag per channel in the waitlist link,** for example `proofline.example/?src=tt` (TikTok),
+- **A tag per channel in the waitlist link,** for example `prooflinecalc.org/?src=tt` (TikTok),
   `?src=yt`, `?src=ig`, `?src=rd` (Reddit), `?src=c-alex` (creator Alex).
 - **Engineering note (done, Oct 2026, not deployed yet):** every waitlist form now sends the link's
   `?utm_source=`, `?utm_medium=`, `?utm_campaign=` (the short `?src=tt` counts as `utm_source`)
@@ -583,7 +583,7 @@ contact, the "not for SAT/ACT/AP" line. No made-up quotes, no fake press logos.
       your teacher".
 - [ ] No AI vendor, payment vendor or Casio name. Casio logo not visible.
 - [ ] Renders labelled "CAD render". Screens are real, not mocked up.
-- [ ] Price, if shown, includes the plan: $225 + $10/month or $100/year, first month free, no
+- [ ] Price, if shown, includes the plan: $225 + $15/month or $120/year, first month free, no
       card.
 - [ ] AI accuracy: "AI can make mistakes" if accuracy comes up. Never "100%".
 - [ ] No minors on camera; no faces of minors anywhere.

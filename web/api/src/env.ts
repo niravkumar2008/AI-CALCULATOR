@@ -27,6 +27,10 @@ export interface Env {
   PRICE_OUT_PER_MTOK?: string;
   RESEND_API_KEY?: string;
   MAIL_FROM?: string;
+  /** Back office: replies and "it shipped" mails come from this, e.g. "Proofline <hello@your-domain>". */
+  MAIL_REPLY_FROM?: string;
+  /** Back office: every customer e-mail is also forwarded here (a verified Email Routing destination). */
+  MAIL_FORWARD_TO?: string;
   ADMIN_TOKEN?: string;
   DEV_MODE?: string;
   MAX_NEW_TRIALS_PER_DAY?: string;
@@ -47,6 +51,9 @@ export interface Env {
   STRIPE_API_VERSION?: string;
   STRIPE_PORTAL_CONFIG?: string;
   STRIPE_SHIPPING_RATE?: string;
+  STRIPE_PROMO_CODES?: string;
+  STORE_STOCK?: string;
+  STORE_SHIP_NOTE?: string;
   STORE_OPEN?: string;
   WAITLIST_DAILY_CAP?: string;
   STORE_GLOBAL_PER_HOUR?: string;
@@ -97,8 +104,14 @@ export interface StripeConfig {
   apiBase: string; // https://api.stripe.com, or a local mock in tests
   apiVersion: string; // required whenever a key is set and DEV_MODE is off; '' only in local dev
   portalConfig: string; // bpc_... passed as `configuration` to portal sessions; '' = account default
-  shippingRate: string; // shr_... offered as the store checkout's shipping option; '' = none
+  /** shr_... rates offered on the store checkout, first = default; [] = no delivery line. */
+  shippingRates: string[];
+  promoCodes: boolean; // allow_promotion_codes on the store checkout (creator / holiday codes)
   storeOpen: boolean;
+  /** Calculators for sale in this batch (paid + being paid); 0 = no limit. */
+  stock: number;
+  /** "Ships in 3-5 weeks"-style line shown on the site and at checkout; '' = none. */
+  shipNote: string;
 }
 
 /** A reservation older than this no longer blocks the device and is settled by the cron. */
@@ -246,8 +259,18 @@ function parseStripe(env: Env, devMode: boolean): StripeConfig {
   }
   const portalConfig = (env.STRIPE_PORTAL_CONFIG ?? "").trim();
   if (portalConfig && !/^bpc_[A-Za-z0-9]{6,}$/.test(portalConfig)) throw new ConfigError("bad setting STRIPE_PORTAL_CONFIG");
-  const shippingRate = (env.STRIPE_SHIPPING_RATE ?? "").trim();
-  if (shippingRate && !/^shr_[A-Za-z0-9]{6,}$/.test(shippingRate)) throw new ConfigError("bad setting STRIPE_SHIPPING_RATE");
+  // One rate, or several separated by commas (Stripe Checkout takes up to 5; the first is the default).
+  const shippingRates = (env.STRIPE_SHIPPING_RATE ?? "")
+    .split(",")
+    .map((x) => x.trim())
+    .filter((x) => x !== "");
+  if (shippingRates.length > 5 || shippingRates.some((x) => !/^shr_[A-Za-z0-9]{6,}$/.test(x))) {
+    throw new ConfigError("bad setting STRIPE_SHIPPING_RATE");
+  }
+  const stockRaw = (env.STORE_STOCK ?? "").trim() || "0";
+  if (!/^\d{1,6}$/.test(stockRaw)) throw new ConfigError("bad setting STORE_STOCK");
+  const shipNote = (env.STORE_SHIP_NOTE ?? "").trim();
+  if (shipNote.length > 120 || /[<>\u0000-\u001f]/.test(shipNote)) throw new ConfigError("bad setting STORE_SHIP_NOTE");
   return {
     secretKey,
     webhookSecret,
@@ -259,7 +282,10 @@ function parseStripe(env: Env, devMode: boolean): StripeConfig {
     apiBase: base.origin,
     apiVersion,
     portalConfig,
-    shippingRate,
+    shippingRates,
+    promoCodes: (env.STRIPE_PROMO_CODES ?? "").trim() === "1",
     storeOpen: (env.STORE_OPEN ?? "").trim() === "1",
+    stock: Number(stockRaw),
+    shipNote,
   };
 }

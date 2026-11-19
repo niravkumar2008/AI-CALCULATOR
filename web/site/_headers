@@ -32,6 +32,12 @@
   Cache-Control: no-store
   Referrer-Policy: no-referrer
 
+# /link/camera/ needs no camera itself (the calculator scans the phone), so the policy above stays.
+# /q/: where a phone camera lands after scanning a calculator link code (the Worker drops the token first).
+/q/*
+  Cache-Control: no-store
+  Referrer-Policy: no-referrer
+
 /account/*
   Cache-Control: no-store
 

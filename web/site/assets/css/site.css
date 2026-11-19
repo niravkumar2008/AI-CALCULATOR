@@ -556,8 +556,15 @@ summary,
 .hero__sub kbd {
   color: var(--ink);
 }
+.hero__buy {
+  margin-top: var(--s-6);
+}
 .hero .waitlist {
   margin-top: var(--s-6);
+}
+/* With the Order button above it, the waitlist is the quieter second choice. */
+.hero__buy + .waitlist {
+  margin-top: var(--s-5);
 }
 
 @media (max-width: 30rem) {
@@ -2664,4 +2671,9 @@ body:has(main form.waitlist) .site-footer form.waitlist {
 /* Keep short phrases like "Wi-Fi" or "$15/month" on one line. */
 .nowrap {
   white-space: nowrap;
+}
+
+/* The hidden attribute always wins (e.g. .badge sets display, and the shop toggles badges with hidden). */
+[hidden] {
+  display: none !important;
 }

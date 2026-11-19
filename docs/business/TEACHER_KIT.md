@@ -122,10 +122,10 @@ outreach before then). Never sell to schools before the product ships, never say
 > Not yet. Preorders are planned for 2027.
 >
 > **Can I see a demo?**
-> Yes. Email **hello@proofline.example** with "Teacher demo" in the subject. [Placeholder; replace
+> Yes. Email **hello@prooflinecalc.org** with "Teacher demo" in the subject. [Placeholder; replace
 > with the real address.]
 >
-> More at **proofline.example/teachers**.
+> More at **prooflinecalc.org/teachers**.
 >
 > *Proofline is not affiliated with Casio Computer Co., Ltd.*
 
@@ -210,7 +210,7 @@ answer questions. No DMs to people who didn't ask. No links in places that ban t
 > 2. Is the timer useful, or would you want something else on screen?
 > 3. What should the unlock process look like for a teacher?
 >
-> There's a one-page summary at proofline.example/teachers [add "and a demo video" only once it
+> There's a one-page summary at prooflinecalc.org/teachers [add "and a demo video" only once it
 > exists] if it helps. Happy to
 > answer anything, including the hard questions.
 
@@ -220,7 +220,7 @@ answer questions. No DMs to people who didn't ask. No links in places that ban t
 >
 > Hi [name],
 >
-> Thanks for asking. The one-page summary is attached (and at proofline.example/teachers).
+> Thanks for asking. The one-page summary is attached (and at prooflinecalc.org/teachers).
 >
 > The short version: SHIFT MODE 8 = turns the AI, camera, Wi-Fi and every app off; the status bar
 > turns black with a padlock, "EXAM" and a timer; students can't turn it off from the keys (12

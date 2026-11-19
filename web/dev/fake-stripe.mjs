@@ -127,7 +127,7 @@ export function startFakeStripe(opts) {
           } else {
             await sendEvent('checkout.session.completed', {
               id: s.id, object: 'checkout.session', mode: 'payment', payment_status: 'paid', status: 'complete',
-              metadata: s.metadata, amount_total: 22500 * s.quantity, currency: 'usd', payment_intent: rid('pi'),
+              metadata: s.metadata, amount_total: 21500 * s.quantity, currency: 'usd', payment_intent: rid('pi'),
               customer_details: { email: 'test.buyer@example.com', name: 'Test Buyer' },
               collected_information: { shipping_details: { name: 'Test Buyer', address: { line1: '1 Test Street', city: 'Testville', state: 'CA', postal_code: '94000', country: 'US' } } },
             });
@@ -136,9 +136,9 @@ export function startFakeStripe(opts) {
         }
         const what = s.mode === 'subscription'
           ? (priceSubYearly && s.price === priceSubYearly
-            ? `<h1>AI tutor plan, yearly</h1><p class="muted">Billed yearly. Cancel anytime.</p><div class="price">$100.00 <span class="muted">/ year</span></div>`
-            : `<h1>AI tutor plan, monthly</h1><p class="muted">Billed monthly. Cancel anytime.</p><div class="price">$10.00 <span class="muted">/ month</span></div>`)
-          : `<h1>Calculator × ${esc(s.quantity)}</h1><p class="muted">Ships to the US.</p><div class="price">$${(225 * s.quantity).toFixed(2)}</div>`;
+            ? `<h1>AI tutor plan, yearly</h1><p class="muted">Billed yearly. Cancel anytime.</p><div class="price">$120.00 <span class="muted">/ year</span></div>`
+            : `<h1>AI tutor plan, monthly</h1><p class="muted">Billed monthly. Cancel anytime.</p><div class="price">$15.00 <span class="muted">/ month</span></div>`)
+          : `<h1>Calculator × ${esc(s.quantity)}</h1><p class="muted">Ships to the US. Shipping and tax are added on the real Stripe page.</p><div class="price">$${(215 * s.quantity).toFixed(2)}</div>`;
         const consent = s.consent ? `<p class="muted">${esc(s.consent.replace(/\[([^\]]+)\]\([^)]+\)/g, '$1'))}</p>` : '';
         return html(200, page('Checkout', `<div class="card">${what}${consent}
           <form method="post" action="/checkout/${esc(s.id)}/pay"><button type="submit">Pay with test card 4242</button></form>

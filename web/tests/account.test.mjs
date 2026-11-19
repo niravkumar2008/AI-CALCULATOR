@@ -47,19 +47,21 @@ test('claim race: two accounts claim the same code concurrently -> exactly one 2
   assertError(loser, 400, 'invalid_code');
 });
 
-test('device limit: 4th active device -> 409 device_limit; revoking frees a slot', async () => {
+test('one calculator per plan: 2nd -> 409 needs_replace; replace:true revokes the old one; revoking frees the slot', async () => {
   const u = await login();
-  const devs = [];
-  for (let i = 0; i < 3; i++) {
-    const d = await register();
-    assert.equal((await claim(u.cookie, d.pair_code)).status, 201);
-    devs.push(d);
-  }
-  const fourth = await register();
-  assertError(await claim(u.cookie, fourth.pair_code), 409, 'device_limit');
-  assert.equal((await browser('POST', `/api/devices/${devs[0].device_id}/revoke`, u.cookie)).status, 204);
-  const retry = await claim(u.cookie, fourth.pair_code);
-  assert.equal(retry.status, 201, 'the code survives a device_limit rejection and a slot is free after revoke');
+  const first = await register();
+  assert.equal((await claim(u.cookie, first.pair_code)).status, 201);
+  const second = await register();
+  const r = await claim(u.cookie, second.pair_code);
+  assertError(r, 409, 'needs_replace');
+  assert.equal(r.json.replaces.id, first.device_id);
+  assert.equal(r.json.replaces.suffix, first.hw_id.slice(-4).toUpperCase());
+  const ok = await claim(u.cookie, second.pair_code, undefined, true);
+  assert.equal(ok.status, 201, 'the code survives a needs_replace rejection');
+  assertError(await api('GET', '/v1/device/status', { token: first.token }), 401, 'device_revoked');
+  assert.equal((await browser('POST', `/api/devices/${second.device_id}/revoke`, u.cookie)).status, 204);
+  const third = await register();
+  assert.equal((await claim(u.cookie, third.pair_code)).status, 201, 'a slot is free after revoke');
 });
 
 test('rename: PATCH label -> 200 Device with the new label', async () => {
@@ -140,7 +142,7 @@ test('first claim of an enrolled board starts the 30-day trial; a second device 
 
   await new Promise((r) => setTimeout(r, 1100));
   const d2 = await registerEnrolled();
-  await claim(u.cookie, d2.pair_code);
+  assert.equal((await claim(u.cookie, d2.pair_code, undefined, true)).status, 201);
   const me2 = await api('GET', '/api/me', { cookie: u.cookie });
   assert.equal(me2.json.trial_ends_at, me.json.trial_ends_at, 'trial not restarted by another device');
 });

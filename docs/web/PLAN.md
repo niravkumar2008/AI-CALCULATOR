@@ -4,7 +4,13 @@ Status: **APPROVED 2026-10-08** with the notes below. The API contract is `docs/
 
 ## 0. Approved decisions (Nirav, 2026-10-08)
 
-**Updated 2026-10-11 (Nirav):** D3's price is now **$10/month or $100/year** (2 months free); software updates
+**Updated 2026-10-16 (Nirav):** D3's price is now **$15/month or $120/year**, 300 solves a month, no Pro tier. The
+free month ends after 30 days **or** 300 solves, whichever comes first. When the plan lapses, AI Solve **and**
+firmware updates stop (`/v1/solve` and `/v1/firmware` both answer 402); the site stays low-key about this and
+states it once at checkout and in the terms. The hidden per-account AI spend cap is to be set after beta
+(somewhere between $5 and $8; `MONTHLY_SPEND_USD` is $5 until then).
+
+**Updated 2026-10-11 (Nirav):** D3's price was **$10/month or $100/year** (2 months free; replaced 2026-10-16); software updates
 come **only with the plan**; buyers are adults (18+); the brand is **Proofline** (company: Proofline
 Corporation, not registered yet; placeholder domain `proofline.example`, contact `hello@proofline.example`).
 The per-account AI spend cap is now **$5** a month (`MONTHLY_SPEND_USD`; 300 solves unchanged; see
@@ -26,7 +32,7 @@ out of date. Also changed since this plan was written:
 |---|---|---|
 | D1 | Cloudflare Workers + D1 | **Spend nothing until it's essential.** Everything is built and tested locally (`wrangler dev`, Miniflare). Firmware images go in **Workers KV**, not R2, because R2 needs a card on file. Rate limits use D1 counters, not a paid binding. Devices use the free `*.workers.dev` address until a domain is bought. The $5 Workers Paid plan (free plan: 10 ms CPU per request) and a domain are the first things to buy, at launch. |
 | D2 | No-card free month that starts on first pairing | When the month is over, the calculator must say so plainly. `subscription_inactive` / `DeviceStatus.reason` = "Your free month is over. Subscribe at <domain>/account to keep using AI." (110 characters or fewer). |
-| D3 | $15/month, 300 solves and $8 of API spend per account per month, no free tier, $50/day global cap | Keep the price; review it after buyer feedback. |
+| D3 | $15/month or $120/year, 300 solves a month, hidden AI spend cap per account TBD ($5–8, set after beta), no free tier, $50/day global cap | Decided 2026-10-16. The free month ends at 30 days or 300 solves, whichever first. A lapsed plan stops AI Solve and firmware updates. |
 | D4 | Sonnet 5.5, `max_tokens` 16,000 | STEM and basic finance. |
 | D5 | Self-registration on first Wi-Fi connect | Must be simple for non-technical buyers: no step should ask for a token or URL. **Added: automatic firmware updates over Wi-Fi** (stage 2, firmware-agent). Today OTA runs only when the calculator is off and on USB. New rule: check after connecting, at most once a day. Install only when on cable or battery ≥ 3.8 V, never during a solve, and never in exam mode. Keep the two-slot rollback. |
 
@@ -98,7 +104,7 @@ stripe_events(id TEXT PK, type, received_at)                              -- web
 Entitlement is "can this device solve?". All of these must hold:
 - the device exists and is not revoked;
 - the device is linked to a user;
-- the user is in trial (`trial_ends_at > now`), OR a subscription is `trialing`/`active`, OR it is `past_due` and less than 3 days past `current_period_end`;
+- the user is in trial (`trial_ends_at > now`), OR a subscription is `trialing`/`active`, OR it is `past_due` and less than 7 days (3 before 2026-10-16) since the failed payment (`past_due_since`);
 - the user's monthly solves and spend are under the plan limits;
 - the global daily spend is under the cap.
 
@@ -123,7 +129,7 @@ Full contract: `openapi.yaml`. Summary:
    - The next call gets `401 device_revoked`, and the device shows "This calculator was removed from its account. SETUP 9 to link again."
    - Re-registering issues a new, unlinked token. A stolen calculator therefore can't solve unless the owner pairs it again.
 5. **Limits and the spend cap (fail closed)**. Before calling Anthropic, one D1 batch:
-   1. requires no other `reserved` row for this device (at most 1 solve in flight per device);
+   1. marks any other open `reserved` row of this device as replaced (`usage_superseded`), only if the new row goes in: one solve per device, the newest wins. The old stream polls that table every second, cancels its upstream read and settles input + elapsed × 250 tok/s of output (capped at its reservation);
    2. checks the per-device burst limit (D1 counter, 6 per minute);
    3. adds the **worst-case** cost of the request (input estimate + `max_tokens` × output price) to `spend_daily`. This only succeeds if it stays under `GLOBAL_DAILY_CAP_USD`, and is checked again against the user's monthly limits.
    4. inserts a `reserved` usage row.
@@ -142,7 +148,7 @@ TLS: the device trusts a fixed 7-root bundle (GTS, ISRG X1/X2, DigiCert, Amazon)
 
 Token theft: the token sits in NVS without encryption. Flash encryption would burn security eFuses, which `FINAL_STATUS` forbids. Mitigations:
 - revoke from the portal;
-- 1 solve in flight per device and 6 per minute;
+- 1 solve per device (a new one replaces the running one) and 6 per minute;
 - monthly per-user limits;
 - `last_seen_at` and `x-device-id` shown in the portal, so the owner can spot a clone.
 

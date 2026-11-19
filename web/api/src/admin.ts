@@ -13,7 +13,7 @@ const VERSION_RE = /^[0-9A-Za-z.\-]{1,32}$/;
 export const MIN_ADMIN_TOKEN_CHARS = 32;
 
 /** Admin API: off (404) unless ADMIN_TOKEN is at least 32 characters (S10); constant-time check. */
-async function requireAdmin(req: Request, env: Env): Promise<void> {
+export async function requireAdmin(req: Request, env: Env): Promise<void> {
   const adminToken = (env.ADMIN_TOKEN ?? "").trim();
   if (adminToken.length < MIN_ADMIN_TOKEN_CHARS) throw new HttpError(404, "not_found", MSG.notFound);
   const given = req.headers.get("x-admin-token") ?? "";

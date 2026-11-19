@@ -138,6 +138,66 @@ paths:
         '401': { $ref: '#/components/responses/DeviceUnauthorized' }
         '429': { $ref: '#/components/responses/RateLimited' }
 
+  /v1/pair/redeem:
+    post:
+      tags: [device]
+      summary: Redeem a link token scanned from the phone (QR way 2).
+      description: |
+        The calculator sends the `L1.<22>` part of a `https://<any host>/q/L1.<22>` QR or the
+        `L:` field of a `PL1;...;;` QR, only ever to its own configured server. Rate limits:
+        10 per calculator per minute, 30 per address per minute (429 `rate_limited`).
+        Errors: 404 `link_token_invalid` (malformed or unknown), 410 `link_token_expired`,
+        409 `link_token_used` (another calculator used it), 409 `already_linked` (this
+        calculator is on another account; the token is not consumed). The same calculator
+        redeeming again gets the same answer. Then poll /v1/device/status: `link_state`
+        is `pending_approval` until the phone taps, `linked` turns true after Approve.
+      security: [{ deviceToken: [] }]
+      parameters:
+        - $ref: '#/components/parameters/DeviceIdHeader'
+        - $ref: '#/components/parameters/Firmware'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [link_token]
+              properties:
+                link_token: { type: string, maxLength: 64 }
+      responses:
+        '200':
+          description: |
+            `pending_approval` (with `approve_by` and the 4-character `suffix` both screens
+            show), or `linked` when this calculator is already on the token owner's account.
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [state]
+                properties:
+                  state: { type: string, enum: [pending_approval, linked] }
+                  approve_by: { type: integer }
+                  suffix: { type: string, pattern: '^[0-9A-Z_-]{4}$' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/DeviceUnauthorized' }
+        '404':
+          description: '`link_token_invalid`'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '409':
+          description: '`link_token_used` or `already_linked`'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '410':
+          description: '`link_token_expired`'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
   /v1/device/status:
     get:
       tags: [device]
@@ -160,14 +220,21 @@ paths:
       summary: Solve a photographed problem. Streams Anthropic-format SSE.
       description: |
         The server owns the system prompt, model, max_tokens, thinking settings and output
-        schema. From the body it reads ONLY the images and `tutor`; every other field is
-        ignored. Two body shapes are accepted (SolveRequest or LegacySolveRequest) so
+        schema. From the body it reads ONLY the images, `tutor` and (SolveRequest only)
+        `effort`, the calculator's Normal / Careful / Max setting, which the server maps
+        to the upstream effort (EFFORT_NORMAL / EFFORT_CAREFUL / EFFORT_MAX); every other
+        field is ignored. Two body shapes are accepted (SolveRequest or LegacySolveRequest) so
         boards flashed before stage 2 keep working.
 
         Order of checks (first failure wins, no upstream call is made on any failure):
         auth -> linked -> entitled -> device burst limit (6/min) [all before the body is
-        read, review S6] -> body valid -> one solve in flight per device -> user monthly
-        solves and spend -> global daily spend cap. The spend reservation is atomic in D1; any DB error -> 503 `unavailable`
+        read, review S6] -> body valid -> user monthly solves and spend -> global daily
+        spend cap.
+
+        One solve per device: a new solve that passes every check REPLACES the one still
+        running on that device (the user pressed AC or the connection dropped) instead of
+        being refused. The old stream stops within about 1 s, ends with `event: error` of
+        type `superseded`, and is billed for what it could have used, not the worst case. The spend reservation is atomic in D1; any DB error -> 503 `unavailable`
         (fail closed).
 
         On 200 the body is `text/event-stream` in Anthropic Messages streaming format,
@@ -206,7 +273,7 @@ paths:
             application/json:
               schema: { $ref: '#/components/schemas/Error' }
         '429':
-          description: '`rate_limited` (burst or one-in-flight) or `quota_exceeded` (monthly solves or spend).'
+          description: '`rate_limited` (burst) or `quota_exceeded` (monthly solves or spend).'
           headers:
             Retry-After: { schema: { type: integer } }
           content:
@@ -238,6 +305,7 @@ paths:
         `family` / `rollback` fields, which old firmware ignores). With `family`: only the
         image last published for that family; when none is, `update` is false. A device
         never gets another family's image this way.
+        Only for a linked calculator with an active plan or free month; otherwise 402.
       responses:
         '200':
           description: Update info
@@ -280,6 +348,11 @@ paths:
                   value: { update: false, family: v15lcd }
         '400': { $ref: '#/components/responses/BadRequest' }
         '401': { $ref: '#/components/responses/DeviceUnauthorized' }
+        '402':
+          description: '`device_not_linked` or `subscription_inactive`: software updates come only with the AI tutor plan or the free month (same checks and messages as /v1/solve).'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
 
   /v1/firmware/image:
     get:
@@ -298,6 +371,11 @@ paths:
               schema: { type: string, format: binary }
         '400': { $ref: '#/components/responses/BadRequest' }
         '401': { $ref: '#/components/responses/DeviceUnauthorized' }
+        '402':
+          description: '`device_not_linked` or `subscription_inactive`: software updates come only with the AI tutor plan or the free month (same checks and messages as /v1/solve).'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
         '404':
           description: '`not_found` (nothing published)'
           content:
@@ -433,8 +511,11 @@ paths:
       description: |
         Atomic: succeeds only if the code exists, is unexpired and unclaimed. Codes are
         normalised (upper case, dash and spaces removed, O->0 not applied: the alphabet has
-        no O/0/I/1). Rate limit 10 attempts per user per 10 min. Max 3 active devices per
-        account (409 `device_limit`). Starts the free trial (decision D2) only if ALL hold:
+        no O/0/I/1). Rate limit 10 attempts per user per 10 min. One calculator per plan
+        (2026-10-16, docs/LINK_QR_CONTRACT.md): if the account already has an active calculator,
+        409 `needs_replace` with `replaces` (the code is not consumed) unless the body has
+        `replace: true`; then the old calculator is revoked in the same transaction, only if the
+        link succeeds. (`device_limit`, the old 3-device cap, is no longer returned.) Starts the free trial (decision D2) only if ALL hold:
         the device is enrolled, that board's trial was never used, the account never had a
         trial, the e-mail (by hash, surviving account deletion) never had a trial, and the
         daily new-trial cap (env MAX_NEW_TRIALS_PER_DAY, default 20) is not reached.
@@ -454,6 +535,9 @@ paths:
               properties:
                 code: { type: string, minLength: 8, maxLength: 12 }
                 label: { $ref: '#/components/schemas/Label' }
+                replace:
+                  type: boolean
+                  description: true = revoke the account's current calculator and link this one.
       responses:
         '201':
           description: Linked
@@ -468,7 +552,109 @@ paths:
         '401': { $ref: '#/components/responses/SessionRequired' }
         '403': { $ref: '#/components/responses/Forbidden' }
         '409':
-          description: '`device_limit`'
+          description: '`needs_replace` (body has `replaces`); send again with `replace: true` after the user agrees'
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Error' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /api/link-tokens:
+    post:
+      tags: [account]
+      summary: New link token for "Link with the calculator's camera" (QR way 2).
+      description: |
+        The phone shows the token as a QR (`qr_url`, or inside a `PL1;...;;` setup payload
+        built in the browser). Lives 10 minutes; only its SHA-256 is stored. Cancels the
+        user's earlier unused tokens. Max 10 per user per hour. Contract:
+        docs/LINK_QR_CONTRACT.md.
+      security: [{ session: [] }]
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema: { type: object, additionalProperties: false }
+      responses:
+        '201':
+          description: Token issued
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [id, token, qr_url, expires_at]
+                properties:
+                  id: { $ref: '#/components/schemas/LinkTokenId' }
+                  token: { $ref: '#/components/schemas/LinkToken' }
+                  qr_url: { type: string, format: uri, example: 'https://proofline.example/q/L1.Qm9vZnRva2VuLXRlc3QxMg' }
+                  expires_at: { type: integer }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/SessionRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '429': { $ref: '#/components/responses/RateLimited' }
+
+  /api/link-tokens/{link_token_id}:
+    get:
+      tags: [account]
+      summary: State of a link token. The phone polls it every 2 s.
+      description: |
+        Owner only (404 otherwise). `waiting` = not scanned yet; `pending_approval` = a
+        calculator redeemed it and waits for Approve until `approve_by`; `approved`;
+        `declined`; `expired` (10 minutes unused, the approve window passed, or replaced by
+        a newer token). `replaces` = the account's active calculator that approving would
+        remove (only while waiting or pending_approval).
+      security: [{ session: [] }]
+      parameters:
+        - $ref: '#/components/parameters/LinkTokenIdPath'
+      responses:
+        '200':
+          description: State
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/LinkTokenState' }
+        '401': { $ref: '#/components/responses/SessionRequired' }
+        '404': { $ref: '#/components/responses/NotFound' }
+
+  /api/link-tokens/{link_token_id}/approve:
+    post:
+      tags: [account]
+      summary: Approve (or refuse) the calculator that scanned the link token.
+      description: |
+        Only in state `pending_approval` and not after `approve_by` (409 `link_token_state`
+        otherwise). `approve: true` links the calculator through the same code path as
+        /api/devices/claim (same free-month rules) and always replaces: the account's other
+        active calculator is revoked. An e-mail "A calculator was linked to your account" is
+        sent (DEV_MODE: the dev outbox, `GET /__dev/outbox?email=...&kind=linked`).
+        `approve: false` declines: the token is dead and the calculator's status shows
+        `link_state: declined` for 10 minutes.
+      security: [{ session: [] }]
+      parameters:
+        - $ref: '#/components/parameters/LinkTokenIdPath'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              additionalProperties: false
+              required: [approve]
+              properties:
+                approve: { type: boolean }
+      responses:
+        '200':
+          description: Approved or declined
+          content:
+            application/json:
+              schema:
+                type: object
+                required: [state]
+                properties:
+                  state: { type: string, enum: [approved, declined] }
+                  device: { $ref: '#/components/schemas/DeviceBrief' }
+        '400': { $ref: '#/components/responses/BadRequest' }
+        '401': { $ref: '#/components/responses/SessionRequired' }
+        '403': { $ref: '#/components/responses/Forbidden' }
+        '404': { $ref: '#/components/responses/NotFound' }
+        '409':
+          description: '`link_token_state` (not waiting for approval, approve window over, or the calculator was linked another way meanwhile)'
           content:
             application/json:
               schema: { $ref: '#/components/schemas/Error' }
@@ -617,7 +803,7 @@ paths:
       description: |
         mode=payment, price = env STRIPE_PRICE_DEVICE, US shipping address collection,
         phone number collected (phone_number_collection[enabled]=true; carriers need it),
-        shipping_options = [env STRIPE_SHIPPING_RATE] when set (`shr_...`, e.g. free US
+        shipping_options = env STRIPE_SHIPPING_RATE split on commas (`shr_...`, up to 5, first preselected; e.g. Standard + Priority
         shipping with the shipping tax code; unset = no delivery line), automatic_tax if env
         STRIPE_TAX=1 (Stripe Tax uses the shipping address; there is no customer yet, so no
         customer_update), consent to ToS required
@@ -674,7 +860,10 @@ paths:
                 required: [open, max_quantity]
                 properties:
                   open: { type: boolean }
-                  max_quantity: { type: integer, minimum: 1, const: 3 }
+                  max_quantity: { type: integer, minimum: 1, maximum: 3, description: "Most per order; lower when fewer are left (STORE_STOCK)" }
+                  ships: { type: string, description: "STORE_SHIP_NOTE, e.g. 'Made to order: ships in 3 to 5 weeks'. Absent when unset." }
+                  sold_out: { type: boolean, description: "Only with STORE_STOCK set: true when the batch is sold out (open is then false)." }
+                  left: { type: integer, minimum: 0, description: "Only with STORE_STOCK set and 10 or fewer left." }
 
   # ---------------------------------------------------------------- webhooks
   /api/stripe/webhook:
@@ -712,7 +901,7 @@ paths:
         dispute_won, dispute_lost (plus Stripe's no_payment_required). Subscriptions
         are mapped to an account by the Stripe customer id we created, never by metadata; a
         live subscription for a deleted account is cancelled at Stripe. Only subscriptions on
-        STRIPE_PRICE_SUB or STRIPE_PRICE_SUB_YEARLY grant AI; past_due keeps AI for 3 days from the first failed
+        STRIPE_PRICE_SUB or STRIPE_PRICE_SUB_YEARLY grant AI; past_due keeps AI for 7 days from the first failed
         payment. Unknown event types -> 200 and ignored. 503 while STRIPE_WEBHOOK_SECRET is
         unset or when the database or Stripe fails (Stripe retries).
       security: []
@@ -965,6 +1154,11 @@ components:
       in: path
       required: true
       schema: { $ref: '#/components/schemas/DeviceId' }
+    LinkTokenIdPath:
+      name: link_token_id
+      in: path
+      required: true
+      schema: { $ref: '#/components/schemas/LinkTokenId' }
 
   responses:
     BadRequest:
@@ -1040,7 +1234,16 @@ components:
                 - no_customer
                 - bad_signature
                 - sold_out
+                - needs_replace
+                - link_token_invalid
+                - link_token_expired
+                - link_token_used
+                - link_token_state
+                - already_linked
             message: { type: string, maxLength: 110 }
+        replaces:
+          $ref: '#/components/schemas/DeviceBrief'
+          description: Only on 409 `needs_replace`, the calculator a `replace:true` claim would remove.
 
     DeviceId:
       type: string
@@ -1048,6 +1251,40 @@ components:
     DeviceToken:
       type: string
       pattern: '^dt_[A-Za-z0-9_-]{43}$'
+    LinkTokenId:
+      type: string
+      pattern: '^lt_[0-9a-f]{16}$'
+    LinkToken:
+      type: string
+      description: '`L1.` + 22 base64url characters (128 random bits).'
+      pattern: '^L1\.[A-Za-z0-9_-]{22}$'
+    DeviceBrief:
+      type: object
+      required: [id, suffix, label]
+      properties:
+        id: { $ref: '#/components/schemas/DeviceId' }
+        suffix:
+          type: string
+          description: Last 4 characters of the calculator's hw_id, upper case ("Calculator ID ...A1F3").
+          example: A1F3
+        label: { type: string }
+    LinkTokenState:
+      type: object
+      required: [state, device, replaces, approve_by]
+      properties:
+        state: { type: string, enum: [waiting, pending_approval, approved, declined, expired] }
+        device:
+          oneOf:
+            - $ref: '#/components/schemas/DeviceBrief'
+            - type: 'null'
+        replaces:
+          oneOf:
+            - $ref: '#/components/schemas/DeviceBrief'
+            - type: 'null'
+        approve_by:
+          oneOf:
+            - type: integer
+            - type: 'null'
     PairCode:
       type: string
       description: 8 chars from `ABCDEFGHJKLMNPQRSTUVWXYZ23456789`, shown as XXXX-XXXX.
@@ -1063,7 +1300,7 @@ components:
       enum: [none, trial, active, past_due, inactive]
       description: |
         none = never had trial or subscription; trial = our free month; active / past_due
-        mirror Stripe (past_due still solves for 3 days); inactive = trial over or
+        mirror Stripe (past_due still solves for 7 days); inactive = trial over or
         subscription ended.
 
     DeviceStatus:
@@ -1109,13 +1346,21 @@ components:
             not parse `reason`. Agrees with `reason`:
             not_linked = no account (reason = "Link this calculator: ...");
             trial = free month running; active = paid subscription; past_due = payment
-            failed, still solving during the 3-day grace;
+            failed, still solving during the 7-day grace (3 days before 2026-10-16);
             free_month_over = trial ended, never subscribed (reason = "Your free month is over...");
             inactive = subscription ended (reason = "Your subscription has ended...");
             no_trial = linked but no free month for this board/account (reason = "No free month...").
             trial / active / past_due can still have can_solve false for the monthly limit or
             the daily spend cap; `reason` then says which.
           example: trial
+        link_state:
+          type: string
+          enum: [pending_approval, declined, '']
+          description: |
+            Added 2026-10-16 (QR way 2). `pending_approval` while a link token this calculator
+            redeemed waits for the phone's Approve (until its approve_by); `declined` for 10
+            minutes after the phone said No; else empty. Poll every 3 s while showing
+            "Approve on your phone".
       example:
         linked: false
         plan: none
@@ -1241,6 +1486,12 @@ components:
           maxItems: 2
           items: { $ref: '#/components/schemas/ImagePart' }
         tutor: { type: boolean, default: false }
+        effort:
+          type: string
+          enum: [normal, careful, max]
+          description: >-
+            The calculator's effort setting. Absent = the server default (EFFORT). The
+            server maps normal -> medium, careful -> high, max -> xhigh by default.
 
     LegacySolveRequest:
       type: object

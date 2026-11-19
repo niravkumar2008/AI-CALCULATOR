@@ -4,7 +4,14 @@ name = "ai-calc-api"
 main = "src/index.ts"
 compatibility_date = "2026-10-01"
 # Free-plan default address: https://ai-calc-api.<your-subdomain>.workers.dev
-workers_dev = true
+workers_dev = true   # keep on: calculators and the farm still use this address
+# Own domain (bought 2026-11-19). The domain must be active in this Cloudflare account first, or the
+# deploy fails. Cloudflare makes the DNS records and the certificate. www is sent to the root by a
+# Redirect Rule (docs/web/BACK_OFFICE.md, Part 1 step 2), because sign-in only accepts PUBLIC_URL's address.
+routes = [
+  { pattern = "prooflinecalc.org", custom_domain = true },
+  { pattern = "www.prooflinecalc.org", custom_domain = true },
+]
 
 # D1 (SQLite). For local dev and tests the id below is a placeholder; before the first deploy
 # run `npx wrangler d1 create ai-calc` and paste the printed database_id here.
@@ -57,20 +64,30 @@ GLOBAL_DAILY_CAP_USD = "50"
 PRICE_IN_PER_MTOK = "2"
 PRICE_OUT_PER_MTOK = "10"
 MAIL_FROM = "Proofline <onboarding@resend.dev>"   # testing: Resend only delivers to your own account e-mail. At launch: "Proofline <login@your-domain>"
+# Back office (docs/web/BACK_OFFICE.md). Customer e-mail to hello@<domain> reaches this Worker
+# through Cloudflare Email Routing ("Send to a Worker"); the farm's Business HQ shows it.
+MAIL_REPLY_FROM = ""   # replies + "it shipped" mails, e.g. "Proofline <hello@your-domain>" (domain verified in Resend)
+MAIL_FORWARD_TO = ""   # also forward every customer e-mail here (your Gmail; must be a verified Email Routing destination)
 MAX_NEW_TRIALS_PER_DAY = "20"
 MAIL_DAILY_CAP = "80"
 # Stage 3. Price ids come from the Stripe dashboard (sandbox first, then live). Secrets
 # (STRIPE_SECRET_KEY, STRIPE_WEBHOOK_SECRET) go in with `npx wrangler secret put NAME`.
 STRIPE_PRICE_SUB = ""          # AI tutor plan, $15/month
 STRIPE_PRICE_SUB_YEARLY = ""   # AI tutor plan, $120/year (empty = yearly not offered)
-STRIPE_PRICE_DEVICE = ""
+STRIPE_PRICE_DEVICE = ""     # the calculator, $215 one-time
 STRIPE_TAX = "0"
 # REQUIRED once STRIPE_SECRET_KEY is set (unless DEV_MODE=1): the same API version the webhook
 # endpoint was created with, e.g. "2026-09-30.clover". Empty + a key = the Worker refuses to
 # start Stripe work (503, config_error in the logs). GUIDE 4.7.
 STRIPE_API_VERSION = ""
 STRIPE_PORTAL_CONFIG = ""   # bpc_... dedicated Customer Portal configuration (empty = account default)
-STRIPE_SHIPPING_RATE = ""   # shr_... shipping rate offered on the calculator checkout (empty = none)
-STORE_OPEN = "0"          # "1" when preorders open; the site switches to "Preorder" by itself
+# shr_... shipping rates on the calculator checkout, comma-separated, first = preselected
+# (e.g. "shr_standard,shr_priority"); empty = no delivery line. scripts/stripe-setup.mjs prints them.
+STRIPE_SHIPPING_RATE = ""
+STRIPE_PROMO_CODES = "1"  # "1" = a "promotion code" box on the calculator checkout (holiday / creator codes)
+STORE_OPEN = "0"          # "1" opens the store; the site switches from "Join the waitlist" to "Buy now" by itself
+STORE_STOCK = "20"        # calculators for sale in this batch (paid + open checkouts); "0" = no limit. Sold out = store closes itself
+# Shown on the product page, the cart and above Checkout's Pay button. Keep it true (FTC mail-order rule).
+STORE_SHIP_NOTE = "Made to order: ships in 3 to 5 weeks"
 WAITLIST_DAILY_CAP = "20000"   # abuse backstop only (a viral day must fit); Turnstile is the real bot check
 STORE_GLOBAL_PER_HOUR = "300"

@@ -2,7 +2,7 @@
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
-import { api, assertError, register, ADMIN_TOKEN, FRESH_STATE } from './lib.mjs';
+import { api, assertError, devUser, linkedDevice, register, ADMIN_TOKEN, FRESH_STATE } from './lib.mjs';
 
 const sha = (b) => crypto.createHash('sha256').update(b).digest('hex');
 /** Image the publish endpoint accepts: >= 100 KB, <= 0x1E0000, first byte 0xE9. */
@@ -21,11 +21,21 @@ const publish = (version, body, token = ADMIN_TOKEN) =>
 const noAdmin = ADMIN_TOKEN ? false : 'ADMIN_TOKEN not given to the test run (npm run test:full sets one)';
 
 test('nothing published: update false and image 404 not_found', { skip: FRESH_STATE ? false : 'needs a fresh KV (FRESH_STATE=1, set by test:full)' }, async () => {
-  const d = await register();
+  const { dev: d } = await linkedDevice(); // updates need the plan
   const r = await api('GET', '/v1/firmware', { token: d.token, headers: { 'x-firmware': '0.0.1' } });
   assert.equal(r.status, 200);
   assert.equal(r.json.update, false);
   assertError(await api('GET', '/v1/firmware/image', { token: d.token }), 404, 'not_found');
+});
+
+test('firmware: unlinked or lapsed calculators get 402', async () => {
+  const u = await register();
+  assertError(await api('GET', '/v1/firmware', { token: u.token }), 402, 'device_not_linked');
+  assertError(await api('GET', '/v1/firmware/image', { token: u.token }), 402, 'device_not_linked');
+  const { dev, user } = await linkedDevice();
+  await devUser({ email: user.email, plan_override: 'inactive' });
+  assertError(await api('GET', '/v1/firmware', { token: dev.token }), 402, 'subscription_inactive');
+  assertError(await api('GET', '/v1/firmware/image', { token: dev.token }), 402, 'subscription_inactive');
 });
 
 test('firmware endpoints need a device token', async () => {
@@ -36,7 +46,7 @@ test('firmware endpoints need a device token', async () => {
 test('admin publish: missing or wrong token -> 401 unauthorized, nothing published', { skip: noAdmin }, async () => {
   assertError(await publish('evil-1', image(), null), 401, 'unauthorized');
   assertError(await publish('evil-2', image(), 'wrong-' + ADMIN_TOKEN), 401, 'unauthorized');
-  const d = await register();
+  const { dev: d } = await linkedDevice(); // updates need the plan
   const r = await api('GET', '/v1/firmware', { token: d.token, headers: { 'x-firmware': 'x' } });
   assert.ok(!['evil-1', 'evil-2'].includes(r.json.version), 'rejected images were not published');
 });
@@ -59,7 +69,7 @@ test('publish, then update true when x-firmware differs, false when equal; image
   assert.equal(p.json.size, img.length);
   assert.equal(p.json.sha256, sha(img), 'server computes sha256 of the raw image');
 
-  const d = await register();
+  const { dev: d } = await linkedDevice(); // updates need the plan
   const older = await api('GET', '/v1/firmware', { token: d.token, headers: { 'x-firmware': 'old-1' } });
   assert.equal(older.status, 200);
   assert.deepEqual(older.json, {
@@ -87,7 +97,7 @@ const publishTo = (q, body = image()) =>
 
 test('family: nothing published for it -> update false (never the legacy image)', { skip: noAdmin }, async () => {
   assert.equal((await publish('legacy-' + Date.now().toString(36), image())).status, 201);
-  const d = await register();
+  const { dev: d } = await linkedDevice(); // updates need the plan
   const f = fam();
   const r = await api('GET', `/v1/firmware?family=${f}`, { token: d.token, headers: { 'x-firmware': `${f}-1` } });
   assert.equal(r.status, 200);
@@ -106,7 +116,7 @@ test('family: publish, check and download its own image; other families and lega
   assert.equal(p.status, 201, p.text);
   assert.deepEqual(p.json, { version, size: img.length, sha256: sha(img), family: f, rollback: false });
 
-  const d = await register();
+  const { dev: d } = await linkedDevice(); // updates need the plan
   const chk = await api('GET', `/v1/firmware?family=${f}`, { token: d.token, headers: { 'x-firmware': `${f}-2026.10.10` } });
   assert.deepEqual(chk.json, {
     update: true, version, size: img.length, sha256: sha(img), path: `/v1/firmware/image?family=${f}`, family: f, rollback: false,
@@ -129,7 +139,7 @@ test('family: publish, check and download its own image; other families and lega
 });
 
 test('family: malformed -> 400; publish needs version "<family>-..."', { skip: noAdmin }, async () => {
-  const d = await register();
+  const { dev: d } = await linkedDevice(); // updates need the plan
   for (const f of ['v15-lcd', 'a b', 'x'.repeat(25)]) {
     assertError(await api('GET', `/v1/firmware?family=${encodeURIComponent(f)}`, { token: d.token }), 400, 'bad_request');
     assertError(await api('GET', `/v1/firmware/image?family=${encodeURIComponent(f)}`, { token: d.token }), 400, 'bad_request');
@@ -145,7 +155,7 @@ test('rollback: manifest carries rollback true until the next normal publish', {
   const rb = await publishTo(`version=${f}-2026.10.09&family=${f}&rollback=1`);
   assert.equal(rb.status, 201, rb.text);
   assert.equal(rb.json.rollback, true);
-  const d = await register();
+  const { dev: d } = await linkedDevice(); // updates need the plan
   const h = { 'x-firmware': `${f}-2026.10.11` };
   let chk = await api('GET', `/v1/firmware?family=${f}`, { token: d.token, headers: h });
   assert.equal(chk.json.update, true);

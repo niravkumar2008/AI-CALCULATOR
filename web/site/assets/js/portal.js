@@ -1,4 +1,4 @@
-// Proofline account portal: sign in, confirm, link a calculator, account.
+// Proofline account portal: sign in, confirm, link a calculator (code or camera), account.
 // One deferred script, no dependencies. Same origin as the API (/api/*), so the session
 // cookie (HttpOnly) travels on its own. User data is only ever written with textContent.
 (() => {
@@ -55,6 +55,7 @@
       status: res.status,
       type: typeof err.type === "string" ? err.type : "error",
       message: typeof err.message === "string" && err.message ? err.message : fallbackMsg(res.status),
+      data, // the whole error body (409 needs_replace carries `replaces`)
     };
   }
 
@@ -468,10 +469,6 @@
       show(form, true);
       if (r.ok && r.data && who) {
         who.textContent = `Signed in as ${r.data.email}.`;
-        const active = Array.isArray(r.data.devices) ? r.data.devices.filter((d) => d && !d.revoked).length : 0;
-        if (active >= 3) {
-          setMsg(status, "This account already has 3 calculators. Remove one on your account page first.", "error");
-        }
       } else if (!r.ok) {
         setMsg(status, r.message, "error");
       }
@@ -486,6 +483,25 @@
       if (atEnd) code.value = fmtCode(c);
     });
     label.addEventListener("input", () => fieldError(label, labelErr, ""));
+
+    // One calculator per plan: a 409 needs_replace asks "Replace calculator ending 7K2Q?".
+    const replaceBox = $("#link-replace");
+    let replaceOk = false;
+    const hideReplace = () => {
+      replaceOk = false;
+      show(replaceBox, false);
+    };
+    code.addEventListener("input", hideReplace);
+    $("#link-replace-no").addEventListener("click", () => {
+      hideReplace();
+      setMsg(status, "Nothing changed. Your current calculator stays linked.", "ok");
+      btn.focus();
+    });
+    $("#link-replace-yes").addEventListener("click", () => {
+      replaceOk = true;
+      if (form.requestSubmit) form.requestSubmit(btn);
+      else btn.click();
+    });
 
     form.addEventListener("submit", async (e) => {
       e.preventDefault();
@@ -508,11 +524,25 @@
         label.focus();
         return;
       }
+      const replace = replaceOk;
+      show(replaceBox, false);
+      replaceOk = false;
       busy(btn, true, "Linking…");
       const body = { code: fmtCode(c) };
       if (name) body.label = name;
+      if (replace) body.replace = true;
       const r = await api("POST", "/api/devices/claim", body);
       busy(btn, false);
+      if (!r.ok && r.type === "needs_replace") {
+        const old = r.data && r.data.replaces ? r.data.replaces : {};
+        $("#link-replace-suffix").textContent = String(old.suffix || "");
+        const oldName = String(old.label || "");
+        $("#link-replace-name").textContent =
+          oldName && oldName !== "Calculator" ? `Your calculator “${oldName}”` : "The old calculator";
+        show(replaceBox, true);
+        focusEl($("#link-replace-title"));
+        return;
+      }
       if (r.ok) {
         const doneName = $("#done-name");
         if (doneName) doneName.textContent = (r.data && r.data.label) || name || "Your calculator";
@@ -537,6 +567,323 @@
     });
   }
 
+  // ============================================================ /link/camera/
+  // QR linking, way 2 (docs/LINK_QR_CONTRACT.md): the phone gets a link token, shows it as a
+  // QR (optionally with the Wi-Fi network, built here: the password is never sent anywhere),
+  // the calculator scans and redeems it, and the owner taps Approve.
+
+  /** Escaping of the WIFI: format (and PL1): a backslash before \ ; , : and ". */
+  function qrEscape(s) {
+    return String(s).replace(/([\\;,:"])/g, "\\$1");
+  }
+  function utf8Len(s) {
+    return new TextEncoder().encode(s).length;
+  }
+
+  /** `PL1;S:<ssid>;P:<password>;T:<WPA|nopass>;[H:true;]L:<token>;;` (contract, payload 2). */
+  function setupPayload(ssid, pass, hidden, token) {
+    let p = `PL1;S:${qrEscape(ssid)};`;
+    p += pass ? `P:${qrEscape(pass)};T:WPA;` : "T:nopass;";
+    if (hidden) p += "H:true;";
+    return `${p}L:${token};;`;
+  }
+
+  /** Draws `text` as a QR code SVG (dark on white, 4-module quiet zone) into `box`. */
+  function drawQr(box, text) {
+    const gen = window.qrcode;
+    if (typeof gen !== "function") throw new Error("QR generator missing");
+    gen.stringToBytes = gen.stringToBytesFuncs["UTF-8"];
+    const qr = gen(0, "M"); // smallest version that fits, medium error correction
+    qr.addData(text, "Byte");
+    qr.make();
+    const n = qr.getModuleCount();
+    const q = 4;
+    let d = "";
+    for (let r = 0; r < n; r++) {
+      for (let c = 0; c < n; c++) if (qr.isDark(r, c)) d += `M${c + q} ${r + q}h1v1h-1z`;
+    }
+    const NS = "http://www.w3.org/2000/svg";
+    const svg = document.createElementNS(NS, "svg");
+    svg.setAttribute("viewBox", `0 0 ${n + 2 * q} ${n + 2 * q}`);
+    svg.setAttribute("aria-hidden", "true");
+    svg.setAttribute("focusable", "false");
+    const bg = document.createElementNS(NS, "rect");
+    bg.setAttribute("width", "100%");
+    bg.setAttribute("height", "100%");
+    bg.setAttribute("fill", "#fff");
+    const path = document.createElementNS(NS, "path");
+    path.setAttribute("d", d);
+    path.setAttribute("fill", "#000");
+    svg.append(bg, path);
+    box.textContent = "";
+    box.append(svg);
+  }
+
+  function fmtLeft(sec) {
+    const s = Math.max(0, Math.floor(sec));
+    return `${Math.floor(s / 60)}:${String(s % 60).padStart(2, "0")}`;
+  }
+
+  function initLinkCamera() {
+    const loading = $("#cam-loading");
+    const status = $("#status");
+    const setup = $("#cam-setup");
+    const wifiForm = $("#wifi-form");
+    const ssidIn = $("#wifi-ssid");
+    const ssidErr = $("#wifi-ssid-error");
+    const passIn = $("#wifi-pass");
+    const passErr = $("#wifi-pass-error");
+    const hiddenIn = $("#wifi-hidden");
+    const makeBtn = $("#cam-make");
+    const codeCard = $("#cam-code");
+    const approveCard = $("#cam-approve");
+    const doneCard = $("#cam-done");
+    const countdown = $("#cam-countdown");
+    const approveCountdown = $("#cam-approve-countdown");
+    const approveMsg = $("#cam-approve-msg");
+
+    let wifi = null; // {ssid, pass, hidden} or null: kept in this page only
+    let tok = null; // the current link token {id, token, qr_url, expires_at}
+    let skew = 0; // server clock - this phone's clock, in seconds
+    let pollTimer = 0;
+    let tickTimer = 0;
+    let state = "";
+    let polling = false;
+
+    const serverNow = () => Math.floor(Date.now() / 1000) + skew;
+    const cards = [setup, codeCard, approveCard, doneCard];
+    const only = (card) => cards.forEach((c) => show(c, c === card));
+
+    function stop() {
+      clearTimeout(pollTimer);
+      clearInterval(tickTimer);
+      pollTimer = 0;
+      tickTimer = 0;
+    }
+
+    function done(title, text) {
+      stop();
+      tok = null;
+      $("#cam-done-title").textContent = title;
+      $("#cam-done-text").textContent = text;
+      only(doneCard);
+      focusEl($("#cam-done-title"));
+    }
+
+    function tick() {
+      if (!tok) return;
+      if (state === "pending_approval") {
+        const left = (tok.approve_by || 0) - serverNow();
+        approveCountdown.textContent = left > 0 ? `Approve within ${fmtLeft(left)}` : "Time's up.";
+        return;
+      }
+      const left = tok.expires_at - serverNow();
+      if (left <= 0) {
+        expired();
+        return;
+      }
+      countdown.textContent = `Code expires in ${fmtLeft(left)}`;
+    }
+
+    function expired() {
+      stop();
+      countdown.textContent = "This code has expired.";
+      $("#qr").textContent = "";
+      setMsg(status, "The code expired. Tap New code to make another.", "error");
+      $("#cam-new").focus();
+    }
+
+    function showReplace(prefix, rep) {
+      const box = $(`#${prefix}`);
+      if (!box) return;
+      if (rep && rep.suffix) {
+        $(`#${prefix}-suffix`).textContent = String(rep.suffix);
+        $(`#${prefix}-label`).textContent = String(rep.label || "Calculator");
+      }
+      show(box, !!(rep && rep.suffix));
+    }
+
+    async function poll() {
+      pollTimer = 0;
+      if (!tok || polling) return;
+      if (document.hidden) {
+        pollTimer = setTimeout(poll, 2000);
+        return;
+      }
+      polling = true;
+      const r = await api("GET", `/api/link-tokens/${encodeURIComponent(tok.id)}`);
+      polling = false;
+      if (!tok) return;
+      if (!r.ok) {
+        if (r.status === 401) return location.replace(PATHS.login + "?expired=1");
+        if (r.status === 404) return done("This code is no longer available", "Make a new code to try again.");
+        pollTimer = setTimeout(poll, 4000); // network hiccup: keep trying, a little slower
+        return;
+      }
+      const s = r.data || {};
+      const prev = state;
+      state = String(s.state || "");
+      if (state === "waiting") {
+        showReplace("cam-replace", s.replaces);
+      } else if (state === "pending_approval") {
+        tok.approve_by = typeof s.approve_by === "number" ? s.approve_by : serverNow() + 300;
+        if (prev !== "pending_approval") {
+          const sfx = s.device && s.device.suffix ? String(s.device.suffix) : "";
+          $("#cam-approve-suffix").textContent = sfx;
+          $("#cam-approve-suffix2").textContent = sfx;
+          const rep = s.replaces;
+          if (rep && rep.suffix) {
+            $("#cam-approve-old-suffix").textContent = String(rep.suffix);
+            $("#cam-approve-old-label").textContent = String(rep.label || "Calculator");
+          }
+          show($("#cam-approve-replace"), !!(rep && rep.suffix));
+          setMsg(approveMsg, "");
+          setMsg(status, "");
+          only(approveCard);
+          focusEl($("#cam-approve-title"));
+          tick();
+        }
+      } else if (state === "approved") {
+        const sfx = s.device && s.device.suffix ? ` ending ${s.device.suffix}` : "";
+        return done("Linked", `Calculator${sfx} is now on your account. It shows Linked in a few seconds.`);
+      } else if (state === "declined") {
+        return done("Not linked", "Nothing changed on your account.");
+      } else if (state === "expired") {
+        if (prev === "pending_approval") {
+          return done("Not linked", "Approve wasn't tapped in time. Make a new code to try again.");
+        }
+        return expired();
+      }
+      pollTimer = setTimeout(poll, 2000);
+    }
+
+    async function newCode() {
+      stop();
+      tok = null;
+      state = "";
+      setMsg(status, "");
+      busy(makeBtn, true, "Making the code…");
+      const newBtn = $("#cam-new");
+      busy(newBtn, true, "Making a new code…");
+      const r = await api("POST", "/api/link-tokens", {});
+      busy(makeBtn, false);
+      busy(newBtn, false);
+      if (!r.ok) {
+        if (r.status === 401) return location.replace(PATHS.login + "?expired=1");
+        setMsg(status, r.message, "error");
+        return;
+      }
+      tok = r.data;
+      skew = tok.expires_at - 600 - Math.floor(Date.now() / 1000);
+      if (Math.abs(skew) > 3600) skew = 0;
+      const text = wifi ? setupPayload(wifi.ssid, wifi.pass, wifi.hidden, tok.token) : tok.qr_url;
+      try {
+        drawQr($("#qr"), text);
+      } catch (e) {
+        setMsg(status, "This code is too long to draw. Try a shorter Wi-Fi name or password.", "error");
+        only(setup);
+        return;
+      }
+      $("#qr-includes").textContent = wifi
+        ? `Includes the Wi-Fi network ${wifi.ssid}${wifi.pass ? " and its password" : ""}.`
+        : "Links the calculator only (no Wi-Fi).";
+      showReplace("cam-replace", null);
+      only(codeCard);
+      focusEl($("#cam-code-title"));
+      tick();
+      tickTimer = setInterval(tick, 1000);
+      pollTimer = setTimeout(poll, 2000);
+    }
+
+    async function decide(yes) {
+      if (!tok) return;
+      const b = yes ? $("#cam-yes") : $("#cam-no");
+      clearTimeout(pollTimer);
+      pollTimer = 0;
+      busy(b, true, yes ? "Linking…" : "Saying no…");
+      const r = await api("POST", `/api/link-tokens/${encodeURIComponent(tok.id)}/approve`, { approve: yes });
+      busy(b, false);
+      if (r.ok) {
+        if (yes) {
+          const sfx = r.data && r.data.device && r.data.device.suffix ? ` ending ${r.data.device.suffix}` : "";
+          return done("Linked", `Calculator${sfx} is now on your account. It shows Linked in a few seconds.`);
+        }
+        return done("Not linked", "The calculator was told no. Nothing changed on your account.");
+      }
+      if (r.status === 401) return location.replace(PATHS.login + "?expired=1");
+      if (r.type === "link_token_state") return done("Not linked", r.message);
+      setMsg(approveMsg, r.message, "error");
+      pollTimer = setTimeout(poll, 2000);
+    }
+
+    // ---- Wi-Fi fields (optional). Limits from the contract: name 1-32 bytes, password
+    // empty (open network) or 8-63 bytes.
+    ssidIn.addEventListener("input", () => fieldError(ssidIn, ssidErr, ""));
+    passIn.addEventListener("input", () => fieldError(passIn, passErr, ""));
+    $("#wifi-show").addEventListener("change", (e) => {
+      passIn.type = e.currentTarget.checked ? "text" : "password";
+    });
+    wifiForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const ssid = ssidIn.value;
+      const pass = passIn.value;
+      fieldError(ssidIn, ssidErr, "");
+      fieldError(passIn, passErr, "");
+      if (!ssid.trim()) {
+        if (pass) {
+          fieldError(ssidIn, ssidErr, "Type the Wi-Fi name too, or leave both empty.");
+          ssidIn.focus();
+          return;
+        }
+        wifi = null;
+      } else {
+        if (utf8Len(ssid) > 32) {
+          fieldError(ssidIn, ssidErr, "Wi-Fi names are at most 32 characters.");
+          ssidIn.focus();
+          return;
+        }
+        if (pass && (utf8Len(pass) < 8 || utf8Len(pass) > 63)) {
+          fieldError(passIn, passErr, "Wi-Fi passwords are 8 to 63 characters. Leave it empty for an open network.");
+          passIn.focus();
+          return;
+        }
+        wifi = { ssid, pass, hidden: hiddenIn.checked };
+      }
+      newCode();
+    });
+
+    $("#cam-new").addEventListener("click", newCode);
+    $("#cam-again").addEventListener("click", newCode);
+    $("#cam-wifi").addEventListener("click", () => {
+      stop();
+      tok = null;
+      setMsg(status, "");
+      only(setup);
+      ssidIn.focus();
+    });
+    $("#cam-yes").addEventListener("click", () => decide(true));
+    $("#cam-no").addEventListener("click", () => decide(false));
+    document.addEventListener("visibilitychange", () => {
+      if (!document.hidden && tok && pollTimer) {
+        clearTimeout(pollTimer);
+        poll();
+      }
+    });
+
+    api("GET", "/api/me").then((r) => {
+      if (!r.ok && r.status === 401) {
+        location.replace(PATHS.login);
+        return;
+      }
+      show(loading, false);
+      if (!r.ok) {
+        setMsg(status, r.message, "error");
+        return;
+      }
+      only(setup);
+    });
+  }
+
   // ============================================================ /account/
   function initAccount() {
     const params = new URLSearchParams(location.search);
@@ -548,7 +895,7 @@
     // the plan page keeps the visitor's choice.
     const pick = $("#plan-pick");
     const subBtn = $("#btn-subscribe");
-    const SUB_LABEL = { year: "Subscribe yearly, $100/year", month: "Subscribe monthly, $10/month" };
+    const SUB_LABEL = { year: "Subscribe yearly, $120/year", month: "Subscribe monthly, $15/month" };
     const chosenInterval = () => {
       const r = pick && pick.querySelector('input[name="interval"]:checked');
       return r && r.value === "month" ? "month" : "year";
@@ -628,7 +975,7 @@
         }
         return {
           text: m.period_end ? `${name}, renews ${fmtDate(m.period_end)}` : name,
-          sub: yearly ? "$100 a year." : m.plan_interval === "month" ? "$10 a month." : "",
+          sub: yearly ? "$120 a year." : m.plan_interval === "month" ? "$15 a month." : "",
         };
       }
       if (p === "past_due" && m.payment_action_required === true) {
@@ -727,16 +1074,14 @@
     const tpl = $("#device-template");
 
     function renderDevices(devs) {
-      $("#device-count").textContent = `${devs.length} of 3`;
+      $("#device-count").textContent = `${devs.length} of 1`;
       list.textContent = "";
       show($("#devices-empty"), devs.length === 0);
       show(list, devs.length > 0);
       const linkBtn = $("#btn-link");
       if (linkBtn) {
-        const full = devs.length >= 3;
-        if (full) linkBtn.setAttribute("aria-disabled", "true");
-        else linkBtn.removeAttribute("aria-disabled");
-        $("#device-full").hidden = !full;
+        // One calculator per plan: linking another one replaces it (the link pages ask first).
+        $("#device-full").hidden = devs.length < 1;
       }
       for (const d of devs) list.append(deviceItem(d));
     }
@@ -892,12 +1237,6 @@
     $("#btn-billing").addEventListener("click", (e) =>
       goBilling(e.currentTarget, "/api/billing/portal", "Opening billing…")
     );
-    $("#btn-link").addEventListener("click", (e) => {
-      if (e.currentTarget.getAttribute("aria-disabled") === "true") {
-        e.preventDefault();
-        setMsg(status, "This account already has 3 calculators. Remove one first.", "error");
-      }
-    });
 
     // ---------------------------------------------------- delete account
     const delInput = $("#delete-email");
@@ -952,7 +1291,7 @@
   }
 
   // ------------------------------------------------------------ start
-  const inits = { login: initLogin, confirm: initConfirm, link: initLink, account: initAccount };
+  const inits = { login: initLogin, confirm: initConfirm, link: initLink, "link-camera": initLinkCamera, account: initAccount };
   try {
     if (inits[page]) inits[page]();
   } catch (e) {

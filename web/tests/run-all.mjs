@@ -37,7 +37,7 @@ const STRIPE_MOCK_PORT = Number(process.env.STRIPE_MOCK_PORT || 8789);
 const BASE_URL = `http://${HOST}:${PORT}`;
 const KEEP_STATE = process.env.KEEP_STATE === '1';
 const isWin = process.platform === 'win32';
-const MAIN_FILES = (process.env.TEST_FILES || 'device.test.mjs solve.test.mjs auth.test.mjs account.test.mjs enrolment.test.mjs firmware.test.mjs dev.test.mjs stage3.test.mjs').split(/\s+/).filter(Boolean);
+const MAIN_FILES = (process.env.TEST_FILES || 'device.test.mjs solve.test.mjs auth.test.mjs account.test.mjs link.test.mjs enrolment.test.mjs firmware.test.mjs dev.test.mjs stage3.test.mjs').split(/\s+/).filter(Boolean);
 
 const ADMIN_TOKEN = crypto.randomBytes(24).toString('hex'); // 48 chars (S10: must be >= 32)
 const STRIPE_WEBHOOK_SECRET = 'whsec_' + crypto.randomBytes(24).toString('base64url');

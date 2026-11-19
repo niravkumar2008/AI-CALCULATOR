@@ -6,7 +6,7 @@
   <title>Thanks for your order · Proofline</title>
   <meta name="description" content="Your Proofline order is in. Here’s what happens next.">
   <meta name="robots" content="noindex">
-  <link rel="canonical" href="https://proofline.example/order/complete/">
+  <link rel="canonical" href="https://prooflinecalc.org/order/complete/">
   <!-- @head -->
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#10141c">
@@ -103,7 +103,7 @@
           <svg aria-hidden="true"><use href="#i-cart"/></svg><span class="icon-link__text">Cart</span>
           <span class="cart-badge" data-cart-count hidden>0</span>
         </a>
-        <a class="btn btn--primary btn--sm header__cta" href="/#join" data-focus-email aria-label="Join the waitlist"><span class="cta-long">Join the waitlist</span><span class="cta-short" aria-hidden="true">Join</span></a>
+        <a class="btn btn--primary btn--sm header__cta" href="/shop/calculator/" aria-label="Buy the calculator"><span class="cta-long">Buy now: $215</span><span class="cta-short" aria-hidden="true">Buy</span></a>
         <details class="mobile-menu" data-mobile-menu>
           <summary class="icon-link" aria-label="Menu"><svg class="mm-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="mm-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
           <div class="mobile-menu__sheet">
@@ -145,7 +145,7 @@
       <div class="container">
         <nav class="breadcrumbs" aria-label="Breadcrumb"><ol><li><a href="/">Home</a></li><li><a href="/shop/">Shop</a></li><li><span aria-current="page">Order complete</span></li></ol></nav>
         <h1>Thanks for your order</h1>
-        <p class="lead">Your preorder is in. Here’s what happens next.</p>
+        <p class="lead">Your order is in. Here’s what happens next.</p>
       </div>
     </section>
 
@@ -154,7 +154,7 @@
         <div class="section-head" style="margin-bottom:0">
           <span class="eyebrow">What happens next</span>
           <h2 id="next-title">Four short steps.</h2>
-          <p>Questions about your order? Email <a href="mailto:hello@proofline.example">hello@proofline.example</a>.</p>
+          <p>Questions about your order? Email <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a>.</p>
         </div>
         <ol class="steps">
           <li class="step">
@@ -163,7 +163,7 @@
           </li>
           <li class="step">
             <span class="step__num" aria-hidden="true">2</span>
-            <div><h3>We ship it</h3><p>Preorders ship in 2027. We’ll email you a ship date. It goes to the US address you entered at checkout.</p></div>
+            <div><h3>We build and ship it</h3><p>We hand-build your calculator, test it, and ship it to the US address you entered at checkout. <span data-ship-note>The ship time was shown at checkout.</span> We email you tracking when it ships.</p></div>
           </li>
           <li class="step">
             <span class="step__num" aria-hidden="true">3</span>
@@ -171,7 +171,7 @@
           </li>
           <li class="step">
             <span class="step__num" aria-hidden="true">4</span>
-            <div><h3>First month free</h3><p>The AI tutor plan’s free month starts when you link. No card needed. After that, it’s $10 a month or $100 a year if you keep it.</p></div>
+            <div><h3>First month free</h3><p>The AI tutor plan’s free month starts when you link. No card needed. After that, it’s $15 a month or $120 a year if you keep it.</p></div>
           </li>
         </ol>
       </div>
@@ -207,17 +207,17 @@
     <div class="container footer__grid">
       <div class="footer__intro">
         <a class="brand" translate="no" href="/" aria-label="Proofline home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Proofline</span></a>
-        <p>The AI study tutor that works like a real scientific calculator. In development; preorders planned for 2027.</p>
+        <p>The AI study tutor that works like a real scientific calculator. Hand-built in small batches. Ships to US addresses.</p>
         <form class="waitlist waitlist--compact" action="/api/waitlist" method="post" data-source="footer">
           <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
-          <label class="waitlist__label" for="email-sitefoot">Get an email when preorders open</label>
+          <label class="waitlist__label" for="email-sitefoot">Get an email about new batches</label>
           <div class="waitlist__row">
             <input class="field" id="email-sitefoot" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-sitefoot msg-sitefoot">
             <div class="hp" aria-hidden="true"><label for="company-sitefoot">Company</label><input id="company-sitefoot" name="company" type="text" tabindex="-1" autocomplete="off"></div>
             <button class="btn btn--primary" type="submit">Join</button>
           </div>
           <label class="waitlist__age" for="age-sitefoot"><input id="age-sitefoot" name="age_ok" type="checkbox" required aria-describedby="msg-sitefoot">I’m 13 or older</label>
-          <p class="waitlist__note" id="note-sitefoot">No payment now. <a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__note" id="note-sitefoot"><a href="/privacy/">Privacy policy</a></p>
           <p class="waitlist__msg" id="msg-sitefoot" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -267,8 +267,7 @@
       <div class="legal">
         <p>Not affiliated with Casio Computer Co., Ltd.</p>
         <p>Prices in US dollars. © 2026 Proofline Corporation.</p>
-        <!-- TODO(contact): real support address once the domain is bought. -->
-        <p>Contact: <a href="mailto:hello@proofline.example">hello@proofline.example</a></p>
+        <p>Contact: <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a></p>
       </div>
     </div>
   </footer>

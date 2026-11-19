@@ -29,7 +29,7 @@ Placeholders: `{first_name}` (we don't collect names today, so default to no nam
 - [ ] **Only email people who signed up.** Never buy, rent or import lists. (People who signed up
       have given consent, so we don't need an "advertisement" label, but keep the content honest.)
 - [ ] Footer line: "You're getting this because you joined the Proofline waitlist at
-      proofline.example."
+      prooflinecalc.org."
 
 ### 0.2 Double opt-in (do this before the first send)
 
@@ -54,7 +54,7 @@ standard good practice.
 ### 0.3 Our own content rules
 
 - No vendor names (AI, payments). No "Casio". No banned words.
-- Price always includes the plan: $225 + $10 a month or $100 a year, first month free, no card.
+- Price always includes the plan: $225 + $15 a month or $120 a year, first month free, no card.
 - No ship dates, "in stock", countdowns, "only X left", reviews or user counts.
 - "Not allowed on the SAT, ACT or AP" whenever tests come up.
 - Real photos only; renders labelled "CAD render".
@@ -78,7 +78,7 @@ standard good practice.
 > **Where we are:** our first prototype boards are ordered. We're building 5 samples first, then
 > moving to production. Preorders are planned for 2027. We're not taking payment yet.
 >
-> **What it will cost:** $225 for the calculator. The AI tutor plan is $10 a month or $100 a year,
+> **What it will cost:** $225 for the calculator. The AI tutor plan is $15 a month or $120 a year,
 > and the first month is free, with no card needed. Without the plan, it's still a full scientific
 > calculator that works offline.
 >
@@ -86,7 +86,7 @@ standard good practice.
 > has Wi-Fi and a camera.
 >
 > **Try it now:** the calculator's own software runs in your browser:
-> [Try it](https://proofline.example/try-it/)
+> [Try it](https://prooflinecalc.org/try-it/)
 >
 > **One question:** which class would you use it for? Just hit reply. I read every answer, and it
 > decides what I show next.
@@ -95,7 +95,7 @@ standard good practice.
 > Founder, Proofline
 >
 > ---
-> You're getting this because you joined the Proofline waitlist at proofline.example.
+> You're getting this because you joined the Proofline waitlist at prooflinecalc.org.
 > Proofline · [postal address] · [Unsubscribe]
 
 ---
@@ -126,7 +126,7 @@ Keep it under 250 words. One real photo. Bad news first if there is any.
 > Nirav, Proofline
 >
 > ---
-> You're getting this because you joined the Proofline waitlist at proofline.example.
+> You're getting this because you joined the Proofline waitlist at prooflinecalc.org.
 > Proofline · [postal address] · [Unsubscribe]
 
 **Monthly checklist:** real photo (logo covered) · no dates promised · one question · links tagged
@@ -195,7 +195,7 @@ real end date and nothing more.
 > **What it costs:**
 > - Batch 1 backers: $195 for the calculator, or $285 with 12 months of the AI tutor plan.
 > - After that, during the campaign: $210, or $299 with the plan.
-> - At retail later: $225, plus the plan at $10 a month or $100 a year.
+> - At retail later: $225, plus the plan at $15 a month or $120 a year.
 > - Every calculator includes the first month of the plan free, no card needed.
 > - US shipping: $[X]. US addresses only. Buyers must be 18 or older.
 >

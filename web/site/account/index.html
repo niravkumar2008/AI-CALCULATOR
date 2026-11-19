@@ -102,7 +102,7 @@
           <svg aria-hidden="true"><use href="#i-cart"/></svg><span class="icon-link__text">Cart</span>
           <span class="cart-badge" data-cart-count hidden>0</span>
         </a>
-        <a class="btn btn--primary btn--sm header__cta" href="/#join" data-focus-email aria-label="Join the waitlist"><span class="cta-long">Join the waitlist</span><span class="cta-short" aria-hidden="true">Join</span></a>
+        <a class="btn btn--primary btn--sm header__cta" href="/shop/calculator/" aria-label="Buy the calculator"><span class="cta-long">Buy now: $215</span><span class="cta-short" aria-hidden="true">Buy</span></a>
         <details class="mobile-menu" data-mobile-menu>
           <summary class="icon-link" aria-label="Menu"><svg class="mm-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="mm-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
           <div class="mobile-menu__sheet">
@@ -159,7 +159,7 @@
           <div id="pay-action" class="notice" data-tone="warn" role="status" aria-labelledby="pay-action-title" hidden>
             <div class="notice__body">
               <h3 id="pay-action-title" class="notice__title">Confirm your payment</h3>
-              <p>Your bank needs you to confirm this month's payment. AI Solve keeps working for 3 days.</p>
+              <p>Your bank needs you to confirm this month's payment. AI Solve keeps working for 7 days.</p>
               <div class="actions">
                 <a id="pay-action-link" class="btn btn--primary" href="/account/" hidden>Confirm payment</a>
                 <button id="pay-action-billing" class="btn btn--primary" type="button" hidden>Manage billing</button>
@@ -190,24 +190,25 @@
               <label class="plan-opt">
                 <input type="radio" name="interval" value="year" checked>
                 <span class="plan-opt__body">
-                  <span class="plan-opt__top"><span class="plan-opt__name">Yearly</span><span class="badge">2 months free</span></span>
-                  <span class="plan-opt__price"><span class="price__num">$100</span> a year</span>
-                  <span class="plan-opt__note">You save $20 compared with paying monthly.</span>
+                  <span class="plan-opt__top"><span class="plan-opt__name">Yearly</span><span class="badge">4 months free</span></span>
+                  <span class="plan-opt__price"><span class="price__num">$120</span> a year</span>
+                  <span class="plan-opt__note">You save $60 compared with paying monthly.</span>
                 </span>
               </label>
               <label class="plan-opt">
                 <input type="radio" name="interval" value="month">
                 <span class="plan-opt__body">
                   <span class="plan-opt__top"><span class="plan-opt__name">Monthly</span></span>
-                  <span class="plan-opt__price"><span class="price__num">$10</span> a month</span>
+                  <span class="plan-opt__price"><span class="price__num">$15</span> a month</span>
                   <span class="plan-opt__note">Pay as you go. Cancel anytime.</span>
                 </span>
               </label>
             </div>
-            <p class="hint">One plan covers up to 3 calculators on this account, sharing 300 solves a month. Software updates are included.</p>
+            <p class="hint">One plan covers one calculator, with up to 300 solves a month. Software updates are included.</p>
+            <p class="hint">If the plan ends, AI Solve and software updates stop until you subscribe again. The calculator keeps working offline.</p>
           </fieldset>
           <div class="actions">
-            <button id="btn-subscribe" class="btn btn--primary" type="button" hidden>Subscribe yearly, $100/year</button>
+            <button id="btn-subscribe" class="btn btn--primary" type="button" hidden>Subscribe yearly, $120/year</button>
             <button id="btn-billing" class="btn btn--ghost" type="button" hidden>Manage billing</button>
           </div>
           <p id="trial-note" class="hint" hidden></p>
@@ -217,13 +218,14 @@
         <section class="card" aria-labelledby="devices-title">
           <div class="card__head">
             <h2 id="devices-title" tabindex="-1">Calculators</h2>
-            <span class="count"><span id="device-count"></span><span class="sr-only"> calculators linked, the most is 3</span></span>
+            <span class="count"><span id="device-count"></span><span class="sr-only"> calculator linked, a plan covers one</span></span>
           </div>
           <p id="devices-empty" class="empty" hidden>No calculators linked yet.</p>
           <ul id="device-list" class="devices"></ul>
-          <p id="device-full" class="hint" hidden>An account can have 3 calculators. Remove one to link another.</p>
+          <p id="device-full" class="hint" hidden>Your plan covers one calculator. Linking another one replaces it (you’re asked first).</p>
           <div class="actions">
             <a id="btn-link" class="btn btn--ghost" href="/link/">Link a calculator</a>
+            <a id="btn-link-camera" class="btn btn--ghost" href="/link/camera/">Link with the calculator's camera</a>
           </div>
         </section>
 
@@ -297,17 +299,17 @@
     <div class="container footer__grid">
       <div class="footer__intro">
         <a class="brand" translate="no" href="/" aria-label="Proofline home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Proofline</span></a>
-        <p>The AI study tutor that works like a real scientific calculator. In development; preorders planned for 2027.</p>
+        <p>The AI study tutor that works like a real scientific calculator. Hand-built in small batches. Ships to US addresses.</p>
         <form class="waitlist waitlist--compact" action="/api/waitlist" method="post" data-source="footer">
           <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
-          <label class="waitlist__label" for="email-sitefoot">Get an email when preorders open</label>
+          <label class="waitlist__label" for="email-sitefoot">Get an email about new batches</label>
           <div class="waitlist__row">
             <input class="field" id="email-sitefoot" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-sitefoot msg-sitefoot">
             <div class="hp" aria-hidden="true"><label for="company-sitefoot">Company</label><input id="company-sitefoot" name="company" type="text" tabindex="-1" autocomplete="off"></div>
             <button class="btn btn--primary" type="submit">Join</button>
           </div>
           <label class="waitlist__age" for="age-sitefoot"><input id="age-sitefoot" name="age_ok" type="checkbox" required aria-describedby="msg-sitefoot">I’m 13 or older</label>
-          <p class="waitlist__note" id="note-sitefoot">No payment now. <a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__note" id="note-sitefoot"><a href="/privacy/">Privacy policy</a></p>
           <p class="waitlist__msg" id="msg-sitefoot" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -357,8 +359,7 @@
       <div class="legal">
         <p>Not affiliated with Casio Computer Co., Ltd.</p>
         <p>Prices in US dollars. © 2026 Proofline Corporation.</p>
-        <!-- TODO(contact): real support address once the domain is bought. -->
-        <p>Contact: <a href="mailto:hello@proofline.example">hello@proofline.example</a></p>
+        <p>Contact: <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a></p>
       </div>
     </div>
   </footer>

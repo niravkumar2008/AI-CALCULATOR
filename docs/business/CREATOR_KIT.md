@@ -41,7 +41,7 @@ an exam mode a teacher can see.
   black with a padlock, "EXAM" and a timer. The calculator, STAT, TABLE, CALC, SOLVE, ∫dx and d/dx
   keep working. Ends after 12 hours, or a teacher unlocks it with a USB cable.
 - **Not allowed on the SAT, ACT or AP exams, even in exam mode** (it has Wi-Fi and a camera).
-- **Price:** $225 for the calculator. The AI tutor plan is $10 a month or $100 a year. First month
+- **Price:** $225 for the calculator. The AI tutor plan is $15 a month or $120 a year. First month
   free, from when you first link the calculator, no card needed. No free tier after that. Cancel
   anytime. Without the plan it's still a full offline scientific calculator.
 - **Photos:** used only to solve that problem, not stored.
@@ -51,7 +51,7 @@ an exam mode a teacher can see.
 
 1. **The disclosure** (section A5), in the first seconds.
 2. **"It's not allowed on the SAT, ACT or AP."** (or "not for standardized tests").
-3. **The full price**, if you mention price at all: "$225, plus $10 a month or $100 a year for the
+3. **The full price**, if you mention price at all: "$225, plus $15 a month or $120 a year for the
    AI tutor plan; first month free."
 4. **"AI can make mistakes; that's why it shows every step."** if accuracy comes up.
 5. **"It's a prototype sample"** and that it isn't on sale yet ("join the waitlist").
@@ -185,7 +185,7 @@ No DMs to people who don't take business messages, never to anyone under 18, nev
 >
 > Thanks,
 > [Name]
-> Proofline · proofline.example · [postal address]
+> Proofline · prooflinecalc.org · [postal address]
 
 ### C2. Teacher or tutor creator
 
@@ -223,7 +223,7 @@ No DMs to people who don't take business messages, never to anyone under 18, nev
 > loan one for 10 days and pay $[amount] for a disclosed (#ad) video, or loan it unpaid if you
 > prefer to keep reviews unpaid (still disclosed as a loan).
 >
-> Build log and specs: proofline.example. Want the brief?
+> Build log and specs: prooflinecalc.org. Want the brief?
 >
 > [Name], Proofline · [postal address]
 
@@ -267,15 +267,15 @@ silently ignored (`C. Alex` won't work; `c-alex` will).
 **Link pattern:**
 
 ```
-https://proofline.example/?utm_source=c-<name>&utm_medium=creator&utm_campaign=<campaign>
+https://prooflinecalc.org/?utm_source=c-<name>&utm_medium=creator&utm_campaign=<campaign>
 ```
 
 Examples:
 
 ```
-https://proofline.example/?utm_source=c-alex&utm_medium=creator&utm_campaign=waitlist-2027q1
-https://proofline.example/try-it/?utm_source=c-mrsk&utm_medium=creator&utm_campaign=teachers-2027q1
-https://proofline.example/?src=c-alex          (short version for a bio)
+https://prooflinecalc.org/?utm_source=c-alex&utm_medium=creator&utm_campaign=waitlist-2027q1
+https://prooflinecalc.org/try-it/?utm_source=c-mrsk&utm_medium=creator&utm_campaign=teachers-2027q1
+https://prooflinecalc.org/?src=c-alex          (short version for a bio)
 ```
 
 For a paid boost of the same video, change the medium so you can tell them apart:

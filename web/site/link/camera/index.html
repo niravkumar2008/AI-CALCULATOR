@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Link with the calculator's camera · Proofline</title>
+  <meta name="description" content="Link a Proofline calculator to your account by letting it scan a code on your phone.">
+  <meta name="robots" content="noindex">
+  <!-- @head -->
+  <meta name="color-scheme" content="light dark">
+  <meta name="theme-color" content="#10141c">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="icon" href="/favicon.ico" sizes="48x48">
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+  <link rel="manifest" href="/site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@600;700&family=Barlow:wght@400;500;600&family=IBM+Plex+Mono:wght@500&display=swap">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <script src="/assets/js/site.js" defer></script>
+  <!-- /@head -->
+  <link rel="stylesheet" href="/assets/css/portal.css">
+  <script src="/assets/js/qrcode.js" defer></script>
+  <script src="/assets/js/portal.js" defer></script>
+</head>
+<body data-page="link-camera">
+  <!-- @header -->
+  <a class="skip-link" href="#main">Skip to content</a>
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+    <defs>
+      <symbol id="i-mark" viewBox="0 0 32 32"><rect width="32" height="32" rx="7" fill="#232a38"/><rect x="8" y="11" width="16" height="3.6" rx="1.8" fill="#e07a4f"/><rect x="8" y="17.4" width="16" height="3.6" rx="1.8" fill="#e07a4f"/></symbol>
+      <symbol id="i-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></symbol>
+      <symbol id="i-user" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></symbol>
+      <symbol id="i-cart" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 4h2.2l2.1 11.2a1.5 1.5 0 0 0 1.5 1.2h8.6a1.5 1.5 0 0 0 1.5-1.2L20.5 8H6.2"/><circle cx="9.5" cy="20" r="1.2"/><circle cx="17" cy="20" r="1.2"/></symbol>
+      <symbol id="i-menu" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></symbol>
+      <symbol id="i-close" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></symbol>
+      <symbol id="i-arrow" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+      <symbol id="i-check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.2 4.2L19 7"/></symbol>
+      <symbol id="i-plus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></symbol>
+      <symbol id="i-minus" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M5 12h14"/></symbol>
+      <symbol id="i-info" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 11v5.5M12 7.6v.1"/></symbol>
+      <symbol id="i-alert" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M10.3 4.2 2.6 17.5A2 2 0 0 0 4.3 20.5h15.4a2 2 0 0 0 1.7-3L13.7 4.2a2 2 0 0 0-3.4 0z"/><path d="M12 9.5v4.2M12 17.2v.1"/></symbol>
+      <symbol id="i-lock" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="10.5" width="14" height="10" rx="2"/><path d="M8 10.5V8a4 4 0 0 1 8 0v2.5"/></symbol>
+      <symbol id="i-wifi" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round"><path d="M2.5 9a14 14 0 0 1 19 0M5.8 12.6a9 9 0 0 1 12.4 0M9.1 16.1a4.3 4.3 0 0 1 5.8 0"/><circle cx="12" cy="19.3" r=".6" fill="currentColor"/></symbol>
+    </defs>
+  </svg>
+
+  <header class="site-header band-dark" data-scrolled="false">
+    <div class="container header__bar">
+      <a class="brand" translate="no" href="/" aria-label="Proofline home">
+        <svg aria-hidden="true"><use href="#i-mark"/></svg>
+        <span>Proofline</span>
+      </a>
+
+      <nav class="nav" aria-label="Main">
+        <ul class="nav__list">
+          <li>
+            <details class="nav__menu" data-menu>
+              <summary>Shop<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/shop/">Shop overview</a></li>
+                <li><a href="/shop/calculator/">The calculator</a></li>
+                <li><a href="/cart/">Cart</a></li>
+              </ul>
+            </details>
+          </li>
+          <li>
+            <details class="nav__menu" data-menu>
+              <summary>Product<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/how-it-works/">How it works</a></li>
+                <li><a href="/features/ai-solve/">AI Solve</a></li>
+                <li><a href="/features/apps/">Apps</a></li>
+                <li><a href="/features/exam-mode/">Exam mode</a></li>
+                <li><a href="/features/calculator/">The calculator</a></li>
+                <li><a href="/try-it/">Try it in your browser</a></li>
+                <li><a href="/specs/">Specs</a></li>
+              </ul>
+            </details>
+          </li>
+          <li><a class="nav__link" href="/pricing/">Pricing</a></li>
+          <li>
+            <details class="nav__menu" data-menu>
+              <summary>Support<svg aria-hidden="true"><use href="#i-chev"/></svg></summary>
+              <ul class="nav__panel">
+                <li><a href="/faq/">FAQ</a></li>
+                <li><a href="/support/setup/">Setup guide</a></li>
+                <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+                <li><a href="/teachers/">For teachers</a></li>
+                <li><a href="/honest/">Honest by design</a></li>
+                <li><a href="/support/">Contact and support</a></li>
+              </ul>
+            </details>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="header__actions">
+        <a class="icon-link" href="/account/" aria-label="Your account">
+          <svg aria-hidden="true"><use href="#i-user"/></svg><span class="icon-link__text">Account</span>
+        </a>
+        <a class="icon-link icon-link--cart" href="/cart/" aria-label="Cart" data-cart-link>
+          <svg aria-hidden="true"><use href="#i-cart"/></svg><span class="icon-link__text">Cart</span>
+          <span class="cart-badge" data-cart-count hidden>0</span>
+        </a>
+        <a class="btn btn--primary btn--sm header__cta" href="/shop/calculator/" aria-label="Buy the calculator"><span class="cta-long">Buy now: $215</span><span class="cta-short" aria-hidden="true">Buy</span></a>
+        <details class="mobile-menu" data-mobile-menu>
+          <summary class="icon-link" aria-label="Menu"><svg class="mm-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="mm-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
+          <div class="mobile-menu__sheet">
+            <p class="mobile-menu__group">Shop</p>
+            <ul>
+              <li><a href="/shop/">Shop overview</a></li>
+              <li><a href="/shop/calculator/">The calculator</a></li>
+              <li><a href="/cart/">Cart</a></li>
+            </ul>
+            <p class="mobile-menu__group">Product</p>
+            <ul>
+              <li><a href="/how-it-works/">How it works</a></li>
+              <li><a href="/features/ai-solve/">AI Solve</a></li>
+              <li><a href="/features/apps/">Apps</a></li>
+              <li><a href="/features/exam-mode/">Exam mode</a></li>
+              <li><a href="/features/calculator/">The calculator</a></li>
+              <li><a href="/try-it/">Try it in your browser</a></li>
+              <li><a href="/specs/">Specs</a></li>
+              <li><a href="/pricing/">Pricing</a></li>
+            </ul>
+            <p class="mobile-menu__group">Support</p>
+            <ul>
+              <li><a href="/faq/">FAQ</a></li>
+              <li><a href="/support/setup/">Setup guide</a></li>
+              <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+              <li><a href="/teachers/">For teachers</a></li>
+              <li><a href="/honest/">Honest by design</a></li>
+              <li><a href="/support/">Contact and support</a></li>
+              <li><a href="/account/">Your account</a></li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </header>
+  <!-- /@header -->
+  <main id="main" class="container">
+    <div class="portal">
+      <h1>Link with the calculator's camera</h1>
+      <p class="lead">Your phone shows a code, the calculator scans it, and you tap Approve here. On the calculator, press MODE then 4 to open Apps, then choose Settings, Link calculator and Scan code.</p>
+      <noscript><p class="notice" data-tone="error">This page needs JavaScript to make the code. Please turn it on and reload.</p></noscript>
+      <div id="cam-loading" class="loading" role="status"><span class="spinner" aria-hidden="true"></span><span>Checking your account…</span></div>
+      <p id="status" class="msg" role="status" aria-live="polite"></p>
+
+      <section id="cam-setup" class="card" hidden aria-labelledby="wifi-title">
+        <h2 id="wifi-title">Wi-Fi for the calculator <span class="optional">(optional)</span></h2>
+        <p>If the calculator isn't on Wi-Fi yet, type your network here and it goes into the code too. The password stays on this phone: it is only drawn into the code and is never sent to us.</p>
+        <form id="wifi-form" class="form" action="/link/camera/" method="post" novalidate>
+          <div class="form-row">
+            <label for="wifi-ssid">Wi-Fi name <span class="optional">(optional)</span></label>
+            <input class="field" id="wifi-ssid" name="ssid" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="64" aria-describedby="wifi-ssid-hint wifi-ssid-error">
+            <p id="wifi-ssid-hint" class="hint">Leave empty if the calculator is already on Wi-Fi.</p>
+            <p id="wifi-ssid-error" class="field-error"></p>
+          </div>
+          <div class="form-row">
+            <label for="wifi-pass">Wi-Fi password <span class="optional">(optional)</span></label>
+            <input class="field" id="wifi-pass" name="wifi_password" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="128" aria-describedby="wifi-pass-hint wifi-pass-error">
+            <p id="wifi-pass-hint" class="hint">8 to 63 characters. Leave empty for an open network.</p>
+            <p id="wifi-pass-error" class="field-error"></p>
+          </div>
+          <label class="check" for="wifi-show"><input id="wifi-show" type="checkbox">Show the password</label>
+          <label class="check" for="wifi-hidden"><input id="wifi-hidden" type="checkbox">This network is hidden (it doesn't show up in Wi-Fi lists)</label>
+          <div class="actions">
+            <button id="cam-make" class="btn btn--primary" type="submit">Show the code</button>
+            <a class="btn btn--ghost" href="/account/">Back to account</a>
+          </div>
+        </form>
+      </section>
+
+      <section id="cam-code" class="card" hidden aria-labelledby="cam-code-title">
+        <h2 id="cam-code-title" tabindex="-1">Point the calculator at this code</h2>
+        <div id="qr" class="qr" role="img" aria-label="Code for the calculator's camera to scan"></div>
+        <p id="qr-includes" class="hint"></p>
+        <p id="cam-countdown" class="countdown" aria-live="off"></p>
+        <div id="cam-replace" class="notice" data-tone="warn" hidden>
+          <div class="notice__body">
+            <p>Your plan covers one calculator. Linking a new one replaces calculator ending <strong id="cam-replace-suffix"></strong> (<span id="cam-replace-label"></span>). You'll be asked before anything changes.</p>
+          </div>
+        </div>
+        <div class="actions">
+          <button id="cam-new" class="btn btn--ghost" type="button">New code</button>
+          <button id="cam-wifi" class="btn btn--ghost" type="button">Change Wi-Fi</button>
+        </div>
+        <p><a href="/link/">Can't scan? Use the code on your calculator instead</a></p>
+      </section>
+
+      <section id="cam-approve" class="card" hidden aria-labelledby="cam-approve-title">
+        <h2 id="cam-approve-title" tabindex="-1">Calculator ending <span id="cam-approve-suffix"></span> wants to link. Approve?</h2>
+        <p>Check that your calculator's screen shows Calculator ID …<span id="cam-approve-suffix2"></span>. If it doesn't, tap No.</p>
+        <div id="cam-approve-replace" class="notice" data-tone="warn" hidden>
+          <div class="notice__body">
+            <p>Approving removes calculator ending <strong id="cam-approve-old-suffix"></strong> (<span id="cam-approve-old-label"></span>) from your account. It keeps working as a scientific calculator, without AI.</p>
+          </div>
+        </div>
+        <p id="cam-approve-countdown" class="countdown" aria-live="off"></p>
+        <div class="actions">
+          <button id="cam-yes" class="btn btn--primary" type="button">Approve</button>
+          <button id="cam-no" class="btn btn--ghost" type="button">No</button>
+        </div>
+        <p id="cam-approve-msg" class="msg" role="status" aria-live="polite"></p>
+      </section>
+
+      <section id="cam-done" class="card" hidden aria-labelledby="cam-done-title">
+        <h2 id="cam-done-title" tabindex="-1"></h2>
+        <p id="cam-done-text"></p>
+        <div class="actions">
+          <a class="btn btn--primary" href="/account/">Go to your account</a>
+          <button id="cam-again" class="btn btn--ghost" type="button">Make a new code</button>
+        </div>
+      </section>
+    </div>
+  </main>
+  <!-- @footer -->
+  <footer class="site-footer band-dark">
+    <div class="container footer__grid">
+      <div class="footer__intro">
+        <a class="brand" translate="no" href="/" aria-label="Proofline home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Proofline</span></a>
+        <p>The AI study tutor that works like a real scientific calculator. Hand-built in small batches. Ships to US addresses.</p>
+        <form class="waitlist waitlist--compact" action="/api/waitlist" method="post" data-source="footer">
+          <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
+          <label class="waitlist__label" for="email-sitefoot">Get an email about new batches</label>
+          <div class="waitlist__row">
+            <input class="field" id="email-sitefoot" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-sitefoot msg-sitefoot">
+            <div class="hp" aria-hidden="true"><label for="company-sitefoot">Company</label><input id="company-sitefoot" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+            <button class="btn btn--primary" type="submit">Join</button>
+          </div>
+          <label class="waitlist__age" for="age-sitefoot"><input id="age-sitefoot" name="age_ok" type="checkbox" required aria-describedby="msg-sitefoot">I’m 13 or older</label>
+          <p class="waitlist__note" id="note-sitefoot"><a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__msg" id="msg-sitefoot" role="status" aria-live="polite"></p>
+        </form>
+      </div>
+      <nav class="footer__cols" aria-label="Footer">
+        <div>
+          <p class="footer__head">Shop</p>
+          <ul>
+            <li><a href="/shop/">Shop overview</a></li>
+            <li><a href="/shop/calculator/">The calculator</a></li>
+            <li><a href="/pricing/">Pricing</a></li>
+            <li><a href="/cart/">Cart</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Product</p>
+          <ul>
+            <li><a href="/how-it-works/">How it works</a></li>
+            <li><a href="/features/ai-solve/">AI Solve</a></li>
+            <li><a href="/features/apps/">Apps</a></li>
+            <li><a href="/features/exam-mode/">Exam mode</a></li>
+            <li><a href="/features/calculator/">The calculator</a></li>
+            <li><a href="/try-it/">Try it</a></li>
+            <li><a href="/specs/">Specs</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Support</p>
+          <ul>
+            <li><a href="/faq/">FAQ</a></li>
+            <li><a href="/support/setup/">Setup guide</a></li>
+            <li><a href="/support/wi-fi/">Wi-Fi help</a></li>
+            <li><a href="/teachers/">For teachers</a></li>
+            <li><a href="/support/">Contact</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__head">Company</p>
+          <ul>
+            <li><a href="/honest/">Honest by design</a></li>
+            <li><a href="/account/">Your account</a></li>
+            <li><a href="/privacy/">Privacy</a></li>
+            <li><a href="/terms/">Terms</a></li>
+            <li><a href="/refunds/">Refunds and warranty</a></li>
+          </ul>
+        </div>
+      </nav>
+      <div class="legal">
+        <p>Not affiliated with Casio Computer Co., Ltd.</p>
+        <p>Prices in US dollars. © 2026 Proofline Corporation.</p>
+        <p>Contact: <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a></p>
+      </div>
+    </div>
+  </footer>
+  <!-- /@footer -->
+</body>
+</html>

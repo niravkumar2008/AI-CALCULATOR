@@ -1,0 +1,14 @@
+{
+  "name": "proofline-farm",
+  "productName": "Proofline Farm",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Desktop app for the Proofline Farm: see and steer the farmhands, keeps the farm running in the tray.",
+  "main": "main.cjs",
+  "scripts": {
+    "start": "electron ."
+  },
+  "devDependencies": {
+    "electron": "33.2.1"
+  }
+}

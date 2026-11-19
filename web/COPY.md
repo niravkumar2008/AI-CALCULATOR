@@ -22,8 +22,8 @@ fact, it isn't on the site.
 | Honest by design (h2) | A tutor, not a shortcut. | "Honest by design." · "Built to teach." | Says the positioning in four words; "Honest by design" is kept as the eyebrow. |
 | Exam mode | Press SHIFT MODE 8 =. The status bar turns black, so a teacher can tell at a glance. | — | From the firmware; no claims beyond it. It also turns all the apps behind MODE 4 off (said on the FAQ, apps and specs pages). |
 | SAT/ACT/AP | It has Wi-Fi and a camera, so it isn't allowed on those exams, even in exam mode. | — | Required by plan section 9. Never "exam-approved". |
-| Pricing (h2) | One price for the calculator. One for the tutor. | "$225, then $10 a month or $100 a year." | Explains the two parts before the numbers. |
-| Pricing proof | Your first year: $225 + free month + 11 × $10 = $335 (or $225 + $100 = $325 yearly) | — | The clearest possible explanation; nothing hidden. |
+| Pricing (h2) | One price for the calculator. One for the tutor. | "$215, then $15 a month or $120 a year." | Explains the two parts before the numbers. |
+| Pricing proof | Your first year: $215 + free month + 11 × $15 = $380 (or $215 + $120 = $335 yearly) | — | The clearest possible explanation; nothing hidden. |
 | Closing | Be first in line. No payment now. | "Want one?" | Repeats the promise that matters most to the buyer. |
 
 ## Messages
@@ -35,7 +35,7 @@ fact, it isn't on the site.
 | Sending | Joining… |
 | Joined | You're on the list. We'll email you when preorders open. Nothing else. |
 | Already joined (409) | You're already on the list. … |
-| API down | We couldn't add you just now. Try again in a minute, or email hello@proofline.example. |
+| API down | We couldn't add you just now. Try again in a minute, or email hello@prooflinecalc.org. |
 | Simulator idle | About 500 KB. It loads by itself when you scroll here. |
 | Simulator failed | The calculator didn't load. Try again, or open it on its own page. |
 | Exam demo on | On the real calculator, only a USB cable or 12 hours ends exam mode. |

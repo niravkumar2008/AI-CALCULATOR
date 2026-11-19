@@ -8,8 +8,8 @@
   const $$ = (sel, root = document) => Array.from(root.querySelectorAll(sel));
   const Cart = window.SiteCart;
   if (!Cart) return; // site.js didn't run: keep the no-JS view
-  const CONTACT = "hello@proofline.example"; // TODO(contact): same as site.js
-  const PRICE = 225; // the calculator, US dollars
+  const CONTACT = "hello@prooflinecalc.org";
+  const PRICE = 215; // the calculator, US dollars (tax and shipping are added at checkout)
   const money = (n) =>
     new Intl.NumberFormat("en-US", { style: "currency", currency: "USD", maximumFractionDigits: 0 }).format(n);
   const say = (el, text, tone) => {
@@ -56,12 +56,23 @@
   const plural = (n) => `${n} calculator${n === 1 ? "" : "s"}`;
 
   // ------------------------------------------------------------ store status
-  // GET /api/store/status -> { open, max_quantity }. Anything else (no API, error, slow) = closed.
+  // GET /api/store/status -> { open, max_quantity, ships?, left?, sold_out? }. Anything else
+  // (no API, error, slow) = closed. `ships` is the ship-time line ("Made to order: ships in
+  // 3-5 weeks"); `left` is only sent when a batch is nearly sold out (a real count, never made up).
   let store = { open: false, max: Cart.max };
   const applyStore = (s) => {
     store = s;
     $$("[data-store-open]").forEach((el) => (el.hidden = !s.open));
     $$("[data-store-closed]").forEach((el) => (el.hidden = s.open));
+    if (s.ships) {
+      const line = /[.!]$/.test(s.ships) ? s.ships : s.ships + ".";
+      $$("[data-ship-note]").forEach((el) => (el.textContent = el.classList.contains("badge") ? s.ships : line));
+    }
+    $$("[data-stock-left]").forEach((el) => {
+      const show = s.open && Number.isInteger(s.left) && s.left > 0 && s.left <= 5;
+      el.hidden = !show;
+      if (show) el.textContent = `Only ${s.left} left in this batch.`;
+    });
     document.dispatchEvent(new CustomEvent("store:status", { detail: s }));
   };
   const loadStore = async () => {
@@ -76,14 +87,16 @@
       if (!res.ok) throw new Error("HTTP " + res.status);
       const d = await res.json();
       const max = Math.max(1, Math.min(Cart.max, Math.floor(Number(d && d.max_quantity) || Cart.max)));
-      return { open: !!d && d.open === true, max };
+      const ships = d && typeof d.ships === "string" ? d.ships.slice(0, 120) : "";
+      const left = d && Number.isInteger(d.left) ? d.left : null;
+      return { open: !!d && d.open === true, max, ships, left };
     } catch {
       return { open: false, max: Cart.max };
     } finally {
       clearTimeout(timer);
     }
   };
-  if ($("[data-store-open], [data-store-closed]")) loadStore().then(applyStore);
+  if ($("[data-store-open], [data-store-closed], [data-ship-note]")) loadStore().then(applyStore);
 
   // ------------------------------------------------------------ quantity steppers
   // <div class="qty" data-qty> <button data-qty-step="-1"> <input type=number> <button data-qty-step="1"> </div>
@@ -344,7 +357,9 @@
             : `Checkout isn’t available right now. Try again in a minute, or email ${CONTACT}.`;
         say(checkoutMsg, apiMsg || fallback, "error");
         // Not on sale (503 sold_out): show the waitlist instead of a button that can't work.
-        if (data && data.error && data.error.type === "sold_out") applyStore({ open: false, max: store.max });
+        if (data && data.error && data.error.type === "sold_out") applyStore({ ...store, open: false });
+        // Fewer left than in the cart: refresh the count so the stepper allows only what's left.
+        if (res.status === 400) loadStore().then(applyStore);
       } catch {
         say(checkoutMsg, "We couldn’t reach the store. Check your connection and try again.", "error");
       }

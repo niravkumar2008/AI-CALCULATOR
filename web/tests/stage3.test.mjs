@@ -84,7 +84,8 @@ describe('stage 3: Stripe and waitlist', { skip: !SECRET ? 'STRIPE_WEBHOOK_SECRE
     test('store status: open false when STORE_OPEN=0', async () => {
       const r = await api('GET', '/api/store/status');
       assert.equal(r.status, 200, r.text);
-      assert.deepEqual(r.json, { open: false, max_quantity: 3 });
+      assert.deepEqual({ open: r.json.open, max_quantity: r.json.max_quantity }, { open: false, max_quantity: 3 });
+      assert.equal(typeof r.json.ships, 'string'); // STORE_SHIP_NOTE from wrangler.toml
     });
   });
 
@@ -173,7 +174,7 @@ describe('stage 3: Stripe and waitlist', { skip: !SECRET ? 'STRIPE_WEBHOOK_SECRE
     test('store status: 200 {open: true, max_quantity: 3}, no login needed; GET only', async () => {
       const r = await api('GET', '/api/store/status');
       assert.equal(r.status, 200, r.text);
-      assert.deepEqual(r.json, { open: true, max_quantity: 3 });
+      assert.deepEqual({ open: r.json.open, max_quantity: r.json.max_quantity, sold_out: r.json.sold_out }, { open: true, max_quantity: 3, sold_out: false });
       // 405 isn't in the contract for this path (no POST operation): skip the schema check.
       const p = await api('POST', '/api/store/status', { body: {}, origin: ORIGIN, check: false });
       assertError(p, 405, 'bad_request');
@@ -238,7 +239,7 @@ describe('stage 3: Stripe and waitlist', { skip: !SECRET ? 'STRIPE_WEBHOOK_SECRE
       const r = await webhook(event('checkout.session.completed', {
         id: 'cs_test_bbOrder', object: 'checkout.session', mode: 'payment', payment_status: 'paid',
         metadata: { kind: 'device' },
-        amount_total: 22500, currency: 'usd', customer_details: { email: 'parent@example.test' },
+        amount_total: 21500, currency: 'usd', customer_details: { email: 'parent@example.test' },
       }));
       assert.equal(r.status, 200);
     });
@@ -247,10 +248,10 @@ describe('stage 3: Stripe and waitlist', { skip: !SECRET ? 'STRIPE_WEBHOOK_SECRE
       const order = {
         id: 'cs_test_bbRefund', object: 'checkout.session', mode: 'payment', payment_status: 'paid',
         metadata: { kind: 'device' }, payment_intent: 'pi_bbRefund1',
-        amount_total: 22500, currency: 'usd', customer_details: { email: 'parent@example.test' },
+        amount_total: 21500, currency: 'usd', customer_details: { email: 'parent@example.test' },
       };
       assert.equal((await webhook(event('checkout.session.completed', order))).status, 200);
-      const ch = { id: 'ch_bb1', object: 'charge', payment_intent: 'pi_bbRefund1', amount: 22500, amount_refunded: 1000, refunded: false };
+      const ch = { id: 'ch_bb1', object: 'charge', payment_intent: 'pi_bbRefund1', amount: 21500, amount_refunded: 1000, refunded: false };
       assert.equal((await webhook(event('charge.refunded', ch))).status, 200);
       const dp = { id: 'dp_bb1', object: 'dispute', charge: 'ch_bb1', payment_intent: 'pi_bbRefund1', status: 'needs_response' };
       assert.equal((await webhook(event('charge.dispute.created', dp))).status, 200);

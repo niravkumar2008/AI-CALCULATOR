@@ -98,7 +98,10 @@ const vars = {
   STRIPE_WEBHOOK_SECRET: secrets.STRIPE_WEBHOOK_SECRET,
   STRIPE_PRICE_SUB: 'price_localMonthly10',
   STRIPE_PRICE_SUB_YEARLY: 'price_localYearly100',
-  STRIPE_PRICE_DEVICE: 'price_localDevice225',
+  STRIPE_PRICE_DEVICE: 'price_localDevice215',
+  STORE_STOCK: '20', // same batch limit as wrangler.toml, so "only N left" can be tried locally
+  STORE_SHIP_NOTE: 'Made to order: ships in 3 to 5 weeks',
+  STRIPE_PROMO_CODES: '1',
   STRIPE_API_BASE: stripe.url,
   STRIPE_API_VERSION: '2026-09-30.clover', // pinned like production (review G4); the fake ignores it
   STORE_OPEN: '1', // so the whole buying flow can be tried locally (the real site starts closed)

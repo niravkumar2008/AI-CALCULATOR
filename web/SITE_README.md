@@ -26,7 +26,7 @@ python -m http.server 8765 --bind 127.0.0.1 --directory web/site
 Then open http://localhost:8765/. `.claude/launch.json` has both ("local-all" and "launch-site") for the
 browser pane. Nothing is deployed and nothing costs money.
 
-## Pages (28, plus the `/try/` simulator frame)
+## Pages (30, plus the `/try/` simulator frame)
 
 | Section | Paths |
 |---|---|
@@ -35,7 +35,7 @@ browser pane. Nothing is deployed and nothing costs money.
 | Product | `/how-it-works/`, `/features/` (+ `ai-solve/`, `apps/`, `exam-mode/`, `calculator/`), `/try-it/`, `/specs/`, `/pricing/` |
 | Support | `/faq/` (38 answers), `/support/` (+ `setup/`, `wi-fi/`) |
 | Audiences | `/teachers/`, `/honest/` (the "honest by design" points moved off the homepage) |
-| Account | `/login/`, `/login/confirm/`, `/link/`, `/account/` |
+| Account | `/login/`, `/login/confirm/`, `/link/` (code from the calculator; `?code=` pre-fills it), `/link/camera/` (QR the calculator scans, Approve / No; `assets/js/qrcode.js` is the vendored MIT QR generator), `/q/` (where a phone lands after scanning a calculator link QR), `/account/` |
 | Legal | `/privacy/`, `/terms/`, `/refunds/` (NEEDS LAWYER REVIEW, `noindex`) |
 | Other | `404.html`, `/try/` (the simulator iframe) |
 

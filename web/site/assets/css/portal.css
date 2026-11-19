@@ -525,3 +525,31 @@
   white-space: normal;
   text-align: center;
 }
+
+/* ---- QR linking (/link/camera/): the code is drawn as an SVG, always dark on white so any
+   camera reads it, in both colour schemes. */
+.qr {
+  width: min(100%, 22rem);
+  margin-inline: auto;
+  padding: var(--s-3);
+  background: #fff;
+  border-radius: 12px;
+}
+.qr svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  shape-rendering: crispEdges;
+}
+.countdown {
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  text-align: center;
+}
+.portal ol {
+  list-style: decimal;
+  padding-inline-start: 1.4em;
+}
+.portal ol > li + li {
+  margin-top: var(--s-2);
+}

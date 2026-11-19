@@ -5,6 +5,9 @@
 //   node web/dev/calculator.mjs status    what the calculator's screen would say
 //   node web/dev/calculator.mjs code      a new link code (if the old one expired)
 //   node web/dev/calculator.mjs solve     "take a photo" and print the answer and steps
+//   node web/dev/calculator.mjs scan <text>
+//                                         "scan" a code from /link/camera/: the QR's text
+//                                         (https://.../q/L1.xxx or PL1;...;;) or just L1.xxx
 //   node web/dev/calculator.mjs forget    throw this calculator away
 //
 // Its identity is kept in <temp>/aicalc-local/calculator.json. Local only: refuses any
@@ -87,6 +90,9 @@ async function cmdStatus(c) {
   const s = r.json;
   const lines = [`Plan: ${s.plan_reason ?? s.plan}`, s.linked ? `Account: ${s.account_hint ?? ''}` : 'Not linked yet'];
   if (!s.linked && s.pair_code) lines.push(`Code: ${s.pair_code}`, `Go to ${s.link_url ?? ''}`);
+  if (!s.linked) lines.push(`Calculator ID ...${c.hw_id.slice(-4).toUpperCase()}`);
+  if (s.link_state === 'pending_approval') lines.push('', 'Approve on your phone');
+  if (s.link_state === 'declined') lines.push('', 'Not linked: your phone said No');
   if (s.can_solve) lines.push('', 'AI Solve ready (MODE 4)', `Solves this month: ${s.solves_this_month ?? 0}/${s.solves_limit ?? '?'}`);
   else lines.push('', s.reason ?? 'AI Solve is not available.');
   if (s.trial_ends_at) lines.push(`Free month ends ${new Date(s.trial_ends_at * 1000).toDateString()}`);
@@ -99,6 +105,28 @@ async function cmdCode(c) {
   if (r.status !== 200) return screen([r.json?.error?.message ?? `Error ${r.status}`]);
   if (r.json?.already_linked) return screen(['This calculator is already linked.', '', 'Run: node web/dev/calculator.mjs status']);
   screen(['LINK THIS CALCULATOR', '', `Code: ${r.json.code}`, '', 'Go to', r.json.link_url]);
+}
+
+/** The link token in a scanned code (contract payloads 1 and 2). Never the host in the QR. */
+function tokenFrom(text) {
+  const t = String(text || '').trim();
+  const url = /\/q\/(L1\.[A-Za-z0-9_-]{22})$/.exec(t);
+  if (url) return url[1];
+  if (t.startsWith('PL1;')) {
+    const m = /(?:^|;)L:(L1\.[A-Za-z0-9_-]{22});/.exec(t);
+    return m ? m[1] : null;
+  }
+  return /^L1\.[A-Za-z0-9_-]{22}$/.test(t) ? t : null;
+}
+
+async function cmdScan(c, text) {
+  const token = tokenFrom(text);
+  if (!token) return screen(["That's not a Proofline code"]);
+  const r = await call('POST', '/v1/pair/redeem', { body: { link_token: token }, headers: headers(c) });
+  if (r.status !== 200) return screen([r.json?.error?.message ?? `Error ${r.status}`]);
+  if (r.json.state === 'linked') return screen(['Already linked to this account.']);
+  screen([`Calculator ID ...${r.json.suffix}`, '', 'Approve on your phone', `(within ${Math.round((r.json.approve_by - Date.now() / 1000) / 60)} minutes)`]);
+  say('\nTap Approve on the phone, then run: node web/dev/calculator.mjs status\n');
 }
 
 function photo() {
@@ -146,5 +174,6 @@ else if (cmd === 'forget') {
   else if (cmd === 'status') await cmdStatus(c);
   else if (cmd === 'code') await cmdCode(c);
   else if (cmd === 'solve') await cmdSolve(c);
-  else say('Commands: new, status, code, solve, forget');
+  else if (cmd === 'scan') await cmdScan(c, process.argv.slice(3).join(' '));
+  else say('Commands: new, status, code, solve, scan, forget');
 }

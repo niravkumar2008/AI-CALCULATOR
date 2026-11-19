@@ -1,0 +1,208 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:">
+  <title>Proofline Farm</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <canvas id="world" aria-label="The farm. Click a farmhand or a building."></canvas>
+
+  <!-- top bar -->
+  <header id="hud" class="hud wood">
+    <div class="brand"><span class="sprout" aria-hidden="true"></span><div><h1>Proofline Farm</h1><div id="clock" class="sub"></div></div></div>
+    <div id="status" class="status off" role="status">
+      <span class="dot"></span>
+      <div class="status-lines"><span id="statusText">Loading…</span><span id="cycleText" class="sub"></span></div>
+    </div>
+    <div id="ticker" class="ticker" title="Latest farm events (open the Command Center for the full timeline)"></div>
+    <button id="usageBox" class="usage" title="Usage details (the silo)">
+      <div class="u-row"><span>Week</span><div class="ubar"><i id="weeklyBar"></i><b id="paceMark" class="pace"></b><b id="lineMark" class="line"></b></div><em id="weeklyText">–</em></div>
+      <div class="u-row"><span>5 h</span><div class="ubar"><i id="fiveBar" class="five"></i></div><em id="fiveText">–</em></div>
+    </button>
+    <div class="hud-actions">
+      <button id="bizBtn" class="gbtn primary">Business HQ <span id="bizHudBadge" class="badge red" hidden></span></button>
+      <button id="opsBtn" class="gbtn">Command Center</button>
+      <button id="pauseBtn" class="gbtn">Pause</button>
+      <button id="powerBtn" class="gbtn">Turn farm off</button>
+      <button id="gearBtn" class="gbtn icon" title="Settings" aria-label="Settings"><span class="gear" aria-hidden="true"></span></button>
+    </div>
+  </header>
+
+  <div id="loginBanner" class="login-banner" hidden>
+    <b>Claude needs a sign-in before the farm can work.</b> In the Claude app's terminal panel (folder <code>tools\farm</code>) run
+    <code>powershell -ExecutionPolicy Bypass -File .\sign-in-claude.ps1</code>, then delete <code>LOGIN-NEEDED</code> in the farm folder.
+  </div>
+
+  <!-- left column: roster + attention -->
+  <aside id="leftcol" class="leftcol">
+    <section class="panel-term" id="rosterPanel">
+      <h2 class="term-title"><span>Mission control</span><span id="rosterCount" class="term-count"></span></h2>
+      <div id="roster" class="roster"></div>
+    </section>
+    <section class="panel-term attention" id="attnPanel">
+      <h2 class="term-title warn"><span>Attention</span><span id="attnCount" class="term-count"></span></h2>
+      <div id="attnList" class="attn-list"></div>
+    </section>
+  </aside>
+
+  <!-- bottom-right action bar -->
+  <div class="actionbar">
+    <button id="plantBtn" class="gbtn primary big"><span class="seed" aria-hidden="true"></span>Plant a task</button>
+    <button id="boardBtn" class="gbtn big">Task board <span id="boardBadge" class="badge" hidden></span></button>
+    <button id="mailBtn" class="gbtn big">Mailbox <span id="mailBadge" class="badge red" hidden></span></button>
+  </div>
+
+  <div id="tip" class="tip" hidden><b id="tipTitle"></b><span id="tipText"></span></div>
+  <div id="toasts" class="toasts" aria-live="polite"></div>
+
+  <!-- agent drawer -->
+  <aside id="drawer" class="drawer parchment" hidden aria-label="Farmhand">
+    <button class="close" data-close aria-label="Close">×</button>
+    <div class="d-head">
+      <canvas id="dAvatar" class="avatar big"></canvas>
+      <div><h2 id="dName"></h2><div id="dTitle" class="muted"></div><div id="dStatus" class="chip"></div></div>
+    </div>
+    <div id="dTask" class="d-task"></div>
+    <div id="dCycle" class="muted small"></div>
+    <div id="dActions" class="row"></div>
+    <div id="dForeman" class="d-foreman" hidden>
+      <h3>Foreman's last note</h3>
+      <p id="dNote" class="note"></p>
+      <h3>Goals</h3>
+      <div id="dGoals"></div>
+    </div>
+    <h3>Talk</h3>
+    <div id="chat" class="chat"></div>
+    <form id="chatForm" class="chat-form">
+      <textarea id="chatInput" rows="2" maxlength="2000"></textarea>
+      <button class="gbtn primary" type="submit">Send</button>
+    </form>
+    <p id="chatHint" class="muted small"></p>
+  </aside>
+
+  <!-- overlays -->
+  <div id="scrim" class="scrim" hidden></div>
+
+  <section id="ov-ops" class="overlay parchment wide" hidden aria-label="Command Center">
+    <button class="close" data-close aria-label="Close">×</button>
+    <h2 class="ov-title">Command Center</h2>
+    <nav class="otabs" id="opsTabs">
+      <button data-otab="mission">Mission</button>
+      <button data-otab="tasks">Tasks</button>
+      <button data-otab="timeline">Timeline</button>
+      <button data-otab="agents">Agents</button>
+    </nav>
+    <div class="otab-body" data-pane="mission">
+      <div class="two">
+        <div>
+          <h3>Goals for the farm</h3>
+          <p class="muted small">The Foreman reads these when it plans. Plain words: what matters this week, what to avoid.</p>
+          <div id="opsGoals"></div>
+        </div>
+        <div>
+          <h3>Foreman's last note</h3>
+          <p id="opsNote" class="note"></p>
+          <p id="opsCycle" class="muted small"></p>
+        </div>
+      </div>
+    </div>
+    <div class="otab-body" data-pane="tasks">
+      <div class="row between"><p class="muted small">Every task on the farm. Cards are written by the farm, buttons act right away.</p><button class="gbtn primary" data-plant>Plant a task</button></div>
+      <div id="board" class="board"></div>
+    </div>
+    <div class="otab-body" data-pane="timeline"><div id="timeline" class="timeline"></div></div>
+    <div class="otab-body" data-pane="agents"><div id="agentsTable" class="agents-table"></div></div>
+  </section>
+
+  <section id="ov-biz" class="overlay parchment wide biz" hidden aria-label="Business HQ">
+    <button class="close" data-close aria-label="Close">×</button>
+    <h2 class="ov-title">Business HQ <span id="bizUpdated" class="muted small"></span></h2>
+    <nav class="otabs" id="bizTabs">
+      <button data-btab="today">Today</button>
+      <button data-btab="inbox">Inbox <span id="bizInboxBadge" class="badge red" hidden></span></button>
+      <button data-btab="orders">Orders <span id="bizShipBadge" class="badge" hidden></span></button>
+      <button data-btab="money">Money</button>
+      <button data-btab="cloud">Website</button>
+      <button data-btab="launch">Launch steps</button>
+      <button data-btab="settings">Settings</button>
+    </nav>
+    <div id="bizBody" class="biz-body"></div>
+  </section>
+
+  <section id="ov-mail" class="overlay parchment" hidden aria-label="Mailbox">
+    <button class="close" data-close aria-label="Close">×</button>
+    <h2 class="ov-title">Mailbox</h2>
+    <p class="muted small">Things that wait for you. Harvest = passed its checks: look at the changes in its folder and commit them yourself if you like them.</p>
+    <div id="mailList" class="mail-list"></div>
+  </section>
+
+  <section id="ov-plant" class="overlay parchment" hidden aria-label="Plant a task">
+    <button class="close" data-close aria-label="Close">×</button>
+    <h2 class="ov-title">Plant a task</h2>
+    <form id="addForm" class="form">
+      <label>Title <input id="fTitle" required maxlength="120" placeholder="Add a unit test for the x^-1 key"></label>
+      <label>What to do <textarea id="fTodo" rows="3" placeholder="Say exactly what you want, in plain words. Name files or folders if you know them."></textarea></label>
+      <label>Done when <span class="muted small">(one per line: <code>cmd:</code> a command that must succeed, or <code>judge:</code> something the inspector checks)</span>
+        <textarea id="fDone" rows="3" class="mono" placeholder="cmd: node -e &quot;process.exit(require('fs').existsSync('docs/x.md')?0:1)&quot;&#10;judge: the text is plain and short"></textarea></label>
+      <div class="row">
+        <label>Kind <select id="fKind"><option value="code">Code</option><option value="marketing">Marketing (drafts only)</option><option value="research">Research</option><option value="hardware-check">Hardware check</option></select></label>
+        <label>Priority <select id="fPrio"><option value="1">1: first</option><option value="2">2</option><option value="3" selected>3</option><option value="4">4</option><option value="5">5: last</option></select></label>
+        <label>Size <select id="fSize"><option value="small">Small (up to 25 min)</option><option value="medium">Medium (up to 70 min)</option></select></label>
+        <label>Farmhand <select id="fAgent"><option value="">Anyone</option></select></label>
+      </div>
+      <p class="muted small">Without a "Done when" line the task is saved as an idea and doesn't start. Marketing tasks only make drafts, nothing is posted or sent. The farm works from the <b>main</b> branch, so it only sees committed work.</p>
+      <div class="row"><button class="gbtn primary" type="submit">Plant it</button><span id="addMsg" class="muted"></span></div>
+    </form>
+  </section>
+
+  <section id="ov-silo" class="overlay parchment" hidden aria-label="Silo: usage">
+    <button class="close" data-close aria-label="Close">×</button>
+    <h2 class="ov-title">The silo: usage</h2>
+    <div class="meter-label"><span>Weekly limit</span><span id="sWeeklyText">–</span></div>
+    <div class="meter"><div id="sWeeklyBar" class="meter-fill"></div><div id="sPaceMark" class="mark pace" title="Today's farm line"></div><div id="sLineMark" class="mark line" title="Farm stops here: the rest is yours"></div></div>
+    <div class="meter-label"><span>5-hour limit</span><span id="sFiveText">–</span></div>
+    <div class="meter"><div id="sFiveBar" class="meter-fill five"></div></div>
+    <p id="usageNote" class="muted small"></p>
+    <div class="legend small"><span><i class="lg used"></i>used</span><span><i class="lg pace"></i>today's farm line</span><span><i class="lg line"></i>farm stops (your reserve after)</span></div>
+    <div class="row between"><h3>Summary</h3><button id="refreshSummary" class="gbtn">Update now</button></div>
+    <pre id="summary" class="summary">No summary yet.</pre>
+  </section>
+
+  <section id="ov-settings" class="overlay parchment" hidden aria-label="Settings">
+    <button class="close" data-close aria-label="Close">×</button>
+    <h2 class="ov-title">Settings</h2>
+    <div class="form">
+      <label class="check"><input type="checkbox" id="sStartup"> Start with Windows (opens hidden in the tray when you log in, so the farm is always on)</label>
+      <div class="row">
+        <label>Your weekly reserve <select id="sReserve"></select></label>
+        <label>Most farmhands at once <select id="sMax"><option>1</option><option>2</option><option>3</option><option>4</option><option>5</option></select></label>
+      </div>
+      <p class="muted small">The reserve is the part of your weekly limit the farm never touches. Changing these restarts the farm manager (a running farmhand starts its step again).</p>
+      <div class="row"><button class="gbtn" data-open="">Open farm folder</button><button class="gbtn" data-open="tasks">Task files</button><button class="gbtn" data-open="logs">Logs</button><button class="gbtn" data-open="runs">Run records</button></div>
+      <p id="farmDir" class="muted small"></p>
+    </div>
+    <h3>How it keeps going</h3>
+    <ul class="plain">
+      <li><b>Closing this window doesn't stop the farm.</b> It keeps working in the tray (the sprout icon by the clock). Right-click it to pause or quit.</li>
+      <li><b>Quit</b> (tray menu) stops the farm. <b>Start with Windows</b> brings it back at every login.</li>
+      <li>The farm works while Windows is logged in and awake. Set sleep to "Never" when plugged in for overnight work.</li>
+      <li>Wi-Fi drops are handled by the Wi-Fi watchdog: runs wait and retry without using a try.</li>
+    </ul>
+  </section>
+
+  <section id="ov-room" class="overlay parchment" hidden aria-label="Building">
+    <button class="close" data-close aria-label="Close">×</button>
+    <h2 class="ov-title" id="roomTitle"></h2>
+    <p id="roomSub" class="muted small"></p>
+    <canvas id="roomCanvas" class="room-canvas"></canvas>
+    <div id="roomList" class="room-list"></div>
+    <div id="roomActions" class="row"></div>
+  </section>
+
+  <script src="game.js"></script>
+  <script src="biz.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

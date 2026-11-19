@@ -4,9 +4,9 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Cart · Proofline</title>
-  <meta name="description" content="Your Proofline cart. Preorders are planned for 2027; until then, join the waitlist.">
+  <meta name="description" content="Your Proofline cart. The calculator is $215, plus tax and shipping.">
   <meta name="robots" content="noindex">
-  <link rel="canonical" href="https://proofline.example/cart/">
+  <link rel="canonical" href="https://prooflinecalc.org/cart/">
   <!-- @head -->
   <meta name="color-scheme" content="light dark">
   <meta name="theme-color" content="#10141c">
@@ -103,7 +103,7 @@
           <svg aria-hidden="true"><use href="#i-cart"/></svg><span class="icon-link__text">Cart</span>
           <span class="cart-badge" data-cart-count hidden>0</span>
         </a>
-        <a class="btn btn--primary btn--sm header__cta" href="/#join" data-focus-email aria-label="Join the waitlist"><span class="cta-long">Join the waitlist</span><span class="cta-short" aria-hidden="true">Join</span></a>
+        <a class="btn btn--primary btn--sm header__cta" href="/shop/calculator/" aria-label="Buy the calculator"><span class="cta-long">Buy now: $215</span><span class="cta-short" aria-hidden="true">Buy</span></a>
         <details class="mobile-menu" data-mobile-menu>
           <summary class="icon-link" aria-label="Menu"><svg class="mm-open" aria-hidden="true"><use href="#i-menu"/></svg><svg class="mm-close" aria-hidden="true"><use href="#i-close"/></svg></summary>
           <div class="mobile-menu__sheet">
@@ -166,7 +166,7 @@
         <noscript>
           <div class="callout">
             <svg aria-hidden="true"><use href="#i-info"/></svg>
-            <p>The cart needs JavaScript turned on. Preorders open in 2027; until then, <a href="#email-sitefoot">join the waitlist</a> to hear first.</p>
+            <p>The cart needs JavaScript turned on. Turn it on to check out, or email <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a> to order.</p>
           </div>
         </noscript>
 
@@ -179,7 +179,7 @@
               </a>
               <div>
                 <h3><a href="/shop/calculator/">Proofline calculator</a></h3>
-                <p class="cart-line__unit">$225 each · Preorder, ships in 2027</p>
+                <p class="cart-line__unit">$215 each · <span data-ship-note>Made to order</span></p>
                 <div class="cart-line__controls">
                   <label class="sr-only" for="qty-cart">Quantity</label>
                   <div class="qty" data-qty>
@@ -192,41 +192,41 @@
                 <p class="shop-note">Up to 3 per order.</p>
                 <p class="sr-only" data-line-msg role="status" aria-live="polite"></p>
               </div>
-              <p class="cart-line__total" data-line-total>$225</p>
+              <p class="cart-line__total" data-line-total>$215</p>
             </div>
             <p class="plan-line">
               <svg aria-hidden="true"><use href="#i-s-camera"/></svg>
-              <span><strong>AI tutor plan:</strong> first month free, starting when you link the calculator. Then $10 a month or $100 a year, billed separately. One plan covers up to 3 calculators on your account. <a href="/shop/calculator/#ai-tutor">About the plan</a></span>
+              <span><strong>AI tutor plan:</strong> first month free, starting when you link the calculator. Then $15 a month or $120 a year, billed separately. One plan covers one calculator. <a href="/shop/calculator/#ai-tutor">About the plan</a></span>
             </p>
           </div>
 
           <aside class="summary" aria-labelledby="summary-title">
             <h2 id="summary-title">Summary</h2>
             <dl>
-              <dt data-item-count>1 calculator</dt><dd data-subtotal>$225</dd>
-              <dt class="total">Subtotal</dt><dd class="total" data-subtotal>$225</dd>
+              <dt data-item-count>1 calculator</dt><dd data-subtotal>$215</dd>
+              <dt class="total">Subtotal</dt><dd class="total" data-subtotal>$215</dd>
             </dl>
             <p class="shop-note">Shipping to US addresses only. Any shipping cost or tax is shown at secure checkout before you pay. The buyer must be 18 or older.</p>
 
             <div data-store-open hidden>
-              <p class="callout" style="margin-top:var(--s-5)"><svg aria-hidden="true"><use href="#i-info"/></svg><span><strong>This is a preorder.</strong> Calculators ship in 2027. We’ll email you a ship date.</span></p>
+              <p class="callout" style="margin-top:var(--s-5)"><svg aria-hidden="true"><use href="#i-info"/></svg><span><strong>Hand-built for you.</strong> <span data-ship-note>We build each calculator after you order.</span> Tax and shipping are added at secure checkout.</span></p>
               <button class="btn btn--primary" type="button" data-checkout><svg width="18" height="18" aria-hidden="true"><use href="#i-lock"/></svg>Checkout</button>
               <p class="shop-msg" data-checkout-msg role="status" aria-live="polite"></p>
               <p class="shop-note">You’ll finish on a secure checkout page. <a href="/refunds/">Refunds and warranty</a></p>
             </div>
 
             <div data-store-closed id="waitlist">
-              <p class="callout" style="margin-top:var(--s-5)"><svg aria-hidden="true"><use href="#i-info"/></svg><span><strong>Preorders open in 2027.</strong> We aren’t taking payment yet. Join the waitlist to hear first.</span></p>
+              <p class="callout" style="margin-top:var(--s-5)"><svg aria-hidden="true"><use href="#i-info"/></svg><span><strong>This batch is sold out.</strong> Join the waitlist and we’ll email you when the next one opens.</span></p>
               <form class="waitlist" action="/api/waitlist" method="post" data-source="site">
                 <input type="hidden" name="source" value="site"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
-                <label class="waitlist__label" for="email-cart">Get an email when preorders open</label>
+                <label class="waitlist__label" for="email-cart">Get an email when the next batch opens</label>
                 <div class="waitlist__row">
                   <input class="field" id="email-cart" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-cart msg-cart">
                   <div class="hp" aria-hidden="true"><label for="company-cart">Company</label><input id="company-cart" name="company" type="text" tabindex="-1" autocomplete="off"></div>
                   <button class="btn btn--primary" type="submit">Join the waitlist</button>
                 </div>
                 <label class="waitlist__age" for="age-cart"><input id="age-cart" name="age_ok" type="checkbox" required aria-describedby="msg-cart">I’m 13 or older</label>
-                <p class="waitlist__note" id="note-cart">No payment now. <a href="/privacy/">Privacy policy</a></p>
+                <p class="waitlist__note" id="note-cart"><a href="/privacy/">Privacy policy</a></p>
                 <p class="waitlist__msg" id="msg-cart" role="status" aria-live="polite"></p>
               </form>
             </div>
@@ -235,7 +235,7 @@
 
         <div class="cart-empty" data-cart-empty hidden>
           <h2>Your cart is empty</h2>
-          <p>The calculator is $225.<span data-store-closed> Preorders are planned for 2027.</span></p>
+          <p>The calculator is $215, plus tax and shipping.</p>
           <p class="shop-msg" data-undo-msg role="status" aria-live="polite"></p>
           <a class="btn btn--primary" href="/shop/calculator/">See the calculator</a>
         </div>
@@ -247,17 +247,17 @@
     <div class="container footer__grid">
       <div class="footer__intro">
         <a class="brand" translate="no" href="/" aria-label="Proofline home"><svg aria-hidden="true"><use href="#i-mark"/></svg><span>Proofline</span></a>
-        <p>The AI study tutor that works like a real scientific calculator. In development; preorders planned for 2027.</p>
+        <p>The AI study tutor that works like a real scientific calculator. Hand-built in small batches. Ships to US addresses.</p>
         <form class="waitlist waitlist--compact" action="/api/waitlist" method="post" data-source="footer">
           <input type="hidden" name="source" value="footer"><input type="hidden" name="utm_source" value="" data-track="utm_source"><input type="hidden" name="utm_medium" value="" data-track="utm_medium"><input type="hidden" name="utm_campaign" value="" data-track="utm_campaign"><input type="hidden" name="ref" value="" data-track="ref">
-          <label class="waitlist__label" for="email-sitefoot">Get an email when preorders open</label>
+          <label class="waitlist__label" for="email-sitefoot">Get an email about new batches</label>
           <div class="waitlist__row">
             <input class="field" id="email-sitefoot" name="email" type="email" inputmode="email" autocomplete="email" autocapitalize="none" spellcheck="false" enterkeyhint="send" placeholder="you@example.com" required aria-describedby="note-sitefoot msg-sitefoot">
             <div class="hp" aria-hidden="true"><label for="company-sitefoot">Company</label><input id="company-sitefoot" name="company" type="text" tabindex="-1" autocomplete="off"></div>
             <button class="btn btn--primary" type="submit">Join</button>
           </div>
           <label class="waitlist__age" for="age-sitefoot"><input id="age-sitefoot" name="age_ok" type="checkbox" required aria-describedby="msg-sitefoot">I’m 13 or older</label>
-          <p class="waitlist__note" id="note-sitefoot">No payment now. <a href="/privacy/">Privacy policy</a></p>
+          <p class="waitlist__note" id="note-sitefoot"><a href="/privacy/">Privacy policy</a></p>
           <p class="waitlist__msg" id="msg-sitefoot" role="status" aria-live="polite"></p>
         </form>
       </div>
@@ -307,8 +307,7 @@
       <div class="legal">
         <p>Not affiliated with Casio Computer Co., Ltd.</p>
         <p>Prices in US dollars. © 2026 Proofline Corporation.</p>
-        <!-- TODO(contact): real support address once the domain is bought. -->
-        <p>Contact: <a href="mailto:hello@proofline.example">hello@proofline.example</a></p>
+        <p>Contact: <a href="mailto:hello@prooflinecalc.org">hello@prooflinecalc.org</a></p>
       </div>
     </div>
   </footer>
